@@ -2312,6 +2312,55 @@ function plantNote(p) {
     ? PLANT_RO[p.id].nota
     : p.nota;
 }
+function localizedSowingGuide(plant) {
+  if (currentLang !== "ro") return SOWING_GUIDE[plant.id];
+  if (SOWING_GUIDE_RO[plant.id]) return SOWING_GUIDE_RO[plant.id];
+
+  const spacing = PLANT_SPACING[plant.id] || {};
+  const row = spacing.d || plant.d || 30;
+  const between = spacing.dr || plant.dr || row;
+  const direct = new Set([
+    "carota", "rucola", "spinaci", "coriandolo", "aneto", "fagiolino",
+    "fagiolo", "pisello", "ravanello", "barbabietola", "rapa",
+    "valerianella", "daikon", "scorzonera", "fava", "soia_edamame",
+    "cece", "lenticchia", "fagiolo_borlotto", "crescione"
+  ]);
+  const bulbs = new Set([
+    "aglio", "scalogno", "cipolla", "cipolla_rossa", "cipollotto"
+  ]);
+  const aromatics = new Set([
+    "rosmarino", "timo", "origano", "salvia", "erba_cipollina",
+    "leustean", "dragoncello", "menta", "maggiorana", "camomilla",
+    "calendula", "nasturzio", "shiso"
+  ]);
+  const warm = new Set([
+    "pomodoro", "peperone", "peperoncino", "melanzana", "zucchina",
+    "zucca", "cetriolo", "melone", "anguria", "basilico", "gombo",
+    "tomatillo", "physalis", "kiwano", "cucamelon", "mais_dolce",
+    "patata_dolce"
+  ]);
+
+  let method = "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
+  if (direct.has(plant.id)) method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
+  if (bulbs.has(plant.id)) method = "Plantează bulbili sau căței sănătoși, apoi păstrează rândurile curate.";
+  if (aromatics.has(plant.id)) method = "Cel mai sigur este transplantul de plăntuțe; semănarea este posibilă, dar mai lentă.";
+  if (warm.has(plant.id)) method = "Seamănă protejat la cald; în seră transplantează o plăntuță bine formată.";
+  if (plant.id === "fragola") method = "Transplantează plăntuțe sau stoloni înrădăcinați; semănarea din sămânță este lentă.";
+  if (plant.id === "patata") method = "Plantează tuberculi sănătoși și mușuroiește când tulpinile cresc.";
+  if (plant.id === "asparago") method = "Pornește de la coroane sau plăntuțe; cultura este perenă și cere răbdare.";
+
+  let depth = "0,5-1 cm";
+  if (bulbs.has(plant.id) || plant.id === "patata") depth = "3-5 cm";
+  if (warm.has(plant.id)) depth = "1-2 cm";
+  if (aromatics.has(plant.id)) depth = "superficial, cu acoperire foarte ușoară";
+
+  const thin = spacing.dr && spacing.dr !== spacing.d
+    ? `Lasă ${row} cm pe rând și ${between} cm între rânduri.`
+    : `Lasă ${row} cm între plante.`;
+  const tip = plantNote(plant) || "Menține umiditatea constantă la pornire și evită aglomerarea plantelor.";
+
+  return { method, depth, thin, tip };
+}
 function kitTitle(month) {
   return currentLang === "ro"
     ? t(`kit.title_${month}`) || KITS[month].titolo
@@ -3028,10 +3077,16 @@ function openDetail(id) {
     .sort((a, b) => a - b)
     .map((m) => ABBR_MESI[m - 1])
     .join(", ");
+  const monthLegend = {
+    available: t("detail.month_available"),
+    selected: t("detail.month_selected"),
+    outside: t("detail.month_outside")
+  };
   const monthSegments = Array.from({ length: 12 }, (_, i) => {
     const on = effectiveMonths(p).has(i + 1);
     const cur = i + 1 === state.mese;
-    return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${NOMI_MESI[i]}">
+    const title = `${NOMI_MESI[i]} · ${on ? monthLegend.available : monthLegend.outside}${cur ? ` · ${monthLegend.selected}` : ""}`;
+    return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${title}" aria-label="${title}">
       <span class="month-seg-abbr">${ABBR_MESI[i]}</span>
     </div>`;
   }).join("");
@@ -3040,7 +3095,11 @@ function openDetail(id) {
        <span>${t("detail.sowing_months")}</span>
        <b>${activeMonths}</b>
      </div>
-     <div class="month-segments">${monthSegments}</div>`;
+     <div class="month-segments" aria-label="${t("detail.sowing_months")}">${monthSegments}</div>
+     <div class="month-bar-legend" aria-hidden="true">
+       <span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span>
+       <span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span>
+     </div>`;
 
   // Abbinamenti: piante amiche e nemiche.
   let comp = "";
@@ -3065,7 +3124,7 @@ function openDetail(id) {
   // Guida alla semina.
   const sowEl = document.getElementById("detailSow");
   const sowBodyEl = document.getElementById("detailSowBody");
-  const guide = (currentLang === "ro" ? SOWING_GUIDE_RO[id] : null) || SOWING_GUIDE[id];
+  const guide = localizedSowingGuide(p);
   let sowHtml = "";
   if (guide) {
     if (guide.method) sowHtml += `<div class="detail-sow-row"><b>🌱 ${t("detail.sow_method")}</b> — ${guide.method}</div>`;
@@ -3468,4 +3527,3 @@ function catalogTechLine(p) {
   const parts = [daysLabel(p), spacingLabel(p), yieldLabel(p)];
   return parts.filter(Boolean).join(" · ");
 }
-

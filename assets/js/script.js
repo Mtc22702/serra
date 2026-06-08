@@ -3266,6 +3266,15 @@ function applyLanguage() {
   const fillSelectedBtn = document.getElementById("btnFillSelected");
   if (fillSelectedBtn) fillSelectedBtn.title = tx("fillSelectedTitle");
   setText("#btnStampa .btn-label", "print");
+  const printBtn = document.getElementById("btnStampa");
+  if (printBtn) printBtn.title = tx("printTitle");
+  setText(".pdp-header-title", "plantSheetTitle");
+  setText("#pdpBackBtn span", "closePlantSheet");
+  const pdpBackBtn = document.getElementById("pdpBackBtn");
+  if (pdpBackBtn) pdpBackBtn.setAttribute("aria-label", tx("closePlantSheetAria"));
+  setText(".mobile-go-to-scene span", "goToGreenhouse");
+  const mobileGoToScene = document.querySelector(".mobile-go-to-scene");
+  if (mobileGoToScene) mobileGoToScene.setAttribute("aria-label", tx("goToGreenhouseAria"));
   setText("#btnRipristina .btn-label", "restoreAutoFill");
   setText("#btnClear .btn-label", "clearGreenhouse");
   setText("#btnClear .btn-hint", "clearGreenhouseHint");
@@ -3945,7 +3954,7 @@ function buildScene() {
   g += `<g transform="translate(${vbW - PAD - 2} ${PAD + 18})" opacity="0.9">
         <circle r="15" fill="#fff" stroke="#d9a441" stroke-width="2"/>
         <text x="0" y="5" text-anchor="middle" font-size="16">☀️</text>
-        <text x="0" y="30" text-anchor="middle" font-family="Outfit" font-size="9" fill="#7b6a3a">SUD</text>
+        <text x="0" y="30" text-anchor="middle" font-family="Outfit" font-size="9" fill="#7b6a3a">${tx("compassSouth")}</text>
       </g>`;
 
   return {
@@ -3981,7 +3990,7 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   const doorY = oy + Li - WALL / 2 - 2;
   const doorH = WALL + 8;
   s += `<rect x="${doorX - dw / 2}" y="${doorY}" width="${dw}" height="${doorH}" rx="3" fill="#e7ad55" stroke="#b07f30" stroke-width="1.5" pointer-events="none"/>`;
-  s += `<text x="${doorX}" y="${doorY + doorH / 2 + 3.5}" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#5f3e23" pointer-events="none">ingresso</text>`;
+  s += `<text x="${doorX}" y="${doorY + doorH / 2 + 3.5}" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#5f3e23" pointer-events="none">${tx("greenhouseEntrance")}</text>`;
   return s;
 }
 
@@ -4534,15 +4543,30 @@ function renderPlantDetailPanel() {
   // segmenti della barra mesi
   const allMonths = [...effectiveMonths(p)].sort((a, b) => a - b);
   const activeMonthsLabel = allMonths.map(m => monthName(m).slice(0, 3)).join(", ");
+  const monthLegend =
+    state.lang === "ro"
+      ? {
+          title: tx("sowingZone"),
+          available: tx("monthAvailable"),
+          selected: tx("monthSelected"),
+          outside: tx("monthOutside")
+        }
+      : {
+          title: tx("sowingZone"),
+          available: tx("monthAvailable"),
+          selected: tx("monthSelected"),
+          outside: tx("monthOutside")
+        };
   const monthSegs = Array.from({ length: 12 }, (_, i) => {
     const on = effectiveMonths(p).has(i + 1);
     const cur = i + 1 === state.mese;
-    return `<div class="pdp-month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${monthName(i + 1)}"></div>`;
+    const title = `${monthName(i + 1)} · ${on ? monthLegend.available : monthLegend.outside}${cur ? ` · ${monthLegend.selected}` : ""}`;
+    return `<div class="pdp-month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${title}" aria-label="${title}"></div>`;
   }).join("");
 
   // tipo
   const tipoEntry = CAT_ORDER.find(c => c.ids.includes(p.id));
-  const tipoLabel = tipoEntry ? tipoEntry.label : "";
+  const tipoLabel = tipoEntry ? tx(`vegCat_${tipoEntry.key}`) : "";
 
   const soleIcon = p.sole === "pieno" ? "☀️" : "🌤️";
   const soleLabel = p.sole === "pieno" ? tx("fullSun") : tx("halfShade");
@@ -4605,17 +4629,22 @@ function renderPlantDetailPanel() {
       ${(months || allMonths.length) ? `
       <div class="month-bar">
         <div class="month-bar-head">
-          <span>${tx("sowMonth")}</span>
+          <span>${monthLegend.title}</span>
           <b>${activeMonthsLabel}</b>
         </div>
-        <div class="month-segments">
+        <div class="month-segments" aria-label="${monthLegend.title}">
           ${Array.from({ length: 12 }, (_, i) => {
             const on = effectiveMonths(p).has(i + 1);
             const cur = i + 1 === state.mese;
-            return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${monthName(i + 1)}">
-              <span class="month-seg-abbr">${monthName(i + 1).slice(0, 1)}</span>
+            const title = `${monthName(i + 1)} · ${on ? monthLegend.available : monthLegend.outside}${cur ? ` · ${monthLegend.selected}` : ""}`;
+            return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${title}" aria-label="${title}">
+              <span class="month-seg-abbr">${monthName(i + 1).slice(0, 3)}</span>
             </div>`;
           }).join("")}
+        </div>
+        <div class="month-bar-legend" aria-hidden="true">
+          <span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span>
+          <span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span>
         </div>
       </div>` : ""}
       ${(amiche.length || nemiche.length) ? `
