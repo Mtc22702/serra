@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Orto in Serra · Coltiva con intelligenza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,600;9..144,0,800;9..144,1,300&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/icons/logo-180.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+  </head>
+  <body>
+    <!-- Header: navigazione principale, lingua e carrello. -->
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
+          <span class="nav-brand-mark"
+            ><img src="assets/img/svg/logo.svg" alt=""
+          /></span>
+          <span class="nav-brand-copy">
+            <strong class="nav-brand-text">Orto in Serra</strong>
+            <small data-i18n="nav.brand_sub">Coltiva con un piano</small>
+          </span>
+        </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+          <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+          <a href="#stagione" class="nav-link" data-i18n="nav.stagione"
+            >Catalogo semi</a
+          >
+          <a href="#abbinamenti" class="nav-link" data-i18n="nav.abbinamenti"
+            >Abbinamenti</a
+          >
+          <a href="#kit" class="nav-link" data-i18n="footer.kit"
+            >Kit del mese</a
+          >
+          <a
+            href="configuratore.html"
+            class="nav-link nav-link--cta"
+            data-i18n="nav.configuratore"
+            >📐 Configuratore</a
+          >
+          <a href="#contatti" class="nav-link" data-i18n="nav.contatti"
+            >Contatti</a
+          >
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="nav-menu-toggle"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Apri menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+          <div class="nav-lang">
+            <span class="nav-action-icon" aria-hidden="true">🌐</span>
+            <select
+              id="langSelect"
+              onchange="setLang(this.value)"
+              title="Lingua / Limbă"
+            >
+              <option value="it">🇮🇹 IT</option>
+              <option value="ro">🇷🇴 RO</option>
+            </select>
+          </div>
+          <button
+            class="cart-btn"
+            onclick="openCart()"
+            aria-label="Apri carrello"
+          >
+            <span class="cart-icon" aria-hidden="true">🛒</span>
+            <span class="cart-label" data-i18n="nav.carrello">Carrello</span>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero: selezione clima e accesso rapido ai percorsi principali. -->
+    <section class="hero-immersive" id="hero">
+      <div class="hero-bg-plants" id="heroBgPlants"></div>
+      <div class="hero-content">
+        <div class="hero-season-kicker" id="heroKicker">
+          <span class="hero-kicker-pulse" aria-hidden="true"></span>
+          🌱&nbsp;Stagione attiva
+        </div>
+        <div class="hero-month-label" id="heroMonth">Giugno</div>
+        <div class="hero-tagline" id="heroTagline">
+          L'estate è&nbsp;qui. Innaffia, taglia, assapora.
+        </div>
+        <div class="hero-controls" aria-label="Filtri clima">
+          <div class="hero-controls-pill">
+            <div class="hero-ctrl-block">
+              <span class="hero-controls-hint" data-i18n="hero.controls_hint">
+                Seleziona la tua zona climatica
+              </span>
+              <div class="hero-zone-options">
+                <button
+                  class="hero-zone-btn"
+                  data-zone="freddo"
+                  onclick="setZone('freddo')"
+                >
+                  <span class="hero-zone-icon" aria-hidden="true">❄️</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label"
+                    >Fredda</span
+                  >
+                  <small data-i18n="hero.zone_cold_hint">stagione corta</small>
+                </button>
+                <button
+                  class="hero-zone-btn active"
+                  data-zone="temperato"
+                  onclick="setZone('temperato')"
+                >
+                  <span class="hero-zone-icon" aria-hidden="true">🌤️</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label"
+                    >Temperata</span
+                  >
+                  <small data-i18n="hero.zone_temp_hint">equilibrata</small>
+                </button>
+                <button
+                  class="hero-zone-btn"
+                  data-zone="caldo"
+                  onclick="setZone('caldo')"
+                >
+                  <span class="hero-zone-icon" aria-hidden="true">☀️</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label"
+                    >Calda</span
+                  >
+                  <small data-i18n="hero.zone_warm_hint">stagione lunga</small>
+                </button>
+              </div>
+            </div>
+            <div class="hero-ctrl-block">
+              <span class="hero-controls-hint" id="heroHeatedLabel">Riscaldamento spento</span>
+              <button
+                class="hero-heated-btn"
+                id="heroHeatedBtn"
+                onclick="toggleHeated()"
+              >
+                <span class="hero-heat-track" aria-hidden="true"
+                  ><span class="hero-heat-dot"></span
+                ></span>
+                <span data-i18n="hero.greenhouse_label">Riscaldamento serra</span>
+              </button>
+            </div>
+          </div>
+          <span class="hero-filter-note" id="heroFilterNote"></span>
+        </div>
+        <div class="hero-path" aria-labelledby="heroPathLabel">
+          <div class="hero-path-divider">
+            <span
+              class="hero-path-divider-label"
+              id="heroPathLabel"
+              data-i18n="hero.path_label"
+              >Scegli il tuo percorso</span
+            >
+          </div>
+
+          <div class="percorso-board percorso-board--two">
+            <!-- Percorso configuratore: piano automatico o progetto libero. -->
+            <div class="percorso-cta percorso-cta--auto">
+              <div class="percorso-cta-deco" aria-hidden="true">🌱</div>
+              <div class="percorso-cta-inner">
+                <div class="percorso-cta-left">
+                  <div class="percorso-cta-eyebrow">
+                    <span class="percorso-cta-icon" aria-hidden="true">🌱</span>
+                    <span class="percorso-badge" data-i18n="path.auto_badge"
+                      >Consigliato</span
+                    >
+                  </div>
+                  <h3 class="percorso-cta-title" data-i18n="path.auto_title">
+                    Pianifica la tua serra
+                  </h3>
+                  <p class="percorso-cta-desc" data-i18n="path.auto_desc">
+                    Misure, clima e piante ottimizzate.<br />
+                    Scegli la modalità che preferisci.
+                  </p>
+                </div>
+                <div class="percorso-cta-paths">
+                  <a
+                    href="configuratore.html?preset=principiante&guided=1"
+                    class="percorso-path percorso-path--auto"
+                  >
+                    <span class="percorso-path-icon" aria-hidden="true"
+                      >✨</span
+                    >
+                    <div class="percorso-path-content">
+                      <span
+                        class="percorso-path-label"
+                        data-i18n="path.auto_kicker"
+                        >Piano automatico</span
+                      >
+                      <span
+                        class="percorso-path-hint"
+                        data-i18n="path.auto_action"
+                        >Orto pronto in un clic</span
+                      >
+                    </div>
+                    <span class="percorso-path-arrow" aria-hidden="true"
+                      >→</span
+                    >
+                  </a>
+                  <a
+                    href="configuratore.html?mode=expert&empty=1"
+                    class="percorso-path percorso-path--free"
+                  >
+                    <span class="percorso-path-icon" aria-hidden="true"
+                      >✏️</span
+                    >
+                    <div class="percorso-path-content">
+                      <span
+                        class="percorso-path-label"
+                        data-i18n="path.free_label"
+                        >Progetto libero</span
+                      >
+                      <span class="percorso-path-hint"
+                        >Personalizzi ogni scelta</span
+                      >
+                    </div>
+                    <span class="percorso-path-arrow" aria-hidden="true"
+                      >→</span
+                    >
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Percorso catalogo: accesso ai semi filtrati per stagione. -->
+            <a href="#stagione" class="percorso-cta percorso-cta--semi">
+              <div class="percorso-cta-deco" aria-hidden="true">🫘</div>
+              <div class="percorso-cta-inner">
+                <div class="percorso-cta-left">
+                  <div class="percorso-cta-eyebrow">
+                    <span class="percorso-cta-icon" aria-hidden="true">🫘</span>
+                    <span
+                      class="percorso-kicker percorso-kicker--earth"
+                      data-i18n="path.semi_kicker"
+                      >Catalogo semi</span
+                    >
+                  </div>
+                  <h3 class="percorso-cta-title" data-i18n="path.semi_title">
+                    Sfoglia i semi di stagione
+                  </h3>
+                  <p class="percorso-cta-desc" data-i18n="path.semi_desc">
+                    Filtrato per mese e clima. Scegli i semi e importali nel tuo
+                    piano.
+                  </p>
+                </div>
+                <div class="percorso-cta-catalog">
+                  <div class="percorso-catalog-grid" aria-hidden="true">
+                    <span>🍅</span><span>🥬</span><span>🌿</span> <span>🥕</span
+                    ><span>🫑</span><span>🌶️</span>
+                  </div>
+                  <div class="percorso-cta-btn percorso-cta-btn--earth">
+                    <span data-i18n="path.semi_action">Vai al catalogo</span>
+                    <span class="percorso-cta-btn-arrow" aria-hidden="true"
+                      >→</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-hint">
+        <span data-i18n="calendar.kicker">L'anno in serra</span>
+        <span class="hero-scroll-arrow">↓</span>
+      </div>
+    </section>
+
+    <!-- Calendario: riepilogo mensile delle semine disponibili. -->
+    <section class="calendar-section">
+      <div class="section-kicker" data-i18n="calendar.kicker">
+        L'anno in serra
+      </div>
+      <div
+        class="section-heading calendar-heading"
+        data-i18n="calendar.heading"
+      >
+        Quante piante puoi seminare ogni mese
+      </div>
+      <div class="month-strip-help" id="monthStripHelp">
+        Scorri e scegli un mese
+      </div>
+      <div class="month-strip" id="monthStrip"></div>
+    </section>
+
+    <!-- Catalogo semi: ricerca, filtri e lista piante per acquisto diretto. -->
+    <section class="stagione-section catalog-pro-section" id="stagione">
+      <div class="catalog-pro-shell">
+        <div class="catalog-pro-hero">
+          <div class="catalog-pro-copy">
+            <div
+              class="section-kicker stagione-kicker"
+              data-i18n="catalog.kicker"
+            >
+              Cosa piantare adesso
+            </div>
+            <div class="section-heading stagione-title" id="stagioneTitle">
+              Catalogo semi professionale
+            </div>
+            <p class="catalog-pro-lead">
+              Cerca, filtra e aggiungi al carrello le colture più adatte alla tua serra. Ogni scheda mostra subito distanze, resa e dati tecnici per scegliere come un esperto.
+            </p>
+            <div class="stagione-meta" id="stagioneMeta"></div>
+          </div>
+          <div class="catalog-pro-card" aria-label="Vantaggi catalogo">
+            <span class="catalog-pro-card-icon" aria-hidden="true">🧺</span>
+            <b>Acquisto rapido</b>
+            <small>Apri la scheda per i dettagli o usa + per inserire subito i semi nel carrello.</small>
+          </div>
+        </div>
+
+        <div class="catalog-tools catalog-tools--pro catalog-tools--advanced" aria-label="Filtri catalogo semi">
+          <div class="catalog-fields catalog-fields--advanced">
+            <label class="catalog-search catalog-search--pro">
+              <span class="catalog-tool-label" data-i18n="catalog.search_label"
+                >Cerca seme</span
+              >
+              <span class="catalog-search-box">
+                <span class="catalog-search-icon" aria-hidden="true">⌕</span>
+                <input
+                  id="catalogSearch"
+                  type="search"
+                  autocomplete="off"
+                  data-i18n-placeholder="catalog.search_placeholder"
+                  placeholder="Pomodoro, basilico, lattuga..."
+                  oninput="setCatalogSearch(this.value)"
+                />
+              </span>
+            </label>
+            <label class="catalog-select catalog-sort-select">
+              <span class="catalog-tool-label" data-i18n="catalog.sort_label"
+                >Ordina per</span
+              >
+              <select id="catalogSort" onchange="setCatalogSort(this.value)">
+                <option value="season" data-i18n="catalog.sort_season">Consigliati</option>
+                <option value="name" data-i18n="catalog.sort_name">Nome A-Z</option>
+                <option value="fast" data-i18n="catalog.sort_fast">Raccolta più veloce</option>
+                <option value="yield" data-i18n="catalog.sort_yield">Resa più alta</option>
+                <option value="distance" data-i18n="catalog.sort_distance">Più compatti</option>
+                <option value="price" data-i18n="catalog.sort_price">Prezzo più basso</option>
+              </select>
+            </label>
+            <label class="catalog-select catalog-type-select">
+              <span class="catalog-tool-label" data-i18n="catalog.type_label"
+                >Tipo</span
+              >
+              <select id="catalogType" onchange="setCatalogType(this.value)">
+                <option value="" data-i18n="catalog.type_all">Tutti</option>
+                <option value="frutto" data-i18n="type.frutto">Frutto</option>
+                <option value="foglia" data-i18n="type.foglia">Foglia</option>
+                <option value="radice" data-i18n="type.radice">Radice</option>
+                <option value="legume" data-i18n="type.legume">Legume</option>
+                <option value="aromatica" data-i18n="type.aromatica">
+                  Aromatica
+                </option>
+              </select>
+            </label>
+          </div>
+          <div class="catalog-category-panel" aria-label="Categorie catalogo">
+            <div class="catalog-category-head">
+              <span data-i18n="catalog.category_label">Categorie</span>
+              <small data-i18n="catalog.category_hint">Scegli una famiglia di colture</small>
+            </div>
+            <div class="catalog-category-rail" id="catalogCategoryRail"></div>
+          </div>
+          <div class="catalog-scope catalog-scope--advanced" aria-label="Ambito catalogo">
+            <button
+              class="catalog-chip active"
+              id="catalogSeasonOnly"
+              type="button"
+              onclick="toggleCatalogSeasonOnly()"
+              aria-pressed="true"
+            >
+              <span class="chip-ico" aria-hidden="true">📅</span>
+              <span class="chip-lbl" data-i18n="catalog.season_only">Solo adatti adesso</span>
+              <span class="chip-count" aria-hidden="true">—</span>
+            </button>
+            <button
+              class="catalog-chip"
+              id="catalogAllToggle"
+              type="button"
+              onclick="toggleCatalogFull()"
+              aria-pressed="false"
+            >
+              <span class="chip-ico" aria-hidden="true">⌕</span>
+              <span class="chip-lbl" data-i18n="catalog.filter_all_plants">Tutto il catalogo</span>
+              <span class="chip-count" aria-hidden="true">—</span>
+            </button>
+            <button
+              class="catalog-chip"
+              id="catalogEasyOnly"
+              type="button"
+              onclick="toggleCatalogEasyOnly()"
+              aria-pressed="false"
+            >
+              <span class="chip-ico" aria-hidden="true">⭐</span>
+              <span class="chip-lbl" data-i18n="catalog.easy_only">Facili per iniziare</span>
+              <span class="chip-count" aria-hidden="true">—</span>
+            </button>
+            <button
+              class="catalog-reset-btn"
+              id="catalogReset"
+              type="button"
+              onclick="showFullCatalog()"
+              data-i18n="catalog.reset"
+              hidden
+            >
+              ✕ Azzera
+            </button>
+          </div>
+        </div>
+
+        <div class="catalog-insights" id="catalogInsights" aria-live="polite"></div>
+        <div class="catalog-status" id="catalogStatus" hidden></div>
+        <div class="catalog-hint catalog-hint--pro" id="catalogHint">
+          <span class="catalog-hint-icon">💡</span>
+          <span data-i18n="catalog.hint_before">Tocca per i dettagli · </span>
+          <b class="catalog-hint-plus">+</b>
+          <span data-i18n="catalog.hint_after"> per aggiungere al carrello</span>
+        </div>
+        <div id="editorialPlants"></div>
+        <div class="plant-compact-list compact-plants" id="compactPlants"></div>
+      </div>
+    </section>
+
+    <!-- Abbinamenti: compatibilità utili tra colture. -->
+    <section class="abbinamenti-section" id="abbinamenti">
+      <div class="abbinamenti-inner">
+        <div class="section-kicker" data-i18n="companions.kicker">
+          Botanica relazionale
+        </div>
+        <div
+          class="section-heading companions-heading"
+          data-i18n="companions.heading"
+        >
+          Si amano in serra
+        </div>
+        <div class="companions-copy" data-i18n="companions.copy">
+          Piante che crescono meglio vicine: benefici reciproci, parassiti
+          allontanati, resa più alta.
+        </div>
+        <div class="abbinamenti-grid" id="abbinamenti-grid"></div>
+      </div>
+    </section>
+
+    <!-- Kit del mese: gruppo di semi già compatibili. -->
+    <section class="kit-section" id="kit">
+      <div class="section-kicker" data-i18n="kit.kicker">
+        Già compatibili tra loro
+      </div>
+      <div class="section-heading" id="kitHeading">Kit del mese</div>
+      <div class="kit-card">
+        <div class="kit-info">
+          <div class="kit-name" id="kitTitle">Kit Estivo in Serra</div>
+          <div class="kit-desc" id="kitDesc">
+            Sei varietà già compatibili tra loro, perfette per iniziare questo
+            mese.
+          </div>
+          <button
+            class="kit-cta-btn"
+            onclick="addKitToCart()"
+            data-i18n="kit.add_all"
+          >
+            + Aggiungi tutto al carrello
+          </button>
+          <div class="kit-compat-note">
+            <div class="kit-compat-dot"></div>
+            <span id="kitCompatText"
+              >Verificato: nessuna incompatibilità nel kit</span
+            >
+          </div>
+        </div>
+        <div class="kit-photos-grid" id="kitPhotos"></div>
+      </div>
+    </section>
+
+    <!-- Configuratore CTA: rimando alla progettazione della serra. -->
+    <section class="conf-section">
+      <div class="conf-card">
+        <div class="conf-icon-col" aria-hidden="true">📐</div>
+        <div class="conf-text">
+          <div class="conf-eyebrow" data-i18n="conf.kicker">
+            Configuratore Serra
+          </div>
+          <div class="conf-title" data-i18n="conf.title">
+            Pianifica la tua serra dall'alto
+          </div>
+          <div class="conf-features">
+            <span class="conf-feature-chip">📐&nbsp;Misure reali</span>
+            <span class="conf-feature-chip">🌱&nbsp;Spaziatura</span>
+            <span class="conf-feature-chip">✓&nbsp;Compatibilità</span>
+            <span class="conf-feature-chip">🖨&nbsp;Stampa</span>
+          </div>
+        </div>
+        <div class="conf-actions">
+          <a
+            href="configuratore.html?preset=principiante&guided=1"
+            class="conf-btn primary"
+            ><span data-i18n="conf.open">Apri il configuratore</span>
+            →</a
+          >
+          <a
+            href="configuratore.html?import=cart"
+            class="conf-btn secondary conf-import-btn"
+            id="confImportBtn"
+            data-i18n="conf.import"
+            >Importa carrello</a
+          >
+          <div class="conf-cart-hint" id="confCartHint" hidden>
+            🛒&nbsp;<span id="confCartHintText"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contatti: recapiti, mappa statica e form messaggio. -->
+    <section class="contatti-section" id="contatti">
+      <div class="contatti-inner">
+        <div class="section-kicker" data-i18n="contatti.kicker">Parlaci</div>
+        <div class="section-heading" data-i18n="contatti.heading">
+          Contattaci
+        </div>
+        <div class="contatti-grid">
+          <div>
+            <div class="contatti-info-list">
+              <div class="contatti-item">
+                <div class="contatti-icon">📍</div>
+                <div>
+                  <div
+                    class="contatti-label"
+                    data-i18n="contatti.lbl.indirizzo"
+                  >
+                    Indirizzo
+                  </div>
+                  <div class="contatti-value">
+                    Via delle Serre, 42<br />50023 Impruneta (FI)
+                    —&nbsp;Toscana, Italia
+                  </div>
+                </div>
+              </div>
+              <div class="contatti-item">
+                <div class="contatti-icon">📞</div>
+                <div>
+                  <div class="contatti-label" data-i18n="contatti.lbl.telefono">
+                    Telefono
+                  </div>
+                  <div class="contatti-value">
+                    <a href="tel:+390559870123">+39 055 987 0123</a>
+                  </div>
+                </div>
+              </div>
+              <div class="contatti-item">
+                <div class="contatti-icon">✉️</div>
+                <div>
+                  <div class="contatti-label" data-i18n="contatti.lbl.email">
+                    Email
+                  </div>
+                  <div class="contatti-value">
+                    <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+                  </div>
+                </div>
+              </div>
+              <div class="contatti-item">
+                <div class="contatti-icon">🕐</div>
+                <div>
+                  <div class="contatti-label" data-i18n="contatti.lbl.orari">
+                    Orari
+                  </div>
+                  <div class="contatti-value" data-i18n="contatti.val.orari">
+                    Lun –&nbsp;Ven: 9:00 –&nbsp;18:00<br />Sabato: 9:00
+                    –&nbsp;13:00
+                  </div>
+                </div>
+              </div>
+              <div class="contatti-item">
+                <div class="contatti-icon">📱</div>
+                <div>
+                  <div class="contatti-label">Social</div>
+                  <div class="contatti-value">
+                    <a href="#">@ortoinserra</a> · Instagram · Facebook
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="contatti-map-placeholder">
+              <div class="map-placeholder-inner">
+                <span class="map-pin">📍</span>
+                <div>
+                  <div class="map-address">Via delle Serre 42</div>
+                  <div class="map-city">50023 Impruneta (FI) — Toscana</div>
+                  <span class="contatti-map-note" data-i18n="contatti.map_note"
+                    >Mappa interattiva prossimamente</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <form class="contatti-form" onsubmit="submitContactForm(event)">
+              <div class="contatti-form-group">
+                <label data-i18n="contatti.form.nome">Nome</label>
+                <input
+                  type="text"
+                  placeholder="Mario Rossi"
+                  data-i18n-placeholder="contatti.placeholder.nome"
+                  required
+                />
+              </div>
+              <div class="contatti-form-group">
+                <label data-i18n="contatti.form.email">Email</label>
+                <input
+                  type="email"
+                  placeholder="mario@example.com"
+                  data-i18n-placeholder="contatti.placeholder.email"
+                  required
+                />
+              </div>
+              <div class="contatti-form-group">
+                <label data-i18n="contatti.form.oggetto">Oggetto</label>
+                <input
+                  type="text"
+                  placeholder="Ho una domanda sulla serra..."
+                  data-i18n-placeholder="contatti.placeholder.oggetto"
+                />
+              </div>
+              <div class="contatti-form-group">
+                <label data-i18n="contatti.form.messaggio">Messaggio</label>
+                <textarea
+                  rows="5"
+                  placeholder="Scrivi qui il tuo messaggio..."
+                  data-i18n-placeholder="contatti.placeholder.messaggio"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="contatti-form-btn"
+                data-i18n="contatti.form.invia"
+              >
+                Invia messaggio
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer: brand, link utili, supporto e note legali. -->
+    <footer class="footer-botanico">
+      <div class="footer-plant-strip">
+        <div class="footer-plant-row" id="footerPlantRow"></div>
+      </div>
+      <div class="footer-main">
+        <div class="footer-brand-col">
+          <div class="footer-logo-row">
+            <img
+              class="footer-logo"
+              src="assets/img/svg/logo.svg"
+              alt="Orto in Serra"
+            />
+            <span class="footer-brand-name">Orto in Serra</span>
+          </div>
+          <div class="footer-motto">
+            "Pianta con cura,<br />raccogli con gioia."
+          </div>
+          <div class="footer-social">
+            <a href="#" title="Instagram" aria-label="Instagram">&#x1F4F7;</a>
+            <a href="#" title="Facebook" aria-label="Facebook">f</a>
+            <a href="#" title="YouTube" aria-label="YouTube">&#9654;</a>
+            <a href="#" title="Pinterest" aria-label="Pinterest">P</a>
+          </div>
+          <div class="footer-company-info">
+            Orto in Serra S.r.l. · P.IVA 07123456789<br />
+            Via delle Serre 42, 50023 Impruneta (FI)
+          </div>
+        </div>
+        <div class="footer-tip-col">
+          <div class="footer-tip-kicker" data-i18n="footer.consiglio_kicker">
+            Consiglio del mese
+          </div>
+          <div class="footer-tip-text" id="footerTip">Caricamento...</div>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-nav-title" data-i18n="footer.esplora">Esplora</div>
+          <ul class="footer-nav-list">
+            <li>
+              <a href="configuratore.html"
+                >📐
+                <span data-i18n="nav.configuratore"
+                  >Configuratore Serra</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#abbinamenti"
+                >🌿&nbsp;<span data-i18n="nav.abbinamenti">Abbinamenti</span></a
+              >
+            </li>
+            <li>
+              <a href="#kit"
+                >📦&nbsp;<span data-i18n="footer.kit">Kit del mese</span></a
+              >
+            </li>
+            <li>
+              <a href="#contatti"
+                >✉️&nbsp;<span data-i18n="nav.contatti">Contatti</span></a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-legal-title" data-i18n="footer.legale">Legale</div>
+          <ul class="footer-legal-list">
+            <li>
+              <a href="#" onclick="return false;" data-i18n="footer.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n="footer.cookie"
+                >Cookie Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n="footer.termini"
+                >Termini di Servizio</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="return false;"
+                data-i18n="footer.accessibilita"
+                >Accessibilità</a
+              >
+            </li>
+          </ul>
+          <div class="footer-support-block">
+            <div class="footer-nav-title" data-i18n="footer.supporto_title">
+              Supporto
+            </div>
+            <ul class="footer-legal-list">
+              <li>
+                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+              </li>
+              <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-gdpr-links">
+          <a href="#" onclick="return false;" data-i18n="footer.privacy"
+            >Privacy Policy</a
+          >
+          <a href="#" onclick="return false;" data-i18n="footer.cookie"
+            >Cookie Policy</a
+          >
+          <a href="#" onclick="return false;" data-i18n="footer.termini"
+            >Termini di Servizio</a
+          >
+        </div>
+        <div class="footer-gdpr-copy" id="footerCopy">
+          © 2025 Orto in Serra S.r.l. ·
+          <span data-i18n="footer.rights">Tutti i diritti riservati</span>
+        </div>
+        <div class="footer-season-tag" id="footerSeasonTag">
+          🌱 stagione attiva
+        </div>
+      </div>
+    </footer>
+
+    <!-- Dettaglio pianta: pannello dinamico aperto dal catalogo. -->
+    <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+      <div class="detail-panel" id="detailPanel">
+        <button
+          class="detail-close"
+          type="button"
+          onclick="closeDetail()"
+          aria-label="Chiudi scheda pianta"
+        >
+          ✕
+        </button>
+        <div class="detail-photo-wrap">
+          <img id="detailPhoto" src="" alt="" />
+          <div class="detail-photo-gradient"></div>
+          <div class="detail-hero-meta">
+            <span class="detail-hero-type" id="detailTypeBadge"></span>
+            <span class="detail-hero-diff" id="detailDiff"></span>
+          </div>
+          <div class="detail-photo-name" id="detailName"></div>
+        </div>
+        <div class="detail-body">
+          <div class="detail-badges" id="detailBadges"></div>
+          <div class="detail-nota" id="detailNota" hidden></div>
+          <div class="detail-spacing" id="detailSpacing"></div>
+          <div class="detail-stats" id="detailStats"></div>
+          <div class="month-bar" id="detailMonthBar"></div>
+          <div class="detail-companions" id="detailCompanions"></div>
+          <details class="detail-sow" id="detailSow">
+            <summary class="detail-sow-header">
+              <span data-i18n="detail.how_to_sow">Come si semina</span>
+              <span class="detail-sow-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="detail-sow-body" id="detailSowBody"></div>
+          </details>
+          <button
+            class="detail-add-btn"
+            id="detailAddBtn"
+            onclick="detailAddToCart()"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrello: drawer con semi selezionati e checkout simulato. -->
+    <div class="cart-overlay" id="cartOverlay">
+      <div class="cart-backdrop" onclick="closeCart()"></div>
+      <div class="cart-drawer">
+        <div class="cart-header">
+          <div class="cart-title" data-i18n="cart.title">Il tuo carrello</div>
+          <div class="cart-header-actions">
+            <button
+              class="cart-clear-btn"
+              id="cartClearBtn"
+              onclick="clearCart()"
+              data-i18n="cart.clear"
+              hidden
+            >
+              Svuota
+            </button>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+          </div>
+        </div>
+        <div class="cart-empty" id="cartEmpty">
+          <div class="cart-empty-icon">🌱</div>
+          <div data-i18n="cart.empty">
+            Nessun seme ancora.<br />Aggiungi le piante di stagione!
+          </div>
+        </div>
+        <div class="cart-items" id="cartItems" hidden></div>
+        <div class="cart-footer" id="cartFooter" hidden>
+          <div class="cart-footer-note" data-i18n="cart.request_note">
+            Pagamento non ancora online: invia la lista e ti confermiamo
+            disponibilità e prezzo finale.
+          </div>
+          <a
+            href="configuratore.html?import=cart"
+            class="cart-conf-link"
+            onclick="closeCart()"
+            >📐
+            <span data-i18n="cart.plan"
+              >Pianifica la disposizione in serra</span
+            >
+            →</a
+          >
+          <button
+            class="cart-checkout-btn"
+            onclick="alertCheckout()"
+            data-i18n="cart.checkout"
+          >
+            Procedi all'acquisto
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Torna su: pulsante flottante di risalita pagina. -->
+    <button
+      class="back-to-top"
+      id="backToTop"
+      aria-label="Torna all'inizio della pagina"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑
+    </button>
+
+    <!-- Notifica carrello: conferma rapida dopo aggiunta semi. -->
+    <div class="cart-nudge" id="cartNudge" aria-live="polite">
+      <div class="cart-nudge-copy">
+        <b id="cartNudgeTitle">Aggiunto al carrello</b>
+        <span id="cartNudgeMeta">1 seme selezionato</span>
+      </div>
+      <button type="button" onclick="openCart()" data-i18n="cart.view">
+        Vedi carrello
+      </button>
+    </div>
+
+    <!-- Cookie banner: consenso essenziale o completo. -->
+    <div
+      class="cookie-banner"
+      id="cookieBanner"
+      role="dialog"
+      aria-label="Cookie consent"
+    >
+      <div class="cookie-banner-text">
+        <span class="cookie-desktop-copy" data-i18n="cookie.text"
+          >Utilizziamo i cookie per migliorare la tua esperienza e analizzare il
+          traffico del sito. Consulta la nostra</span
+        >
+        <a
+          class="cookie-desktop-copy"
+          href="#"
+          onclick="return false;"
+          data-i18n="cookie.policy"
+        >
+          Cookie Policy</a
+        >
+        <span class="cookie-desktop-copy" data-i18n="cookie.text2">
+          per saperne di più.</span
+        >
+        <a class="cookie-mobile-copy" href="#" onclick="return false;"
+          >Cookie e privacy</a
+        >
+      </div>
+      <div class="cookie-banner-btns">
+        <button
+          class="cookie-reject-btn"
+          onclick="rejectCookies()"
+          data-i18n="cookie.reject"
+        >
+          Solo essenziali
+        </button>
+        <button
+          class="cookie-accept-btn"
+          onclick="acceptCookies()"
+          data-i18n="cookie.accept"
+        >
+          Accetta
+        </button>
+      </div>
+    </div>
+
+    <!-- Service worker: cache attiva in produzione, reset automatico in locale. -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        const isLocalDev =
+          location.hostname === "localhost" ||
+          location.hostname === "127.0.0.1" ||
+          location.hostname === "0.0.0.0" ||
+          location.hostname === "::1" ||
+          location.hostname === "";
+
+        if (isLocalDev) {
+          const hadController = Boolean(navigator.serviceWorker.controller);
+          navigator.serviceWorker
+            .getRegistrations()
+            .then((registrations) =>
+              Promise.all(
+                registrations.map((registration) => registration.unregister())
+              )
+            )
+            .then(() => ("caches" in window ? caches.keys() : []))
+            .then((keys) =>
+              Promise.all(
+                keys
+                  .filter((key) => key.startsWith("serra-"))
+                  .map((key) => caches.delete(key))
+              )
+            )
+            .then(() => {
+              const reloadKey = "serra.dev-cache-reset";
+              if (hadController && !sessionStorage.getItem(reloadKey)) {
+                sessionStorage.setItem(reloadKey, "1");
+                location.reload();
+              } else if (!hadController) {
+                sessionStorage.removeItem(reloadKey);
+              }
+            })
+            .catch(() => {});
+        } else {
+          navigator.serviceWorker.register("./sw.js", {
+            updateViaCache: "none"
+          });
+        }
+      }
+    </script>
+    <!-- Script pagina: menu, traduzioni e logica ecommerce. -->
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/index.js"></script>
+  </body>
+</html>

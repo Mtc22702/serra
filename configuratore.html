@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Orto in Serra · Progetta la tua serra dall'alto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/icons/logo-180.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Header: navigazione principale, lingua e carrello. -->
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
+          <span class="nav-brand-mark"
+            ><img src="assets/img/svg/logo.svg" alt=""
+          /></span>
+          <span class="nav-brand-copy">
+            <strong class="nav-brand-text">Orto in Serra</strong>
+            <small>Coltiva con un piano</small>
+          </span>
+        </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+          <a href="index.html" class="nav-link" data-i18n-conf="nav.home"
+            >Home</a
+          >
+          <a
+            href="index.html#stagione"
+            class="nav-link"
+            data-i18n-conf="nav.stagione"
+            >Catalogo semi</a
+          >
+          <a
+            href="index.html#abbinamenti"
+            class="nav-link"
+            data-i18n-conf="nav.abbinamenti"
+            >Abbinamenti</a
+          >
+          <a href="index.html#kit" class="nav-link" data-i18n-conf="footer.kit"
+            >Kit del mese</a
+          >
+          <a
+            href="configuratore.html"
+            class="nav-link nav-link--current"
+            aria-current="page"
+            data-i18n-conf="nav.configuratore"
+            >📐 Configuratore</a
+          >
+          <a
+            href="index.html#contatti"
+            class="nav-link"
+            data-i18n-conf="nav.contatti"
+            >Contatti</a
+          >
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="nav-menu-toggle"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Apri menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+          <div class="nav-lang">
+            <span class="nav-action-icon" aria-hidden="true">🌐</span>
+            <select
+              id="navLang"
+              onchange="confSetLang(this.value)"
+              title="Lingua / Limbă"
+            >
+              <option value="it">🇮🇹 IT</option>
+              <option value="ro">🇷🇴 RO</option>
+            </select>
+          </div>
+          <button
+            class="cart-btn"
+            onclick="openConfCart()"
+            aria-label="Apri carrello"
+          >
+            <span class="cart-icon" aria-hidden="true">🛒</span>
+            <span class="cart-label" data-i18n-conf="nav.carrello"
+              >Carrello</span
+            >
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="app">
+      <!-- Bridge JS: controlli nascosti richiesti dalla logica esistente. -->
+      <div hidden aria-hidden="true">
+        <span id="mainLangLabel">Lingua</span>
+        <select id="inLang">
+          <option value="it" selected>Italiano</option>
+          <option value="ro">Română</option>
+        </select>
+      </div>
+
+      <!-- Intro guidata: spiega modalità, stato corrente e prossimi passi. -->
+      <div class="guided-intro" id="guidedIntro">
+        <!-- Intro sinistra: brand e riepilogo misure/clima. -->
+        <div class="guided-intro-head">
+          <div class="guided-brand-row">
+            <span class="guided-brand-mark" aria-hidden="true">
+              <img src="assets/img/photo/seed.png" alt="" />
+            </span>
+            <div class="guided-brand-copy">
+              <h1 id="guidedAppTitle">Configuratore Serra</h1>
+              <p id="guidedAppSub">
+                Progetta il tuo orto pianta per pianta · vista dall'alto
+              </p>
+            </div>
+          </div>
+          <div class="guided-meta-row">
+            <div class="guided-tags" aria-label="Dati attuali della serra">
+              <span class="tag" id="tagZona">🌡️&nbsp;temperata</span>
+              <span class="tag" id="tagMese">📅&nbsp;—</span>
+              <span class="tag" id="tagArea">📐&nbsp;3×5 m</span>
+            </div>
+            <div class="guided-summary" id="guidedSummary"></div>
+          </div>
+        </div>
+
+        <!-- Intro destra: passi rapidi e scelta modalità. -->
+        <div class="guided-intro-right">
+          <!-- Passi: flusso minimo per progettare la serra. -->
+          <div class="guided-intro-main">
+            <b class="guided-steps-label" id="guidedIntroTitle"
+              >Come funziona</b
+            >
+            <ol class="guided-steps" id="guidedIntroSteps">
+              <li>
+                <span class="guided-step-num" aria-hidden="true">1</span>
+                <span
+                  >Imposta <strong>misure e clima</strong> della tua serra</span
+                >
+              </li>
+              <li>
+                <span class="guided-step-num" aria-hidden="true">2</span>
+                <span
+                  >Premi <strong>Riempi la serra</strong> o aggiungi le piante
+                  una a una</span
+                >
+              </li>
+              <li>
+                <span class="guided-step-num" aria-hidden="true">3</span>
+                <span
+                  >Clicca un'aiuola per vedere la
+                  <strong>scheda della pianta</strong></span
+                >
+              </li>
+            </ol>
+          </div>
+
+          <!-- Modalità: piano automatico o scelta manuale colture. -->
+          <div
+            class="guided-intro-actions"
+            role="tablist"
+            aria-label="Modalità configuratore"
+          >
+            <button
+              class="mode-tab is-active"
+              type="button"
+              data-mode="fit"
+              role="tab"
+              aria-selected="true"
+            >
+              <span class="mode-tab-ico" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 19V8" />
+                  <path d="M9 19V5" />
+                  <path d="M14 19v-7" />
+                  <path d="M19 19V9" />
+                  <path d="M3 19h18" />
+                  <path d="M5 8h8" />
+                </svg>
+              </span>
+              <span class="mode-tab-body">
+                <b id="modeFitTitle">Piano automatico</b>
+                <small id="modeFitHint"
+                  >Imposta misure e clima —&nbsp;la serra si riempie da
+                  sola</small
+                >
+              </span>
+              <span class="mode-tab-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M6 3l5 5-5 5" />
+                </svg>
+              </span>
+            </button>
+            <button
+              class="mode-tab"
+              type="button"
+              data-mode="expert"
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="mode-tab-ico" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v3" />
+                  <path d="M12 18v3" />
+                  <path d="M3 12h3" />
+                  <path d="M18 12h3" />
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M18.4 5.6l-2.1 2.1" />
+                  <path d="M7.7 16.3l-2.1 2.1" />
+                  <path d="M5.6 5.6l2.1 2.1" />
+                  <path d="M16.3 16.3l2.1 2.1" />
+                </svg>
+              </span>
+              <span class="mode-tab-body">
+                <b id="modeExpertTitle">Scegli le colture</b>
+                <small id="modeExpertHint"
+                  >Aggiungi o rimuovi le piante una a una</small
+                >
+              </span>
+              <span class="mode-tab-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M6 3l5 5-5 5" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonna sinistra: controlli per misure, clima e preset. -->
+      <div class="col-left">
+        <div class="mode-section is-active" data-mode-section="fit">
+          <div class="panel panel--settings" id="panelSettings">
+            <div class="pad">
+              <div class="panel-head panel-head--static">
+                <span class="settings-head-icon" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    width="16"
+                    height="16"
+                  >
+                    <path d="M2 9L10 2l8 7v9H2V9z" />
+                    <path d="M7 18v-6h6v6" />
+                  </svg>
+                </span>
+                <div class="panel-head-title-group">
+                  <h2>La tua serra</h2>
+                  <span class="panel-head-tag">Impostazioni</span>
+                </div>
+                <button
+                  class="panel-toggle panel-toggle--settings"
+                  type="button"
+                  aria-expanded="true"
+                  aria-label="Chiudi la tendina"
+                >
+                  <span class="panel-toggle-label">Chiudi</span>
+                  <span class="panel-toggle-icon" aria-hidden="true">⌃</span>
+                </button>
+              </div>
+              <div class="panel-body">
+                <div class="section-label">1. Misure interne</div>
+                <div class="row field">
+                  <div>
+                    <label class="fld">Larghezza</label>
+                    <div class="stepper">
+                      <button
+                        class="step-btn"
+                        type="button"
+                        data-step="-0.5"
+                        data-target="inW"
+                        aria-label="Riduci larghezza"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="inW"
+                        min="1"
+                        max="12"
+                        step="0.5"
+                        value="3"
+                        inputmode="decimal"
+                      />
+                      <button
+                        class="step-btn"
+                        type="button"
+                        data-step="0.5"
+                        data-target="inW"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <input
+                      type="range"
+                      id="inWSlider"
+                      min="1"
+                      max="12"
+                      step="0.5"
+                      value="3"
+                      class="dim-slider"
+                      aria-label="Larghezza slider"
+                    />
+                  </div>
+                  <div>
+                    <label class="fld">Lunghezza</label>
+                    <div class="stepper">
+                      <button
+                        class="step-btn"
+                        type="button"
+                        data-step="-0.5"
+                        data-target="inL"
+                        aria-label="Riduci lunghezza"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="inL"
+                        min="1"
+                        max="30"
+                        step="0.5"
+                        value="5"
+                        inputmode="decimal"
+                      />
+                      <button
+                        class="step-btn"
+                        type="button"
+                        data-step="0.5"
+                        data-target="inL"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <input
+                      type="range"
+                      id="inLSlider"
+                      min="1"
+                      max="30"
+                      step="0.5"
+                      value="5"
+                      class="dim-slider"
+                      aria-label="Lunghezza slider"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="fld" id="lblPath"
+                    >Camminamento tra aiuole</label
+                  >
+                  <div
+                    class="row field"
+                    style="gap: 6px; align-items: center; margin-top: 4px"
+                  >
+                    <input
+                      type="range"
+                      id="inPath"
+                      min="30"
+                      max="120"
+                      step="5"
+                      value="60"
+                      style="flex: 1"
+                    />
+                    <div class="stepper stepper-sm">
+                      <button
+                        class="step-btn"
+                        type="button"
+                        data-step="-5"
+                        data-target="inPathNum"
+                        aria-label="Riduci camminamento"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="inPathNum"
+                        min="30"
+                        max="120"
+                        step="5"
+                        value="60"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                      />
+                      <button
+                        class="step-btn"
+                        type="button"
+                        data-step="5"
+                        data-target="inPathNum"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span style="font-size: 12px; color: #5a6a5a">cm</span>
+                  </div>
+                </div>
+                <div class="section-label">2. Clima</div>
+                <div class="row field">
+                  <div>
+                    <label class="fld">Zona</label>
+                    <select id="inZona">
+                      <option value="freddo">Fredda</option>
+                      <option value="temperato" selected>Temperata</option>
+                      <option value="caldo">Calda</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="fld">Serra</label>
+                    <select id="inRisc">
+                      <option value="no">Fredda</option>
+                      <option value="si">Riscaldata</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="section-label auto-plan-control">
+                  3. Piano automatico
+                </div>
+                <div class="crops-month-selector auto-plan-control">
+                  <span class="crops-month-label"
+                    >📅&nbsp;<span id="sowAtLabel">Mese</span></span
+                  >
+                  <select id="inMese" aria-label="Mese di semina"></select>
+                </div>
+                <button
+                  class="btn btn-primary btn-icon crops-fill-main-btn"
+                  id="btnRipristina"
+                  title="Riempi automaticamente la serra con le colture di stagione"
+                >
+                  <svg
+                    class="btn-ico"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 22V12" />
+                    <path d="M12 12C9 12 6 9 6 6c3 0 6 3 6 6z" />
+                    <path d="M12 12c3 0 6-3 6-6-3 0-6 3-6 6z" />
+                  </svg>
+                  <span class="btn-label">Riempi la serra</span>
+                  <span
+                    class="btn-month-tag"
+                    id="btnMonthTag"
+                    aria-hidden="true"
+                    >📅</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="preset-inline preset-inline--standalone" id="presetBar">
+            <label class="fld">Layout già pronti</label>
+            <select id="inPreset">
+              <option value="">Scegli un esempio…</option>
+              <option value="insalate">
+                Insalate facili tutto l'anno
+              </option>
+              <option value="salsa">
+                Tutto per la salsa di pomodoro
+              </option>
+              <option value="principiante">Orto del principiante</option>
+              <option value="aromatiche">Angolo aromatiche</option>
+              <option value="estivo">Orto estivo abbondante</option>
+              <option value="invernale">Serra invernale verde</option>
+              <option value="radici">Radici e bulbi facili</option>
+              <option value="foglie">Taglio continuo di foglie</option>
+              <option value="brassicacee">Cavoli da serra fresca</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Area centrale: vista dall'alto della serra e strumenti vista. -->
+      <div class="stage">
+        <div class="stage-head">
+          <div class="stage-title-row">
+            <div>
+              <h2 class="stage-title">Vista dall'alto</h2>
+              <div class="stage-subtitle">
+                Clicca un'aiuola per modificare quantità e vedere consigli.
+              </div>
+            </div>
+            <div class="view-toolbar">
+              <div class="view-select-wrap">
+                <span class="view-select-label" id="viewModeLabel">Vista</span>
+                <span class="view-select-value" id="viewModeValue"
+                  >Vista naturale</span
+                >
+                <select
+                  class="overlay-select"
+                  id="inOverlay"
+                  aria-labelledby="viewModeLabel"
+                >
+                  <option value="">Vista naturale</option>
+                  <option value="sole">Mappa sole</option>
+                  <option value="acqua">Mappa acqua</option>
+                  <option value="altezza">Altezza piante</option>
+                </select>
+                <span class="view-select-arrow" aria-hidden="true"></span>
+              </div>
+              <button
+                class="btn btn-soft btn-icon view-print-btn"
+                id="btnStampa"
+                title="Stampa il progetto corrente"
+              >
+                <svg
+                  class="btn-ico"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 6 2 18 2 18 9" />
+                  <path
+                    d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+                  />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+                <span class="btn-label">Stampa</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Scheda pianta: dettaglio dell'aiuola selezionata. -->
+        <div class="panel panel--plant-detail" id="panelPlantDetail" hidden>
+          <div class="pad">
+            <div class="pdp-header">
+              <span class="pdp-header-title">Scheda pianta</span>
+              <button
+                class="pdp-back-btn"
+                id="pdpBackBtn"
+                type="button"
+                aria-label="Chiudi scheda pianta"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  width="16"
+                  height="16"
+                >
+                  <path d="M18 6L6 18" />
+                  <path d="M6 6l12 12" />
+                </svg>
+                <span>Chiudi</span>
+              </button>
+            </div>
+            <div id="pdpContent"></div>
+          </div>
+        </div>
+        <div class="scene-wrap"><div class="scene" id="scene"></div></div>
+
+        <!-- Stato vuoto: guida mostrata quando non ci sono colture. -->
+        <div class="stage-empty-banner" id="stageEmptyBanner" hidden>
+          <span class="seb-icon" aria-hidden="true">🌿</span>
+          <div class="seb-copy">
+            <b>La serra è&nbsp;vuota</b>
+            <span
+              >Premi <strong>Riempi la serra</strong> per iniziare subito in
+              automatico, oppure scegli le piante una per una dalla card
+              <strong>Personalizza</strong>.</span
+            >
+          </div>
+        </div>
+
+        <div class="scale-note" id="scaleNote"></div>
+        <div class="overlay-legend" id="legend"></div>
+        <div class="print-summary" id="printSummary"></div>
+      </div>
+
+      <!-- Colonna destra: colture selezionabili, azioni e lista semi. -->
+      <div class="col-right">
+        <div class="mode-section" data-mode-section="expert">
+          <div class="panel panel--customize" id="panelCustomize">
+            <div class="pad">
+              <div class="panel-title-row">
+                <div class="customize-title-group">
+                  <span class="customize-title-badge" aria-hidden="true"
+                    >⚙</span
+                  >
+                  <h2>Colture nella serra</h2>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div
+                  class="veg-filters"
+                  role="group"
+                  aria-label="Filtra piante"
+                >
+                  <button class="veg-filter-tab active" type="button" data-filter="all">
+                    <span class="tab-ico" aria-hidden="true">🌿</span>
+                    <span class="tab-lbl">Seminabili ora</span>
+                    <span class="tab-count">—</span>
+                  </button>
+                  <button class="veg-filter-tab" type="button" data-filter="in">
+                    <span class="tab-ico" aria-hidden="true">✓</span>
+                    <span class="tab-lbl">Già aggiunte</span>
+                    <span class="tab-count">—</span>
+                  </button>
+                  <button class="veg-filter-tab" type="button" data-filter="all-beds">
+                    <span class="tab-ico" aria-hidden="true">⌕</span>
+                    <span class="tab-lbl">Tutti i semi</span>
+                    <span class="tab-count">—</span>
+                  </button>
+                </div>
+                <div class="crops-count" id="seminabiliSub"></div>
+                <button
+                  class="btn btn-soft btn-icon mobile-go-to-scene"
+                  type="button"
+                  onclick="scrollGreenhouseImageIntoView('smooth')"
+                  aria-label="Vai alla vista della serra"
+                >
+                  <svg
+                    class="btn-ico"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <path d="M9 9l6 3-6 3V9z" />
+                  </svg>
+                  <span>Vai alla serra</span>
+                </button>
+                <div class="veg-list" id="vegList"></div>
+                <div
+                  class="crops-customize-footer"
+                  aria-label="Azioni sulle colture inserite"
+                >
+                  <div class="crop-actions-copy">
+                    <b id="cropActionsTitle">Azioni sulle colture inserite</b>
+                    <span id="cropActionsHint"
+                      >Questi comandi modificano il progetto corrente della
+                      serra.</span
+                    >
+                  </div>
+                  <div class="crop-actions-grid">
+                    <button
+                      class="crop-action-btn crop-action-btn--primary"
+                      id="btnFillSelected"
+                      title="Riempi la serra usando solo le piante già inserite"
+                    >
+                      <span class="crop-action-icon" aria-hidden="true">
+                        <svg
+                          class="btn-ico"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M4 5h16" />
+                          <path d="M4 12h16" />
+                          <path d="M4 19h16" />
+                          <path d="M8 5v14" />
+                          <path d="M16 5v14" />
+                        </svg>
+                      </span>
+                      <span class="crop-action-text">
+                        <span class="btn-label">Ottimizza colture scelte</span>
+                        <small class="btn-hint"
+                          >Ricalibra quantità e riempie solo con queste
+                          colture.</small
+                        >
+                      </span>
+                    </button>
+                    <button
+                      class="crop-action-btn crop-action-btn--danger crops-clear-btn"
+                      id="btnClear"
+                      title="Rimuove tutte le piante dalla serra"
+                    >
+                      <span class="crop-action-icon" aria-hidden="true">
+                        <svg
+                          class="btn-ico"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="3 6 5 6 21 6" />
+                          <path
+                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"
+                          />
+                        </svg>
+                      </span>
+                      <span class="crop-action-text">
+                        <span class="btn-label">Svuota serra</span>
+                        <small class="btn-hint"
+                          >Rimuove tutte le colture dal progetto.</small
+                        >
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div id="warnings" class="customize-warnings"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel--cart" id="panelYield">
+          <div class="pad">
+            <div class="panel-title-row">
+              <div class="yield-title-group">
+                <span class="yield-cart-badge" aria-hidden="true">🛒</span>
+                <div class="yield-title-inner">
+                  <h2>Lista semi da acquistare</h2>
+                  <button
+                    class="panel-toggle panel-toggle--yield"
+                    type="button"
+                    aria-expanded="true"
+                  >
+                    <span class="panel-toggle-seeds-icon" aria-hidden="true">🌱</span>
+                    <span class="panel-toggle-label">Chiudi</span>
+                    <span class="panel-toggle-badge" id="yieldToggleBadge" aria-hidden="true"></span>
+                    <span class="panel-toggle-icon" aria-hidden="true">⌃</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="sub" id="yieldSub">
+                Tutto ciò che serve per realizzare questo progetto.
+              </div>
+              <div class="summary" id="summary"></div>
+              <ul class="shop" id="shop"></ul>
+            </div>
+            <!-- Footer azioni: CTA primario e azione secondaria modifica colture. -->
+            <div class="yield-footer">
+              <div class="cart-btn-slot" id="cartBtnSlot"></div>
+              <button
+                class="yield-edit-crops-btn"
+                id="btnEditCropsFromYield"
+                type="button"
+                aria-label="Modifica le colture della serra"
+              >
+                <svg class="yield-edit-crops-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                <span id="yieldEditCropsLabel">Modifica colture</span>
+                <span id="yieldEditCropsHint" hidden></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Torna su: pulsante flottante di risalita pagina. -->
+    <button
+      class="back-to-top"
+      id="backToTop"
+      aria-label="Torna all'inizio della pagina"
+      type="button"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑
+    </button>
+
+    <!-- Carrello: drawer con semi del progetto e checkout simulato. -->
+    <div class="cart-overlay" id="cartOverlay">
+      <div class="cart-backdrop" onclick="closeConfCart()"></div>
+      <div class="cart-drawer">
+        <div class="cart-header">
+          <div
+            class="cart-title"
+            id="confCartTitle"
+            data-i18n-conf="cart.title"
+          >
+            Il tuo carrello
+          </div>
+          <div class="cart-header-actions">
+            <button
+              class="cart-clear-btn"
+              id="cartClearBtn"
+              onclick="clearConfCart()"
+              hidden
+              data-i18n-conf="cart.clear"
+            >
+              Svuota
+            </button>
+            <button class="cart-close" onclick="closeConfCart()">✕</button>
+          </div>
+        </div>
+        <div class="cart-empty" id="cartEmpty">
+          <div class="cart-empty-icon">🌱</div>
+          <div id="confCartEmptyMsg" data-i18n-conf="cart.empty_conf">
+            Nessun seme ancora.<br />Pianifica la serra e aggiungi i semi!
+          </div>
+        </div>
+        <div class="cart-items" id="cartItems" hidden></div>
+        <div class="cart-footer" id="cartFooter" hidden>
+          <div
+            class="cart-footer-note"
+            id="confCartNote"
+            data-i18n-conf="cart.request_note"
+          >
+            Pagamento non ancora online: invia la lista e ti confermiamo
+            disponibilità e prezzo finale.
+          </div>
+          <button
+            class="cart-checkout-btn"
+            onclick="alertConfCheckout()"
+            id="confCheckoutBtn"
+            data-i18n-conf="cart.checkout"
+          >
+            Invia richiesta semi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifica carrello: conferma rapida dopo aggiunta semi. -->
+    <div class="cart-nudge" id="cartNudge" aria-live="polite">
+      <div class="cart-nudge-copy">
+        <b id="cartNudgeTitle"></b>
+        <span id="cartNudgeMeta"></span>
+      </div>
+      <button
+        type="button"
+        onclick="openConfCart()"
+        id="confNudgeViewBtn"
+        data-i18n-conf="cart.view"
+      >
+        Vedi carrello
+      </button>
+    </div>
+
+    <!-- Footer: brand, link utili, supporto e note legali. -->
+    <footer class="footer-botanico">
+      <div class="footer-plant-strip">
+        <div class="footer-plant-row" id="footerPlantRow"></div>
+      </div>
+      <div class="footer-main">
+        <div class="footer-brand-col">
+          <div class="footer-logo-row">
+            <img
+              class="footer-logo"
+              src="assets/img/svg/logo.svg"
+              alt="Orto in Serra"
+            />
+            <span class="footer-brand-name">Orto in Serra</span>
+          </div>
+          <div class="footer-motto">
+            "Pianta con cura,<br />raccogli con gioia."
+          </div>
+          <div class="footer-social">
+            <a href="#" title="Instagram" aria-label="Instagram">&#x1F4F7;</a>
+            <a href="#" title="Facebook" aria-label="Facebook">f</a>
+            <a href="#" title="YouTube" aria-label="YouTube">&#9654;</a>
+            <a href="#" title="Pinterest" aria-label="Pinterest">P</a>
+          </div>
+          <div class="footer-company-info">
+            Orto in Serra S.r.l. · P.IVA 07123456789<br />
+            Via delle Serre 42, 50023 Impruneta (FI)
+          </div>
+        </div>
+        <div class="footer-tip-col">
+          <div
+            class="footer-tip-kicker"
+            data-i18n-conf="footer.consiglio_kicker"
+          >
+            Consiglio del mese
+          </div>
+          <div class="footer-tip-text" id="footerTip">
+            Annaffia alla base, mai sulle foglie: previeni l'oidio.
+          </div>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-nav-title" data-i18n-conf="footer.esplora">
+            Esplora
+          </div>
+          <ul class="footer-nav-list">
+            <li>
+              <a href="configuratore.html"
+                >📐&nbsp;<span data-i18n-conf="nav.configuratore"
+                  >Configuratore Serra</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="index.html#abbinamenti"
+                >🌿&nbsp;<span data-i18n-conf="nav.abbinamenti"
+                  >Abbinamenti</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="index.html#kit"
+                >📦&nbsp;<span data-i18n-conf="footer.kit"
+                  >Kit del mese</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="index.html#contatti"
+                >✉️&nbsp;<span data-i18n-conf="nav.contatti">Contatti</span></a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-legal-title" data-i18n-conf="footer.legale">
+            Legale
+          </div>
+          <ul class="footer-legal-list">
+            <li>
+              <a
+                href="#"
+                onclick="return false;"
+                data-i18n-conf="footer.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n-conf="footer.cookie"
+                >Cookie Policy</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="return false;"
+                data-i18n-conf="footer.termini"
+                >Termini di Servizio</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="return false;"
+                data-i18n-conf="footer.accessibilita"
+                >Accessibilità</a
+              >
+            </li>
+          </ul>
+          <div class="footer-support-block">
+            <div
+              class="footer-nav-title"
+              data-i18n-conf="footer.supporto_title"
+            >
+              Supporto
+            </div>
+            <ul class="footer-legal-list">
+              <li>
+                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+              </li>
+              <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-gdpr-links">
+          <a href="#" onclick="return false;" data-i18n-conf="footer.privacy"
+            >Privacy Policy</a
+          >
+          <a href="#" onclick="return false;" data-i18n-conf="footer.cookie"
+            >Cookie Policy</a
+          >
+          <a href="#" onclick="return false;" data-i18n-conf="footer.termini"
+            >Termini di Servizio</a
+          >
+        </div>
+        <div class="footer-gdpr-copy" id="footerCopy">
+          © 2025 Orto in Serra S.r.l. ·
+          <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span>
+        </div>
+        <div class="footer-season-tag" id="footerSeasonTag">
+          🌱 stagione attiva
+        </div>
+      </div>
+    </footer>
+
+    <!-- Script pagina: menu, traduzioni e logica configuratore. -->
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/script.js"></script>
+    <!-- Torna su: mostra il pulsante dopo lo scroll. -->
+    <script>
+      window.addEventListener(
+        "scroll",
+        function () {
+          var btn = document.getElementById("backToTop");
+          if (btn) btn.classList.toggle("visible", window.scrollY > 420);
+        },
+        { passive: true }
+      );
+    </script>
+    <!-- Service worker: cache attiva in produzione, reset automatico in locale. -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        const isLocalDev =
+          location.hostname === "localhost" ||
+          location.hostname === "127.0.0.1" ||
+          location.hostname === "0.0.0.0" ||
+          location.hostname === "::1" ||
+          location.hostname === "";
+
+        if (isLocalDev) {
+          const hadController = Boolean(navigator.serviceWorker.controller);
+          navigator.serviceWorker
+            .getRegistrations()
+            .then((registrations) =>
+              Promise.all(
+                registrations.map((registration) => registration.unregister())
+              )
+            )
+            .then(() => ("caches" in window ? caches.keys() : []))
+            .then((keys) =>
+              Promise.all(
+                keys
+                  .filter((key) => key.startsWith("serra-"))
+                  .map((key) => caches.delete(key))
+              )
+            )
+            .then(() => {
+              const reloadKey = "serra.dev-cache-reset";
+              if (hadController && !sessionStorage.getItem(reloadKey)) {
+                sessionStorage.setItem(reloadKey, "1");
+                location.reload();
+              } else if (!hadController) {
+                sessionStorage.removeItem(reloadKey);
+              }
+            })
+            .catch(() => {});
+        } else {
+          navigator.serviceWorker.register("./sw.js", {
+            updateViaCache: "none"
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

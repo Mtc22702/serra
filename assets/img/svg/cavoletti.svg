@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="cavoletti">
+  <circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+  <ellipse cx="4" cy="5" rx="36" ry="34" fill="rgba(0,0,0,.15)"/>
+  <path d="M0 35 C4 13 4 -15 0 -39 C-4 -15 -4 13 0 35Z" fill="#4f704a"/>
+  <g fill="#6f9466">
+    <path d="M-5 -18 C-28 -31 -38 -16 -25 0 C-15 -4 -8 -9 -5 -18Z"/>
+    <path d="M5 -18 C28 -31 38 -16 25 0 C15 -4 8 -9 5 -18Z"/>
+    <path d="M-5 0 C-30 -7 -39 10 -23 22 C-13 17 -7 10 -5 0Z"/>
+    <path d="M5 0 C30 -7 39 10 23 22 C13 17 7 10 5 0Z"/>
+    <path d="M-4 16 C-22 16 -27 31 -12 36 C-7 31 -4 24 -4 16Z"/>
+    <path d="M4 16 C22 16 27 31 12 36 C7 31 4 24 4 16Z"/>
+  </g>
+  <g fill="#7fb36a" stroke="rgba(0,0,0,.08)" stroke-width="1">
+    <circle cx="-9" cy="-9" r="5"/>
+    <circle cx="9" cy="-9" r="5"/>
+    <circle cx="-10" cy="4" r="5"/>
+    <circle cx="10" cy="4" r="5"/>
+    <circle cx="-8" cy="17" r="5"/>
+    <circle cx="8" cy="17" r="5"/>
+    <circle cx="0" cy="29" r="5"/>
+  </g>
+</svg>

@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piano — Ecommerce Semi da Serra</title>
+    <style>
+      :root {
+        --green: #2d6a4f;
+        --lime: #74c69d;
+        --earth: #6b4226;
+        --sand: #f4e4c1;
+        --bg: #f8f5ef;
+        --text: #1a1a1a;
+        --muted: #666;
+        --border: #d9cfc0;
+        --accent: #e76f51;
+        --blue: #3a86ff;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        padding: 2rem 1rem 6rem;
+      }
+      .page {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      /* Documento: intestazione con titolo e metadati. */
+      .doc-header {
+        border-left: 6px solid var(--green);
+        padding: 1.5rem 1.5rem 1.5rem 2rem;
+        margin-bottom: 3rem;
+        background: #fff;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+      .doc-header h1 {
+        font-size: 1.8rem;
+        color: var(--green);
+      }
+      .doc-header .subtitle {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-top: 0.3rem;
+        font-style: italic;
+      }
+      .doc-header .meta {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+        font-family: monospace;
+      }
+
+      /* Sezioni documento: spaziatura e gerarchia editoriale. */
+      section {
+        margin-bottom: 3rem;
+      }
+      h2 {
+        font-size: 1.25rem;
+        color: var(--green);
+        border-bottom: 2px solid var(--lime);
+        padding-bottom: 0.4rem;
+        margin-bottom: 1.2rem;
+      }
+      h3 {
+        font-size: 1.05rem;
+        color: var(--earth);
+        margin: 1.4rem 0 0.5rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        padding-left: 1.4rem;
+        margin-bottom: 0.9rem;
+      }
+      li {
+        margin-bottom: 0.4rem;
+      }
+
+      /* Card funzionalità: griglie riassuntive del piano ecommerce. */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.2rem 1.4rem;
+        border: 1px solid var(--border);
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+      }
+      .card .icon {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+      }
+      .card h4 {
+        color: var(--green);
+        margin-bottom: 0.4rem;
+        font-size: 0.95rem;
+      }
+      .card p {
+        font-size: 0.87rem;
+        color: var(--muted);
+        margin: 0;
+      }
+      .card.highlight {
+        border-color: var(--lime);
+        background: #f0faf5;
+      }
+      .card.key {
+        border-color: var(--accent);
+        background: #fff6f3;
+      }
+
+      /* Journey: passaggi dell'esperienza utente. */
+      .journey {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin: 1rem 0;
+      }
+      .step {
+        display: flex;
+        gap: 1rem;
+        position: relative;
+        padding-bottom: 1.2rem;
+      }
+      .step:last-child {
+        padding-bottom: 0;
+      }
+      .step-num {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        background: var(--green);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+        z-index: 1;
+      }
+      .step::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 36px;
+        bottom: 0;
+        width: 2px;
+        background: var(--lime);
+      }
+      .step:last-child::before {
+        display: none;
+      }
+      .step-body {
+        padding-top: 0.3rem;
+      }
+      .step-body strong {
+        color: var(--green);
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      .step-body span {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      /* Tabelle: confronto e integrazione tra sito e commerce. */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        margin: 1rem 0;
+      }
+      th {
+        background: var(--green);
+        color: #fff;
+        padding: 0.6rem 1rem;
+        text-align: left;
+        font-weight: normal;
+      }
+      td {
+        padding: 0.55rem 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      tr:nth-child(even) td {
+        background: #faf8f4;
+      }
+
+      /* Callout: note evidenziate e priorità operative. */
+      .callout {
+        background: #fff6f3;
+        border-left: 4px solid var(--accent);
+        padding: 0.9rem 1.2rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
+        font-size: 0.93rem;
+      }
+      .callout strong {
+        color: var(--accent);
+      }
+
+      .callout.green {
+        background: #f0faf5;
+        border-color: var(--green);
+      }
+      .callout.green strong {
+        color: var(--green);
+      }
+
+      /* Tech stack: pillole tecniche e strumenti consigliati. */
+      .pill {
+        display: inline-block;
+        background: var(--sand);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.2rem 0.8rem;
+        font-size: 0.82rem;
+        margin: 0.2rem 0.1rem;
+        font-family: monospace;
+      }
+
+      /* Indice: navigazione rapida tra capitoli. */
+      .toc {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.2rem 1.6rem;
+        margin-bottom: 2.5rem;
+        font-size: 0.9rem;
+      }
+      .toc h3 {
+        color: var(--green);
+        margin: 0 0 0.8rem;
+        font-size: 1rem;
+      }
+      .toc ol {
+        padding-left: 1.2rem;
+      }
+      .toc li {
+        margin-bottom: 0.3rem;
+      }
+      .toc a {
+        color: var(--green);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 600px) {
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Header documento: titolo, obiettivo e versione del piano. -->
+      <div class="doc-header">
+        <h1>Piano — Ecommerce Semi da Serra</h1>
+        <div class="subtitle">
+          Concept interattivo integrato con l'app "Orto in Serra"
+        </div>
+        <div class="meta">
+          Stato: BOZZA · Non implementato · Data: giugno 2026
+        </div>
+      </div>
+
+      <!-- Indice: collegamenti alle sezioni strategiche. -->
+      <div class="toc">
+        <h3>Indice</h3>
+        <ol>
+          <li><a href="#vision">Visione e differenziazione</a></li>
+          <li><a href="#utenti">Profili utente target</a></li>
+          <li>
+            <a href="#journey">Journey principale: dal mese al carrello</a>
+          </li>
+          <li><a href="#funzionalita">Funzionalità interattive chiave</a></li>
+          <li><a href="#integrazione">Integrazione con l'app Serra</a></li>
+          <li><a href="#pagine">Struttura pagine</a></li>
+          <li><a href="#monetizzazione">Modello di monetizzazione</a></li>
+          <li><a href="#tech">Stack tecnologico</a></li>
+          <li><a href="#priorita">Priorità implementazione</a></li>
+        </ol>
+      </div>
+
+      <!-- Visione: obiettivo ecommerce e modello di vendita. -->
+      <section id="vision">
+        <h2>1. Visione e differenziazione</h2>
+
+        <p>
+          Il sito <strong>non è un catalogo di semi</strong>. È uno strumento
+          che aiuta l'utente a capire <em>cosa piantare</em> e poi gli vende
+          esattamente quello. La differenza rispetto a qualsiasi altro ecommerce
+          orticolo è che l'acquisto è sempre contestualizzato: mese attuale,
+          clima, dimensione della serra, esperienza.
+        </p>
+
+        <div class="callout">
+          <strong>Tagline di riferimento:</strong>
+          "Dimmi quando e dove. Ti dico cosa seminare."
+        </div>
+
+        <p>
+          Il punto di forza competitivo è che l'app Serra — già funzionante —
+          contiene tutto il motore di logica: periodi di semina per zona
+          climatica, compatibilità tra piante, spaziature, resa stimata.
+          L'ecommerce si appoggia su quel motore invece di reinventarlo.
+        </p>
+      </section>
+
+      <!-- Utenti: target, bisogni e livello di esperienza. -->
+      <section id="utenti">
+        <h2>2. Profili utente target</h2>
+
+        <div class="feature-grid">
+          <div class="card">
+            <div class="icon">🌱</div>
+            <h4>Il Principiante</h4>
+            <p>
+              Non sa da dove iniziare. Ha una serra nuova o uno spazio limitato.
+              Ha bisogno di essere guidato passo passo senza essere sommerso da
+              scelte.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">📅</div>
+            <h4>L'Orticoltore Stagionale</h4>
+            <p>
+              Sa già cosa coltivare ma si dimentica ogni anno quando seminare
+              cosa. Vuole un promemoria visivo e un modo rapido per riordinare
+              le stesse cose.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">📐</div>
+            <h4>Il Pianificatore</h4>
+            <p>
+              Già usa l'app Serra. Vuole che la lista della spesa sia generata
+              automaticamente dal suo piano visivo. Compra esattamente quello
+              che ha pianificato.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">🎁</div>
+            <h4>Chi Regala</h4>
+            <p>
+              Vuole fare un regalo originale a chi ama l'orto. Ha bisogno di kit
+              curati, presentati bene, senza dover capire cosa è compatibile con
+              cosa.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Journey: percorso cliente dal bisogno all'acquisto. -->
+      <section id="journey">
+        <h2>3. Journey principale: dal mese al carrello</h2>
+
+        <p>
+          L'homepage non mostra prodotti. Mostra una domanda. Il catalogo è
+          sempre secondario rispetto al contesto dell'utente.
+        </p>
+
+        <div class="journey">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Landing — "Cosa semini adesso?"</strong>
+              <span
+                >Il sito rileva il mese corrente e lo preseleziona. L'utente
+                vede subito "Giugno — ecco le 8 piante da seminare in serra
+                adesso". Nessun click necessario per arrivare qui.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Contestualizzazione rapida (3 domande)</strong>
+              <span
+                >Zona climatica (fredda / temperata / calda) · Serra riscaldata
+                sì/no · Sono un principiante / ho già esperienza. Niente form:
+                solo 3 toggle visivi grandi. Salvati in localStorage.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Raccomandazione personalizzata</strong>
+              <span
+                >Griglia di 6–8 piante raccomandate per il profilo, ordinate per
+                facilità. Ogni pianta mostra: icona SVG (già esistente
+                nell'app), nome, difficoltà, giorni al raccolto, abbinamenti
+                consigliati. Tasto "Aggiungi al carrello" su ogni card.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <strong>Suggerimento compatibilità</strong>
+              <span
+                >Quando aggiungo pomodoro, il sistema mostra "Si abbina
+                benissimo con basilico" e "Tieni lontano da finocchio" — usando
+                i dati `amiche`/`nemiche` già in PLANTS. Upsell educativo, non
+                commerciale.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <strong>Simulatore di resa (facoltativo)</strong>
+              <span
+                >L'utente inserisce i metri quadri disponibili. Il sistema
+                mostra "Con 4m² puoi raccogliere circa 3 kg di pomodori e 1 kg
+                di basilico". Usa le formule di resa già in script.js.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <strong>Checkout + opzione "Pianifica in Serra"</strong>
+              <span
+                >Prima di confermare, il sito propone "Vuoi anche pianificare la
+                disposizione nella tua serra?" → apre l'app Serra con le piante
+                del carrello già precaricate come preset.</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Funzionalità: capacità necessarie per MVP e crescita. -->
+      <section id="funzionalita">
+        <h2>4. Funzionalità interattive chiave</h2>
+
+        <h3>4.1 Calendario di semina interattivo</h3>
+        <p>
+          Una ruota o una timeline orizzontale dei 12 mesi. Ogni mese è colorato
+          in base a quante piante sono seminabili. Click su un mese → vista
+          delle piante disponibili in quel mese per il profilo utente. Permette
+          di pianificare acquisti futuri ("a settembre devo comprare...").
+        </p>
+
+        <h3>4.2 Mappa di compatibilità visiva</h3>
+        <p>
+          Non una tabella piante-amiche, ma un grafo interattivo: ogni pianta è
+          un nodo, le linee verdi indicano abbinamenti positivi, quelle rosse
+          conflitti. Click su un nodo → si vede solo la rete di quella pianta.
+          Dato già pronto in PLANTS (`amiche`, `nemiche`).
+        </p>
+
+        <h3>4.3 Kit stagionale auto-generato</h3>
+        <p>
+          In base a mese + zona + livello esperienza, il sistema propone un "Kit
+          Starter" di 5–6 piante già compatibili tra loro, con una storia
+          visiva: "Questo mese in una serra di 6m² in zona temperata, ecco cosa
+          ti consigliamo". Un click aggiunge tutto.
+        </p>
+
+        <h3>4.4 Serra Box — abbonamento mensile</h3>
+        <p>
+          Una box di semi personalizzata che cambia ogni mese in base alla
+          stagione e al profilo dell'utente. Il cliente riceve sempre semi
+          pronti per essere seminati nel mese in cui arriva la box. La
+          composizione viene calcolata con la stessa logica di
+          <code>seminabili()</code>.
+        </p>
+
+        <h3>4.5 "Importa il tuo progetto Serra"</h3>
+        <p>
+          Se l'utente ha già usato l'app Serra, può importare la configurazione
+          salvata in localStorage. Il sito legge le piante pianificate e genera
+          automaticamente il carrello. Zero sforzo per l'utente abituale.
+        </p>
+
+        <h3>4.6 Scheda prodotto ricca (non solo prezzo)</h3>
+        <div class="feature-grid">
+          <div class="card">
+            <div class="icon">📆</div>
+            <h4>Calendario di semina</h4>
+            <p>
+              Barra visiva dei 12 mesi con mesi attivi evidenziati per zona
+              climatica.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">🌿</div>
+            <h4>Abbinamenti</h4>
+            <p>
+              Lista di amiche e nemiche con link alle rispettive schede
+              prodotto.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">📏</div>
+            <h4>Distanze e resa</h4>
+            <p>Quante piante per m², stima raccolta in 1 stagione.</p>
+          </div>
+          <div class="card">
+            <div class="icon">💧</div>
+            <h4>Profilo di cura</h4>
+            <p>
+              Indicatori visivi di acqua necessaria, esposizione sole, altezza
+              pianta.
+            </p>
+          </div>
+        </div>
+
+        <h3>4.7 Tracker post-acquisto (futura evoluzione)</h3>
+        <p>
+          Dopo l'acquisto, l'utente può aggiungere le piante acquistate al piano
+          Serra e attivare un tracker: "Hai seminato il pomodoro il 15 giugno →
+          raccolta stimata 15 agosto". Notifiche browser via service worker (già
+          presente in sw.js).
+        </p>
+
+        <div class="callout key">
+          <strong>Idea differenziante:</strong>
+          Nessun concorrente collega il momento dell'acquisto alla
+          pianificazione dello spazio fisico. Questo loop "pianifica → compra →
+          pianifica la disposizione → torna a comprare" crea retention organica.
+        </div>
+      </section>
+
+      <!-- Integrazione: collegamenti tra configuratore e vendita semi. -->
+      <section id="integrazione">
+        <h2>5. Integrazione con l'app Serra</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Dato in Serra</th>
+              <th>Utilizzo nell'ecommerce</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>PLANTS</code> — catalogo completo</td>
+              <td>Fonte unica per tutti i prodotti: nomi, icone, proprietà</td>
+            </tr>
+            <tr>
+              <td><code>seminabili()</code></td>
+              <td>Filtra prodotti visibili per mese + zona + riscaldamento</td>
+            </tr>
+            <tr>
+              <td><code>amiche</code> / <code>nemiche</code></td>
+              <td>Mappa compatibilità + suggerimenti upsell nel carrello</td>
+            </tr>
+            <tr>
+              <td><code>resa</code> per coltura</td>
+              <td>Simulatore "quanti kg raccolgo" nella pagina prodotto</td>
+            </tr>
+            <tr>
+              <td><code>d</code> — distanza tra piante</td>
+              <td>Calcolo piante per m² inserito dall'utente</td>
+            </tr>
+            <tr>
+              <td><code>mesi</code> per zona</td>
+              <td>Calendario visivo per ogni prodotto</td>
+            </tr>
+            <tr>
+              <td>SVG in <code>assets/img/svg/</code></td>
+              <td>Icone prodotto già pronte, nessun costo grafico</td>
+            </tr>
+            <tr>
+              <td><code>localStorage</code> — configurazione utente</td>
+              <td>"Importa il tuo progetto" → carrello pre-popolato</td>
+            </tr>
+            <tr>
+              <td><code>PRESETS</code></td>
+              <td>Base per i Kit stagionali pre-confezionati</td>
+            </tr>
+            <tr>
+              <td><code>sw.js</code> — service worker</td>
+              <td>Notifiche "è il momento di seminare" post-acquisto</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout green">
+          <strong>Opzione avanzata:</strong>
+          Creare una libreria condivisa <code>serra-core.js</code> che contiene
+          PLANTS, seminabili() e le logiche di compatibilità. Importata sia
+          dall'app Serra che dall'ecommerce. Una sola fonte di verità, zero
+          duplicazione.
+        </div>
+      </section>
+
+      <!-- Pagine: struttura informativa del sito ecommerce. -->
+      <section id="pagine">
+        <h2>6. Struttura pagine</h2>
+
+        <h3>Homepage — "Cosa semini questo mese?"</h3>
+        <ul>
+          <li>Hero con mese attuale auto-rilevato e toggle zona climatica</li>
+          <li>Griglia prodotti stagionali filtrata in tempo reale</li>
+          <li>Banner "Kit del mese" — composizione stagionale consigliata</li>
+          <li>Link a Calendario annuale e Mappa compatibilità</li>
+        </ul>
+
+        <h3>Pagina prodotto — semi di [pianta]</h3>
+        <ul>
+          <li>Icona SVG grande + nome + testo descrittivo</li>
+          <li>
+            Barra calendario semina (12 mesi, zona climatica selezionabile)
+          </li>
+          <li>Indicatori visivi: sole, acqua, altezza, difficoltà</li>
+          <li>Resa stimata con slider m²</li>
+          <li>Sezione abbinamenti: amiche (link ai loro prodotti) + nemiche</li>
+          <li>CTA: Aggiungi al carrello + "Aggiungi anche le amiche"</li>
+        </ul>
+
+        <h3>Pagina "Guida Principiante" / Wizard</h3>
+        <ul>
+          <li>3 step: mese → zona → livello → risultato con kit consigliato</li>
+          <li>Spiegazione del perché ogni pianta è consigliata</li>
+          <li>Add-to-cart del kit completo in un click</li>
+        </ul>
+
+        <h3>Pagina "Calendario annuale"</h3>
+        <ul>
+          <li>Vista 12 mesi scrollabile (o ruota)</li>
+          <li>Ogni mese mostra le piante seminabili con icone</li>
+          <li>Filtro zona climatica in alto</li>
+          <li>Click su pianta → scheda prodotto</li>
+        </ul>
+
+        <h3>Pagina "Mappa compatibilità"</h3>
+        <ul>
+          <li>Grafo interattivo nodi-archi (SVG o Canvas)</li>
+          <li>Toggle: mostra solo amiche / mostra solo nemiche / entrambe</li>
+          <li>Click su nodo → evidenzia connessioni + link scheda prodotto</li>
+        </ul>
+
+        <h3>Pagina "Serra Box" (abbonamento)</h3>
+        <ul>
+          <li>Presentazione del concetto (box mensile personalizzata)</li>
+          <li>Preview del contenuto del mese corrente</li>
+          <li>Personalizzazione: zona + serra riscaldata + preferenze</li>
+        </ul>
+
+        <h3>Carrello + Checkout</h3>
+        <ul>
+          <li>Lista prodotti con suggerimenti abbinamento inline</li>
+          <li>
+            Banner "Stai dimenticando qualcosa?" — piante amiche non ancora nel
+            carrello
+          </li>
+          <li>Opzione "Pianifica in Serra" prima del checkout</li>
+          <li>Checkout standard (da definire: Shopify, Stripe, custom)</li>
+        </ul>
+      </section>
+
+      <!-- Monetizzazione: ricavi, margini e servizi aggiuntivi. -->
+      <section id="monetizzazione">
+        <h2>7. Modello di monetizzazione</h2>
+
+        <div class="feature-grid">
+          <div class="card highlight">
+            <div class="icon">🛒</div>
+            <h4>Vendita diretta semi</h4>
+            <p>
+              Core del business. Singoli prodotti e bundle. Margine su varietà
+              rare o biologiche certificate.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="icon">📦</div>
+            <h4>Serra Box — abbonamento</h4>
+            <p>
+              Box mensile di semi stagionali. Revenue ricorrente, bassa
+              frizione, alto valore percepito.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">🎁</div>
+            <h4>Kit regalo</h4>
+            <p>
+              Kit tematici (pomodori, aromatiche, orto invernale) in confezione
+              regalo. Alta marginalità.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">🔧</div>
+            <h4>Accessori</h4>
+            <p>
+              Etichette, bustine, terriccio specifico. Upsell naturale nel
+              carrello.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tecnologia: architettura, dati e scelte implementative. -->
+      <section id="tech">
+        <h2>8. Stack tecnologico</h2>
+
+        <p>
+          Coerente con la filosofia dell'app Serra:
+          <strong>zero dipendenze superflue</strong>, HTML/CSS/JS puro dove
+          possibile, build step solo se indispensabile.
+        </p>
+
+        <h3>Frontend</h3>
+        <p>
+          <span class="pill">HTML5</span>
+          <span class="pill">CSS custom properties</span>
+          <span class="pill">Vanilla JS (ES modules)</span>
+          <span class="pill">SVG (riuso icone Serra)</span>
+          <span class="pill">localStorage</span>
+        </p>
+        <p>
+          Opzionale per il grafo compatibilità:
+          <span class="pill">D3.js</span> (force layout) oppure SVG puro per
+          mantenere zero dipendenze.
+        </p>
+
+        <h3>Backend / Ecommerce engine</h3>
+        <p>
+          Da decidere in fase implementativa. Opzioni in ordine di complessità:
+        </p>
+        <ol>
+          <li>
+            <strong>Shopify</strong> — veloce, scalabile, customizzazione del
+            frontend via Liquid + JS. Ideale se si vuole aprire presto senza
+            gestire infrastruttura.
+          </li>
+          <li>
+            <strong>Snipcart</strong> — carrello JS iniettabile in qualsiasi
+            sito statico. Permette di mantenere il frontend completamente
+            custom.
+          </li>
+          <li>
+            <strong>Custom (Node/Express + Stripe)</strong> — controllo totale,
+            più lavoro. Indicato solo se si vogliono funzionalità molto
+            specifiche (es. abbonamento Box con logica personalizzata).
+          </li>
+        </ol>
+
+        <div class="callout">
+          <strong>Raccomandazione:</strong>
+          Iniziare con <strong>Snipcart</strong> su sito statico custom.
+          Permette di costruire tutta l'esperienza interattiva descritta sopra
+          senza compromessi sul design, con un carrello funzionante in poco
+          tempo.
+        </div>
+
+        <h3>Hosting</h3>
+        <p>
+          <span class="pill">Netlify</span> o
+          <span class="pill">GitHub Pages</span>
+          per il frontend statico. CDN incluso, deploy automatico da git.
+        </p>
+      </section>
+
+      <!-- Priorità: roadmap operativa e prossimi passi. -->
+      <section id="priorita">
+        <h2>9. Priorità implementazione</h2>
+
+        <p>
+          Ordine suggerito: partire dalle funzionalità con il maggiore impatto
+          differenziante e il minore sforzo tecnico, sfruttando il codice già
+          esistente in Serra.
+        </p>
+
+        <div class="journey">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Estrazione dati da Serra in modulo condiviso</strong>
+              <span
+                >Creare <code>serra-core.js</code> con PLANTS, seminabili(),
+                amiche/nemiche. Base per tutto il resto.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Homepage stagionale + filtro 3 domande</strong>
+              <span
+                >La funzionalità più differenziante. Converte subito anche il
+                principiante.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Schede prodotto ricche</strong>
+              <span
+                >Calendario semina visivo + abbinamenti. Riusa SVG già
+                esistenti.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <strong>Carrello con Snipcart + suggerimenti abbinamento</strong>
+              <span
+                >Primo acquisto funzionante. Aggiungere il banner "pianta amica"
+                nel carrello.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <strong>Calendario annuale + mappa compatibilità</strong>
+              <span
+                >Feature di esplorazione e fidelizzazione. Ottimo per SEO.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <strong>"Importa progetto Serra" → carrello</strong>
+              <span>Integrazione profonda per utenti già attivi sull'app.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">7</div>
+            <div class="step-body">
+              <strong>Serra Box — abbonamento</strong>
+              <span
+                >Revenue ricorrente. Richiede backend per gestione abbonamenti
+                (Stripe Billing o Shopify subscriptions).</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="callout green">
+          <strong>Nota finale:</strong>
+          Tutto il motore logico è già scritto nell'app Serra. L'ecommerce non è
+          un progetto da zero: è una nuova shell visiva sopra dati e regole già
+          collaudati. Il vantaggio competitivo è già in cassaforte.
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

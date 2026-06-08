@@ -1,0 +1,150 @@
+// Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
+const CACHE_VERSION = "2026-06-08-16";
+const CACHE = `serra-${CACHE_VERSION}`;
+
+const PRECACHE = [
+  "./",
+  "./index.html",
+  "./configuratore.html",
+  "./manifest.json",
+  "./assets/css/index.css",
+  "./assets/css/style.css",
+  "./assets/js/i18n.js",
+  "./assets/js/index.js",
+  "./assets/js/script.js",
+  "./assets/img/icons/logo-180.png",
+  "./assets/img/icons/logo-192.png",
+  "./assets/img/icons/logo-512.png",
+  "./assets/img/svg/aglio.svg",
+  "./assets/img/svg/aneto.svg",
+  "./assets/img/svg/anguria.svg",
+  "./assets/img/svg/barbabietola.svg",
+  "./assets/img/svg/basilico.svg",
+  "./assets/img/svg/bietola.svg",
+  "./assets/img/svg/broccolo.svg",
+  "./assets/img/svg/carota.svg",
+  "./assets/img/svg/cavolfiore.svg",
+  "./assets/img/svg/cavolo.svg",
+  "./assets/img/svg/cavolonero.svg",
+  "./assets/img/svg/cavolorapa.svg",
+  "./assets/img/svg/cetriolo.svg",
+  "./assets/img/svg/cicoria.svg",
+  "./assets/img/svg/cipolla.svg",
+  "./assets/img/svg/coriandolo.svg",
+  "./assets/img/svg/cavoletti.svg",
+  "./assets/img/svg/fagiolino.svg",
+  "./assets/img/svg/fagiolo.svg",
+  "./assets/img/svg/finocchio.svg",
+  "./assets/img/svg/fragola.svg",
+  "./assets/img/svg/indivia.svg",
+  "./assets/img/svg/lattuga.svg",
+  "./assets/img/svg/leaf.svg",
+  "./assets/img/svg/logo.svg",
+  "./assets/img/svg/melanzana.svg",
+  "./assets/img/svg/melone.svg",
+  "./assets/img/svg/origano.svg",
+  "./assets/img/svg/peperoncino.svg",
+  "./assets/img/svg/peperone.svg",
+  "./assets/img/svg/pakchoi.svg",
+  "./assets/img/svg/pisello.svg",
+  "./assets/img/svg/pomodoro.svg",
+  "./assets/img/svg/porro.svg",
+  "./assets/img/svg/prezzemolo.svg",
+  "./assets/img/svg/radicchio.svg",
+  "./assets/img/svg/rapa.svg",
+  "./assets/img/svg/ravanello.svg",
+  "./assets/img/svg/rosmarino.svg",
+  "./assets/img/svg/rucola.svg",
+  "./assets/img/svg/salvia.svg",
+  "./assets/img/svg/scalogno.svg",
+  "./assets/img/svg/sedano.svg",
+  "./assets/img/svg/spinaci.svg",
+  "./assets/img/svg/timo.svg",
+  "./assets/img/svg/valerianella.svg",
+  "./assets/img/svg/verza.svg",
+  "./assets/img/svg/zucca.svg",
+  "./assets/img/svg/zucchina.svg"
+];
+
+// Pre-carica tutto al primo avvio; skipWaiting attiva subito il nuovo SW
+self.addEventListener("install", (e) => {
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
+  self.skipWaiting();
+});
+
+// Cancella tutte le cache delle versioni precedenti
+self.addEventListener("activate", (e) => {
+  e.waitUntil(
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))
+        )
+      )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", (e) => {
+  if (e.request.method !== "GET") return;
+
+  const isLocalDev =
+    self.location.hostname === "localhost" ||
+    self.location.hostname === "127.0.0.1" ||
+    self.location.hostname === "0.0.0.0" ||
+    self.location.hostname === "::1";
+
+  if (isLocalDev) {
+    e.respondWith(fetch(e.request, { cache: "no-store" }));
+    return;
+  }
+
+  // HTML, CSS e JS: network-first per mostrare subito una release aggiornata.
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      fetch(e.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(e.request, copy));
+          return response;
+        })
+        .catch(() =>
+          caches.match(e.request).then((cached) => cached || caches.match("./"))
+        )
+    );
+    return;
+  }
+
+  const destination = e.request.destination;
+  const needsFreshCopy =
+    destination === "style" ||
+    destination === "script" ||
+    destination === "manifest";
+
+  if (needsFreshCopy) {
+    e.respondWith(
+      fetch(e.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(e.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Immagini e font: cache-first, perché cambiano raramente.
+  e.respondWith(
+    caches.match(e.request).then(
+      (cached) =>
+        cached ||
+        fetch(e.request).then((res) => {
+          const clone = res.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, clone));
+          return res;
+        })
+    )
+  );
+});

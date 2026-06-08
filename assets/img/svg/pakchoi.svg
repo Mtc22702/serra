@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="pak choi">
+  <circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+  <ellipse cx="3" cy="5" rx="38" ry="34" fill="rgba(0,0,0,.15)"/>
+  <g>
+    <path d="M-5 8 C-19 -3 -18 -27 -7 -39 C5 -27 5 -4 -5 8Z" fill="#3f823a"/>
+    <path d="M5 8 C19 -3 18 -27 7 -39 C-5 -27 -5 -4 5 8Z" fill="#72b34f"/>
+    <path d="M-13 13 C-31 8 -35 -10 -25 -27 C-12 -18 -8 -2 -13 13Z" fill="#72b34f"/>
+    <path d="M13 13 C31 8 35 -10 25 -27 C12 -18 8 -2 13 13Z" fill="#3f823a"/>
+    <path d="M-19 17 C-34 20 -39 5 -35 -10 C-22 -9 -13 2 -19 17Z" fill="#4d9a42"/>
+    <path d="M19 17 C34 20 39 5 35 -10 C22 -9 13 2 19 17Z" fill="#6fb44e"/>
+  </g>
+  <path d="M-8 24 C-3 12 -3 -10 0 -31 C3 -10 3 12 8 24Z" fill="#eef0d8"/>
+  <ellipse cx="0" cy="25" rx="12" ry="8" fill="#eef0d8"/>
+</svg>

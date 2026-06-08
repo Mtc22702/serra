@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Orto in Serra logo">
+  <path d="M50 6 L92 34 V92 H8 V34 Z" fill="#eef3ee" stroke="#2f6b3a" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M50 6 L92 34 M50 6 L8 34 M50 6 V92" stroke="#2f6b3a" stroke-width="3"/>
+  <circle cx="34" cy="64" r="9" fill="#5b9c4a"/>
+  <circle cx="66" cy="64" r="9" fill="#5b9c4a"/>
+  <circle cx="50" cy="78" r="9" fill="#86c45a"/>
+</svg>

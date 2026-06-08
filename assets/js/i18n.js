@@ -1,0 +1,1443 @@
+/* Traduzioni condivise: testi interfaccia e nomi piante per home/configuratore. */
+(function (global) {
+  const shared = {
+    /* Nomi mese: usati da calendario, hero e selettori. */
+    months: {
+      it: [
+        "Gennaio",
+        "Febbraio",
+        "Marzo",
+        "Aprile",
+        "Maggio",
+        "Giugno",
+        "Luglio",
+        "Agosto",
+        "Settembre",
+        "Ottobre",
+        "Novembre",
+        "Dicembre"
+      ],
+      ro: [
+        "Ianuarie",
+        "Februarie",
+        "Martie",
+        "Aprilie",
+        "Mai",
+        "Iunie",
+        "Iulie",
+        "August",
+        "Septembrie",
+        "Octombrie",
+        "Noiembrie",
+        "Decembrie"
+      ]
+    },
+    monthAbbr: {
+      it: [
+        "Gen",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mag",
+        "Giu",
+        "Lug",
+        "Ago",
+        "Set",
+        "Ott",
+        "Nov",
+        "Dic"
+      ],
+      ro: [
+        "Ian",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mai",
+        "Iun",
+        "Iul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    },
+    /* Piante: localizzazione dei campi botanici mostrati nelle card. */
+    plants: {
+      ro: {
+        pomodoro: {
+          nome: "Roșie",
+          nota: "Are nevoie de susținere și soare plin. Îndepărtează lăstarii laterali."
+        },
+        peperone: {
+          nome: "Ardei gras",
+          nota: "Iubește căldura. Fertilizează când începe fructificarea."
+        },
+        peperoncino: {
+          nome: "Ardei iute",
+          nota: "Rustic și productiv. Suportă bine seceta."
+        },
+        melanzana: {
+          nome: "Vânătă",
+          nota: "Are nevoie de multă căldură și udări regulate."
+        },
+        zucchina: {
+          nome: "Dovlecel",
+          nota: "Crește repede și ocupă mult spațiu. Recoltează des."
+        },
+        zucca: {
+          nome: "Dovleac",
+          nota: "Se întinde mult: lasă-i spațiu sau condu-l pe suport."
+        },
+        cetriolo: {
+          nome: "Castravete",
+          nota: "Condu-l pe plasă: fructele rămân mai curate și mai drepte."
+        },
+        melone: {
+          nome: "Pepene galben",
+          nota: "Vrea mult soare și mai puțină apă spre coacere."
+        },
+        anguria: {
+          nome: "Pepene verde",
+          nota: "Ocupă mult spațiu: o plantă poate umple jumătate dintr-o seră mică."
+        },
+        lattuga: {
+          nome: "Salată verde",
+          nota: "Foarte ușoară și rapidă. Seamănă puține plante odată."
+        },
+        radicchio: {
+          nome: "Radicchio",
+          nota: "Frigul îl face mai roșu și mai dulce."
+        },
+        rucola: {
+          nome: "Rucola",
+          nota: "Gata în câteva săptămâni. Se taie și crește din nou."
+        },
+        spinaci: {
+          nome: "Spanac",
+          nota: "Iubește răcoarea; vara intră repede în floare."
+        },
+        bietola: {
+          nome: "Mangold",
+          nota: "Generos: recoltează frunzele exterioare treptat."
+        },
+        cavolo: {
+          nome: "Varză albă",
+          nota: "Are nevoie de spațiu și sol bogat. Atenție la omizi."
+        },
+        verza: {
+          nome: "Varză creață",
+          nota: "Rezistă la îngheț; e mai gustoasă după primele brume."
+        },
+        broccolo: {
+          nome: "Broccoli",
+          nota: "După căpățâna centrală produce mulți lăstari laterali."
+        },
+        cavolfiore: {
+          nome: "Conopidă",
+          nota: "Îndoaie frunzele peste căpățână ca să rămână albă."
+        },
+        cavolonero: {
+          nome: "Varză kale neagră",
+          nota: "Rustică: se recoltează frunză cu frunză timp de luni întregi."
+        },
+        cavolorapa: {
+          nome: "Gulie",
+          nota: "Se mănâncă tulpina îngroșată: recoltează când e tânără."
+        },
+        carota: {
+          nome: "Morcov",
+          nota: "Seamănă des și rărește. Sol afânat, fără pietre."
+        },
+        finocchio: {
+          nome: "Fenicul",
+          nota: "Nu se potrivește cu multe plante: ține-l separat."
+        },
+        prezzemolo: {
+          nome: "Pătrunjel",
+          nota: "Pornește lent; apoi taie des pe tot parcursul anului."
+        },
+        basilico: {
+          nome: "Busuioc",
+          nota: "Ciuppește florile pentru frunze mereu fragede."
+        },
+        coriandolo: {
+          nome: "Coriandru",
+          nota: "Înflorește la căldură: seamănă eșalonat la fiecare 2 săptămâni."
+        },
+        aneto: {
+          nome: "Mărar",
+          nota: "Ajută verzele și atrage insecte utile."
+        },
+        cipolla: {
+          nome: "Ceapă",
+          nota: "Puțină apă la finalul ciclului. Ține la distanță mulți dăunători."
+        },
+        aglio: {
+          nome: "Usturoi",
+          nota: "Se plantează în căței toamna și se recoltează vara."
+        },
+        porro: {
+          nome: "Praz",
+          nota: "Mușuroiește pământul în jur pentru o tulpină albă mai lungă."
+        },
+        scalogno: {
+          nome: "Șalotă",
+          nota: "Ca ceapa, dar mai delicată; foarte bună pentru începători."
+        },
+        fagiolino: {
+          nome: "Fasole pitică",
+          nota: "Nu are nevoie de suport. Îmbunătățește solul cu azot."
+        },
+        fagiolo: {
+          nome: "Fasole urcătoare",
+          nota: "Are nevoie de araci sau plasă: poate urca până la 2 metri."
+        },
+        pisello: {
+          nome: "Mazăre",
+          nota: "Iubește răcoarea: se seamănă toamna sau la final de iarnă."
+        },
+        fragola: {
+          nome: "Căpșun",
+          nota: "Peren: produce mai mulți ani și face stoloni."
+        },
+        sedano: {
+          nome: "Țelină",
+          nota: "Are nevoie de multă apă și sol bogat."
+        },
+        ravanello: {
+          nome: "Ridiche",
+          nota: "Cea mai rapidă: gata în 3-4 săptămâni. Ideală cu copiii."
+        },
+        barbabietola: {
+          nome: "Sfeclă roșie",
+          nota: "Se mănâncă rădăcina și frunzele. Rărește plantele tinere."
+        },
+        cicoria: {
+          nome: "Cicoare",
+          nota: "Rustică și gustoasă. Recoltează frunzele exterioare sau căpățâna tânără."
+        },
+        indivia: {
+          nome: "Andivă / Escarolă",
+          nota: "Iubește răcoarea. Leagă căpățâna dacă vrei frunze interioare mai deschise."
+        },
+        pakchoi: {
+          nome: "Pak choi",
+          nota: "Crește repede pe vreme răcoroasă. Recoltează frunze baby sau căpățâni mici."
+        },
+        cavoletti: {
+          nome: "Varză de Bruxelles",
+          nota: "Are nevoie de timp și răcoare: ciupește vârful când mugurii încep să se formeze."
+        },
+        rapa: {
+          nome: "Nap",
+          nota: "Rădăcină rapidă de sezon rece. Rărește devreme ca să se îngroașe."
+        },
+        valerianella: {
+          nome: "Valerianelă",
+          nota: "Perfectă pentru sera rece: formează rozete mici și fragede toamna și iarna."
+        },
+        rosmarino: {
+          nome: "Rozmarin",
+          nota: "Peren și rustic: foarte puțină apă, trăiește ani întregi."
+        },
+        timo: {
+          nome: "Cimbru",
+          nota: "Târâtor și parfumat; iubește uscăciunea."
+        },
+        origano: {
+          nome: "Oregano",
+          nota: "Peren: se usucă foarte bine pentru iarnă."
+        },
+        salvia: {
+          nome: "Salvie",
+          nota: "Tufă perenă cu frunze catifelate."
+        },
+        pastinaca: {
+          nome: "Păstârnac",
+          nota: "Devine mai dulce după frig; seamănă direct în sol afânat și adânc."
+        },
+        radice_prezemolo: {
+          nome: "Pătrunjel rădăcină",
+          nota: "Cultură tradițională: rădăcină albă aromată pentru supe și ciorbe."
+        },
+        sedano_rapa: {
+          nome: "Țelină rădăcină",
+          nota: "Rădăcină rotundă și parfumată; cere apă constantă și sol bogat."
+        },
+        rafano: {
+          nome: "Hrean",
+          nota: "Rădăcină picantă foarte folosită în România; controlează-l, este viguros."
+        },
+        patata: {
+          nome: "Cartof",
+          nota: "În seră grăbește recolta; mușuroiește când tulpinile cresc."
+        },
+        patata_dolce: {
+          nome: "Cartof dulce",
+          nota: "Iubește căldura stabilă și solul ușor; potrivit pentru seră caldă."
+        },
+        cipolla_rossa: {
+          nome: "Ceapă roșie",
+          nota: "Bulb dulce și colorat; bun pentru recoltări eșalonate."
+        },
+        cipollotto: {
+          nome: "Ceapă verde",
+          nota: "Gata rapid; recoltează-l tânăr înainte să se îngroașe."
+        },
+        erba_cipollina: {
+          nome: "Chives / Cepșoară",
+          nota: "Aromatică perenă; taie des pentru frunze fragede."
+        },
+        loboda: {
+          nome: "Lobodă",
+          nota: "Frunză tradițională pentru ciorbe; crește bine pe vreme răcoroasă."
+        },
+        stevia_dolce: {
+          nome: "Ștevie",
+          nota: "Plantă acrișoară pentru ciorbe de primăvară; recoltează frunze tinere."
+        },
+        leustean: {
+          nome: "Leuștean",
+          nota: "Aroma clasică a ciorbelor românești; peren și viguros."
+        },
+        dragoncello: {
+          nome: "Tarhon",
+          nota: "Aromatic fin pentru oțeturi și conserve; evită băltirea."
+        },
+        menta: {
+          nome: "Mentă",
+          nota: "Foarte viguroasă: mai bine în ghiveci sau zonă controlată."
+        },
+        maggiorana: {
+          nome: "Măghiran",
+          nota: "Aromatică delicată; iubește căldura, lumina și solul drenat."
+        },
+        camomilla: {
+          nome: "Mușețel",
+          nota: "Flori pentru ceai; atrage insecte utile și parfumează sera."
+        },
+        calendula: {
+          nome: "Gălbenele",
+          nota: "Floare utilă în grădină: atrage polenizatori și colorează straturile."
+        },
+        nasturzio: {
+          nome: "Conduraș",
+          nota: "Flori și frunze comestibile; util ca plantă-capcană pentru afide."
+        },
+        mais_dolce: {
+          nome: "Porumb dulce",
+          nota: "Are nevoie de grupuri de plante pentru polenizare bună; ideal pe margini."
+        },
+        gombo: {
+          nome: "Bame",
+          nota: "Iubește multă căldură; recoltează păstăile mici și fragede."
+        },
+        tomatillo: {
+          nome: "Tomatillo",
+          nota: "Are nevoie de cel puțin două plante pentru fructificare bună; excelent pentru sosuri."
+        },
+        physalis: {
+          nome: "Physalis",
+          nota: "Fructe dulci în înveliș ca o lanternă; în seră se coace mai bine."
+        },
+        kiwano: {
+          nome: "Kiwano",
+          nota: "Cucurbitacee exotică pentru sere calde; condu-o pe spalier."
+        },
+        cucamelon: {
+          nome: "Cucamelon",
+          nota: "Fructe mici și crocante; productiv pe plasă în seră."
+        },
+        asparago: {
+          nome: "Sparanghel",
+          nota: "Peren: cere răbdare, dar produce mulți ani."
+        },
+        carciofo: {
+          nome: "Anghinare",
+          nota: "Cultură mare și decorativă; protejează de ger puternic."
+        },
+        cardo: {
+          nome: "Cardon",
+          nota: "Rudă cu anghinarea; albește pețiolurile înainte de recoltă."
+        },
+        crescione: {
+          nome: "Năsturel",
+          nota: "Crește rapid și cere umiditate constantă; perfect pentru tăieri repetate."
+        },
+        mizuna: {
+          nome: "Mizuna",
+          nota: "Muștar japonez ușor; frunze zimțate pentru mixuri de salată."
+        },
+        senape_foglia: {
+          nome: "Muștar frunze",
+          nota: "Frunze picante; seamănă pe răcoare ca să eviți înflorirea rapidă."
+        },
+        tatsoi: {
+          nome: "Tatsoi",
+          nota: "Rozetă compactă, foarte rezistentă la frig."
+        },
+        cavolo_cinese: {
+          nome: "Varză chinezească",
+          nota: "Formează căpățână fragedă; protejează de căldură și stres hidric."
+        },
+        daikon: {
+          nome: "Daikon",
+          nota: "Ridiche lungă: sol adânc și recoltare înainte să devină lemnoasă."
+        },
+        scorzonera: {
+          nome: "Scorțonera",
+          nota: "Rădăcină neagră lungă; cere sol ușor și adânc."
+        },
+        topinambur: {
+          nome: "Topinambur",
+          nota: "Tubercul rustic și productiv; delimitează spațiul deoarece se extinde."
+        },
+        fava: {
+          nome: "Bob",
+          nota: "Leguminoasă timpurie, rezistentă la răcoare; îmbunătățește solul."
+        },
+        soia_edamame: {
+          nome: "Soia edamame",
+          nota: "Recoltează păstăile verzi când boabele sunt pline, dar fragede."
+        },
+        cece: {
+          nome: "Năut",
+          nota: "Iubește uscăciunea și căldura; nu uda excesiv în seră."
+        },
+        lenticchia: {
+          nome: "Linte",
+          nota: "Leguminoasă mică și rustică; potrivită pentru margini mai uscate."
+        },
+        fagiolo_borlotto: {
+          nome: "Fasole pestriță",
+          nota: "Pentru păstăi proaspete sau boabe; folosește araci solizi."
+        },
+        cavolo_rosso: {
+          nome: "Varză roșie",
+          nota: "Căpățână compactă și colorată; excelentă pentru recolte de toamnă."
+        },
+        cavolo_navone: {
+          nome: "Gulie furajeră / Nap",
+          nota: "Rădăcină mare și rustică; utilă pentru toamnă și iarnă."
+        },
+        broccolo_rapa: {
+          nome: "Rapini",
+          nota: "Recoltează vârfurile și frunzele înainte de înflorire completă."
+        },
+        shiso: {
+          nome: "Shiso",
+          nota: "Aromatică asiatică parfumată; frumoasă și în ghiveci în seră."
+        }
+      }
+    },
+    /* Home: navigazione, catalogo, carrello, contatti e cookie. */
+    index: {
+      it: {
+        "page.title": "Orto in Serra · Coltiva con intelligenza",
+        "nav.home": "Home",
+        "nav.stagione": "Di stagione",
+        "nav.catalog_all": "Catalogo completo",
+        "nav.abbinamenti": "Abbinamenti",
+        "nav.configuratore": "Configuratore",
+        "nav.contatti": "Contatti",
+        "nav.carrello": "Carrello",
+        "hero.zone_label": "Scegli la tua zona climatica",
+        "hero.greenhouse_label": "Tipo di Serra",
+        "hero.zone_cold": "❄️Zona Climatica Fredda",
+        "hero.zone_temp": "🌤️Zona Climatica Temperata",
+        "hero.zone_warm": "☀️Zona Climatica Calda",
+        "hero.zone_cold_label": "Fredda",
+        "hero.zone_temp_label": "Temperata",
+        "hero.zone_warm_label": "Calda",
+        "hero.zone_cold_hint": "stagione corta",
+        "hero.zone_temp_hint": "equilibrata",
+        "hero.zone_warm_hint": "stagione lunga",
+        "hero.heated_off": "Riscaldamento spento",
+        "hero.heated_on": "🔥 Riscaldamento attivo",
+        "hero.filter_note_cold":
+          "Riscaldamento spento: selezione adatta a una serra protetta ma non riscaldata.",
+        "hero.filter_note_heated":
+          "Riscaldamento attivo: mostra anche colture anticipate o prolungate.",
+        "hero.cta_plants": "Crea il mio orto guidato",
+        "hero.cta_config": "Sfoglia i semi adatti",
+        "hero.scroll": "scorri",
+        "path.kicker": "Scegli il percorso",
+        "path.heading": "Da dove vuoi iniziare?",
+        "path.lead":
+          "Tre ingressi diversi, pensati per decisioni importanti: un piano guidato, una tela libera o il catalogo dei semi adatti alla tua stagione.",
+        "path.auto_badge": "Consigliato",
+        "path.auto_kicker": "Piano automatico",
+        "path.auto_title": "Guidami passo passo",
+        "path.auto_desc":
+          "Ti preparo subito un orto completo per il mese corrente. Poi puoi modificare misure, clima e piante quando vuoi.",
+        "path.auto_benefit_1": "Scelte già ordinate",
+        "path.auto_benefit_2": "Adatto al mese e al clima",
+        "path.auto_benefit_3": "Modificabile in ogni momento",
+        "path.auto_action": "Crea il mio orto",
+        "path.free_kicker": "Configuratore",
+        "path.free_label": "Progetto libero",
+        "path.free_hint": "Scegli misure, colture e disposizione senza guida.",
+        "path.free_action": "Apri",
+        "path.semi_kicker": "Catalogo semi",
+        "path.semi_title": "Sfoglia i semi di stagione",
+        "path.semi_desc":
+          "Sfoglia il catalogo filtrato per mese e clima. Aggiungi i semi al carrello e importali nel configuratore.",
+        "path.semi_action": "Vai al catalogo",
+        "path.note":
+          "Puoi sempre cambiare percorso: il configuratore conserva le scelte e ti lascia rientrare nel flusso quando vuoi.",
+        "calendar.kicker": "L'anno in serra",
+        "calendar.heading": "Quante piante puoi seminare ogni mese",
+        "companions.kicker": "Botanica relazionale",
+        "companions.heading": "Si amano in serra",
+        "companions.copy":
+          "Piante che crescono meglio vicine: benefici reciproci, parassiti allontanati, resa più alta.",
+        "companions.empty":
+          "Nessun abbinamento disponibile per questa combinazione di mese e zona.",
+        "companions.reason_1": "Si proteggono a vicenda dagli afidi",
+        "companions.reason_2": "Ottimizzano l'uso dello spazio in radice",
+        "companions.reason_3": "Attraggono impollinatori utili",
+        "companions.badge_1": "✅&nbsp;Abbinamento classico",
+        "companions.badge_2": "✅&nbsp;Abbinamento consigliato",
+        "companions.badge_3": "✅&nbsp;Abbinamento sinergico",
+        "companions.add_pair": "+ Aggiungi la coppia",
+        "companions.in_cart_pair": "✓&nbsp;Coppia nel carrello",
+        "kit.kicker": "Già compatibili tra loro",
+        "kit.heading": "Kit del mese · {month}",
+        "kit.desc":
+          "{count} varietà già compatibili tra loro, perfette per iniziare questo mese.",
+        "kit.add_all": "+ Aggiungi tutto al carrello",
+        "kit.compat": "Verificato: nessuna incompatibilità nel kit",
+        "kit.title_1": "Kit Invernale",
+        "kit.title_2": "Kit Primaverile Precoce",
+        "kit.title_3": "Kit di Primavera",
+        "kit.title_4": "Kit di Primavera",
+        "kit.title_5": "Kit di Maggio",
+        "kit.title_6": "Kit Estivo in Serra",
+        "kit.title_7": "Kit d'Estate",
+        "kit.title_8": "Kit Fine Estate",
+        "kit.title_9": "Kit Autunnale",
+        "kit.title_10": "Kit d'Autunno",
+        "kit.title_11": "Kit Autunno-Inverno",
+        "kit.title_12": "Kit Invernale",
+        "conf.kicker": "Percorso guidato",
+        "conf.title": "Pianifica la tua serra dall'alto",
+        "conf.desc":
+          "Inserisci misure, mese e zona: il configuratore ti mostra cosa seminare, dove metterlo e quanti semi preparare. Puoi partire da un piano facile e cambiarlo quando vuoi.",
+        "conf.open": "Apri il configuratore guidato",
+        "conf.import": "Importa carrello nel piano",
+        "season.title": "{count} piante per {month}",
+        "season.meta": "Zona {zone} · Serra {greenhouse}",
+        "season.empty":
+          "Nessuna pianta da seminare questo mese.<br>Prova ad attivare la serra riscaldata.",
+        "catalog.search_label": "Cerca seme",
+        "catalog.search_placeholder": "Pomodoro, basilico, lattuga...",
+        "catalog.type_label": "Tipo",
+        "catalog.type_all": "Tutti",
+        "catalog.category_label": "Categorie",
+        "catalog.category_hint": "Scegli una famiglia di colture",
+        "catalog.sort_label": "Ordina per",
+        "catalog.sort_season": "Consigliati",
+        "catalog.sort_name": "Nome A-Z",
+        "catalog.sort_fast": "Raccolta più veloce",
+        "catalog.sort_yield": "Resa più alta",
+        "catalog.sort_distance": "Più compatti",
+        "catalog.sort_price": "Prezzo più basso",
+        "catalog.insight_seasonal": "adatti ora",
+        "catalog.insight_fast": "rapidi",
+        "catalog.insight_compact": "compatti",
+        "catalog.insight_cart": "nel carrello",
+        "catalog.season_only": "Solo adatti adesso",
+        "catalog.easy_only": "Facili per iniziare",
+        "catalog.filter_all_plants": "Tutto il catalogo",
+        "catalog.results": "risultati",
+        "catalog.reset": "Azzera filtri",
+        "catalog.hint_before": "Tocca una pianta per i dettagli · usa",
+        "catalog.hint_after": "per aggiungerla al carrello direttamente",
+        "catalog.empty":
+          "Nessun seme trovato con questi filtri. Prova a togliere un filtro o cambiare mese.",
+        "catalog.search_all":
+          "La ricerca include tutto il catalogo. Alcuni risultati potrebbero non essere adatti alla semina in {month}.",
+        "catalog.count_all": "{count} semi nel catalogo",
+        "catalog.count_filtered": "{shown} di {total} semi mostrati",
+        "zone.freddo": "fredda",
+        "zone.temperato": "temperata",
+        "zone.caldo": "calda",
+        "greenhouse.cold": "fredda",
+        "greenhouse.heated": "riscaldata",
+        "type.frutto": "frutto",
+        "type.foglia": "foglia",
+        "type.radice": "radice",
+        "type.legume": "legume",
+        "type.aromatica": "aromatica",
+        "plant.perennial": "perenne",
+        "plant.days_short": "gg",
+        "plant.days_harvest": "{days} giorni al raccolto",
+        "plant.full_sun": "sole pieno",
+        "plant.half_shade": "semiombra",
+        "plant.water": "acqua",
+        "plant.sun": "sole",
+        "plant.height": "altezza",
+        "plant.distance": "distanza",
+        "plant.harvest_days": "giorni al raccolto",
+        "plant.yield": "resa/pianta",
+        "water.alta": "alta",
+        "water.media": "media",
+        "water.bassa": "bassa",
+        "height.alta": "alta",
+        "height.media": "media",
+        "height.bassa": "bassa",
+        "detail.sowing_months": "Mesi di semina",
+        "detail.friends": "Si abbina con",
+        "detail.enemies": "Tieni lontano da",
+        "cart.title": "Il tuo carrello",
+        "cart.empty": "Nessun seme ancora.<br>Aggiungi le piante di stagione!",
+        "cart.payment_soon": "Pagamento online in arrivo",
+        "cart.plan": "Pianifica la disposizione in serra",
+        "cart.checkout": "Invia richiesta semi",
+        "cart.alert":
+          "Vorrei ricevere disponibilità e prezzo finale per questi semi:",
+        "cart.add": "+ Aggiungi",
+        "cart.add_plain": "Aggiungi",
+        "cart.in_cart": "✓&nbsp;Nel carrello",
+        "cart.clear": "Svuota",
+        "cart.remove": "Rimuovi",
+        "cart.add_to_cart": "+ Aggiungi al carrello",
+        "cart.remove_from_cart": "✕ Rimuovi dal carrello",
+        "cart.view": "Vedi carrello",
+        "cart.added_title": "{name} aggiunto",
+        "cart.added_meta": "{count} semi nel carrello",
+        "cart.removed_title": "{name} rimosso",
+        "cart.removed_meta": "{count} semi nel carrello",
+        "cart.pack": "1 bustina",
+        "cart.estimate": "Totale indicativo",
+        "cart.request_note":
+          "Pagamento non ancora online: invia la lista e ti confermiamo disponibilità e prezzo finale.",
+        "cart.mail_subject": "Richiesta semi Orto in Serra",
+        "cart.pack_many": "{count} bustine",
+        "cart.seeds_per_pack": "{count} semi/busta",
+        "cart.per_pack": "/busta",
+        "conf.cart_hint_one": "1 seme pronto da importare",
+        "conf.cart_hint_many": "{count} semi pronti da importare",
+        "cart.empty_conf":
+          "Nessun seme ancora.<br>Pianifica la serra e aggiungi i semi!",
+        "season_name.winter": "🌨️  Inverno",
+        "season_name.spring": "🌸  Primavera",
+        "season_name.summer": "☀️  Estate",
+        "season_name.autumn": "🍂  Autunno",
+        "contatti.kicker": "Parlaci",
+        "contatti.heading": "Contattaci",
+        "contatti.lbl.indirizzo": "Indirizzo",
+        "contatti.lbl.telefono": "Telefono",
+        "contatti.lbl.email": "Email",
+        "contatti.lbl.orari": "Orari",
+        "contatti.val.orari": "Lun – Ven: 9:00 – 18:00<br>Sabato: 9:00 – 13:00",
+        "contatti.map_note": "Mappa disponibile prossimamente",
+        "contatti.form.nome": "Nome",
+        "contatti.form.email": "Email",
+        "contatti.form.oggetto": "Oggetto",
+        "contatti.form.messaggio": "Messaggio",
+        "contatti.form.invia": "Invia messaggio",
+        "contatti.placeholder.nome": "Mario Rossi",
+        "contatti.placeholder.email": "mario@example.com",
+        "contatti.placeholder.oggetto": "Ho una domanda sulla serra...",
+        "contatti.placeholder.messaggio": "Scrivi qui il tuo messaggio...",
+        "footer.consiglio_kicker": "Consiglio del mese",
+        "footer.esplora": "Esplora",
+        "footer.kit": "Kit del mese",
+        "footer.legale": "Legale",
+        "footer.privacy": "Privacy Policy",
+        "footer.cookie": "Cookie Policy",
+        "footer.termini": "Termini di Servizio",
+        "footer.accessibilita": "Accessibilità",
+        "footer.supporto_title": "Supporto",
+        "footer.rights": "Tutti i diritti riservati",
+        "footer.disclaimer":
+          "Le distanze, i periodi di semina e gli abbinamenti sono stime pratiche. Varietà, microclima e tecnica individuale possono cambiare il risultato.",
+        "cookie.text":
+          "Utilizziamo i cookie per migliorare la tua esperienza e analizzare il traffico del sito. Consulta la nostra",
+        "cookie.policy": "Cookie Policy",
+        "cookie.text2": "per saperne di più.",
+        "cookie.accept": "Accetta",
+        "cookie.reject": "Solo essenziali",
+        "hero.controls_hint": "Seleziona la tua zona climatica per vedere i semi giusti per te",
+        "hero.path_label": "Scegli il tuo percorso",
+        "nav.brand_sub": "Coltiva con un piano",
+        "detail.how_to_sow": "Come si semina",
+        "detail.spacing_label": "Spaziatura",
+        "detail.in_row": "sulla fila",
+        "detail.between_rows": "tra le file",
+        "detail.diff_easy": "★ Facile",
+        "detail.diff_medium": "★★ Medio",
+        "detail.diff_hard": "★★★ Difficile",
+        "detail.difficulty": "Difficoltà",
+        "detail.price_pack": "Prezzo / bustina",
+        "detail.seeds_pack": "Semi / bustina",
+        "detail.height_range": "Altezza",
+        "detail.water_needs": "Acqua",
+        "detail.in_greenhouse": "In serra",
+        "detail.overview": "Panoramica",
+        "detail.practical_note": "Nota pratica",
+        "detail.sow_method": "Metodo",
+        "detail.sow_depth": "Profondità",
+        "detail.sow_thin": "Spaziatura",
+      },
+      ro: {
+        "page.title": "Grădină în seră · Cultivă inteligent",
+        "nav.home": "Acasă",
+        "nav.stagione": "De sezon",
+        "nav.catalog_all": "Catalog complet",
+        "nav.abbinamenti": "Combinații",
+        "nav.configuratore": "Configurator",
+        "nav.contatti": "Contact",
+        "nav.carrello": "Coș",
+        "hero.zone_label": "Alegeți zona dvs. climatică",
+        "hero.greenhouse_label": "Tip de Seră",
+        "hero.zone_cold": "❄️Zona climatică Rece",
+        "hero.zone_temp": "🌤️Zona climatică Temperată",
+        "hero.zone_warm": "☀️Zona climatică Caldă",
+        "hero.zone_cold_label": "Rece",
+        "hero.zone_temp_label": "Temperată",
+        "hero.zone_warm_label": "Caldă",
+        "hero.zone_cold_hint": "sezon scurt",
+        "hero.zone_temp_hint": "echilibrată",
+        "hero.zone_warm_hint": "sezon lung",
+        "hero.heated_off": "Încălzire oprită",
+        "hero.heated_on": "🔥 Încălzire activă",
+        "hero.filter_note_cold":
+          "Încălzire oprită: selecție pentru seră protejată, dar neîncălzită.",
+        "hero.filter_note_heated":
+          "Încălzire activă: apar și culturi anticipate sau prelungite.",
+        "hero.cta_plants": "Creează grădina mea ghidată",
+        "hero.cta_config": "Vezi semințele potrivite",
+        "hero.scroll": "derulează",
+        "path.kicker": "Alege traseul",
+        "path.heading": "De unde vrei să începi?",
+        "path.lead":
+          "Trei intrări diferite, gândite pentru decizii importante: un plan ghidat, o planșă liberă sau catalogul semințelor potrivite sezonului tău.",
+        "path.auto_badge": "Recomandat",
+        "path.auto_kicker": "Plan automat",
+        "path.auto_title": "Ghidează-mă pas cu pas",
+        "path.auto_desc":
+          "Îți pregătesc imediat o grădină completă pentru luna curentă. Poți modifica dimensiuni, climă și plante oricând.",
+        "path.auto_benefit_1": "Alegeri deja ordonate",
+        "path.auto_benefit_2": "Potrivit lunii și climei",
+        "path.auto_benefit_3": "Editabil oricând",
+        "path.auto_action": "Creează grădina mea",
+        "path.free_kicker": "Configurator",
+        "path.free_label": "Proiect liber",
+        "path.free_hint": "Alege dimensiuni, culturi și aranjare fără ghid.",
+        "path.free_action": "Deschide",
+        "path.semi_kicker": "Catalog semințe",
+        "path.semi_title": "Răsfoiește semințele de sezon",
+        "path.semi_desc":
+          "Răsfoiește catalogul filtrat după lună și climă. Adaugă semințele în coș și importă-le în configurator.",
+        "path.semi_action": "Vezi catalogul",
+        "path.note":
+          "Poți schimba oricând traseul: configuratorul păstrează alegerile și te lasă să revii în flux când vrei.",
+        "calendar.kicker": "Anul în seră",
+        "calendar.heading": "Câte plante poți semăna în fiecare lună",
+        "companions.kicker": "Botanică relațională",
+        "companions.heading": "Se potrivesc în seră",
+        "companions.copy":
+          "Plante care cresc mai bine împreună: beneficii reciproce, mai puțini dăunători, recoltă mai bună.",
+        "companions.empty":
+          "Nu există combinații disponibile pentru această lună și zonă.",
+        "companions.reason_1": "Se protejează reciproc de afide",
+        "companions.reason_2": "Folosesc mai eficient spațiul la rădăcină",
+        "companions.reason_3": "Atrag polenizatori utili",
+        "companions.badge_1": "✅&nbsp;Combinație clasică",
+        "companions.badge_2": "✅&nbsp;Combinație recomandată",
+        "companions.badge_3": "✅&nbsp;Combinație sinergică",
+        "companions.add_pair": "+ Adaugă perechea",
+        "companions.in_cart_pair": "✓&nbsp;Perechea este în coș",
+        "kit.kicker": "Deja compatibile între ele",
+        "kit.heading": "Kit-ul lunii · {month}",
+        "kit.desc":
+          "{count} soiuri compatibile între ele, perfecte pentru început luna aceasta.",
+        "kit.add_all": "+ Adaugă tot în coș",
+        "kit.compat": "Verificat: nicio incompatibilitate în kit",
+        "kit.title_1": "Kit de iarnă",
+        "kit.title_2": "Kit timpuriu de primăvară",
+        "kit.title_3": "Kit de primăvară",
+        "kit.title_4": "Kit de primăvară",
+        "kit.title_5": "Kit de mai",
+        "kit.title_6": "Kit estival în seră",
+        "kit.title_7": "Kit de vară",
+        "kit.title_8": "Kit de sfârșit de vară",
+        "kit.title_9": "Kit de toamnă",
+        "kit.title_10": "Kit de toamnă",
+        "kit.title_11": "Kit toamnă-iarnă",
+        "kit.title_12": "Kit de iarnă",
+        "conf.kicker": "Traseu ghidat",
+        "conf.title": "Planifică sera de sus",
+        "conf.desc":
+          "Introdu dimensiunile, luna și zona: configuratorul îți arată ce să semeni, unde să pui plantele și câte semințe să pregătești. Poți porni de la un plan ușor și îl poți schimba oricând.",
+        "conf.open": "Deschide configuratorul ghidat",
+        "conf.import": "Importă coșul în plan",
+        "season.title": "{count} plante pentru {month}",
+        "season.meta": "Zonă {zone} · Seră {greenhouse}",
+        "season.empty":
+          "Nicio plantă de semănat luna aceasta.<br>Încearcă să activezi sera încălzită.",
+        "catalog.search_label": "Caută sămânță",
+        "catalog.search_placeholder": "Roșii, busuioc, salată...",
+        "catalog.type_label": "Tip",
+        "catalog.type_all": "Toate",
+        "catalog.category_label": "Categorii",
+        "catalog.category_hint": "Alege o familie de culturi",
+        "catalog.sort_label": "Sortează după",
+        "catalog.sort_season": "Recomandate",
+        "catalog.sort_name": "Nume A-Z",
+        "catalog.sort_fast": "Recoltare rapidă",
+        "catalog.sort_yield": "Producție mai mare",
+        "catalog.sort_distance": "Mai compacte",
+        "catalog.sort_price": "Preț mai mic",
+        "catalog.insight_seasonal": "potrivite acum",
+        "catalog.insight_fast": "rapide",
+        "catalog.insight_compact": "compacte",
+        "catalog.insight_cart": "în coș",
+        "catalog.season_only": "Doar potrivite acum",
+        "catalog.easy_only": "Ușoare pentru început",
+        "catalog.filter_all_plants": "Tot catalogul",
+        "catalog.results": "rezultate",
+        "catalog.reset": "Resetează filtrele",
+        "catalog.hint_before": "Atinge o plantă pentru detalii · folosește",
+        "catalog.hint_after": "pentru a o adăuga direct în coș",
+        "catalog.empty":
+          "Nu am găsit semințe cu aceste filtre. Scoate un filtru sau schimbă luna.",
+        "catalog.search_all":
+          "Căutarea include întregul catalog. Unele rezultate pot să nu fie potrivite pentru semănat în {month}.",
+        "catalog.count_all": "{count} semințe în catalog",
+        "catalog.count_filtered": "{shown} din {total} semințe afișate",
+        "zone.freddo": "rece",
+        "zone.temperato": "temperată",
+        "zone.caldo": "caldă",
+        "greenhouse.cold": "rece",
+        "greenhouse.heated": "încălzită",
+        "type.frutto": "fruct",
+        "type.foglia": "frunze",
+        "type.radice": "rădăcină",
+        "type.legume": "leguminoasă",
+        "type.aromatica": "aromatică",
+        "plant.perennial": "perenă",
+        "plant.days_short": "zile",
+        "plant.days_harvest": "{days} zile până la recoltă",
+        "plant.full_sun": "soare plin",
+        "plant.half_shade": "semiumbră",
+        "plant.water": "apă",
+        "plant.sun": "soare",
+        "plant.height": "înălțime",
+        "plant.distance": "distanță",
+        "plant.harvest_days": "zile până la recoltă",
+        "plant.yield": "recoltă/plantă",
+        "water.alta": "multă",
+        "water.media": "medie",
+        "water.bassa": "puțină",
+        "height.alta": "înaltă",
+        "height.media": "medie",
+        "height.bassa": "joasă",
+        "detail.sowing_months": "Luni de semănare",
+        "detail.friends": "Se potrivește cu",
+        "detail.enemies": "Ține departe de",
+        "cart.title": "Coșul tău",
+        "cart.empty": "Încă nu ai semințe.<br>Adaugă plantele de sezon!",
+        "cart.payment_soon": "Plata online vine în curând",
+        "cart.plan": "Planifică așezarea în seră",
+        "cart.checkout": "Trimite cererea",
+        "cart.alert":
+          "Aș dori disponibilitatea și prețul final pentru aceste semințe:",
+        "cart.add": "+ Adaugă",
+        "cart.add_plain": "Adaugă",
+        "cart.in_cart": "✓&nbsp;În coș",
+        "cart.clear": "Golește",
+        "cart.remove": "Elimină",
+        "cart.add_to_cart": "+ Adaugă în coș",
+        "cart.remove_from_cart": "✕ Elimină din coș",
+        "cart.view": "Vezi coșul",
+        "cart.added_title": "{name} adăugat",
+        "cart.added_meta": "{count} semințe în coș",
+        "cart.removed_title": "{name} eliminat",
+        "cart.removed_meta": "{count} semințe în coș",
+        "cart.pack": "1 plic",
+        "cart.estimate": "Total orientativ",
+        "cart.request_note":
+          "Plata nu este încă online: trimite lista și îți confirmăm disponibilitatea și prețul final.",
+        "cart.mail_subject": "Cerere semințe Orto in Serra",
+        "cart.pack_many": "{count} plicuri",
+        "cart.seeds_per_pack": "{count} semințe/plic",
+        "cart.per_pack": "/plic",
+        "conf.cart_hint_one": "1 sămânță gata de importat",
+        "conf.cart_hint_many": "{count} semințe gata de importat",
+        "cart.empty_conf":
+          "Încă nu ai semințe.<br>Planifică sera și adaugă semințele!",
+        "season_name.winter": "🌨️&nbsp;Iarnă",
+        "season_name.spring": "🌸&nbsp;Primăvară",
+        "season_name.summer": "☀️&nbsp;Vară",
+        "season_name.autumn": "🍂&nbsp;Toamnă",
+        "contatti.kicker": "Scrie-ne",
+        "contatti.heading": "Contact",
+        "contatti.lbl.indirizzo": "Adresă",
+        "contatti.lbl.telefono": "Telefon",
+        "contatti.lbl.email": "Email",
+        "contatti.lbl.orari": "Program",
+        "contatti.val.orari":
+          "Lun – Vin: 9:00 – 18:00<br>Sâmbătă: 9:00 – 13:00",
+        "contatti.map_note": "Hartă disponibilă în curând",
+        "contatti.form.nome": "Nume",
+        "contatti.form.email": "Email",
+        "contatti.form.oggetto": "Subiect",
+        "contatti.form.messaggio": "Mesaj",
+        "contatti.form.invia": "Trimite mesajul",
+        "contatti.placeholder.nome": "Ion Popescu",
+        "contatti.placeholder.email": "ion@example.com",
+        "contatti.placeholder.oggetto": "Am o întrebare despre seră...",
+        "contatti.placeholder.messaggio": "Scrie mesajul tău aici...",
+        "footer.consiglio_kicker": "Sfatul lunii",
+        "footer.esplora": "Explorează",
+        "footer.kit": "Kit-ul lunii",
+        "footer.legale": "Legal",
+        "footer.privacy": "Politică de confidențialitate",
+        "footer.cookie": "Politică Cookie",
+        "footer.termini": "Termeni de serviciu",
+        "footer.accessibilita": "Accesibilitate",
+        "footer.supporto_title": "Suport",
+        "footer.rights": "Toate drepturile rezervate",
+        "footer.disclaimer":
+          "Distanțele, perioadele de semănat și combinațiile sunt estimări practice. Varietatea, microclimatul și tehnica individuală pot schimba rezultatul.",
+        "cookie.text":
+          "Folosim cookie-uri pentru a îmbunătăți experiența de navigare și a analiza traficul site-ului. Consultați",
+        "cookie.policy": "Politica Cookie",
+        "cookie.text2": "pentru mai multe informații.",
+        "cookie.accept": "Accept",
+        "cookie.reject": "Doar esențiale",
+        "hero.controls_hint": "Selectează zona climatică pentru a vedea semințele potrivite",
+        "hero.path_label": "Alege traseul tău",
+        "nav.brand_sub": "Cultivă cu un plan",
+        "detail.how_to_sow": "Cum se seamănă",
+        "detail.spacing_label": "Spațiere",
+        "detail.in_row": "pe rând",
+        "detail.between_rows": "între rânduri",
+        "detail.diff_easy": "★ Ușor",
+        "detail.diff_medium": "★★ Mediu",
+        "detail.diff_hard": "★★★ Dificil",
+        "detail.difficulty": "Dificultate",
+        "detail.price_pack": "Preț / plic",
+        "detail.seeds_pack": "Semințe / plic",
+        "detail.height_range": "Înălțime",
+        "detail.water_needs": "Apă",
+        "detail.in_greenhouse": "În seră",
+        "detail.overview": "Prezentare",
+        "detail.practical_note": "Notă practică",
+        "detail.sow_method": "Metodă",
+        "detail.sow_depth": "Adâncime",
+        "detail.sow_thin": "Spațiere",
+      }
+    },
+    /* Configuratore: pannelli, controlli, carrello e messaggi tecnici. */
+    configurator: {
+      it: {
+        title: "Orto in Serra · Progetta la tua serra dall'alto",
+        language: "Lingua",
+        selected: "Selezionata",
+        openSetup: "Riapri configurazione guidata",
+        brandTitle: "Orto in Serra",
+        brandSub: "Progetta la tua serra vista dall'alto, pianta per pianta",
+        guidedAppTitle: "Configuratore Serra",
+        guidedAppSub:
+          "Progetta il tuo orto pianta per pianta · vista dall'alto",
+        modalKicker: "Configurazione iniziale",
+        modalTitle: "Prima scegli il clima",
+        modalCopy:
+          "Userò zona e riscaldamento per mostrarti solo le colture adatte al periodo. Potrai cambiarli anche dopo.",
+        guidedModalKicker: "Percorso per iniziare",
+        guidedModalTitle: "Partiamo da un orto facile",
+        guidedModalCopy:
+          "Inserisci misure e clima: preparo un primo progetto da principiante con colture semplici, distanze corrette e quantità modificabili.",
+        guidedIntroTitle: "Configura la serra, poi esplora le colture",
+        guidedIntroCopy:
+          "Imposta i dati reali. Riempi automaticamente oppure scegli le colture. Clicca una pianta nella mappa per aprire la scheda con quantità, resa e consigli.",
+        guidedIntroEdit: "Personalizza",
+        guidedIntroEditHint: "Modifica misure, piante e layout",
+        guidedIntroView: "Vedi il progetto",
+        guidedIntroViewHint: "Esplora il piano completo",
+        guidedIntroBuy: "Acquista i semi",
+        guidedIntroBuyHint: "Vai al catalogo e al carrello",
+        guidedIntroSummary:
+          "{beds} varietà · {plants} piante · circa {yield} di raccolto",
+        modalSizeTitle: "Dimensioni serra",
+        modalSizeCopy: "Inserisci le misure interne: resteranno salvate.",
+        modalZoneTitle: "Zona climatica",
+        modalZoneCopy: "Scegli l'opzione più vicina al tuo giardino.",
+        zoneColdTitle: "Zona fredda",
+        zoneColdCopy: "Nord, montagna, inverni rigidi. Stagione più corta.",
+        zoneTempTitle: "Zona temperata",
+        zoneTempCopy: "Pianura, collina, gran parte d'Italia.",
+        zoneWarmTitle: "Zona calda",
+        zoneWarmCopy: "Sud, coste, inverni miti. Stagione più lunga.",
+        modalGreenhouseTitle: "Tipo di serra",
+        modalGreenhouseCopy:
+          "Spunta se puoi mantenere temperature miti in inverno.",
+        heated: "Serra riscaldata",
+        start: "Crea il primo progetto",
+        guidedStart: "Crea il mio orto guidato",
+        disclaimer:
+          "Le distanze, i periodi di semina e gli abbinamenti sono stime pratiche: varietà, microclima e tecnica possono cambiare il risultato.",
+        settingsTitle: "La tua serra",
+        settingsSub:
+          "Questi dati guidano sia il piano automatico sia la scelta manuale delle colture.",
+        openPanel: "Apri",
+        closePanel: "Chiudi",
+        openPanelLabel: "Apri la tendina",
+        closePanelLabel: "Chiudi la tendina",
+        openCropsPanel: "Scegli le piante",
+        sizes: "1. Misure interne",
+        climate: "2. Clima",
+        quickStart: "3. Piano automatico",
+        width: "Larghezza",
+        length: "Lunghezza",
+        sowMonth: "Mese di semina",
+        pathWidth: "Camminamento tra aiuole",
+        zone: "Zona",
+        greenhouse: "Serra",
+        readyLayouts: "Layout già pronti",
+        presetDefault: "Scegli un esempio",
+        presetInsalate: "Insalate facili tutto l'anno",
+        presetSalsa: "Tutto per la salsa di pomodoro",
+        presetPrincipiante: "Orto del principiante",
+        presetAromatiche: "Angolo aromatiche",
+        presetEstivo: "Orto estivo abbondante",
+        presetInvernale: "Serra invernale verde",
+        presetRadici: "Radici e bulbi facili",
+        presetFoglie: "Taglio continuo di foglie",
+        presetBrassicacee: "Cavoli da serra fresca",
+        autoFill: "Auto riempi",
+        autoFillCopy: "Sceglie colture di stagione e riempie lo spazio.",
+        helper:
+          "Usa <b>Auto riempi</b> quando vuoi partire da zero. Dopo ogni modifica il layout si sistema automaticamente.",
+        sowAt: "Semina",
+        stageTitle: "Vista dall'alto",
+        stageSub: "Clicca un'aiuola per i dettagli di coltivazione.",
+        viewMode: "Vista",
+        viewNatural: "Vista naturale",
+        sunMap: "Mappa sole",
+        waterMap: "Mappa acqua",
+        heightMap: "Altezza piante",
+        restoreAutoFill: "Riempi la serra",
+        fillSelected: "Ottimizza colture scelte",
+        fillSelectedHint: "Ricalibra quantità e riempie solo con queste colture.",
+        cropActionsTitle: "Azioni sulle colture inserite",
+        cropActionsHint:
+          "Questi comandi modificano il progetto corrente della serra.",
+        cropsSectionCustomize: "⚙ Personalizza",
+        customizeTitle: "Colture nella serra",
+        customizeSub:
+          "Aggiungi o togli colture. Il filtro In serra mostra solo quelle già presenti nel progetto.",
+        modeFitTitle: "Piano automatico",
+        modeFitHint: "Imposta misure e clima — la serra si riempie da sola",
+        modeExpertTitle: "Scegli le colture",
+        modeExpertHint: "Aggiungi o rimuovi le piante una a una",
+        fillSelectedTitle:
+          "Ricalibra quantità realistiche e riempie la serra usando solo le colture già inserite",
+        clearGreenhouseHint: "Rimuove tutte le colture dal progetto.",
+        clearGreenhouseTitle: "Rimuove tutte le piante dalla serra",
+        noSelectedPlants:
+          "Prima aggiungi una o più piante con il pulsante <b>+</b> nella card <em>Personalizza</em>: poi questo pulsante ottimizzerà la serra solo con quelle.",
+        print: "Stampa",
+        noSelection: "Dettagli coltura",
+        plantInfoHint:
+          "Clicca una coltura nella mappa centrale per vedere qui quantità, resa, distanza, acqua, sole e raccolta.",
+        noSelectionCopy:
+          "Aggiungi un ortaggio dalla card Personalizza, poi toccalo nella serra per vedere come coltivarlo.",
+        howTo1:
+          "Nel <b>Piano automatico</b> imposta misure, mese, clima e tipo di serra.",
+        howTo2:
+          "Premi <b>Riempi la serra</b>, oppure passa a <em>Scegli le colture</em> per aggiungerle manualmente.",
+        howTo3:
+          "Clicca un'aiuola nella vista per modificare quantità e leggere i dettagli.",
+        inGreenhouse: "Nella serra",
+        bedsSub:
+          "Elenco delle aiuole inserite. Clicca una riga per selezionarla.",
+        yieldCost: "Lista semi da acquistare",
+        yieldSub:
+          "Semi necessari e raccolto previsto per realizzare questo progetto.",
+        yieldEditCropsLabel: "Modifica colture",
+        yieldEditCropsHint:
+          "Apri “Scegli le colture” per aggiungere o rimuovere piante.",
+        yieldEditCropsAria: "Modifica le colture della serra",
+        tagZone: "Zona",
+        tagMonth: "Mese",
+        tagGreenhouse: "Serra",
+        cold: "fredda",
+        temperate: "temperata",
+        warm: "calda",
+        heatedShort: "riscaldata",
+        unheated: "Fredda",
+        heatedOption: "Riscaldata",
+        suitableCrops:
+          "<b>{count}</b> piante adatte questo mese — tocca <b>+</b> per aggiungere, <b>×</b> per rimuovere",
+        filterDescAll:
+          "🌿&nbsp;<b>{count}</b> colture seminabili questo mese per la tua zona — tocca <b>+</b> per aggiungere",
+        filterDescIn:
+          "✓&nbsp;<b>{count}</b> {label} nella tua serra — <b>−/+</b> quantità · <b>×</b> rimuovi",
+        filterDescAllBeds:
+          "⌕&nbsp;<b>{count}</b> semi nel catalogo completo · <b>{seasonal}</b> adatti al mese selezionato",
+        cropSingular: "coltura",
+        cropPlural: "colture",
+        offSeason: "fuori stagione",
+        noCrops:
+          "Nessun ortaggio tipico da seminare in <b>{month}</b> per questa zona. Prova un altro mese, oppure attiva la serra riscaldata.",
+        fullSun: "pieno sole",
+        halfShade: "mezz'ombra",
+        waterHigh: "Molta acqua",
+        waterMedium: "Media",
+        waterLow: "Poca",
+        heightHigh: "Alte",
+        heightMedium: "Medie",
+        heightLow: "Basse",
+        emptyGreenhouse: "Serra vuota",
+        emptyBannerTitle: "La serra è vuota",
+        emptyBannerCopy:
+          "Premi <strong>Riempi la serra</strong> per iniziare in automatico, oppure scegli le piante una per una dalla card <strong>Personalizza</strong>.",
+        svgLabel: "Serra vista dall'alto",
+        tooFull: "troppo piena: il layout automatico ha raggiunto il limite",
+        organized: "spazio organizzato correttamente",
+        emptyStatus: "vuota",
+        scale: "Serra {w}×{l} m · usati {used} m su {l} m · {status}",
+        noBeds:
+          "Nessuna pianta ancora — aggiungi con <b>+</b> o usa <em>Riempi la serra</em>.",
+        addEstimate: "Aggiungi piante alla serra per vedere la stima di resa.",
+        daysShort: "gg",
+        about: "circa",
+        piecesShort: "pz",
+        plants: "piante",
+        estimated: "stimati",
+        distance: "Distanza",
+        distanceInRow: "fila",
+        distanceBetweenRows: "tra file",
+        height: "Altezza",
+        sun: "Sole",
+        water: "Acqua",
+        harvest: "Raccolta",
+        yieldPlant: "Resa/pianta",
+        distanceHelp:
+          "Sulla fila × tra le file: spazio minimo tra una pianta e l'altra e tra due file della stessa aiuola.",
+        harvestHelp:
+          "Giorni indicativi dal trapianto o dalla semina diretta; cambiano con temperatura, varietà e gestione.",
+        perennial: "perenne",
+        sowingZone: "Semina (questa zona)",
+        howToSow: "Come si semina",
+        sowMethod: "Metodo",
+        sowDepth: "Profondità",
+        sowThin: "Diradamento/trapianto",
+        sowTip: "Nota pratica",
+        detailHarvestSub: "giorni dal trapianto",
+        detailYieldSub: "per pianta",
+        friends: "Amiche",
+        enemies: "Nemiche",
+        removePlant: "Rimuovi dalla serra",
+        remove: "Rimuovi",
+        overflowWarning:
+          "Le aiuole superano la lunghezza della serra. Riduci il numero di piante o ingrandisci la serra (linea rossa = fine serra).",
+        badCompanion:
+          "<b>{a}</b> e <b>{b}</b> non si amano: meglio tenerle lontane o separarle con un'altra coltura.",
+        goodCompanions: "Buoni abbinamenti presenti: {pairs}.",
+        summary:
+          "<b>{plants}</b> piante in <b>{beds}</b> aiuole · raccolto stimato <b>{yield}</b> a fine ciclo.",
+        shoppingItem: "{count} piante/sementi",
+        clearGreenhouse: "Svuota serra",
+        /* Categorie piante nella tendina Personalizza */
+        vegCat_frutti: "Frutti & ortaggi",
+        vegCat_foglie: "Insalate & foglie",
+        vegCat_radici: "Radici & bulbi",
+        vegCat_aromatiche: "Aromatiche",
+        vegCat_legumi: "Legumi",
+        vegCat_cavoli: "Cavoli & brassiche",
+        vegCatAltro: "Altro",
+        /* Difficoltà */
+        diffEasy: "★&nbsp;Facile",
+        diffMedium: "★★&nbsp;Medio",
+        diffHard: "★★★&nbsp;Difficile",
+        /* Badge e messaggi lista piante */
+        vegInGreenhouse: "✓&nbsp;in serra",
+        vegNoMore: "Nessuna pianta in serra per questo mese.",
+        /* Filtri tab */
+        filterAll: "🌿&nbsp;Seminabili ora",
+        filterAllBeds: "📋&nbsp;Piano completo",
+        filterEasy: "⭐&nbsp;Facili",
+        filterIn: "✓&nbsp;Già aggiunte",
+        "yield.varieties": "varietà",
+        "yield.plants_label": "piante",
+        "yield.harvest": "raccolto stimato",
+        "cart.pack_one": "1 bustina",
+        "cart.pack_many": "{count} bustine",
+        "cart.seeds_per_pack": "{count} semi/busta",
+        "cart.per_pack": "busta",
+        "cart.total": "Totale stimato",
+        "cart.export_btn": "🛒 Aggiungi i semi al carrello",
+        "cart.nudge_title": "Semi aggiunti al carrello",
+        "cart.nudge_meta_one": "1 varietà aggiunta",
+        "cart.nudge_meta_many": "{count} varietà aggiunte",
+        "print.title": "Progetto serra",
+        "print.greenhouse_info": "Serra {w}×{l} m · {zone} · {month}",
+        "print.yield_title": "Resa e spesa",
+        "print.plant": "Pianta",
+        "print.qty": "Quantità",
+        "print.total_yield": "Resa totale",
+        "print.shopping": "Da preparare",
+        "print.total": "Totale stimato",
+        "cart.checkout_msg":
+          "Il pagamento online non è ancora attivo.\n\nScrivici a info@ortoinserra.it o chiamaci al +39 055 987 0123 con la tua lista:\n{lines}\n\nTotale: {total}"
+      },
+      ro: {
+        title: "Grădină în seră · Proiectează sera de sus",
+        language: "Limbă",
+        selected: "Selectată",
+        openSetup: "Redeschide configurarea ghidată",
+        brandTitle: "Grădină în seră",
+        brandSub: "Proiectează sera de sus, plantă cu plantă",
+        guidedAppTitle: "Configurator seră",
+        guidedAppSub: "Proiectează grădina plantă cu plantă · vedere de sus",
+        modalKicker: "Configurare inițială",
+        modalTitle: "Alege mai întâi clima",
+        modalCopy:
+          "Folosesc zona și încălzirea ca să îți arăt culturile potrivite perioadei. Le poți schimba și după.",
+        guidedModalKicker: "Traseu pentru început",
+        guidedModalTitle: "Pornim de la o grădină ușoară",
+        guidedModalCopy:
+          "Introdu dimensiunile și clima: pregătesc un prim proiect pentru începători, cu culturi simple, distanțe corecte și cantități editabile.",
+        guidedIntroTitle: "Configurează sera, apoi explorează culturile",
+        guidedIntroCopy:
+          "Setează datele reale. Umple automat sau alege culturile. Apasă pe o plantă din hartă pentru fișa cu cantități, recoltă și sfaturi.",
+        guidedIntroEdit: "Personalizează",
+        guidedIntroEditHint: "Modifică dimensiuni, plante și layout",
+        guidedIntroView: "Vezi proiectul",
+        guidedIntroViewHint: "Explorează planul complet",
+        guidedIntroBuy: "Cumpără semințele",
+        guidedIntroBuyHint: "Mergi la catalog și coș",
+        guidedIntroSummary:
+          "{beds} soiuri · {plants} plante · aproximativ {yield} recoltă",
+        modalSizeTitle: "Dimensiunile serei",
+        modalSizeCopy: "Introdu dimensiunile interioare: vor rămâne salvate.",
+        modalZoneTitle: "Zonă climatică",
+        modalZoneCopy: "Alege opțiunea cea mai apropiată de grădina ta.",
+        zoneColdTitle: "Zonă rece",
+        zoneColdCopy: "Nord, munte, ierni aspre. Sezon mai scurt.",
+        zoneTempTitle: "Zonă temperată",
+        zoneTempCopy: "Câmpie, deal, cea mai mare parte a Italiei.",
+        zoneWarmTitle: "Zonă caldă",
+        zoneWarmCopy: "Sud, coastă, ierni blânde. Sezon mai lung.",
+        modalGreenhouseTitle: "Tipul serei",
+        modalGreenhouseCopy:
+          "Bifează dacă poți menține temperaturi blânde iarna.",
+        heated: "Seră încălzită",
+        start: "Creează primul proiect",
+        guidedStart: "Creează grădina mea ghidată",
+        disclaimer:
+          "Distanțele, perioadele de semănare și asocierile sunt estimări practice: soiul, microclimatul și tehnica pot schimba rezultatul.",
+        settingsTitle: "Sera ta",
+        settingsSub:
+          "Aceste date ghidează atât planul automat, cât și alegerea manuală a culturilor.",
+        openPanel: "Deschide",
+        closePanel: "Închide",
+        openPanelLabel: "Deschide secțiunea",
+        closePanelLabel: "Închide secțiunea",
+        openCropsPanel: "Alege plantele",
+        sizes: "1. Dimensiuni interioare",
+        climate: "2. Climă",
+        quickStart: "3. Plan automat",
+        width: "Lățime",
+        length: "Lungime",
+        sowMonth: "Luna de semănare",
+        pathWidth: "Lățimea aleii dintre straturi",
+        zone: "Zonă",
+        greenhouse: "Seră",
+        readyLayouts: "Planuri pregătite",
+        presetDefault: "Alege un exemplu",
+        presetInsalate: "Salate ușoare tot anul",
+        presetSalsa: "Totul pentru sos de roșii",
+        presetPrincipiante: "Grădina începătorului",
+        presetAromatiche: "Colț de plante aromatice",
+        presetEstivo: "Grădină de vară bogată",
+        presetInvernale: "Seră verde de iarnă",
+        presetRadici: "Rădăcini și bulbi ușori",
+        presetFoglie: "Frunze pentru tăieri repetate",
+        presetBrassicacee: "Verze pentru seră răcoroasă",
+        autoFill: "Umple automat",
+        autoFillCopy: "Alege culturi de sezon și umple spațiul.",
+        helper:
+          "Folosește <b>Umple automat</b> când pornești de la zero. După fiecare modificare, planul se aranjează automat.",
+        sowAt: "Semănare",
+        stageTitle: "Vedere de sus",
+        stageSub: "Apasă pe un strat pentru detalii de cultivare.",
+        viewMode: "Vedere",
+        viewNatural: "Vedere naturală",
+        sunMap: "Hartă soare",
+        waterMap: "Hartă apă",
+        heightMap: "Înălțimea plantelor",
+        restoreAutoFill: "Umple sera",
+        fillSelected: "Optimizează culturile alese",
+        fillSelectedHint: "Recalibrează cantitățile și umple doar cu aceste culturi.",
+        cropActionsTitle: "Acțiuni pentru culturile adăugate",
+        cropActionsHint: "Aceste comenzi modifică proiectul curent al serei.",
+        cropsSectionCustomize: "⚙ Personalizează",
+        customizeTitle: "Culturi în seră",
+        customizeSub:
+          "Adaugă sau elimină culturi. Filtrul În seră arată doar plantele deja prezente în proiect.",
+        modeFitTitle: "Plan automat",
+        modeFitHint: "Setează dimensiunile și clima — sera se umple automat",
+        modeExpertTitle: "Alege culturile",
+        modeExpertHint: "Adaugă sau elimină plantele una câte una",
+        fillSelectedTitle:
+          "Recalibrează cantități realiste și umple sera folosind doar culturile deja adăugate",
+        clearGreenhouseHint: "Elimină toate culturile din proiect.",
+        clearGreenhouseTitle: "Elimină toate plantele din seră",
+        noSelectedPlants:
+          "Adaugă mai întâi una sau mai multe plante cu butonul <b>+</b> din cardul <em>Personalizează</em>: apoi acest buton va optimiza sera doar cu acelea.",
+        print: "Tipărește",
+        noSelection: "Detalii cultură",
+        plantInfoHint:
+          "Apasă pe o cultură din harta centrală pentru a vedea aici cantitate, recoltă, distanță, apă, soare și recoltare.",
+        noSelectionCopy:
+          "Adaugă o cultură din cardul Personalizează, apoi apasă pe ea în seră pentru detalii.",
+        howTo1:
+          "În <b>Plan automat</b> setează dimensiuni, lună, climă și tipul serei.",
+        howTo2:
+          "Apasă <b>Umple sera</b> sau treci la <em>Alege culturile</em> pentru a le adăuga manual.",
+        howTo3: "Apasă pe un strat din vedere pentru cantități și detalii.",
+        inGreenhouse: "În seră",
+        bedsSub: "Lista straturilor inserate. Clic pe un rând pentru selecție.",
+        yieldCost: "Semințe de cumpărat",
+        yieldSub:
+          "Semințele necesare și recolta estimată pentru realizarea acestui proiect.",
+        yieldEditCropsLabel: "Modifică culturile",
+        yieldEditCropsHint:
+          "Deschide „Alege culturile” pentru a adăuga sau elimina plante.",
+        yieldEditCropsAria: "Modifică culturile din seră",
+        tagZone: "Zonă",
+        tagMonth: "Lună",
+        tagGreenhouse: "Seră",
+        cold: "rece",
+        temperate: "temperată",
+        warm: "caldă",
+        heatedShort: "încălzită",
+        unheated: "Rece",
+        heatedOption: "Încălzită",
+        suitableCrops:
+          "<b>{count}</b> plante potrivite luna aceasta — apasă <b>+</b> pentru a adăuga, <b>×</b> pentru a elimina",
+        filterDescAll:
+          "🌿&nbsp;<b>{count}</b> culturi de semănat luna aceasta în zona ta — apasă <b>+</b> pentru a adăuga",
+        filterDescIn:
+          "✓&nbsp;<b>{count}</b> {label} în sera ta — <b>−/+</b> cantitate · <b>×</b> elimină",
+        filterDescAllBeds:
+          "⌕&nbsp;<b>{count}</b> semințe în catalogul complet · <b>{seasonal}</b> potrivite pentru luna selectată",
+        cropSingular: "cultură",
+        cropPlural: "culturi",
+        offSeason: "în afara sezonului",
+        noCrops:
+          "Nu există culturi tipice de semănat în <b>{month}</b> pentru această zonă. Încearcă altă lună sau activează sera încălzită.",
+        fullSun: "soare plin",
+        halfShade: "semiumbră",
+        waterHigh: "Multă apă",
+        waterMedium: "Mediu",
+        waterLow: "Puțină",
+        heightHigh: "Înalte",
+        heightMedium: "Medii",
+        heightLow: "Joase",
+        emptyGreenhouse: "Seră goală",
+        emptyBannerTitle: "Sera este goală",
+        emptyBannerCopy:
+          "Apasă <strong>Umple sera</strong> pentru a porni automat, sau alege plantele una câte una din cardul <strong>Personalizează</strong>.",
+        svgLabel: "Seră văzută de sus",
+        tooFull: "prea plină: planul automat a atins limita",
+        organized: "spațiu organizat corect",
+        emptyStatus: "goală",
+        scale: "Seră {w}×{l} m · folosiți {used} m din {l} m · {status}",
+        noBeds:
+          "Nicio plantă încă — adaugă cu <b>+</b> sau folosește <em>Umple sera</em>.",
+        addEstimate: "Adaugă plante în seră pentru a vedea estimarea recoltei.",
+        daysShort: "zile",
+        about: "aprox.",
+        piecesShort: "buc",
+        plants: "plante",
+        estimated: "estimate",
+        distance: "Distanță",
+        distanceInRow: "pe rând",
+        distanceBetweenRows: "între rânduri",
+        height: "Înălțime",
+        sun: "Soare",
+        water: "Apă",
+        harvest: "Recoltare",
+        yieldPlant: "Recoltă/plantă",
+        distanceHelp:
+          "Pe rând × între rânduri: spațiul minim între plante și între două rânduri din același strat.",
+        harvestHelp:
+          "Zile orientative de la transplantare sau semănare directă; variază cu temperatura, soiul și îngrijirea.",
+        perennial: "perenă",
+        sowingZone: "Semănare (zona aceasta)",
+        howToSow: "Cum se seamănă",
+        sowMethod: "Metodă",
+        sowDepth: "Adâncime",
+        sowThin: "Rărire/transplantare",
+        sowTip: "Notă practică",
+        detailHarvestSub: "zile de la transplantare",
+        detailYieldSub: "per plantă",
+        friends: "Compatibile",
+        enemies: "Incompatibile",
+        removePlant: "Elimină din seră",
+        remove: "Elimină",
+        overflowWarning:
+          "Straturile depășesc lungimea serei. Redu numărul de plante sau mărește sera (linia roșie = capătul serei).",
+        badCompanion:
+          "<b>{a}</b> și <b>{b}</b> nu se potrivesc: mai bine ține-le la distanță sau separă-le cu altă cultură.",
+        goodCompanions: "Asocieri bune prezente: {pairs}.",
+        summary:
+          "<b>{plants}</b> plante în <b>{beds}</b> straturi · recoltă estimată <b>{yield}</b> la finalul ciclului.",
+        shoppingItem: "{count} plante/semințe",
+        clearGreenhouse: "Golește sera",
+        /* Categorie piante nella sezione Personalizza */
+        vegCat_frutti: "Fructe & legume",
+        vegCat_foglie: "Salate & frunze",
+        vegCat_radici: "Rădăcini & bulbi",
+        vegCat_aromatiche: "Aromatice",
+        vegCat_legumi: "Leguminoase",
+        vegCat_cavoli: "Verze & brasicacee",
+        vegCatAltro: "Altele",
+        /* Difficoltà */
+        diffEasy: "★&nbsp;Ușor",
+        diffMedium: "★★&nbsp;Mediu",
+        diffHard: "★★★&nbsp;Dificil",
+        /* Badge e messaggi della lista piante */
+        vegInGreenhouse: "✓&nbsp;în seră",
+        vegNoMore: "Nicio plantă în seră pentru această lună.",
+        /* Filtri tab */
+        filterAll: "🌿&nbsp;De semănat acum",
+        filterAllBeds: "📋&nbsp;Plan complet",
+        filterEasy: "⭐&nbsp;Ușoare",
+        filterIn: "✓&nbsp;Deja adăugate",
+        "yield.varieties": "soiuri",
+        "yield.plants_label": "plante",
+        "yield.harvest": "recoltă estimată",
+        "cart.pack_one": "1 pungă",
+        "cart.pack_many": "{count} pungi",
+        "cart.seeds_per_pack": "{count} sem./pungă",
+        "cart.per_pack": "pungă",
+        "cart.total": "Total estimat",
+        "cart.export_btn": "🛒 Adaugă semințele în coș",
+        "cart.nudge_title": "Semințe adăugate în coș",
+        "cart.nudge_meta_one": "1 soi adăugat",
+        "cart.nudge_meta_many": "{count} soiuri adăugate",
+        "print.title": "Plan seră",
+        "print.greenhouse_info": "Seră {w}×{l} m · {zone} · {month}",
+        "print.yield_title": "Recoltă și cumpărături",
+        "print.plant": "Plantă",
+        "print.qty": "Cantitate",
+        "print.total_yield": "Recoltă totală",
+        "print.shopping": "De pregătit",
+        "print.total": "Total estimat",
+        "cart.checkout_msg":
+          "Nu există plată online momentan.\n\nScrie-ne la info@ortoinserra.it sau sună la +39 055 987 0123 cu lista ta:\n{lines}\n\nTotal: {total}"
+      }
+    }
+  };
+  global.SERRA_I18N = Object.assign({}, global.SERRA_I18N || {}, shared);
+})(window);
