@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="scorzonera">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(-22)"><path d="M0 0 C 13 -4.2, 7.2 -27.8, 0 -32.6 C -7.2 -27.8, -13 -4.2, 0 0 Z" fill="#5a9a48"/></g>
+<g transform="rotate(8)"><path d="M0 0 C 14 -4.5, 7.7 -30, 0 -35.2 C -7.7 -30, -14 -4.5, 0 0 Z" fill="#7aba68"/></g>
+<g transform="rotate(35)"><path d="M0 0 C 11.5 -3.7, 6.3 -24.8, 0 -29.2 C -6.3 -24.8, -11.5 -3.7, 0 0 Z" fill="#5a9a48"/></g>
+<path d="M0 -5 C -5 5, -7 20, -4 40" stroke="#3a2818" stroke-width="9" fill="none" stroke-linecap="round"/>
+<path d="M0 -5 C -4.5 5, -6.2 20, -3.5 40" stroke="#4a3828" stroke-width="7" fill="none" stroke-linecap="round"/>
+<line x1="-1" y1="10" x2="-3.5" y2="40" stroke="#2a1808" stroke-width="1" stroke-dasharray="3,3"/>
+<path d="M-3.5 32 C -10 34, -11 39, -7 43" stroke="#3a2818" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M-3 29 C 4 32, 5 37, 3 42" stroke="#3a2818" stroke-width="2" fill="none" stroke-linecap="round"/>
 </svg>

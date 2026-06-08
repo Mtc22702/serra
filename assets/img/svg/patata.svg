@@ -1,4 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="patata">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="translate(-1.8 1) rotate(315)"><path d="M0 0 C 14 -3.6, 7.7 -19, 0 -22.4 C -7.7 -19, -14 -3.6, 0 0 Z" fill="#4a7838"/></g>
+<g transform="translate(5 1.4) rotate(116)"><path d="M0 0 C 12 -3.1, 6.6 -16.4, 0 -19.4 C -6.6 -16.4, -12 -3.1, 0 0 Z" fill="#6a9a52"/></g>
+<g transform="translate(-11 -13) rotate(354)"><path d="M0 0 C 15 -3.9, 8.4 -20.9, 0 -24.6 C -8.4 -20.9, -15 -3.9, 0 0 Z" fill="#4a7838"/></g>
+<g transform="translate(13 7) rotate(296)"><path d="M0 0 C 9.5 -2.5, 5.2 -13, 0 -15.4 C -5.2 -13, -9.5 -2.5, 0 0 Z" fill="#6a9a52"/></g>
+<ellipse cx="3" cy="8" rx="28" ry="20" fill="#b89050"/>
+<ellipse cx="3" cy="8" rx="26" ry="18" fill="#c8a060"/>
+<circle cx="-8" cy="2" r="3" fill="#a07840"/>
+<circle cx="-8" cy="2" r="1.5" fill="#906830"/>
+<circle cx="12" cy="5" r="2.5" fill="#a07840"/>
+<circle cx="12" cy="5" r="1.2" fill="#906830"/>
+<circle cx="0" cy="18" r="2.8" fill="#a07840"/>
+<circle cx="0" cy="18" r="1.3" fill="#906830"/>
+<circle cx="-5" cy="12" r="2" fill="#a07840"/>
+<ellipse cx="-5" cy="0" rx="8" ry="5" fill="rgba(255,255,255,.2)"/>
 </svg>

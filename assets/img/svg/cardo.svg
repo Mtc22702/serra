@@ -1,4 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="cardo">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(0)"><path d="M0 0 C 8 -3, 4 -28, 0 -34 C -4 -28, -8 -3, 0 0 Z" fill="#6a7a8e"/><path d="M0 0 L0 -28" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/></g>
+<g transform="rotate(40)"><path d="M0 0 C 9 -3.5, 5 -30, 0 -36 C -5 -30, -9 -3.5, 0 0 Z" fill="#8090a8"/><path d="M0 0 L0 -30" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/></g>
+<g transform="rotate(80)"><path d="M0 0 C 8 -3, 4 -27, 0 -33 C -4 -27, -8 -3, 0 0 Z" fill="#6a7a8e"/><path d="M0 0 L0 -27" stroke="rgba(255,255,255,.18)" stroke-width="1.15"/></g>
+<g transform="rotate(130)"><path d="M0 0 C 9 -3.5, 5 -31, 0 -37 C -5 -31, -9 -3.5, 0 0 Z" fill="#8090a8"/><path d="M0 0 L0 -31" stroke="rgba(255,255,255,.18)" stroke-width="1.35"/></g>
+<g transform="rotate(175)"><path d="M0 0 C 8 -3, 4 -28, 0 -34 C -4 -28, -8 -3, 0 0 Z" fill="#6a7a8e"/><path d="M0 0 L0 -28" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/></g>
+<g transform="rotate(220)"><path d="M0 0 C 9 -3.5, 5 -30, 0 -36 C -5 -30, -9 -3.5, 0 0 Z" fill="#8090a8"/><path d="M0 0 L0 -30" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/></g>
+<g transform="rotate(265)"><path d="M0 0 C 8 -3, 4 -27, 0 -33 C -4 -27, -8 -3, 0 0 Z" fill="#6a7a8e"/><path d="M0 0 L0 -27" stroke="rgba(255,255,255,.18)" stroke-width="1.15"/></g>
+<g transform="rotate(315)"><path d="M0 0 C 9 -3.5, 5 -30, 0 -36 C -5 -30, -9 -3.5, 0 0 Z" fill="#8090a8"/><path d="M0 0 L0 -30" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/></g>
+<circle r="11" fill="#7b68aa"/>
+<circle cx="-3" cy="-3" r="4" fill="rgba(255,255,255,.25)"/>
+<circle r="5" fill="#9e7dc8"/>
+<circle cx="-1.5" cy="-1.5" r="1.8" fill="rgba(255,255,255,.35)"/>
 </svg>

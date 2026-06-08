@@ -1,4 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="fagiolo borlotto">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="translate(-17 0) rotate(203)"><path d="M0 0 C 14.5 -2.9, 8 -15.5, 0 -18.3 C -8 -15.5, -14.5 -2.9, 0 0 Z" fill="#7a3848"/></g>
+<g transform="translate(-5 -16) rotate(182)"><path d="M0 0 C 15.5 -3.1, 8.5 -16.6, 0 -19.5 C -8.5 -16.6, -15.5 -3.1, 0 0 Z" fill="#a05068"/></g>
+<g transform="translate(6.5 -14.6) rotate(176)"><path d="M0 0 C 21.4 -4.3, 11.8 -22.8, 0 -26.8 C -11.8 -22.8, -21.4 -4.3, 0 0 Z" fill="#7a3848"/></g>
+<g transform="translate(23 -8.6) rotate(306)"><path d="M0 0 C 16.7 -3.3, 9.2 -17.7, 0 -20.9 C -9.2 -17.7, -16.7 -3.3, 0 0 Z" fill="#a05068"/></g>
+<g transform="translate(-8.4 6.8) rotate(78)"><path d="M0 0 C 20 -4, 11 -21.3, 0 -25 C -11 -21.3, -20 -4, 0 0 Z" fill="#7a3848"/></g>
+<g transform="translate(-3.7 -3.2) rotate(206)"><path d="M0 0 C 18.4 -3.7, 10.1 -19.6, 0 -23 C -10.1 -19.6, -18.4 -3.7, 0 0 Z" fill="#a05068"/></g>
+<g transform="translate(-16.5 -13.1) rotate(258)"><path d="M0 0 C 21.7 -4.3, 11.9 -23.1, 0 -27.2 C -11.9 -23.1, -21.7 -4.3, 0 0 Z" fill="#7a3848"/></g>
+<g transform="translate(-14.5 13.5) rotate(192)"><path d="M0 0 C 22 -4.4, 12.1 -23.4, 0 -27.6 C -12.1 -23.4, -22 -4.4, 0 0 Z" fill="#a05068"/></g>
+<g transform="translate(-2 0.2) rotate(108)"><path d="M0 0 C 13.7 -2.7, 7.5 -14.5, 0 -17.1 C -7.5 -14.5, -13.7 -2.7, 0 0 Z" fill="#7a3848"/></g>
+<g transform="translate(3.1 4.7) rotate(300)"><path d="M0 0 C 14.5 -2.9, 8 -15.4, 0 -18.1 C -8 -15.4, -14.5 -2.9, 0 0 Z" fill="#a05068"/></g>
+<g transform="translate(8.9 8.2) rotate(104)"><path d="M0 0 C 20.3 -4.1, 11.2 -21.6, 0 -25.4 C -11.2 -21.6, -20.3 -4.1, 0 0 Z" fill="#7a3848"/></g>
+<g transform="translate(4.7 -16.9) rotate(349)"><path d="M0 0 C 14.3 -2.9, 7.9 -15.2, 0 -17.8 C -7.9 -15.2, -14.3 -2.9, 0 0 Z" fill="#a05068"/></g>
+<g transform="translate(-4.6 2) rotate(45)"><path d="M0 0 C 22.5 -4.5, 12.4 -23.9, 0 -28.2 C -12.4 -23.9, -22.5 -4.5, 0 0 Z" fill="#7a3848"/></g>
+<path d="M0 0 q 15.96 -15.96 3.36 -27.3" stroke="#7a3848" stroke-width="2.1" fill="none"/>
 </svg>

@@ -1,4 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="calendula">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(0)"><path d="M0 0 C 10 -4, 6 -36, 0 -40 C -6 -36, -10 -4, 0 0 Z" fill="#e08020"/></g>
+<g transform="rotate(30)"><path d="M0 0 C 10 -4, 6 -34, 0 -38 C -6 -34, -10 -4, 0 0 Z" fill="#f09030"/></g>
+<g transform="rotate(60)"><path d="M0 0 C 10 -4, 6 -36, 0 -40 C -6 -36, -10 -4, 0 0 Z" fill="#e08020"/></g>
+<g transform="rotate(90)"><path d="M0 0 C 10 -4, 6 -35, 0 -39 C -6 -35, -10 -4, 0 0 Z" fill="#f09030"/></g>
+<g transform="rotate(120)"><path d="M0 0 C 10 -4, 6 -36, 0 -40 C -6 -36, -10 -4, 0 0 Z" fill="#e08020"/></g>
+<g transform="rotate(150)"><path d="M0 0 C 10 -4, 6 -34, 0 -38 C -6 -34, -10 -4, 0 0 Z" fill="#f09030"/></g>
+<g transform="rotate(180)"><path d="M0 0 C 10 -4, 6 -36, 0 -40 C -6 -36, -10 -4, 0 0 Z" fill="#e08020"/></g>
+<g transform="rotate(210)"><path d="M0 0 C 10 -4, 6 -35, 0 -39 C -6 -35, -10 -4, 0 0 Z" fill="#f09030"/></g>
+<g transform="rotate(240)"><path d="M0 0 C 10 -4, 6 -36, 0 -40 C -6 -36, -10 -4, 0 0 Z" fill="#e08020"/></g>
+<g transform="rotate(270)"><path d="M0 0 C 10 -4, 6 -34, 0 -38 C -6 -34, -10 -4, 0 0 Z" fill="#f09030"/></g>
+<g transform="rotate(300)"><path d="M0 0 C 10 -4, 6 -36, 0 -40 C -6 -36, -10 -4, 0 0 Z" fill="#e08020"/></g>
+<g transform="rotate(330)"><path d="M0 0 C 10 -4, 6 -35, 0 -39 C -6 -35, -10 -4, 0 0 Z" fill="#f09030"/></g>
+<circle r="12" fill="#c86010"/>
+<circle cx="-3" cy="-3" r="4.5" fill="rgba(255,255,255,.25)"/>
 </svg>

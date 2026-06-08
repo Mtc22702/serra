@@ -1,4 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="carciofo">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(-20)"><path d="M0 5 C 12 -2, 8 -28, 0 -34 C -8 -28, -12 -2, 0 5 Z" fill="#4a7838"/></g>
+<g transform="rotate(20)"><path d="M0 5 C 11 -2, 7 -26, 0 -32 C -7 -26, -11 -2, 0 5 Z" fill="#6a9a58"/></g>
+<ellipse cx="0" cy="-2" rx="20" ry="26" fill="#5a7848"/>
+<ellipse cx="0" cy="-2" rx="18" ry="24" fill="#6a8858"/>
+<g transform="translate(0 -8)">
+  <path d="M0 -16 C-8 -14, -12 -8, -12 0 C-12 8, -8 14, 0 16 C8 14, 12 8, 12 0 C12 -8, 8 -14, 0 -16 Z" fill="#5a7848"/>
+  <path d="M-8 -10 C-6 -16, 0 -18, 8 -10 C6 -16, 0 -18, -8 -10 Z" fill="#4a6838"/>
+  <path d="M-10 0 C-12 -8, -8 -16, 0 -18 C-8 -14, -12 -6, -12 0 Z" fill="#7a9868"/>
+  <path d="M10 0 C12 -8, 8 -16, 0 -18 C8 -14, 12 -6, 12 0 Z" fill="#4a6838"/>
+  <path d="M-8 10 C-12 4, -12 -4, -8 -12 C-10 -4, -10 4, -8 10 Z" fill="#7a9868"/>
+  <path d="M8 10 C12 4, 12 -4, 8 -12 C10 -4, 10 4, 8 10 Z" fill="#4a6838"/>
+  <path d="M0 16 C-8 14, -12 6, -10 0 C-8 6, -4 12, 0 14 C4 12, 8 6, 10 0 C12 6, 8 14, 0 16 Z" fill="#7a9868"/>
+</g>
+<circle cx="0" cy="-10" r="8" fill="#8878aa"/>
+<circle cx="-2.5" cy="-12.5" r="3" fill="rgba(255,255,255,.2)"/>
 </svg>

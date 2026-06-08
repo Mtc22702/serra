@@ -1,4 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="loboda">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.44" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(10)"><path d="M0 0 C 18 -5.8, 9.9 -30.6, 0 -36 C -9.9 -30.6, -18 -5.8, 0 0 Z" fill="#8a3858"/></g>
+<g transform="rotate(50)"><path d="M0 0 C 16.6 -5.3, 9.1 -28.2, 0 -33.2 C -9.1 -28.2, -16.6 -5.3, 0 0 Z" fill="#aa5070"/></g>
+<g transform="rotate(90)"><path d="M0 0 C 19 -6.1, 10.5 -32.3, 0 -38 C -10.5 -32.3, -19 -6.1, 0 0 Z" fill="#8a3858"/></g>
+<g transform="rotate(132)"><path d="M0 0 C 17 -5.4, 9.3 -28.8, 0 -34 C -9.3 -28.8, -17 -5.4, 0 0 Z" fill="#aa5070"/></g>
+<g transform="rotate(175)"><path d="M0 0 C 16.3 -5.2, 8.9 -27.7, 0 -32.6 C -8.9 -27.7, -16.3 -5.2, 0 0 Z" fill="#8a3858"/></g>
+<g transform="rotate(215)"><path d="M0 0 C 19.9 -6.3, 10.9 -33.8, 0 -39.8 C -10.9 -33.8, -19.9 -6.3, 0 0 Z" fill="#aa5070"/></g>
+<g transform="rotate(258)"><path d="M0 0 C 17.9 -5.7, 9.8 -30.4, 0 -35.7 C -9.8 -30.4, -17.9 -5.7, 0 0 Z" fill="#8a3858"/></g>
+<g transform="rotate(298)"><path d="M0 0 C 15.9 -5.1, 8.7 -27, 0 -31.7 C -8.7 -27, -15.9 -5.1, 0 0 Z" fill="#aa5070"/></g>
+<g transform="rotate(336)"><path d="M0 0 C 17.6 -5.6, 9.7 -29.9, 0 -35.2 C -9.7 -29.9, -17.6 -5.6, 0 0 Z" fill="#8a3858"/></g>
+<circle r="7" fill="#c05878"/>
 </svg>
