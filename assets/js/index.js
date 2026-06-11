@@ -1,1223 +1,21 @@
 /* =========================================================
    JS pagina home: catalogo semi, sezione hero stagionale, carrello e traduzioni.
    Le funzioni restano globali per i gestori inline presenti nell'HTML.
+   ---------------------------------------------------------
+   MAPPA DEL FILE (in ordine):
+     1. Catalogo colture (PLANTS) e indice per id (BYID)
+     2. Mappa difficoltà colture (DIFFICULTY)
+     3. Dati ausiliari (prezzi, foto, traduzioni piante)
+     4. Stato pagina (filtri catalogo, carrello)
+     5. Helper catalogo (filtri, ordinamento, prezzi, etichette)
+     6. Rendering (hero, calendario, catalogo, abbinamenti, kit, footer)
+     7. Carrello e dettaglio pianta
+     8. Preferenze, persistenza e lingua
+     9. Avvio (boot)
    ========================================================= */
 
 /* Dati piante: catalogo base usato da card, dettaglio e carrello. */
-const PLANTS = [
-  {
-    id: "pomodoro",
-    nome: "Pomodoro",
-    mesi: [2, 3, 4],
-    gg: 90,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    resa: 3,
-    amiche: [
-      "basilico",
-      "cipolla",
-      "carota",
-      "prezzemolo",
-      "lattuga",
-      "sedano"
-    ],
-    nemiche: [
-      "cavolo",
-      "verza",
-      "broccolo",
-      "cavolfiore",
-      "cavolonero",
-      "cavolorapa",
-      "finocchio"
-    ],
-    nota: "Vuole sostegno e pieno sole. Togli le femminelle."
-  },
-  {
-    id: "peperone",
-    nome: "Peperone",
-    mesi: [2, 3, 4],
-    gg: 90,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 1,
-    amiche: ["basilico", "pomodoro"],
-    nemiche: ["fagiolino", "fagiolo"],
-    nota: "Ama il caldo. Concima quando inizia a fruttificare."
-  },
-  {
-    id: "peperoncino",
-    nome: "Peperoncino",
-    mesi: [2, 3, 4],
-    gg: 95,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.5,
-    amiche: ["basilico"],
-    nemiche: [],
-    nota: "Rustico e generoso. Sopporta bene la siccità."
-  },
-  {
-    id: "melanzana",
-    nome: "Melanzana",
-    mesi: [2, 3, 4],
-    gg: 100,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    resa: 1.5,
-    amiche: ["fagiolino"],
-    nemiche: [],
-    nota: "Vuole molto caldo e annaffiature regolari."
-  },
-  {
-    id: "zucchina",
-    nome: "Zucchina",
-    mesi: [3, 4, 5, 6],
-    gg: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "alta",
-    resa: 2.5,
-    amiche: ["fagiolino", "ravanello"],
-    nemiche: [],
-    nota: "Cresce in fretta. Raccogli spesso."
-  },
-  {
-    id: "zucca",
-    nome: "Zucca",
-    mesi: [4, 5],
-    gg: 120,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 4,
-    amiche: ["fagiolo"],
-    nemiche: [],
-    nota: "Si allarga molto: lascia spazio o falla arrampicare."
-  },
-  {
-    id: "cetriolo",
-    nome: "Cetriolo",
-    mesi: [3, 4, 5, 6],
-    gg: 60,
-    h: "alta",
-    sole: "pieno",
-    acqua: "alta",
-    resa: 2,
-    amiche: ["fagiolino", "lattuga", "aneto"],
-    nemiche: ["salvia", "pomodoro"],
-    nota: "Falla arrampicare su una rete: frutti più puliti."
-  },
-  {
-    id: "melone",
-    nome: "Melone",
-    mesi: [3, 4, 5],
-    gg: 110,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 2,
-    amiche: [],
-    nemiche: [],
-    nota: "Vuole tanto sole e poca acqua a fine maturazione."
-  },
-  {
-    id: "anguria",
-    nome: "Anguria",
-    mesi: [3, 4, 5],
-    gg: 120,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 6,
-    amiche: [],
-    nemiche: [],
-    nota: "Enorme: una pianta riempie mezza serra piccola."
-  },
-  {
-    id: "lattuga",
-    nome: "Lattuga",
-    mesi: [1, 2, 3, 4, 8, 9, 10],
-    gg: 55,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.35,
-    amiche: ["carota", "ravanello", "fragola", "cetriolo", "cipolla"],
-    nemiche: [],
-    nota: "Facilissima e veloce. Semina poche piante per volta."
-  },
-  {
-    id: "radicchio",
-    nome: "Radicchio",
-    mesi: [6, 7, 8],
-    gg: 80,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.3,
-    amiche: ["finocchio"],
-    nemiche: [],
-    nota: "Il freddo lo rende rosso e dolce."
-  },
-  {
-    id: "rucola",
-    nome: "Rucola",
-    mesi: [2, 3, 4, 5, 8, 9, 10],
-    gg: 35,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.1,
-    amiche: ["lattuga"],
-    nemiche: [],
-    nota: "Pronta in poche settimane. Si ritaglia e ricresce."
-  },
-  {
-    id: "spinaci",
-    nome: "Spinaci",
-    mesi: [1, 2, 3, 9, 10, 11],
-    gg: 45,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.15,
-    amiche: ["fragola", "cavolo"],
-    nemiche: [],
-    nota: "Ama il fresco; in estate va in fiore subito."
-  },
-  {
-    id: "bietola",
-    nome: "Bietola da coste",
-    mesi: [2, 3, 4, 5, 8, 9],
-    gg: 60,
-    h: "media",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.5,
-    amiche: ["cavolo", "cipolla"],
-    nemiche: [],
-    nota: "Generosa: raccogli le foglie esterne a mano a mano."
-  },
-  {
-    id: "cavolo",
-    nome: "Cavolo cappuccio",
-    mesi: [2, 3, 6, 7],
-    gg: 90,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 1.2,
-    amiche: ["sedano", "aneto", "cipolla", "bietola"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Vuole spazio e terreno ricco."
-  },
-  {
-    id: "verza",
-    nome: "Verza",
-    mesi: [2, 3, 6, 7],
-    gg: 100,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 1.2,
-    amiche: ["sedano", "aneto", "cipolla"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Resiste al gelo; più buona dopo le prime brinate."
-  },
-  {
-    id: "broccolo",
-    nome: "Broccolo",
-    mesi: [2, 3, 6, 7],
-    gg: 85,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.6,
-    amiche: ["sedano", "cipolla"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Dopo la testa centrale dà tanti getti laterali."
-  },
-  {
-    id: "cavolfiore",
-    nome: "Cavolfiore",
-    mesi: [2, 3, 6, 7],
-    gg: 95,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.8,
-    amiche: ["sedano", "aneto"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Piega le foglie sulla testa per tenerla bianca."
-  },
-  {
-    id: "cavolonero",
-    nome: "Cavolo nero",
-    mesi: [2, 3, 6, 7],
-    gg: 80,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.5,
-    amiche: ["cipolla", "bietola"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Rustico toscano: si raccoglie a foglie per mesi."
-  },
-  {
-    id: "cavolorapa",
-    nome: "Cavolo rapa",
-    mesi: [2, 3, 8, 9],
-    gg: 60,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.3,
-    amiche: ["cipolla", "bietola"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Si mangia il fusto ingrossato: raccogli da giovane."
-  },
-  {
-    id: "carota",
-    nome: "Carota",
-    mesi: [2, 3, 4, 5, 6, 7, 8],
-    gg: 90,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.1,
-    amiche: ["cipolla", "porro", "lattuga", "ravanello", "pomodoro"],
-    nemiche: ["aneto", "finocchio"],
-    nota: "Semina fitta e dirada. Terreno sciolto, senza sassi."
-  },
-  {
-    id: "finocchio",
-    nome: "Finocchio",
-    mesi: [6, 7, 8],
-    gg: 100,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.3,
-    amiche: [],
-    nemiche: [
-      "pomodoro",
-      "fagiolino",
-      "fagiolo",
-      "pisello",
-      "cetriolo",
-      "spinaci"
-    ],
-    nota: "Tienilo in disparte: non va d'accordo con molti."
-  },
-  {
-    id: "prezzemolo",
-    nome: "Prezzemolo",
-    mesi: [2, 3, 4, 5, 8, 9],
-    gg: 75,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.05,
-    amiche: ["pomodoro"],
-    nemiche: [],
-    nota: "Lento a partire; poi taglia di continuo per mesi."
-  },
-  {
-    id: "basilico",
-    nome: "Basilico",
-    mesi: [3, 4, 5, 6],
-    gg: 60,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.05,
-    amiche: ["pomodoro", "peperone", "peperoncino"],
-    nemiche: [],
-    nota: "Cima i fiori per avere foglie sempre tenere."
-  },
-  {
-    id: "coriandolo",
-    nome: "Coriandolo",
-    mesi: [3, 4, 5, 8, 9],
-    gg: 50,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.03,
-    amiche: [],
-    nemiche: [],
-    nota: "Va a fiore col caldo: semina ogni 2 settimane."
-  },
-  {
-    id: "aneto",
-    nome: "Aneto",
-    mesi: [3, 4, 5, 8],
-    gg: 70,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.05,
-    amiche: ["cavolo", "cetriolo"],
-    nemiche: ["carota"],
-    nota: "Aiuta i cavoli e attira insetti utili."
-  },
-  {
-    id: "cipolla",
-    nome: "Cipolla",
-    mesi: [1, 2, 3, 9, 10],
-    gg: 120,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.15,
-    amiche: ["carota", "lattuga", "barbabietola", "pomodoro", "fragola"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    nota: "Poca acqua a fine ciclo. Tiene lontani i parassiti."
-  },
-  {
-    id: "aglio",
-    nome: "Aglio",
-    mesi: [10, 11, 12, 1],
-    gg: 240,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.05,
-    amiche: ["carota", "fragola", "pomodoro"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    nota: "Si pianta a spicchi in autunno, si raccoglie in estate."
-  },
-  {
-    id: "porro",
-    nome: "Porro",
-    mesi: [2, 3, 4],
-    gg: 150,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.2,
-    amiche: ["carota"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    nota: "Rincalza la terra per avere il fusto bianco lungo."
-  },
-  {
-    id: "scalogno",
-    nome: "Scalogno",
-    mesi: [1, 2, 9, 10],
-    gg: 100,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.1,
-    amiche: ["carota", "fragola"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    nota: "Come la cipolla ma più delicato; ottimo per principianti."
-  },
-  {
-    id: "fagiolino",
-    nome: "Fagiolino nano",
-    mesi: [4, 5, 6, 7],
-    gg: 65,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.15,
-    amiche: ["carota", "cetriolo", "lattuga", "zucchina"],
-    nemiche: ["cipolla", "aglio", "porro", "scalogno"],
-    nota: "Non serve sostegno. Migliora il terreno con l'azoto."
-  },
-  {
-    id: "fagiolo",
-    nome: "Fagiolo rampicante",
-    mesi: [4, 5, 6],
-    gg: 75,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.25,
-    amiche: ["carota", "cetriolo", "zucchina"],
-    nemiche: ["cipolla", "aglio", "porro", "scalogno"],
-    nota: "Vuole canne o rete: sale anche 2 metri."
-  },
-  {
-    id: "pisello",
-    nome: "Pisello",
-    mesi: [10, 11, 1, 2],
-    gg: 80,
-    h: "media",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.1,
-    amiche: ["carota", "lattuga"],
-    nemiche: ["cipolla", "aglio", "porro", "scalogno"],
-    nota: "Ama il fresco: si semina in autunno o fine inverno."
-  },
-  {
-    id: "fragola",
-    nome: "Fragola",
-    mesi: [3, 4, 8, 9],
-    gg: 90,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.25,
-    amiche: ["lattuga", "spinaci", "cipolla", "aglio"],
-    nemiche: [
-      "cavolo",
-      "verza",
-      "broccolo",
-      "cavolfiore",
-      "cavolonero",
-      "cavolorapa"
-    ],
-    nota: "Perenne: produce per più anni e fa stoloni."
-  },
-  {
-    id: "sedano",
-    nome: "Sedano",
-    mesi: [2, 3, 4],
-    gg: 120,
-    h: "media",
-    sole: "mezz",
-    acqua: "alta",
-    resa: 0.5,
-    amiche: ["cavolo", "pomodoro"],
-    nemiche: [],
-    nota: "Vuole tanta acqua e terreno ricco."
-  },
-  {
-    id: "ravanello",
-    nome: "Ravanello",
-    mesi: [1, 2, 3, 4, 8, 9, 10],
-    gg: 28,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.03,
-    amiche: ["lattuga", "carota", "cetriolo"],
-    nemiche: [],
-    nota: "Il più veloce: pronto in 3–4 settimane."
-  },
-  {
-    id: "barbabietola",
-    nome: "Barbabietola",
-    mesi: [3, 4, 5, 6, 7],
-    gg: 80,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.2,
-    amiche: ["cipolla", "lattuga"],
-    nemiche: [],
-    nota: "Si mangiano radice e foglie. Dirada le piantine."
-  },
-  {
-    id: "cicoria",
-    nome: "Cicoria",
-    mesi: [2, 3, 4, 7, 8, 9],
-    gg: 70,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.25,
-    amiche: ["carota", "cipolla", "lattuga"],
-    nemiche: [],
-    nota: "Rustica e saporita. Raccogli le foglie esterne."
-  },
-  {
-    id: "indivia",
-    nome: "Indivia / Scarola",
-    mesi: [2, 3, 4, 7, 8, 9],
-    gg: 75,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.35,
-    amiche: ["lattuga", "ravanello", "finocchio"],
-    nemiche: [],
-    nota: "Ama il fresco. Lega il cespo per foglie più chiare."
-  },
-  {
-    id: "pakchoi",
-    nome: "Pak choi",
-    mesi: [2, 3, 4, 8, 9, 10],
-    gg: 45,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.25,
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: ["fragola"],
-    nota: "Cresce veloce in clima fresco."
-  },
-  {
-    id: "cavoletti",
-    nome: "Cavoletti di Bruxelles",
-    mesi: [3, 4, 5, 6],
-    gg: 120,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.7,
-    amiche: ["sedano", "cipolla", "timo"],
-    nemiche: ["pomodoro", "fragola"],
-    nota: "Vuole tempo e fresco: cima la punta a metà ciclo."
-  },
-  {
-    id: "rapa",
-    nome: "Rapa",
-    mesi: [2, 3, 4, 8, 9, 10],
-    gg: 55,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    resa: 0.15,
-    amiche: ["pisello", "lattuga"],
-    nemiche: [],
-    nota: "Fresca e rapida: dirada presto per ingrossare la radice."
-  },
-  {
-    id: "valerianella",
-    nome: "Valerianella",
-    mesi: [1, 2, 9, 10, 11],
-    gg: 50,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    resa: 0.08,
-    amiche: ["lattuga", "ravanello", "cipolla"],
-    nemiche: [],
-    nota: "Perfetta per la serra fredda: ciuffi teneri in inverno."
-  },
-  {
-    id: "rosmarino",
-    nome: "Rosmarino",
-    mesi: [3, 4, 5],
-    gg: 0,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.1,
-    amiche: [],
-    nemiche: [],
-    nota: "Perenne e rustico: pochissima acqua, vive anni."
-  },
-  {
-    id: "timo",
-    nome: "Timo",
-    mesi: [3, 4, 5],
-    gg: 0,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.05,
-    amiche: ["cavolo"],
-    nemiche: [],
-    nota: "Tappezzante e profumato; ama il secco."
-  },
-  {
-    id: "origano",
-    nome: "Origano",
-    mesi: [3, 4, 5],
-    gg: 0,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.05,
-    amiche: [],
-    nemiche: [],
-    nota: "Perenne: si secca benissimo per l'inverno."
-  },
-  {
-    id: "salvia",
-    nome: "Salvia",
-    mesi: [3, 4, 5],
-    gg: 0,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    resa: 0.05,
-    amiche: ["cavolo"],
-    nemiche: ["cetriolo"],
-    nota: "Cespuglio perenne dalle foglie vellutate."
-  },
-  {
-    id: "pastinaca",
-    nome: "Pastinaca",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [3, 4, 8, 9],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Dolce dopo il freddo; semina diretta e terreno profondo."
-  },
-  {
-    id: "radice_prezemolo",
-    nome: "Prezzemolo da radice",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 8],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.7,
-    nota: "Coltura tradizionale rumena: radice bianca aromatica per zuppe e ciorbe."
-  },
-  {
-    id: "sedano_rapa",
-    nome: "Sedano rapa",
-    h: "media",
-    sole: "pieno",
-    acqua: "alta",
-    gg: 120,
-    mesi: [2, 3, 4, 5],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.2,
-    nota: "Radice globosa e profumata; vuole acqua costante e suolo ricco."
-  },
-  {
-    id: "rafano",
-    nome: "Rafano",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 180,
-    mesi: [3, 4, 9, 10],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.8,
-    nota: "Radice piccante molto usata in Romania; contenila perché è vigorosa."
-  },
-  {
-    id: "patata",
-    nome: "Patata",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 5],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.8,
-    nota: "In serra anticipa il raccolto; rincalza quando gli steli crescono."
-  },
-  {
-    id: "patata_dolce",
-    nome: "Patata dolce",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [4, 5, 6],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.5,
-    nota: "Ama caldo stabile e suolo leggero; ideale in serra lunga."
-  },
-  {
-    id: "cipolla_rossa",
-    nome: "Cipolla rossa",
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 120,
-    mesi: [2, 3, 8, 9, 10],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Bulbo dolce e colorato; ottima per raccolti scalari."
-  },
-  {
-    id: "cipollotto",
-    nome: "Cipollotto",
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [2, 3, 4, 5, 8, 9],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Pronto rapidamente; raccogli giovane prima che ingrossi troppo."
-  },
-  {
-    id: "erba_cipollina",
-    nome: "Erba cipollina",
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 75,
-    mesi: [3, 4, 5, 8, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Aromatica perenne; taglia spesso per foglie tenere."
-  },
-  {
-    id: "loboda",
-    nome: "Loboda",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 45,
-    mesi: [3, 4, 5, 8, 9],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco."
-  },
-  {
-    id: "stevia_dolce",
-    nome: "Stevia rumena",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 50,
-    mesi: [3, 4, 8, 9],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.3,
-    nota: "Acetosa per minestre primaverili; raccogli foglie giovani."
-  },
-  {
-    id: "leustean",
-    nome: "Levistico",
-    h: "alta",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 90,
-    mesi: [3, 4, 5, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.15,
-    nota: "Il profumo classico delle ciorbe rumene; perenne e vigoroso."
-  },
-  {
-    id: "dragoncello",
-    nome: "Dragoncello",
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 90,
-    mesi: [3, 4, 5],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Aromatica fine per aceti e conserve; evita ristagni."
-  },
-  {
-    id: "menta",
-    nome: "Menta",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "alta",
-    gg: 60,
-    mesi: [3, 4, 5, 8],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.1,
-    nota: "Molto vigorosa: meglio in vaso o area controllata."
-  },
-  {
-    id: "maggiorana",
-    nome: "Maggiorana",
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 75,
-    mesi: [3, 4, 5],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Aromatica delicata; ama caldo, luce e terreno drenato."
-  },
-  {
-    id: "camomilla",
-    nome: "Camomilla",
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 70,
-    mesi: [3, 4, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.04,
-    nota: "Fiori per tisane; attira insetti utili e profuma la serra."
-  },
-  {
-    id: "calendula",
-    nome: "Calendula",
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 65,
-    mesi: [3, 4, 5, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Fiore utile nell’orto: attira impollinatori e colora le aiuole."
-  },
-  {
-    id: "nasturzio",
-    nome: "Nasturzio",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [4, 5, 6],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Fiori e foglie commestibili; utile come pianta esca per afidi."
-  },
-  {
-    id: "mais_dolce",
-    nome: "Mais dolce",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [4, 5, 6],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi."
-  },
-  {
-    id: "gombo",
-    nome: "Gombo",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 80,
-    mesi: [4, 5, 6],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 0.7,
-    nota: "Ama molto caldo; raccogli i baccelli piccoli e teneri."
-  },
-  {
-    id: "tomatillo",
-    nome: "Tomatillo",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 95,
-    mesi: [3, 4, 5],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 1.5,
-    nota: "Serve almeno due piante per fruttificare bene; ottimo per salse."
-  },
-  {
-    id: "physalis",
-    nome: "Alchechengi",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 5],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 0.5,
-    nota: "Frutti dolci in lanterna; in serra matura meglio."
-  },
-  {
-    id: "kiwano",
-    nome: "Kiwano",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [4, 5],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 1.5,
-    nota: "Cucurbitacea esotica per serre calde; falla arrampicare."
-  },
-  {
-    id: "cucamelon",
-    nome: "Cucamelon",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 75,
-    mesi: [4, 5, 6],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 0.5,
-    nota: "Piccoli frutti croccanti; produttivo su rete in serra."
-  },
-  {
-    id: "asparago",
-    nome: "Asparago",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 730,
-    mesi: [3, 4],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Perenne: richiede pazienza, ma produce per molti anni."
-  },
-  {
-    id: "carciofo",
-    nome: "Carciofo",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 180,
-    mesi: [2, 3, 4],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 1.2,
-    nota: "Coltura grande e decorativa; proteggi dal gelo intenso."
-  },
-  {
-    id: "cardo",
-    nome: "Cardo",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 150,
-    mesi: [3, 4, 5],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Parente del carciofo; imbianchisci le coste prima del raccolto."
-  },
-  {
-    id: "crescione",
-    nome: "Crescione",
-    h: "bassa",
-    sole: "mezzombra",
-    acqua: "alta",
-    gg: 30,
-    mesi: [3, 4, 5, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.1,
-    nota: "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti."
-  },
-  {
-    id: "mizuna",
-    nome: "Mizuna",
-    h: "bassa",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 35,
-    mesi: [3, 4, 5, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.18,
-    nota: "Senape giapponese facile; foglie frastagliate per mix insalata."
-  },
-  {
-    id: "senape_foglia",
-    nome: "Senape da foglia",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 40,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Foglie piccanti; semina in fresco per evitare fioritura precoce."
-  },
-  {
-    id: "tatsoi",
-    nome: "Tatsoi",
-    h: "bassa",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 45,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.2,
-    nota: "Rosetta compatta, molto resistente al freddo."
-  },
-  {
-    id: "cavolo_cinese",
-    nome: "Cavolo cinese",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "alta",
-    gg: 65,
-    mesi: [3, 4, 8, 9],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.9,
-    nota: "Forma un cespo tenero; proteggi da caldo e stress idrico."
-  },
-  {
-    id: "daikon",
-    nome: "Daikon",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Ravanello lungo: terreno profondo e raccolta prima che lignifichi."
-  },
-  {
-    id: "scorzonera",
-    nome: "Scorzonera",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 150,
-    mesi: [3, 4],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Radice nera lunga; richiede suolo leggero e profondo."
-  },
-  {
-    id: "topinambur",
-    nome: "Topinambur",
-    h: "alta",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 180,
-    mesi: [3, 4, 5],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 2.0,
-    nota: "Tubero rustico e produttivo; delimita lo spazio perché si espande."
-  },
-  {
-    id: "fava",
-    nome: "Fava",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [2, 3, 10, 11],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.7,
-    nota: "Legume precoce e resistente al fresco; migliora il terreno."
-  },
-  {
-    id: "soia_edamame",
-    nome: "Soia edamame",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [4, 5, 6],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.6,
-    nota: "Raccogli i baccelli verdi quando i semi sono pieni ma teneri."
-  },
-  {
-    id: "cece",
-    nome: "Cece",
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 100,
-    mesi: [3, 4, 5],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.35,
-    nota: "Ama asciutto e caldo; non eccedere con acqua in serra."
-  },
-  {
-    id: "lenticchia",
-    nome: "Lenticchia",
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 95,
-    mesi: [3, 4],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.25,
-    nota: "Piccolo legume rustico; adatto a bordure asciutte."
-  },
-  {
-    id: "fagiolo_borlotto",
-    nome: "Fagiolo borlotto",
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 95,
-    mesi: [4, 5, 6],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.8,
-    nota: "Per baccelli freschi o granella; usa tutori robusti."
-  },
-  {
-    id: "cavolo_rosso",
-    nome: "Cavolo rosso",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 110,
-    mesi: [2, 3, 4, 7, 8],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 1.5,
-    nota: "Cespo compatto e colorato; ottimo per raccolti autunnali."
-  },
-  {
-    id: "cavolo_navone",
-    nome: "Navone",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 7, 8],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Radice grande e rustica; utile per autunno e inverno."
-  },
-  {
-    id: "broccolo_rapa",
-    nome: "Cime di rapa",
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 55,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.35,
-    nota: "Raccogli cime e foglie prima della piena fioritura."
-  },
-  {
-    id: "shiso",
-    nome: "Shiso",
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 70,
-    mesi: [3, 4, 5],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Aromatica asiatica profumata; bella anche in vaso in serra."
-  }
-];
+const PLANTS = window.PLANTS;
 
 const NOMI_MESI = [
   "Gennaio",
@@ -1249,18 +47,31 @@ const ABBR_MESI = [
 ];
 const SOLE_ICON = { pieno: "☀️", mezz: "🌤️" };
 const ACQUA_ICON = { alta: "💧💧💧", media: "💧💧", bassa: "💧" };
+// Difficoltà di coltivazione: 1 = facile, 2 = media, 3 = difficile/esotica.
+// Mappa completa su tutte le colture del catalogo (allineata a script.js).
 const DIFFICULTY = {
+  // Facili: rapide, tolleranti, ideali per chi inizia.
   lattuga:1, rucola:1, ravanello:1, fagiolino:1, basilico:1,
-  prezzemolo:1, carota:1, cipolla:1, spinaci:1, bietola:1,
-  valerianella:1, zucchina:1, scalogno:1, cicoria:1, pakchoi:1,
-  rapa:1, aglio:1,
+  prezzemolo:1, carota:1, cipolla:1, cipolla_rossa:1, cipollotto:1,
+  spinaci:1, bietola:1, valerianella:1, zucchina:1, scalogno:1,
+  cicoria:1, pakchoi:1, rapa:1, aglio:1, erba_cipollina:1,
+  menta:1, maggiorana:1, calendula:1, nasturzio:1, crescione:1,
+  mizuna:1, senape_foglia:1, tatsoi:1, loboda:1, broccolo_rapa:1,
+  // Medie: richiedono un po' di attenzione o tempi più lunghi.
   pomodoro:2, peperone:2, cetriolo:2, fragola:2, finocchio:2,
   pisello:2, porro:2, indivia:2, barbabietola:2, aneto:2,
   coriandolo:2, timo:2, origano:2, salvia:2, rosmarino:2,
-  radicchio:2, fagiolo:2,
+  radicchio:2, fagiolo:2, fagiolo_borlotto:2, fava:2, cece:2,
+  lenticchia:2, soia_edamame:2, patata:2, pastinaca:2, radice_prezemolo:2,
+  daikon:2, cavolo_cinese:2, leustean:2, dragoncello:2, camomilla:2,
+  // Difficili o esotiche: lente, delicate, perenni o poco comuni.
   peperoncino:3, melanzana:3, zucca:3, melone:3, anguria:3,
   cavolo:3, verza:3, broccolo:3, cavolfiore:3, cavolonero:3,
-  cavolorapa:3, cavoletti:3, sedano:3
+  cavolorapa:3, cavoletti:3, sedano:3, cavolo_rosso:3, cavolo_navone:3,
+  sedano_rapa:3, rafano:3, patata_dolce:3, scorzonera:3, topinambur:3,
+  asparago:3, carciofo:3, cardo:3, mais_dolce:3, gombo:3,
+  tomatillo:3, physalis:3, kiwano:3, cucamelon:3, stevia_dolce:3,
+  shiso:3
 };
 
 /* Metadati piante: altezze, spaziature e guide di semina. */
@@ -1378,464 +189,11 @@ const PLANT_SPACING = {
   shiso: { d: 30, dr: 45 }
 };
 
-const SOWING_GUIDE = {
-  pomodoro:    { method: "Semina in vasetto o alveolo al caldo; trapianta in serra una piantina robusta con 4-6 foglie vere.", depth: "0,5–1 cm", thin: "50 cm sulla fila, 80 cm tra le file.", tip: "Interra leggermente il fusto fino alle foglie e prepara subito un tutore o filo verticale." },
-  peperone:    { method: "Semina protetta in alveolo; meglio trapiantare piante già formate quando le notti sono miti.", depth: "0,5 cm", thin: "40 cm sulla fila, 60 cm tra le file.", tip: "Germina lentamente: serve caldo costante (20-25 °C) e terreno mai zuppo." },
-  peperoncino: { method: "Semina protetta in alveolo con molto calore iniziale (25-28 °C).", depth: "0,5 cm", thin: "35 cm sulla fila, 50 cm tra le file.", tip: "Lascia asciugare leggermente tra un'annaffiatura e l'altra: radica meglio." },
-  melanzana:   { method: "Semina in semenzaio caldo; in serra è più pratico trapiantare piantine acquistate.", depth: "0,5–1 cm", thin: "50 cm sulla fila, 80 cm tra le file.", tip: "Ama il substrato caldo: evita trapianti anticipati in terra ancora fredda." },
-  zucchina:    { method: "Semina diretta a postarella (2 semi per buca) o in vasetto da trapiantare con pane di terra integro.", depth: "2–3 cm", thin: "80 cm sulla fila, 100 cm tra le file. Tieni la piantina più vigorosa.", tip: "Cresce rapidissima: copri il suolo con pacciame e raccogli i frutti ogni 2-3 giorni." },
-  zucca:       { method: "Semina diretta a postarella o in vaso grande; trapianto delicato con pane integro.", depth: "2–3 cm", thin: "100 cm sulla fila, 130 cm tra le file.", tip: "Dalle spazio fin dall'inizio: soffre se compressa. Orienta i tralci verso l'esterno." },
-  cetriolo:    { method: "Semina diretta o in vasetto; in serra rende benissimo su rete verticale.", depth: "1,5–2 cm", thin: "40 cm sulla fila, 100 cm tra le file o i sostegni.", tip: "Trapianta senza rompere le radici e lega presto i tralci alla rete." },
-  melone:      { method: "Semina a postarella o in vasetto caldo; trapianta con pane integro quando le notti superano i 15 °C.", depth: "2 cm", thin: "90 cm sulla fila, 120 cm tra le file.", tip: "Pacciama e bagna al piede; riduci l'acqua quando i frutti iniziano a maturare." },
-  anguria:     { method: "Semina a postarella o in vaso grande solo con terreno ben caldo (min. 22 °C).", depth: "2–3 cm", thin: "120 cm sulla fila, 150 cm tra le file.", tip: "In serra piccola usa 1-2 piante al massimo: ogni esemplare occupa molto volume." },
-  lattuga:     { method: "Semina in alveolo o a spaglio leggero; il trapianto produce cespi più ordinati e uniformi.", depth: "0,3–0,5 cm", thin: "25 cm sulla fila, 30 cm tra le file.", tip: "Semina poco e spesso (ogni 2-3 settimane) per raccolte scalari senza interruzioni." },
-  radicchio:   { method: "Semina in alveolo o semenzaio, poi trapianto.", depth: "0,5 cm", thin: "30 cm sulla fila, 35 cm tra le file.", tip: "Per cespi compatti evita l'eccesso di azoto e il caldo intenso; il freddo intensifica il colore." },
-  rucola:      { method: "Semina diretta a file o a spaglio fitto; non ama il trapianto.", depth: "0,5 cm", thin: "15 cm sulla fila, 20 cm tra le file (più fitta per baby leaf).", tip: "Taglia a 5 cm dal suolo per far ricrescere; con il caldo monta a seme in pochi giorni." },
-  spinaci:     { method: "Semina diretta a file nel letto ben preparato e fine.", depth: "1–2 cm", thin: "20 cm sulla fila, 25 cm tra le file.", tip: "Ama il fresco e l'umidità costante; col caldo supera i 15 °C monta a seme rapidamente." },
-  bietola:     { method: "Semina diretta o in alveolo; ogni seme è un glomerulo che può produrre 2-4 piantine.", depth: "1–2 cm", thin: "30 cm sulla fila, 40 cm tra le file (dirada presto).", tip: "Raccogli le foglie esterne senza tagliare il cuore centrale per prolungare la produzione." },
-  cavolo:      { method: "Semina in semenzaio o alveolo, poi trapianta piantine robuste.", depth: "0,5–1 cm", thin: "50 cm sulla fila, 70 cm tra le file.", tip: "Interra bene il colletto e mantieni umidità regolare; proteggi dai lepidotteri con rete." },
-  verza:       { method: "Semina in semenzaio o alveolo; trapianta piantine robuste.", depth: "0,5–1 cm", thin: "50 cm sulla fila, 70 cm tra le file.", tip: "Resiste bene al freddo: programma raccolte autunnali/invernali; il gelo ne migliora il sapore." },
-  broccolo:    { method: "Semina in alveolo o semenzaio; poi trapianto.", depth: "0,5–1 cm", thin: "50 cm sulla fila, 70 cm tra le file.", tip: "Non far asciugare durante la formazione del corimbo; dopo il taglio dà getti laterali per settimane." },
-  cavolfiore:  { method: "Semina in alveolo; trapianta senza stress idrico.", depth: "0,5–1 cm", thin: "50 cm sulla fila, 70 cm tra le file.", tip: "Richiede crescita continua: evita sbalzi di acqua e nutrienti; copri la testa per mantenerla bianca." },
-  cavolonero:  { method: "Semina in alveolo o semenzaio, poi trapianto.", depth: "0,5–1 cm", thin: "45 cm sulla fila, 60 cm tra le file.", tip: "Raccogli foglia per foglia dal basso: la pianta continua a produrre per mesi durante l'inverno." },
-  cavolorapa:  { method: "Semina diretta o in alveolo; poi trapianto precoce.", depth: "0,5–1 cm", thin: "30 cm sulla fila, 40 cm tra le file.", tip: "Raccogli giovane (5-7 cm di diametro): se resta troppo a lungo si indurisce e diventa legnoso." },
-  carota:      { method: "Semina diretta a file nel terreno fine e profondo (almeno 30 cm); non tollera il trapianto.", depth: "0,5–1 cm", thin: "Dirada progressivamente fino a 8 cm sulla fila, 25 cm tra le file.", tip: "Tieni il letto umido fino alla germinazione (10-20 giorni); sassi nel suolo causano radici biforcute." },
-  finocchio:   { method: "Semina in alveolo o diretta; trapianto delicato da giovane.", depth: "1 cm", thin: "25 cm sulla fila, 35 cm tra le file.", tip: "Rincalza leggermente la base per imbianchire il grumolo; evita stress idrici che causano fioritura precoce." },
-  prezzemolo:  { method: "Semina diretta o in vasetto; ammollo 24h dei semi in acqua tiepida accelera la germinazione.", depth: "0,5 cm", thin: "20 cm sulla fila; raccogli a taglio lasciando ricrescere.", tip: "Germina molto lentamente (15-28 giorni): non lasciare seccare il letto di semina in questo periodo." },
-  basilico:    { method: "Semina in vasetto/alveolo o diretta solo con temperature stabili oltre i 18 °C.", depth: "0,3–0,5 cm", thin: "25 cm tra le piante.", tip: "Cima i fiori non appena appaiono per ottenere foglie più grandi e prolungare la produzione." },
-  coriandolo:  { method: "Semina diretta a file; il trapianto lo fa andare a fiore prematuramente.", depth: "1 cm", thin: "15 cm sulla fila (più fitto per foglie young, più rado per semi).", tip: "Esegui semine scalari ogni 3 settimane: col caldo monta rapidamente. Usa sia foglie che semi." },
-  aneto:       { method: "Semina diretta a file; non ama il trapianto.", depth: "0,5–1 cm", thin: "25 cm tra le piante.", tip: "Lascia qualche pianta fiorire: i fiori attirano insetti impollinatori e utili come la Syrphidae." },
-  cipolla:     { method: "Semina in semenzaio (trapianto a matita) o pianta bulbilli direttamente in file.", depth: "0,5–1 cm (seme); 3 cm (bulbillo)", thin: "12 cm sulla fila, 25 cm tra le file.", tip: "Non interrare troppo il bulbo: deve ingrossare vicino alla superficie. Riduci l'acqua dopo la piegatura." },
-  aglio:       { method: "Pianta spicchi sani con la punta verso l'alto, preferibilmente in autunno.", depth: "3–5 cm", thin: "12 cm sulla fila, 25 cm tra le file.", tip: "Usa gli spicchi esterni più grandi delle teste migliori: danno bulbi più grossi. Asporta gli scapi." },
-  porro:       { method: "Semina in semenzaio; trapianta quando ha lo spessore di una matita (6-8 mm).", depth: "0,5–1 cm", thin: "15 cm sulla fila, 30 cm tra le file.", tip: "Trapianta in buche profonde e rincalza progressivamente per ottenere fusti bianchi e lunghi." },
-  scalogno:    { method: "Pianta bulbilli o semina in semenzaio.", depth: "2–3 cm con punta appena coperta", thin: "12 cm sulla fila, 20 cm tra le file.", tip: "Evita ristagni idrici: i bulbi marciscono in terreno troppo bagnato. Conserva in luogo asciutto." },
-  fagiolino:   { method: "Semina diretta a file quando il terreno supera i 15 °C.", depth: "2–3 cm", thin: "20 cm sulla fila, 40 cm tra le file.", tip: "Come leguminosa fissa l'azoto nel suolo: non concimare troppo o produce foglie a scapito dei baccelli." },
-  fagiolo:     { method: "Semina diretta alla base di canne o rete già montata.", depth: "2–4 cm", thin: "25 cm sulla fila, 50 cm tra i sostegni.", tip: "Monta la struttura prima di seminare per non disturbare le radici. Sale fino a 2-3 metri." },
-  pisello:     { method: "Semina diretta a file doppie o vicino a una rete bassa.", depth: "3–5 cm", thin: "15 cm sulla fila, 30 cm tra le file.", tip: "Ama il fresco (10-18 °C): in serra semina in autunno o fine inverno; il caldo estivo lo uccide." },
-  fragola:     { method: "Meglio trapiantare piantine certificate o stoloni radicati; da seme è lento e variabile.", depth: "Colletto a livello del terreno", thin: "30 cm sulla fila, 40 cm tra le file.", tip: "Non coprire mai il cuore della pianta; pacciama con paglia per frutti puliti e contenere l'umidità." },
-  sedano:      { method: "Semina in alveolo; i semi sono finissimi e vanno coperti pochissimo o lasciati alla luce.", depth: "0,2–0,3 cm", thin: "30 cm sulla fila, 40 cm tra le file.", tip: "Richiede acqua costante: anche una breve siccità lo rende fibroso e amaro." },
-  ravanello:   { method: "Semina diretta a file, in modo scalare ogni 7-10 giorni.", depth: "0,5–1 cm", thin: "8 cm sulla fila, 15 cm tra le file.", tip: "Se resta troppo fitto produce foglie rigogliose ma radici piccole. Pronto in soli 3-4 settimane!" },
-  barbabietola:{ method: "Semina diretta; ogni seme è un glomerulo che può generare 2-4 piantine da diradare.", depth: "1–2 cm", thin: "12 cm sulla fila, 25 cm tra le file.", tip: "Usa i diradamenti giovani come foglie da insalata: sono teneri e saporiti." },
-  cicoria:     { method: "Semina diretta o in alveolo, poi trapianto.", depth: "0,5–1 cm", thin: "25 cm sulla fila, 30 cm tra le file.", tip: "Raccogli a cespo giovane o taglia le foglie esterne; il sapore amaro si attenua col freddo." },
-  indivia:     { method: "Semina in alveolo o semenzaio, poi trapianto.", depth: "0,5 cm", thin: "30 cm sulla fila, 40 cm tra le file.", tip: "Per foglie più chiare e tenere lega il cespo (asciutto) 7-10 giorni prima del raccolto." },
-  pakchoi:     { method: "Semina diretta o in alveolo; cresce molto veloce.", depth: "0,5–1 cm", thin: "25 cm sulla fila, 30 cm tra le file.", tip: "Semina in clima fresco (max 22 °C): con caldo o stress idrico monta a fiore in pochissimo tempo." },
-  cavoletti:   { method: "Semina in semenzaio o alveolo; trapianta presto.", depth: "0,5–1 cm", thin: "60 cm sulla fila, 80 cm tra le file.", tip: "Coltura lunga (4-6 mesi): occupa spazio a lungo. Cima la punta quando i cavoletti iniziano a formarsi." },
-  rapa:        { method: "Semina diretta a file nel periodo fresco.", depth: "1 cm", thin: "12 cm sulla fila, 25 cm tra le file.", tip: "Dirada presto per far ingrossare radici regolari; raccoglie da giovane prima che diventino legnose." },
-  valerianella:{ method: "Semina diretta a spaglio o file fitte.", depth: "0,5 cm", thin: "10 cm sulla fila, 15 cm tra le file.", tip: "Copri appena il seme e mantieni umido nei primi giorni. Perfetta per la serra fredda autunnale." },
-  rosmarino:   { method: "Meglio trapiantare talea o piantina; da seme è molto lento.", depth: "Colletto a livello del terreno", thin: "60 cm sulla fila, 80 cm tra le file.", tip: "Pochissima acqua e terreno ben drenante: teme il ristagno idrico più di qualsiasi altra condizione." },
-  timo:        { method: "Semina superficiale o trapianto di piccole piantine.", depth: "Superficiale, copertura leggerissima", thin: "30 cm tra le piante.", tip: "Ama il sole diretto e il terreno asciutto; non coprirlo con colture più alte." },
-  origano:     { method: "Semina superficiale o trapianto; germina meglio con luce diretta.", depth: "Superficiale, copertura leggerissima", thin: "30 cm tra le piante.", tip: "Cima regolarmente per farlo accestire e raccogli sempre prima della piena fioritura per massimo aroma." },
-  salvia:      { method: "Semina in alveolo o trapianto di piantina giovane.", depth: "0,5 cm", thin: "40 cm sulla fila, 50 cm tra le file.", tip: "Non eccedere con l'acqua: le foglie sono più aromatiche in terreno drenante e leggermente asciutto." }
-,
-  pastinaca: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 35 cm sulla fila e 45 cm tra file.",
-  tip: "Dolce dopo il freddo; semina diretta e terreno profondo."
-  },
-  radice_prezemolo: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 40 cm tra file.",
-  tip: "Coltura tradizionale rumena: radice bianca aromatica per zuppe e ciorbe."
-  },
-  sedano_rapa: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 35 cm sulla fila e 50 cm tra file.",
-  tip: "Radice globosa e profumata; vuole acqua costante e suolo ricco."
-  },
-  rafano: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 45 cm sulla fila e 60 cm tra file.",
-  tip: "Radice piccante molto usata in Romania; contenila perché è vigorosa."
-  },
-  patata: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 35 cm sulla fila e 60 cm tra file.",
-  tip: "In serra anticipa il raccolto; rincalza quando gli steli crescono."
-  },
-  patata_dolce: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 45 cm sulla fila e 90 cm tra file.",
-  tip: "Ama caldo stabile e suolo leggero; ideale in serra lunga."
-  },
-  cipolla_rossa: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 15 cm sulla fila e 30 cm tra file.",
-  tip: "Bulbo dolce e colorato; ottima per raccolti scalari."
-  },
-  cipollotto: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 8 cm sulla fila e 20 cm tra file.",
-  tip: "Pronto rapidamente; raccogli giovane prima che ingrossi troppo."
-  },
-  erba_cipollina: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 20 cm sulla fila e 25 cm tra file.",
-  tip: "Aromatica perenne; taglia spesso per foglie tenere."
-  },
-  loboda: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
-  tip: "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco."
-  },
-  stevia_dolce: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 40 cm tra file.",
-  tip: "Acetosa per minestre primaverili; raccogli foglie giovani."
-  },
-  leustean: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
-  tip: "Il profumo classico delle ciorbe rumene; perenne e vigoroso."
-  },
-  dragoncello: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 45 cm tra file.",
-  tip: "Aromatica fine per aceti e conserve; evita ristagni."
-  },
-  menta: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 50 cm tra file.",
-  tip: "Molto vigorosa: meglio in vaso o area controllata."
-  },
-  maggiorana: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
-  tip: "Aromatica delicata; ama caldo, luce e terreno drenato."
-  },
-  camomilla: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
-  tip: "Fiori per tisane; attira insetti utili e profuma la serra."
-  },
-  calendula: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 40 cm tra file.",
-  tip: "Fiore utile nell’orto: attira impollinatori e colora le aiuole."
-  },
-  nasturzio: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 50 cm tra file.",
-  tip: "Fiori e foglie commestibili; utile come pianta esca per afidi."
-  },
-  mais_dolce: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 70 cm tra file.",
-  tip: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi."
-  },
-  gombo: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
-  tip: "Ama molto caldo; raccogli i baccelli piccoli e teneri."
-  },
-  tomatillo: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 50 cm sulla fila e 80 cm tra file.",
-  tip: "Serve almeno due piante per fruttificare bene; ottimo per salse."
-  },
-  physalis: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
-  tip: "Frutti dolci in lanterna; in serra matura meglio."
-  },
-  kiwano: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 60 cm sulla fila e 100 cm tra file.",
-  tip: "Cucurbitacea esotica per serre calde; falla arrampicare."
-  },
-  cucamelon: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 60 cm tra file.",
-  tip: "Piccoli frutti croccanti; produttivo su rete in serra."
-  },
-  asparago: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 40 cm sulla fila e 80 cm tra file.",
-  tip: "Perenne: richiede pazienza, ma produce per molti anni."
-  },
-  carciofo: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 80 cm sulla fila e 100 cm tra file.",
-  tip: "Coltura grande e decorativa; proteggi dal gelo intenso."
-  },
-  cardo: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 60 cm sulla fila e 90 cm tra file.",
-  tip: "Parente del carciofo; imbianchisci le coste prima del raccolto."
-  },
-  crescione: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 15 cm sulla fila e 20 cm tra file.",
-  tip: "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti."
-  },
-  mizuna: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 20 cm sulla fila e 30 cm tra file.",
-  tip: "Senape giapponese facile; foglie frastagliate per mix insalata."
-  },
-  senape_foglia: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
-  tip: "Foglie piccanti; semina in fresco per evitare fioritura precoce."
-  },
-  tatsoi: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 20 cm sulla fila e 30 cm tra file.",
-  tip: "Rosetta compatta, molto resistente al freddo."
-  },
-  cavolo_cinese: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 35 cm sulla fila e 50 cm tra file.",
-  tip: "Forma un cespo tenero; proteggi da caldo e stress idrico."
-  },
-  daikon: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 40 cm tra file.",
-  tip: "Ravanello lungo: terreno profondo e raccolta prima che lignifichi."
-  },
-  scorzonera: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
-  tip: "Radice nera lunga; richiede suolo leggero e profondo."
-  },
-  topinambur: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 50 cm sulla fila e 90 cm tra file.",
-  tip: "Tubero rustico e produttivo; delimita lo spazio perché si espande."
-  },
-  fava: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 50 cm tra file.",
-  tip: "Legume precoce e resistente al fresco; migliora il terreno."
-  },
-  soia_edamame: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 50 cm tra file.",
-  tip: "Raccogli i baccelli verdi quando i semi sono pieni ma teneri."
-  },
-  cece: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 40 cm tra file.",
-  tip: "Ama asciutto e caldo; non eccedere con acqua in serra."
-  },
-  lenticchia: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 20 cm sulla fila e 35 cm tra file.",
-  tip: "Piccolo legume rustico; adatto a bordure asciutte."
-  },
-  fagiolo_borlotto: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 60 cm tra file.",
-  tip: "Per baccelli freschi o granella; usa tutori robusti."
-  },
-  cavolo_rosso: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 45 cm sulla fila e 60 cm tra file.",
-  tip: "Cespo compatto e colorato; ottimo per raccolti autunnali."
-  },
-  cavolo_navone: {
-  method: "Semina diretta a file nel terreno ben preparato.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 35 cm sulla fila e 50 cm tra file.",
-  tip: "Radice grande e rustica; utile per autunno e inverno."
-  },
-  broccolo_rapa: {
-  method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 25 cm sulla fila e 40 cm tra file.",
-  tip: "Raccogli cime e foglie prima della piena fioritura."
-  },
-  shiso: {
-  method: "Semina superficiale o trapianto di piantina giovane.",
-  depth: "0,5-1 cm",
-  thin: "Dirada o trapianta a circa 30 cm sulla fila e 45 cm tra file.",
-  tip: "Aromatica asiatica profumata; bella anche in vaso in serra."
-  }
-};
+const SOWING_GUIDE = window.SOWING_GUIDE;
 
-const SOWING_GUIDE_RO = {
-  pomodoro:    { method: "Seamănă în ghiveci sau alveolă la cald; transplantează în seră un răsad robust cu 4-6 frunze adevărate.", depth: "0,5–1 cm", thin: "50 cm pe rând, 80 cm între rânduri.", tip: "Îngroapă ușor tulpina până la frunze și pregătește imediat un tutore sau sfoară verticală." },
-  peperone:    { method: "Seamănă protejat în alveolă; mai bine transplantează plante deja formate când nopțile sunt blânde.", depth: "0,5 cm", thin: "40 cm pe rând, 60 cm între rânduri.", tip: "Încolțește lent: necesită căldură constantă (20-25 °C) și sol niciodată îmbibat." },
-  peperoncino: { method: "Seamănă protejat în alveolă cu multă căldură inițială (25-28 °C).", depth: "0,5 cm", thin: "35 cm pe rând, 50 cm între rânduri.", tip: "Lasă să se usuce ușor între udări: prinde rădăcini mai bine." },
-  melanzana:   { method: "Seamănă în semănătoare caldă; în seră e mai practic să transplantezi răsaduri cumpărate.", depth: "0,5–1 cm", thin: "50 cm pe rând, 80 cm între rânduri.", tip: "Iubește substratul cald: evită transplantul timpuriu în pământ încă rece." },
-  zucchina:    { method: "Seamănă direct la cuib (2 semințe per gaură) sau în ghiveci pentru transplant cu bulgărele integru.", depth: "2–3 cm", thin: "80 cm pe rând, 100 cm între rânduri. Păstrează răsadul mai viguros.", tip: "Crește foarte rapid: acoperă solul cu mulci și recoltează fructele la fiecare 2-3 zile." },
-  zucca:       { method: "Seamănă direct la cuib sau în ghiveci mare; transplant delicat cu bulgărele integru.", depth: "2–3 cm", thin: "100 cm pe rând, 130 cm între rânduri.", tip: "Oferă-i spațiu de la început: suferă dacă e comprimată. Dirijează corzile spre exterior." },
-  cetriolo:    { method: "Seamănă direct sau în ghiveci; în seră dă rezultate excelente pe plasă verticală.", depth: "1,5–2 cm", thin: "40 cm pe rând, 100 cm între rânduri sau suporturi.", tip: "Transplantează fără să rupi rădăcinile și leagă devreme corzile de plasă." },
-  melone:      { method: "Seamănă la cuib sau în ghiveci cald; transplantează cu bulgărele integru când nopțile depășesc 15 °C.", depth: "2 cm", thin: "90 cm pe rând, 120 cm între rânduri.", tip: "Mulcește și udă la bază; reduce apa când fructele încep să se coacă." },
-  anguria:     { method: "Seamănă la cuib sau în ghiveci mare doar cu pământ bine cald (min. 22 °C).", depth: "2–3 cm", thin: "120 cm pe rând, 150 cm între rânduri.", tip: "În seră mică folosește 1-2 plante maxim: fiecare exemplar ocupă mult volum." },
-  lattuga:     { method: "Seamănă în alveolă sau dispersat ușor; transplantul produce căpățâni mai ordonate și uniforme.", depth: "0,3–0,5 cm", thin: "25 cm pe rând, 30 cm între rânduri.", tip: "Seamănă puțin și des (la 2-3 săptămâni) pentru recoltă eșalonată fără întreruperi." },
-  radicchio:   { method: "Seamănă în alveolă sau semănătoare, apoi transplant.", depth: "0,5 cm", thin: "30 cm pe rând, 35 cm între rânduri.", tip: "Pentru căpățâni compacte evită excesul de azot și căldura intensă; frigul intensifică culoarea." },
-  rucola:      { method: "Seamănă direct în rânduri sau dispersat des; nu place transplantul.", depth: "0,5 cm", thin: "15 cm pe rând, 20 cm între rânduri (mai des pentru baby leaf).", tip: "Taie la 5 cm de sol pentru recreștere; pe timp cald intră repede în floare." },
-  spinaci:     { method: "Seamănă direct în rânduri în patul bine pregătit și fin.", depth: "1–2 cm", thin: "20 cm pe rând, 25 cm între rânduri.", tip: "Iubește răcoarea și umiditatea constantă; la căldură peste 15 °C intră rapid în floare." },
-  bietola:     { method: "Seamănă direct sau în alveolă; fiecare sămânță este un glomerul care poate produce 2-4 răsaduri.", depth: "1–2 cm", thin: "30 cm pe rând, 40 cm între rânduri (rărește devreme).", tip: "Recoltează frunzele exterioare fără a tăia centrul pentru a prelungi producția." },
-  cavolo:      { method: "Seamănă în semănătoare sau alveolă, apoi transplantează răsaduri robuste.", depth: "0,5–1 cm", thin: "50 cm pe rând, 70 cm între rânduri.", tip: "Îngroapă bine coletul și menține umiditate regulată; protejează de lepidoptere cu plasă." },
-  verza:       { method: "Seamănă în semănătoare sau alveolă; transplantează răsaduri robuste.", depth: "0,5–1 cm", thin: "50 cm pe rând, 70 cm între rânduri.", tip: "Rezistă bine la frig: planifică recoltele toamna/iarna; îngețul îi îmbunătățește gustul." },
-  broccolo:    { method: "Seamănă în alveolă sau semănătoare; apoi transplant.", depth: "0,5–1 cm", thin: "50 cm pe rând, 70 cm între rânduri.", tip: "Nu lăsa să se usuce în timpul formării coriumbului; după tăiere dă lăstari laterali săptămâni întregi." },
-  cavolfiore:  { method: "Seamănă în alveolă; transplantează fără stres hidric.", depth: "0,5–1 cm", thin: "50 cm pe rând, 70 cm între rânduri.", tip: "Necesită creștere continuă: evită variații de apă și nutrienți; acoperă capul pentru a rămâne alb." },
-  cavolonero:  { method: "Seamănă în alveolă sau semănătoare, apoi transplant.", depth: "0,5–1 cm", thin: "45 cm pe rând, 60 cm între rânduri.", tip: "Recoltează frunză cu frunză de jos: planta continuă să producă luni întregi iarna." },
-  cavolorapa:  { method: "Seamănă direct sau în alveolă; apoi transplant timpuriu.", depth: "0,5–1 cm", thin: "30 cm pe rând, 40 cm între rânduri.", tip: "Recoltează tânăr (5-7 cm diametru): dacă stă prea mult se întărește și devine lemnos." },
-  carota:      { method: "Seamănă direct în rânduri în pământ fin și adânc (min. 30 cm); nu tolerează transplantul.", depth: "0,5–1 cm", thin: "Rărește progresiv până la 8 cm pe rând, 25 cm între rânduri.", tip: "Menține patul umed până la germinare (10-20 zile); pietrele din sol cauzează rădăcini bifurcate." },
-  finocchio:   { method: "Seamănă în alveolă sau direct; transplant delicat când e tânăr.", depth: "1 cm", thin: "25 cm pe rând, 35 cm între rânduri.", tip: "Mușuroiește ușor baza pentru a albi bulbul; evită stresul hidric care cauzează înflorire prematură." },
-  prezzemolo:  { method: "Seamănă direct sau în ghiveci; înmuierea semințelor 24h în apă caldă accelerează germinarea.", depth: "0,5 cm", thin: "20 cm pe rând; recoltează prin tăiere lăsând să recrescă.", tip: "Germinează foarte lent (15-28 zile): nu lăsa patul de semănat să se usuce în această perioadă." },
-  basilico:    { method: "Seamănă în ghiveci/alveolă sau direct doar la temperaturi stabile peste 18 °C.", depth: "0,3–0,5 cm", thin: "25 cm între plante.", tip: "Ciupește florile imediat ce apar pentru frunze mai mari și producție prelungită." },
-  coriandolo:  { method: "Seamănă direct în rânduri; transplantul îl face să înflorească prematur.", depth: "1 cm", thin: "15 cm pe rând (mai des pentru frunze tinere, mai rar pentru semințe).", tip: "Seamănă eșalonat la fiecare 3 săptămâni: la căldură intră rapid în floare. Folosește atât frunzele cât și semințele." },
-  aneto:       { method: "Seamănă direct în rânduri; nu place transplantul.", depth: "0,5–1 cm", thin: "25 cm între plante.", tip: "Lasă câteva plante să înflorească: florile atrag insecte polenizatoare și benefice." },
-  cipolla:     { method: "Seamănă în semănătoare (transplant la grosimea unui creion) sau plantează bulbili direct în rânduri.", depth: "0,5–1 cm (sămânță); 3 cm (bulbil)", thin: "12 cm pe rând, 25 cm între rânduri.", tip: "Nu îngropa prea adânc bulbul: trebuie să se îngroașe aproape de suprafață. Reduce apa după îndoire." },
-  aglio:       { method: "Plantează căței sănătoși cu vârful în sus, preferabil toamna.", depth: "3–5 cm", thin: "12 cm pe rând, 25 cm între rânduri.", tip: "Folosește cei mai mari căței din capetele cele mai bune: dau bulbi mai mari. Îndepărtează scapele." },
-  porro:       { method: "Seamănă în semănătoare; transplantează când are grosimea unui creion (6-8 mm).", depth: "0,5–1 cm", thin: "15 cm pe rând, 30 cm între rânduri.", tip: "Transplantează în gropi adânci și mușuroiește progresiv pentru tulpini albe și lungi." },
-  scalogno:    { method: "Plantează bulbili sau seamănă în semănătoare.", depth: "2–3 cm cu vârful abia acoperit", thin: "12 cm pe rând, 20 cm între rânduri.", tip: "Evită stagnarea apei: bulbii putrezesc în pământ prea umed. Păstrează în loc uscat." },
-  fagiolino:   { method: "Seamănă direct în rânduri când pământul depășește 15 °C.", depth: "2–3 cm", thin: "20 cm pe rând, 40 cm între rânduri.", tip: "Ca leguminoasă fixează azotul în sol: nu fertiliza prea mult sau produce frunze în detrimentul păstăilor." },
-  fagiolo:     { method: "Seamănă direct la baza araci-lor sau plaselor deja montate.", depth: "2–4 cm", thin: "25 cm pe rând, 50 cm între suporturi.", tip: "Montează structura înainte de semănat pentru a nu deranja rădăcinile. Urcă până la 2-3 metri." },
-  pisello:     { method: "Seamănă direct în rânduri duble sau lângă o plasă joasă.", depth: "3–5 cm", thin: "15 cm pe rând, 30 cm între rânduri.", tip: "Iubește răcoarea (10-18 °C): în seră seamănă toamna sau la sfârșitul iernii; căldura estivală îl ucide." },
-  fragola:     { method: "Mai bine transplantează răsaduri certificate sau stoloni înrădăcinați; din sămânță e lent și variabil.", depth: "Coletul la nivelul solului", thin: "30 cm pe rând, 40 cm între rânduri.", tip: "Nu acoperi niciodată inima plantei; mulcește cu paie pentru fructe curate și menținerea umidității." },
-  sedano:      { method: "Seamănă în alveolă; semințele sunt fine și se acoperă foarte puțin sau se lasă la lumină.", depth: "0,2–0,3 cm", thin: "30 cm pe rând, 40 cm între rânduri.", tip: "Necesită apă constantă: chiar și o scurtă secetă îl face fibros și amar." },
-  ravanello:   { method: "Seamănă direct în rânduri, eșalonat la fiecare 7-10 zile.", depth: "0,5–1 cm", thin: "8 cm pe rând, 15 cm între rânduri.", tip: "Dacă rămâne prea des produce frunze bogate dar rădăcini mici. Gata în doar 3-4 săptămâni!" },
-  barbabietola:{ method: "Seamănă direct; fiecare sămânță este un glomerul care poate genera 2-4 răsaduri de rărit.", depth: "1–2 cm", thin: "12 cm pe rând, 25 cm între rânduri.", tip: "Folosește răriturile tinere ca frunze de salată: sunt fragede și gustoase." },
-  cicoria:     { method: "Seamănă direct sau în alveolă, apoi transplant.", depth: "0,5–1 cm", thin: "25 cm pe rând, 30 cm între rânduri.", tip: "Recoltează căpățâna tânără sau taie frunzele exterioare; gustul amar se atenuează cu frigul." },
-  indivia:     { method: "Seamănă în alveolă sau semănătoare, apoi transplant.", depth: "0,5 cm", thin: "30 cm pe rând, 40 cm între rânduri.", tip: "Pentru frunze mai deschise și fragede, leagă căpățâna (uscată) cu 7-10 zile înainte de recoltă." },
-  pakchoi:     { method: "Seamănă direct sau în alveolă; crește foarte rapid.", depth: "0,5–1 cm", thin: "25 cm pe rând, 30 cm între rânduri.", tip: "Seamănă în climat răcoros (max 22 °C): la căldură sau stres hidric intră în floare foarte repede." },
-  cavoletti:   { method: "Seamănă în semănătoare sau alveolă; transplantează devreme.", depth: "0,5–1 cm", thin: "60 cm pe rând, 80 cm între rânduri.", tip: "Cultură lungă (4-6 luni): ocupă spațiu mult timp. Ciupește vârful când mugurii încep să se formeze." },
-  rapa:        { method: "Seamănă direct în rânduri în perioada răcoroasă.", depth: "1 cm", thin: "12 cm pe rând, 25 cm între rânduri.", tip: "Rărește devreme pentru rădăcini regulate; recoltează tânăr înainte de a deveni lemnos." },
-  valerianella:{ method: "Seamănă direct dispersat sau în rânduri dese.", depth: "0,5 cm", thin: "10 cm pe rând, 15 cm între rânduri.", tip: "Acoperă abia sămânța și menține umed în primele zile. Perfectă pentru sera rece de toamnă." },
-  rosmarino:   { method: "Mai bine transplantează butaș sau răsad; din sămânță e foarte lent.", depth: "Coletul la nivelul solului", thin: "60 cm pe rând, 80 cm între rânduri.", tip: "Foarte puțină apă și sol bine drenat: se teme de stagnarea apei mai mult decât orice." },
-  timo:        { method: "Seamănă la suprafață sau transplantează răsaduri mici.", depth: "Superficial, acoperire foarte ușoară", thin: "30 cm între plante.", tip: "Iubește soarele direct și solul uscat; nu-l acoperi cu culturi mai înalte." },
-  origano:     { method: "Seamănă la suprafață sau transplantează; germinează mai bine cu lumină directă.", depth: "Superficial, acoperire foarte ușoară", thin: "30 cm între plante.", tip: "Ciupește regulat pentru a-l face să se îndesească și recoltează întotdeauna înaintea înfloririi complete." },
-  salvia:      { method: "Seamănă în alveolă sau transplantează răsad tânăr.", depth: "0,5 cm", thin: "40 cm pe rând, 50 cm între rânduri.", tip: "Nu exagera cu apa: frunzele sunt mai aromatice în sol drenat și ușor uscat." }
-};
+const SOWING_GUIDE_RO = window.SOWING_GUIDE_RO;
 
-const TIPO = {
-  pomodoro: "frutto",
-  peperone: "frutto",
-  peperoncino: "frutto",
-  melanzana: "frutto",
-  zucchina: "frutto",
-  zucca: "frutto",
-  cetriolo: "frutto",
-  melone: "frutto",
-  anguria: "frutto",
-  fragola: "frutto",
-  fagiolino: "legume",
-  fagiolo: "legume",
-  pisello: "legume",
-  lattuga: "foglia",
-  radicchio: "foglia",
-  rucola: "foglia",
-  spinaci: "foglia",
-  bietola: "foglia",
-  cavolo: "foglia",
-  verza: "foglia",
-  broccolo: "foglia",
-  cavolfiore: "foglia",
-  cavolonero: "foglia",
-  cavolorapa: "foglia",
-  cicoria: "foglia",
-  indivia: "foglia",
-  pakchoi: "foglia",
-  cavoletti: "foglia",
-  valerianella: "foglia",
-  carota: "radice",
-  cipolla: "radice",
-  aglio: "radice",
-  porro: "radice",
-  scalogno: "radice",
-  ravanello: "radice",
-  barbabietola: "radice",
-  rapa: "radice",
-  sedano: "radice",
-  basilico: "aromatica",
-  prezzemolo: "aromatica",
-  coriandolo: "aromatica",
-  aneto: "aromatica",
-  rosmarino: "aromatica",
-  timo: "aromatica",
-  origano: "aromatica",
-  salvia: "aromatica",
-  finocchio: "aromatica",
-  pastinaca: "radice",
-  radice_prezemolo: "radice",
-  sedano_rapa: "radice",
-  rafano: "radice",
-  patata: "radice",
-  patata_dolce: "radice",
-  cipolla_rossa: "radice",
-  cipollotto: "radice",
-  erba_cipollina: "aromatica",
-  loboda: "foglia",
-  stevia_dolce: "foglia",
-  leustean: "aromatica",
-  dragoncello: "aromatica",
-  menta: "aromatica",
-  maggiorana: "aromatica",
-  camomilla: "aromatica",
-  calendula: "aromatica",
-  nasturzio: "aromatica",
-  mais_dolce: "frutto",
-  gombo: "frutto",
-  tomatillo: "frutto",
-  physalis: "frutto",
-  kiwano: "frutto",
-  cucamelon: "frutto",
-  asparago: "foglia",
-  carciofo: "foglia",
-  cardo: "foglia",
-  crescione: "foglia",
-  mizuna: "foglia",
-  senape_foglia: "foglia",
-  tatsoi: "foglia",
-  cavolo_cinese: "foglia",
-  daikon: "radice",
-  scorzonera: "radice",
-  topinambur: "radice",
-  fava: "legume",
-  soia_edamame: "legume",
-  cece: "legume",
-  lenticchia: "legume",
-  fagiolo_borlotto: "legume",
-  cavolo_rosso: "foglia",
-  cavolo_navone: "radice",
-  broccolo_rapa: "foglia",
-  shiso: "aromatica"
-};
+const TIPO = window.TIPO;
 const TIPO_STYLE = {
   frutto: "background:rgba(231,111,81,.18);color:#a03820",
   foglia: "background:rgba(45,106,79,.16);color:#1b4332",
@@ -2169,7 +527,7 @@ let state = {
 let catalog = {
   search: "",
   type: "",
-  seasonOnly: true,
+  seasonOnly: false,
   easyOnly: false,
   sort: "season"
 };
@@ -2475,32 +833,6 @@ function spacingInfographic(p) {
   <text x="206" y="109" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="750" fill="#40916c">${bLbl}</text>
 </svg>`;
 }
-function plantFactItems(plant, compact = false) {
-  const base = [
-    ["↔", t("plant.distance"), spacingLabel(plant)],
-    ["⏱", t("plant.harvest_days"), daysLabel(plant)],
-    ["⚖", t("plant.yield"), yieldLabel(plant)]
-  ];
-  if (compact) return base;
-  return base.concat([
-    [SOLE_ICON[plant.sole] || "☀️", t("plant.sun"), sunLabel(plant)],
-    [ACQUA_ICON[plant.acqua] || "💧", t("plant.water"), t(`water.${plant.acqua}`)],
-    ["↕", t("plant.height"), t(`height.${plant.h}`)]
-  ]);
-}
-function plantFacts(plant, variant = "") {
-  const compact = variant === "compact";
-  return `<div class="plant-facts ${variant}">
-    ${plantFactItems(plant, compact)
-      .map(
-        ([icon, label, value]) => `<span class="plant-fact">
-          <span class="fact-icon" aria-hidden="true">${icon}</span>
-          <span class="fact-copy"><span class="fact-label">${label}</span><b>${value}</b></span>
-        </span>`
-      )
-      .join("")}
-  </div>`;
-}
 function applyDynamicStaticText() {
   const heatedBtn = document.getElementById("heroHeatedBtn");
   const heatedLabel = document.getElementById("heroHeatedLabel");
@@ -2602,28 +934,56 @@ function centerActiveMonth(strip) {
   });
 }
 
+/* Hero: apre/chiude la scelta del livello dentro "Apri il configuratore". */
+function toggleCfgLevels() {
+  const panel = document.getElementById("cfgLevels");
+  const btn = document.getElementById("cfgOpenBtn");
+  if (!panel || !btn) return;
+  const willOpen = panel.hasAttribute("hidden");
+  if (willOpen) {
+    panel.removeAttribute("hidden");
+    btn.setAttribute("aria-expanded", "true");
+    const first = panel.querySelector(".hero-cfg-level");
+    if (first) first.focus({ preventScroll: true });
+  } else {
+    panel.setAttribute("hidden", "");
+    btn.setAttribute("aria-expanded", "false");
+  }
+}
+
 /* Catalogo: render delle piante in evidenza e lista compatta. */
 function renderEditorialPlants() {
   const seasonal = seminabili();
   const plants = filteredCatalogPlants();
   const filtersActive =
     Boolean(catalog.search || catalog.type || catalog.easyOnly) ||
-    !catalog.seasonOnly;
+    catalog.seasonOnly;
   syncCatalogControls();
   const catalogStatus = document.getElementById("catalogStatus");
   if (catalogStatus) {
-    const parts = [];
-    if (!catalog.seasonOnly) parts.push(t("catalog.filter_all_plants"));
-    if (catalog.search) parts.push(`"${catalog.search}"`);
-    if (catalog.type) parts.push(typeLabel(catalog.type));
-    if (catalog.easyOnly) parts.push(t("catalog.easy_only"));
-    if (catalog.sort && catalog.sort !== "season") parts.push(t(`catalog.sort_${catalog.sort}`));
-    catalogStatus.hidden = !parts.length;
-    if (parts.length) {
-      catalogStatus.innerHTML = `<span class="catalog-status-ico">🔍</span> ${parts.join(" · ")} <span class="catalog-status-count">${plants.length} ${t("catalog.results")}</span>`;
+    const pills = [];
+    if (catalog.seasonOnly) pills.push({ kind: "scope", label: t("catalog.season_only") });
+    if (catalog.search) pills.push({ kind: "search", label: `"${catalog.search}"` });
+    if (catalog.type) pills.push({ kind: "type", label: typeLabel(catalog.type) });
+    if (catalog.easyOnly) pills.push({ kind: "easy", label: t("catalog.easy_only") });
+    if (catalog.sort && catalog.sort !== "season") pills.push({ kind: "sort", label: t(`catalog.sort_${catalog.sort}`) });
+    catalogStatus.hidden = !pills.length;
+    if (pills.length) {
+      const remove = t("catalog.remove_filter");
+      catalogStatus.innerHTML =
+        `<span class="catalog-status-count">${plants.length} ${t("catalog.results")}</span>` +
+        `<span class="catalog-status-pills">` +
+        pills
+          .map(
+            (p) =>
+              `<button class="catalog-filter-pill" type="button" onclick="removeCatalogFilter('${p.kind}')" aria-label="${remove}: ${p.label}"><span class="pill-text">${p.label}</span><span class="pill-x" aria-hidden="true">✕</span></button>`
+          )
+          .join("") +
+        `</span>` +
+        `<button class="catalog-clear-all" type="button" onclick="showFullCatalog()">${t("catalog.reset_short")}</button>`;
     }
   }
-  if (catalog.seasonOnly && !filtersActive) {
+  if (catalog.seasonOnly) {
     document.getElementById("stagioneTitle").innerHTML = t("season.title")
       .replace("{count}", `<span class="stagione-count">${plants.length}</span>`)
       .replace("{month}", NOMI_MESI[state.mese - 1]);
@@ -2650,13 +1010,15 @@ function renderEditorialPlants() {
 
   if (!plants.length) {
     document.getElementById("editorialPlants").innerHTML =
-      `<div class="empty-state"><div class="empty-icon">🌱</div><p>${filtersActive ? t("catalog.empty") : t("season.empty")}</p></div>`;
+      `<div class="empty-state"><div class="empty-icon">🌱</div><p>${filtersActive ? t("catalog.empty") : t("season.empty")}</p>${filtersActive ? `<button class="empty-cta" type="button" onclick="showFullCatalog()">${t("catalog.show_all")}</button>` : ""}</div>`;
     document.getElementById("compactPlants").innerHTML = "";
     return;
   }
 
   const featured = plants.slice(0, 3);
   const rest = plants.slice(3);
+  const seasonSet = new Set(seasonal.map((p) => p.id));
+  const offSeasonBadge = `<span class="off-season-badge">${t("catalog.off_season")}</span>`;
 
   /* In evidenza: 3 card uguali nella griglia catalogo. */
   const editHTML = `<div class="plant-catalog-top">
@@ -2671,15 +1033,24 @@ function renderEditorialPlants() {
           <span class="photo-cart-check">✓</span>
         </div>
         <div class="top-body">
-          <div class="top-name">${plantName(p.id)}</div>
+          <div class="top-nameline">
+            <div class="top-name">${plantName(p.id)}</div>
+            ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
+          </div>
           <div class="top-facts-row">
             <span class="top-fact">⏱&nbsp;${daysLabel(p)}</span>
             <span class="top-fact">↔&nbsp;${spacingLabel(p)}</span>
             <span class="top-fact">⚖&nbsp;${yieldLabel(p)}</span>
           </div>
-          <button class="top-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')">
-            ${cartActionLabel(inC)}
-          </button>
+          <div class="top-buy-row">
+            <span class="top-price">
+              <b>${money(packPrice(p.id))}</b>
+              <small>${seedsPerPack(p.id)} ${t("catalog.seeds")}</small>
+            </span>
+            <button class="top-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')">
+              ${cartActionLabel(inC)}
+            </button>
+          </div>
         </div>
       </div>`;
     }).join("")}
@@ -2698,6 +1069,7 @@ function renderEditorialPlants() {
           <div class="compact-name-row">
             <span class="compact-name">${plantName(p.id)}</span>
             <span class="compact-badge" style="${ts}">${typeLabel(tipo)}</span>
+            ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
           </div>
           <p class="compact-note">${plantNote(p)}</p>
           <div class="compact-facts-row compact-facts-row--pro">
@@ -2706,7 +1078,10 @@ function renderEditorialPlants() {
             <span>⚖&nbsp;${yieldLabel(p)}</span>
           </div>
         </div>
-        <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
+        <div class="compact-buy">
+          <span class="compact-price">${money(packPrice(p.id))}</span>
+          <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
+        </div>
       </div>`;
     })
     .join("");
@@ -3127,9 +1502,14 @@ function openDetail(id) {
   const guide = localizedSowingGuide(p);
   let sowHtml = "";
   if (guide) {
-    if (guide.method) sowHtml += `<div class="detail-sow-row"><b>🌱 ${t("detail.sow_method")}</b> — ${guide.method}</div>`;
-    if (guide.depth)  sowHtml += `<div class="detail-sow-row"><b>📏 ${t("detail.sow_depth")}</b> — ${guide.depth}</div>`;
-    if (guide.thin)   sowHtml += `<div class="detail-sow-row"><b>📐 ${t("detail.sow_thin")}</b> — ${guide.thin}</div>`;
+    if (guide.method)      sowHtml += `<div class="detail-sow-row"><b>🌱 ${t("detail.sow_method")}</b> — ${guide.method}</div>`;
+    if (guide.periodo)     sowHtml += `<div class="detail-sow-row"><b>📅 ${t("detail.sow_period")}</b> — ${guide.periodo}</div>`;
+    if (guide.depth)       sowHtml += `<div class="detail-sow-row"><b>📏 ${t("detail.sow_depth")}</b> — ${guide.depth}</div>`;
+    if (guide.thin)        sowHtml += `<div class="detail-sow-row"><b>📐 ${t("detail.sow_thin")}</b> — ${guide.thin}</div>`;
+    if (guide.tempGerm && guide.tempGerm !== "—")     sowHtml += `<div class="detail-sow-row"><b>🌡️ ${t("detail.sow_temp")}</b> — ${guide.tempGerm}</div>`;
+    if (guide.giorniGerm && guide.giorniGerm !== "—") sowHtml += `<div class="detail-sow-row"><b>⏳ ${t("detail.sow_germ")}</b> — ${guide.giorniGerm}</div>`;
+    if (guide.esposizione) sowHtml += `<div class="detail-sow-row"><b>☀️ ${t("detail.sow_exposure")}</b> — ${guide.esposizione}</div>`;
+    if (guide.annaffiatura) sowHtml += `<div class="detail-sow-row"><b>💧 ${t("detail.sow_water")}</b> — ${guide.annaffiatura}</div>`;
     if (guide.tip || nota) sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${guide.tip || nota}</blockquote>`;
   } else if (nota) {
     sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${nota}</blockquote>`;
@@ -3217,12 +1597,32 @@ function syncCatalogControls() {
     const easyCountEl = easy.querySelector(".chip-count");
     if (easyCountEl) easyCountEl.textContent = easyCount;
   }
-  const anyExtra = catalog.search || catalog.type || catalog.easyOnly || !catalog.seasonOnly || catalog.sort !== "season";
+  const anyExtra = catalog.search || catalog.type || catalog.easyOnly || catalog.seasonOnly || catalog.sort !== "season";
   const resetBtn = document.getElementById("catalogReset");
   if (resetBtn) resetBtn.hidden = !anyExtra;
 }
 function setCatalogSearch(value) {
   catalog.search = value;
+  render();
+}
+function clearCatalogSearch() {
+  catalog.search = "";
+  const input = document.getElementById("catalogSearch");
+  if (input) {
+    input.value = "";
+    input.focus();
+  }
+  render();
+}
+function removeCatalogFilter(kind) {
+  if (kind === "scope") catalog.seasonOnly = false;
+  else if (kind === "search") {
+    catalog.search = "";
+    const input = document.getElementById("catalogSearch");
+    if (input) input.value = "";
+  } else if (kind === "type") catalog.type = "";
+  else if (kind === "easy") catalog.easyOnly = false;
+  else if (kind === "sort") catalog.sort = "season";
   render();
 }
 function setCatalogType(value) {
@@ -3284,7 +1684,7 @@ function showFullCatalog() {
   catalog.search = "";
   catalog.type = "";
   catalog.easyOnly = false;
-  catalog.seasonOnly = true;
+  catalog.seasonOnly = false;
   catalog.sort = "season";
   render();
 }
@@ -3516,14 +1916,50 @@ if (_initLang !== "it") {
     el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
   });
 }
-initCookieBanner();function catalogBuyLabel() {
-  return currentLang === "ro" ? "Catalog profesional · cumpărare rapidă" : "Catalog professionale · acquisto rapido";
+initCookieBanner();
+
+/* Scroll con offset per l'header fisso: porta `target` appena sotto la nav
+   invece di farlo finire nascosto dietro di essa. */
+function scrollElementBelowNav(target, behavior = "smooth") {
+  if (!target) return;
+  const navH = parseInt(
+    getComputedStyle(document.documentElement).getPropertyValue("--nav-h") ||
+      "76",
+    10
+  );
+  const top =
+    target.getBoundingClientRect().top + window.scrollY - navH - 12;
+  window.scrollTo({ top: Math.max(0, top), behavior });
 }
-function catalogSpacingText(p) {
-  const spacing = spacingLabel(p);
-  return currentLang === "ro" ? `Distanțe ${spacing}` : `Distanze ${spacing}`;
+
+/* "...oppure sfoglia il catalogo semi": porta all'inizio della card "Cosa
+   piantare adesso" invece che a metà sezione. */
+const heroCatalogLink = document.querySelector(".hero-cfg-catalog-link");
+if (heroCatalogLink) {
+  heroCatalogLink.addEventListener("click", (e) => {
+    const target =
+      document.querySelector("#stagione .stagione-kicker") ||
+      document.getElementById("stagione");
+    if (!target) return;
+    e.preventDefault();
+    history.replaceState(null, "", "#stagione");
+    scrollElementBelowNav(target);
+  });
 }
-function catalogTechLine(p) {
-  const parts = [daysLabel(p), spacingLabel(p), yieldLabel(p)];
-  return parts.filter(Boolean).join(" · ");
+
+/* "Cerca una coltura": porta all'inizio della card di ricerca e mette subito
+   il focus sul campo, pronto per scrivere. */
+const catalogSearchLink = document.querySelector(
+  '.catalog-pro-primary-action[href="#catalogSearch"]'
+);
+if (catalogSearchLink) {
+  catalogSearchLink.addEventListener("click", (e) => {
+    const input = document.getElementById("catalogSearch");
+    const target = input?.closest(".catalog-search--pro") || input;
+    if (!target) return;
+    e.preventDefault();
+    history.replaceState(null, "", "#catalogSearch");
+    scrollElementBelowNav(target);
+    window.setTimeout(() => input?.focus({ preventScroll: true }), 350);
+  });
 }

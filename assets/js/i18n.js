@@ -479,6 +479,8 @@
         "path.free_label": "Progetto libero",
         "path.free_hint": "Scegli misure, colture e disposizione senza guida.",
         "path.free_action": "Apri",
+        "path.mid_label": "Guidato e personalizzabile",
+        "path.mid_hint": "Parti pronto, poi modifica le colture",
         "path.semi_kicker": "Catalogo semi",
         "path.semi_title": "Sfoglia i semi di stagione",
         "path.semi_desc":
@@ -543,8 +545,10 @@
         "catalog.stat_zones": "zone clima",
         "catalog.stat_months": "mesi filtrati",
         "catalog.stat_cart": "nel carrello",
+        "catalog.card_kicker": "Checklist rapida",
         "catalog.card_title": "Prima di aggiungere semi",
         "catalog.card_subtitle": "Controlla questi quattro segnali",
+        "catalog.card_tip": "Apri la scheda di una pianta per vedere subito se è il momento giusto per seminarla.",
         "catalog.feature_sowing_title": "Finestra di semina",
         "catalog.feature_sowing_sub": "adatta al mese selezionato",
         "catalog.feature_climate_title": "Compatibilità clima",
@@ -571,10 +575,16 @@
         "catalog.insight_compact": "compatti",
         "catalog.insight_cart": "nel carrello",
         "catalog.season_only": "Solo adatti adesso",
+        "catalog.off_season": "Fuori stagione",
         "catalog.easy_only": "Facili per iniziare",
         "catalog.filter_all_plants": "Tutto il catalogo",
         "catalog.results": "risultati",
         "catalog.reset": "Azzera filtri",
+        "catalog.reset_short": "Azzera tutto",
+        "catalog.seeds": "semi",
+        "catalog.show_all": "Mostra tutto il catalogo",
+        "catalog.remove_filter": "Rimuovi filtro",
+        "catalog.clear_search": "Cancella ricerca",
         "catalog.hint_before": "Tocca una pianta per i dettagli · usa",
         "catalog.hint_after": "per aggiungerla al carrello direttamente",
         "catalog.empty":
@@ -688,6 +698,20 @@
         "cookie.reject": "Solo essenziali",
         "hero.controls_hint": "Seleziona la tua zona climatica per vedere i semi giusti per te",
         "hero.path_label": "Scegli il tuo percorso",
+        "hero.cfg_badge": "Strumento interattivo",
+        "hero.cfg_title": "Progetta la tua serra, vista dall'alto",
+        "hero.cfg_desc": "Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.",
+        "hero.cfg_cta": "Apri il configuratore",
+        "hero.cfg_or": "oppure sfoglia il catalogo semi",
+        "hero.cfg_personas_label": "Entra come",
+        "hero.cfg_novizio": "Principiante",
+        "hero.cfg_intermedio": "Con esperienza",
+        "hero.cfg_esperto": "Esperto",
+        "hero.cfg_caption": "Anteprima · vista dall'alto",
+        "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
+        "hero.cfg_nov_hint": "Orto pronto, guidato passo passo",
+        "hero.cfg_int_hint": "Guidato, ma personalizzabile",
+        "hero.cfg_exp_hint": "Catalogo completo, scelta libera",
         "nav.brand_sub": "Coltiva con un piano",
         "detail.how_to_sow": "Come si semina",
         "detail.spacing_label": "Spaziatura",
@@ -707,6 +731,11 @@
         "detail.sow_method": "Metodo",
         "detail.sow_depth": "Profondità",
         "detail.sow_thin": "Spaziatura",
+        "detail.sow_period": "Periodo di semina",
+        "detail.sow_temp": "Temperatura di germinazione",
+        "detail.sow_germ": "Tempo di germinazione",
+        "detail.sow_exposure": "Esposizione",
+        "detail.sow_water": "Irrigazione",
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -754,6 +783,8 @@
         "path.free_label": "Proiect liber",
         "path.free_hint": "Alege dimensiuni, culturi și aranjare fără ghid.",
         "path.free_action": "Deschide",
+        "path.mid_label": "Ghidat și personalizabil",
+        "path.mid_hint": "Pornești gata, apoi modifici culturile",
         "path.semi_kicker": "Catalog semințe",
         "path.semi_title": "Răsfoiește semințele de sezon",
         "path.semi_desc":
@@ -818,8 +849,10 @@
         "catalog.stat_zones": "zone climatice",
         "catalog.stat_months": "luni filtrate",
         "catalog.stat_cart": "în coș",
+        "catalog.card_kicker": "Verificare rapidă",
         "catalog.card_title": "Înainte să adaugi semințe",
         "catalog.card_subtitle": "Verifică aceste patru semnale",
+        "catalog.card_tip": "Deschide fișa unei plante pentru a vedea imediat dacă este momentul potrivit pentru semănat.",
         "catalog.feature_sowing_title": "Fereastră de semănare",
         "catalog.feature_sowing_sub": "potrivită lunii selectate",
         "catalog.feature_climate_title": "Compatibilitate climă",
@@ -846,10 +879,16 @@
         "catalog.insight_compact": "compacte",
         "catalog.insight_cart": "în coș",
         "catalog.season_only": "Doar potrivite acum",
+        "catalog.off_season": "În afara sezonului",
         "catalog.easy_only": "Ușoare pentru început",
         "catalog.filter_all_plants": "Tot catalogul",
         "catalog.results": "rezultate",
         "catalog.reset": "Resetează filtrele",
+        "catalog.reset_short": "Resetează tot",
+        "catalog.seeds": "semințe",
+        "catalog.show_all": "Arată tot catalogul",
+        "catalog.remove_filter": "Elimină filtrul",
+        "catalog.clear_search": "Șterge căutarea",
         "catalog.hint_before": "Atinge o plantă pentru detalii · folosește",
         "catalog.hint_after": "pentru a o adăuga direct în coș",
         "catalog.empty":
@@ -964,6 +1003,20 @@
         "cookie.reject": "Doar esențiale",
         "hero.controls_hint": "Selectează zona climatică pentru a vedea semințele potrivite",
         "hero.path_label": "Alege traseul tău",
+        "hero.cfg_badge": "Instrument interactiv",
+        "hero.cfg_title": "Proiectează-ți sera, văzută de sus",
+        "hero.cfg_desc": "Dimensiuni reale, climă și culturi aranjate strat cu strat. Vezi cum arată înainte să semeni.",
+        "hero.cfg_cta": "Deschide configuratorul",
+        "hero.cfg_or": "sau răsfoiește catalogul de semințe",
+        "hero.cfg_personas_label": "Intră ca",
+        "hero.cfg_novizio": "Începător",
+        "hero.cfg_intermedio": "Cu experiență",
+        "hero.cfg_esperto": "Expert",
+        "hero.cfg_caption": "Previzualizare · vedere de sus",
+        "hero.cfg_levels_title": "Ce fel de cultivator ești?",
+        "hero.cfg_nov_hint": "Grădină gata, ghidat pas cu pas",
+        "hero.cfg_int_hint": "Ghidat, dar personalizabil",
+        "hero.cfg_exp_hint": "Catalog complet, alegere liberă",
         "nav.brand_sub": "Cultivă cu un plan",
         "detail.how_to_sow": "Cum se seamănă",
         "detail.spacing_label": "Spațiere",
@@ -983,6 +1036,11 @@
         "detail.sow_method": "Metodă",
         "detail.sow_depth": "Adâncime",
         "detail.sow_thin": "Spațiere",
+        "detail.sow_period": "Perioada de semănat",
+        "detail.sow_temp": "Temperatura de germinare",
+        "detail.sow_germ": "Timp de germinare",
+        "detail.sow_exposure": "Expunere",
+        "detail.sow_water": "Udare",
       }
     },
     /* Configuratore: pannelli, controlli, carrello e messaggi tecnici. */
@@ -1005,9 +1063,24 @@
         guidedModalTitle: "Partiamo da un orto facile",
         guidedModalCopy:
           "Inserisci misure e clima: preparo un primo progetto da principiante con colture semplici, distanze corrette e quantità modificabili.",
-        guidedIntroTitle: "Configura la serra, poi esplora le colture",
+        guidedIntroTitle: "Personalizza il tuo orto",
         guidedIntroCopy:
           "Imposta i dati reali. Riempi automaticamente oppure scegli le colture. Clicca una pianta nella mappa per aprire la scheda con quantità, resa e consigli.",
+        guidedIntroNovTitle: "Prepara la tua serra",
+        guidedNovStep1:
+          "Controlla <strong>larghezza e lunghezza</strong> della tua serra qui sotto",
+        guidedNovStep2:
+          "Indica se la serra è <strong>riscaldata</strong> e scegli il tuo clima",
+        guidedNovStep3:
+          "Seleziona il <strong>mese attuale</strong> per colture giuste",
+        guidedNovCta: "Verifica le dimensioni della serra",
+        guidedIntroExpTitle: "Componi la serra a mano",
+        guidedExpStep1:
+          "Imposta <strong>misure, clima e mese</strong> per il catalogo completo",
+        guidedExpStep2:
+          "Sfoglia <strong>tutto il catalogo</strong> e aggiungi le colture che vuoi, anche fuori stagione",
+        guidedExpStep3:
+          "Disponi le <strong>aiuole</strong> e regola quantità e layout a mano",
         guidedIntroEdit: "Personalizza",
         guidedIntroEditHint: "Modifica misure, piante e layout",
         guidedIntroView: "Vedi il progetto",
@@ -1062,6 +1135,17 @@
         presetRadici: "Radici e bulbi facili",
         presetFoglie: "Taglio continuo di foglie",
         presetBrassicacee: "Cavoli da serra fresca",
+        presetPrimaverile: "Orto di primavera",
+        presetAutunnale: "Orto d'autunno",
+        presetLegumi: "Legumi da baccello",
+        presetFrutti: "Ortaggi da frutto",
+        presetCucurbitacee: "Zucche e cetrioli",
+        presetSoffritto: "Base per soffritto",
+        presetGrigliata: "Verdure da grigliare",
+        presetFamiglia: "Buono per la famiglia",
+        catPresetSeason: "Per stagione",
+        catPresetType: "Per tipo di coltura",
+        catPresetGoal: "Per obiettivo",
         autoFill: "Auto riempi",
         autoFillCopy: "Sceglie colture di stagione e riempie lo spazio.",
         helper:
@@ -1088,6 +1172,18 @@
         modeFitHint: "Imposta misure e clima — la serra si riempie da sola",
         modeExpertTitle: "Scegli le colture",
         modeExpertHint: "Aggiungi o rimuovi le piante una a una",
+        personaPickLabel: "Da dove vuoi partire?",
+        personaPickHint:
+          "Scegli il percorso più adatto a te — puoi cambiarlo quando vuoi.",
+        personaNovTitle: "Sono alle prime armi",
+        personaNovDesc:
+          "Ti guido passo passo: clima, serra e un orto pronto fino al carrello",
+        personaIntTitle: "Ho un po' di esperienza",
+        personaIntDesc:
+          "Parti guidato, poi personalizza le colture e aggiungi semi fuori stagione",
+        personaExpTitle: "So già cosa voglio",
+        personaExpDesc:
+          "Sfoglia tutto il catalogo, di stagione o no, e componi la serra a mano",
         fillSelectedTitle:
           "Ricalibra quantità realistiche e riempie la serra usando solo le colture già inserite",
         clearGreenhouseHint: "Rimuove tutte le colture dal progetto.",
@@ -1107,11 +1203,11 @@
         noSelectionCopy:
           "Aggiungi un ortaggio dalla card Personalizza, poi toccalo nella serra per vedere come coltivarlo.",
         howTo1:
-          "Nel <b>Piano automatico</b> imposta misure, mese, clima e tipo di serra.",
+          "Controlla <strong>misure e clima</strong>: la serra è già pronta per te",
         howTo2:
-          "Premi <b>Riempi la serra</b>, oppure passa a <em>Scegli le colture</em> per aggiungerle manualmente.",
+          "Personalizza le <strong>colture</strong>, anche <em>fuori stagione</em>",
         howTo3:
-          "Clicca un'aiuola nella vista per modificare quantità e leggere i dettagli.",
+          "Clicca un'aiuola per vedere la <strong>scheda della pianta</strong>",
         inGreenhouse: "Nella serra",
         bedsSub:
           "Elenco delle aiuole inserite. Clicca una riga per selezionarla.",
@@ -1268,9 +1364,24 @@
         guidedModalTitle: "Pornim de la o grădină ușoară",
         guidedModalCopy:
           "Introdu dimensiunile și clima: pregătesc un prim proiect pentru începători, cu culturi simple, distanțe corecte și cantități editabile.",
-        guidedIntroTitle: "Configurează sera, apoi explorează culturile",
+        guidedIntroTitle: "Personalizează-ți grădina",
         guidedIntroCopy:
           "Setează datele reale. Umple automat sau alege culturile. Apasă pe o plantă din hartă pentru fișa cu cantități, recoltă și sfaturi.",
+        guidedIntroNovTitle: "Pregătește-ți sera",
+        guidedNovStep1:
+          "Verifică <strong>lățimea și lungimea</strong> serei tale mai jos",
+        guidedNovStep2:
+          "Indică dacă sera este <strong>încălzită</strong> și alege clima ta",
+        guidedNovStep3:
+          "Selectează <strong>luna curentă</strong> pentru culturi potrivite",
+        guidedNovCta: "Verifică dimensiunile serei",
+        guidedIntroExpTitle: "Compune sera manual",
+        guidedExpStep1:
+          "Setează <strong>dimensiunile, clima și luna</strong> pentru catalogul complet",
+        guidedExpStep2:
+          "Răsfoiește <strong>tot catalogul</strong> și adaugă culturile dorite, chiar și în afara sezonului",
+        guidedExpStep3:
+          "Aranjează <strong>straturile</strong> și ajustează cantitățile și aspectul manual",
         guidedIntroEdit: "Personalizează",
         guidedIntroEditHint: "Modifică dimensiuni, plante și layout",
         guidedIntroView: "Vezi proiectul",
@@ -1325,6 +1436,17 @@
         presetRadici: "Rădăcini și bulbi ușori",
         presetFoglie: "Frunze pentru tăieri repetate",
         presetBrassicacee: "Verze pentru seră răcoroasă",
+        presetPrimaverile: "Grădină de primăvară",
+        presetAutunnale: "Grădină de toamnă",
+        presetLegumi: "Leguminoase de păstaie",
+        presetFrutti: "Legume-fruct",
+        presetCucurbitacee: "Dovleci și castraveți",
+        presetSoffritto: "Bază pentru sote",
+        presetGrigliata: "Legume pentru grătar",
+        presetFamiglia: "Bun pentru familie",
+        catPresetSeason: "După sezon",
+        catPresetType: "După tipul culturii",
+        catPresetGoal: "După obiectiv",
         autoFill: "Umple automat",
         autoFillCopy: "Alege culturi de sezon și umple spațiul.",
         helper:
@@ -1350,6 +1472,18 @@
         modeFitHint: "Setează dimensiunile și clima — sera se umple automat",
         modeExpertTitle: "Alege culturile",
         modeExpertHint: "Adaugă sau elimină plantele una câte una",
+        personaPickLabel: "De unde vrei să începi?",
+        personaPickHint:
+          "Alege parcursul potrivit pentru tine — îl poți schimba oricând.",
+        personaNovTitle: "Sunt la început",
+        personaNovDesc:
+          "Te ghidez pas cu pas: climă, seră și o grădină gata până la coș",
+        personaIntTitle: "Am ceva experiență",
+        personaIntDesc:
+          "Pornești ghidat, apoi personalizezi culturile și adaugi semințe în afara sezonului",
+        personaExpTitle: "Știu deja ce vreau",
+        personaExpDesc:
+          "Răsfoiește tot catalogul, de sezon sau nu, și compune sera manual",
         fillSelectedTitle:
           "Recalibrează cantități realiste și umple sera folosind doar culturile deja adăugate",
         clearGreenhouseHint: "Elimină toate culturile din proiect.",
@@ -1369,10 +1503,11 @@
         noSelectionCopy:
           "Adaugă o cultură din cardul Personalizează, apoi apasă pe ea în seră pentru detalii.",
         howTo1:
-          "În <b>Plan automat</b> setează dimensiuni, lună, climă și tipul serei.",
+          "Verifică <strong>dimensiunile și clima</strong>: sera este deja pregătită pentru tine",
         howTo2:
-          "Apasă <b>Umple sera</b> sau treci la <em>Alege culturile</em> pentru a le adăuga manual.",
-        howTo3: "Apasă pe un strat din vedere pentru cantități și detalii.",
+          "Personalizează <strong>culturile</strong>, chiar și <em>în afara sezonului</em>",
+        howTo3:
+          "Apasă pe un strat pentru a vedea <strong>fișa plantei</strong>",
         inGreenhouse: "În seră",
         bedsSub: "Lista straturilor inserate. Clic pe un rând pentru selecție.",
         yieldCost: "Semințe de cumpărat",

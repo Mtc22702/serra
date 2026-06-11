@@ -145,27 +145,145 @@
 
         <!-- Intro destra: passi rapidi e scelta modalità. -->
         <div class="guided-intro-right">
-          <!-- Passi: flusso minimo per progettare la serra. -->
-          <div class="guided-intro-main">
-            <b class="guided-steps-label" id="guidedIntroTitle"
-              >Come funziona</b
+          <!-- Selettore livello: instrada novizio / intermedio / esperto. -->
+          <div class="persona-pick">
+            <div class="persona-pick-head">
+              <b class="persona-pick-label" id="personaPickLabel"
+                >Da dove vuoi partire?</b
+              >
+              <span class="persona-pick-hint" id="personaPickHint"
+                >Scegli il percorso più adatto a te — puoi cambiarlo quando
+                vuoi.</span
+              >
+            </div>
+            <div
+              class="persona-cards"
+              role="tablist"
+              aria-label="Livello di esperienza"
             >
-            <ol class="guided-steps" id="guidedIntroSteps">
+              <button
+                class="persona-card persona-card--novizio"
+                type="button"
+                data-livello="novizio"
+                data-mode="fit"
+                role="tab"
+                aria-selected="false"
+              >
+                <span class="persona-card-ico" aria-hidden="true">🌱</span>
+                <span class="persona-card-body">
+                  <b id="personaNovTitle">Sono alle prime armi</b>
+                  <small id="personaNovDesc"
+                    >Ti guido passo passo: clima, serra e un orto pronto fino
+                    al carrello</small
+                  >
+                </span>
+                <span class="persona-card-go" aria-hidden="true">→</span>
+              </button>
+              <button
+                class="persona-card persona-card--intermedio is-active"
+                type="button"
+                data-livello="intermedio"
+                data-mode="fit"
+                role="tab"
+                aria-selected="true"
+              >
+                <span class="persona-card-ico" aria-hidden="true">🌿</span>
+                <span class="persona-card-body">
+                  <b id="personaIntTitle">Ho un po' di esperienza</b>
+                  <small id="personaIntDesc"
+                    >Parti guidato, poi personalizza le colture e aggiungi semi
+                    fuori stagione</small
+                  >
+                </span>
+                <span class="persona-card-go" aria-hidden="true">→</span>
+              </button>
+              <button
+                class="persona-card persona-card--esperto"
+                type="button"
+                data-livello="esperto"
+                data-mode="expert"
+                role="tab"
+                aria-selected="false"
+              >
+                <span class="persona-card-ico" aria-hidden="true">🌾</span>
+                <span class="persona-card-body">
+                  <b id="personaExpTitle">So già cosa voglio</b>
+                  <small id="personaExpDesc"
+                    >Sfoglia tutto il catalogo, di stagione o no, e componi la
+                    serra a mano</small
+                  >
+                </span>
+                <span class="persona-card-go" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Passi: percorso guidato per il novizio (dimensioni, riscaldamento, mese). -->
+          <div class="guided-intro-main guided-intro-novizio">
+            <b class="guided-steps-label" id="guidedIntroNovTitle"
+              >Prepara la tua serra</b
+            >
+            <ol class="guided-steps" id="guidedIntroNovSteps">
               <li>
                 <span class="guided-step-num" aria-hidden="true">1</span>
+                <span class="guided-step-ico" aria-hidden="true">📏</span>
                 <span
-                  >Imposta <strong>misure e clima</strong> della tua serra</span
+                  >Controlla <strong>larghezza e lunghezza</strong> della tua
+                  serra qui sotto</span
                 >
               </li>
               <li>
                 <span class="guided-step-num" aria-hidden="true">2</span>
+                <span class="guided-step-ico" aria-hidden="true">🌡️</span>
                 <span
-                  >Premi <strong>Riempi la serra</strong> o aggiungi le piante
-                  una a una</span
+                  >Indica se la serra è <strong>riscaldata</strong> e scegli il
+                  tuo clima</span
                 >
               </li>
               <li>
                 <span class="guided-step-num" aria-hidden="true">3</span>
+                <span class="guided-step-ico" aria-hidden="true">📅</span>
+                <span
+                  >Seleziona il <strong>mese attuale</strong> per colture
+                  giuste</span
+                >
+              </li>
+            </ol>
+            <button
+              class="guided-nov-cta"
+              type="button"
+              id="guidedNovCta"
+            >
+              <span aria-hidden="true">📐</span>
+              <span id="guidedNovCtaLabel">Verifica le dimensioni della serra</span>
+            </button>
+          </div>
+
+          <!-- Passi: percorso per chi ha già un po' di esperienza. -->
+          <div class="guided-intro-main guided-intro-intermedio">
+            <b class="guided-steps-label" id="guidedIntroTitle"
+              >Personalizza il tuo orto</b
+            >
+            <ol class="guided-steps" id="guidedIntroSteps">
+              <li>
+                <span class="guided-step-num" aria-hidden="true">1</span>
+                <span class="guided-step-ico" aria-hidden="true">📐</span>
+                <span
+                  >Controlla <strong>misure e clima</strong>: la serra è già
+                  pronta per te</span
+                >
+              </li>
+              <li>
+                <span class="guided-step-num" aria-hidden="true">2</span>
+                <span class="guided-step-ico" aria-hidden="true">🌱</span>
+                <span
+                  >Personalizza le <strong>colture</strong>, anche
+                  <em>fuori stagione</em></span
+                >
+              </li>
+              <li>
+                <span class="guided-step-num" aria-hidden="true">3</span>
+                <span class="guided-step-ico" aria-hidden="true">🔍</span>
                 <span
                   >Clicca un'aiuola per vedere la
                   <strong>scheda della pianta</strong></span
@@ -174,102 +292,37 @@
             </ol>
           </div>
 
-          <!-- Modalità: piano automatico o scelta manuale colture. -->
-          <div
-            class="guided-intro-actions"
-            role="tablist"
-            aria-label="Modalità configuratore"
-          >
-            <button
-              class="mode-tab is-active"
-              type="button"
-              data-mode="fit"
-              role="tab"
-              aria-selected="true"
+          <!-- Passi: percorso per chi sa già cosa vuole. -->
+          <div class="guided-intro-main guided-intro-esperto">
+            <b class="guided-steps-label" id="guidedIntroExpTitle"
+              >Componi la serra a mano</b
             >
-              <span class="mode-tab-ico" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+            <ol class="guided-steps" id="guidedIntroExpSteps">
+              <li>
+                <span class="guided-step-num" aria-hidden="true">1</span>
+                <span class="guided-step-ico" aria-hidden="true">📐</span>
+                <span
+                  >Imposta <strong>misure, clima e mese</strong> per il
+                  catalogo completo</span
                 >
-                  <path d="M4 19V8" />
-                  <path d="M9 19V5" />
-                  <path d="M14 19v-7" />
-                  <path d="M19 19V9" />
-                  <path d="M3 19h18" />
-                  <path d="M5 8h8" />
-                </svg>
-              </span>
-              <span class="mode-tab-body">
-                <b id="modeFitTitle">Piano automatico</b>
-                <small id="modeFitHint"
-                  >Imposta misure e clima —&nbsp;la serra si riempie da
-                  sola</small
+              </li>
+              <li>
+                <span class="guided-step-num" aria-hidden="true">2</span>
+                <span class="guided-step-ico" aria-hidden="true">🌾</span>
+                <span
+                  >Sfoglia <strong>tutto il catalogo</strong> e aggiungi le
+                  colture che vuoi, anche fuori stagione</span
                 >
-              </span>
-              <span class="mode-tab-arrow" aria-hidden="true">
-                <svg
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+              </li>
+              <li>
+                <span class="guided-step-num" aria-hidden="true">3</span>
+                <span class="guided-step-ico" aria-hidden="true">🧩</span>
+                <span
+                  >Disponi le <strong>aiuole</strong> e regola quantità e
+                  layout a mano</span
                 >
-                  <path d="M6 3l5 5-5 5" />
-                </svg>
-              </span>
-            </button>
-            <button
-              class="mode-tab"
-              type="button"
-              data-mode="expert"
-              role="tab"
-              aria-selected="false"
-            >
-              <span class="mode-tab-ico" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M12 3v3" />
-                  <path d="M12 18v3" />
-                  <path d="M3 12h3" />
-                  <path d="M18 12h3" />
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M18.4 5.6l-2.1 2.1" />
-                  <path d="M7.7 16.3l-2.1 2.1" />
-                  <path d="M5.6 5.6l2.1 2.1" />
-                  <path d="M16.3 16.3l2.1 2.1" />
-                </svg>
-              </span>
-              <span class="mode-tab-body">
-                <b id="modeExpertTitle">Scegli le colture</b>
-                <small id="modeExpertHint"
-                  >Aggiungi o rimuovi le piante una a una</small
-                >
-              </span>
-              <span class="mode-tab-arrow" aria-hidden="true">
-                <svg
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M6 3l5 5-5 5" />
-                </svg>
-              </span>
-            </button>
+              </li>
+            </ol>
           </div>
         </div>
       </div>
@@ -395,7 +448,7 @@
                     />
                   </div>
                 </div>
-                <div class="field">
+                <div class="field" id="pathField">
                   <label class="fld" id="lblPath"
                     >Camminamento tra aiuole</label
                   >
@@ -504,19 +557,29 @@
             <label class="fld">Layout già pronti</label>
             <select id="inPreset">
               <option value="">Scegli un esempio…</option>
-              <option value="insalate">
-                Insalate facili tutto l'anno
-              </option>
-              <option value="salsa">
-                Tutto per la salsa di pomodoro
-              </option>
-              <option value="principiante">Orto del principiante</option>
-              <option value="aromatiche">Angolo aromatiche</option>
-              <option value="estivo">Orto estivo abbondante</option>
-              <option value="invernale">Serra invernale verde</option>
-              <option value="radici">Radici e bulbi facili</option>
-              <option value="foglie">Taglio continuo di foglie</option>
-              <option value="brassicacee">Cavoli da serra fresca</option>
+              <optgroup label="Per stagione" data-i18n-optgroup="catPresetSeason">
+                <option value="primaverile">Orto di primavera</option>
+                <option value="estivo">Orto estivo abbondante</option>
+                <option value="autunnale">Orto d'autunno</option>
+                <option value="invernale">Serra invernale verde</option>
+              </optgroup>
+              <optgroup label="Per tipo di coltura" data-i18n-optgroup="catPresetType">
+                <option value="foglie">Taglio continuo di foglie</option>
+                <option value="radici">Radici e bulbi facili</option>
+                <option value="brassicacee">Cavoli da serra fresca</option>
+                <option value="aromatiche">Angolo aromatiche</option>
+                <option value="legumi">Legumi da baccello</option>
+                <option value="frutti">Ortaggi da frutto</option>
+                <option value="cucurbitacee">Zucche e cetrioli</option>
+              </optgroup>
+              <optgroup label="Per obiettivo" data-i18n-optgroup="catPresetGoal">
+                <option value="principiante">Orto del principiante</option>
+                <option value="insalate">Insalate facili tutto l'anno</option>
+                <option value="salsa">Tutto per la salsa di pomodoro</option>
+                <option value="soffritto">Base per soffritto</option>
+                <option value="grigliata">Verdure da grigliare</option>
+                <option value="famiglia">Buono per la famiglia</option>
+              </optgroup>
             </select>
           </div>
         </div>
@@ -1038,6 +1101,7 @@
     <!-- Script pagina: menu, traduzioni e logica configuratore. -->
     <script src="assets/js/nav.js"></script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/plants-data.js"></script>
     <script src="assets/js/script.js"></script>
     <!-- Torna su: mostra il pulsante dopo lo scroll. -->
     <script>

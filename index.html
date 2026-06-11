@@ -163,78 +163,98 @@
           </div>
           <span class="hero-filter-note" id="heroFilterNote"></span>
         </div>
-        <div class="hero-path" aria-labelledby="heroPathLabel">
-          <div class="hero-path-divider">
-            <span
-              class="hero-path-divider-label"
-              id="heroPathLabel"
-              data-i18n="hero.path_label"
-              >Scegli il tuo percorso</span
-            >
-          </div>
-
-          <div class="percorso-board percorso-board--two">
-            <!-- Percorso configuratore: piano automatico o progetto libero. -->
-            <div class="percorso-cta percorso-cta--auto">
-              <div class="percorso-cta-deco" aria-hidden="true">🌱</div>
-              <div class="percorso-cta-inner">
-                <div class="percorso-cta-left">
-                  <div class="percorso-cta-eyebrow">
-                    <span class="percorso-cta-icon" aria-hidden="true">🌱</span>
-                    <span class="percorso-badge" data-i18n="path.auto_badge"
-                      >Consigliato</span
-                    >
-                  </div>
-                  <h3 class="percorso-cta-title" data-i18n="path.auto_title">
-                    Pianifica la tua serra
-                  </h3>
-                  <p class="percorso-cta-desc" data-i18n="path.auto_desc">
-                    Misure, clima e piante ottimizzate.<br />
-                    Scegli la modalità che preferisci.
-                  </p>
-                </div>
-                <div class="percorso-cta-paths">
-                  <a
-                    href="configuratore.html?preset=principiante&guided=1"
-                    class="percorso-path percorso-path--auto"
+        <!-- Configuratore: azione principale e dominante dell'hero. -->
+        <div class="hero-cfg">
+          <div class="hero-cfg-inner">
+            <div class="hero-cfg-text">
+              <span class="hero-cfg-badge">
+                <span class="hero-cfg-badge-dot" aria-hidden="true"></span>
+                <span data-i18n="hero.cfg_badge">Strumento interattivo</span>
+              </span>
+              <h2 class="hero-cfg-title" data-i18n="hero.cfg_title">
+                Progetta la tua serra, vista dall'alto
+              </h2>
+              <p class="hero-cfg-desc" data-i18n="hero.cfg_desc">
+                Misure reali, clima e colture disposte aiuola per aiuola. Vedi
+                com'è prima ancora di seminare.
+              </p>
+              <div class="hero-cfg-actions">
+                <button
+                  class="hero-cfg-cta"
+                  type="button"
+                  id="cfgOpenBtn"
+                  aria-expanded="false"
+                  aria-controls="cfgLevels"
+                  onclick="toggleCfgLevels()"
+                >
+                  <span class="hero-cfg-cta-ico" aria-hidden="true">📐</span>
+                  <span data-i18n="hero.cfg_cta">Apri il configuratore</span>
+                  <span class="hero-cfg-cta-arrow" aria-hidden="true">▾</span>
+                </button>
+                <a class="hero-cfg-catalog-link" href="#stagione">
+                  <span data-i18n="hero.cfg_or"
+                    >oppure sfoglia il catalogo semi</span
                   >
-                    <span class="percorso-path-icon" aria-hidden="true"
-                      >✨</span
-                    >
-                    <div class="percorso-path-content">
-                      <span
-                        class="percorso-path-label"
-                        data-i18n="path.auto_kicker"
-                        >Piano automatico</span
+                  <span class="hero-cfg-catalog-arrow" aria-hidden="true"
+                    >→</span
+                  >
+                </a>
+              </div>
+              <div
+                class="hero-cfg-levels"
+                id="cfgLevels"
+                role="group"
+                aria-label="Scegli il livello"
+                hidden
+              >
+                <span
+                  class="hero-cfg-levels-title"
+                  data-i18n="hero.cfg_levels_title"
+                  >Che tipo di coltivatore sei?</span
+                >
+                <div class="hero-cfg-levels-grid">
+                  <a
+                    class="hero-cfg-level"
+                    href="configuratore.html?livello=novizio&preset=principiante&guided=1"
+                  >
+                    <span class="hero-cfg-level-ico" aria-hidden="true">🌱</span>
+                    <span class="hero-cfg-level-body">
+                      <b data-i18n="hero.cfg_novizio">Principiante</b>
+                      <small data-i18n="hero.cfg_nov_hint"
+                        >Orto pronto, guidato passo passo</small
                       >
-                      <span
-                        class="percorso-path-hint"
-                        data-i18n="path.auto_action"
-                        >Orto pronto in un clic</span
-                      >
-                    </div>
-                    <span class="percorso-path-arrow" aria-hidden="true"
+                    </span>
+                    <span class="hero-cfg-level-arrow" aria-hidden="true"
                       >→</span
                     >
                   </a>
                   <a
-                    href="configuratore.html?mode=expert&empty=1"
-                    class="percorso-path percorso-path--free"
+                    class="hero-cfg-level"
+                    href="configuratore.html?livello=intermedio&guided=1"
                   >
-                    <span class="percorso-path-icon" aria-hidden="true"
-                      >✏️</span
+                    <span class="hero-cfg-level-ico" aria-hidden="true">🌿</span>
+                    <span class="hero-cfg-level-body">
+                      <b data-i18n="hero.cfg_intermedio">Con esperienza</b>
+                      <small data-i18n="hero.cfg_int_hint"
+                        >Guidato, ma personalizzabile</small
+                      >
+                    </span>
+                    <span class="hero-cfg-level-arrow" aria-hidden="true"
+                      >→</span
                     >
-                    <div class="percorso-path-content">
-                      <span
-                        class="percorso-path-label"
-                        data-i18n="path.free_label"
-                        >Progetto libero</span
+                  </a>
+                  <a
+                    class="hero-cfg-level"
+                    href="configuratore.html?livello=esperto&mode=expert&empty=1"
+                  >
+                    <span class="hero-cfg-level-ico" aria-hidden="true">🌾</span>
+                    <span class="hero-cfg-level-body">
+                      <b data-i18n="hero.cfg_esperto">Esperto</b>
+                      <small data-i18n="hero.cfg_exp_hint"
+                        >Catalogo completo, scelta libera</small
                       >
-                      <span class="percorso-path-hint"
-                        >Personalizzi ogni scelta</span
-                      >
-                    </div>
-                    <span class="percorso-path-arrow" aria-hidden="true"
+                    </span>
+                    <span class="hero-cfg-level-arrow" aria-hidden="true"
                       >→</span
                     >
                   </a>
@@ -242,41 +262,35 @@
               </div>
             </div>
 
-            <!-- Percorso catalogo: accesso ai semi filtrati per stagione. -->
-            <a href="#stagione" class="percorso-cta percorso-cta--semi">
-              <div class="percorso-cta-deco" aria-hidden="true">🫘</div>
-              <div class="percorso-cta-inner">
-                <div class="percorso-cta-left">
-                  <div class="percorso-cta-eyebrow">
-                    <span class="percorso-cta-icon" aria-hidden="true">🫘</span>
-                    <span
-                      class="percorso-kicker percorso-kicker--earth"
-                      data-i18n="path.semi_kicker"
-                      >Catalogo semi</span
-                    >
+            <div class="hero-cfg-visual" aria-hidden="true">
+              <div class="hcg">
+                <div class="hcg-glass">
+                  <div class="hcg-ridge"></div>
+                  <div class="hcg-beds">
+                    <div class="hcg-bed">
+                      <span class="hcg-plant">🍅</span>
+                      <span class="hcg-plant">🍅</span>
+                    </div>
+                    <div class="hcg-bed">
+                      <span class="hcg-plant">🥬</span>
+                      <span class="hcg-plant">🥬</span>
+                    </div>
+                    <div class="hcg-bed">
+                      <span class="hcg-plant">🥕</span>
+                      <span class="hcg-plant">🥕</span>
+                    </div>
+                    <div class="hcg-bed">
+                      <span class="hcg-plant">🌶️</span>
+                      <span class="hcg-plant">🌶️</span>
+                    </div>
                   </div>
-                  <h3 class="percorso-cta-title" data-i18n="path.semi_title">
-                    Sfoglia i semi di stagione
-                  </h3>
-                  <p class="percorso-cta-desc" data-i18n="path.semi_desc">
-                    Filtrato per mese e clima. Scegli i semi e importali nel tuo
-                    piano.
-                  </p>
+                  <div class="hcg-path"></div>
                 </div>
-                <div class="percorso-cta-catalog">
-                  <div class="percorso-catalog-grid" aria-hidden="true">
-                    <span>🍅</span><span>🥬</span><span>🌿</span> <span>🥕</span
-                    ><span>🫑</span><span>🌶️</span>
-                  </div>
-                  <div class="percorso-cta-btn percorso-cta-btn--earth">
-                    <span data-i18n="path.semi_action">Vai al catalogo</span>
-                    <span class="percorso-cta-btn-arrow" aria-hidden="true"
-                      >→</span
-                    >
-                  </div>
-                </div>
+                <span class="hcg-caption" data-i18n="hero.cfg_caption"
+                  >Anteprima · vista dall'alto</span
+                >
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -341,16 +355,37 @@
             <div class="catalog-pro-card-top">
               <span class="catalog-pro-card-icon" aria-hidden="true">📋</span>
               <div class="catalog-pro-card-headline">
+                <span class="catalog-pro-card-kicker" data-i18n="catalog.card_kicker">Checklist rapida</span>
                 <b data-i18n="catalog.card_title">Prima di aggiungere semi</b>
                 <small data-i18n="catalog.card_subtitle">Controlla questi quattro segnali</small>
               </div>
             </div>
-            <ul class="catalog-pro-features">
-              <li><span aria-hidden="true">📅</span><b data-i18n="catalog.feature_sowing_title">Finestra di semina</b><small data-i18n="catalog.feature_sowing_sub">adatta al mese selezionato</small></li>
-              <li><span aria-hidden="true">🌡️</span><b data-i18n="catalog.feature_climate_title">Compatibilità clima</b><small data-i18n="catalog.feature_climate_sub">freddo, temperato o caldo</small></li>
-              <li><span aria-hidden="true">📐</span><b data-i18n="catalog.feature_space_title">Ingombro reale</b><small data-i18n="catalog.feature_space_sub">distanze utili in serra</small></li>
-              <li><span aria-hidden="true">🌿</span><b data-i18n="catalog.feature_easy_title">Facilità di cura</b><small data-i18n="catalog.feature_easy_sub">ideale se parti da zero</small></li>
-            </ul>
+            <ol class="catalog-pro-checklist">
+              <li>
+                <span class="checklist-num" aria-hidden="true">1</span>
+                <span class="checklist-ico" aria-hidden="true">📅</span>
+                <div class="checklist-text"><b data-i18n="catalog.feature_sowing_title">Finestra di semina</b><small data-i18n="catalog.feature_sowing_sub">adatta al mese selezionato</small></div>
+              </li>
+              <li>
+                <span class="checklist-num" aria-hidden="true">2</span>
+                <span class="checklist-ico" aria-hidden="true">🌡️</span>
+                <div class="checklist-text"><b data-i18n="catalog.feature_climate_title">Compatibilità clima</b><small data-i18n="catalog.feature_climate_sub">freddo, temperato o caldo</small></div>
+              </li>
+              <li>
+                <span class="checklist-num" aria-hidden="true">3</span>
+                <span class="checklist-ico" aria-hidden="true">📐</span>
+                <div class="checklist-text"><b data-i18n="catalog.feature_space_title">Ingombro reale</b><small data-i18n="catalog.feature_space_sub">distanze utili in serra</small></div>
+              </li>
+              <li>
+                <span class="checklist-num" aria-hidden="true">4</span>
+                <span class="checklist-ico" aria-hidden="true">🌿</span>
+                <div class="checklist-text"><b data-i18n="catalog.feature_easy_title">Facilità di cura</b><small data-i18n="catalog.feature_easy_sub">ideale se parti da zero</small></div>
+              </li>
+            </ol>
+            <div class="catalog-pro-card-foot">
+              <span aria-hidden="true">💡</span>
+              <span data-i18n="catalog.card_tip">Apri la scheda di una pianta per vedere subito se è il momento giusto per seminarla.</span>
+            </div>
           </div>
         </div>
 
@@ -370,6 +405,15 @@
                   placeholder="Pomodoro, basilico, lattuga..."
                   oninput="setCatalogSearch(this.value)"
                 />
+                <button
+                  type="button"
+                  class="catalog-search-clear"
+                  onclick="clearCatalogSearch()"
+                  data-i18n-aria="catalog.clear_search"
+                  aria-label="Cancella ricerca"
+                >
+                  ✕
+                </button>
               </span>
             </label>
             <label class="catalog-select catalog-sort-select">
@@ -1023,6 +1067,7 @@
     <!-- Script pagina: menu, traduzioni e logica ecommerce. -->
     <script src="assets/js/nav.js"></script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/plants-data.js"></script>
     <script src="assets/js/index.js"></script>
   </body>
 </html>

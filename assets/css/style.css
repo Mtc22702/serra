@@ -234,12 +234,18 @@ button {
   min-width: 0;
 }
 
-/* Riga top: steps numerati orizzontali */
+/* Blocco passi guidati: etichetta + lista step, stile coerente per i tre
+   livelli (novizio / intermedio / esperto). */
 .guided-intro-main {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
   min-width: 0;
+}
+.guided-intro-main .guided-steps {
+  flex-direction: column;
+  gap: 6px;
 }
 .guided-steps-label {
   color: var(--verde-scuro);
@@ -266,16 +272,22 @@ button {
 .guided-steps li {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   flex: 1;
   min-width: 0;
   font-size: 11.5px;
   color: #4a5c4e;
   line-height: 1.3;
-  padding: 5px 8px;
-  border-radius: 8px;
-  background: rgba(47, 107, 58, 0.05);
-  border: 1px solid rgba(47, 107, 58, 0.09);
+  padding: 5px 9px 5px 6px;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(236, 248, 238, 0.6));
+  border: 1px solid rgba(47, 107, 58, 0.1);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.guided-steps li:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(31, 58, 38, 0.1);
 }
 .guided-steps li strong {
   color: var(--verde-scuro);
@@ -296,7 +308,15 @@ button {
   line-height: 1;
 }
 .guided-step-ico {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 7px;
+  background: rgba(47, 107, 58, 0.08);
+  font-size: 12px;
 }
 
 /* Summary text */
@@ -5067,5 +5087,265 @@ body.cart-open .cart-nudge {
   }
   .shop-pack::before {
     display: none;
+  }
+}
+
+/* =========================================================
+   REFRESH PERSONAS — selettore livello in ingresso + comportamento
+   per novizio / intermedio / esperto. Blocco aggiunto in coda: override
+   mirati, nessuna regola esistente rimossa.
+   ========================================================= */
+
+:root {
+  --persona-nov: #4f9a3f; /* germoglio */
+  --persona-int: #c9962f; /* oro maturo */
+  --persona-exp: #c0552f; /* terracotta */
+  --raggio-lg: 14px;
+}
+
+/* Intro: più respiro e un accento deciso in alto. */
+.guided-intro {
+  padding: 14px 18px;
+  border-top-width: 4px;
+  border-radius: var(--raggio-lg);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 253, 246, 0.99) 0%,
+    rgba(233, 246, 235, 0.97) 58%,
+    rgba(245, 240, 226, 0.97) 100%
+  );
+}
+.guided-brand-copy h1 {
+  font-size: 21px;
+  letter-spacing: -0.01em;
+}
+
+/* --- Selettore livello --- */
+.persona-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-top: 9px;
+  padding-top: 11px;
+  border-top: 1.5px solid rgba(47, 107, 58, 0.14);
+}
+.persona-pick-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.persona-pick-label {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--verde-scuro);
+}
+.persona-pick-hint {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: #6d7a66;
+}
+.persona-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Card livello: base neutra, accento colorato a sinistra. */
+.persona-card {
+  --accent: var(--verde);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-align: left;
+  padding: 13px 14px 13px 16px;
+  border-radius: var(--raggio-lg);
+  border: 1.6px solid rgba(31, 58, 38, 0.16);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(31, 58, 38, 0.06);
+  color: var(--inchiostro);
+  overflow: hidden;
+  transition:
+    transform 0.12s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+.persona-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  opacity: 0.85;
+  transition: width 0.16s ease;
+}
+.persona-card--novizio {
+  --accent: var(--persona-nov);
+}
+.persona-card--intermedio {
+  --accent: var(--persona-int);
+}
+.persona-card--esperto {
+  --accent: var(--persona-exp);
+}
+.persona-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 22px rgba(31, 58, 38, 0.14);
+}
+.persona-card:hover::before {
+  width: 6px;
+}
+.persona-card:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+/* Card attiva: tinta dell'accento + bordo pieno. */
+.persona-card.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, #fff);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.persona-card.is-active::before {
+  width: 6px;
+  opacity: 1;
+}
+.persona-card.is-active .persona-card-ico {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.04);
+}
+
+.persona-card-ico {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  font-size: 21px;
+  line-height: 1;
+  background: color-mix(in srgb, var(--accent) 16%, #fff);
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease;
+}
+.persona-card-body {
+  flex: 1;
+  min-width: 0;
+}
+.persona-card-body b {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.18;
+  color: var(--verde-scuro);
+}
+.persona-card-body small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 1.32;
+  color: #5f6d60;
+}
+.persona-card-go {
+  flex: 0 0 auto;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+.persona-card:hover .persona-card-go,
+.persona-card.is-active .persona-card-go {
+  opacity: 0.9;
+  transform: translateX(0);
+}
+
+/* --- Semplificazioni per livello --- */
+/* Novizio: percorso lineare. Nasconde controlli avanzati e i passi tecnici,
+   lascia il flusso "serra pronta → carrello". */
+body.livello-novizio #pathField,
+body.livello-novizio #presetBar,
+body.livello-novizio .view-select-wrap,
+body.livello-novizio .veg-filters {
+  display: none !important;
+}
+/* Ognuno dei tre blocchi passi-guidati è mostrato solo per il livello
+   corrispondente: stesso stile, testi diversi per persona. */
+body.livello-novizio .guided-intro-novizio,
+body.livello-intermedio .guided-intro-intermedio,
+body.livello-esperto .guided-intro-esperto {
+  display: flex;
+}
+
+.guided-nov-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: none;
+  background: var(--verde);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(47, 107, 58, 0.25);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.guided-nov-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(47, 107, 58, 0.32);
+}
+
+/* Evidenzia brevemente il pannello "La tua serra" quando il novizio
+   arriva dalla CTA del percorso guidato. */
+.panel.guided-highlight {
+  animation: guidedHighlightPulse 1.6s ease;
+}
+@keyframes guidedHighlightPulse {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  20%,
+  60% {
+    box-shadow: 0 0 0 3px rgba(47, 107, 58, 0.35);
+  }
+}
+
+/* --- Responsive selettore livello --- */
+@media (max-width: 1080px) {
+  .persona-cards {
+    grid-template-columns: 1fr;
+  }
+  .persona-card-go {
+    opacity: 0.5;
+    transform: none;
+  }
+}
+@media (max-width: 640px) {
+  .guided-intro {
+    padding: 12px 13px;
+  }
+  .persona-card {
+    padding: 11px 12px 11px 14px;
+  }
+  .persona-card-ico {
+    width: 36px;
+    height: 36px;
+    font-size: 19px;
   }
 }

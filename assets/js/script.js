@@ -3,6 +3,21 @@
    HTML/CSS/JS puro, nessuna libreria.
    Vista dall'alto in scala reale: aiuole rialzate in terra + camminamenti
    in ghiaia, struttura serra (vetri e telaio) sovrapposta.
+   -------------------------------------------------------------------------
+   MAPPA DEL FILE (in ordine):
+     1.  Costanti di layout (misure reali in cm)
+     2.  Catalogo colture (PLANTS) e indice per id (BYID)
+     3.  Descrizioni, foto e preset degli orti
+     4.  Mappa difficoltà colture (DIFFICULTY)
+     5.  Stato del configuratore e gestione profili/persone
+     6.  Helper i18n e testi
+     7.  Disegno SVG (piantine, scena, struttura serra)
+     8.  Geometria del layout (colonne, aiuole, compatibilità)
+     9.  Rendering dell'interfaccia (pannelli, scena, riepiloghi)
+     10. Riempimento automatico e selezione colture
+     11. Collegamento eventi (form, pulsanti, tab)
+     12. Carrello del configuratore
+     13. Avvio (boot) e sincronizzazione lingua
    ========================================================================= */
 
 /* Costanti layout: misure reali in centimetri e limiti prestazionali. */
@@ -37,1507 +52,35 @@ const SITE_I18N = window.SERRA_I18N?.index || { it: {}, ro: {} };
    d = distanza sulla fila (cm) · dr = distanza tra file (cm, se omesso = d) · h = altezza (bassa/media/alta)
    sole/acqua · giorni alla raccolta · mesi semina in serra (base, zona temperata)
    amiche/nemiche (abbinamenti) · resa kg/pianta · nota principianti · col = palette foglie */
-const PLANTS = [
-  {
-    id: "pomodoro",
-    nome: "Pomodoro",
-    arch: "frutto",
-    d: 50, dr: 80,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [2, 3, 4],
-    amiche: [
-      "basilico",
-      "cipolla",
-      "carota",
-      "prezzemolo",
-      "lattuga",
-      "sedano"
-    ],
-    nemiche: [
-      "cavolo",
-      "verza",
-      "broccolo",
-      "cavolfiore",
-      "cavolonero",
-      "cavolorapa",
-      "finocchio"
-    ],
-    resa: 3,
-    nota: "Vuole sostegno e pieno sole. Togli le femminelle.",
-    col: { l1: "#3f7a3a", l2: "#2f5e2c", fr: "#e2452f" }
-  },
-  {
-    id: "peperone",
-    nome: "Peperone",
-    arch: "frutto",
-    d: 40, dr: 60,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [2, 3, 4],
-    amiche: ["basilico", "pomodoro"],
-    nemiche: ["fagiolino", "fagiolo"],
-    resa: 1,
-    nota: "Ama il caldo. Concima quando inizia a fruttificare.",
-    col: { l1: "#3c7d3a", l2: "#2c5e2b", fr: "#37a13a" }
-  },
-  {
-    id: "peperoncino",
-    nome: "Peperoncino",
-    arch: "frutto",
-    d: 35, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 95,
-    mesi: [2, 3, 4],
-    amiche: ["basilico"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Rustico e generoso. Sopporta bene la siccità.",
-    col: { l1: "#3c7d3a", l2: "#2c5e2b", fr: "#d22f22" }
-  },
-  {
-    id: "melanzana",
-    nome: "Melanzana",
-    arch: "frutto",
-    d: 50, dr: 80,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [2, 3, 4],
-    amiche: ["fagiolino"],
-    nemiche: [],
-    resa: 1.5,
-    nota: "Vuole molto caldo e annaffiature regolari.",
-    col: { l1: "#46743f", l2: "#345633", fr: "#5b2a7a" }
-  },
-  {
-    id: "zucchina",
-    nome: "Zucchina",
-    arch: "cucurbita",
-    d: 80, dr: 100,
-    h: "media",
-    sole: "pieno",
-    acqua: "alta",
-    gg: 50,
-    mesi: [3, 4, 5, 6],
-    amiche: ["fagiolino", "ravanello"],
-    nemiche: [],
-    resa: 2.5,
-    nota: "Cresce in fretta e occupa tanto spazio. Raccogli spesso.",
-    col: { l1: "#3f7e3f", l2: "#2e5e2e", fl: "#f3c43b" }
-  },
-  {
-    id: "zucca",
-    nome: "Zucca",
-    arch: "cucurbita",
-    d: 100, dr: 130,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [4, 5],
-    amiche: ["fagiolo"],
-    nemiche: [],
-    resa: 4,
-    nota: "Si allarga molto: lasciale spazio o falla arrampicare.",
-    col: { l1: "#477e3a", l2: "#345a2c", fl: "#f0b93a" }
-  },
-  {
-    id: "cetriolo",
-    nome: "Cetriolo",
-    arch: "rampicante",
-    d: 40, dr: 100,
-    h: "alta",
-    sole: "pieno",
-    acqua: "alta",
-    gg: 60,
-    mesi: [3, 4, 5, 6],
-    amiche: ["fagiolino", "lattuga", "aneto"],
-    nemiche: ["salvia", "pomodoro"],
-    resa: 2,
-    nota: "Falla arrampicare su una rete: frutti più puliti e dritti.",
-    col: { l1: "#3f863f", l2: "#2c5f2c" }
-  },
-  {
-    id: "melone",
-    nome: "Melone",
-    arch: "cucurbita",
-    d: 90, dr: 120,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 110,
-    mesi: [3, 4, 5],
-    amiche: [],
-    nemiche: [],
-    resa: 2,
-    nota: "Vuole tanto sole e poca acqua a fine maturazione.",
-    col: { l1: "#4c8240", l2: "#385f2f", fl: "#f3d23b" }
-  },
-  {
-    id: "anguria",
-    nome: "Anguria",
-    arch: "cucurbita",
-    d: 120, dr: 150,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [3, 4, 5],
-    amiche: [],
-    nemiche: [],
-    resa: 6,
-    nota: "Enorme footprint: una pianta riempie mezza serra piccola.",
-    col: { l1: "#3f7a3a", l2: "#2c5a29", fl: "#f1cf3b" }
-  },
-  {
-    id: "lattuga",
-    nome: "Lattuga",
-    arch: "rosetta",
-    d: 25, dr: 30,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 55,
-    mesi: [1, 2, 3, 4, 8, 9, 10],
-    amiche: ["carota", "ravanello", "fragola", "cetriolo", "cipolla"],
-    nemiche: [],
-    resa: 0.35,
-    nota: "Facilissima e veloce. Semina poche piante per volta.",
-    col: { l1: "#8cc85d", l2: "#6fae45" }
-  },
-  {
-    id: "radicchio",
-    nome: "Radicchio",
-    arch: "rosetta",
-    d: 30, dr: 35,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 80,
-    mesi: [6, 7, 8],
-    amiche: ["finocchio"],
-    nemiche: [],
-    resa: 0.3,
-    nota: "Il freddo lo rende rosso e dolce.",
-    col: { l1: "#9c4f6a", l2: "#6f3550", fr: "#b85a78" }
-  },
-  {
-    id: "rucola",
-    nome: "Rucola",
-    arch: "frastagliata",
-    d: 15, dr: 20,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 35,
-    mesi: [2, 3, 4, 5, 8, 9, 10],
-    amiche: ["lattuga"],
-    nemiche: [],
-    resa: 0.1,
-    nota: "Pronta in poche settimane. Si ritaglia e ricresce.",
-    col: { l1: "#5fa23a", l2: "#477e2b" }
-  },
-  {
-    id: "spinaci",
-    nome: "Spinaci",
-    arch: "rosetta",
-    d: 20, dr: 25,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 45,
-    mesi: [1, 2, 3, 9, 10, 11],
-    amiche: ["fragola", "cavolo"],
-    nemiche: [],
-    resa: 0.15,
-    nota: "Ama il fresco; in estate va in fiore subito.",
-    col: { l1: "#2f6f2f", l2: "#234f24" }
-  },
-  {
-    id: "bietola",
-    nome: "Bietola da coste",
-    arch: "rosetta",
-    d: 30, dr: 40,
-    h: "media",
-    sole: "mezz",
-    acqua: "media",
-    gg: 60,
-    mesi: [2, 3, 4, 5, 8, 9],
-    amiche: ["cavolo", "cipolla"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Generosa: si raccolgono le foglie esterne a mano a mano.",
-    col: { l1: "#3a7e3a", l2: "#2a5d2a", fr: "#d8d4c0" }
-  },
-  {
-    id: "cavolo",
-    nome: "Cavolo cappuccio",
-    arch: "brassica",
-    d: 50, dr: 70,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [2, 3, 6, 7],
-    amiche: ["sedano", "aneto", "cipolla", "bietola"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 1.2,
-    nota: "Vuole spazio e terreno ricco. Attento ai bruchi.",
-    col: { l1: "#7fa37e", l2: "#5f8060", head: "#bcd6a0" }
-  },
-  {
-    id: "verza",
-    nome: "Verza",
-    arch: "brassica",
-    d: 50, dr: 70,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [2, 3, 6, 7],
-    amiche: ["sedano", "aneto", "cipolla"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 1.2,
-    nota: "Resiste al gelo; più buona dopo le prime brinate.",
-    col: { l1: "#5f8a5f", l2: "#456545", head: "#9cc07e" }
-  },
-  {
-    id: "broccolo",
-    nome: "Broccolo",
-    arch: "brassica",
-    d: 50, dr: 70,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 85,
-    mesi: [2, 3, 6, 7],
-    amiche: ["sedano", "cipolla"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 0.6,
-    nota: "Dopo la testa centrale dà tanti getti laterali.",
-    col: { l1: "#6f9466", l2: "#4f704a", head: "#3c6e3a" }
-  },
-  {
-    id: "cavolfiore",
-    nome: "Cavolfiore",
-    arch: "brassica",
-    d: 50, dr: 70,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 95,
-    mesi: [2, 3, 6, 7],
-    amiche: ["sedano", "aneto"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 0.8,
-    nota: "Piega le foglie sulla testa per tenerla bianca.",
-    col: { l1: "#7fa178", l2: "#5d7d58", head: "#eef0d8" }
-  },
-  {
-    id: "cavolonero",
-    nome: "Cavolo nero",
-    arch: "brassica",
-    d: 45, dr: 60,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 80,
-    mesi: [2, 3, 6, 7],
-    amiche: ["cipolla", "bietola"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 0.5,
-    nota: "Rustico toscano: si raccoglie a foglie per mesi.",
-    col: { l1: "#2b4f33", l2: "#1d3a26", head: "#34563a" }
-  },
-  {
-    id: "cavolorapa",
-    nome: "Cavolo rapa",
-    arch: "brassica",
-    d: 30, dr: 40,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [2, 3, 8, 9],
-    amiche: ["cipolla", "bietola"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 0.3,
-    nota: "Si mangia il fusto ingrossato: raccogli da giovane.",
-    col: { l1: "#7fa37e", l2: "#5f8060", head: "#b6cda0" }
-  },
-  {
-    id: "carota",
-    nome: "Carota",
-    arch: "piumosa",
-    d: 8, dr: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [2, 3, 4, 5, 6, 7, 8],
-    amiche: ["cipolla", "porro", "lattuga", "ravanello", "pomodoro"],
-    nemiche: ["aneto", "finocchio"],
-    resa: 0.1,
-    nota: "Semina fitta e dirada. Terreno sciolto, senza sassi.",
-    col: { l1: "#5fae4a", l2: "#458035" }
-  },
-  {
-    id: "finocchio",
-    nome: "Finocchio",
-    arch: "piumosa",
-    d: 25, dr: 35,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [6, 7, 8],
-    amiche: [],
-    nemiche: [
-      "pomodoro",
-      "fagiolino",
-      "fagiolo",
-      "pisello",
-      "cetriolo",
-      "spinaci"
-    ],
-    resa: 0.3,
-    nota: 'È "antipatico" a molte piante: tienilo in disparte.',
-    col: { l1: "#6db04a", l2: "#4f8235", fr: "#dfe6c0" }
-  },
-  {
-    id: "prezzemolo",
-    nome: "Prezzemolo",
-    arch: "cespuglio",
-    d: 20,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 75,
-    mesi: [2, 3, 4, 5, 8, 9],
-    amiche: ["pomodoro"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Lento a partire; poi taglia di continuo per tutto l'anno.",
-    col: { l1: "#3f8a3f", l2: "#2e6630" }
-  },
-  {
-    id: "basilico",
-    nome: "Basilico",
-    arch: "cespuglio",
-    d: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [3, 4, 5, 6],
-    amiche: ["pomodoro", "peperone", "peperoncino"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Cima i fiori per avere foglie sempre tenere.",
-    col: { l1: "#46a046", l2: "#347e34" }
-  },
-  {
-    id: "coriandolo",
-    nome: "Coriandolo",
-    arch: "cespuglio",
-    d: 15,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 50,
-    mesi: [3, 4, 5, 8, 9],
-    amiche: [],
-    nemiche: [],
-    resa: 0.03,
-    nota: "Va a fiore col caldo: semina scalare ogni 2 settimane.",
-    col: { l1: "#5aa24a", l2: "#427e35" }
-  },
-  {
-    id: "aneto",
-    nome: "Aneto",
-    arch: "piumosa",
-    d: 25,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 70,
-    mesi: [3, 4, 5, 8],
-    amiche: ["cavolo", "cetriolo"],
-    nemiche: ["carota"],
-    resa: 0.05,
-    nota: "Aiuta i cavoli e attira insetti utili.",
-    col: { l1: "#6aa84a", l2: "#4d7e36" }
-  },
-  {
-    id: "cipolla",
-    nome: "Cipolla",
-    arch: "bulbo",
-    d: 12, dr: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 120,
-    mesi: [1, 2, 3, 9, 10],
-    amiche: ["carota", "lattuga", "barbabietola", "pomodoro", "fragola"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    resa: 0.15,
-    nota: "Poca acqua a fine ciclo. Tiene lontani molti parassiti.",
-    col: { l1: "#6f9e7a", l2: "#527e5d" }
-  },
-  {
-    id: "aglio",
-    nome: "Aglio",
-    arch: "bulbo",
-    d: 12, dr: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 240,
-    mesi: [10, 11, 12, 1],
-    amiche: ["carota", "fragola", "pomodoro"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    resa: 0.05,
-    nota: "Si pianta a spicchi in autunno, si raccoglie in estate.",
-    col: { l1: "#7aa884", l2: "#5c8866" }
-  },
-  {
-    id: "porro",
-    nome: "Porro",
-    arch: "bulbo",
-    d: 15, dr: 30,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 150,
-    mesi: [2, 3, 4],
-    amiche: ["carota"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    resa: 0.2,
-    nota: "Rincalza la terra attorno per avere il fusto bianco lungo.",
-    col: { l1: "#6f9e84", l2: "#507a62" }
-  },
-  {
-    id: "scalogno",
-    nome: "Scalogno",
-    arch: "bulbo",
-    d: 12, dr: 20,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 100,
-    mesi: [1, 2, 9, 10],
-    amiche: ["carota", "fragola"],
-    nemiche: ["fagiolino", "fagiolo", "pisello"],
-    resa: 0.1,
-    nota: "Come la cipolla ma più delicato; ottimo per principianti.",
-    col: { l1: "#74a37e", l2: "#557d60" }
-  },
-  {
-    id: "fagiolino",
-    nome: "Fagiolino nano",
-    arch: "rampicante",
-    d: 20, dr: 40,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 65,
-    mesi: [4, 5, 6, 7],
-    amiche: ["carota", "cetriolo", "lattuga", "zucchina"],
-    nemiche: ["cipolla", "aglio", "porro", "scalogno"],
-    resa: 0.15,
-    nota: "Non serve sostegno. Migliora il terreno con l'azoto.",
-    col: { l1: "#4f9a3f", l2: "#3a7530" }
-  },
-  {
-    id: "fagiolo",
-    nome: "Fagiolo rampicante",
-    arch: "rampicante",
-    d: 25, dr: 50,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 75,
-    mesi: [4, 5, 6],
-    amiche: ["carota", "cetriolo", "zucchina"],
-    nemiche: ["cipolla", "aglio", "porro", "scalogno"],
-    resa: 0.25,
-    nota: "Vuole canne o rete: sale anche 2 metri.",
-    col: { l1: "#4a943a", l2: "#36702c" }
-  },
-  {
-    id: "pisello",
-    nome: "Pisello",
-    arch: "rampicante",
-    d: 15, dr: 30,
-    h: "media",
-    sole: "mezz",
-    acqua: "media",
-    gg: 80,
-    mesi: [10, 11, 1, 2],
-    amiche: ["carota", "lattuga"],
-    nemiche: ["cipolla", "aglio", "porro", "scalogno"],
-    resa: 0.1,
-    nota: "Ama il fresco: si semina in autunno o fine inverno.",
-    col: { l1: "#5fa84a", l2: "#458035" }
-  },
-  {
-    id: "fragola",
-    nome: "Fragola",
-    arch: "fragola",
-    d: 30, dr: 40,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [3, 4, 8, 9],
-    amiche: ["lattuga", "spinaci", "cipolla", "aglio"],
-    nemiche: [
-      "cavolo",
-      "verza",
-      "broccolo",
-      "cavolfiore",
-      "cavolonero",
-      "cavolorapa"
-    ],
-    resa: 0.25,
-    nota: "Perenne: produce per più anni e fa stoloni.",
-    col: { l1: "#3f8a3f", l2: "#2e6630", fr: "#e23b3b", fl: "#fff" }
-  },
-  {
-    id: "sedano",
-    nome: "Sedano",
-    arch: "rosetta",
-    d: 30, dr: 40,
-    h: "media",
-    sole: "mezz",
-    acqua: "alta",
-    gg: 120,
-    mesi: [2, 3, 4],
-    amiche: ["cavolo", "pomodoro"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Vuole tanta acqua e terreno ricco.",
-    col: { l1: "#6aa84a", l2: "#4d7e36", fr: "#cfe0a8" }
-  },
-  {
-    id: "ravanello",
-    nome: "Ravanello",
-    arch: "rosetta",
-    d: 8, dr: 15,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 28,
-    mesi: [1, 2, 3, 4, 8, 9, 10],
-    amiche: ["lattuga", "carota", "cetriolo"],
-    nemiche: [],
-    resa: 0.03,
-    nota: "Il più veloce: pronto in 3-4 settimane. Ideale coi bimbi.",
-    col: { l1: "#6fab46", l2: "#507f33", fr: "#d23a4a" }
-  },
-  {
-    id: "barbabietola",
-    nome: "Barbabietola",
-    arch: "rosetta",
-    d: 12, dr: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 80,
-    mesi: [3, 4, 5, 6, 7],
-    amiche: ["cipolla", "lattuga"],
-    nemiche: [],
-    resa: 0.2,
-    nota: "Si mangiano radice e foglie. Dirada le piantine.",
-    col: { l1: "#6b4f6e", l2: "#4d3850", fr: "#8a3a6a" }
-  },
-  {
-    id: "cicoria",
-    nome: "Cicoria",
-    arch: "frastagliata",
-    d: 25, dr: 30,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 70,
-    mesi: [2, 3, 4, 7, 8, 9],
-    amiche: ["carota", "cipolla", "lattuga"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Rustica e saporita. Raccogli le foglie esterne o il cespo giovane.",
-    col: { l1: "#4f8f3a", l2: "#2f6f2f" }
-  },
-  {
-    id: "indivia",
-    nome: "Indivia / Scarola",
-    arch: "rosetta",
-    d: 30, dr: 40,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 75,
-    mesi: [2, 3, 4, 7, 8, 9],
-    amiche: ["lattuga", "ravanello", "finocchio"],
-    nemiche: [],
-    resa: 0.35,
-    nota: "Ama il fresco. Lega il cespo se vuoi foglie interne più chiare.",
-    col: { l1: "#9bc86b", l2: "#6fa84a", fr: "#f1e9b5" }
-  },
-  {
-    id: "pakchoi",
-    nome: "Pak choi",
-    arch: "rosetta",
-    d: 25, dr: 30,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 45,
-    mesi: [2, 3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: ["fragola"],
-    resa: 0.25,
-    nota: "Cresce veloce in clima fresco. Raccogli da baby leaf o a piccolo cespo.",
-    col: { l1: "#72b34f", l2: "#3f823a", fr: "#eef0d8" }
-  },
-  {
-    id: "cavoletti",
-    nome: "Cavoletti di Bruxelles",
-    arch: "brassica",
-    d: 60, dr: 80,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [3, 4, 5, 6],
-    amiche: ["sedano", "cipolla", "timo"],
-    nemiche: ["pomodoro", "fragola"],
-    resa: 0.7,
-    nota: "Vuole tempo e fresco: cima la punta quando i cavoletti iniziano a formarsi.",
-    col: { l1: "#6f9466", l2: "#4f704a", head: "#7fb36a" }
-  },
-  {
-    id: "rapa",
-    nome: "Rapa",
-    arch: "rosetta",
-    d: 12, dr: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 55,
-    mesi: [2, 3, 4, 8, 9, 10],
-    amiche: ["pisello", "lattuga"],
-    nemiche: [],
-    resa: 0.15,
-    nota: "Fresca e rapida: dirada presto per far ingrossare la radice.",
-    col: { l1: "#6fab46", l2: "#507f33", fr: "#f2f0df" }
-  },
-  {
-    id: "valerianella",
-    nome: "Valerianella",
-    arch: "rosetta",
-    d: 10, dr: 15,
-    h: "bassa",
-    sole: "mezz",
-    acqua: "media",
-    gg: 50,
-    mesi: [1, 2, 9, 10, 11],
-    amiche: ["lattuga", "ravanello", "cipolla"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Perfetta per la serra fredda: forma piccoli ciuffi teneri in autunno e inverno.",
-    col: { l1: "#6fb24f", l2: "#4b8a38" }
-  },
-  {
-    id: "rosmarino",
-    nome: "Rosmarino",
-    arch: "erbafine",
-    d: 60, dr: 80,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 0,
-    mesi: [3, 4, 5],
-    amiche: [],
-    nemiche: [],
-    resa: 0.1,
-    nota: "Perenne e rustico: pochissima acqua, vive anni.",
-    col: { l1: "#3f6e4a", l2: "#2c5037" }
-  },
-  {
-    id: "timo",
-    nome: "Timo",
-    arch: "erbafine",
-    d: 30,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 0,
-    mesi: [3, 4, 5],
-    amiche: ["cavolo"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Tappezzante e profumato; ama il secco.",
-    col: { l1: "#5a7e4a", l2: "#446035" }
-  },
-  {
-    id: "origano",
-    nome: "Origano",
-    arch: "erbafine",
-    d: 30,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 0,
-    mesi: [3, 4, 5],
-    amiche: [],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Perenne: si secca benissimo per l'inverno.",
-    col: { l1: "#5e8a4f", l2: "#476838" }
-  },
-  {
-    id: "salvia",
-    nome: "Salvia",
-    arch: "cespuglio",
-    d: 40, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 0,
-    mesi: [3, 4, 5],
-    amiche: ["cavolo"],
-    nemiche: ["cetriolo"],
-    resa: 0.05,
-    nota: "Cespuglio perenne dalle foglie vellutate.",
-    col: { l1: "#7e9a78", l2: "#5e7a5a" }
-  },
-  {
-    id: "pastinaca",
-    nome: "Pastinaca",
-    arch: "piumosa",
-    d: 35, dr: 45,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [3, 4, 8, 9],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Dolce dopo il freddo; semina diretta e terreno profondo.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "radice_prezemolo",
-    nome: "Prezzemolo da radice",
-    arch: "piumosa",
-    d: 30, dr: 40,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 8],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.7,
-    nota: "Coltura tradizionale rumena: radice bianca aromatica per zuppe e ciorbe.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "sedano_rapa",
-    nome: "Sedano rapa",
-    arch: "piumosa",
-    d: 35, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "alta",
-    gg: 120,
-    mesi: [2, 3, 4, 5],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.2,
-    nota: "Radice globosa e profumata; vuole acqua costante e suolo ricco.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "rafano",
-    nome: "Rafano",
-    arch: "rosetta",
-    d: 45, dr: 60,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 180,
-    mesi: [3, 4, 9, 10],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.8,
-    nota: "Radice piccante molto usata in Romania; contenila perché è vigorosa.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "patata",
-    nome: "Patata",
-    arch: "cespuglio",
-    d: 35, dr: 60,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 5],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.8,
-    nota: "In serra anticipa il raccolto; rincalza quando gli steli crescono.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "patata_dolce",
-    nome: "Patata dolce",
-    arch: "rampicante",
-    d: 45, dr: 90,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [4, 5, 6],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.5,
-    nota: "Ama caldo stabile e suolo leggero; ideale in serra lunga.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "cipolla_rossa",
-    nome: "Cipolla rossa",
-    arch: "bulbo",
-    d: 15, dr: 30,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 120,
-    mesi: [2, 3, 8, 9, 10],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Bulbo dolce e colorato; ottima per raccolti scalari.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "cipollotto",
-    nome: "Cipollotto",
-    arch: "bulbo",
-    d: 8, dr: 20,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [2, 3, 4, 5, 8, 9],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Pronto rapidamente; raccogli giovane prima che ingrossi troppo.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "erba_cipollina",
-    nome: "Erba cipollina",
-    arch: "erbafine",
-    d: 20, dr: 25,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "media",
-    gg: 75,
-    mesi: [3, 4, 5, 8, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Aromatica perenne; taglia spesso per foglie tenere.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "loboda",
-    nome: "Loboda",
-    arch: "rosetta",
-    d: 25, dr: 35,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 45,
-    mesi: [3, 4, 5, 8, 9],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "stevia_dolce",
-    nome: "Stevia rumena",
-    arch: "rosetta",
-    d: 30, dr: 40,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 50,
-    mesi: [3, 4, 8, 9],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.3,
-    nota: "Acetosa per minestre primaverili; raccogli foglie giovani.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "leustean",
-    nome: "Levistico",
-    arch: "cespuglio",
-    d: 45, dr: 70,
-    h: "alta",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 90,
-    mesi: [3, 4, 5, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.15,
-    nota: "Il profumo classico delle ciorbe rumene; perenne e vigoroso.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "dragoncello",
-    nome: "Dragoncello",
-    arch: "erbafine",
-    d: 30, dr: 45,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 90,
-    mesi: [3, 4, 5],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Aromatica fine per aceti e conserve; evita ristagni.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "menta",
-    nome: "Menta",
-    arch: "erbafine",
-    d: 30, dr: 50,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "alta",
-    gg: 60,
-    mesi: [3, 4, 5, 8],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.1,
-    nota: "Molto vigorosa: meglio in vaso o area controllata.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "maggiorana",
-    nome: "Maggiorana",
-    arch: "erbafine",
-    d: 25, dr: 35,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 75,
-    mesi: [3, 4, 5],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Aromatica delicata; ama caldo, luce e terreno drenato.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "camomilla",
-    nome: "Camomilla",
-    arch: "erbafine",
-    d: 25, dr: 35,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 70,
-    mesi: [3, 4, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.04,
-    nota: "Fiori per tisane; attira insetti utili e profuma la serra.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "calendula",
-    nome: "Calendula",
-    arch: "cespuglio",
-    d: 30, dr: 40,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 65,
-    mesi: [3, 4, 5, 9],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.05,
-    nota: "Fiore utile nell’orto: attira impollinatori e colora le aiuole.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "nasturzio",
-    nome: "Nasturzio",
-    arch: "rampicante",
-    d: 30, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [4, 5, 6],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Fiori e foglie commestibili; utile come pianta esca per afidi.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  },
-  {
-    id: "mais_dolce",
-    nome: "Mais dolce",
-    arch: "frutto",
-    d: 30, dr: 70,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [4, 5, 6],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
-    col: {"l1": "#3f7a3a", "l2": "#2f5e2c", "fr": "#e07a2f"}
-  },
-  {
-    id: "gombo",
-    nome: "Gombo",
-    arch: "frutto",
-    d: 45, dr: 70,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 80,
-    mesi: [4, 5, 6],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 0.7,
-    nota: "Ama molto caldo; raccogli i baccelli piccoli e teneri.",
-    col: {"l1": "#3f7a3a", "l2": "#2f5e2c", "fr": "#e07a2f"}
-  },
-  {
-    id: "tomatillo",
-    nome: "Tomatillo",
-    arch: "frutto",
-    d: 50, dr: 80,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 95,
-    mesi: [3, 4, 5],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 1.5,
-    nota: "Serve almeno due piante per fruttificare bene; ottimo per salse.",
-    col: {"l1": "#3f7a3a", "l2": "#2f5e2c", "fr": "#e07a2f"}
-  },
-  {
-    id: "physalis",
-    nome: "Alchechengi",
-    arch: "frutto",
-    d: 45, dr: 70,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 5],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 0.5,
-    nota: "Frutti dolci in lanterna; in serra matura meglio.",
-    col: {"l1": "#3f7a3a", "l2": "#2f5e2c", "fr": "#e07a2f"}
-  },
-  {
-    id: "kiwano",
-    nome: "Kiwano",
-    arch: "rampicante",
-    d: 60, dr: 100,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 120,
-    mesi: [4, 5],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 1.5,
-    nota: "Cucurbitacea esotica per serre calde; falla arrampicare.",
-    col: {"l1": "#3f7a3a", "l2": "#2f5e2c", "fr": "#e07a2f"}
-  },
-  {
-    id: "cucamelon",
-    nome: "Cucamelon",
-    arch: "rampicante",
-    d: 30, dr: 60,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 75,
-    mesi: [4, 5, 6],
-    amiche: ["basilico", "cipolla", "prezzemolo"],
-    nemiche: ["finocchio"],
-    resa: 0.5,
-    nota: "Piccoli frutti croccanti; produttivo su rete in serra.",
-    col: {"l1": "#3f7a3a", "l2": "#2f5e2c", "fr": "#e07a2f"}
-  },
-  {
-    id: "asparago",
-    nome: "Asparago",
-    arch: "piumosa",
-    d: 40, dr: 80,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 730,
-    mesi: [3, 4],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Perenne: richiede pazienza, ma produce per molti anni.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "carciofo",
-    nome: "Carciofo",
-    arch: "cespuglio",
-    d: 80, dr: 100,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 180,
-    mesi: [2, 3, 4],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 1.2,
-    nota: "Coltura grande e decorativa; proteggi dal gelo intenso.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "cardo",
-    nome: "Cardo",
-    arch: "rosetta",
-    d: 60, dr: 90,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 150,
-    mesi: [3, 4, 5],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Parente del carciofo; imbianchisci le coste prima del raccolto.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "crescione",
-    nome: "Crescione",
-    arch: "rosetta",
-    d: 15, dr: 20,
-    h: "bassa",
-    sole: "mezzombra",
-    acqua: "alta",
-    gg: 30,
-    mesi: [3, 4, 5, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.1,
-    nota: "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "mizuna",
-    nome: "Mizuna",
-    arch: "frastagliata",
-    d: 20, dr: 30,
-    h: "bassa",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 35,
-    mesi: [3, 4, 5, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.18,
-    nota: "Senape giapponese facile; foglie frastagliate per mix insalata.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "senape_foglia",
-    nome: "Senape da foglia",
-    arch: "frastagliata",
-    d: 25, dr: 35,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 40,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.25,
-    nota: "Foglie piccanti; semina in fresco per evitare fioritura precoce.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "tatsoi",
-    nome: "Tatsoi",
-    arch: "rosetta",
-    d: 20, dr: 30,
-    h: "bassa",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 45,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.2,
-    nota: "Rosetta compatta, molto resistente al freddo.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "cavolo_cinese",
-    nome: "Cavolo cinese",
-    arch: "brassica",
-    d: 35, dr: 50,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "alta",
-    gg: 65,
-    mesi: [3, 4, 8, 9],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.9,
-    nota: "Forma un cespo tenero; proteggi da caldo e stress idrico.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "daikon",
-    nome: "Daikon",
-    arch: "rosetta",
-    d: 25, dr: 40,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 60,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Ravanello lungo: terreno profondo e raccolta prima che lignifichi.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "scorzonera",
-    nome: "Scorzonera",
-    arch: "rosetta",
-    d: 25, dr: 35,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 150,
-    mesi: [3, 4],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 0.5,
-    nota: "Radice nera lunga; richiede suolo leggero e profondo.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "topinambur",
-    nome: "Topinambur",
-    arch: "cespuglio",
-    d: 50, dr: 90,
-    h: "alta",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 180,
-    mesi: [3, 4, 5],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 2.0,
-    nota: "Tubero rustico e produttivo; delimita lo spazio perché si espande.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "fava",
-    nome: "Fava",
-    arch: "cespuglio",
-    d: 30, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [2, 3, 10, 11],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.7,
-    nota: "Legume precoce e resistente al fresco; migliora il terreno.",
-    col: {"l1": "#4f8a45", "l2": "#2f6b3a", "fl": "#f1d27a"}
-  },
-  {
-    id: "soia_edamame",
-    nome: "Soia edamame",
-    arch: "cespuglio",
-    d: 30, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 90,
-    mesi: [4, 5, 6],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.6,
-    nota: "Raccogli i baccelli verdi quando i semi sono pieni ma teneri.",
-    col: {"l1": "#4f8a45", "l2": "#2f6b3a", "fl": "#f1d27a"}
-  },
-  {
-    id: "cece",
-    nome: "Cece",
-    arch: "cespuglio",
-    d: 25, dr: 40,
-    h: "media",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 100,
-    mesi: [3, 4, 5],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.35,
-    nota: "Ama asciutto e caldo; non eccedere con acqua in serra.",
-    col: {"l1": "#4f8a45", "l2": "#2f6b3a", "fl": "#f1d27a"}
-  },
-  {
-    id: "lenticchia",
-    nome: "Lenticchia",
-    arch: "cespuglio",
-    d: 20, dr: 35,
-    h: "bassa",
-    sole: "pieno",
-    acqua: "bassa",
-    gg: 95,
-    mesi: [3, 4],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.25,
-    nota: "Piccolo legume rustico; adatto a bordure asciutte.",
-    col: {"l1": "#4f8a45", "l2": "#2f6b3a", "fl": "#f1d27a"}
-  },
-  {
-    id: "fagiolo_borlotto",
-    nome: "Fagiolo borlotto",
-    arch: "rampicante",
-    d: 30, dr: 60,
-    h: "alta",
-    sole: "pieno",
-    acqua: "media",
-    gg: 95,
-    mesi: [4, 5, 6],
-    amiche: ["carota", "cetriolo", "mais_dolce"],
-    nemiche: ["cipolla", "aglio"],
-    resa: 0.8,
-    nota: "Per baccelli freschi o granella; usa tutori robusti.",
-    col: {"l1": "#4f8a45", "l2": "#2f6b3a", "fl": "#f1d27a"}
-  },
-  {
-    id: "cavolo_rosso",
-    nome: "Cavolo rosso",
-    arch: "brassica",
-    d: 45, dr: 60,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 110,
-    mesi: [2, 3, 4, 7, 8],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 1.5,
-    nota: "Cespo compatto e colorato; ottimo per raccolti autunnali.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "cavolo_navone",
-    nome: "Navone",
-    arch: "brassica",
-    d: 35, dr: 50,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 100,
-    mesi: [3, 4, 7, 8],
-    amiche: ["lattuga", "cipolla", "pisello"],
-    nemiche: [],
-    resa: 1.0,
-    nota: "Radice grande e rustica; utile per autunno e inverno.",
-    col: {"l1": "#5f8b46", "l2": "#3f6533", "fr": "#c98242"}
-  },
-  {
-    id: "broccolo_rapa",
-    nome: "Cime di rapa",
-    arch: "frastagliata",
-    d: 25, dr: 40,
-    h: "media",
-    sole: "pieno",
-    acqua: "media",
-    gg: 55,
-    mesi: [3, 4, 8, 9, 10],
-    amiche: ["carota", "cipolla", "ravanello"],
-    nemiche: [],
-    resa: 0.35,
-    nota: "Raccogli cime e foglie prima della piena fioritura.",
-    col: {"l1": "#4f8a45", "l2": "#376b34"}
-  },
-  {
-    id: "shiso",
-    nome: "Shiso",
-    arch: "cespuglio",
-    d: 30, dr: 45,
-    h: "media",
-    sole: "mezzombra",
-    acqua: "media",
-    gg: 70,
-    mesi: [3, 4, 5],
-    amiche: ["pomodoro", "cavolo", "carota"],
-    nemiche: [],
-    resa: 0.08,
-    nota: "Aromatica asiatica profumata; bella anche in vaso in serra.",
-    col: {"l1": "#5a8a4f", "l2": "#416b39"}
-  }
-];
+const PLANTS = window.PLANTS;
 const BYID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 
+// Difficoltà di coltivazione: 1 = facile, 2 = media, 3 = difficile/esotica.
+// Mappa completa su tutte le colture del catalogo: è la fonte unica usata
+// sia dalle schede pianta sia dall'auto-riempimento.
 const DIFFICULTY = {
+  // Facili: rapide, tolleranti, ideali per chi inizia.
   lattuga:1, rucola:1, ravanello:1, fagiolino:1, basilico:1,
-  prezzemolo:1, carota:1, cipolla:1, spinaci:1, bietola:1,
-  valerianella:1, zucchina:1, scalogno:1, cicoria:1, pakchoi:1,
-  rapa:1, aglio:1,
+  prezzemolo:1, carota:1, cipolla:1, cipolla_rossa:1, cipollotto:1,
+  spinaci:1, bietola:1, valerianella:1, zucchina:1, scalogno:1,
+  cicoria:1, pakchoi:1, rapa:1, aglio:1, erba_cipollina:1,
+  menta:1, maggiorana:1, calendula:1, nasturzio:1, crescione:1,
+  mizuna:1, senape_foglia:1, tatsoi:1, loboda:1, broccolo_rapa:1,
+  // Medie: richiedono un po' di attenzione o tempi più lunghi.
   pomodoro:2, peperone:2, cetriolo:2, fragola:2, finocchio:2,
   pisello:2, porro:2, indivia:2, barbabietola:2, aneto:2,
   coriandolo:2, timo:2, origano:2, salvia:2, rosmarino:2,
-  radicchio:2, fagiolo:2,
+  radicchio:2, fagiolo:2, fagiolo_borlotto:2, fava:2, cece:2,
+  lenticchia:2, soia_edamame:2, patata:2, pastinaca:2, radice_prezemolo:2,
+  daikon:2, cavolo_cinese:2, leustean:2, dragoncello:2, camomilla:2,
+  // Difficili o esotiche: lente, delicate, perenni o poco comuni.
   peperoncino:3, melanzana:3, zucca:3, melone:3, anguria:3,
   cavolo:3, verza:3, broccolo:3, cavolfiore:3, cavolonero:3,
-  cavolorapa:3, cavoletti:3, sedano:3
+  cavolorapa:3, cavoletti:3, sedano:3, cavolo_rosso:3, cavolo_navone:3,
+  sedano_rapa:3, rafano:3, patata_dolce:3, scorzonera:3, topinambur:3,
+  asparago:3, carciofo:3, cardo:3, mais_dolce:3, gombo:3,
+  tomatillo:3, physalis:3, kiwano:3, cucamelon:3, stevia_dolce:3,
+  shiso:3
 };
 const CAT_ORDER = [
   { key:"frutti",     label:"Frutti & ortaggi",  ids:["pomodoro","peperone","peperoncino","melanzana","zucchina","zucca","cetriolo","melone","anguria","fragola","mais_dolce","gombo","tomatillo","physalis","kiwano","cucamelon"] },
@@ -2719,6 +1262,60 @@ const PRESETS = {
     ["pakchoi", 10],
     ["cavolorapa", 12],
     ["timo", 4]
+  ],
+  primaverile: [
+    ["lattuga", 10],
+    ["ravanello", 30],
+    ["pisello", 24],
+    ["spinaci", 18],
+    ["carota", 40],
+    ["rucola", 24]
+  ],
+  autunnale: [
+    ["spinaci", 18],
+    ["valerianella", 30],
+    ["finocchio", 8],
+    ["porro", 16],
+    ["bietola", 8],
+    ["ravanello", 30]
+  ],
+  legumi: [
+    ["fagiolino", 16],
+    ["fagiolo", 12],
+    ["pisello", 24]
+  ],
+  frutti: [
+    ["pomodoro", 6],
+    ["peperone", 6],
+    ["melanzana", 3],
+    ["cetriolo", 4]
+  ],
+  cucurbitacee: [
+    ["zucchina", 2],
+    ["zucca", 1],
+    ["cetriolo", 4],
+    ["melone", 2],
+    ["anguria", 1]
+  ],
+  soffritto: [
+    ["cipolla", 24],
+    ["sedano", 9],
+    ["carota", 40],
+    ["prezzemolo", 9]
+  ],
+  grigliata: [
+    ["melanzana", 3],
+    ["zucchina", 2],
+    ["peperone", 6],
+    ["cipolla", 18],
+    ["pomodoro", 6]
+  ],
+  famiglia: [
+    ["fragola", 12],
+    ["pomodoro", 6],
+    ["carota", 30],
+    ["lattuga", 8],
+    ["zucchina", 2]
   ]
 };
 
@@ -2734,8 +1331,12 @@ const state = {
   beds: [],
   autoPlan: true,
   overlay: "",
-  selected: -1
+  selected: -1,
+  // Livello/persona dell'utente: "novizio" | "intermedio" | "esperto".
+  // Guida quanta UI mostrare e quanto automatizzare il flusso.
+  livello: "intermedio"
 };
+const LIVELLI = new Set(["novizio", "intermedio", "esperto"]);
 let vegFilter = "all";
 const CONFIG_KEY = "serra.config.v1";
 const BOOT_PARAMS = new URLSearchParams(window.location.search);
@@ -2765,6 +1366,7 @@ function saveConfig(done = true) {
         path: state.path,
         mese: state.mese,
         autoPlan: state.autoPlan,
+        livello: state.livello,
         beds: state.beds.map((bed) => ({
           plantId: bed.plantId,
           count: bed.count,
@@ -2864,14 +1466,6 @@ function updateGuidedIntroDynamic() {
   if (pill) pill.textContent = `📅 ${monthName} · ${tx("tagZone")} ${zoneLabel}`;
 }
 
-function setGuidedIntroVisible(visible) {
-  const intro = document.getElementById("guidedIntro");
-  if (!intro) return;
-  intro.hidden = !visible;
-  document.body.classList.toggle("guided-simple", visible);
-  if (visible) updateGuidedIntroDynamic();
-}
-
 function setMode(mode, scroll = false) {
   const allowed = new Set(["fit", "expert"]);
   const next = allowed.has(mode) ? mode : "fit";
@@ -2909,6 +1503,79 @@ function setMode(mode, scroll = false) {
       block: "start"
     });
   }
+}
+
+/* Personas: imposta il livello utente, sincronizza UI e mappa la modalità.
+   "novizio" e "intermedio" usano la modalità guidata (fit); "esperto" la
+   modalità manuale (expert). La differenza tra novizio e intermedio è quanta
+   UI avanzata viene mostrata (gestita via classi sul body in CSS). */
+function setLivello(liv, { mapMode = true } = {}) {
+  const next = LIVELLI.has(liv) ? liv : "intermedio";
+  state.livello = next;
+  document.body.classList.toggle("livello-novizio", next === "novizio");
+  document.body.classList.toggle("livello-intermedio", next === "intermedio");
+  document.body.classList.toggle("livello-esperto", next === "esperto");
+  document.querySelectorAll(".persona-card").forEach((card) => {
+    const on = card.dataset.livello === next;
+    card.classList.toggle("is-active", on);
+    card.setAttribute("aria-selected", String(on));
+  });
+  if (mapMode) setMode(next === "esperto" ? "expert" : "fit", false);
+}
+
+/* Scelta esplicita da parte dell'utente: imposta il livello e applica il
+   comportamento adatto alla persona, poi salva. */
+function chooseLivello(liv) {
+  const prev = state.livello;
+  setLivello(liv);
+  if (liv === "esperto") {
+    // L'esperto vuole il controllo: catalogo completo, scelta a mano.
+    vegFilter = "all";
+    state.autoPlan = false;
+    syncVegFilterTabs();
+    render();
+    focusManualPlanningPath();
+  } else if (liv === "intermedio") {
+    // Punto di partenza pronto, ma libero di personalizzare e andare off-season.
+    vegFilter = "all";
+    state.autoPlan = true;
+    if (!state.beds.length) autoFill();
+    else render();
+    syncVegFilterTabs();
+    focusManualPlanningPath();
+  } else {
+    // Novizio: serra pronta, solo colture di stagione, percorso lineare al carrello.
+    vegFilter = "in";
+    state.autoPlan = true;
+    autoFill();
+    syncVegFilterTabs();
+    collapseSettingsPanelAfterAutoPlan();
+    scrollToScene();
+  }
+  saveConfig(true);
+  if (prev !== liv) updateGuidedIntroDynamic();
+}
+
+/* Allinea i tab del filtro colture allo stato vegFilter corrente. */
+function syncVegFilterTabs() {
+  document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.filter === vegFilter);
+  });
+}
+
+/* Porta l'utente alla vista della serra (usato per il percorso novizio). */
+function scrollToScene() {
+  window.setTimeout(() => {
+    const stage = document.querySelector(".stage");
+    if (!stage) return;
+    const navH = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue("--nav-h") ||
+        "66",
+      10
+    );
+    const top = stage.getBoundingClientRect().top + window.scrollY - navH - 12;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, 120);
 }
 
 function tx(key, vars = {}) {
@@ -2953,17 +1620,6 @@ function spacingValue(plant) {
   return plant.dr && plant.dr !== plant.d
     ? `${plant.d}×${plant.dr} cm`
     : `${plant.d} cm`;
-}
-
-function spacingVisual(plant) {
-  const row = plant.d;
-  const between = plant.dr || plant.d;
-  return `<div class="spacing-visual" aria-hidden="true">
-    <div class="spacing-axis row"><span class="spacing-dot"></span><span class="spacing-dot"></span></div>
-    <div class="spacing-axis column"><span class="spacing-dot"></span><span class="spacing-dot"></span></div>
-    <div class="spacing-label">${tx("distanceInRow")} ${row} cm</div>
-    <div class="spacing-label column">${tx("distanceBetweenRows")} ${between} cm</div>
-  </div>`;
 }
 
 function spacingInfographicSvg(p) {
@@ -3105,10 +1761,6 @@ function setText(selector, key) {
   if (el) el.textContent = tx(key);
 }
 
-function setHtml(selector, key) {
-  const el = document.querySelector(selector);
-  if (el) el.innerHTML = tx(key);
-}
 
 function setOptionText(selectId, value, key) {
   const opt = document.querySelector(`#${selectId} option[value="${value}"]`);
@@ -3170,10 +1822,29 @@ function applyLanguage() {
   setText(".modal .hero h2", isGuidedBoot() ? "guidedModalTitle" : "modalTitle");
   setText(".modal .hero p", isGuidedBoot() ? "guidedModalCopy" : "modalCopy");
   setText("#guidedIntroTitle", "guidedIntroTitle");
-  const introSteps = document.querySelectorAll("#guidedIntroSteps li > span:not(.guided-step-num)");
+  setText("#personaPickLabel", "personaPickLabel");
+  setText("#personaPickHint", "personaPickHint");
+  setText("#personaNovTitle", "personaNovTitle");
+  setText("#personaNovDesc", "personaNovDesc");
+  setText("#personaIntTitle", "personaIntTitle");
+  setText("#personaIntDesc", "personaIntDesc");
+  setText("#personaExpTitle", "personaExpTitle");
+  setText("#personaExpDesc", "personaExpDesc");
+  const introSteps = document.querySelectorAll("#guidedIntroSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
   if (introSteps[0]) introSteps[0].innerHTML = tx("howTo1");
   if (introSteps[1]) introSteps[1].innerHTML = tx("howTo2");
   if (introSteps[2]) introSteps[2].innerHTML = tx("howTo3");
+  setText("#guidedIntroNovTitle", "guidedIntroNovTitle");
+  setText("#guidedNovCtaLabel", "guidedNovCta");
+  const introNovSteps = document.querySelectorAll("#guidedIntroNovSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
+  if (introNovSteps[0]) introNovSteps[0].innerHTML = tx("guidedNovStep1");
+  if (introNovSteps[1]) introNovSteps[1].innerHTML = tx("guidedNovStep2");
+  if (introNovSteps[2]) introNovSteps[2].innerHTML = tx("guidedNovStep3");
+  setText("#guidedIntroExpTitle", "guidedIntroExpTitle");
+  const introExpSteps = document.querySelectorAll("#guidedIntroExpSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
+  if (introExpSteps[0]) introExpSteps[0].innerHTML = tx("guidedExpStep1");
+  if (introExpSteps[1]) introExpSteps[1].innerHTML = tx("guidedExpStep2");
+  if (introExpSteps[2]) introExpSteps[2].innerHTML = tx("guidedExpStep3");
   /* Traduci le tab filtro piante */
   const filterIconMap = { all: "🌿", in: "✓", "all-beds": "⌕" };
   const filterLblMap = {
@@ -3245,6 +1916,19 @@ function applyLanguage() {
   setOptionText("inPreset", "radici", "presetRadici");
   setOptionText("inPreset", "foglie", "presetFoglie");
   setOptionText("inPreset", "brassicacee", "presetBrassicacee");
+  setOptionText("inPreset", "primaverile", "presetPrimaverile");
+  setOptionText("inPreset", "autunnale", "presetAutunnale");
+  setOptionText("inPreset", "legumi", "presetLegumi");
+  setOptionText("inPreset", "frutti", "presetFrutti");
+  setOptionText("inPreset", "cucurbitacee", "presetCucurbitacee");
+  setOptionText("inPreset", "soffritto", "presetSoffritto");
+  setOptionText("inPreset", "grigliata", "presetGrigliata");
+  setOptionText("inPreset", "famiglia", "presetFamiglia");
+  document
+    .querySelectorAll("#inPreset optgroup[data-i18n-optgroup]")
+    .forEach((og) => {
+      og.label = tx(og.dataset.i18nOptgroup);
+    });
   setText("#btnOpenSetup", "openSetup");
   setText("#sowAtLabel", "sowAt");
   const sowMonthSelect = document.getElementById("inMese");
@@ -4380,69 +3064,6 @@ function renderBeds() {
   );
 }
 
-function renderDetail() {
-  const d = document.getElementById("detailContent");
-  if (state.selected < 0 || state.selected >= state.beds.length) {
-    d.innerHTML = `<div class="guided-info-card">
-      <b>${tx("noSelection")}</b>
-      <span>${tx("plantInfoHint")}</span>
-    </div>`;
-    return;
-  }
-  const b = state.beds[state.selected],
-    p = BYID[b.plantId];
-  const months = [...effectiveMonths(p)]
-    .sort((a, b) => a - b)
-    .map((m) => monthName(m).slice(0, 3))
-    .join(", ");
-  const amiche = p.amiche.map(plantNameById).filter(Boolean);
-  const nemiche = p.nemiche.map(plantNameById).filter(Boolean);
-  const resaTot = b.count * p.resa;
-  const _photoSrc =
-    PLANT_PHOTOS[p.id] || `assets/img/svg/${p.id}.svg`;
-  const _svgFallback = `assets/img/svg/${p.id}.svg`;
-  const _desc = (PLANT_DESC[state.lang] || PLANT_DESC.it)[p.id] || "";
-  const sow = localizedSowingGuide(p);
-  d.innerHTML = `
-    <div class="guided-info-card guided-info-card--plant">
-      <div class="guided-plant-title">
-        <span class="guided-plant-ico" role="img" aria-label="${plantText(p, "nome")}">${FRUIT_EMOJI[p.id] || "🌱"}</span>
-        <div>
-          <b>${plantText(p, "nome")}</b>
-          <span>${b.count} ${tx("plants")} · ~${yieldLabel(resaTot)} ${tx("estimated")}</span>
-        </div>
-      </div>
-      <div class="guided-plant-chips">
-        <span>${tx("distance")}: ${spacingValue(p)}</span>
-        <span>${tx("sun")}: ${p.sole === "pieno" ? tx("fullSun") : tx("halfShade")}</span>
-        <span>${tx("water")}: ${waterLabel(p.acqua)}</span>
-        <span>${tx("harvest")}: ${harvestValue(p)}</span>
-      </div>
-      <div class="guided-plant-actions">
-        <div class="count-ctl guided-count"><button data-cnt="-1">−</button><b>${b.count}</b><button data-cnt="1">+</button></div>
-        <button class="btn btn-ghost btn-sm-compact" data-remove>${tx("removePlant")}</button>
-      </div>
-    </div>`;
-  d.querySelectorAll("[data-cnt]").forEach((el) =>
-    el.addEventListener("click", () => {
-      b.count = Math.max(1, b.count + parseInt(el.dataset.cnt));
-      state.autoPlan = false;
-      autoBalanceLayout(true, false);
-      saveConfig(true);
-      render();
-    })
-  );
-  d.querySelector("[data-remove]").addEventListener("click", () => {
-    state.beds.splice(state.selected, 1);
-    state.autoPlan = false;
-    state.selected = -1;
-    autoBalanceLayout(true, true);
-    saveConfig(true);
-    closePlantDetailPanel();
-    render();
-  });
-}
-
 function headerScrollOffset() {
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue("--nav-h")
@@ -4483,6 +3104,40 @@ function collapseSettingsPanelAfterAutoPlan() {
   panel.classList.add("is-collapsed");
   updateAllPanelToggles();
   requestAnimationFrame(() => scrollGreenhouseImageIntoView("smooth"));
+}
+
+/* All'ingresso dalla homepage con una persona già scelta (mobile/tablet),
+   porta lo scroll all'inizio del blocco "Come funziona" specifico per quel
+   livello, invece di lasciare il testo tagliato dall'header. */
+function scrollToGuidedIntroForLivello(liv) {
+  if (!isResponsiveConfiguratorLayout()) return;
+  const selectors = {
+    novizio: ".guided-intro-novizio",
+    intermedio: ".guided-intro-intermedio",
+    esperto: ".guided-intro-esperto"
+  };
+  const sel = selectors[liv];
+  if (!sel) return;
+  window.setTimeout(() => {
+    const target = document.querySelector(sel);
+    if (target) scrollElementBelowHeader(target, "smooth");
+  }, 200);
+}
+
+function openSettingsPanelAndFocusDimensions() {
+  const panel = document.getElementById("panelSettings");
+  if (!panel) return;
+  panel.classList.remove("is-collapsed");
+  updateAllPanelToggles();
+  requestAnimationFrame(() => {
+    scrollElementBelowHeader(panel, "smooth");
+    const inW = document.getElementById("inW");
+    if (inW) {
+      inW.focus({ preventScroll: true });
+      panel.classList.add("guided-highlight");
+      window.setTimeout(() => panel.classList.remove("guided-highlight"), 1600);
+    }
+  });
 }
 
 function openPlantDetailPanel() {
@@ -5214,23 +3869,6 @@ function removePlantById(id) {
   render();
 }
 
-function riordina() {
-  // piante alte in fondo (basso) per non ombreggiare
-  state.autoPlan = false;
-  state.beds.sort(
-    (a, b) => H_RANK[BYID[a.plantId].h] - H_RANK[BYID[b.plantId].h]
-  );
-  state.selected = -1;
-  saveConfig(true);
-  render();
-}
-function smartLayout() {
-  state.autoPlan = false;
-  autoBalanceLayout(false);
-  saveConfig(true);
-  render();
-}
-
 function refreshForSeasonChange() {
   if (state.autoPlan || state.beds.length === 0) {
     autoFill();
@@ -5318,35 +3956,66 @@ function expandAutoFillToSpace() {
   }
 }
 
+/* ======================================================================
+   SELEZIONE AUTOMATICA DELLE COLTURE (auto-riempimento)
+   La scelta è consapevole del profilo utente (state.livello) e usa come
+   unica fonte di verità la mappa DIFFICULTY (1=facile, 2=media, 3=difficile/
+   esotica), completa su tutte le colture:
+   - novizio  → solo colture facili/medie (difficoltà ≤ 2);
+   - intermedio/esperto → tutto il catalogo stagionale, con le colture
+     difficili ed esotiche spinte in fondo alla lista.
+   ====================================================================== */
+
+// Ortaggi comuni e gratificanti: hanno priorità a parità di difficoltà.
+const AUTO_PREFERRED = [
+  "pomodoro", "basilico", "lattuga", "rucola", "carota", "zucchina",
+  "fagiolino", "cetriolo", "peperone", "prezzemolo", "spinaci", "ravanello",
+  "cipolla", "fragola", "bietola", "timo", "origano"
+];
+
+// Difficoltà di una coltura (1-3); fallback prudente a 3 se non classificata.
+function autoDifficulty(p) {
+  return DIFFICULTY[p.id] || 3;
+}
+
+// Punteggio di selezione: più basso = scelto prima.
+function autoCropScore(p) {
+  // Le colture facili vengono prima, le esotiche/difficili per ultime.
+  let s = autoDifficulty(p) * 60;
+  // I grandi classici hanno una spinta in più, nel loro ordine.
+  const pref = AUTO_PREFERRED.indexOf(p.id);
+  if (pref >= 0) s -= 130 - pref;
+  // Qualità: premia resa alta e raccolta veloce.
+  s -= Math.min(p.resa || 0, 5) * 3;
+  s += Math.min(p.gg || 120, 200) * 0.04;
+  return s;
+}
+
+// Pool di candidati ordinato, filtrato in base al profilo utente.
+function autoCandidatePool() {
+  const seasonal = seminabili();
+  let pool;
+  if (state.livello === "novizio") {
+    // Solo colture facili o medie esplicitamente classificate (≤ 2).
+    pool = seasonal.filter((p) => autoDifficulty(p) <= 2);
+    // In stagioni povere allarga fino alle difficili (≤ 3), mai alle esotiche.
+    if (pool.length < 4) pool = seasonal.filter((p) => autoDifficulty(p) <= 3);
+  } else {
+    pool = seasonal.slice();
+  }
+  return pool.sort(
+    (a, b) =>
+      autoCropScore(a) - autoCropScore(b) ||
+      a.nome.localeCompare(b.nome, "it", { sensitivity: "base" })
+  );
+}
+
 function autoFill(options = {}) {
   const { compactPaths = true } = options;
   state.autoPlan = true;
   if (compactPaths) state.path = compactPathForAutoFill();
   syncSizeControls();
-  const seasonal = seminabili();
-  const preferred = [
-    "pomodoro",
-    "basilico",
-    "lattuga",
-    "rucola",
-    "carota",
-    "zucchina",
-    "fagiolino",
-    "cetriolo",
-    "peperone",
-    "prezzemolo",
-    "spinaci",
-    "ravanello",
-    "cipolla",
-    "fragola",
-    "bietola",
-    "timo",
-    "origano"
-  ];
-  const candidates = preferred
-    .map((id) => seasonal.find((p) => p.id === id))
-    .filter(Boolean)
-    .concat(seasonal.filter((p) => !preferred.includes(p.id)));
+  const candidates = autoCandidatePool();
   state.beds = [];
   let filaSlots = Math.max(0, layoutColumns(state.larghezza * 100) - 1);
   const sortedCandidates = candidates.slice();
@@ -5527,6 +4196,9 @@ function initEvents() {
   document.querySelectorAll(".mode-tab").forEach((tab) => {
     tab.addEventListener("click", () => setMode(tab.dataset.mode, false));
   });
+  document.querySelectorAll(".persona-card").forEach((card) => {
+    card.addEventListener("click", () => chooseLivello(card.dataset.livello));
+  });
   document.getElementById("inLang").addEventListener("change", (e) => {
     state.lang = e.target.value;
     localStorage.setItem("ois.lang", e.target.value);
@@ -5663,6 +4335,14 @@ function initEvents() {
     input.dispatchEvent(new Event("change", { bubbles: true }));
   });
 
+  // CTA del percorso novizio: apre/evidenzia il pannello "La tua serra"
+  const guidedNovCta = document.getElementById("guidedNovCta");
+  if (guidedNovCta) {
+    guidedNovCta.addEventListener("click", () => {
+      openSettingsPanelAndFocusDimensions();
+    });
+  }
+
   // Pulsante accordion del pannello
   document.querySelectorAll(".panel-toggle").forEach((btn) => {
     updatePanelToggle(btn);
@@ -5792,6 +4472,7 @@ function initConfig() {
       state.mese = savedMonth;
     }
     state.autoPlan = saved.autoPlan !== false;
+    if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
     state.beds = normalizeSavedBeds(saved.beds);
     autoBalanceLayout(true, false);
   }
@@ -6004,24 +4685,42 @@ initConfig();
 initEvents();
 loadConfCart();
 const _bootCfg = readSavedConfig();
-const _bootIntentApplied =
-  isGuidedBoot() || isFreeProjectBoot() || _bootCfg?.done ? applyBootIntent() : false;
+// Livello/persona richiesto dalla homepage (es. ?livello=novizio).
+const _bootLivello = BOOT_PARAMS.get("livello");
 
-if (_bootIntentApplied && isGuidedBoot()) {
-  // Arrivo dalla homepage "Crea il mio orto guidato": intento iniziale già applicato.
-} else if (!_bootIntentApplied && !_bootCfg) {
-  // Prima visita: riempimento automatico.
-  autoFill();
-} else if (!_bootIntentApplied && _bootCfg?.done && state.autoPlan && state.beds.length === 0) {
-  // Utente di ritorno con piano automatico ma serra vuota, per esempio dopo cambio mese.
-  autoFill();
-} else if (!_bootIntentApplied) {
-  render();
-}
-if (BOOT_PARAMS.get("mode") === "expert") {
-  state.autoPlan = false;
+if (LIVELLI.has(_bootLivello)) {
+  // Ingresso dalla homepage con persona già scelta: applica esattamente lo
+  // stesso comportamento del pulsante livello dentro il configuratore, così
+  // novizio/intermedio/esperto riempiono la serra in modo coerente.
+  state.livello = _bootLivello;
+  chooseLivello(_bootLivello);
   clearBootParams();
+  scrollToGuidedIntroForLivello(_bootLivello);
+} else {
+  const _bootIntentApplied =
+    isGuidedBoot() || isFreeProjectBoot() || _bootCfg?.done
+      ? applyBootIntent()
+      : false;
+
+  if (_bootIntentApplied && isGuidedBoot()) {
+    // Arrivo dalla homepage "Crea il mio orto guidato": intento iniziale già applicato.
+  } else if (!_bootIntentApplied && !_bootCfg) {
+    // Prima visita: riempimento automatico.
+    autoFill();
+  } else if (!_bootIntentApplied && _bootCfg?.done && state.autoPlan && state.beds.length === 0) {
+    // Utente di ritorno con piano automatico ma serra vuota, per esempio dopo cambio mese.
+    autoFill();
+  } else if (!_bootIntentApplied) {
+    render();
+  }
+  if (BOOT_PARAMS.get("mode") === "expert") {
+    state.autoPlan = false;
+    clearBootParams();
+  }
+  setMode(state.autoPlan ? "fit" : "expert", false);
+  // Sincronizza classi body e card attiva senza forzare la modalità (già decisa).
+  setLivello(state.livello, { mapMode: false });
 }
-setMode(state.autoPlan ? "fit" : "expert", false);
+syncVegFilterTabs();
 /* Avvio finale: intro sempre visibile e prima renderizzazione. */
 updateGuidedIntroDynamic();
