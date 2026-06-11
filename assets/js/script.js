@@ -1530,7 +1530,7 @@ function chooseLivello(liv) {
   setLivello(liv);
   if (liv === "esperto") {
     // L'esperto vuole il controllo: catalogo completo, scelta a mano.
-    vegFilter = "all";
+    vegFilter = "all-beds";
     state.autoPlan = false;
     syncVegFilterTabs();
     render();

@@ -1604,7 +1604,71 @@ function syncCatalogControls() {
 function setCatalogSearch(value) {
   catalog.search = value;
   render();
+  updateCatalogSearchSuggestions();
 }
+function hideCatalogSearchSuggestions() {
+  const list = document.getElementById("catalogSearchSuggestions");
+  const input = document.getElementById("catalogSearch");
+  if (list) {
+    list.hidden = true;
+    list.innerHTML = "";
+  }
+  if (input) input.setAttribute("aria-expanded", "false");
+}
+function selectCatalogSearchSuggestion(name) {
+  catalog.search = name;
+  const input = document.getElementById("catalogSearch");
+  if (input) input.value = name;
+  render();
+  hideCatalogSearchSuggestions();
+}
+function updateCatalogSearchSuggestions() {
+  const list = document.getElementById("catalogSearchSuggestions");
+  const input = document.getElementById("catalogSearch");
+  if (!list || !input) return;
+  const term = normalizeSearch(catalog.search);
+  if (!term) {
+    hideCatalogSearchSuggestions();
+    return;
+  }
+  const seen = new Set();
+  const names = [];
+  for (const p of PLANTS) {
+    const name = plantName(p.id);
+    const key = normalizeSearch(name);
+    if (!key.includes(term) || seen.has(key)) continue;
+    seen.add(key);
+    names.push(name);
+    if (names.length >= 8) break;
+  }
+  if (!names.length) {
+    hideCatalogSearchSuggestions();
+    return;
+  }
+  list.innerHTML = names
+    .map(
+      (name) =>
+        `<li role="option"><button type="button" data-name="${escapeHtml(name)}">${escapeHtml(name)}</button></li>`
+    )
+    .join("");
+  list.hidden = false;
+  input.setAttribute("aria-expanded", "true");
+}
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+(function setupCatalogSearchSuggestionsClick() {
+  document.addEventListener("mousedown", (e) => {
+    const btn = e.target.closest("#catalogSearchSuggestions button[data-name]");
+    if (!btn) return;
+    selectCatalogSearchSuggestion(btn.dataset.name);
+  });
+})();
 function clearCatalogSearch() {
   catalog.search = "";
   const input = document.getElementById("catalogSearch");

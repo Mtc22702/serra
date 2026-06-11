@@ -404,6 +404,12 @@
                   data-i18n-placeholder="catalog.search_placeholder"
                   placeholder="Pomodoro, basilico, lattuga..."
                   oninput="setCatalogSearch(this.value)"
+                  onfocus="updateCatalogSearchSuggestions()"
+                  onblur="setTimeout(hideCatalogSearchSuggestions, 150)"
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-autocomplete="list"
+                  aria-controls="catalogSearchSuggestions"
                 />
                 <button
                   type="button"
@@ -415,6 +421,7 @@
                   ✕
                 </button>
               </span>
+              <ul id="catalogSearchSuggestions" class="catalog-search-suggestions" role="listbox" hidden></ul>
             </label>
             <label class="catalog-select catalog-sort-select">
               <span class="catalog-tool-label" data-i18n="catalog.sort_label"
