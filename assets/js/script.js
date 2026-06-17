@@ -2314,11 +2314,13 @@ function computeLayout() {
     const S = p.d;                // distanza sulla fila (tra piante nella stessa fila)
     const Sc = p.dr || p.d;      // distanza tra file (tra file adiacenti, usata nella larghezza)
     const isFila = b.layout === "fila" && Li >= 480 && columnCount > 1;
-    // In blocco: le file corrono in senso Y (lunghezza), la distanza TRA file (Sc) va in X (larghezza)
+    // Le file corrono in senso Y (lunghezza), la distanza TRA file (Sc) va in X (larghezza)
     // e la distanza SULLA fila (S) va in Y (altezza del letto).
-    const Sr = S; // passo Y: distanza sulla fila (p.d) sia per blocco che per fila
+    // In modalità fila si usano comunque tante file affiancate quante ne entra nella larghezza
+    // dell'aiuola (ad es. cetriolo dr=100cm in aiuola da 200cm → 2 file affiancate).
+    const Sr = S; // passo Y: distanza sulla fila (p.d)
     const innerW = bedW - 2 * BEDPAD;
-    const cols = isFila ? 1 : maxSlotsForSpan(innerW, Sc); // numero di file in larghezza
+    const cols = maxSlotsForSpan(innerW, Sc); // file in larghezza, sia per blocco che per fila
     const rows = isFila
       ? maxSlotsForSpan(Li - 2 * MARGIN - 2 * BEDPAD, S)
       : Math.max(1, Math.ceil(b.count / cols));
@@ -3672,7 +3674,10 @@ function canUseFilaLayout(p) {
 
 function countForFilaPlant(p) {
   const Li = state.lunghezza * 100;
-  return maxSlotsForSpan(Li - 2 * MARGIN - 2 * BEDPAD, p.d);
+  const Sc = p.dr || p.d; // passo tra file affiancate (X)
+  const filesAcross = maxSlotsForSpan(usableBedWidth() - 2 * BEDPAD, Sc);
+  const plantsPerFile = maxSlotsForSpan(Li - 2 * MARGIN - 2 * BEDPAD, p.d);
+  return filesAcross * plantsPerFile;
 }
 
 function defaultCount(p) {
@@ -3827,7 +3832,12 @@ function resetSelectedCropCountsForOptimization() {
 
 function autoBalanceLayout(keepSelection = true, expandToSpace = true) {
   const selectedPlant = keepSelection ? rememberSelection() : null;
-  if (expandToSpace) expandFilaBedsToLength();
+  // expandFilaBedsToLength va chiamata sempre (non solo quando expandToSpace=true)
+  // perché usableBedWidth() dipende da state.beds.length: aggiungendo o rimuovendo
+  // una pianta il numero di colonne cambia e il count corretto per le file si aggiorna.
+  // Senza questo ricalcolo, il count salvato è quello di una colonna più larga e
+  // provoca overflow non appena si aggiunge una seconda pianta in modalità manuale.
+  expandFilaBedsToLength();
   if (expandToSpace) enforceMinimumBedCounts();
   sortBedsForLayout();
   shrinkOverflowToFit();
@@ -3852,7 +3862,11 @@ function addPlant(id) {
   });
   state.autoPlan = false;
   state.selected = state.beds.findIndex((b) => b.plantId === id);
-  autoBalanceLayout(true, true);
+  // expandToSpace=false: in modalità manuale il sistema non espande le piante
+  // esistenti né applica i conteggi minimi forzati — altrimenti enforceMinimumBedCounts
+  // + expandAutoFillToSpace riempiono lo spazio, shrinkOverflowToFit rimuove
+  // una pianta già presente e l'utente vede una sostituzione invece di un'aggiunta.
+  autoBalanceLayout(true, false);
   saveConfig(true);
   render();
 }
@@ -3954,6 +3968,51 @@ function expandAutoFillToSpace() {
     state.beds[best.index].count = best.count;
     guard++;
   }
+
+  // Phase 2: fine-tuning with +1 plant at a time to fill the last sub-row gap.
+  // The main loop above can only add a full row (rowSizeForPlant plants) at once.
+  // If the remaining gap is smaller than one row's height, the main loop stops
+  // and leaves empty soil. This pass fills that leftover space one plant at a time.
+  let fineGuard = 0;
+  while (fineGuard < 300) {
+    const currentLayout = computeLayout();
+    const currentScore = fillScore(currentLayout);
+    let best = null;
+
+    const candidates = state.beds
+      .map((bed, index) => {
+        const layoutBed = currentLayout.beds.find((item) => item.idx === index);
+        const plant = BYID[bed.plantId];
+        return { index, bed, plant, layoutBed };
+      })
+      .filter((item) => item.plant && item.bed.layout !== "fila" && item.layoutBed)
+      .sort((a, b) => {
+        const ah = currentLayout.columnHeights[a.layoutBed.columnIndex] || 0;
+        const bh = currentLayout.columnHeights[b.layoutBed.columnIndex] || 0;
+        return ah - bh || a.plant.d - b.plant.d || a.index - b.index;
+      });
+
+    for (const item of candidates) {
+      const before = state.beds[item.index].count;
+      state.beds[item.index].count += 1;
+      const nextLayout = computeLayout();
+      if (!nextLayout.overflow) {
+        const nextScore = fillScore(nextLayout);
+        if (!best || nextScore < best.score) {
+          best = {
+            index: item.index,
+            count: state.beds[item.index].count,
+            score: nextScore
+          };
+        }
+      }
+      state.beds[item.index].count = before;
+    }
+
+    if (!best || best.score >= currentScore - 0.1) break;
+    state.beds[best.index].count = best.count;
+    fineGuard++;
+  }
 }
 
 /* ======================================================================
@@ -4046,12 +4105,36 @@ function autoFill(options = {}) {
       skippedConflicts.push(p);
       continue;
     }
-    addAutoCandidate(p, false);
+    addAutoCandidate(p);
   }
+  // Secondo passaggio: aggiunge piante saltate solo se non creano nuove
+  // incompatibilità con le piante già inserite. In questo modo la serra
+  // viene riempita da expandAutoFillToSpace (più esemplari delle colture
+  // compatibili già presenti) anziché da piante che non si amano.
+  // Se dopo questo passaggio ci sono ancora meno varietà del target,
+  // viene fatto un terzo tentativo accettando al massimo 1 conflitto per
+  // pianta (caso di stagioni con pool molto ristretto).
   for (const p of skippedConflicts) {
     if (state.beds.length >= minVarieties) break;
     if (state.beds.some((bed) => bed.plantId === p.id)) continue;
-    addAutoCandidate(p, false);
+    const newConflicts = state.beds.filter(
+      (bed) => areIncompatible(p, BYID[bed.plantId])
+    ).length;
+    if (newConflicts > 0) continue; // salta: creerebbe incompatibilità
+    addAutoCandidate(p);
+  }
+  // Terzo passaggio di emergenza: se le varietà sono ancora pochissime
+  // (meno della metà del target), accetta piante con al massimo 1 conflitto
+  // per non lasciare serre grandi quasi vuote.
+  if (state.beds.length < Math.ceil(minVarieties / 2)) {
+    for (const p of skippedConflicts) {
+      if (state.beds.length >= Math.ceil(minVarieties / 2)) break;
+      if (state.beds.some((bed) => bed.plantId === p.id)) continue;
+      const newConflicts = state.beds.filter(
+        (bed) => areIncompatible(p, BYID[bed.plantId])
+      ).length;
+      if (newConflicts <= 1) addAutoCandidate(p);
+    }
   }
   if (state.beds.length === 0 && candidates.length) {
     const p = candidates[0];

@@ -42,7 +42,9 @@
       "cavolfiore",
       "cavolonero",
       "cavolorapa",
-      "finocchio"
+      "finocchio",
+      "cetriolo",
+      "cavoletti"
     ],
     "resa": 3,
     "nota": "Vuole sostegno e pieno sole. Togli le femminelle.",
@@ -223,7 +225,8 @@
     ],
     "nemiche": [
       "salvia",
-      "pomodoro"
+      "pomodoro",
+      "finocchio"
     ],
     "resa": 2,
     "nota": "Falla arrampicare su una rete: frutti più puliti e dritti.",
@@ -403,7 +406,9 @@
       "fragola",
       "cavolo"
     ],
-    "nemiche": [],
+    "nemiche": [
+      "finocchio"
+    ],
     "resa": 0.15,
     "nota": "Ama il fresco; in estate va in fiore subito.",
     "col": {
@@ -707,7 +712,13 @@
       "fagiolo",
       "pisello",
       "cetriolo",
-      "spinaci"
+      "spinaci",
+      "carota",
+      "gombo",
+      "tomatillo",
+      "physalis",
+      "kiwano",
+      "cucamelon"
     ],
     "resa": 0.3,
     "nota": "È \"antipatico\" a molte piante: tienilo in disparte.",
@@ -862,7 +873,12 @@
     "nemiche": [
       "fagiolino",
       "fagiolo",
-      "pisello"
+      "pisello",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
     ],
     "resa": 0.15,
     "nota": "Poca acqua a fine ciclo. Tiene lontani molti parassiti.",
@@ -897,7 +913,12 @@
     "nemiche": [
       "fagiolino",
       "fagiolo",
-      "pisello"
+      "pisello",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
     ],
     "resa": 0.05,
     "nota": "Si pianta a spicchi in autunno, si raccoglie in estate.",
@@ -998,7 +1019,9 @@
       "cipolla",
       "aglio",
       "porro",
-      "scalogno"
+      "scalogno",
+      "peperone",
+      "finocchio"
     ],
     "resa": 0.15,
     "nota": "Non serve sostegno. Migliora il terreno con l'azoto.",
@@ -1032,7 +1055,9 @@
       "cipolla",
       "aglio",
       "porro",
-      "scalogno"
+      "scalogno",
+      "peperone",
+      "finocchio"
     ],
     "resa": 0.25,
     "nota": "Vuole canne o rete: sale anche 2 metri.",
@@ -1066,7 +1091,8 @@
       "cipolla",
       "aglio",
       "porro",
-      "scalogno"
+      "scalogno",
+      "finocchio"
     ],
     "resa": 0.1,
     "nota": "Ama il fresco: si semina in autunno o fine inverno.",
@@ -1104,7 +1130,9 @@
       "broccolo",
       "cavolfiore",
       "cavolonero",
-      "cavolorapa"
+      "cavolorapa",
+      "pakchoi",
+      "cavoletti"
     ],
     "resa": 0.25,
     "nota": "Perenne: produce per più anni e fa stoloni.",
