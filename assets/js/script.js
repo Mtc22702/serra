@@ -4167,7 +4167,13 @@ function autoFill(options = {}) {
       ? countForFilaPlant(plant)
       : starterCountForAutoPlant(plant, false);
   });
+  // Stessa sequenza di autoBalanceLayout(true, true): shrink PRIMA di expand.
+  // Senza questo, i bond tra piante compagne (es. cetriolo↔fagiolino) possono
+  // forzare un layout in overflow che expandAutoFillToSpace non può migliorare
+  // (qualsiasi aggiunta peggiora l'overflow). shrinkOverflowToFit risolve prima
+  // l'overflow, portando il layout in uno stato valido da cui l'espansione parte.
   sortBedsForLayout();
+  shrinkOverflowToFit();
   expandAutoFillToSpace();
   // Riordina dopo l'espansione: piante alte sempre in fondo per non ombreggiare.
   sortBedsForLayout();
