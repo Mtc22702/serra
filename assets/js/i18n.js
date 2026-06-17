@@ -549,7 +549,8 @@
         "catalog.card_kicker": "Checklist rapida",
         "catalog.card_title": "Prima di aggiungere semi",
         "catalog.card_subtitle": "Controlla questi quattro segnali",
-        "catalog.card_tip": "Apri la scheda di una pianta per vedere subito se è il momento giusto per seminarla.",
+        "catalog.card_tip":
+          "Apri la scheda di una pianta per vedere subito se è il momento giusto per seminarla.",
         "catalog.feature_sowing_title": "Finestra di semina",
         "catalog.feature_sowing_sub": "adatta al mese selezionato",
         "catalog.feature_climate_title": "Compatibilità clima",
@@ -698,11 +699,13 @@
         "cookie.text2": "per saperne di più.",
         "cookie.accept": "Accetta",
         "cookie.reject": "Solo essenziali",
-        "hero.controls_hint": "Seleziona la tua zona climatica per vedere i semi giusti per te",
+        "hero.controls_hint":
+          "Seleziona la tua zona climatica per vedere i semi giusti per te",
         "hero.path_label": "Scegli il tuo percorso",
         "hero.cfg_badge": "Strumento interattivo",
         "hero.cfg_title": "Progetta la tua serra, vista dall'alto",
-        "hero.cfg_desc": "Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.",
+        "hero.cfg_desc":
+          "Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.",
         "hero.cfg_cta": "Apri il configuratore",
         "hero.cfg_or": "oppure sfoglia il catalogo semi",
         "hero.cfg_personas_label": "Entra come",
@@ -737,7 +740,7 @@
         "detail.sow_temp": "Temperatura di germinazione",
         "detail.sow_germ": "Tempo di germinazione",
         "detail.sow_exposure": "Esposizione",
-        "detail.sow_water": "Irrigazione",
+        "detail.sow_water": "Irrigazione"
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -855,7 +858,8 @@
         "catalog.card_kicker": "Verificare rapidă",
         "catalog.card_title": "Înainte să adaugi semințe",
         "catalog.card_subtitle": "Verifică aceste patru semnale",
-        "catalog.card_tip": "Deschide fișa unei plante pentru a vedea imediat dacă este momentul potrivit pentru semănat.",
+        "catalog.card_tip":
+          "Deschide fișa unei plante pentru a vedea imediat dacă este momentul potrivit pentru semănat.",
         "catalog.feature_sowing_title": "Fereastră de semănare",
         "catalog.feature_sowing_sub": "potrivită lunii selectate",
         "catalog.feature_climate_title": "Compatibilitate climă",
@@ -1005,11 +1009,13 @@
         "cookie.text2": "pentru mai multe informații.",
         "cookie.accept": "Accept",
         "cookie.reject": "Doar esențiale",
-        "hero.controls_hint": "Selectează zona climatică pentru a vedea semințele potrivite",
+        "hero.controls_hint":
+          "Selectează zona climatică pentru a vedea semințele potrivite",
         "hero.path_label": "Alege traseul tău",
         "hero.cfg_badge": "Instrument interactiv",
         "hero.cfg_title": "Proiectează-ți sera, văzută de sus",
-        "hero.cfg_desc": "Dimensiuni reale, climă și culturi aranjate strat cu strat. Vezi cum arată înainte să semeni.",
+        "hero.cfg_desc":
+          "Dimensiuni reale, climă și culturi aranjate strat cu strat. Vezi cum arată înainte să semeni.",
         "hero.cfg_cta": "Deschide configuratorul",
         "hero.cfg_or": "sau răsfoiește catalogul de semințe",
         "hero.cfg_personas_label": "Intră ca",
@@ -1044,7 +1050,7 @@
         "detail.sow_temp": "Temperatura de germinare",
         "detail.sow_germ": "Timp de germinare",
         "detail.sow_exposure": "Expunere",
-        "detail.sow_water": "Udare",
+        "detail.sow_water": "Udare"
       }
     },
     /* Configuratore: pannelli, controlli, carrello e messaggi tecnici. */
@@ -1164,7 +1170,8 @@
         heightMap: "Altezza piante",
         restoreAutoFill: "Riempi la serra",
         fillSelected: "Ottimizza colture scelte",
-        fillSelectedHint: "Ricalibra quantità e riempie solo con queste colture.",
+        fillSelectedHint:
+          "Ricalibra quantità e riempie solo con queste colture.",
         cropActionsTitle: "Azioni sulle colture inserite",
         cropActionsHint:
           "Questi comandi modificano il progetto corrente della serra.",
@@ -1465,7 +1472,8 @@
         heightMap: "Înălțimea plantelor",
         restoreAutoFill: "Umple sera",
         fillSelected: "Optimizează culturile alese",
-        fillSelectedHint: "Recalibrează cantitățile și umple doar cu aceste culturi.",
+        fillSelectedHint:
+          "Recalibrează cantitățile și umple doar cu aceste culturi.",
         cropActionsTitle: "Acțiuni pentru culturile adăugate",
         cropActionsHint: "Aceste comenzi modifică proiectul curent al serei.",
         cropsSectionCustomize: "⚙ Personalizează",
