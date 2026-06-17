@@ -3023,16 +3023,18 @@ function renderBeds() {
     bl.innerHTML = `<div class="empty-note">${tx("noBeds")}</div>`;
     return;
   }
+  const semSet = new Set(seminabili().map(p => p.id));
   bl.innerHTML = state.beds
     .map((b, i) => {
       const p = BYID[b.plantId];
       const diff = DIFFICULTY[p.id] || 2;
       const diffLabel = diff === 1 ? tx("diffEasy") : diff === 2 ? tx("diffMedium") : tx("diffHard");
       const diffClass = diff === 1 ? "diff-easy" : diff === 2 ? "diff-medium" : "diff-hard";
+      const offSeasonBadge = !semSet.has(p.id) ? `<span class="veg-offseason">${tx("offSeason")}</span>` : "";
       return `<div class="bedchip ${i === state.selected ? "sel" : ""}" data-sel="${i}">
       <span class="bedico" role="img" aria-label="${plantText(p, "nome")}">${FRUIT_EMOJI[p.id] || "🌱"}</span>
       <div class="bedchip-body">
-        <div class="t">${plantText(p, "nome")}</div>
+        <div class="t">${plantText(p, "nome")}${offSeasonBadge}</div>
         <div class="bedchip-sub">
           <span class="c">${b.count}&nbsp;${tx("piecesShort")}</span>
           <span class="bedchip-dot" aria-hidden="true">·</span>
@@ -3059,7 +3061,7 @@ function renderBeds() {
       state.beds.splice(i, 1);
       state.autoPlan = false;
       if (state.selected >= state.beds.length) state.selected = -1;
-      autoBalanceLayout(true, true);
+      autoBalanceLayout(true, false);
       saveConfig(true);
       render();
     })
@@ -3878,7 +3880,9 @@ function removePlantById(id) {
   state.autoPlan = false;
   if (state.selected === index) state.selected = -1;
   else if (state.selected > index) state.selected -= 1;
-  autoBalanceLayout(true, true);
+  // expandToSpace=false: rimuovere una pianta non deve far espandere le piante rimanenti,
+  // simmetricamente a addPlant che usa lo stesso flag.
+  autoBalanceLayout(true, false);
   saveConfig(true);
   render();
 }
@@ -4146,6 +4150,23 @@ function autoFill(options = {}) {
       if (computeLayout().overflow) state.beds[0].count = minimumCountForPlant(p);
     }
   }
+  // Ricalcola i conteggi iniziali con il layout a colonne definitivo.
+  // Durante la selezione ogni pianta viene aggiunta una alla volta: le prime
+  // usano usableBedWidth() monocolonna (più larga) e ottengono conteggi gonfiati.
+  // Ora che state.beds è completo il numero di colonne è stabile; azzerare i
+  // conteggi allo starter corretto lascia a expandAutoFillToSpace il compito
+  // di riempire lo spazio in modo uniforme — esattamente come fa fillSelectedPlants.
+  // Nota: non usiamo resetSelectedCropCountsForOptimization() perché quella
+  // funzione permette una sola aiuola fila (!hasFila), mentre autoFill può
+  // piazzarne fino a filaSlots (layoutColumns - 1). Il layout assegnato da
+  // addAutoCandidate viene preservato; si ricalcola solo il conteggio.
+  state.beds.forEach((bed) => {
+    const plant = BYID[bed.plantId];
+    if (!plant) return;
+    bed.count = bed.layout === "fila"
+      ? countForFilaPlant(plant)
+      : starterCountForAutoPlant(plant, false);
+  });
   sortBedsForLayout();
   expandAutoFillToSpace();
   // Riordina dopo l'espansione: piante alte sempre in fondo per non ombreggiare.
@@ -4616,6 +4637,55 @@ const PACK_DATA = {
   timo:        { seeds: 200, price: 2.80 },
   origano:     { seeds: 300, price: 2.80 },
   salvia:      { seeds: 100, price: 2.80 },
+  // Legumi
+  fava:             { seeds: 20,  price: 3.00 },
+  cece:             { seeds: 30,  price: 3.00 },
+  lenticchia:       { seeds: 50,  price: 2.80 },
+  soia_edamame:     { seeds: 30,  price: 3.20 },
+  fagiolo_borlotto: { seeds: 25,  price: 3.00 },
+  // Radici e bulbi
+  patata:           { seeds: 10,  price: 4.50 },
+  patata_dolce:     { seeds: 5,   price: 5.00 },
+  pastinaca:        { seeds: 200, price: 2.50 },
+  radice_prezemolo: { seeds: 200, price: 2.50 },
+  sedano_rapa:      { seeds: 300, price: 2.60 },
+  rafano:           { seeds: 50,  price: 2.80 },
+  cipolla_rossa:    { seeds: 200, price: 2.30 },
+  cipollotto:       { seeds: 200, price: 2.30 },
+  daikon:           { seeds: 100, price: 2.50 },
+  scorzonera:       { seeds: 100, price: 2.80 },
+  topinambur:       { seeds: 10,  price: 4.00 },
+  cavolo_navone:    { seeds: 200, price: 2.50 },
+  // Foglie e insalate
+  loboda:           { seeds: 100, price: 2.50 },
+  stevia_dolce:     { seeds: 100, price: 3.20 },
+  asparago:         { seeds: 20,  price: 3.50 },
+  carciofo:         { seeds: 10,  price: 4.00 },
+  cardo:            { seeds: 20,  price: 3.50 },
+  crescione:        { seeds: 500, price: 2.20 },
+  mizuna:           { seeds: 300, price: 2.40 },
+  senape_foglia:    { seeds: 300, price: 2.40 },
+  tatsoi:           { seeds: 300, price: 2.40 },
+  cavolo_cinese:    { seeds: 200, price: 2.60 },
+  cavolo_rosso:     { seeds: 100, price: 2.80 },
+  broccolo_rapa:    { seeds: 200, price: 2.50 },
+  // Frutti esotici
+  mais_dolce:       { seeds: 30,  price: 3.50 },
+  gombo:            { seeds: 20,  price: 3.80 },
+  tomatillo:        { seeds: 20,  price: 3.50 },
+  physalis:         { seeds: 20,  price: 3.50 },
+  kiwano:           { seeds: 10,  price: 4.00 },
+  cucamelon:        { seeds: 15,  price: 4.00 },
+  // Aromatiche e fiori
+  erba_cipollina:   { seeds: 200, price: 2.80 },
+  leustean:         { seeds: 100, price: 3.00 },
+  dragoncello:      { seeds: 100, price: 3.00 },
+  menta:            { seeds: 200, price: 2.80 },
+  maggiorana:       { seeds: 300, price: 2.60 },
+  camomilla:        { seeds: 300, price: 2.40 },
+  calendula:        { seeds: 100, price: 2.40 },
+  nasturzio:        { seeds: 50,  price: 2.80 },
+  shiso:            { seeds: 100, price: 3.20 },
 };
 function formatMoney(value) {
   return new Intl.NumberFormat(state.lang === "ro" ? "ro-RO" : "it-IT", {
