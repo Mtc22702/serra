@@ -51,150 +51,47 @@ const ACQUA_ICON = { alta: "💧💧💧", media: "💧💧", bassa: "💧" };
 // Mappa completa su tutte le colture del catalogo (allineata a script.js).
 const DIFFICULTY = {
   // Facili: rapide, tolleranti, ideali per chi inizia.
-  lattuga: 1,
-  rucola: 1,
-  ravanello: 1,
-  fagiolino: 1,
-  basilico: 1,
-  prezzemolo: 1,
-  carota: 1,
-  cipolla: 1,
-  cipolla_rossa: 1,
-  cipollotto: 1,
-  spinaci: 1,
-  bietola: 1,
-  valerianella: 1,
-  zucchina: 1,
-  scalogno: 1,
-  cicoria: 1,
-  pakchoi: 1,
-  rapa: 1,
-  aglio: 1,
-  erba_cipollina: 1,
-  menta: 1,
-  maggiorana: 1,
-  calendula: 1,
-  nasturzio: 1,
-  crescione: 1,
-  mizuna: 1,
-  senape_foglia: 1,
-  tatsoi: 1,
-  loboda: 1,
-  broccolo_rapa: 1,
+  lattuga:1, rucola:1, ravanello:1, fagiolino:1, basilico:1,
+  prezzemolo:1, carota:1, cipolla:1, cipolla_rossa:1, cipollotto:1,
+  spinaci:1, bietola:1, valerianella:1, zucchina:1, scalogno:1,
+  cicoria:1, pakchoi:1, rapa:1, aglio:1, erba_cipollina:1,
+  menta:1, maggiorana:1, calendula:1, nasturzio:1, crescione:1,
+  mizuna:1, senape_foglia:1, tatsoi:1, loboda:1, broccolo_rapa:1,
   // Medie: richiedono un po' di attenzione o tempi più lunghi.
-  pomodoro: 2,
-  peperone: 2,
-  cetriolo: 2,
-  fragola: 2,
-  finocchio: 2,
-  pisello: 2,
-  porro: 2,
-  indivia: 2,
-  barbabietola: 2,
-  aneto: 2,
-  coriandolo: 2,
-  timo: 2,
-  origano: 2,
-  salvia: 2,
-  rosmarino: 2,
-  radicchio: 2,
-  fagiolo: 2,
-  fagiolo_borlotto: 2,
-  fava: 2,
-  cece: 2,
-  lenticchia: 2,
-  soia_edamame: 2,
-  patata: 2,
-  pastinaca: 2,
-  radice_prezemolo: 2,
-  daikon: 2,
-  cavolo_cinese: 2,
-  leustean: 2,
-  dragoncello: 2,
-  camomilla: 2,
+  pomodoro:2, peperone:2, cetriolo:2, fragola:2, finocchio:2,
+  pisello:2, porro:2, indivia:2, barbabietola:2, aneto:2,
+  coriandolo:2, timo:2, origano:2, salvia:2, rosmarino:2,
+  radicchio:2, fagiolo:2, fagiolo_borlotto:2, fava:2, cece:2,
+  lenticchia:2, soia_edamame:2, patata:2, pastinaca:2, radice_prezemolo:2,
+  daikon:2, cavolo_cinese:2, leustean:2, dragoncello:2, camomilla:2,
   // Difficili o esotiche: lente, delicate, perenni o poco comuni.
-  peperoncino: 3,
-  melanzana: 3,
-  zucca: 3,
-  melone: 3,
-  anguria: 3,
-  cavolo: 3,
-  verza: 3,
-  broccolo: 3,
-  cavolfiore: 3,
-  cavolonero: 3,
-  cavolorapa: 3,
-  cavoletti: 3,
-  sedano: 3,
-  cavolo_rosso: 3,
-  cavolo_navone: 3,
-  sedano_rapa: 3,
-  rafano: 3,
-  patata_dolce: 3,
-  scorzonera: 3,
-  topinambur: 3,
-  asparago: 3,
-  carciofo: 3,
-  cardo: 3,
-  mais_dolce: 3,
-  gombo: 3,
-  tomatillo: 3,
-  physalis: 3,
-  kiwano: 3,
-  cucamelon: 3,
-  stevia_dolce: 3,
-  shiso: 3
+  peperoncino:3, melanzana:3, zucca:3, melone:3, anguria:3,
+  cavolo:3, verza:3, broccolo:3, cavolfiore:3, cavolonero:3,
+  cavolorapa:3, cavoletti:3, sedano:3, cavolo_rosso:3, cavolo_navone:3,
+  sedano_rapa:3, rafano:3, patata_dolce:3, scorzonera:3, topinambur:3,
+  asparago:3, carciofo:3, cardo:3, mais_dolce:3, gombo:3,
+  tomatillo:3, physalis:3, kiwano:3, cucamelon:3, stevia_dolce:3,
+  shiso:3
 };
 
 /* Metadati piante: altezze, spaziature e guide di semina. */
 const PLANT_HEIGHT_CM = {
-  pomodoro: "100–200",
-  peperone: "50–100",
-  peperoncino: "40–70",
-  melanzana: "60–120",
-  zucchina: "40–80",
-  zucca: "30–50",
-  cetriolo: "100–200",
-  melone: "30–50",
-  anguria: "30–50",
-  lattuga: "20–35",
-  radicchio: "20–30",
-  rucola: "15–30",
-  spinaci: "20–30",
-  bietola: "30–60",
-  cavolo: "40–60",
-  verza: "35–55",
-  broccolo: "60–100",
-  cavolfiore: "40–70",
-  cavolonero: "60–100",
-  cavolorapa: "20–40",
-  carota: "20–35",
-  finocchio: "40–70",
-  prezzemolo: "20–40",
-  basilico: "20–50",
-  coriandolo: "20–50",
-  aneto: "40–100",
-  cipolla: "30–50",
-  aglio: "30–50",
-  porro: "40–70",
-  scalogno: "20–40",
-  fagiolino: "30–50",
-  fagiolo: "150–250",
-  pisello: "60–150",
-  fragola: "15–30",
-  sedano: "40–80",
-  ravanello: "10–20",
-  barbabietola: "20–35",
-  cicoria: "20–40",
-  indivia: "20–35",
-  pakchoi: "20–40",
-  cavoletti: "60–120",
-  rapa: "15–30",
-  valerianella: "10–20",
-  rosmarino: "50–150",
-  timo: "15–30",
-  origano: "30–60",
-  salvia: "40–80"
+  pomodoro: "100–200",  peperone: "50–100",  peperoncino: "40–70",
+  melanzana: "60–120",  zucchina: "40–80",   zucca: "30–50",
+  cetriolo: "100–200",  melone: "30–50",      anguria: "30–50",
+  lattuga: "20–35",     radicchio: "20–30",   rucola: "15–30",
+  spinaci: "20–30",     bietola: "30–60",     cavolo: "40–60",
+  verza: "35–55",       broccolo: "60–100",   cavolfiore: "40–70",
+  cavolonero: "60–100", cavolorapa: "20–40",  carota: "20–35",
+  finocchio: "40–70",   prezzemolo: "20–40",  basilico: "20–50",
+  coriandolo: "20–50",  aneto: "40–100",      cipolla: "30–50",
+  aglio: "30–50",       porro: "40–70",       scalogno: "20–40",
+  fagiolino: "30–50",   fagiolo: "150–250",   pisello: "60–150",
+  fragola: "15–30",     sedano: "40–80",      ravanello: "10–20",
+  barbabietola: "20–35",cicoria: "20–40",     indivia: "20–35",
+  pakchoi: "20–40",     cavoletti: "60–120",  rapa: "15–30",
+  valerianella: "10–20",rosmarino: "50–150",  timo: "15–30",
+  origano: "30–60",     salvia: "40–80"
 };
 
 const PLANT_SPACING = {
@@ -244,7 +141,8 @@ const PLANT_SPACING = {
   rosmarino: { d: 60, dr: 80 },
   timo: { d: 30 },
   origano: { d: 30 },
-  salvia: { d: 40, dr: 50 },
+  salvia: { d: 40, dr: 50 }
+,
   pastinaca: { d: 35, dr: 45 },
   radice_prezemolo: { d: 30, dr: 40 },
   sedano_rapa: { d: 35, dr: 50 },
@@ -649,53 +547,53 @@ const EASY_IDS = new Set([
   "valerianella"
 ]);
 const PACK_DATA = {
-  pomodoro: { seeds: 20, price: 3.5 },
-  peperone: { seeds: 15, price: 3.2 },
-  peperoncino: { seeds: 15, price: 3.2 },
-  melanzana: { seeds: 20, price: 3.5 },
-  zucchina: { seeds: 10, price: 3.8 },
-  zucca: { seeds: 8, price: 3.8 },
-  cetriolo: { seeds: 15, price: 3.2 },
-  melone: { seeds: 12, price: 3.5 },
-  anguria: { seeds: 10, price: 3.8 },
-  lattuga: { seeds: 400, price: 2.4 },
-  radicchio: { seeds: 300, price: 2.5 },
-  rucola: { seeds: 500, price: 2.2 },
-  spinaci: { seeds: 200, price: 2.4 },
-  bietola: { seeds: 150, price: 2.6 },
-  cavolo: { seeds: 100, price: 2.8 },
-  verza: { seeds: 100, price: 2.8 },
-  broccolo: { seeds: 100, price: 2.8 },
-  cavolfiore: { seeds: 100, price: 2.8 },
-  cavolonero: { seeds: 100, price: 2.8 },
-  cavolorapa: { seeds: 100, price: 2.8 },
-  carota: { seeds: 300, price: 2.3 },
-  finocchio: { seeds: 200, price: 2.5 },
-  prezzemolo: { seeds: 200, price: 2.6 },
-  basilico: { seeds: 300, price: 2.6 },
-  coriandolo: { seeds: 200, price: 2.6 },
-  aneto: { seeds: 200, price: 2.6 },
-  cipolla: { seeds: 200, price: 2.3 },
-  aglio: { seeds: 50, price: 3.0 },
-  porro: { seeds: 200, price: 2.4 },
-  scalogno: { seeds: 100, price: 2.8 },
-  fagiolino: { seeds: 40, price: 2.8 },
-  fagiolo: { seeds: 30, price: 3.0 },
-  pisello: { seeds: 50, price: 2.8 },
-  fragola: { seeds: 100, price: 3.2 },
-  sedano: { seeds: 300, price: 2.6 },
-  ravanello: { seeds: 300, price: 2.2 },
-  barbabietola: { seeds: 100, price: 2.4 },
-  cicoria: { seeds: 300, price: 2.4 },
-  indivia: { seeds: 300, price: 2.5 },
-  pakchoi: { seeds: 200, price: 2.6 },
-  cavoletti: { seeds: 100, price: 2.8 },
-  rapa: { seeds: 200, price: 2.3 },
-  valerianella: { seeds: 300, price: 2.4 },
-  rosmarino: { seeds: 100, price: 3.0 },
-  timo: { seeds: 200, price: 2.8 },
-  origano: { seeds: 300, price: 2.8 },
-  salvia: { seeds: 100, price: 2.8 }
+  pomodoro:    { seeds: 20,  price: 3.50 },
+  peperone:    { seeds: 15,  price: 3.20 },
+  peperoncino: { seeds: 15,  price: 3.20 },
+  melanzana:   { seeds: 20,  price: 3.50 },
+  zucchina:    { seeds: 10,  price: 3.80 },
+  zucca:       { seeds: 8,   price: 3.80 },
+  cetriolo:    { seeds: 15,  price: 3.20 },
+  melone:      { seeds: 12,  price: 3.50 },
+  anguria:     { seeds: 10,  price: 3.80 },
+  lattuga:     { seeds: 400, price: 2.40 },
+  radicchio:   { seeds: 300, price: 2.50 },
+  rucola:      { seeds: 500, price: 2.20 },
+  spinaci:     { seeds: 200, price: 2.40 },
+  bietola:     { seeds: 150, price: 2.60 },
+  cavolo:      { seeds: 100, price: 2.80 },
+  verza:       { seeds: 100, price: 2.80 },
+  broccolo:    { seeds: 100, price: 2.80 },
+  cavolfiore:  { seeds: 100, price: 2.80 },
+  cavolonero:  { seeds: 100, price: 2.80 },
+  cavolorapa:  { seeds: 100, price: 2.80 },
+  carota:      { seeds: 300, price: 2.30 },
+  finocchio:   { seeds: 200, price: 2.50 },
+  prezzemolo:  { seeds: 200, price: 2.60 },
+  basilico:    { seeds: 300, price: 2.60 },
+  coriandolo:  { seeds: 200, price: 2.60 },
+  aneto:       { seeds: 200, price: 2.60 },
+  cipolla:     { seeds: 200, price: 2.30 },
+  aglio:       { seeds: 50,  price: 3.00 },
+  porro:       { seeds: 200, price: 2.40 },
+  scalogno:    { seeds: 100, price: 2.80 },
+  fagiolino:   { seeds: 40,  price: 2.80 },
+  fagiolo:     { seeds: 30,  price: 3.00 },
+  pisello:     { seeds: 50,  price: 2.80 },
+  fragola:     { seeds: 100, price: 3.20 },
+  sedano:      { seeds: 300, price: 2.60 },
+  ravanello:   { seeds: 300, price: 2.20 },
+  barbabietola:{ seeds: 100, price: 2.40 },
+  cicoria:     { seeds: 300, price: 2.40 },
+  indivia:     { seeds: 300, price: 2.50 },
+  pakchoi:     { seeds: 200, price: 2.60 },
+  cavoletti:   { seeds: 100, price: 2.80 },
+  rapa:        { seeds: 200, price: 2.30 },
+  valerianella:{ seeds: 300, price: 2.40 },
+  rosmarino:   { seeds: 100, price: 3.00 },
+  timo:        { seeds: 200, price: 2.80 },
+  origano:     { seeds: 300, price: 2.80 },
+  salvia:      { seeds: 100, price: 2.80 },
 };
 
 /* Logica catalogo: filtri, testi localizzati, prezzi e micro-dati. */
@@ -726,28 +624,13 @@ function catalogSortScore(p) {
 }
 function sortCatalogPlants(plants) {
   const list = [...plants];
-  const byName = (a, b) =>
-    plantName(a.id).localeCompare(
-      plantName(b.id),
-      currentLang === "ro" ? "ro" : "it",
-      { sensitivity: "base" }
-    );
+  const byName = (a, b) => plantName(a.id).localeCompare(plantName(b.id), currentLang === "ro" ? "ro" : "it", { sensitivity: "base" });
   if (catalog.sort === "name") return list.sort(byName);
-  if (catalog.sort === "fast")
-    return list.sort((a, b) => (a.gg || 9999) - (b.gg || 9999) || byName(a, b));
-  if (catalog.sort === "yield")
-    return list.sort((a, b) => (b.resa || 0) - (a.resa || 0) || byName(a, b));
-  if (catalog.sort === "distance")
-    return list.sort(
-      (a, b) => plantDistanceValue(a) - plantDistanceValue(b) || byName(a, b)
-    );
-  if (catalog.sort === "price")
-    return list.sort(
-      (a, b) => packPrice(a.id) - packPrice(b.id) || byName(a, b)
-    );
-  return list.sort(
-    (a, b) => catalogSortScore(a) - catalogSortScore(b) || byName(a, b)
-  );
+  if (catalog.sort === "fast") return list.sort((a, b) => (a.gg || 9999) - (b.gg || 9999) || byName(a, b));
+  if (catalog.sort === "yield") return list.sort((a, b) => (b.resa || 0) - (a.resa || 0) || byName(a, b));
+  if (catalog.sort === "distance") return list.sort((a, b) => plantDistanceValue(a) - plantDistanceValue(b) || byName(a, b));
+  if (catalog.sort === "price") return list.sort((a, b) => packPrice(a.id) - packPrice(b.id) || byName(a, b));
+  return list.sort((a, b) => catalogSortScore(a) - catalogSortScore(b) || byName(a, b));
 }
 function catalogTypeCounts(base) {
   return ["frutto", "foglia", "radice", "legume", "aromatica"].map((type) => ({
@@ -795,105 +678,44 @@ function localizedSowingGuide(plant) {
   const row = spacing.d || plant.d || 30;
   const between = spacing.dr || plant.dr || row;
   const direct = new Set([
-    "carota",
-    "rucola",
-    "spinaci",
-    "coriandolo",
-    "aneto",
-    "fagiolino",
-    "fagiolo",
-    "pisello",
-    "ravanello",
-    "barbabietola",
-    "rapa",
-    "valerianella",
-    "daikon",
-    "scorzonera",
-    "fava",
-    "soia_edamame",
-    "cece",
-    "lenticchia",
-    "fagiolo_borlotto",
-    "crescione"
+    "carota", "rucola", "spinaci", "coriandolo", "aneto", "fagiolino",
+    "fagiolo", "pisello", "ravanello", "barbabietola", "rapa",
+    "valerianella", "daikon", "scorzonera", "fava", "soia_edamame",
+    "cece", "lenticchia", "fagiolo_borlotto", "crescione"
   ]);
   const bulbs = new Set([
-    "aglio",
-    "scalogno",
-    "cipolla",
-    "cipolla_rossa",
-    "cipollotto"
+    "aglio", "scalogno", "cipolla", "cipolla_rossa", "cipollotto"
   ]);
   const aromatics = new Set([
-    "rosmarino",
-    "timo",
-    "origano",
-    "salvia",
-    "erba_cipollina",
-    "leustean",
-    "dragoncello",
-    "menta",
-    "maggiorana",
-    "camomilla",
-    "calendula",
-    "nasturzio",
-    "shiso"
+    "rosmarino", "timo", "origano", "salvia", "erba_cipollina",
+    "leustean", "dragoncello", "menta", "maggiorana", "camomilla",
+    "calendula", "nasturzio", "shiso"
   ]);
   const warm = new Set([
-    "pomodoro",
-    "peperone",
-    "peperoncino",
-    "melanzana",
-    "zucchina",
-    "zucca",
-    "cetriolo",
-    "melone",
-    "anguria",
-    "basilico",
-    "gombo",
-    "tomatillo",
-    "physalis",
-    "kiwano",
-    "cucamelon",
-    "mais_dolce",
+    "pomodoro", "peperone", "peperoncino", "melanzana", "zucchina",
+    "zucca", "cetriolo", "melone", "anguria", "basilico", "gombo",
+    "tomatillo", "physalis", "kiwano", "cucamelon", "mais_dolce",
     "patata_dolce"
   ]);
 
-  let method =
-    "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
-  if (direct.has(plant.id))
-    method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
-  if (bulbs.has(plant.id))
-    method =
-      "Plantează bulbili sau căței sănătoși, apoi păstrează rândurile curate.";
-  if (aromatics.has(plant.id))
-    method =
-      "Cel mai sigur este transplantul de plăntuțe; semănarea este posibilă, dar mai lentă.";
-  if (warm.has(plant.id))
-    method =
-      "Seamănă protejat la cald; în seră transplantează o plăntuță bine formată.";
-  if (plant.id === "fragola")
-    method =
-      "Transplantează plăntuțe sau stoloni înrădăcinați; semănarea din sămânță este lentă.";
-  if (plant.id === "patata")
-    method =
-      "Plantează tuberculi sănătoși și mușuroiește când tulpinile cresc.";
-  if (plant.id === "asparago")
-    method =
-      "Pornește de la coroane sau plăntuțe; cultura este perenă și cere răbdare.";
+  let method = "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
+  if (direct.has(plant.id)) method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
+  if (bulbs.has(plant.id)) method = "Plantează bulbili sau căței sănătoși, apoi păstrează rândurile curate.";
+  if (aromatics.has(plant.id)) method = "Cel mai sigur este transplantul de plăntuțe; semănarea este posibilă, dar mai lentă.";
+  if (warm.has(plant.id)) method = "Seamănă protejat la cald; în seră transplantează o plăntuță bine formată.";
+  if (plant.id === "fragola") method = "Transplantează plăntuțe sau stoloni înrădăcinați; semănarea din sămânță este lentă.";
+  if (plant.id === "patata") method = "Plantează tuberculi sănătoși și mușuroiește când tulpinile cresc.";
+  if (plant.id === "asparago") method = "Pornește de la coroane sau plăntuțe; cultura este perenă și cere răbdare.";
 
   let depth = "0,5-1 cm";
   if (bulbs.has(plant.id) || plant.id === "patata") depth = "3-5 cm";
   if (warm.has(plant.id)) depth = "1-2 cm";
-  if (aromatics.has(plant.id))
-    depth = "superficial, cu acoperire foarte ușoară";
+  if (aromatics.has(plant.id)) depth = "superficial, cu acoperire foarte ușoară";
 
-  const thin =
-    spacing.dr && spacing.dr !== spacing.d
-      ? `Lasă ${row} cm pe rând și ${between} cm între rânduri.`
-      : `Lasă ${row} cm între plante.`;
-  const tip =
-    plantNote(plant) ||
-    "Menține umiditatea constantă la pornire și evită aglomerarea plantelor.";
+  const thin = spacing.dr && spacing.dr !== spacing.d
+    ? `Lasă ${row} cm pe rând și ${between} cm între rânduri.`
+    : `Lasă ${row} cm între plante.`;
+  const tip = plantNote(plant) || "Menține umiditatea constantă la pornire și evită aglomerarea plantelor.";
 
   return { method, depth, thin, tip };
 }
@@ -913,13 +735,13 @@ function tv(key, vars = {}) {
   return value;
 }
 function packPrice(id) {
-  return PACK_DATA[id]?.price ?? 2.5;
+  return PACK_DATA[id]?.price ?? 2.50;
 }
 function seedsPerPack(id) {
   return PACK_DATA[id]?.seeds ?? 100;
 }
 function inCart(id) {
-  return cart.some((i) => i.id === id);
+  return cart.some(i => i.id === id);
 }
 function money(value) {
   return new Intl.NumberFormat(currentLang === "ro" ? "ro-RO" : "it-IT", {
@@ -1065,12 +887,7 @@ function renderHero() {
       const posStyle = pos.right
         ? `top:${pos.top};right:${pos.right}`
         : `top:${pos.top};left:${pos.left}`;
-      const visual = mixedPlantVisual(
-        p,
-        "hero-bg-plant-visual",
-        i,
-        previousEmoji
-      );
+      const visual = mixedPlantVisual(p, "hero-bg-plant-visual", i, previousEmoji);
       previousEmoji = fruitEmoji(p.id);
       return `<span class="hero-bg-plant" aria-hidden="true"
       style="${posStyle};font-size:${pos.size}px;opacity:${pos.opacity};--dur:${pos.dur}s;--delay:${pos.delay}s;">${visual}</span>`;
@@ -1085,23 +902,21 @@ function renderCalendarStrip() {
   const planteLabel = currentLang === "ro" ? "plante" : "piante";
   const sowingLabel = currentLang === "ro" ? "de semănat" : "seminabili";
   const chooseLabel = currentLang === "ro" ? "alege luna" : "scegli mese";
-  const selectedLabel =
-    currentLang === "ro" ? "lună selectată" : "mese selezionato";
-  if (help)
-    help.textContent =
-      currentLang === "ro"
-        ? "Derulează și alege luna"
-        : "Scorri e scegli un mese";
-  strip.innerHTML = Array.from({ length: 12 }, (_, i) => {
-    const m = i + 1;
-    const count = PLANTS.filter((p) => effectiveMonths(p).has(m)).length;
-    const active = m === state.mese ? " active" : "";
-    return `<button class="month-tile${active}" onclick="setMese(${m})" aria-label="${NOMI_MESI[i]}: ${count} ${planteLabel} ${sowingLabel}" aria-pressed="${m === state.mese}">
+  const selectedLabel = currentLang === "ro" ? "lună selectată" : "mese selezionato";
+  if (help) help.textContent = currentLang === "ro" ? "Derulează și alege luna" : "Scorri e scegli un mese";
+  strip.innerHTML = Array.from(
+    { length: 12 },
+    (_, i) => {
+      const m = i + 1;
+      const count = PLANTS.filter((p) => effectiveMonths(p).has(m)).length;
+      const active = m === state.mese ? " active" : "";
+      return `<button class="month-tile${active}" onclick="setMese(${m})" aria-label="${NOMI_MESI[i]}: ${count} ${planteLabel} ${sowingLabel}" aria-pressed="${m === state.mese}">
       <span class="month-tile-name">${NOMI_MESI[i]}</span>
       <span class="month-tile-meta"><span class="month-tile-count">${count}</span> <span class="month-tile-label">${planteLabel} ${sowingLabel}</span></span>
       <span class="month-tile-action">${m === state.mese ? selectedLabel : chooseLabel}</span>
     </button>`;
-  }).join("");
+    }
+  ).join("");
   centerActiveMonth(strip);
 }
 
@@ -1147,16 +962,11 @@ function renderEditorialPlants() {
   const catalogStatus = document.getElementById("catalogStatus");
   if (catalogStatus) {
     const pills = [];
-    if (catalog.seasonOnly)
-      pills.push({ kind: "scope", label: t("catalog.season_only") });
-    if (catalog.search)
-      pills.push({ kind: "search", label: `"${catalog.search}"` });
-    if (catalog.type)
-      pills.push({ kind: "type", label: typeLabel(catalog.type) });
-    if (catalog.easyOnly)
-      pills.push({ kind: "easy", label: t("catalog.easy_only") });
-    if (catalog.sort && catalog.sort !== "season")
-      pills.push({ kind: "sort", label: t(`catalog.sort_${catalog.sort}`) });
+    if (catalog.seasonOnly) pills.push({ kind: "scope", label: t("catalog.season_only") });
+    if (catalog.search) pills.push({ kind: "search", label: `"${catalog.search}"` });
+    if (catalog.type) pills.push({ kind: "type", label: typeLabel(catalog.type) });
+    if (catalog.easyOnly) pills.push({ kind: "easy", label: t("catalog.easy_only") });
+    if (catalog.sort && catalog.sort !== "season") pills.push({ kind: "sort", label: t(`catalog.sort_${catalog.sort}`) });
     catalogStatus.hidden = !pills.length;
     if (pills.length) {
       const remove = t("catalog.remove_filter");
@@ -1175,10 +985,7 @@ function renderEditorialPlants() {
   }
   if (catalog.seasonOnly) {
     document.getElementById("stagioneTitle").innerHTML = t("season.title")
-      .replace(
-        "{count}",
-        `<span class="stagione-count">${plants.length}</span>`
-      )
+      .replace("{count}", `<span class="stagione-count">${plants.length}</span>`)
       .replace("{month}", NOMI_MESI[state.mese - 1]);
   } else {
     document.getElementById("stagioneTitle").innerHTML = tv(
@@ -1215,12 +1022,11 @@ function renderEditorialPlants() {
 
   /* In evidenza: 3 card uguali nella griglia catalogo. */
   const editHTML = `<div class="plant-catalog-top">
-    ${featured
-      .map((p) => {
-        const tipo = typeOfPlant(p);
-        const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
-        const inC = inCart(p.id);
-        return `<div class="plant-card-top${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+    ${featured.map((p) => {
+      const tipo = typeOfPlant(p);
+      const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
+      const inC = inCart(p.id);
+      return `<div class="plant-card-top${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
         <div class="top-photo">
           <img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" />
           <span class="photo-type-tag" style="${ts}">${typeLabel(tipo)}</span>
@@ -1247,8 +1053,7 @@ function renderEditorialPlants() {
           </div>
         </div>
       </div>`;
-      })
-      .join("")}
+    }).join("")}
   </div>`;
   document.getElementById("editorialPlants").innerHTML = editHTML;
 
@@ -1376,12 +1181,7 @@ function renderFooter() {
   let previousEmoji = "";
   const icons = nonRepeatingPlantOrder(PLANTS)
     .map((p, i) => {
-      const visual = mixedPlantVisual(
-        p,
-        "footer-plant-icon-visual",
-        i,
-        previousEmoji
-      );
+      const visual = mixedPlantVisual(p, "footer-plant-icon-visual", i, previousEmoji);
       previousEmoji = fruitEmoji(p.id);
       return `<span class="footer-plant-icon">${visual}</span>`;
     })
@@ -1406,9 +1206,7 @@ function render() {
 function toggleCart(e, id) {
   e.stopPropagation();
   const added = !inCart(id);
-  cart = added
-    ? [...cart, { id, bustine: 1 }]
-    : cart.filter((i) => i.id !== id);
+  cart = added ? [...cart, { id, bustine: 1 }] : cart.filter(i => i.id !== id);
   updateCartUI();
   renderEditorialPlants();
   renderAbbinamenti();
@@ -1439,7 +1237,7 @@ function addKitToCart() {
     (id) => BYID[id] && effectiveMonths(BYID[id]).has(state.mese)
   );
   availableIds.forEach((id) => {
-    if (!inCart(id)) cart.push({ id, bustine: 1 });
+      if (!inCart(id)) cart.push({ id, bustine: 1 });
   });
   updateCartUI();
   renderEditorialPlants();
@@ -1449,7 +1247,7 @@ function addKitToCart() {
   openCart();
 }
 function removeFromCart(id) {
-  cart = cart.filter((i) => i.id !== id);
+  cart = cart.filter(i => i.id !== id);
   updateCartUI();
   renderEditorialPlants();
   renderAbbinamenti();
@@ -1470,10 +1268,7 @@ function updateCartUI() {
   const confHintText = document.getElementById("confCartHintText");
   if (confHint && confHintText) {
     if (cart.length > 0) {
-      const label =
-        cart.length === 1
-          ? t("conf.cart_hint_one")
-          : tv("conf.cart_hint_many", { count: cart.length });
+      const label = cart.length === 1 ? t("conf.cart_hint_one") : tv("conf.cart_hint_many", { count: cart.length });
       confHintText.textContent = label;
       confHint.hidden = false;
     } else {
@@ -1494,18 +1289,14 @@ function updateCartUI() {
     items.hidden = false;
     foot.hidden = false;
     if (clearBtn) clearBtn.hidden = false;
-    items.innerHTML =
-      cart
-        .map(({ id, bustine }) => {
-          const p = BYID[id];
-          if (!p) return "";
-          const spp = seedsPerPack(id);
-          const price = packPrice(id);
-          const bustLabel =
-            bustine === 1
-              ? t("cart.pack")
-              : tv("cart.pack_many", { count: bustine });
-          return `<div class="cart-item">
+    items.innerHTML = cart
+      .map(({ id, bustine }) => {
+        const p = BYID[id];
+        if (!p) return "";
+        const spp = seedsPerPack(id);
+        const price = packPrice(id);
+        const bustLabel = bustine === 1 ? t("cart.pack") : tv("cart.pack_many", { count: bustine });
+        return `<div class="cart-item">
         <img src="${photoSrc(id)}" alt="${plantName(id)}" />
         <span class="cart-item-copy">
           <span class="cart-item-name">${plantName(id)}</span>
@@ -1517,8 +1308,8 @@ function updateCartUI() {
         </span>
         <button class="cart-item-remove" onclick="removeFromCart('${id}')" title="${t("cart.remove")}">✕</button>
       </div>`;
-        })
-        .join("") +
+      })
+      .join("") +
       `<div class="cart-total-row">
         <span>${t("cart.estimate")}</span>
         <b>${money(cart.reduce((sum, { id, bustine }) => sum + packPrice(id) * bustine, 0))}</b>
@@ -1566,16 +1357,11 @@ function alertCheckout() {
   }
   const lines = cart
     .map(({ id, bustine }) => {
-      const bustLine =
-        bustine === 1
-          ? t("cart.pack")
-          : tv("cart.pack_many", { count: bustine });
+      const bustLine = bustine === 1 ? t("cart.pack") : tv("cart.pack_many", { count: bustine });
       return `- ${plantName(id)}: ${bustLine} × ${money(packPrice(id))} = ${money(bustine * packPrice(id))}`;
     })
     .join("\n");
-  const total = money(
-    cart.reduce((sum, { id, bustine }) => sum + packPrice(id) * bustine, 0)
-  );
+  const total = money(cart.reduce((sum, { id, bustine }) => sum + packPrice(id) * bustine, 0));
   const body = `${t("cart.alert")}\n\n${lines}\n\n${t("cart.estimate")}: ${total}`;
   window.location.href = `mailto:info@ortoinserra.it?subject=${encodeURIComponent(
     t("cart.mail_subject")
@@ -1596,18 +1382,12 @@ function openDetail(id) {
   // Tipo e difficoltà nella sezione hero: usa le chiavi traduzione corrette.
   const tipo = TIPO[p.id] || "foglia";
   const diffLevel = DIFFICULTY[p.id] || 2;
-  const diffLabel =
-    diffLevel === 1
-      ? t("detail.diff_easy")
-      : diffLevel === 2
-        ? t("detail.diff_medium")
-        : t("detail.diff_hard");
-  const diffClass =
-    diffLevel === 1
-      ? "diff-easy"
-      : diffLevel === 2
-        ? "diff-medium"
-        : "diff-hard";
+  const diffLabel = diffLevel === 1
+    ? t("detail.diff_easy")
+    : diffLevel === 2
+    ? t("detail.diff_medium")
+    : t("detail.diff_hard");
+  const diffClass = diffLevel === 1 ? "diff-easy" : diffLevel === 2 ? "diff-medium" : "diff-hard";
   document.getElementById("detailTypeBadge").textContent = typeLabel(tipo);
   const diffEl = document.getElementById("detailDiff");
   diffEl.textContent = diffLabel;
@@ -1617,7 +1397,7 @@ function openDetail(id) {
   document.getElementById("detailBadges").innerHTML =
     `<span class="badge badge--sun">${SOLE_ICON[p.sole]} ${sunLabel(p)}</span>
      <span class="badge badge--water">${ACQUA_ICON[p.acqua]} ${t("plant.water")} ${t(`water.${p.acqua}`)}</span>
-     <span class="badge badge--type" style="${TIPO_STYLE[tipo] || ""}">${typeLabel(tipo)}</span>`;
+     <span class="badge badge--type" style="${TIPO_STYLE[tipo] || ''}">${typeLabel(tipo)}</span>`;
 
   // Nota pratica.
   const nota = plantNote(p);
@@ -1701,22 +1481,16 @@ function openDetail(id) {
   if (p.amiche.length)
     comp += `<div class="detail-companions-group">
       <div class="detail-companions-label">💚 ${t("detail.friends")}</div>
-      <div class="companion-list">${p.amiche
-        .map(
-          (aid) =>
-            `<span class="companion-chip friend">${fruitEmoji(aid)} ${plantName(aid)}</span>`
-        )
-        .join("")}</div>
+      <div class="companion-list">${p.amiche.map(aid =>
+        `<span class="companion-chip friend">${fruitEmoji(aid)} ${plantName(aid)}</span>`
+      ).join("")}</div>
     </div>`;
   if (p.nemiche.length)
     comp += `<div class="detail-companions-group">
       <div class="detail-companions-label detail-companions-label--foe">⚠️ ${t("detail.enemies")}</div>
-      <div class="companion-list">${p.nemiche
-        .map(
-          (eid) =>
-            `<span class="companion-chip foe">${fruitEmoji(eid)} ${plantName(eid)}</span>`
-        )
-        .join("")}</div>
+      <div class="companion-list">${p.nemiche.map(eid =>
+        `<span class="companion-chip foe">${fruitEmoji(eid)} ${plantName(eid)}</span>`
+      ).join("")}</div>
     </div>`;
   const compEl = document.getElementById("detailCompanions");
   compEl.innerHTML = comp;
@@ -1728,24 +1502,15 @@ function openDetail(id) {
   const guide = localizedSowingGuide(p);
   let sowHtml = "";
   if (guide) {
-    if (guide.method)
-      sowHtml += `<div class="detail-sow-row"><b>🌱 ${t("detail.sow_method")}</b> — ${guide.method}</div>`;
-    if (guide.periodo)
-      sowHtml += `<div class="detail-sow-row"><b>📅 ${t("detail.sow_period")}</b> — ${guide.periodo}</div>`;
-    if (guide.depth)
-      sowHtml += `<div class="detail-sow-row"><b>📏 ${t("detail.sow_depth")}</b> — ${guide.depth}</div>`;
-    if (guide.thin)
-      sowHtml += `<div class="detail-sow-row"><b>📐 ${t("detail.sow_thin")}</b> — ${guide.thin}</div>`;
-    if (guide.tempGerm && guide.tempGerm !== "—")
-      sowHtml += `<div class="detail-sow-row"><b>🌡️ ${t("detail.sow_temp")}</b> — ${guide.tempGerm}</div>`;
-    if (guide.giorniGerm && guide.giorniGerm !== "—")
-      sowHtml += `<div class="detail-sow-row"><b>⏳ ${t("detail.sow_germ")}</b> — ${guide.giorniGerm}</div>`;
-    if (guide.esposizione)
-      sowHtml += `<div class="detail-sow-row"><b>☀️ ${t("detail.sow_exposure")}</b> — ${guide.esposizione}</div>`;
-    if (guide.annaffiatura)
-      sowHtml += `<div class="detail-sow-row"><b>💧 ${t("detail.sow_water")}</b> — ${guide.annaffiatura}</div>`;
-    if (guide.tip || nota)
-      sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${guide.tip || nota}</blockquote>`;
+    if (guide.method)      sowHtml += `<div class="detail-sow-row"><b>🌱 ${t("detail.sow_method")}</b> — ${guide.method}</div>`;
+    if (guide.periodo)     sowHtml += `<div class="detail-sow-row"><b>📅 ${t("detail.sow_period")}</b> — ${guide.periodo}</div>`;
+    if (guide.depth)       sowHtml += `<div class="detail-sow-row"><b>📏 ${t("detail.sow_depth")}</b> — ${guide.depth}</div>`;
+    if (guide.thin)        sowHtml += `<div class="detail-sow-row"><b>📐 ${t("detail.sow_thin")}</b> — ${guide.thin}</div>`;
+    if (guide.tempGerm && guide.tempGerm !== "—")     sowHtml += `<div class="detail-sow-row"><b>🌡️ ${t("detail.sow_temp")}</b> — ${guide.tempGerm}</div>`;
+    if (guide.giorniGerm && guide.giorniGerm !== "—") sowHtml += `<div class="detail-sow-row"><b>⏳ ${t("detail.sow_germ")}</b> — ${guide.giorniGerm}</div>`;
+    if (guide.esposizione) sowHtml += `<div class="detail-sow-row"><b>☀️ ${t("detail.sow_exposure")}</b> — ${guide.esposizione}</div>`;
+    if (guide.annaffiatura) sowHtml += `<div class="detail-sow-row"><b>💧 ${t("detail.sow_water")}</b> — ${guide.annaffiatura}</div>`;
+    if (guide.tip || nota) sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${guide.tip || nota}</blockquote>`;
   } else if (nota) {
     sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${nota}</blockquote>`;
   }
@@ -1766,7 +1531,7 @@ function detailAddToCart() {
   const added = !inCart(currentDetail);
   cart = added
     ? [...cart, { id: currentDetail, bustine: 1 }]
-    : cart.filter((i) => i.id !== currentDetail);
+    : cart.filter(i => i.id !== currentDetail);
   updateCartUI();
   renderEditorialPlants();
   renderAbbinamenti();
@@ -1808,8 +1573,7 @@ function syncCatalogControls() {
   const season = document.getElementById("catalogSeasonOnly");
   const allToggle = document.getElementById("catalogAllToggle");
   const easy = document.getElementById("catalogEasyOnly");
-  if (search && search !== document.activeElement)
-    search.value = catalog.search;
+  if (search && search !== document.activeElement) search.value = catalog.search;
   if (type && type !== document.activeElement) type.value = catalog.type;
   if (sort && sort !== document.activeElement) sort.value = catalog.sort;
   if (season) {
@@ -1829,16 +1593,11 @@ function syncCatalogControls() {
     easy.classList.toggle("active", catalog.easyOnly);
     easy.setAttribute("aria-pressed", String(catalog.easyOnly));
     const easyBase = catalog.seasonOnly ? seminabili() : PLANTS;
-    const easyCount = easyBase.filter((p) => EASY_IDS.has(p.id)).length;
+    const easyCount = easyBase.filter(p => EASY_IDS.has(p.id)).length;
     const easyCountEl = easy.querySelector(".chip-count");
     if (easyCountEl) easyCountEl.textContent = easyCount;
   }
-  const anyExtra =
-    catalog.search ||
-    catalog.type ||
-    catalog.easyOnly ||
-    catalog.seasonOnly ||
-    catalog.sort !== "season";
+  const anyExtra = catalog.search || catalog.type || catalog.easyOnly || catalog.seasonOnly || catalog.sort !== "season";
   const resetBtn = document.getElementById("catalogReset");
   if (resetBtn) resetBtn.hidden = !anyExtra;
 }
@@ -1957,34 +1716,19 @@ function setCatalogCategory(type) {
 function renderCatalogCategoryRail(base) {
   const rail = document.getElementById("catalogCategoryRail");
   if (!rail) return;
-  const categories = [
-    { type: "", count: base.length, icon: "🌿", label: t("catalog.type_all") }
-  ].concat(
+  const categories = [{ type: "", count: base.length, icon: "🌿", label: t("catalog.type_all") }].concat(
     catalogTypeCounts(base).map(({ type, count }) => ({
       type,
       count,
-      icon:
-        {
-          frutto: "🍅",
-          foglia: "🥬",
-          radice: "🥕",
-          legume: "🫘",
-          aromatica: "🌿"
-        }[type] || "🌱",
+      icon: ({ frutto: "🍅", foglia: "🥬", radice: "🥕", legume: "🫘", aromatica: "🌿" })[type] || "🌱",
       label: typeLabel(type)
     }))
   );
-  rail.innerHTML = categories
-    .map(
-      (
-        cat
-      ) => `<button class="catalog-category-chip${catalog.type === cat.type ? " active" : ""}" type="button" onclick="setCatalogCategory('${cat.type}')" aria-pressed="${catalog.type === cat.type}">
+  rail.innerHTML = categories.map((cat) => `<button class="catalog-category-chip${catalog.type === cat.type ? " active" : ""}" type="button" onclick="setCatalogCategory('${cat.type}')" aria-pressed="${catalog.type === cat.type}">
     <span class="category-ico" aria-hidden="true">${cat.icon}</span>
     <span class="category-label">${cat.label}</span>
     <span class="category-count">${cat.count}</span>
-  </button>`
-    )
-    .join("");
+  </button>`).join("");
 }
 function renderCatalogInsights(plants, base) {
   const box = document.getElementById("catalogInsights");
@@ -1992,9 +1736,7 @@ function renderCatalogInsights(plants, base) {
   const cartCount = cart.length;
   const fastCount = plants.filter((p) => p.gg && p.gg <= 45).length;
   const compactCount = plants.filter((p) => plantDistanceValue(p) <= 25).length;
-  const seasonalCount = base.filter((p) =>
-    effectiveMonths(p).has(state.mese)
-  ).length;
+  const seasonalCount = base.filter((p) => effectiveMonths(p).has(state.mese)).length;
   box.innerHTML = `
     <span><b>${plants.length}</b> ${t("catalog.results")}</span>
     <span><b>${seasonalCount}</b> ${t("catalog.insight_seasonal")}</span>
@@ -2030,7 +1772,7 @@ function loadPrefs() {
     if (p.riscaldata !== undefined) state.riscaldata = p.riscaldata;
     if (p.mese) state.mese = p.mese;
     const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
-    cart = raw.map((i) => (typeof i === "string" ? { id: i, bustine: 1 } : i));
+    cart = raw.map(i => typeof i === "string" ? { id: i, bustine: 1 } : i);
   } catch (_) {}
 }
 
@@ -2217,9 +1959,7 @@ loadPrefs();
 if (new URLSearchParams(window.location.search).get("catalog") === "all") {
   toggleCatalogFull();
 }
-if (
-  new URLSearchParams(window.location.search).get("from") === "configuratore"
-) {
+if (new URLSearchParams(window.location.search).get("from") === "configuratore") {
   history.replaceState(null, "", window.location.pathname);
   setTimeout(openCart, 320);
 }
@@ -2251,7 +1991,8 @@ function scrollElementBelowNav(target, behavior = "smooth") {
       "76",
     10
   );
-  const top = target.getBoundingClientRect().top + window.scrollY - navH - 12;
+  const top =
+    target.getBoundingClientRect().top + window.scrollY - navH - 12;
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
