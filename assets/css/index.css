@@ -4078,21 +4078,34 @@ body.cart-open .back-to-top {
 .cart-conf-link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.7rem;
-  border-radius: 10px;
-  background: var(--sand-lt);
-  border: 1.5px dashed var(--border);
+  gap: 0.55rem;
+  padding: 0.68rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(45, 106, 79, 0.07);
+  border: 1px solid rgba(45, 106, 79, 0.18);
   text-decoration: none;
-  font-size: 0.87rem;
-  font-weight: 500;
-  color: var(--green);
-  transition: all 0.16s;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--green-dk);
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+  line-height: 1.2;
 }
 .cart-conf-link:hover {
-  border-color: var(--lime);
-  background: #f0faf5;
+  transform: translateY(-1px);
+  background: rgba(45, 106, 79, 0.12);
+  border-color: rgba(45, 106, 79, 0.28);
+}
+.cart-conf-link-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  flex: 1;
+}
+.cart-conf-link-hint {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  opacity: 0.6;
 }
 .cart-checkout-btn {
   width: 100%;
@@ -7685,5 +7698,98 @@ body.cart-open .back-to-top {
 @media (max-width: 900px) {
   .hero-cfg-levels-title {
     text-align: center;
+  }
+}
+
+/* ===================================================================
+   MIGLIORAMENTI UX: tendina configuratore, importa catalogo, importa conf
+   =================================================================== */
+
+/* 1. Hero: tendina si apre TRA il pulsante e il link "sfoglia catalogo"
+      hero-cfg-actions diventa colonna invece di riga */
+.hero-cfg-actions {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.hero-cfg-actions > .hero-cfg-levels {
+  width: 100%;
+  margin-top: 0;
+}
+@media (max-width: 900px) {
+  .hero-cfg-actions {
+    align-items: center;
+  }
+}
+@media (max-width: 520px) {
+  .hero-cfg-actions > .hero-cfg-catalog-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 2. Catalogo: pulsante "Porta nel configuratore" con hint flusso */
+.catalog-import-btn {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 0.12rem !important;
+  border-radius: 14px !important;
+  padding: 0.6rem 1.1rem !important;
+  line-height: 1.2 !important;
+  justify-content: center !important;
+}
+.catalog-import-btn-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.catalog-import-hint {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  opacity: 0.58;
+  letter-spacing: 0;
+}
+
+/* 3. Conf section: blocco importa con label esplicativa.
+      align-items: flex-start su conf-actions + margin-top sul primario
+      garantisce che i due bottoni si allineino in cima indipendentemente
+      dal fatto che la label sopra o il hint sotto siano visibili. */
+.conf-actions {
+  align-items: flex-start;
+}
+/* Il pulsante primario scende di: altezza label (0.73rem * 1.2) + gap (0.25rem)
+   così il suo bordo superiore coincide con quello del pulsante secondario */
+.conf-actions > .conf-btn.primary {
+  margin-top: calc(0.73rem * 1.2 + 0.25rem);
+}
+.conf-import-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+.conf-import-block-label {
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.52);
+  font-style: italic;
+  padding-left: 0.15rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+/* Mobile ≤660px: ripristina layout orizzontale senza margin-top artificiale */
+@media (max-width: 660px) {
+  .conf-actions {
+    align-items: center;
+  }
+  .conf-actions > .conf-btn.primary {
+    margin-top: 0;
+  }
+  .conf-import-block {
+    flex: 1;
+    align-items: stretch;
+  }
+  .conf-import-block .conf-btn {
+    justify-content: center;
   }
 }

@@ -191,6 +191,66 @@
                   <span data-i18n="hero.cfg_cta">Apri il configuratore</span>
                   <span class="hero-cfg-cta-arrow" aria-hidden="true">▾</span>
                 </button>
+                <div
+                  class="hero-cfg-levels"
+                  id="cfgLevels"
+                  role="group"
+                  aria-label="Scegli il livello"
+                  hidden
+                >
+                  <span
+                    class="hero-cfg-levels-title"
+                    data-i18n="hero.cfg_levels_title"
+                    >Che tipo di coltivatore sei?</span
+                  >
+                  <div class="hero-cfg-levels-grid">
+                    <a
+                      class="hero-cfg-level"
+                      href="configuratore.html?livello=novizio&preset=principiante&guided=1"
+                    >
+                      <span class="hero-cfg-level-ico" aria-hidden="true">🌱</span>
+                      <span class="hero-cfg-level-body">
+                        <b data-i18n="hero.cfg_novizio">Principiante</b>
+                        <small data-i18n="hero.cfg_nov_hint"
+                          >Orto pronto, guidato passo passo</small
+                        >
+                      </span>
+                      <span class="hero-cfg-level-arrow" aria-hidden="true"
+                        >→</span
+                      >
+                    </a>
+                    <a
+                      class="hero-cfg-level"
+                      href="configuratore.html?livello=intermedio&guided=1"
+                    >
+                      <span class="hero-cfg-level-ico" aria-hidden="true">🌿</span>
+                      <span class="hero-cfg-level-body">
+                        <b data-i18n="hero.cfg_intermedio">Con esperienza</b>
+                        <small data-i18n="hero.cfg_int_hint"
+                          >Guidato, ma personalizzabile</small
+                        >
+                      </span>
+                      <span class="hero-cfg-level-arrow" aria-hidden="true"
+                        >→</span
+                      >
+                    </a>
+                    <a
+                      class="hero-cfg-level"
+                      href="configuratore.html?livello=esperto&mode=expert&empty=1"
+                    >
+                      <span class="hero-cfg-level-ico" aria-hidden="true">🌾</span>
+                      <span class="hero-cfg-level-body">
+                        <b data-i18n="hero.cfg_esperto">Esperto</b>
+                        <small data-i18n="hero.cfg_exp_hint"
+                          >Catalogo completo, scelta libera</small
+                        >
+                      </span>
+                      <span class="hero-cfg-level-arrow" aria-hidden="true"
+                        >→</span
+                      >
+                    </a>
+                  </div>
+                </div>
                 <a class="hero-cfg-catalog-link" href="#stagione">
                   <span data-i18n="hero.cfg_or"
                     >oppure sfoglia il catalogo semi</span
@@ -199,66 +259,6 @@
                     >→</span
                   >
                 </a>
-              </div>
-              <div
-                class="hero-cfg-levels"
-                id="cfgLevels"
-                role="group"
-                aria-label="Scegli il livello"
-                hidden
-              >
-                <span
-                  class="hero-cfg-levels-title"
-                  data-i18n="hero.cfg_levels_title"
-                  >Che tipo di coltivatore sei?</span
-                >
-                <div class="hero-cfg-levels-grid">
-                  <a
-                    class="hero-cfg-level"
-                    href="configuratore.html?livello=novizio&preset=principiante&guided=1"
-                  >
-                    <span class="hero-cfg-level-ico" aria-hidden="true">🌱</span>
-                    <span class="hero-cfg-level-body">
-                      <b data-i18n="hero.cfg_novizio">Principiante</b>
-                      <small data-i18n="hero.cfg_nov_hint"
-                        >Orto pronto, guidato passo passo</small
-                      >
-                    </span>
-                    <span class="hero-cfg-level-arrow" aria-hidden="true"
-                      >→</span
-                    >
-                  </a>
-                  <a
-                    class="hero-cfg-level"
-                    href="configuratore.html?livello=intermedio&guided=1"
-                  >
-                    <span class="hero-cfg-level-ico" aria-hidden="true">🌿</span>
-                    <span class="hero-cfg-level-body">
-                      <b data-i18n="hero.cfg_intermedio">Con esperienza</b>
-                      <small data-i18n="hero.cfg_int_hint"
-                        >Guidato, ma personalizzabile</small
-                      >
-                    </span>
-                    <span class="hero-cfg-level-arrow" aria-hidden="true"
-                      >→</span
-                    >
-                  </a>
-                  <a
-                    class="hero-cfg-level"
-                    href="configuratore.html?livello=esperto&mode=expert&empty=1"
-                  >
-                    <span class="hero-cfg-level-ico" aria-hidden="true">🌾</span>
-                    <span class="hero-cfg-level-body">
-                      <b data-i18n="hero.cfg_esperto">Esperto</b>
-                      <small data-i18n="hero.cfg_exp_hint"
-                        >Catalogo completo, scelta libera</small
-                      >
-                    </span>
-                    <span class="hero-cfg-level-arrow" aria-hidden="true"
-                      >→</span
-                    >
-                  </a>
-                </div>
               </div>
             </div>
 
@@ -338,9 +338,6 @@
               <a href="#catalogSearch" class="catalog-pro-primary-action">
                 <span aria-hidden="true">⌕</span>
                 <span data-i18n="catalog.action_search">Cerca una coltura</span>
-              </a>
-              <a href="configuratore.html?import=cart" class="catalog-pro-secondary-action">
-                <span data-i18n="catalog.action_import">Importa nel configuratore</span>
               </a>
             </div>
             <div class="catalog-pro-stats" aria-label="Panoramica catalogo">
@@ -595,15 +592,17 @@
             ><span data-i18n="conf.open">Apri il configuratore</span>
             →</a
           >
-          <a
-            href="configuratore.html?import=cart"
-            class="conf-btn secondary conf-import-btn"
-            id="confImportBtn"
-            data-i18n="conf.import"
-            >Importa carrello</a
-          >
-          <div class="conf-cart-hint" id="confCartHint" hidden>
-            🛒&nbsp;<span id="confCartHintText"></span>
+          <div class="conf-import-block">
+            <span class="conf-import-block-label" data-i18n="conf.import_label">Hai già dei semi nel carrello?</span>
+            <a
+              href="configuratore.html?import=cart"
+              class="conf-btn secondary conf-import-btn"
+              id="confImportBtn"
+              ><span aria-hidden="true">📐</span> <span data-i18n="conf.import">Importa carrello nel piano</span> →</a
+            >
+            <div class="conf-cart-hint" id="confCartHint" hidden>
+              🛒&nbsp;<span id="confCartHintText"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -944,12 +943,14 @@
             href="configuratore.html?import=cart"
             class="cart-conf-link"
             onclick="closeCart()"
-            >📐
-            <span data-i18n="cart.plan"
-              >Pianifica la disposizione in serra</span
-            >
-            →</a
           >
+            <span aria-hidden="true">📐</span>
+            <span class="cart-conf-link-inner">
+              <span data-i18n="cart.plan">Pianifica la disposizione in serra</span>
+              <small class="cart-conf-link-hint" data-i18n="cart.plan_hint">Porta i semi scelti nel configuratore</small>
+            </span>
+            <span aria-hidden="true">→</span>
+          </a>
           <button
             class="cart-checkout-btn"
             onclick="alertCheckout()"

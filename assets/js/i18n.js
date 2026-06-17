@@ -527,7 +527,8 @@
         "conf.desc":
           "Inserisci misure, mese e zona: il configuratore ti mostra cosa seminare, dove metterlo e quanti semi preparare. Puoi partire da un piano facile e cambiarlo quando vuoi.",
         "conf.open": "Apri il configuratore guidato",
-        "conf.import": "Importa carrello nel piano",
+        "conf.import": "Importa i semi e pianifica",
+        "conf.import_label": "Hai già dei semi nel carrello?",
         "conf.feature_measures": "Misure reali",
         "conf.feature_spacing": "Spaziatura",
         "conf.feature_compat": "Compatibilità",
@@ -630,6 +631,7 @@
         "cart.empty": "Nessun seme ancora.<br>Aggiungi le piante di stagione!",
         "cart.payment_soon": "Pagamento online in arrivo",
         "cart.plan": "Pianifica la disposizione in serra",
+        "cart.plan_hint": "Porta i semi scelti nel configuratore",
         "cart.checkout": "Invia richiesta semi",
         "cart.alert":
           "Vorrei ricevere disponibilità e prezzo finale per questi semi:",
@@ -831,7 +833,8 @@
         "conf.desc":
           "Introdu dimensiunile, luna și zona: configuratorul îți arată ce să semeni, unde să pui plantele și câte semințe să pregătești. Poți porni de la un plan ușor și îl poți schimba oricând.",
         "conf.open": "Deschide configuratorul ghidat",
-        "conf.import": "Importă coșul în plan",
+        "conf.import": "Importă semințele și planifică",
+        "conf.import_label": "Ai deja semințe în coș?",
         "conf.feature_measures": "Dimensiuni reale",
         "conf.feature_spacing": "Spațiere",
         "conf.feature_compat": "Compatibilitate",
@@ -934,6 +937,7 @@
         "cart.empty": "Încă nu ai semințe.<br>Adaugă plantele de sezon!",
         "cart.payment_soon": "Plata online vine în curând",
         "cart.plan": "Planifică așezarea în seră",
+        "cart.plan_hint": "Aduce semințele alese în configurator",
         "cart.checkout": "Trimite cererea",
         "cart.alert":
           "Aș dori disponibilitatea și prețul final pentru aceste semințe:",
