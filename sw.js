@@ -1,5 +1,5 @@
 // Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
-const CACHE_VERSION = "2026-06-17-38";
+const CACHE_VERSION = "2026-06-17-39";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -124,8 +124,11 @@ self.addEventListener("fetch", (e) => {
     destination === "manifest";
 
   if (needsFreshCopy) {
+    // cache: 'reload' bypassa la HTTP-cache del browser, garantendo che il
+    // browser scarichi sempre il file aggiornato dal server (non una versione
+    // stale tenuta in cache HTTP anche dopo il cambio di CACHE_VERSION).
     e.respondWith(
-      fetch(e.request)
+      fetch(e.request, { cache: "reload" })
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE).then((cache) => cache.put(e.request, copy));
