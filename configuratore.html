@@ -171,7 +171,10 @@
               >
                 <span class="persona-card-ico" aria-hidden="true">🌱</span>
                 <span class="persona-card-body">
-                  <b id="personaNovTitle">Sono alle prime armi</b>
+                  <b>
+                    <span id="personaNovTitle">Sono alle prime armi</span>
+                    <span class="persona-level-label" id="personaNovLevel">(Principiante)</span>
+                  </b>
                   <small id="personaNovDesc"
                     >Ti guido passo passo: clima, serra e un orto pronto fino
                     al carrello</small
@@ -189,7 +192,10 @@
               >
                 <span class="persona-card-ico" aria-hidden="true">🌿</span>
                 <span class="persona-card-body">
-                  <b id="personaIntTitle">Ho un po' di esperienza</b>
+                  <b>
+                    <span id="personaIntTitle">Ho un po' di esperienza</span>
+                    <span class="persona-level-label" id="personaIntLevel">(Pratico)</span>
+                  </b>
                   <small id="personaIntDesc"
                     >Parti guidato, poi personalizza le colture e aggiungi semi
                     fuori stagione</small
@@ -207,7 +213,10 @@
               >
                 <span class="persona-card-ico" aria-hidden="true">🌾</span>
                 <span class="persona-card-body">
-                  <b id="personaExpTitle">So già cosa voglio</b>
+                  <b>
+                    <span id="personaExpTitle">So già cosa voglio</span>
+                    <span class="persona-level-label" id="personaExpLevel">(Esperto)</span>
+                  </b>
                   <small id="personaExpDesc"
                     >Sfoglia tutto il catalogo, di stagione o no, e componi la
                     serra a mano</small
@@ -775,11 +784,39 @@
                   <div class="crop-actions-copy">
                     <b id="cropActionsTitle">Azioni sulle colture inserite</b>
                     <span id="cropActionsHint"
-                      >Questi comandi modificano il progetto corrente della
-                      serra.</span
+                      >Prima regola le quantità, poi scegli se conservarle o
+                      riempire gli spazi vuoti.</span
                     >
                   </div>
                   <div class="crop-actions-grid">
+                    <button
+                      class="crop-action-btn crop-action-btn--secondary"
+                      id="btnArrangeSelected"
+                      title="Riordina la mappa senza cambiare le quantità"
+                    >
+                      <span class="crop-action-icon" aria-hidden="true">
+                        <svg
+                          class="btn-ico"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <rect x="4" y="4" width="6" height="6" />
+                          <rect x="14" y="4" width="6" height="6" />
+                          <rect x="4" y="14" width="6" height="6" />
+                          <rect x="14" y="14" width="6" height="6" />
+                        </svg>
+                      </span>
+                      <span class="crop-action-text">
+                        <span class="btn-label">Sistema senza riempire</span>
+                        <small class="btn-hint"
+                          >Riordina le aiuole e non cambia i numeri.</small
+                        >
+                      </span>
+                    </button>
                     <button
                       class="crop-action-btn crop-action-btn--primary"
                       id="btnFillSelected"
@@ -803,10 +840,9 @@
                         </svg>
                       </span>
                       <span class="crop-action-text">
-                        <span class="btn-label">Ottimizza colture scelte</span>
+                        <span class="btn-label">Riempi spazi vuoti</span>
                         <small class="btn-hint"
-                          >Ricalibra quantità e riempie solo con queste
-                          colture.</small
+                          >Aumenta solo le colture automatiche.</small
                         >
                       </span>
                     </button>

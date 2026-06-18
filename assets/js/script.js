@@ -1371,7 +1371,8 @@ function saveConfig(done = true) {
         beds: state.beds.map((bed) => ({
           plantId: bed.plantId,
           count: bed.count,
-          layout: bed.layout || "blocco"
+          layout: bed.layout || "blocco",
+          countLocked: Boolean(bed.countLocked)
         })),
         done
       })
@@ -1855,10 +1856,13 @@ function applyLanguage() {
   setText("#personaPickLabel", "personaPickLabel");
   setText("#personaPickHint", "personaPickHint");
   setText("#personaNovTitle", "personaNovTitle");
+  setText("#personaNovLevel", "personaNovLevel");
   setText("#personaNovDesc", "personaNovDesc");
   setText("#personaIntTitle", "personaIntTitle");
+  setText("#personaIntLevel", "personaIntLevel");
   setText("#personaIntDesc", "personaIntDesc");
   setText("#personaExpTitle", "personaExpTitle");
+  setText("#personaExpLevel", "personaExpLevel");
   setText("#personaExpDesc", "personaExpDesc");
   const introSteps = document.querySelectorAll("#guidedIntroSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
   if (introSteps[0]) introSteps[0].innerHTML = tx("howTo1");
@@ -1976,6 +1980,10 @@ function applyLanguage() {
   setText("#panelCustomize h2", "customizeTitle");
   setText("#cropActionsTitle", "cropActionsTitle");
   setText("#cropActionsHint", "cropActionsHint");
+  setText("#btnArrangeSelected .btn-label", "arrangeSelected");
+  setText("#btnArrangeSelected .btn-hint", "arrangeSelectedHint");
+  const arrangeSelectedBtn = document.getElementById("btnArrangeSelected");
+  if (arrangeSelectedBtn) arrangeSelectedBtn.title = tx("arrangeSelectedTitle");
   setText("#btnFillSelected .btn-label", "fillSelected");
   setText("#btnFillSelected .btn-hint", "fillSelectedHint");
   const fillSelectedBtn = document.getElementById("btnFillSelected");
@@ -1992,9 +2000,7 @@ function applyLanguage() {
   if (mobileGoToScene) mobileGoToScene.setAttribute("aria-label", tx("goToGreenhouseAria"));
   setText("#btnRipristina .btn-label", "restoreAutoFill");
   setText("#btnClear .btn-label", "clearGreenhouse");
-  setText("#btnClear .btn-hint", "clearGreenhouseHint");
-  const clearBtn = document.getElementById("btnClear");
-  if (clearBtn) clearBtn.title = tx("clearGreenhouseTitle");
+  updateClearGreenhouseCopy();
   setText("#panelYield h2", "yieldCost");
   setText("#yieldSub", "yieldSub");
   setText("#yieldEditCropsLabel", "yieldEditCropsLabel");
@@ -2822,24 +2828,38 @@ function vegCardHTML(p, inb, outOfSeason = false) {
   if (inb) {
     const bed = state.beds.find(b => b.plantId === p.id);
     const count = bed ? bed.count : 0;
-    return `<div class="veg in">
-    <span class="ico" role="img" aria-label="${plantText(p, "nome")}">${FRUIT_EMOJI[p.id] || "🌱"}</span>
-    <div class="nm">
-      <div class="veg-nameline">
-        <span class="veg-name">${plantText(p, "nome")}</span>${offSeasonBadge}
+    const locked = Boolean(bed?.countLocked);
+    const sliderMax = quantitySliderMax(p, count);
+    const lockBadge = locked
+      ? `<span class="veg-lock-badge">${tx("qtyLocked")}</span>`
+      : `<span class="veg-auto-badge">${tx("qtyAuto")}</span>`;
+    return `<div class="veg in ${locked ? "qty-locked" : ""}">
+    <div class="veg-in-main">
+      <span class="ico" role="img" aria-label="${plantText(p, "nome")}">${FRUIT_EMOJI[p.id] || "🌱"}</span>
+      <div class="nm">
+        <div class="veg-nameline">
+          <span class="veg-name">${plantText(p, "nome")}</span>${offSeasonBadge}
+        </div>
+        <div class="veg-tags">
+          <span class="vtag">${soleIco}</span>
+          <span class="vtag">${harvestTag}</span>
+        </div>
+        <span class="veg-diff ${diffClass}">${diffLabel}</span>
       </div>
-      <div class="veg-tags">
-        <span class="vtag">${soleIco}</span>
-        <span class="vtag">${harvestTag}</span>
+      <button class="add remove-from-seed" data-remove-plant="${p.id}" title="${tx("remove")}">×</button>
+    </div>
+    <div class="veg-qty-panel">
+      <div class="veg-qty-topline">
+        <span>${tx("qtyLabel")}</span>
+        ${lockBadge}
       </div>
-      <span class="veg-diff ${diffClass}">${diffLabel}</span>
+      <div class="veg-qty-ctl">
+        <button class="veg-step" data-veg-cnt="-1" data-veg-plant="${p.id}" aria-label="${tx("qtyDecrease")}">−</button>
+        <input class="veg-qty-input" type="number" min="1" step="1" inputmode="numeric" value="${count}" data-veg-count-input="${p.id}" aria-label="${tx("qtyInputAria")} ${plantText(p, "nome")}">
+        <button class="veg-step" data-veg-cnt="1" data-veg-plant="${p.id}" aria-label="${tx("qtyIncrease")}">+</button>
+      </div>
+      <input class="veg-qty-slider" type="range" min="1" max="${sliderMax}" step="1" value="${Math.min(count, sliderMax)}" data-veg-count-range="${p.id}" aria-label="${tx("qtySliderAria")} ${plantText(p, "nome")}">
     </div>
-    <div class="veg-qty-ctl">
-      <button class="veg-step" data-veg-cnt="-1" data-veg-plant="${p.id}" aria-label="Riduci quantità">−</button>
-      <span class="veg-qty-num">${count}</span>
-      <button class="veg-step" data-veg-cnt="1" data-veg-plant="${p.id}" aria-label="Aumenta quantità">+</button>
-    </div>
-    <button class="add remove-from-seed" data-remove-plant="${p.id}" title="${tx("remove")}">×</button>
   </div>`;
   }
   return `<div class="veg">
@@ -2947,10 +2967,27 @@ function renderVegList() {
 
 function updateCropActionControls() {
   const hasCrops = state.beds.length > 0;
+  const noviceLocked = state.livello === "novizio";
+  const arrangeBtn = document.getElementById("btnArrangeSelected");
   const fillBtn = document.getElementById("btnFillSelected");
   const clearBtn = document.getElementById("btnClear");
+  if (arrangeBtn) arrangeBtn.disabled = !hasCrops;
   if (fillBtn) fillBtn.disabled = !hasCrops;
-  if (clearBtn) clearBtn.disabled = !hasCrops;
+  if (clearBtn) {
+    clearBtn.disabled = !hasCrops || noviceLocked;
+    clearBtn.classList.toggle("is-level-locked", noviceLocked);
+    clearBtn.setAttribute("aria-disabled", String(!hasCrops || noviceLocked));
+  }
+  updateClearGreenhouseCopy();
+}
+
+function updateClearGreenhouseCopy() {
+  const clearBtn = document.getElementById("btnClear");
+  if (!clearBtn) return;
+  const noviceLocked = state.livello === "novizio";
+  const hint = clearBtn.querySelector(".btn-hint");
+  if (hint) hint.innerHTML = noviceLocked ? tx("clearGreenhouseLockedHint") : tx("clearGreenhouseHint");
+  clearBtn.title = noviceLocked ? tx("clearGreenhouseLockedTitle") : tx("clearGreenhouseTitle");
 }
 
 function getStagione(m) {
@@ -3744,6 +3781,18 @@ function defaultCount(p) {
   return Math.max(minimumCountForPlant(p), countForPlant(p, targetRowsForPlant(p)));
 }
 
+function quantitySliderMax(p, count = 1) {
+  if (!p) return Math.max(60, count * 2);
+  const row = Math.max(1, rowSizeForPlant(p));
+  const baseline = Math.max(
+    defaultCount(p),
+    minimumCountForPlant(p) * 4,
+    row * 14,
+    80
+  );
+  return Math.ceil(Math.max(baseline, count * 2));
+}
+
 function starterCountForAutoPlant(p, useFila = false) {
   if (useFila) return countForFilaPlant(p);
   return Math.max(
@@ -3776,7 +3825,8 @@ function normalizeSavedBeds(beds) {
       return {
         plantId: bed?.plantId,
         count: Math.max(1, Math.round(parseInt(bed?.count) || 1)),
-        layout
+        layout,
+        countLocked: Boolean(bed?.countLocked)
       };
     })
     .filter((bed) => {
@@ -3828,15 +3878,21 @@ function sortBedsForLayout() {
   state.beds = ordered;
 }
 
-function shrinkOverflowToFit() {
+function shrinkOverflowToFit(options = {}) {
+  const preserveLockedCounts = options.preserveLockedCounts === true;
   let guard = 0;
   while (computeLayout().overflow && guard < 700) {
     const candidates = state.beds
       .map((b, index) => ({ ...b, index, plant: BYID[b.plantId] }))
       .filter((b) => b.layout !== "fila");
+    const flexibleCandidates = preserveLockedCounts
+      ? candidates.filter((b) => !b.countLocked)
+      : candidates;
+    if (preserveLockedCounts && flexibleCandidates.length === 0) break;
+    const shrinkCandidates = preserveLockedCounts ? flexibleCandidates : candidates;
 
     // Aiuole con più di una fila completa: riducile per prime.
-    const reducible = candidates
+    const reducible = shrinkCandidates
       .filter((b) => b.count > Math.max(rowSizeForPlant(b.plant), minimumCountForPlant(b.plant)))
       .sort((a, b) => b.count - a.count || b.plant.d - a.plant.d);
 
@@ -3847,7 +3903,7 @@ function shrinkOverflowToFit() {
       state.beds[largest.index].count = Math.max(minCount, largest.count - step);
     } else {
       // Tutte le aiuole sono già al minimo: rimuovi quella con ingombro maggiore.
-      const toRemove = candidates.sort(
+      const toRemove = shrinkCandidates.sort(
         (a, b) => b.plant.d - a.plant.d || b.count - a.count
       )[0];
       if (!toRemove) break;
@@ -3857,19 +3913,24 @@ function shrinkOverflowToFit() {
   }
 }
 
-function expandFilaBedsToLength() {
+function expandFilaBedsToLength(fillToLength = true, options = {}) {
+  const preserveLockedCounts = options.preserveLockedCounts === true;
   state.beds.forEach((bed) => {
     const plant = BYID[bed.plantId];
+    if (preserveLockedCounts && bed.countLocked) return;
     if (bed.layout === "fila" && plant && canUseFilaLayout(plant)) {
-      bed.count = countForFilaPlant(plant);
+      const capacity = countForFilaPlant(plant);
+      bed.count = fillToLength ? capacity : Math.min(bed.count, capacity);
     }
   });
 }
 
-function enforceMinimumBedCounts() {
+function enforceMinimumBedCounts(options = {}) {
+  const preserveLockedCounts = options.preserveLockedCounts === true;
   state.beds.forEach((bed) => {
     const plant = BYID[bed.plantId];
     if (!plant || bed.layout === "fila") return;
+    if (preserveLockedCounts && bed.countLocked) return;
     const minCount = minimumCountForPlant(plant);
     if (bed.count >= minCount) return;
     const before = bed.count;
@@ -3887,25 +3948,109 @@ function resetSelectedCropCountsForOptimization() {
     if (useFila) hasFila = true;
     bed.layout = useFila ? "fila" : "blocco";
     bed.count = useFila ? countForFilaPlant(plant) : starterCountForAutoPlant(plant, false);
+    bed.countLocked = false;
   });
 }
 
-function autoBalanceLayout(keepSelection = true, expandToSpace = true) {
+function normalizeSelectedCropInputsForOptimization() {
+  let hasFila = false;
+  state.beds.forEach((bed) => {
+    const plant = BYID[bed.plantId];
+    if (!plant) return;
+    const useFila = canUseFilaLayout(plant) && !hasFila && bed.layout === "fila";
+    if (useFila) hasFila = true;
+    bed.layout = useFila ? "fila" : "blocco";
+    bed.count = Math.max(1, Math.round(parseInt(bed.count) || 1));
+    bed.countLocked = Boolean(bed.countLocked);
+  });
+}
+
+function restoreManualCountsWhenPossible(manualCounts) {
+  state.beds.forEach((bed) => {
+    const desired = manualCounts.get(bed.plantId);
+    if (!desired || bed.count >= desired) return;
+    const before = bed.count;
+    bed.count = desired;
+    if (computeLayout().overflow) bed.count = before;
+  });
+}
+
+function rebalanceManualLayoutOnly() {
+  const selectedPlant = rememberSelection();
+  expandFilaBedsToLength(false);
+  sortBedsForLayout();
+  restoreSelection(selectedPlant);
+}
+
+function reduceFlexibleCropsForLockedChange(lockedPlantId) {
+  let guard = 0;
+  while (computeLayout().overflow && guard < 700) {
+    const layout = computeLayout();
+    const candidates = state.beds
+      .map((bed, index) => ({
+        bed,
+        index,
+        plant: BYID[bed.plantId],
+        layoutBed: layout.beds.find((item) => item.idx === index)
+      }))
+      .filter((item) =>
+        item.plant &&
+        item.bed.plantId !== lockedPlantId &&
+        !item.bed.countLocked &&
+        item.bed.layout !== "fila" &&
+        item.layoutBed &&
+        item.bed.count > 1
+      )
+      .sort((a, b) =>
+        b.bed.count - a.bed.count ||
+        b.layoutBed.h - a.layoutBed.h ||
+        b.plant.d - a.plant.d
+      );
+
+    if (!candidates.length) break;
+    const item = candidates[0];
+    const minCount = Math.max(1, minimumCountForPlant(item.plant));
+    const step = Math.max(1, rowSizeForPlant(item.plant));
+    const before = item.bed.count;
+    item.bed.count = Math.max(minCount, item.bed.count - step);
+    if (item.bed.count === before && item.bed.count > 1) {
+      item.bed.count -= 1;
+    }
+    rebalanceManualLayoutOnly();
+    guard++;
+  }
+}
+
+function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
+  rebalanceManualLayoutOnly();
+  if (computeLayout().overflow) {
+    reduceFlexibleCropsForLockedChange(lockedPlantId);
+  }
+  if (computeLayout().overflow) {
+    restoreBedsSnapshot(beforeSnapshot);
+    return false;
+  }
+  return true;
+}
+
+function autoBalanceLayout(keepSelection = true, expandToSpace = true, options = {}) {
   const selectedPlant = keepSelection ? rememberSelection() : null;
   // expandFilaBedsToLength va chiamata sempre (non solo quando expandToSpace=true)
   // perché usableBedWidth() dipende da state.beds.length: aggiungendo o rimuovendo
   // una pianta il numero di colonne cambia e il count corretto per le file si aggiorna.
   // Senza questo ricalcolo, il count salvato è quello di una colonna più larga e
   // provoca overflow non appena si aggiunge una seconda pianta in modalità manuale.
-  expandFilaBedsToLength();
-  if (expandToSpace) enforceMinimumBedCounts();
+  expandFilaBedsToLength(options.fillFilaToLength !== false, {
+    preserveLockedCounts: options.preserveLockedCounts === true
+  });
+  if (expandToSpace) enforceMinimumBedCounts({ preserveLockedCounts: options.preserveLockedCounts === true });
   sortBedsForLayout();
-  shrinkOverflowToFit();
-  if (expandToSpace) expandAutoFillToSpace();
+  shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
+  if (expandToSpace) expandAutoFillToSpace({ skipLockedCounts: options.expandLockedCounts === false });
   // Riordina per tenere le piante alte dietro a quelle basse (ordine anti-ombra).
   sortBedsForLayout();
-  if (expandToSpace) expandAutoFillToSpace();
-  shrinkOverflowToFit();
+  if (expandToSpace) expandAutoFillToSpace({ skipLockedCounts: options.expandLockedCounts === false });
+  shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
   restoreSelection(selectedPlant);
 }
 
@@ -3918,7 +4063,8 @@ function addPlant(id) {
   state.beds.push({
     plantId: id,
     count: useFila ? countForFilaPlant(p) : defaultCount(p),
-    layout: useFila ? "fila" : "blocco"
+    layout: useFila ? "fila" : "blocco",
+    countLocked: false
   });
   state.autoPlan = false;
   state.selected = state.beds.findIndex((b) => b.plantId === id);
@@ -3926,7 +4072,10 @@ function addPlant(id) {
   // esistenti né applica i conteggi minimi forzati — altrimenti enforceMinimumBedCounts
   // + expandAutoFillToSpace riempiono lo spazio, shrinkOverflowToFit rimuove
   // una pianta già presente e l'utente vede una sostituzione invece di un'aggiunta.
-  autoBalanceLayout(true, false);
+  autoBalanceLayout(true, false, {
+    preserveLockedCounts: true,
+    expandLockedCounts: false
+  });
   saveConfig(true);
   render();
 }
@@ -3940,7 +4089,10 @@ function removePlantById(id) {
   else if (state.selected > index) state.selected -= 1;
   // expandToSpace=false: rimuovere una pianta non deve far espandere le piante rimanenti,
   // simmetricamente a addPlant che usa lo stesso flag.
-  autoBalanceLayout(true, false);
+  autoBalanceLayout(true, false, {
+    preserveLockedCounts: true,
+    expandLockedCounts: false
+  });
   saveConfig(true);
   render();
 }
@@ -3954,14 +4106,69 @@ function refreshForSeasonChange() {
   }
 }
 
+function arrangeSelectedPlantsExact() {
+  if (state.beds.length === 0) {
+    alert(tx("noSelectedPlants"));
+    return;
+  }
+  state.autoPlan = false;
+  normalizeSelectedCropInputsForOptimization();
+  rebalanceManualLayoutOnly();
+  saveConfig(true);
+  render();
+}
+
 function fillSelectedPlants() {
   if (state.beds.length === 0) {
     alert(tx("noSelectedPlants"));
     return;
   }
   state.autoPlan = false;
-  resetSelectedCropCountsForOptimization();
-  autoBalanceLayout(true, true);
+  const manualCounts = new Map(state.beds.map((bed) => [bed.plantId, bed.count]));
+  normalizeSelectedCropInputsForOptimization();
+  state.beds.forEach((bed) => {
+    const plant = BYID[bed.plantId];
+    if (plant && bed.layout === "fila" && !bed.countLocked) {
+      bed.count = countForFilaPlant(plant);
+    }
+  });
+  autoBalanceLayout(true, true, {
+    fillFilaToLength: false,
+    expandLockedCounts: false,
+    preserveLockedCounts: true
+  });
+  restoreManualCountsWhenPossible(manualCounts);
+  saveConfig(true);
+  render();
+}
+
+function changePlantCount(id, delta) {
+  const index = state.beds.findIndex((bed) => bed.plantId === id);
+  if (index < 0) return;
+  const selectedPlant = rememberSelection();
+  const before = cloneBedsSnapshot();
+  const bed = state.beds[index];
+  bed.count = Math.max(1, Math.round((parseInt(bed.count) || 1) + delta));
+  bed.countLocked = true;
+  state.autoPlan = false;
+  fitLockedCountChange(id, before);
+  restoreSelection(selectedPlant);
+  saveConfig(true);
+  render();
+}
+
+function setPlantCount(id, value) {
+  const index = state.beds.findIndex((bed) => bed.plantId === id);
+  if (index < 0) return;
+  const nextCount = Math.max(1, Math.round(parseInt(value) || 1));
+  const selectedPlant = rememberSelection();
+  const before = cloneBedsSnapshot();
+  const bed = state.beds[index];
+  bed.count = nextCount;
+  bed.countLocked = true;
+  state.autoPlan = false;
+  fitLockedCountChange(id, before);
+  restoreSelection(selectedPlant);
   saveConfig(true);
   render();
 }
@@ -3993,7 +4200,8 @@ function cloneBedsSnapshot() {
   return state.beds.map((bed) => ({
     plantId: bed.plantId,
     count: bed.count,
-    layout: bed.layout
+    layout: bed.layout,
+    countLocked: Boolean(bed.countLocked)
   }));
 }
 
@@ -4001,7 +4209,8 @@ function restoreBedsSnapshot(snapshot) {
   state.beds = snapshot.map((bed) => ({
     plantId: bed.plantId,
     count: bed.count,
-    layout: bed.layout
+    layout: bed.layout,
+    countLocked: Boolean(bed.countLocked)
   }));
 }
 
@@ -4019,7 +4228,8 @@ function finalizeAutoFillWithOptimizeBaseline() {
   restoreBedsSnapshot(original);
 }
 
-function expandAutoFillToSpace() {
+function expandAutoFillToSpace(options = {}) {
+  const skipLockedCounts = options.skipLockedCounts === true;
   const fillScore = layoutWasteScore;
 
   let guard = 0;
@@ -4034,7 +4244,12 @@ function expandAutoFillToSpace() {
         const plant = BYID[bed.plantId];
         return { index, bed, plant, layoutBed };
       })
-      .filter((item) => item.plant && item.bed.layout !== "fila" && item.layoutBed)
+      .filter((item) =>
+        item.plant &&
+        item.bed.layout !== "fila" &&
+        item.layoutBed &&
+        (!skipLockedCounts || !item.bed.countLocked)
+      )
       .sort((a, b) => {
         const ah = currentLayout.columnHeights[a.layoutBed.columnIndex] || 0;
         const bh = currentLayout.columnHeights[b.layoutBed.columnIndex] || 0;
@@ -4079,7 +4294,12 @@ function expandAutoFillToSpace() {
         const plant = BYID[bed.plantId];
         return { index, bed, plant, layoutBed };
       })
-      .filter((item) => item.plant && item.bed.layout !== "fila" && item.layoutBed)
+      .filter((item) =>
+        item.plant &&
+        item.bed.layout !== "fila" &&
+        item.layoutBed &&
+        (!skipLockedCounts || !item.bed.countLocked)
+      )
       .sort((a, b) => {
         const ah = currentLayout.columnHeights[a.layoutBed.columnIndex] || 0;
         const bh = currentLayout.columnHeights[b.layoutBed.columnIndex] || 0;
@@ -4176,7 +4396,12 @@ function autoFill(options = {}) {
   const skippedConflicts = [];
   const addAutoCandidate = (p, allowFila = true) => {
     const useFila = allowFila && filaSlots > 0 && canUseFilaLayout(p);
-    state.beds.push({ plantId: p.id, count: 1, layout: useFila ? "fila" : "blocco" });
+    state.beds.push({
+      plantId: p.id,
+      count: 1,
+      layout: useFila ? "fila" : "blocco",
+      countLocked: false
+    });
     state.beds[state.beds.length - 1].count = useFila
       ? starterCountForAutoPlant(p, true)
       : starterCountForAutoPlant(p, false);
@@ -4232,7 +4457,12 @@ function autoFill(options = {}) {
   }
   if (state.beds.length === 0 && candidates.length) {
     const p = candidates[0];
-    state.beds.push({ plantId: p.id, count: minimumCountForPlant(p), layout: "blocco" });
+    state.beds.push({
+      plantId: p.id,
+      count: minimumCountForPlant(p),
+      layout: "blocco",
+      countLocked: false
+    });
     if (computeLayout().overflow) {
       state.beds.pop();
     } else {
@@ -4256,6 +4486,7 @@ function autoFill(options = {}) {
     bed.count = bed.layout === "fila"
       ? countForFilaPlant(plant)
       : starterCountForAutoPlant(plant, false);
+    bed.countLocked = false;
   });
   // Usa la stessa sequenza di autoBalanceLayout(true, true) usata da "ottimizza colture":
   // expandFilaBedsToLength → enforceMinimumBedCounts → sort → shrink → expand → sort
@@ -4276,7 +4507,8 @@ function loadPreset(key) {
   state.beds = PRESETS[key].map(([id, cnt]) => ({
     plantId: id,
     count: cnt,
-    layout: "blocco"
+    layout: "blocco",
+    countLocked: false
   }));
   state.autoPlan = false;
   autoBalanceLayout(false, true);
@@ -4321,7 +4553,8 @@ function importCartToPlan() {
     return {
       plantId: id,
       count: useFila ? countForFilaPlant(plant) : defaultCount(plant),
-      layout: useFila ? "fila" : "blocco"
+      layout: useFila ? "fila" : "blocco",
+      countLocked: false
     };
   });
   state.autoPlan = false;
@@ -4499,9 +4732,13 @@ function initEvents() {
     collapseSettingsPanelAfterAutoPlan();
   });
   document
+    .getElementById("btnArrangeSelected")
+    .addEventListener("click", arrangeSelectedPlantsExact);
+  document
     .getElementById("btnFillSelected")
     .addEventListener("click", fillSelectedPlants);
   document.getElementById("btnClear").addEventListener("click", () => {
+    if (state.livello === "novizio") return;
     const msg =
       state.lang === "ro"
         ? "Golești sera? Folosește «Umple sera» pentru a o reface."
@@ -4600,15 +4837,41 @@ function initEvents() {
     if (stepBtn) {
       const id = stepBtn.dataset.vegPlant;
       const delta = parseInt(stepBtn.dataset.vegCnt);
-      const bed = state.beds.find(b => b.plantId === id);
-      if (bed) {
-        bed.count = Math.max(1, bed.count + delta);
-        state.autoPlan = false;
-        autoBalanceLayout(true, false);
-        saveConfig(true);
-        render();
-      }
+      changePlantCount(id, delta);
     }
+  });
+  document.getElementById("vegList").addEventListener("input", (e) => {
+    const range = e.target.closest("[data-veg-count-range]");
+    if (range) {
+      const card = range.closest(".veg.in");
+      const input = card?.querySelector("[data-veg-count-input]");
+      if (input) input.value = range.value;
+      return;
+    }
+    const input = e.target.closest("[data-veg-count-input]");
+    if (!input || input.value === "") return;
+    const card = input.closest(".veg.in");
+    const slider = card?.querySelector("[data-veg-count-range]");
+    if (slider) {
+      if (parseInt(input.value) > parseInt(slider.max)) slider.max = input.value;
+      slider.value = input.value;
+    }
+  });
+  document.getElementById("vegList").addEventListener("change", (e) => {
+    const range = e.target.closest("[data-veg-count-range]");
+    if (range) {
+      setPlantCount(range.dataset.vegCountRange, range.value);
+      return;
+    }
+    const input = e.target.closest("[data-veg-count-input]");
+    if (!input || input.value === "") return;
+    setPlantCount(input.dataset.vegCountInput, input.value);
+  });
+  document.getElementById("vegList").addEventListener("keydown", (e) => {
+    const input = e.target.closest("[data-veg-count-input]");
+    if (!input || e.key !== "Enter" || input.value === "") return;
+    e.preventDefault();
+    setPlantCount(input.dataset.vegCountInput, input.value);
   });
 
   // filtri piante

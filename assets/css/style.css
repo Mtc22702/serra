@@ -1152,14 +1152,14 @@ select:focus {
 .crop-actions-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 .crop-action-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 68px;
-  padding: 12px 14px;
+  gap: 10px;
+  min-height: 62px;
+  padding: 11px 12px;
   border-radius: 12px;
   border: 1.5px solid transparent;
   background: #fff;
@@ -1184,6 +1184,20 @@ select:focus {
   transform: none;
   pointer-events: none;
 }
+.crop-action-btn.is-level-locked:disabled {
+  opacity: 0.72;
+  background: linear-gradient(145deg, #f8f7f1 0%, #efede4 100%);
+  color: #726a55;
+  border-color: rgba(114, 106, 85, 0.22);
+}
+.crop-action-btn.is-level-locked .crop-action-icon {
+  background: linear-gradient(145deg, #a8a08c, #7f765f);
+  box-shadow: 0 2px 6px rgba(114, 106, 85, 0.2);
+}
+.crop-action-btn.is-level-locked .btn-hint {
+  color: #6f684f;
+  opacity: 1;
+}
 .crop-action-btn--primary {
   border-color: rgba(47, 107, 58, 0.32);
   background: linear-gradient(145deg, #eef9e9 0%, #e0f3d8 100%);
@@ -1198,6 +1212,21 @@ select:focus {
   box-shadow:
     0 2px 0 rgba(47, 107, 58, 0.16),
     0 10px 24px rgba(31, 58, 38, 0.14);
+}
+.crop-action-btn--secondary {
+  border-color: rgba(67, 99, 139, 0.24);
+  background: linear-gradient(145deg, #f8fbff 0%, #eef5fb 100%);
+  color: #244768;
+  box-shadow:
+    0 2px 0 rgba(67, 99, 139, 0.08),
+    0 4px 12px rgba(67, 99, 139, 0.07);
+}
+.crop-action-btn--secondary:hover {
+  border-color: rgba(67, 99, 139, 0.44);
+  background: linear-gradient(145deg, #ffffff 0%, #e5f0f9 100%);
+  box-shadow:
+    0 2px 0 rgba(67, 99, 139, 0.12),
+    0 8px 20px rgba(67, 99, 139, 0.11);
 }
 .crop-action-btn--danger {
   border-color: rgba(176, 48, 48, 0.22);
@@ -1218,8 +1247,8 @@ select:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
   flex: none;
   transition: transform 0.12s ease;
@@ -1231,6 +1260,11 @@ select:focus {
   background: linear-gradient(145deg, #3d8a4a, #2f6b3a);
   color: #fff;
   box-shadow: 0 2px 6px rgba(47, 107, 58, 0.35);
+}
+.crop-action-btn--secondary .crop-action-icon {
+  background: linear-gradient(145deg, #43638b, #2c4f73);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(67, 99, 139, 0.28);
 }
 .crop-action-btn--danger .crop-action-icon {
   background: linear-gradient(145deg, #d44a4a, #b03030);
@@ -1248,8 +1282,8 @@ select:focus {
   min-width: 0;
 }
 .crop-action-text .btn-label {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 850;
   line-height: 1.2;
   color: currentColor;
   letter-spacing: 0.01em;
@@ -1613,10 +1647,74 @@ select:focus {
 }
 /* Pianta già nella serra: sfondo verde tenue */
 .veg.in {
-  background: rgba(47, 107, 58, 0.05);
-  border-color: rgba(47, 107, 58, 0.18);
+  display: block;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(244, 250, 241, 0.96));
+  border-color: rgba(47, 107, 58, 0.2);
+  padding: 10px;
+  box-shadow:
+    inset 3px 0 0 rgba(47, 107, 58, 0.34),
+    0 5px 14px rgba(31, 58, 38, 0.06);
+}
+.veg.in.qty-locked {
+  border-color: rgba(217, 164, 65, 0.36);
+  box-shadow:
+    inset 3px 0 0 rgba(217, 164, 65, 0.75),
+    0 5px 14px rgba(31, 58, 38, 0.07);
+}
+.veg-in-main {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 32px;
   align-items: center;
-  padding: 10px 12px;
+  gap: 9px;
+}
+.veg.in .ico {
+  width: 36px;
+  height: 36px;
+}
+.veg.in .veg-name {
+  font-size: 13.5px;
+}
+.veg-qty-panel {
+  margin-top: 9px;
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(47, 107, 58, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+}
+.veg-qty-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+  color: #526151;
+  font-size: 10.5px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.veg-lock-badge,
+.veg-auto-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 19px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+.veg-lock-badge {
+  color: #7a5514;
+  background: rgba(217, 164, 65, 0.16);
+  border: 1px solid rgba(217, 164, 65, 0.32);
+}
+.veg-auto-badge {
+  color: var(--verde-scuro);
+  background: rgba(47, 107, 58, 0.1);
+  border: 1px solid rgba(47, 107, 58, 0.16);
 }
 .veg .add {
   width: 32px;
@@ -1646,9 +1744,6 @@ select:focus {
 .veg.in .add:hover {
   background: rgba(180, 69, 44, 0.18);
   filter: none;
-}
-.veg.in > .veg-qty-ctl {
-  flex: none;
 }
 .empty-note {
   font-size: 13px;
@@ -3340,9 +3435,12 @@ body.cart-open .cart-nudge {
     background: rgba(47, 107, 58, 0.08);
     border-color: rgba(47, 107, 58, 0.28);
     box-shadow: inset 3px 0 0 rgba(47, 107, 58, 0.45);
-    align-items: center;
     gap: 8px;
     padding: 12px 10px;
+  }
+  .veg-in-main {
+    grid-template-columns: 36px minmax(0, 1fr) 30px;
+    gap: 8px;
   }
   .veg.in .ico {
     width: 36px;
@@ -3370,11 +3468,21 @@ body.cart-open .cart-nudge {
   .veg.in .veg-tags {
     margin-top: 2px;
   }
-  .veg.in > .veg-qty-ctl {
-    flex: none;
-    border-color: rgba(47, 107, 58, 0.35);
+  .veg-qty-panel {
+    margin-top: 8px;
+    padding: 8px;
   }
-  .veg.in > .add {
+  .veg-qty-ctl {
+    grid-template-columns: 30px minmax(54px, 1fr) 30px;
+  }
+  .veg-step,
+  .veg-qty-input {
+    height: 30px;
+  }
+  .veg-step {
+    width: 30px;
+  }
+  .veg.in .add {
     width: 30px;
     height: 30px;
     font-size: 15px;
@@ -4448,17 +4556,19 @@ body.cart-open .cart-nudge {
   margin-top: 8px;
 }
 .veg-qty-ctl {
-  display: flex;
+  display: grid;
+  grid-template-columns: 32px minmax(58px, 1fr) 32px;
   align-items: center;
   gap: 0;
   background: #fff;
   border: 1.5px solid rgba(47, 107, 58, 0.28);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(31, 58, 38, 0.05);
 }
 .veg-step {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border: none;
   background: transparent;
   color: var(--verde);
@@ -4474,13 +4584,39 @@ body.cart-open .cart-nudge {
 .veg-step:hover {
   background: rgba(47, 107, 58, 0.08);
 }
-.veg-qty-num {
-  min-width: 26px;
+.veg-qty-input {
+  width: 100%;
+  height: 32px;
+  border: 0;
+  border-left: 1px solid rgba(47, 107, 58, 0.14);
+  border-right: 1px solid rgba(47, 107, 58, 0.14);
+  background: #fbfdf9;
   text-align: center;
-  font-size: 13px;
-  font-weight: 700;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 850;
   color: var(--inchiostro);
-  padding: 0 2px;
+  appearance: textfield;
+}
+.veg-qty-input::-webkit-outer-spin-button,
+.veg-qty-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.veg-qty-input:focus {
+  outline: 2px solid rgba(47, 107, 58, 0.24);
+  outline-offset: -2px;
+}
+.veg-qty-slider {
+  display: block;
+  width: 100%;
+  margin: 8px 0 0;
+  accent-color: var(--verde);
+  cursor: pointer;
+}
+.veg-qty-slider:focus-visible {
+  outline: 2px solid rgba(47, 107, 58, 0.28);
+  outline-offset: 3px;
 }
 
 /* PDP hero: immagine, titolo e metadati della pianta. */
@@ -5328,6 +5464,14 @@ body.cart-open .cart-nudge {
   font-size: 13.5px;
   line-height: 1.18;
   color: var(--verde-scuro);
+}
+.persona-level-label {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 11px;
+  font-weight: 750;
+  color: color-mix(in srgb, var(--accent), #213f26 22%);
+  white-space: nowrap;
 }
 .persona-card-body small {
   display: block;

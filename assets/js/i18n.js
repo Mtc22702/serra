@@ -1163,11 +1163,15 @@
         waterMap: "Mappa acqua",
         heightMap: "Altezza piante",
         restoreAutoFill: "Riempi la serra",
-        fillSelected: "Ottimizza colture scelte",
-        fillSelectedHint: "Ricalibra quantità e riempie solo con queste colture.",
+        arrangeSelected: "Sistema senza riempire",
+        arrangeSelectedHint: "Riordina le aiuole e non cambia i numeri.",
+        arrangeSelectedTitle:
+          "Riordina la mappa senza cambiare le quantità scelte",
+        fillSelected: "Riempi spazi vuoti",
+        fillSelectedHint: "Aumenta solo le colture automatiche.",
         cropActionsTitle: "Azioni sulle colture inserite",
         cropActionsHint:
-          "Questi comandi modificano il progetto corrente della serra.",
+          "Prima regola le quantità, poi scegli se conservarle o riempire gli spazi vuoti.",
         cropsSectionCustomize: "⚙ Personalizza",
         customizeTitle: "Colture nella serra",
         customizeSub:
@@ -1180,18 +1184,32 @@
         personaPickHint:
           "Scegli il percorso più adatto a te — puoi cambiarlo quando vuoi.",
         personaNovTitle: "Sono alle prime armi",
+        personaNovLevel: "(Principiante)",
         personaNovDesc:
           "Ti guido passo passo: clima, serra e un orto pronto fino al carrello",
         personaIntTitle: "Ho un po' di esperienza",
+        personaIntLevel: "(Pratico)",
         personaIntDesc:
           "Parti guidato, poi personalizza le colture e aggiungi semi fuori stagione",
         personaExpTitle: "So già cosa voglio",
+        personaExpLevel: "(Esperto)",
         personaExpDesc:
           "Sfoglia tutto il catalogo, di stagione o no, e componi la serra a mano",
         fillSelectedTitle:
-          "Ricalibra quantità realistiche e riempie la serra usando solo le colture già inserite",
+          "Riempie lo spazio libero aumentando le colture non modificate e rispettando le quantità cambiate a mano",
+        qtyLabel: "Quantità",
+        qtyLocked: "manuale",
+        qtyAuto: "auto",
+        qtyDecrease: "Riduci quantità",
+        qtyIncrease: "Aumenta quantità",
+        qtyInputAria: "Scrivi quantità per",
+        qtySliderAria: "Regola quantità per",
         clearGreenhouseHint: "Rimuove tutte le colture dal progetto.",
+        clearGreenhouseLockedHint:
+          "Disponibile solo in modalità Pratico o Esperto.",
         clearGreenhouseTitle: "Rimuove tutte le piante dalla serra",
+        clearGreenhouseLockedTitle:
+          "Per svuotare la serra passa a Pratico o Esperto",
         goToGreenhouse: "Vai alla serra",
         goToGreenhouseAria: "Vai alla vista della serra",
         plantSheetTitle: "Scheda pianta",
@@ -1464,10 +1482,15 @@
         waterMap: "Hartă apă",
         heightMap: "Înălțimea plantelor",
         restoreAutoFill: "Umple sera",
-        fillSelected: "Optimizează culturile alese",
-        fillSelectedHint: "Recalibrează cantitățile și umple doar cu aceste culturi.",
+        arrangeSelected: "Aranjează fără umplere",
+        arrangeSelectedHint: "Reordonează straturile fără să schimbe numerele.",
+        arrangeSelectedTitle:
+          "Reordonează harta fără să schimbe cantitățile alese",
+        fillSelected: "Umple spațiile libere",
+        fillSelectedHint: "Mărește doar culturile automate.",
         cropActionsTitle: "Acțiuni pentru culturile adăugate",
-        cropActionsHint: "Aceste comenzi modifică proiectul curent al serei.",
+        cropActionsHint:
+          "Mai întâi reglează cantitățile, apoi alege dacă le păstrezi sau umpli spațiile libere.",
         cropsSectionCustomize: "⚙ Personalizează",
         customizeTitle: "Culturi în seră",
         customizeSub:
@@ -1480,18 +1503,32 @@
         personaPickHint:
           "Alege parcursul potrivit pentru tine — îl poți schimba oricând.",
         personaNovTitle: "Sunt la început",
+        personaNovLevel: "(Începător)",
         personaNovDesc:
           "Te ghidez pas cu pas: climă, seră și o grădină gata până la coș",
         personaIntTitle: "Am ceva experiență",
+        personaIntLevel: "(Practic)",
         personaIntDesc:
           "Pornești ghidat, apoi personalizezi culturile și adaugi semințe în afara sezonului",
         personaExpTitle: "Știu deja ce vreau",
+        personaExpLevel: "(Expert)",
         personaExpDesc:
           "Răsfoiește tot catalogul, de sezon sau nu, și compune sera manual",
         fillSelectedTitle:
-          "Recalibrează cantități realiste și umple sera folosind doar culturile deja adăugate",
+          "Umple spațiul liber mărind culturile nemodificate și respectând cantitățile schimbate manual",
+        qtyLabel: "Cantitate",
+        qtyLocked: "manual",
+        qtyAuto: "auto",
+        qtyDecrease: "Scade cantitatea",
+        qtyIncrease: "Mărește cantitatea",
+        qtyInputAria: "Scrie cantitatea pentru",
+        qtySliderAria: "Reglează cantitatea pentru",
         clearGreenhouseHint: "Elimină toate culturile din proiect.",
+        clearGreenhouseLockedHint:
+          "Disponibil doar în modul Practic sau Expert.",
         clearGreenhouseTitle: "Elimină toate plantele din seră",
+        clearGreenhouseLockedTitle:
+          "Pentru a goli sera, treci la Practic sau Expert",
         goToGreenhouse: "Mergi la seră",
         goToGreenhouseAria: "Mergi la vederea serei",
         plantSheetTitle: "Fișa plantei",
