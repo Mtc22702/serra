@@ -3219,7 +3219,7 @@ footer.footer-botanico {
   display: none;
 }
 .footer-season-tag {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 0.4rem;
   padding: 0.28rem 0.8rem;
@@ -3248,9 +3248,18 @@ footer.footer-botanico {
   justify-content: center;
   padding: 1rem;
   backdrop-filter: blur(8px);
+  overscroll-behavior: contain;
+  touch-action: none;
 }
 .detail-overlay.open {
   display: flex;
+}
+body.detail-open {
+  overflow: hidden;
+}
+body.detail-open .cart-nudge,
+body.detail-open .back-to-top {
+  display: none !important;
 }
 .detail-panel {
   background: linear-gradient(180deg, #fffdf8 0%, #f4f6ec 100%);
@@ -3265,6 +3274,9 @@ footer.footer-botanico {
   box-shadow: 0 24px 70px rgba(20, 38, 27, 0.28);
   scrollbar-width: thin;
   scrollbar-color: rgba(45, 106, 79, 0.28) transparent;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 @keyframes slideUp {
   from {

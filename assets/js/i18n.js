@@ -436,7 +436,7 @@
       it: {
         "page.title": "Orto in Serra · Coltiva con intelligenza",
         "nav.home": "Home",
-        "nav.stagione": "Di stagione",
+        "nav.stagione": "Catalogo completo",
         "nav.catalog_all": "Catalogo completo",
         "nav.abbinamenti": "Abbinamenti",
         "nav.configuratore": "Configuratore",
@@ -537,7 +537,7 @@
         "season.meta": "Zona {zone} · Serra {greenhouse}",
         "season.empty":
           "Nessuna pianta da seminare questo mese.<br>Prova ad attivare la serra riscaldata.",
-        "catalog.kicker": "Cosa piantare adesso",
+        "catalog.kicker": "Cosa piantare",
         "catalog.lead":
           "Parti dal mese, dal clima e dallo spazio reale della serra. Il catalogo mette in evidenza le colture più adatte ora, con dati pratici per scegliere senza tentativi.",
         "catalog.action_search": "Cerca una coltura",
@@ -742,7 +742,7 @@
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
         "nav.home": "Acasă",
-        "nav.stagione": "De sezon",
+        "nav.stagione": "Catalog complet",
         "nav.catalog_all": "Catalog complet",
         "nav.abbinamenti": "Combinații",
         "nav.configuratore": "Configurator",
@@ -843,7 +843,7 @@
         "season.meta": "Zonă {zone} · Seră {greenhouse}",
         "season.empty":
           "Nicio plantă de semănat luna aceasta.<br>Încearcă să activezi sera încălzită.",
-        "catalog.kicker": "Ce să plantezi acum",
+        "catalog.kicker": "Ce să plantezi",
         "catalog.lead":
           "Pornește de la lună, climă și spațiul real al serei. Catalogul evidențiază culturile potrivite acum, cu date practice pentru alegeri fără încercări la întâmplare.",
         "catalog.action_search": "Caută o cultură",

@@ -533,6 +533,8 @@ let catalog = {
 };
 let cart = [];
 let currentDetail = null;
+let detailScrollY = 0;
+let detailTouchY = null;
 const BYID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 const EASY_IDS = new Set([
   "lattuga",
@@ -1175,7 +1177,8 @@ function renderFooter() {
     estate: t("season_name.summer"),
     autunno: t("season_name.autumn")
   }[stag];
-  document.getElementById("footerSeasonTag").innerHTML = stagLabel;
+  const footerSeasonTag = document.getElementById("footerSeasonTag");
+  if (footerSeasonTag) footerSeasonTag.innerHTML = stagLabel;
 
   /* Striscia infinita di piante. */
   let previousEmoji = "";
@@ -1369,6 +1372,24 @@ function alertCheckout() {
 }
 
 /* Dettaglio pianta: pannello sovrapposto con foto, semina, metriche e compatibilità. */
+function lockDetailPageScroll() {
+  detailScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.body.classList.add("detail-open");
+  document.body.style.position = "fixed";
+  document.body.style.top = `-${detailScrollY}px`;
+  document.body.style.left = "0";
+  document.body.style.right = "0";
+  document.body.style.width = "100%";
+}
+function unlockDetailPageScroll() {
+  document.body.classList.remove("detail-open");
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.left = "";
+  document.body.style.right = "";
+  document.body.style.width = "";
+  window.scrollTo(0, detailScrollY);
+}
 function openDetail(id) {
   const p = BYID[id];
   if (!p) return;
@@ -1524,7 +1545,9 @@ function openDetail(id) {
   btn.classList.toggle("added", inC);
 
   document.getElementById("detailOverlay").classList.add("open");
-  document.body.style.overflow = "hidden";
+  const detailPanel = document.getElementById("detailPanel");
+  if (detailPanel) detailPanel.scrollTop = 0;
+  lockDetailPageScroll();
 }
 function detailAddToCart() {
   if (!currentDetail) return;
@@ -1546,12 +1569,29 @@ function detailAddToCart() {
 function closeDetail(e) {
   if (e && e.target !== document.getElementById("detailOverlay")) return;
   document.getElementById("detailOverlay").classList.remove("open");
-  document.body.style.overflow = "";
+  unlockDetailPageScroll();
   currentDetail = null;
 }
 document
   .getElementById("detailPanel")
   .addEventListener("click", (e) => e.stopPropagation());
+document.getElementById("detailOverlay")?.addEventListener("touchmove", (e) => {
+  const panel = document.getElementById("detailPanel");
+  if (!panel || !panel.contains(e.target)) e.preventDefault();
+}, { passive: false });
+document.getElementById("detailPanel")?.addEventListener("touchstart", (e) => {
+  detailTouchY = e.touches?.[0]?.clientY ?? null;
+}, { passive: true });
+document.getElementById("detailPanel")?.addEventListener("touchmove", (e) => {
+  const panel = document.getElementById("detailPanel");
+  const y = e.touches?.[0]?.clientY;
+  if (!panel || y == null || detailTouchY == null) return;
+  const deltaY = y - detailTouchY;
+  const atTop = panel.scrollTop <= 0;
+  const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1;
+  if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) e.preventDefault();
+  detailTouchY = y;
+}, { passive: false });
 
 /* Controlli interfaccia: clima, mese e filtri catalogo. */
 function setZone(z) {
@@ -1992,7 +2032,7 @@ function scrollElementBelowNav(target, behavior = "smooth") {
     10
   );
   const top =
-    target.getBoundingClientRect().top + window.scrollY - navH - 12;
+    target.getBoundingClientRect().top + window.scrollY - navH - 28;
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
@@ -2009,6 +2049,30 @@ if (heroCatalogLink) {
     history.replaceState(null, "", "#stagione");
     scrollElementBelowNav(target);
   });
+}
+
+/* Link menu "Catalogo completo": usa lo stesso offset, così il titolo
+   "Cosa piantare" non finisce sotto l'header fisso su mobile. */
+document.querySelectorAll('a[href="#stagione"], a[href="index.html#stagione"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const target =
+      document.querySelector("#stagione .stagione-kicker") ||
+      document.getElementById("stagione");
+    if (!target || !document.getElementById("stagione")) return;
+    e.preventDefault();
+    history.replaceState(null, "", "#stagione");
+    scrollElementBelowNav(target);
+  });
+});
+
+if (window.location.hash === "#stagione") {
+  window.setTimeout(() => {
+    scrollElementBelowNav(
+      document.querySelector("#stagione .stagione-kicker") ||
+        document.getElementById("stagione"),
+      "auto"
+    );
+  }, 80);
 }
 
 /* "Cerca una coltura": porta all'inizio della card di ricerca e mette subito

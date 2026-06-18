@@ -1,26 +1,35 @@
 /* =========================================================================
+   SEZIONE 00 - Panoramica del configuratore
+   -------------------------------------------------------------------------
    JS configuratore: progettazione serra, layout aiuole, vista SVG e carrello.
    HTML/CSS/JS puro, nessuna libreria.
    Vista dall'alto in scala reale: aiuole rialzate in terra + camminamenti
    in ghiaia, struttura serra (vetri e telaio) sovrapposta.
    -------------------------------------------------------------------------
    MAPPA DEL FILE (in ordine):
-     1.  Costanti di layout (misure reali in cm)
-     2.  Catalogo colture (PLANTS) e indice per id (BYID)
-     3.  Descrizioni, foto e preset degli orti
-     4.  Mappa difficoltà colture (DIFFICULTY)
-     5.  Stato del configuratore e gestione profili/persone
-     6.  Helper i18n e testi
-     7.  Disegno SVG (piantine, scena, struttura serra)
-     8.  Geometria del layout (colonne, aiuole, compatibilità)
-     9.  Rendering dell'interfaccia (pannelli, scena, riepiloghi)
-     10. Riempimento automatico e selezione colture
-     11. Collegamento eventi (form, pulsanti, tab)
-     12. Carrello del configuratore
-     13. Avvio (boot) e sincronizzazione lingua
+     1.  Costanti, mesi e dizionari globali
+     2.  Catalogo colture, difficoltà, icone e testi botanici
+     3.  Foto e preset pronti
+     4.  Stato globale, salvataggio e sincronizzazione controlli
+     5.  Profili utente, modalità e percorso guidato
+     6.  Traduzioni, etichette e helper testuali
+     7.  Disegno SVG delle piante
+     8.  Geometria della serra e costruzione scena
+     9.  Rendering UI, dettaglio pianta, riepiloghi e stampa
+     10. Motore quantità, layout manuale e riempimento spazi
+     11. Auto-riempimento stagionale
+     12. Preset, import/export e intenti di avvio
+     13. Eventi UI e inizializzazione configuratore
+     14. Carrello configuratore
+     15. Avvio finale e sincronizzazione lingua
    ========================================================================= */
 
-/* Costanti layout: misure reali in centimetri e limiti prestazionali. */
+/* =========================================================================
+   SEZIONE 01 - Costanti, mesi e dizionari globali
+   -------------------------------------------------------------------------
+   Misure reali espresse in centimetri, limiti di rendering e riferimenti ai
+   dizionari i18n caricati da assets/js/i18n.js.
+   ========================================================================= */
 const WALL = 12; // spessore telaio serra
 const MARGIN = 18; // ghiaia tra muro e prima aiuola
 const PATH = 34; // camminamento tra le aiuole
@@ -47,11 +56,17 @@ const MONTHS = window.SERRA_I18N?.months || { it: MESI, ro: MESI };
 const I18N = window.SERRA_I18N?.configurator || { it: {}, ro: {} };
 const SITE_I18N = window.SERRA_I18N?.index || { it: {}, ro: {} };
 
-/* Catalogo ortaggi:
+/* =========================================================================
+   SEZIONE 02 - Catalogo colture, difficoltà e icone
+   -------------------------------------------------------------------------
+   Il catalogo principale arriva da plants-data.js. Qui costruiamo indici,
+   difficoltà, ordine categorie, emoji e contenuti descrittivi collegati.
+
    arch = stile grafico della piantina
    d = distanza sulla fila (cm) · dr = distanza tra file (cm, se omesso = d) · h = altezza (bassa/media/alta)
    sole/acqua · giorni alla raccolta · mesi semina in serra (base, zona temperata)
-   amiche/nemiche (abbinamenti) · resa kg/pianta · nota principianti · col = palette foglie */
+   amiche/nemiche (abbinamenti) · resa kg/pianta · nota principianti · col = palette foglie
+   ========================================================================= */
 const PLANTS = window.PLANTS;
 const BYID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 
@@ -186,7 +201,7 @@ const FRUIT_EMOJI = {
 };
 const PLANT_RO = window.SERRA_I18N?.plants?.ro || {};
 
-/* Descrizioni colture: testo breve per schede e pannelli. */
+/* Testi descrittivi italiani usati nelle schede pianta e nei pannelli. */
 const PLANT_DESC = {
   it: {
     pomodoro:
@@ -1103,6 +1118,13 @@ const SOWING_GUIDE = {
   }
 };
 
+/* =========================================================================
+   SEZIONE 03 - Foto colture e preset pronti
+   -------------------------------------------------------------------------
+   Immagini locali per il dettaglio pianta e configurazioni di partenza che
+   l'utente puo caricare dal selettore dei layout.
+   ========================================================================= */
+
 /* Foto colture: immagini locali usate nel dettaglio pianta. */
 const PLANT_PHOTOS = {
   pomodoro: "assets/img/photo/pomodoro.jpg",
@@ -1319,7 +1341,12 @@ const PRESETS = {
   ]
 };
 
-/* Stato configuratore: lingua, misure, clima, aiuole e preferenze interfaccia. */
+/* =========================================================================
+   SEZIONE 04 - Stato globale, salvataggio e controlli base
+   -------------------------------------------------------------------------
+   Stato applicativo unico del configuratore, persistenza in localStorage e
+   funzioni che tengono allineati input, slider, clima e lingua.
+   ========================================================================= */
 const state = {
   lang: "it",
   zona: "temperato",
@@ -1507,10 +1534,17 @@ function setMode(mode, scroll = false) {
   }
 }
 
-/* Personas: imposta il livello utente, sincronizza UI e mappa la modalità.
+/* =========================================================================
+   SEZIONE 05 - Profili utente, modalita e percorso guidato
+   -------------------------------------------------------------------------
+   Gestisce i tre profili visibili all'utente: Principiante, Pratico, Esperto.
+   Il valore interno resta "novizio" | "intermedio" | "esperto" per non
+   rompere salvataggi, URL e logiche gia esistenti.
+
    "novizio" e "intermedio" usano la modalità guidata (fit); "esperto" la
    modalità manuale (expert). La differenza tra novizio e intermedio è quanta
-   UI avanzata viene mostrata (gestita via classi sul body in CSS). */
+   UI avanzata viene mostrata (gestita via classi sul body in CSS).
+   ========================================================================= */
 function setLivello(liv, { mapMode = true } = {}) {
   const next = LIVELLI.has(liv) ? liv : "intermedio";
   state.livello = next;
@@ -1608,6 +1642,13 @@ function scrollToScene() {
     window.scrollTo({ top, behavior: "smooth" });
   }, 120);
 }
+
+/* =========================================================================
+   SEZIONE 06 - Traduzioni, etichette e helper testuali
+   -------------------------------------------------------------------------
+   Funzioni leggere per recuperare testi localizzati, nomi pianta, etichette
+   agronomiche e microcopy dell'interfaccia.
+   ========================================================================= */
 
 function tx(key, vars = {}) {
   const dict = I18N[state.lang] || I18N.it;
@@ -2015,6 +2056,13 @@ function applyLanguage() {
   fillMonths();
 }
 
+/* =========================================================================
+   SEZIONE 07 - Disegno SVG delle piante
+   -------------------------------------------------------------------------
+   Genera forme vegetali dall'alto con un casuale deterministico: a parita di
+   pianta/layout il disegno resta stabile, ma non appare troppo ripetitivo.
+   ========================================================================= */
+
 /* Casuale deterministico: varietà grafica stabile a parità di pianta/layout. */
 function rngFrom(seed) {
   let a = seed >>> 0;
@@ -2271,7 +2319,12 @@ function glyph(plant, r, rng) {
   return s;
 }
 
-/* Layout serra: calcolo semine, compatibilità, aiuole e scena SVG. */
+/* =========================================================================
+   SEZIONE 08 - Geometria della serra e costruzione scena
+   -------------------------------------------------------------------------
+   Calcola mesi effettivi, compatibilita, colonne, dimensioni aiuole e SVG
+   principale della vista dall'alto.
+   ========================================================================= */
 function effectiveMonths(plant) {
   const set = new Set(plant.mesi);
   const expand = state.riscaldata || state.zona === "caldo";
@@ -2817,7 +2870,12 @@ function overlayShape(bed, bx, by) {
   return s;
 }
 
-/* Render interfaccia: liste colture, scena, pannelli, footer, riepiloghi e stampa. */
+/* =========================================================================
+   SEZIONE 09 - Rendering UI, dettaglio pianta, riepiloghi e stampa
+   -------------------------------------------------------------------------
+   Disegna lista colture, pannelli laterali, scheda pianta, avvisi, riepilogo
+   economico/stagionale e versione stampabile.
+   ========================================================================= */
 function vegCardHTML(p, inb, outOfSeason = false) {
   const diff = DIFFICULTY[p.id] || 2;
   const diffLabel = diff === 1 ? tx("diffEasy") : diff === 2 ? tx("diffMedium") : tx("diffHard");
@@ -3667,7 +3725,15 @@ function renderPrintSummary() {
     </div>`;
 }
 
-/* Riempimento automatico: inserimento e ottimizzazione delle colture. */
+/* =========================================================================
+   SEZIONE 10 - Motore quantita, layout manuale e riempimento spazi
+   -------------------------------------------------------------------------
+   Qui vivono le regole fisiche: quante piante entrano in un'aiuola, quando
+   usare layout a fila, come preservare le quantita manuali e come riempire
+   gli spazi vuoti senza sovrascrivere le scelte dell'utente.
+   ========================================================================= */
+
+/* Calcolo base delle quantita: traduce distanze botaniche in numeri piantabili. */
 function countForPlant(p, targetRows = 2) {
   const bedW = usableBedWidth();
   const Sc = p.dr || p.d; // distanza tra file, usata nella larghezza
@@ -3801,6 +3867,8 @@ function starterCountForAutoPlant(p, useFila = false) {
   );
 }
 
+/* Selezione e salvataggio layout: mantiene stabile la pianta evidenziata
+   mentre il motore riordina o ricalcola le aiuole. */
 function rememberSelection() {
   return state.selected >= 0 && state.selected < state.beds.length
     ? state.beds[state.selected].plantId
@@ -3836,6 +3904,8 @@ function normalizeSavedBeds(beds) {
     });
 }
 
+/* Riordino fisico delle aiuole: priorita alle file, poi ombra, acqua,
+   distanza e compatibilita tra colture. */
 function sortBedsForLayout() {
   state.beds.sort((a, b) => {
     const pa = BYID[a.plantId];
@@ -3878,6 +3948,8 @@ function sortBedsForLayout() {
   state.beds = ordered;
 }
 
+/* Riduce piante o rimuove aiuole solo quando il layout non entra nello spazio.
+   Con preserveLockedCounts=true non tocca le quantita impostate a mano. */
 function shrinkOverflowToFit(options = {}) {
   const preserveLockedCounts = options.preserveLockedCounts === true;
   let guard = 0;
@@ -3913,6 +3985,8 @@ function shrinkOverflowToFit(options = {}) {
   }
 }
 
+/* Gestione delle colture a fila: adatta la lunghezza delle file al layout,
+   ma puo preservare le quantita manuali quando richiesto. */
 function expandFilaBedsToLength(fillToLength = true, options = {}) {
   const preserveLockedCounts = options.preserveLockedCounts === true;
   state.beds.forEach((bed) => {
@@ -3925,6 +3999,8 @@ function expandFilaBedsToLength(fillToLength = true, options = {}) {
   });
 }
 
+/* Minimi agronomici: alza automaticamente conteggi troppo bassi, salvo quelli
+   bloccati dall'utente. */
 function enforceMinimumBedCounts(options = {}) {
   const preserveLockedCounts = options.preserveLockedCounts === true;
   state.beds.forEach((bed) => {
@@ -3939,6 +4015,7 @@ function enforceMinimumBedCounts(options = {}) {
   });
 }
 
+/* Normalizzazione delle quantita prima di una nuova ottimizzazione. */
 function resetSelectedCropCountsForOptimization() {
   let hasFila = false;
   state.beds.forEach((bed) => {
@@ -3952,6 +4029,7 @@ function resetSelectedCropCountsForOptimization() {
   });
 }
 
+/* Normalizza solo input e layout, lasciando intatto il blocco manuale. */
 function normalizeSelectedCropInputsForOptimization() {
   let hasFila = false;
   state.beds.forEach((bed) => {
@@ -3965,6 +4043,7 @@ function normalizeSelectedCropInputsForOptimization() {
   });
 }
 
+/* Dopo un riempimento tenta di ripristinare conteggi manuali se lo spazio lo consente. */
 function restoreManualCountsWhenPossible(manualCounts) {
   state.beds.forEach((bed) => {
     const desired = manualCounts.get(bed.plantId);
@@ -3975,6 +4054,7 @@ function restoreManualCountsWhenPossible(manualCounts) {
   });
 }
 
+/* Riordina il layout manuale senza espandere automaticamente le colture. */
 function rebalanceManualLayoutOnly() {
   const selectedPlant = rememberSelection();
   expandFilaBedsToLength(false);
@@ -3982,6 +4062,8 @@ function rebalanceManualLayoutOnly() {
   restoreSelection(selectedPlant);
 }
 
+/* Quando l'utente aumenta una quantita manuale, libera spazio riducendo solo
+   colture automatiche/non bloccate. */
 function reduceFlexibleCropsForLockedChange(lockedPlantId) {
   let guard = 0;
   while (computeLayout().overflow && guard < 700) {
@@ -4021,6 +4103,7 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
   }
 }
 
+/* Applica una modifica manuale e torna indietro solo se fisicamente impossibile. */
 function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
   rebalanceManualLayoutOnly();
   if (computeLayout().overflow) {
@@ -4033,6 +4116,8 @@ function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
   return true;
 }
 
+/* Bilanciamento centrale del layout: usato da auto-riempimento, aggiunte,
+   rimozioni e cambio misure. Le opzioni decidono se preservare conteggi manuali. */
 function autoBalanceLayout(keepSelection = true, expandToSpace = true, options = {}) {
   const selectedPlant = keepSelection ? rememberSelection() : null;
   // expandFilaBedsToLength va chiamata sempre (non solo quando expandToSpace=true)
@@ -4054,6 +4139,8 @@ function autoBalanceLayout(keepSelection = true, expandToSpace = true, options =
   restoreSelection(selectedPlant);
 }
 
+/* Aggiunta manuale dalla tendina colture: non espande colture gia presenti e
+   preserva le quantita modificate dall'utente. */
 function addPlant(id) {
   if (state.beds.some((b) => b.plantId === id)) return;
   const p = BYID[id];
@@ -4080,6 +4167,7 @@ function addPlant(id) {
   render();
 }
 
+/* Rimozione manuale: non riempie automaticamente lo spazio liberato. */
 function removePlantById(id) {
   const index = state.beds.findIndex((b) => b.plantId === id);
   if (index < 0) return;
@@ -4097,6 +4185,8 @@ function removePlantById(id) {
   render();
 }
 
+/* Cambio stagione/misure: se il piano e automatico rigenera, altrimenti conserva
+   la scelta manuale e ribilancia solo il necessario. */
 function refreshForSeasonChange() {
   if (state.autoPlan || state.beds.length === 0) {
     autoFill();
@@ -4106,6 +4196,8 @@ function refreshForSeasonChange() {
   }
 }
 
+/* Pulsante "Sistema senza riempire": riordina le colture scelte senza cambiare
+   i conteggi manuali e senza espandere lo spazio vuoto. */
 function arrangeSelectedPlantsExact() {
   if (state.beds.length === 0) {
     alert(tx("noSelectedPlants"));
@@ -4118,6 +4210,8 @@ function arrangeSelectedPlantsExact() {
   render();
 }
 
+/* Pulsante "Riempi spazi vuoti": riempie ampliando solo colture automatiche,
+   rispettando le quantita impostate a mano. */
 function fillSelectedPlants() {
   if (state.beds.length === 0) {
     alert(tx("noSelectedPlants"));
@@ -4142,6 +4236,7 @@ function fillSelectedPlants() {
   render();
 }
 
+/* Controlli quantita (+/-): ogni modifica diventa manuale e viene protetta. */
 function changePlantCount(id, delta) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
   if (index < 0) return;
@@ -4157,6 +4252,7 @@ function changePlantCount(id, delta) {
   render();
 }
 
+/* Input numerico e slider quantita: stessa regola dei +/- ma con valore diretto. */
 function setPlantCount(id, value) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
   if (index < 0) return;
@@ -4173,6 +4269,8 @@ function setPlantCount(id, value) {
   render();
 }
 
+/* Utility del piano automatico: percorso compatto, punteggio di spazio vuoto
+   e snapshot per confrontare/annullare ottimizzazioni. */
 function compactPathForAutoFill() {
   if (state.larghezza >= 6 && state.lunghezza >= 7) return Math.min(state.path, 45);
   if (state.larghezza >= 4.2 && state.lunghezza >= 6) return Math.min(state.path, 50);
@@ -4228,6 +4326,8 @@ function finalizeAutoFillWithOptimizeBaseline() {
   restoreBedsSnapshot(original);
 }
 
+/* Espansione controllata: aumenta conteggi dove migliora il riempimento.
+   Con skipLockedCounts=true ignora le quantita manuali. */
 function expandAutoFillToSpace(options = {}) {
   const skipLockedCounts = options.skipLockedCounts === true;
   const fillScore = layoutWasteScore;
@@ -4329,15 +4429,16 @@ function expandAutoFillToSpace(options = {}) {
   }
 }
 
-/* ======================================================================
-   SELEZIONE AUTOMATICA DELLE COLTURE (auto-riempimento)
+/* =========================================================================
+   SEZIONE 11 - Auto-riempimento stagionale
+   -------------------------------------------------------------------------
    La scelta è consapevole del profilo utente (state.livello) e usa come
    unica fonte di verità la mappa DIFFICULTY (1=facile, 2=media, 3=difficile/
    esotica), completa su tutte le colture:
    - novizio  → solo colture facili/medie (difficoltà ≤ 2);
    - intermedio/esperto → tutto il catalogo stagionale, con le colture
      difficili ed esotiche spinte in fondo alla lista.
-   ====================================================================== */
+   ========================================================================= */
 
 // Ortaggi comuni e gratificanti: hanno priorità a parità di difficoltà.
 const AUTO_PREFERRED = [
@@ -4502,6 +4603,12 @@ function autoFill(options = {}) {
   saveConfig(true);
   render();
 }
+/* =========================================================================
+   SEZIONE 12 - Preset, import/export e intenti di avvio
+   -------------------------------------------------------------------------
+   Carica layout pronti, esporta le colture nel carrello condiviso e interpreta
+   parametri URL provenienti dalla homepage o da percorsi guidati.
+   ========================================================================= */
 function loadPreset(key) {
   if (!PRESETS[key]) return;
   state.beds = PRESETS[key].map(([id, cnt]) => ({
@@ -4614,7 +4721,12 @@ function applyBootIntent() {
   return true;
 }
 
-/* Eventi: collegamento di form, pulsanti, tab, filtri e azioni sulla scena. */
+/* =========================================================================
+   SEZIONE 13 - Eventi UI e inizializzazione configuratore
+   -------------------------------------------------------------------------
+   Collega form, pulsanti, tab, filtri, controlli quantita, pannelli e azioni
+   sulla scena. La funzione initConfig subito dopo recupera lo stato salvato.
+   ========================================================================= */
 function fillMonths() {
   const sel = document.getElementById("inMese");
   sel.innerHTML = (MONTHS[state.lang] || MONTHS.it)
@@ -4926,6 +5038,8 @@ function initEvents() {
   });
 }
 
+/* Inizializzazione dello stato: carica localStorage, lingua condivisa,
+   dimensioni, mese, profilo e aiuole salvate. */
 function initConfig() {
   const saved = readSavedConfig();
   const sharedLang = localStorage.getItem("ois.lang");
@@ -4959,7 +5073,12 @@ function initConfig() {
   setStartModalVisible(!saved?.done && !isGuidedBoot() && !isFreeProjectBoot());
 }
 
-/* Carrello configuratore: usa localStorage["ois.cart"] condiviso con la homepage. */
+/* =========================================================================
+   SEZIONE 14 - Carrello configuratore
+   -------------------------------------------------------------------------
+   Usa localStorage["ois.cart"] condiviso con la homepage. Calcola bustine,
+   prezzi, badge, overlay carrello e messaggi di checkout.
+   ========================================================================= */
 const PACK_DATA = {
   pomodoro:    { seeds: 20,  price: 3.50 },
   peperone:    { seeds: 15,  price: 3.20 },
@@ -5186,6 +5305,13 @@ function alertConfCheckout() {
   alert(tx("cart.checkout_msg", { lines, total }));
 }
 
+/* =========================================================================
+   SEZIONE 15 - Avvio finale e sincronizzazione lingua
+   -------------------------------------------------------------------------
+   Sincronizza la lingua tra tab/pagine, esegue init, interpreta i parametri
+   URL finali e produce il primo render del configuratore.
+   ========================================================================= */
+
 /* Lingua nav: sincronizza selettore header e localStorage condiviso. */
 function confSetLang(val) {
   const inLang = document.getElementById("inLang");
@@ -5246,5 +5372,5 @@ if (LIVELLI.has(_bootLivello)) {
   setLivello(state.livello, { mapMode: false });
 }
 syncVegFilterTabs();
-/* Avvio finale: intro sempre visibile e prima renderizzazione. */
+/* Chiusura boot: aggiorna i testi dinamici del percorso guidato. */
 updateGuidedIntroDynamic();
