@@ -947,6 +947,14 @@ function toggleCfgLevels() {
     btn.setAttribute("aria-expanded", "true");
     const first = panel.querySelector(".hero-cfg-level");
     if (first) first.focus({ preventScroll: true });
+    // Scroll all'inizio della card configuratore
+    requestAnimationFrame(() => {
+      const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 66;
+      const card = document.querySelector(".hero-cfg");
+      const target = card || btn;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    });
   } else {
     panel.setAttribute("hidden", "");
     btn.setAttribute("aria-expanded", "false");

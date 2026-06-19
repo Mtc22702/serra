@@ -130,73 +130,59 @@
     <section class="hero-immersive" id="hero">
       <div class="hero-bg-plants" id="heroBgPlants"></div>
       <div class="hero-content">
-        <div class="hero-season-kicker" id="heroKicker">
+
+        <!-- Kicker con mese integrato -->
+        <div class="hero-season-kicker">
           <span class="hero-kicker-pulse" aria-hidden="true"></span>
-          🌱&nbsp;Stagione attiva
+          <span id="heroKicker">🌱&nbsp;Stagione attiva</span>
+          <span class="hero-kicker-sep" aria-hidden="true">·</span>
+          <span id="heroMonth" class="hero-kicker-month">Giugno</span>
         </div>
-        <div class="hero-month-label" id="heroMonth">Giugno</div>
-        <div class="hero-tagline" id="heroTagline">
-          L'estate è&nbsp;qui. Innaffia, taglia, assapora.
-        </div>
+
+        <!-- Headline centrata -->
+        <h1 class="hero-headline" data-i18n="hero.headline">
+          Semi freschi per la tua serra.
+        </h1>
+        <p class="hero-sub" data-i18n="hero.sub">
+          40+ varietà filtrate per clima e mese. Aggiungi al carrello e coltiva con metodo.
+        </p>
+        <span id="heroTagline" hidden></span>
+
+        <!-- Controlli clima -->
         <div class="hero-controls" aria-label="Filtri clima">
           <div class="hero-controls-pill">
             <div class="hero-ctrl-block">
-              <span class="hero-controls-hint" data-i18n="hero.controls_hint">
-                Seleziona la tua zona climatica
-              </span>
+              <span class="hero-controls-hint" data-i18n="hero.controls_hint">Seleziona la tua zona climatica per vedere i semi giusti per te</span>
               <div class="hero-zone-options">
-                <button
-                  class="hero-zone-btn"
-                  data-zone="freddo"
-                  onclick="setZone('freddo')"
-                >
+                <button class="hero-zone-btn" data-zone="freddo" onclick="setZone('freddo')">
                   <span class="hero-zone-icon" aria-hidden="true">❄️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label"
-                    >Fredda</span
-                  >
+                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label">Fredda</span>
                   <small data-i18n="hero.zone_cold_hint">stagione corta</small>
                 </button>
-                <button
-                  class="hero-zone-btn active"
-                  data-zone="temperato"
-                  onclick="setZone('temperato')"
-                >
+                <button class="hero-zone-btn active" data-zone="temperato" onclick="setZone('temperato')">
                   <span class="hero-zone-icon" aria-hidden="true">🌤️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label"
-                    >Temperata</span
-                  >
+                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label">Temperata</span>
                   <small data-i18n="hero.zone_temp_hint">equilibrata</small>
                 </button>
-                <button
-                  class="hero-zone-btn"
-                  data-zone="caldo"
-                  onclick="setZone('caldo')"
-                >
+                <button class="hero-zone-btn" data-zone="caldo" onclick="setZone('caldo')">
                   <span class="hero-zone-icon" aria-hidden="true">☀️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label"
-                    >Calda</span
-                  >
+                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label">Calda</span>
                   <small data-i18n="hero.zone_warm_hint">stagione lunga</small>
                 </button>
               </div>
             </div>
             <div class="hero-ctrl-block">
               <span class="hero-controls-hint" id="heroHeatedLabel">Riscaldamento spento</span>
-              <button
-                class="hero-heated-btn"
-                id="heroHeatedBtn"
-                onclick="toggleHeated()"
-              >
-                <span class="hero-heat-track" aria-hidden="true"
-                  ><span class="hero-heat-dot"></span
-                ></span>
+              <button class="hero-heated-btn" id="heroHeatedBtn" onclick="toggleHeated()">
+                <span class="hero-heat-track" aria-hidden="true"><span class="hero-heat-dot"></span></span>
                 <span data-i18n="hero.greenhouse_label">Riscaldamento serra</span>
               </button>
             </div>
           </div>
           <span class="hero-filter-note" id="heroFilterNote"></span>
         </div>
-        <!-- Configuratore: azione principale e dominante dell'hero. -->
+
+        <!-- Configuratore: card originale con i suoi CTA -->
         <div class="hero-cfg">
           <div class="hero-cfg-inner">
             <div class="hero-cfg-text">
@@ -208,93 +194,51 @@
                 Progetta la tua serra, vista dall'alto
               </h2>
               <p class="hero-cfg-desc" data-i18n="hero.cfg_desc">
-                Misure reali, clima e colture disposte aiuola per aiuola. Vedi
-                com'è prima ancora di seminare.
+                Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.
               </p>
               <div class="hero-cfg-actions">
-                <button
-                  class="hero-cfg-cta"
-                  type="button"
-                  id="cfgOpenBtn"
-                  aria-expanded="false"
-                  aria-controls="cfgLevels"
-                  onclick="toggleCfgLevels()"
-                >
+                <button class="hero-cfg-cta" type="button" id="cfgOpenBtn"
+                  aria-expanded="false" aria-controls="cfgLevels" onclick="toggleCfgLevels()">
                   <span class="hero-cfg-cta-ico" aria-hidden="true">📐</span>
                   <span data-i18n="hero.cfg_cta">Apri il configuratore</span>
                   <span class="hero-cfg-cta-arrow" aria-hidden="true">▾</span>
                 </button>
-                <div
-                  class="hero-cfg-levels"
-                  id="cfgLevels"
-                  role="group"
-                  aria-label="Scegli il livello"
-                  hidden
-                >
-                  <span
-                    class="hero-cfg-levels-title"
-                    data-i18n="hero.cfg_levels_title"
-                    >Che tipo di coltivatore sei?</span
-                  >
+                <div class="hero-cfg-levels" id="cfgLevels" role="group"
+                  aria-label="Scegli il livello" hidden>
+                  <span class="hero-cfg-levels-title" data-i18n="hero.cfg_levels_title">Che tipo di coltivatore sei?</span>
                   <div class="hero-cfg-levels-grid">
-                    <a
-                      class="hero-cfg-level"
-                      href="configuratore.html?livello=novizio&preset=principiante&guided=1"
-                    >
+                    <a class="hero-cfg-level" href="configuratore.html?livello=novizio&preset=principiante&guided=1">
                       <span class="hero-cfg-level-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"></span>
                       <span class="hero-cfg-level-body">
                         <b data-i18n="hero.cfg_novizio">Principiante</b>
-                        <small data-i18n="hero.cfg_nov_hint"
-                          >Orto pronto, guidato passo passo</small
-                        >
+                        <small data-i18n="hero.cfg_nov_hint">Orto pronto, guidato passo passo</small>
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true"
-                        >→</span
-                      >
+                      <span class="hero-cfg-level-arrow" aria-hidden="true">→</span>
                     </a>
-                    <a
-                      class="hero-cfg-level"
-                      href="configuratore.html?livello=intermedio&guided=1"
-                    >
+                    <a class="hero-cfg-level" href="configuratore.html?livello=intermedio&guided=1">
                       <span class="hero-cfg-level-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"></span>
                       <span class="hero-cfg-level-body">
-                        <b data-i18n="hero.cfg_intermedio">Con esperienza</b>
-                        <small data-i18n="hero.cfg_int_hint"
-                          >Guidato, ma personalizzabile</small
-                        >
+                        <b data-i18n="hero.cfg_intermedio">Intermedio</b>
+                        <small data-i18n="hero.cfg_int_hint">Guidato, ma personalizzabile</small>
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true"
-                        >→</span
-                      >
+                      <span class="hero-cfg-level-arrow" aria-hidden="true">→</span>
                     </a>
-                    <a
-                      class="hero-cfg-level"
-                      href="configuratore.html?livello=esperto&mode=expert&empty=1"
-                    >
+                    <a class="hero-cfg-level" href="configuratore.html?livello=esperto&mode=expert&empty=1">
                       <span class="hero-cfg-level-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"></span>
                       <span class="hero-cfg-level-body">
                         <b data-i18n="hero.cfg_esperto">Esperto</b>
-                        <small data-i18n="hero.cfg_exp_hint"
-                          >Catalogo completo, scelta libera</small
-                        >
+                        <small data-i18n="hero.cfg_exp_hint">Catalogo completo, scelta libera</small>
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true"
-                        >→</span
-                      >
+                      <span class="hero-cfg-level-arrow" aria-hidden="true">→</span>
                     </a>
                   </div>
                 </div>
                 <a class="hero-cfg-catalog-link" href="#stagione">
-                  <span data-i18n="hero.cfg_or"
-                    >oppure sfoglia il catalogo semi</span
-                  >
-                  <span class="hero-cfg-catalog-arrow" aria-hidden="true"
-                    >→</span
-                  >
+                  <span data-i18n="hero.cfg_or">oppure sfoglia il catalogo semi</span>
+                  <span class="hero-cfg-catalog-arrow" aria-hidden="true">→</span>
                 </a>
               </div>
             </div>
-
             <div class="hero-cfg-visual" aria-hidden="true">
               <div class="hcg">
                 <div class="hcg-glass">
@@ -307,9 +251,7 @@
                     <div class="hcg-peek-inner" id="hcgPeekInner"></div>
                   </div>
                 </div>
-                <span class="hcg-caption" data-i18n="hero.cfg_caption"
-                  >Anteprima · vista dall'alto</span
-                >
+                <span class="hcg-caption" data-i18n="hero.cfg_caption">Anteprima · vista dall'alto</span>
               </div>
             </div>
           </div>
@@ -679,117 +621,48 @@
       <div class="footer-main">
         <div class="footer-brand-col">
           <div class="footer-logo-row">
-            <img
-              class="footer-logo"
-              src="assets/img/svg/logo.svg"
-              alt="Orto in Serra"
-            />
+            <img class="footer-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra"/>
             <span class="footer-brand-name">Orto in Serra</span>
           </div>
-          <div class="footer-motto">
-            "Pianta con cura,<br />raccogli con gioia."
-          </div>
+          <div class="footer-motto">"Pianta con cura, raccogli con gioia."</div>
           <div class="footer-social">
-            <a href="#" title="Instagram" aria-label="Instagram">&#x1F4F7;</a>
-            <a href="#" title="Facebook" aria-label="Facebook">f</a>
-            <a href="#" title="YouTube" aria-label="YouTube">&#9654;</a>
-            <a href="#" title="Pinterest" aria-label="Pinterest">P</a>
+            <a href="#" title="Instagram" aria-label="Instagram"><img src="assets/img/svg/icon-instagram.svg" alt="" class="footer-social-icon"></a>
+            <a href="#" title="Facebook" aria-label="Facebook"><img src="assets/img/svg/icon-facebook.svg" alt="" class="footer-social-icon"></a>
+            <a href="#" title="YouTube" aria-label="YouTube"><img src="assets/img/svg/icon-youtube.svg" alt="" class="footer-social-icon"></a>
           </div>
-          <div class="footer-company-info">
-            Orto in Serra S.r.l. · P.IVA 07123456789<br />
-            Via delle Serre 42, 50023 Impruneta (FI)
+          <div class="footer-tip-inline">
+            <div class="footer-tip-kicker" data-i18n="footer.consiglio_kicker">Consiglio del mese</div>
+            <div class="footer-tip-text" id="footerTip">Caricamento...</div>
           </div>
-        </div>
-        <div class="footer-tip-col">
-          <div class="footer-tip-kicker" data-i18n="footer.consiglio_kicker">
-            Consiglio del mese
-          </div>
-          <div class="footer-tip-text" id="footerTip">Caricamento...</div>
         </div>
         <div class="footer-nav-col">
           <div class="footer-nav-title" data-i18n="footer.esplora">Esplora</div>
           <ul class="footer-nav-list">
-            <li>
-              <a href="configuratore.html"
-                >📐
-                <span data-i18n="nav.configuratore"
-                  >Configuratore Serra</span
-                ></a
-              >
-            </li>
-            <li>
-              <a href="#abbinamenti"
-                >🌿&nbsp;<span data-i18n="nav.abbinamenti">Abbinamenti</span></a
-              >
-            </li>
-            <li>
-              <a href="#kit"
-                >📦&nbsp;<span data-i18n="footer.kit">Kit del mese</span></a
-              >
-            </li>
-            <li>
-              <a href="#contatti"
-                >✉️&nbsp;<span data-i18n="nav.contatti">Contatti</span></a
-              >
-            </li>
+            <li><a href="configuratore.html"><span data-i18n="nav.configuratore">📐 Configuratore</span></a></li>
+            <li><a href="#abbinamenti"><span data-i18n="nav.abbinamenti">🌿 Abbinamenti</span></a></li>
+            <li><a href="#kit"><span data-i18n="footer.kit">📦 Kit del mese</span></a></li>
+            <li><a href="#contatti"><span data-i18n="nav.contatti">✉️ Contatti</span></a></li>
           </ul>
         </div>
         <div class="footer-nav-col">
           <div class="footer-legal-title" data-i18n="footer.legale">Legale</div>
           <ul class="footer-legal-list">
-            <li>
-              <a href="#" onclick="return false;" data-i18n="footer.privacy"
-                >Privacy Policy</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="return false;" data-i18n="footer.cookie"
-                >Cookie Policy</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="return false;" data-i18n="footer.termini"
-                >Termini di Servizio</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                onclick="return false;"
-                data-i18n="footer.accessibilita"
-                >Accessibilità</a
-              >
-            </li>
+            <li><a href="#" onclick="return false;" data-i18n="footer.privacy">Privacy Policy</a></li>
+            <li><a href="#" onclick="return false;" data-i18n="footer.cookie">Cookie Policy</a></li>
+            <li><a href="#" onclick="return false;" data-i18n="footer.termini">Termini di Servizio</a></li>
           </ul>
           <div class="footer-support-block">
-            <div class="footer-nav-title" data-i18n="footer.supporto_title">
-              Supporto
-            </div>
+            <div class="footer-nav-title" data-i18n="footer.supporto_title">Supporto</div>
             <ul class="footer-legal-list">
-              <li>
-                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
-              </li>
+              <li><a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a></li>
               <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-gdpr-links">
-          <a href="#" onclick="return false;" data-i18n="footer.privacy"
-            >Privacy Policy</a
-          >
-          <a href="#" onclick="return false;" data-i18n="footer.cookie"
-            >Cookie Policy</a
-          >
-          <a href="#" onclick="return false;" data-i18n="footer.termini"
-            >Termini di Servizio</a
-          >
-        </div>
-        <div class="footer-gdpr-copy" id="footerCopy">
-          © 2025 Orto in Serra S.r.l. ·
-          <span data-i18n="footer.rights">Tutti i diritti riservati</span>
-        </div>
+        <div class="footer-company-info">Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023 Impruneta (FI)</div>
+        <div class="footer-gdpr-copy" id="footerCopy">© 2025 Orto in Serra · <span data-i18n="footer.rights">Tutti i diritti riservati</span></div>
       </div>
     </footer>
 
