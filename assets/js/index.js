@@ -901,11 +901,18 @@ function renderHero() {
 function renderCalendarStrip() {
   const strip = document.getElementById("monthStrip");
   const help = document.getElementById("monthStripHelp");
+  if (!strip) return;
   const planteLabel = currentLang === "ro" ? "plante" : "piante";
   const sowingLabel = currentLang === "ro" ? "de semănat" : "seminabili";
   const chooseLabel = currentLang === "ro" ? "alege luna" : "scegli mese";
   const selectedLabel = currentLang === "ro" ? "lună selectată" : "mese selezionato";
-  if (help) help.textContent = currentLang === "ro" ? "Derulează și alege luna" : "Scorri e scegli un mese";
+  const selectedCount = PLANTS.filter((p) => effectiveMonths(p).has(state.mese)).length;
+  if (help) {
+    help.textContent =
+      currentLang === "ro"
+        ? `${NOMI_MESI[state.mese - 1]} · ${selectedCount} plante potrivite`
+        : `${NOMI_MESI[state.mese - 1]} · ${selectedCount} piante adatte`;
+  }
   strip.innerHTML = Array.from(
     { length: 12 },
     (_, i) => {
@@ -972,7 +979,7 @@ function renderEditorialPlants() {
   const catalogStatus = document.getElementById("catalogStatus");
   if (catalogStatus) {
     const pills = [];
-    if (catalog.seasonOnly) pills.push({ kind: "scope", label: t("catalog.season_only") });
+    if (!catalog.seasonOnly) pills.push({ kind: "scope", label: t("catalog.filter_all_plants") });
     if (catalog.search) pills.push({ kind: "search", label: `"${catalog.search}"` });
     if (catalog.type) pills.push({ kind: "type", label: typeLabel(catalog.type) });
     if (catalog.easyOnly) pills.push({ kind: "easy", label: t("catalog.easy_only") });
@@ -1113,6 +1120,13 @@ function renderAbbinamenti() {
     }
     if (pairs.length >= 3) break;
   }
+  const summary = document.getElementById("companionsSummary");
+  if (summary) {
+    summary.textContent = tv("companions.summary", {
+      count: pairs.length,
+      month: NOMI_MESI[state.mese - 1]
+    });
+  }
   if (!pairs.length) {
     document.getElementById("abbinamenti-grid").innerHTML =
       `<div class="abbinamenti-empty" style="grid-column:1/-1">${t("companions.empty")}</div>`;
@@ -1130,6 +1144,7 @@ function renderAbbinamenti() {
       const [reason, badge] = ABBINAMENTO_REASONS[i] || ABBINAMENTO_REASONS[0];
       const pairInCart = inCart(aId) && inCart(bId);
       return `<div class="abbinamento-card${pairInCart ? " in-cart" : ""}">
+      <div class="abbin-card-topline"><span>${tv("companions.pair_number", { number: i + 1 })}</span><span>${badge}</span></div>
       <div class="abbinamento-photos">
         <div class="abbin-photo"><img src="${photoSrc(aId)}" alt="${plantName(aId)}" /></div>
         <div class="abbin-heart">💚</div>
@@ -1163,6 +1178,16 @@ function renderKit() {
     "{count}",
     avail.length
   );
+  const kitMetaRow = document.getElementById("kitMetaRow");
+  if (kitMetaRow) {
+    const fastCount = avail.filter((id) => BYID[id]?.gg && BYID[id].gg <= 45).length;
+    const easyCount = avail.filter((id) => EASY_IDS.has(id)).length;
+    kitMetaRow.innerHTML = `
+      <span><b>${avail.length}</b> ${t("catalog.seeds")}</span>
+      <span><b>${easyCount}</b> ${t("catalog.easy_only")}</span>
+      <span><b>${fastCount}</b> ${t("catalog.insight_fast")}</span>
+    `;
+  }
   document.getElementById("kitCompatText").textContent = t("kit.compat");
   document.getElementById("kitPhotos").innerHTML = avail
     .map((id) => {
@@ -1257,6 +1282,23 @@ function addKitToCart() {
   if (availableIds.length) showCartNudge(availableIds[0], true);
   openCart();
 }
+function addKitAndPlan() {
+  const kit = KITS[state.mese];
+  if (!kit) return;
+  const availableIds = kit.ids.filter(
+    (id) => BYID[id] && effectiveMonths(BYID[id]).has(state.mese)
+  );
+  availableIds.forEach((id) => {
+    if (!inCart(id)) cart.push({ id, bustine: 1 });
+  });
+  updateCartUI();
+  renderEditorialPlants();
+  renderAbbinamenti();
+  savePrefs();
+  if (availableIds.length) {
+    window.location.href = "configuratore.html?import=cart";
+  }
+}
 function removeFromCart(id) {
   cart = cart.filter(i => i.id !== id);
   updateCartUI();
@@ -1277,13 +1319,26 @@ function updateCartUI() {
   // Sezione configuratore: mostra suggerimento carrello se ci sono semi da importare.
   const confHint = document.getElementById("confCartHint");
   const confHintText = document.getElementById("confCartHintText");
+  const confImportBtn = document.getElementById("confImportBtn");
+  if (confImportBtn) {
+    const hasSeeds = cart.length > 0;
+    confImportBtn.classList.toggle("disabled", !hasSeeds);
+    confImportBtn.setAttribute("aria-disabled", String(!hasSeeds));
+    confImportBtn.tabIndex = hasSeeds ? 0 : -1;
+    if (hasSeeds) {
+      confImportBtn.href = "configuratore.html?import=cart";
+    } else {
+      confImportBtn.removeAttribute("href");
+    }
+  }
   if (confHint && confHintText) {
     if (cart.length > 0) {
       const label = cart.length === 1 ? t("conf.cart_hint_one") : tv("conf.cart_hint_many", { count: cart.length });
       confHintText.textContent = label;
       confHint.hidden = false;
     } else {
-      confHint.hidden = true;
+      confHintText.textContent = t("conf.cart_hint_empty");
+      confHint.hidden = false;
     }
   }
   const empty = document.getElementById("cartEmpty");
@@ -1645,7 +1700,7 @@ function syncCatalogControls() {
     const easyCountEl = easy.querySelector(".chip-count");
     if (easyCountEl) easyCountEl.textContent = easyCount;
   }
-  const anyExtra = catalog.search || catalog.type || catalog.easyOnly || catalog.seasonOnly || catalog.sort !== "season";
+  const anyExtra = catalog.search || catalog.type || catalog.easyOnly || !catalog.seasonOnly || catalog.sort !== "season";
   const resetBtn = document.getElementById("catalogReset");
   if (resetBtn) resetBtn.hidden = !anyExtra;
 }
@@ -1717,6 +1772,13 @@ function escapeHtml(value) {
     selectCatalogSearchSuggestion(btn.dataset.name);
   });
 })();
+(function setupDisabledImportGuard() {
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("#confImportBtn.disabled");
+    if (!link) return;
+    e.preventDefault();
+  });
+})();
 function clearCatalogSearch() {
   catalog.search = "";
   const input = document.getElementById("catalogSearch");
@@ -1727,7 +1789,7 @@ function clearCatalogSearch() {
   render();
 }
 function removeCatalogFilter(kind) {
-  if (kind === "scope") catalog.seasonOnly = false;
+  if (kind === "scope") catalog.seasonOnly = true;
   else if (kind === "search") {
     catalog.search = "";
     const input = document.getElementById("catalogSearch");
@@ -1978,19 +2040,6 @@ function acceptCookies() {
 function rejectCookies() {
   localStorage.setItem("ois.cookie", "essential");
   document.getElementById("cookieBanner").classList.remove("visible");
-}
-
-/* Contatti: simulazione invio form senza backend. */
-function submitContactForm(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector(".contatti-form-btn");
-  const orig = btn.textContent;
-  btn.textContent = currentLang === "ro" ? "✓ Trimis!" : "✓ Inviato!";
-  btn.style.background = "var(--green-lt)";
-  setTimeout(() => {
-    btn.textContent = orig;
-    btn.style.background = "";
-  }, 3000);
 }
 
 /* Torna su: mostra il pulsante dopo lo scroll. */

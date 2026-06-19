@@ -8,7 +8,7 @@
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-06-19-47";
+      window.SERRA_APP_VERSION = "2026-06-19-53";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -258,26 +258,9 @@
         </div>
       </div>
       <div class="hero-scroll-hint">
-        <span data-i18n="calendar.kicker">L'anno in serra</span>
+        <span data-i18n="catalog.kicker">Cosa piantare</span>
         <span class="hero-scroll-arrow">↓</span>
       </div>
-    </section>
-
-    <!-- Calendario: riepilogo mensile delle semine disponibili. -->
-    <section class="calendar-section">
-      <div class="section-kicker" data-i18n="calendar.kicker">
-        L'anno in serra
-      </div>
-      <div
-        class="section-heading calendar-heading"
-        data-i18n="calendar.heading"
-      >
-        Quante piante puoi seminare ogni mese
-      </div>
-      <div class="month-strip-help" id="monthStripHelp">
-        Scorri e scegli un mese
-      </div>
-      <div class="month-strip" id="monthStrip"></div>
     </section>
 
     <!-- Catalogo semi: ricerca, filtri e lista piante per acquisto diretto. -->
@@ -293,85 +276,117 @@
 
         <!-- Barra filtri -->
         <div class="catalog-tools catalog-tools--pro catalog-tools--advanced" aria-label="Filtri catalogo semi">
+          <div class="catalog-filter-group catalog-filter-group--month">
+            <div class="catalog-filter-group-head">
+              <span class="catalog-filter-step">1</span>
+              <div>
+                <span class="catalog-filter-label" data-i18n="calendar.kicker">L'anno in serra</span>
+                <strong id="monthStripHelp">Scorri e scegli un mese</strong>
+              </div>
+            </div>
+            <div class="catalog-month-filter" aria-label="Filtro mese">
+              <div class="month-strip" id="monthStrip"></div>
+            </div>
+          </div>
 
-          <!-- Filtro per tipo: chip scrollabili generati da JS -->
-          <div class="catalog-category-rail" id="catalogCategoryRail"></div>
+          <div class="catalog-filter-row">
+            <div class="catalog-filter-group catalog-filter-group--type">
+              <div class="catalog-filter-group-head">
+                <span class="catalog-filter-step">2</span>
+                <div>
+                  <span class="catalog-filter-label" data-i18n="catalog.filter_type_label">Tipo</span>
+                  <strong data-i18n="catalog.filter_type_hint">Scegli una famiglia</strong>
+                </div>
+              </div>
+              <!-- Filtro per tipo: chip scrollabili generati da JS -->
+              <div class="catalog-category-rail" id="catalogCategoryRail"></div>
+            </div>
 
-          <!-- Riga search + sort + ambito -->
-          <div class="cat-bar">
-            <label class="catalog-search catalog-search--pro">
-              <span class="catalog-search-box">
-                <span class="catalog-search-icon" aria-hidden="true">⌕</span>
-                <input
-                  id="catalogSearch"
-                  type="search"
-                  autocomplete="off"
-                  data-i18n-placeholder="catalog.search_placeholder"
-                  placeholder="Pomodoro, basilico, lattuga..."
-                  oninput="setCatalogSearch(this.value)"
-                  onfocus="updateCatalogSearchSuggestions()"
-                  onblur="setTimeout(hideCatalogSearchSuggestions, 150)"
-                  role="combobox"
-                  aria-expanded="false"
-                  aria-autocomplete="list"
-                  aria-controls="catalogSearchSuggestions"
-                />
-                <button
-                  type="button"
-                  class="catalog-search-clear"
-                  onclick="clearCatalogSearch()"
-                  aria-label="Cancella ricerca"
-                >✕</button>
-              </span>
-              <ul id="catalogSearchSuggestions" class="catalog-search-suggestions" role="listbox" hidden></ul>
-            </label>
+            <!-- Riga search + sort + ambito -->
+            <div class="catalog-filter-group catalog-filter-group--search">
+              <div class="catalog-filter-group-head">
+                <span class="catalog-filter-step">3</span>
+                <div>
+                  <span class="catalog-filter-label" data-i18n="catalog.filter_search_label">Ricerca</span>
+                  <strong data-i18n="catalog.filter_search_hint">Affina i risultati</strong>
+                </div>
+              </div>
+              <div class="cat-bar">
+                <label class="catalog-search catalog-search--pro">
+                  <span class="catalog-search-box">
+                    <span class="catalog-search-icon" aria-hidden="true">⌕</span>
+                    <input
+                      id="catalogSearch"
+                      type="search"
+                      autocomplete="off"
+                      data-i18n-placeholder="catalog.search_placeholder"
+                      placeholder="Pomodoro, basilico, lattuga..."
+                      oninput="setCatalogSearch(this.value)"
+                      onfocus="updateCatalogSearchSuggestions()"
+                      onblur="setTimeout(hideCatalogSearchSuggestions, 150)"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      aria-controls="catalogSearchSuggestions"
+                    />
+                    <button
+                      type="button"
+                      class="catalog-search-clear"
+                      onclick="clearCatalogSearch()"
+                      aria-label="Cancella ricerca"
+                    >✕</button>
+                  </span>
+                  <ul id="catalogSearchSuggestions" class="catalog-search-suggestions" role="listbox" hidden></ul>
+                </label>
 
-            <select
-              id="catalogSort"
-              class="cat-sort-select"
-              onchange="setCatalogSort(this.value)"
-              aria-label="Ordina per"
-            >
-              <option value="season" data-i18n="catalog.sort_season">Consigliati</option>
-              <option value="name" data-i18n="catalog.sort_name">Nome A-Z</option>
-              <option value="fast" data-i18n="catalog.sort_fast">Raccolta più veloce</option>
-              <option value="yield" data-i18n="catalog.sort_yield">Resa più alta</option>
-              <option value="distance" data-i18n="catalog.sort_distance">Più compatti</option>
-              <option value="price" data-i18n="catalog.sort_price">Prezzo più basso</option>
-            </select>
+                <select
+                  id="catalogSort"
+                  class="cat-sort-select"
+                  onchange="setCatalogSort(this.value)"
+                  aria-label="Ordina per"
+                >
+                  <option value="season" data-i18n="catalog.sort_season">Consigliati</option>
+                  <option value="name" data-i18n="catalog.sort_name">Nome A-Z</option>
+                  <option value="fast" data-i18n="catalog.sort_fast">Raccolta più veloce</option>
+                  <option value="yield" data-i18n="catalog.sort_yield">Resa più alta</option>
+                  <option value="distance" data-i18n="catalog.sort_distance">Più compatti</option>
+                  <option value="price" data-i18n="catalog.sort_price">Prezzo più basso</option>
+                </select>
 
-            <!-- Select tipo: nascosto visivamente, usato dal JS per sincronizzare lo stato -->
-            <select id="catalogType" onchange="setCatalogType(this.value)" aria-hidden="true" style="display:none">
-              <option value=""></option>
-              <option value="frutto">frutto</option>
-              <option value="foglia">foglia</option>
-              <option value="radice">radice</option>
-              <option value="legume">legume</option>
-              <option value="aromatica">aromatica</option>
-            </select>
+                <!-- Select tipo: nascosto visivamente, usato dal JS per sincronizzare lo stato -->
+                <select id="catalogType" onchange="setCatalogType(this.value)" aria-hidden="true" style="display:none">
+                  <option value=""></option>
+                  <option value="frutto">frutto</option>
+                  <option value="foglia">foglia</option>
+                  <option value="radice">radice</option>
+                  <option value="legume">legume</option>
+                  <option value="aromatica">aromatica</option>
+                </select>
 
-            <div class="catalog-scope catalog-scope--advanced" aria-label="Ambito catalogo">
-              <button class="catalog-chip active" id="catalogSeasonOnly" type="button"
-                onclick="toggleCatalogSeasonOnly()" aria-pressed="true">
-                <span class="chip-ico" aria-hidden="true">📅</span>
-                <span class="chip-lbl" data-i18n="catalog.season_only">Adatti adesso</span>
-                <span class="chip-count" aria-hidden="true">—</span>
-              </button>
-              <button class="catalog-chip" id="catalogAllToggle" type="button"
-                onclick="toggleCatalogFull()" aria-pressed="false">
-                <span class="chip-lbl" data-i18n="catalog.filter_all_plants">Tutto il catalogo</span>
-                <span class="chip-count" aria-hidden="true">—</span>
-              </button>
-              <button class="catalog-chip" id="catalogEasyOnly" type="button"
-                onclick="toggleCatalogEasyOnly()" aria-pressed="false">
-                <span class="chip-ico" aria-hidden="true">⭐</span>
-                <span class="chip-lbl" data-i18n="catalog.easy_only">Facili</span>
-                <span class="chip-count" aria-hidden="true">—</span>
-              </button>
-              <button class="catalog-reset-btn" id="catalogReset" type="button"
-                onclick="showFullCatalog()" data-i18n="catalog.reset" hidden>
-                ✕ Azzera
-              </button>
+                <div class="catalog-scope catalog-scope--advanced" aria-label="Ambito catalogo">
+                  <button class="catalog-chip active" id="catalogSeasonOnly" type="button"
+                    onclick="toggleCatalogSeasonOnly()" aria-pressed="true">
+                    <span class="chip-ico" aria-hidden="true">📅</span>
+                    <span class="chip-lbl" data-i18n="catalog.season_only">Adatti adesso</span>
+                    <span class="chip-count" aria-hidden="true">—</span>
+                  </button>
+                  <button class="catalog-chip" id="catalogAllToggle" type="button"
+                    onclick="toggleCatalogFull()" aria-pressed="false">
+                    <span class="chip-lbl" data-i18n="catalog.filter_all_plants">Tutto il catalogo</span>
+                    <span class="chip-count" aria-hidden="true">—</span>
+                  </button>
+                  <button class="catalog-chip" id="catalogEasyOnly" type="button"
+                    onclick="toggleCatalogEasyOnly()" aria-pressed="false">
+                    <span class="chip-ico" aria-hidden="true">⭐</span>
+                    <span class="chip-lbl" data-i18n="catalog.easy_only">Facili</span>
+                    <span class="chip-count" aria-hidden="true">—</span>
+                  </button>
+                  <button class="catalog-reset-btn" id="catalogReset" type="button"
+                    onclick="showFullCatalog()" data-i18n="catalog.reset" hidden>
+                    ✕ Azzera
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -392,18 +407,25 @@
     <!-- Abbinamenti: compatibilità utili tra colture. -->
     <section class="abbinamenti-section" id="abbinamenti">
       <div class="abbinamenti-inner">
-        <div class="section-kicker" data-i18n="companions.kicker">
-          Botanica relazionale
-        </div>
-        <div
-          class="section-heading companions-heading"
-          data-i18n="companions.heading"
-        >
-          Si amano in serra
-        </div>
-        <div class="companions-copy" data-i18n="companions.copy">
-          Piante che crescono meglio vicine: benefici reciproci, parassiti
-          allontanati, resa più alta.
+        <div class="flow-section-head">
+          <div>
+            <div class="section-kicker" data-i18n="companions.kicker">
+              Botanica relazionale
+            </div>
+            <div
+              class="section-heading companions-heading"
+              data-i18n="companions.heading"
+            >
+              Si amano in serra
+            </div>
+            <div class="companions-copy" data-i18n="companions.copy">
+              Piante che crescono meglio vicine: benefici reciproci, parassiti
+              allontanati, resa più alta.
+            </div>
+          </div>
+          <div class="flow-head-note" id="companionsSummary">
+            Coppie aggiornate sul mese selezionato
+          </div>
         </div>
         <div class="abbinamenti-grid" id="abbinamenti-grid"></div>
       </div>
@@ -411,24 +433,31 @@
 
     <!-- Kit del mese: gruppo di semi già compatibili. -->
     <section class="kit-section" id="kit">
-      <div class="section-kicker" data-i18n="kit.kicker">
-        Già compatibili tra loro
-      </div>
-      <div class="section-heading" id="kitHeading">Kit del mese</div>
       <div class="kit-card">
         <div class="kit-info">
+          <div class="section-kicker" data-i18n="kit.kicker">
+            Già compatibili tra loro
+          </div>
+          <div class="section-heading" id="kitHeading">Kit del mese</div>
           <div class="kit-name" id="kitTitle">Kit Estivo in Serra</div>
           <div class="kit-desc" id="kitDesc">
             Sei varietà già compatibili tra loro, perfette per iniziare questo
             mese.
           </div>
-          <button
-            class="kit-cta-btn"
-            onclick="addKitToCart()"
-            data-i18n="kit.add_all"
-          >
-            + Aggiungi tutto al carrello
-          </button>
+          <div class="kit-meta-row" id="kitMetaRow"></div>
+          <div class="kit-actions">
+            <button
+              class="kit-cta-btn"
+              onclick="addKitToCart()"
+              data-i18n="kit.add_all"
+            >
+              + Aggiungi tutto al carrello
+            </button>
+            <button class="kit-plan-link" type="button" onclick="addKitAndPlan()">
+              <span data-i18n="kit.plan_link">Aggiungi kit e pianifica</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
           <div class="kit-compat-note">
             <div class="kit-compat-dot"></div>
             <span id="kitCompatText"
@@ -443,7 +472,11 @@
     <!-- Configuratore CTA: rimando alla progettazione della serra. -->
     <section class="conf-section">
       <div class="conf-card">
-        <div class="conf-icon-col" aria-hidden="true">📐</div>
+        <div class="conf-visual" aria-hidden="true">
+          <div class="conf-visual-bed conf-visual-bed--lg"></div>
+          <div class="conf-visual-bed"></div>
+          <div class="conf-visual-bed conf-visual-bed--sm"></div>
+        </div>
         <div class="conf-text">
           <div class="conf-eyebrow" data-i18n="conf.kicker">
             Configuratore Serra
@@ -451,6 +484,9 @@
           <div class="conf-title" data-i18n="conf.title">
             Pianifica la tua serra dall'alto
           </div>
+          <p class="conf-desc" data-i18n="conf.desc">
+            Inserisci misure, mese e zona: il configuratore ti mostra cosa seminare, dove metterlo e quanti semi preparare.
+          </p>
           <div class="conf-features">
             <span class="conf-feature-chip">📐&nbsp;<span data-i18n="conf.feature_measures">Misure reali</span></span>
             <span class="conf-feature-chip">🌱&nbsp;<span data-i18n="conf.feature_spacing">Spaziatura</span></span>
@@ -468,9 +504,9 @@
           <div class="conf-import-block">
             <span class="conf-import-block-label" data-i18n="conf.import_label">Hai già dei semi nel carrello?</span>
             <a
-              href="configuratore.html?import=cart"
-              class="conf-btn secondary conf-import-btn"
+              class="conf-btn secondary conf-import-btn disabled"
               id="confImportBtn"
+              aria-disabled="true"
               ><span aria-hidden="true">📐</span> <span data-i18n="conf.import">Importa carrello nel piano</span> →</a
             >
             <div class="conf-cart-hint" id="confCartHint" hidden>
@@ -481,7 +517,7 @@
       </div>
     </section>
 
-    <!-- Contatti: recapiti, mappa statica e form messaggio. -->
+    <!-- Contatti: recapiti diretti e mappa statica. -->
     <section class="contatti-section" id="contatti">
       <div class="contatti-inner">
         <div class="section-kicker" data-i18n="contatti.kicker">Parlaci</div>
@@ -550,64 +586,18 @@
                 </div>
               </div>
             </div>
-            <div class="contatti-map-placeholder">
-              <div class="map-placeholder-inner">
-                <span class="map-pin">📍</span>
-                <div>
-                  <div class="map-address">Via delle Serre 42</div>
-                  <div class="map-city">50023 Impruneta (FI) — Toscana</div>
-                  <span class="contatti-map-note" data-i18n="contatti.map_note"
-                    >Mappa interattiva prossimamente</span
-                  >
-                </div>
+          </div>
+          <div class="contatti-map-placeholder">
+            <div class="map-placeholder-inner">
+              <span class="map-pin">📍</span>
+              <div>
+                <div class="map-address">Via delle Serre 42</div>
+                <div class="map-city">50023 Impruneta (FI) — Toscana</div>
+                <span class="contatti-map-note" data-i18n="contatti.map_note"
+                  >Mappa interattiva prossimamente</span
+                >
               </div>
             </div>
-          </div>
-          <div>
-            <form class="contatti-form" onsubmit="submitContactForm(event)">
-              <div class="contatti-form-group">
-                <label data-i18n="contatti.form.nome">Nome</label>
-                <input
-                  type="text"
-                  placeholder="Mario Rossi"
-                  data-i18n-placeholder="contatti.placeholder.nome"
-                  required
-                />
-              </div>
-              <div class="contatti-form-group">
-                <label data-i18n="contatti.form.email">Email</label>
-                <input
-                  type="email"
-                  placeholder="mario@example.com"
-                  data-i18n-placeholder="contatti.placeholder.email"
-                  required
-                />
-              </div>
-              <div class="contatti-form-group">
-                <label data-i18n="contatti.form.oggetto">Oggetto</label>
-                <input
-                  type="text"
-                  placeholder="Ho una domanda sulla serra..."
-                  data-i18n-placeholder="contatti.placeholder.oggetto"
-                />
-              </div>
-              <div class="contatti-form-group">
-                <label data-i18n="contatti.form.messaggio">Messaggio</label>
-                <textarea
-                  rows="5"
-                  placeholder="Scrivi qui il tuo messaggio..."
-                  data-i18n-placeholder="contatti.placeholder.messaggio"
-                  required
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                class="contatti-form-btn"
-                data-i18n="contatti.form.invia"
-              >
-                Invia messaggio
-              </button>
-            </form>
           </div>
         </div>
       </div>
