@@ -7,22 +7,59 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
+    <script>
+      window.SERRA_APP_VERSION = "2026-06-19-47";
+      window.SERRA_IS_LOCAL_DEV =
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1" ||
+        location.hostname === "0.0.0.0" ||
+        location.hostname === "::1" ||
+        location.hostname === "";
+      window.SERRA_ASSET_VERSION = window.SERRA_IS_LOCAL_DEV
+        ? String(Date.now())
+        : window.SERRA_APP_VERSION;
+      window.serraAsset = function (path) {
+        return path + "?v=" + window.SERRA_ASSET_VERSION;
+      };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="assets/img/icons/logo-180.png"
-    />
-    <link rel="manifest" href="manifest.json" />
+    <script>
+      document.write(
+        '<link rel="icon" href="' +
+          serraAsset("assets/img/icons/logo-192.png") +
+          '" type="image/png" />'
+      );
+    </script>
+    <script>
+      document.write(
+        '<link rel="apple-touch-icon" sizes="180x180" href="' +
+          serraAsset("assets/img/icons/logo-180.png") +
+          '" />'
+      );
+    </script>
+    <script>
+      document.write(
+        '<link rel="manifest" href="' + serraAsset("manifest.json") + '" />'
+      );
+    </script>
     <meta name="theme-color" content="#2f6b3a" />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Outfit:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/index.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <script>
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/index.css") +
+          '" />'
+      );
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/style.css") +
+          '" />'
+      );
+    </script>
   </head>
   <body>
     <!-- Header: navigazione principale, lingua e carrello. -->
@@ -1155,10 +1192,12 @@
     </footer>
 
     <!-- Script pagina: menu, traduzioni e logica configuratore. -->
-    <script src="assets/js/nav.js"></script>
-    <script src="assets/js/i18n.js"></script>
-    <script src="assets/js/plants-data.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script>
+      document.write('<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>');
+      document.write('<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>');
+      document.write('<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>');
+      document.write('<script src="' + serraAsset("assets/js/script.js") + '"><\/script>');
+    </script>
     <!-- Torna su: mostra il pulsante dopo lo scroll. -->
     <script>
       window.addEventListener(
@@ -1208,7 +1247,7 @@
             })
             .catch(() => {});
         } else {
-          navigator.serviceWorker.register("./sw.js", {
+          navigator.serviceWorker.register(serraAsset("./sw.js"), {
             updateViaCache: "none"
           });
         }

@@ -97,6 +97,13 @@ const DIFFICULTY = {
   tomatillo:3, physalis:3, kiwano:3, cucamelon:3, stevia_dolce:3,
   shiso:3
 };
+
+// Colture difficili perche poco comuni o esotiche: il principiante non le
+// riceve nemmeno nel fallback delle stagioni con poche alternative.
+const EXOTIC_PLANTS = new Set([
+  "mais_dolce", "gombo", "tomatillo", "physalis", "kiwano", "cucamelon",
+  "stevia_dolce", "shiso"
+]);
 const CAT_ORDER = [
   { key:"frutti",     label:"Frutti & ortaggi",  ids:["pomodoro","peperone","peperoncino","melanzana","zucchina","zucca","cetriolo","melone","anguria","fragola","mais_dolce","gombo","tomatillo","physalis","kiwano","cucamelon"] },
   { key:"foglie",     label:"Insalate & foglie",  ids:["lattuga","rucola","spinaci","bietola","cicoria","indivia","pakchoi","valerianella","radicchio","loboda","stevia_dolce","asparago","carciofo","cardo","crescione","mizuna","senape_foglia","tatsoi","cavolo_cinese","cavolo_rosso","broccolo_rapa"] },
@@ -1359,6 +1366,8 @@ const state = {
   autoPlan: true,
   overlay: "",
   selected: -1,
+  autoPlanNotice: "",
+  manualPlanNotice: "",
   // Livello/persona dell'utente: "novizio" | "intermedio" | "esperto".
   // Guida quanta UI mostrare e quanto automatizzare il flusso.
   livello: "intermedio"
@@ -1510,9 +1519,15 @@ function setMode(mode, scroll = false) {
   });
   document.querySelectorAll("[data-mode-section]").forEach((section) => {
     const sectionMode = section.dataset.modeSection;
+    const showGuidedCustomize =
+      next === "fit" &&
+      (state.livello === "novizio" || state.livello === "intermedio") &&
+      sectionMode === "expert";
     section.classList.toggle(
       "is-active",
-      sectionMode === next || (next === "expert" && sectionMode === "fit")
+      sectionMode === next ||
+        showGuidedCustomize ||
+        (next === "expert" && sectionMode === "fit")
     );
   });
   const yieldPanel = document.getElementById("panelYield");
@@ -1584,6 +1599,7 @@ function chooseLivello(liv) {
     // Novizio: serra pronta, solo colture di stagione, percorso lineare al carrello.
     vegFilter = "in";
     state.autoPlan = true;
+    resetNoviceAdvancedOptions();
     autoFill();
     syncVegFilterTabs();
     collapseSettingsPanelAfterAutoPlan();
@@ -1598,6 +1614,13 @@ function syncVegFilterTabs() {
   document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.filter === vegFilter);
   });
+}
+
+function resetNoviceAdvancedOptions() {
+  state.path = 60;
+  state.overlay = "";
+  syncSizeControls();
+  syncOverlaySelectLabel();
 }
 
 function normalizeVegSearchText(value) {
@@ -1843,6 +1866,7 @@ function syncOverlaySelectLabel() {
   const select = document.getElementById("inOverlay");
   const label = document.getElementById("viewModeValue");
   if (!select || !label) return;
+  select.value = state.overlay || "";
   label.textContent =
     select.options[select.selectedIndex]?.textContent || tx("viewNatural");
 }
@@ -2887,7 +2911,6 @@ function vegCardHTML(p, inb, outOfSeason = false) {
     const bed = state.beds.find(b => b.plantId === p.id);
     const count = bed ? bed.count : 0;
     const locked = Boolean(bed?.countLocked);
-    const sliderMax = quantitySliderMax(p, count);
     const lockBadge = locked
       ? `<span class="veg-lock-badge">${tx("qtyLocked")}</span>`
       : `<span class="veg-auto-badge">${tx("qtyAuto")}</span>`;
@@ -2916,7 +2939,6 @@ function vegCardHTML(p, inb, outOfSeason = false) {
         <input class="veg-qty-input" type="number" min="1" step="1" inputmode="numeric" value="${count}" data-veg-count-input="${p.id}" aria-label="${tx("qtyInputAria")} ${plantText(p, "nome")}">
         <button class="veg-step" data-veg-cnt="1" data-veg-plant="${p.id}" aria-label="${tx("qtyIncrease")}">+</button>
       </div>
-      <input class="veg-qty-slider" type="range" min="1" max="${sliderMax}" step="1" value="${Math.min(count, sliderMax)}" data-veg-count-range="${p.id}" aria-label="${tx("qtySliderAria")} ${plantText(p, "nome")}">
     </div>
   </div>`;
   }
@@ -2938,6 +2960,9 @@ function vegCardHTML(p, inb, outOfSeason = false) {
 
 function renderVegList() {
   updateVegSearchUI();
+  if (state.livello === "novizio" && vegFilter !== "in") {
+    vegFilter = "in";
+  }
   const sem = seminabili();
   const present = new Set(state.beds.map(b => b.plantId));
 
@@ -3020,7 +3045,19 @@ function renderVegList() {
     }
     return plantText(a, "nome").localeCompare(plantText(b, "nome"), locale);
   });
-  vl.innerHTML = filtered.map(p => vegCardHTML(p, present.has(p.id), !semSet.has(p.id))).join("");
+  const noviceUpgrade =
+    state.livello === "novizio"
+      ? `<div class="novice-crops-note">
+          <div>
+            <b>${tx("noviceCropsNoteTitle")}</b>
+            <span>${tx("noviceCropsNoteText")}</span>
+          </div>
+          <button type="button" data-upgrade-level="intermedio">${tx("noviceCropsUpgrade")}</button>
+        </div>`
+      : "";
+  vl.innerHTML =
+    noviceUpgrade +
+    filtered.map(p => vegCardHTML(p, present.has(p.id), !semSet.has(p.id))).join("");
 }
 
 function updateCropActionControls() {
@@ -3523,6 +3560,10 @@ function renderWarnings(L) {
   });
   if (L.overflow)
     out += `<div class="warn bad"><span class="i">📏</span><div>${tx("overflowWarning")}</div></div>`;
+  if (state.autoPlanNotice)
+    out += `<div class="warn tip"><span class="i">ℹ️</span><div>${tx(state.autoPlanNotice)}</div></div>`;
+  if (state.manualPlanNotice)
+    out += `<div class="warn tip"><span class="i">ℹ️</span><div>${tx(state.manualPlanNotice)}</div></div>`;
   // suggerimenti amiche presenti
   const goodPairs = [];
   const seen2 = new Set();
@@ -3847,18 +3888,6 @@ function defaultCount(p) {
   return Math.max(minimumCountForPlant(p), countForPlant(p, targetRowsForPlant(p)));
 }
 
-function quantitySliderMax(p, count = 1) {
-  if (!p) return Math.max(60, count * 2);
-  const row = Math.max(1, rowSizeForPlant(p));
-  const baseline = Math.max(
-    defaultCount(p),
-    minimumCountForPlant(p) * 4,
-    row * 14,
-    80
-  );
-  return Math.ceil(Math.max(baseline, count * 2));
-}
-
 function starterCountForAutoPlant(p, useFila = false) {
   if (useFila) return countForFilaPlant(p);
   return Math.max(
@@ -3952,6 +3981,7 @@ function sortBedsForLayout() {
    Con preserveLockedCounts=true non tocca le quantita impostate a mano. */
 function shrinkOverflowToFit(options = {}) {
   const preserveLockedCounts = options.preserveLockedCounts === true;
+  const allowRemove = options.allowRemove !== false;
   let guard = 0;
   while (computeLayout().overflow && guard < 700) {
     const candidates = state.beds
@@ -3973,13 +4003,15 @@ function shrinkOverflowToFit(options = {}) {
       const step = rowSizeForPlant(largest.plant);
       const minCount = Math.max(rowSizeForPlant(largest.plant), minimumCountForPlant(largest.plant));
       state.beds[largest.index].count = Math.max(minCount, largest.count - step);
-    } else {
+    } else if (allowRemove) {
       // Tutte le aiuole sono già al minimo: rimuovi quella con ingombro maggiore.
       const toRemove = shrinkCandidates.sort(
         (a, b) => b.plant.d - a.plant.d || b.count - a.count
       )[0];
       if (!toRemove) break;
       state.beds.splice(toRemove.index, 1);
+    } else {
+      break;
     }
     guard++;
   }
@@ -4057,47 +4089,60 @@ function restoreManualCountsWhenPossible(manualCounts) {
 /* Riordina il layout manuale senza espandere automaticamente le colture. */
 function rebalanceManualLayoutOnly() {
   const selectedPlant = rememberSelection();
-  expandFilaBedsToLength(false);
+  expandFilaBedsToLength(false, { preserveLockedCounts: true });
   sortBedsForLayout();
   restoreSelection(selectedPlant);
 }
 
-/* Quando l'utente aumenta una quantita manuale, libera spazio riducendo solo
-   colture automatiche/non bloccate. */
+function flexibleCropReductionCandidates(layout, lockedPlantId, options = {}) {
+  const allowBelowMinimum = options.allowBelowMinimum === true;
+  return state.beds
+    .map((bed, index) => {
+      const plant = BYID[bed.plantId];
+      const layoutBed = layout.beds.find((item) => item.idx === index);
+      if (
+        !plant ||
+        bed.plantId === lockedPlantId ||
+        bed.countLocked ||
+        bed.layout === "fila" ||
+        !layoutBed
+      ) {
+        return null;
+      }
+      const minCount = Math.max(1, minimumCountForPlant(plant));
+      const floorCount = allowBelowMinimum ? 1 : minCount;
+      const surplus = bed.count - floorCount;
+      if (surplus <= 0) return null;
+      return { bed, index, plant, layoutBed, floorCount, minCount, surplus };
+    })
+    .filter(Boolean)
+    .sort((a, b) =>
+      Number(b.bed.count > b.minCount) - Number(a.bed.count > a.minCount) ||
+      b.surplus - a.surplus ||
+      b.bed.count - a.bed.count ||
+      b.layoutBed.h - a.layoutBed.h ||
+      b.plant.d - a.plant.d
+    );
+}
+
+/* Quando l'utente aumenta una quantita manuale, libera spazio riducendo prima
+   le colture automatiche con piu surplus rispetto al loro minimo. */
 function reduceFlexibleCropsForLockedChange(lockedPlantId) {
   let guard = 0;
   while (computeLayout().overflow && guard < 700) {
     const layout = computeLayout();
-    const candidates = state.beds
-      .map((bed, index) => ({
-        bed,
-        index,
-        plant: BYID[bed.plantId],
-        layoutBed: layout.beds.find((item) => item.idx === index)
-      }))
-      .filter((item) =>
-        item.plant &&
-        item.bed.plantId !== lockedPlantId &&
-        !item.bed.countLocked &&
-        item.bed.layout !== "fila" &&
-        item.layoutBed &&
-        item.bed.count > 1
-      )
-      .sort((a, b) =>
-        b.bed.count - a.bed.count ||
-        b.layoutBed.h - a.layoutBed.h ||
-        b.plant.d - a.plant.d
-      );
-
+    let candidates = flexibleCropReductionCandidates(layout, lockedPlantId);
+    if (!candidates.length) {
+      candidates = flexibleCropReductionCandidates(layout, lockedPlantId, {
+        allowBelowMinimum: true
+      });
+    }
     if (!candidates.length) break;
     const item = candidates[0];
-    const minCount = Math.max(1, minimumCountForPlant(item.plant));
     const step = Math.max(1, rowSizeForPlant(item.plant));
     const before = item.bed.count;
-    item.bed.count = Math.max(minCount, item.bed.count - step);
-    if (item.bed.count === before && item.bed.count > 1) {
-      item.bed.count -= 1;
-    }
+    item.bed.count = Math.max(item.floorCount, item.bed.count - Math.min(step, item.surplus));
+    if (item.bed.count === before) break;
     rebalanceManualLayoutOnly();
     guard++;
   }
@@ -4105,21 +4150,39 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
 
 /* Applica una modifica manuale e torna indietro solo se fisicamente impossibile. */
 function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
+  const hasFlexibleAdjustments = () => {
+    const beforeById = new Map(beforeSnapshot.map((bed) => [bed.plantId, bed]));
+    return state.beds.some((bed) => {
+      if (bed.plantId === lockedPlantId) return false;
+      const before = beforeById.get(bed.plantId);
+      return !before || before.count !== bed.count || before.layout !== bed.layout;
+    }) || beforeSnapshot.some((bed) =>
+      bed.plantId !== lockedPlantId &&
+      !state.beds.some((current) => current.plantId === bed.plantId)
+    );
+  };
   rebalanceManualLayoutOnly();
   if (computeLayout().overflow) {
     reduceFlexibleCropsForLockedChange(lockedPlantId);
   }
   if (computeLayout().overflow) {
-    restoreBedsSnapshot(beforeSnapshot);
-    return false;
+    shrinkOverflowToFit({ preserveLockedCounts: true, allowRemove: false });
+    rebalanceManualLayoutOnly();
   }
-  return true;
+  if (computeLayout().overflow) {
+    restoreBedsSnapshot(beforeSnapshot);
+    return "rejected";
+  }
+  return hasFlexibleAdjustments() ? "adjusted" : "accepted";
 }
 
 /* Bilanciamento centrale del layout: usato da auto-riempimento, aggiunte,
    rimozioni e cambio misure. Le opzioni decidono se preservare conteggi manuali. */
 function autoBalanceLayout(keepSelection = true, expandToSpace = true, options = {}) {
   const selectedPlant = keepSelection ? rememberSelection() : null;
+  const respectDiversityLimit =
+    options.respectDiversityLimit === true ||
+    (options.respectDiversityLimit !== false && state.autoPlan && state.livello !== "esperto");
   // expandFilaBedsToLength va chiamata sempre (non solo quando expandToSpace=true)
   // perché usableBedWidth() dipende da state.beds.length: aggiungendo o rimuovendo
   // una pianta il numero di colonne cambia e il count corretto per le file si aggiorna.
@@ -4131,10 +4194,16 @@ function autoBalanceLayout(keepSelection = true, expandToSpace = true, options =
   if (expandToSpace) enforceMinimumBedCounts({ preserveLockedCounts: options.preserveLockedCounts === true });
   sortBedsForLayout();
   shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
-  if (expandToSpace) expandAutoFillToSpace({ skipLockedCounts: options.expandLockedCounts === false });
+  if (expandToSpace) expandAutoFillToSpace({
+    skipLockedCounts: options.expandLockedCounts === false,
+    respectDiversityLimit
+  });
   // Riordina per tenere le piante alte dietro a quelle basse (ordine anti-ombra).
   sortBedsForLayout();
-  if (expandToSpace) expandAutoFillToSpace({ skipLockedCounts: options.expandLockedCounts === false });
+  if (expandToSpace) expandAutoFillToSpace({
+    skipLockedCounts: options.expandLockedCounts === false,
+    respectDiversityLimit
+  });
   shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
   restoreSelection(selectedPlant);
 }
@@ -4154,6 +4223,7 @@ function addPlant(id) {
     countLocked: false
   });
   state.autoPlan = false;
+  state.manualPlanNotice = "";
   state.selected = state.beds.findIndex((b) => b.plantId === id);
   // expandToSpace=false: in modalità manuale il sistema non espande le piante
   // esistenti né applica i conteggi minimi forzati — altrimenti enforceMinimumBedCounts
@@ -4173,6 +4243,7 @@ function removePlantById(id) {
   if (index < 0) return;
   state.beds.splice(index, 1);
   state.autoPlan = false;
+  state.manualPlanNotice = "";
   if (state.selected === index) state.selected = -1;
   else if (state.selected > index) state.selected -= 1;
   // expandToSpace=false: rimuovere una pianta non deve far espandere le piante rimanenti,
@@ -4204,6 +4275,7 @@ function arrangeSelectedPlantsExact() {
     return;
   }
   state.autoPlan = false;
+  state.manualPlanNotice = "";
   normalizeSelectedCropInputsForOptimization();
   rebalanceManualLayoutOnly();
   saveConfig(true);
@@ -4218,6 +4290,7 @@ function fillSelectedPlants() {
     return;
   }
   state.autoPlan = false;
+  state.manualPlanNotice = "";
   const manualCounts = new Map(state.beds.map((bed) => [bed.plantId, bed.count]));
   normalizeSelectedCropInputsForOptimization();
   state.beds.forEach((bed) => {
@@ -4246,7 +4319,11 @@ function changePlantCount(id, delta) {
   bed.count = Math.max(1, Math.round((parseInt(bed.count) || 1) + delta));
   bed.countLocked = true;
   state.autoPlan = false;
-  fitLockedCountChange(id, before);
+  const fitResult = fitLockedCountChange(id, before);
+  state.manualPlanNotice =
+    fitResult === "rejected" ? "manualCountRejected" :
+    fitResult === "adjusted" ? "manualCountAdjusted" :
+    "";
   restoreSelection(selectedPlant);
   saveConfig(true);
   render();
@@ -4263,7 +4340,11 @@ function setPlantCount(id, value) {
   bed.count = nextCount;
   bed.countLocked = true;
   state.autoPlan = false;
-  fitLockedCountChange(id, before);
+  const fitResult = fitLockedCountChange(id, before);
+  state.manualPlanNotice =
+    fitResult === "rejected" ? "manualCountRejected" :
+    fitResult === "adjusted" ? "manualCountAdjusted" :
+    "";
   restoreSelection(selectedPlant);
   saveConfig(true);
   render();
@@ -4292,6 +4373,14 @@ function layoutWasteScore(layout = computeLayout()) {
   const gaps = layout.columnHeights.map((h) => Math.max(0, target - h));
   const squaredGaps = gaps.reduce((sum, gap) => sum + gap * gap, 0);
   return squaredGaps + Math.max(...gaps, 0) * 25;
+}
+
+function autoExpansionLimitForPlant(p) {
+  const row = Math.max(1, rowSizeForPlant(p));
+  const min = minimumCountForPlant(p);
+  const baseline = Math.max(starterCountForAutoPlant(p, false), min);
+  const rows = state.livello === "novizio" ? 6 : 8;
+  return Math.max(baseline, min * 3, row * rows);
 }
 
 function cloneBedsSnapshot() {
@@ -4330,6 +4419,7 @@ function finalizeAutoFillWithOptimizeBaseline() {
    Con skipLockedCounts=true ignora le quantita manuali. */
 function expandAutoFillToSpace(options = {}) {
   const skipLockedCounts = options.skipLockedCounts === true;
+  const respectDiversityLimit = options.respectDiversityLimit === true;
   const fillScore = layoutWasteScore;
 
   let guard = 0;
@@ -4348,6 +4438,7 @@ function expandAutoFillToSpace(options = {}) {
         item.plant &&
         item.bed.layout !== "fila" &&
         item.layoutBed &&
+        (!respectDiversityLimit || item.bed.count < autoExpansionLimitForPlant(item.plant)) &&
         (!skipLockedCounts || !item.bed.countLocked)
       )
       .sort((a, b) => {
@@ -4358,7 +4449,12 @@ function expandAutoFillToSpace(options = {}) {
 
     for (const item of candidates) {
       const before = state.beds[item.index].count;
-      state.beds[item.index].count += rowSizeForPlant(item.plant);
+      const limit = respectDiversityLimit ? autoExpansionLimitForPlant(item.plant) : Infinity;
+      state.beds[item.index].count = Math.min(
+        limit,
+        state.beds[item.index].count + rowSizeForPlant(item.plant)
+      );
+      if (state.beds[item.index].count === before) continue;
       const nextLayout = computeLayout();
       if (!nextLayout.overflow) {
         const nextScore = fillScore(nextLayout);
@@ -4398,6 +4494,7 @@ function expandAutoFillToSpace(options = {}) {
         item.plant &&
         item.bed.layout !== "fila" &&
         item.layoutBed &&
+        (!respectDiversityLimit || item.bed.count < autoExpansionLimitForPlant(item.plant)) &&
         (!skipLockedCounts || !item.bed.countLocked)
       )
       .sort((a, b) => {
@@ -4472,8 +4569,10 @@ function autoCandidatePool() {
   if (state.livello === "novizio") {
     // Solo colture facili o medie esplicitamente classificate (≤ 2).
     pool = seasonal.filter((p) => autoDifficulty(p) <= 2);
-    // In stagioni povere allarga fino alle difficili (≤ 3), mai alle esotiche.
-    if (pool.length < 4) pool = seasonal.filter((p) => autoDifficulty(p) <= 3);
+    // In stagioni povere allarga fino alle difficili, ma mai alle esotiche.
+    if (pool.length < 4) {
+      pool = seasonal.filter((p) => autoDifficulty(p) <= 3 && !EXOTIC_PLANTS.has(p.id));
+    }
   } else {
     pool = seasonal.slice();
   }
@@ -4487,6 +4586,8 @@ function autoCandidatePool() {
 function autoFill(options = {}) {
   const { compactPaths = true } = options;
   state.autoPlan = true;
+  state.autoPlanNotice = "";
+  state.manualPlanNotice = "";
   if (compactPaths) state.path = compactPathForAutoFill();
   syncSizeControls();
   const candidates = autoCandidatePool();
@@ -4547,14 +4648,16 @@ function autoFill(options = {}) {
   // (meno della metà del target), accetta piante con al massimo 1 conflitto
   // per non lasciare serre grandi quasi vuote.
   if (state.beds.length < Math.ceil(minVarieties / 2)) {
+    let acceptedCompromises = 0;
     for (const p of skippedConflicts) {
       if (state.beds.length >= Math.ceil(minVarieties / 2)) break;
       if (state.beds.some((bed) => bed.plantId === p.id)) continue;
       const newConflicts = state.beds.filter(
         (bed) => areIncompatible(p, BYID[bed.plantId])
       ).length;
-      if (newConflicts <= 1) addAutoCandidate(p);
+      if (newConflicts <= 1 && addAutoCandidate(p)) acceptedCompromises++;
     }
+    if (acceptedCompromises > 0) state.autoPlanNotice = "autoPlanCompromise";
   }
   if (state.beds.length === 0 && candidates.length) {
     const p = candidates[0];
@@ -4716,7 +4819,11 @@ function applyBootIntent() {
     syncSizeControls();
   }
   loadPreset(preset);
-  if (isGuidedBoot()) state.autoPlan = true;
+  if (isGuidedBoot()) {
+    state.autoPlan = true;
+    saveConfig(true);
+    render();
+  }
   clearBootParams();
   return true;
 }
@@ -4941,6 +5048,11 @@ function initEvents() {
   });
   // delega su lista seminabili
   document.getElementById("vegList").addEventListener("click", (e) => {
+    const upgradeBtn = e.target.closest("[data-upgrade-level]");
+    if (upgradeBtn) {
+      chooseLivello(upgradeBtn.dataset.upgradeLevel);
+      return;
+    }
     const addBtn = e.target.closest("[data-add]");
     if (addBtn) addPlant(addBtn.dataset.add);
     const removeBtn = e.target.closest("[data-remove-plant]");
@@ -4952,29 +5064,7 @@ function initEvents() {
       changePlantCount(id, delta);
     }
   });
-  document.getElementById("vegList").addEventListener("input", (e) => {
-    const range = e.target.closest("[data-veg-count-range]");
-    if (range) {
-      const card = range.closest(".veg.in");
-      const input = card?.querySelector("[data-veg-count-input]");
-      if (input) input.value = range.value;
-      return;
-    }
-    const input = e.target.closest("[data-veg-count-input]");
-    if (!input || input.value === "") return;
-    const card = input.closest(".veg.in");
-    const slider = card?.querySelector("[data-veg-count-range]");
-    if (slider) {
-      if (parseInt(input.value) > parseInt(slider.max)) slider.max = input.value;
-      slider.value = input.value;
-    }
-  });
   document.getElementById("vegList").addEventListener("change", (e) => {
-    const range = e.target.closest("[data-veg-count-range]");
-    if (range) {
-      setPlantCount(range.dataset.vegCountRange, range.value);
-      return;
-    }
     const input = e.target.closest("[data-veg-count-input]");
     if (!input || input.value === "") return;
     setPlantCount(input.dataset.vegCountInput, input.value);
@@ -5340,10 +5430,43 @@ const _bootLivello = BOOT_PARAMS.get("livello");
 
 if (LIVELLI.has(_bootLivello)) {
   // Ingresso dalla homepage con persona già scelta: applica esattamente lo
-  // stesso comportamento del pulsante livello dentro il configuratore, così
-  // novizio/intermedio/esperto riempiono la serra in modo coerente.
+  // stesso comportamento del pulsante livello dentro il configuratore, ma prima
+  // rispetta intenti espliciti come preset=principiante o empty=1.
   state.livello = _bootLivello;
-  chooseLivello(_bootLivello);
+  const _hasExplicitBootIntent =
+    isFreeProjectBoot() || shouldImportCart() || Boolean(requestedBootPreset());
+  const _bootIntentApplied = _hasExplicitBootIntent ? applyBootIntent() : false;
+
+  if (_bootLivello === "esperto") {
+    vegFilter = "all-beds";
+    state.autoPlan = false;
+    setLivello(_bootLivello, { mapMode: false });
+    setMode("expert", false);
+    syncVegFilterTabs();
+    render();
+    focusManualPlanningPath();
+  } else if (_bootLivello === "intermedio") {
+    vegFilter = "all";
+    state.autoPlan = true;
+    setLivello(_bootLivello, { mapMode: false });
+    setMode("fit", false);
+    syncVegFilterTabs();
+    if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
+    else render();
+    focusManualPlanningPath();
+  } else {
+    vegFilter = "in";
+    state.autoPlan = true;
+    setLivello(_bootLivello, { mapMode: false });
+    setMode("fit", false);
+    resetNoviceAdvancedOptions();
+    syncVegFilterTabs();
+    if (!_bootIntentApplied) autoFill();
+    else render();
+    collapseSettingsPanelAfterAutoPlan();
+    scrollToScene();
+  }
+  saveConfig(true);
   clearBootParams();
   scrollToGuidedIntroForLivello(_bootLivello);
 } else {

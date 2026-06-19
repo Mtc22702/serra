@@ -1176,6 +1176,10 @@
         customizeTitle: "Colture nella serra",
         customizeSub:
           "Aggiungi o togli colture. Il filtro In serra mostra solo quelle già presenti nel progetto.",
+        noviceCropsNoteTitle: "Vuoi aggiungere nuove piante?",
+        noviceCropsNoteText:
+          "In modalità Principiante puoi regolare o rimuovere quelle già scelte. Per aggiungerne altre passa a Pratico.",
+        noviceCropsUpgrade: "Passa a Pratico",
         modeFitTitle: "Piano automatico",
         modeFitHint: "Imposta misure e clima — la serra si riempie da sola",
         modeExpertTitle: "Scegli le colture",
@@ -1319,6 +1323,12 @@
         remove: "Rimuovi",
         overflowWarning:
           "Le aiuole superano la lunghezza della serra. Riduci il numero di piante o ingrandisci la serra (linea rossa = fine serra).",
+        autoPlanCompromise:
+          "Ho aggiunto una coltura meno ideale perché in questo mese ci sono poche alternative compatibili.",
+        manualCountRejected:
+          "Questa quantità non entra nello spazio disponibile: ho mantenuto il valore precedente.",
+        manualCountAdjusted:
+          "Ho fatto spazio alla quantità scelta riducendo alcune colture automatiche.",
         badCompanion:
           "<b>{a}</b> e <b>{b}</b> non si amano: meglio tenerle lontane o separarle con un'altra coltura.",
         goodCompanions: "Buoni abbinamenti presenti: {pairs}.",
@@ -1495,6 +1505,10 @@
         customizeTitle: "Culturi în seră",
         customizeSub:
           "Adaugă sau elimină culturi. Filtrul În seră arată doar plantele deja prezente în proiect.",
+        noviceCropsNoteTitle: "Vrei să adaugi plante noi?",
+        noviceCropsNoteText:
+          "În modul Începător poți regla sau elimina plantele deja alese. Pentru a adăuga altele, treci la Practic.",
+        noviceCropsUpgrade: "Treci la Practic",
         modeFitTitle: "Plan automat",
         modeFitHint: "Setează dimensiunile și clima — sera se umple automat",
         modeExpertTitle: "Alege culturile",
@@ -1637,6 +1651,12 @@
         remove: "Elimină",
         overflowWarning:
           "Straturile depășesc lungimea serei. Redu numărul de plante sau mărește sera (linia roșie = capătul serei).",
+        autoPlanCompromise:
+          "Am adăugat o cultură mai puțin ideală deoarece luna aceasta există puține alternative compatibile.",
+        manualCountRejected:
+          "Această cantitate nu încape în spațiul disponibil: am păstrat valoarea anterioară.",
+        manualCountAdjusted:
+          "Am făcut loc pentru cantitatea aleasă reducând câteva culturi automate.",
         badCompanion:
           "<b>{a}</b> și <b>{b}</b> nu se potrivesc: mai bine ține-le la distanță sau separă-le cu altă cultură.",
         goodCompanions: "Asocieri bune prezente: {pairs}.",

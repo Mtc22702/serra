@@ -1117,6 +1117,49 @@ select:focus {
   background: rgba(255, 255, 255, 0.54);
   border: 1px solid rgba(31, 58, 38, 0.08);
 }
+.novice-crops-note {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 164, 65, 0.26);
+  background: linear-gradient(145deg, rgba(255, 250, 234, 0.96), rgba(244, 250, 241, 0.94));
+  box-shadow: 0 3px 10px rgba(31, 58, 38, 0.05);
+}
+.novice-crops-note b,
+.novice-crops-note span {
+  display: block;
+}
+.novice-crops-note b {
+  color: var(--verde-scuro);
+  font-size: 12.5px;
+  line-height: 1.15;
+}
+.novice-crops-note span {
+  margin-top: 2px;
+  color: #667060;
+  font-size: 11.5px;
+  line-height: 1.3;
+}
+.novice-crops-note button {
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(47, 107, 58, 0.25);
+  border-radius: 9px;
+  background: var(--verde);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(47, 107, 58, 0.18);
+}
+.novice-crops-note button:hover {
+  background: var(--verde-scuro);
+}
 
 /* Azioni colture: ottimizza o svuota il progetto corrente. */
 .crops-customize-footer {
@@ -1650,7 +1693,7 @@ select:focus {
   display: block;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(244, 250, 241, 0.96));
   border-color: rgba(47, 107, 58, 0.2);
-  padding: 10px;
+  padding: 8px;
   box-shadow:
     inset 3px 0 0 rgba(47, 107, 58, 0.34),
     0 5px 14px rgba(31, 58, 38, 0.06);
@@ -1663,30 +1706,34 @@ select:focus {
 }
 .veg-in-main {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) 32px;
+  grid-template-columns: 32px minmax(0, 1fr) 30px;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
 }
 .veg.in .ico {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
+  font-size: 19px;
 }
 .veg.in .veg-name {
   font-size: 13.5px;
 }
 .veg-qty-panel {
-  margin-top: 9px;
-  padding: 9px;
-  border-radius: 10px;
-  border: 1px solid rgba(47, 107, 58, 0.12);
-  background: rgba(255, 255, 255, 0.72);
-}
-.veg-qty-topline {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 7px;
+  margin-top: 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.veg-qty-topline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 0;
   color: #526151;
   font-size: 10.5px;
   font-weight: 850;
@@ -1697,10 +1744,10 @@ select:focus {
 .veg-auto-badge {
   display: inline-flex;
   align-items: center;
-  min-height: 19px;
-  padding: 2px 7px;
+  min-height: 18px;
+  padding: 1px 6px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 850;
   letter-spacing: 0;
   text-transform: none;
@@ -3430,30 +3477,31 @@ body.cart-open .cart-nudge {
     justify-content: space-between;
   }
 
-  /* veg.in mobile: riga pianta sopra, controlli quantita sotto a larghezza piena. */
+  /* veg.in mobile: info pianta e controlli quantita nella stessa riga compatta. */
   .veg.in {
     background: rgba(47, 107, 58, 0.08);
     border-color: rgba(47, 107, 58, 0.28);
     box-shadow: inset 3px 0 0 rgba(47, 107, 58, 0.45);
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-auto-rows: auto;
-    gap: 10px;
-    min-height: 198px;
+    gap: 8px;
+    min-height: 78px;
     height: auto;
-    padding: 12px 10px 13px;
+    padding: 8px 9px;
     overflow: visible;
-    align-items: stretch;
+    align-items: center;
   }
   .veg-in-main {
-    grid-template-columns: 36px minmax(0, 1fr) 30px;
-    gap: 8px;
+    grid-template-columns: 32px minmax(0, 1fr) 28px;
+    gap: 7px;
     min-width: 0;
     grid-row: 1;
+    grid-column: 1;
   }
   .veg.in .ico {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     flex: none;
   }
   .veg.in .nm {
@@ -3478,50 +3526,65 @@ body.cart-open .cart-nudge {
     margin-top: 2px;
   }
   .veg-qty-panel {
-    display: block;
-    grid-row: 2;
-    grid-column: 1 / -1;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    grid-row: 1;
+    grid-column: 2;
+    width: auto;
     min-width: 0;
     margin-top: 0;
-    padding: 9px 10px 11px;
-    border-radius: 12px;
+    padding: 0;
+    border-radius: 0;
     position: static;
     z-index: 0;
     box-sizing: border-box;
   }
   .veg-qty-topline {
-    margin-bottom: 8px;
-    min-height: 21px;
+    margin-bottom: 0;
+    min-height: 18px;
+  }
+  .veg-qty-topline > span:first-child {
+    display: none;
   }
   .veg-qty-ctl {
-    grid-template-columns: 38px minmax(86px, 1fr) 38px;
-    width: 100%;
-    min-height: 40px;
-    border-radius: 12px;
+    grid-template-columns: 34px 48px 34px;
+    width: auto;
+    min-height: 36px;
+    border-radius: 11px;
   }
   .veg-step,
   .veg-qty-input {
-    height: 40px;
+    height: 36px;
   }
   .veg-step {
-    width: 38px;
+    width: 34px;
     font-size: 18px;
   }
   .veg-qty-input {
     min-width: 0;
+    width: 48px;
     font-size: 15px;
   }
   .veg-qty-slider {
-    width: 100%;
-    margin: 12px 0 2px;
-    display: block;
+    display: none;
   }
   .veg.in .add {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     font-size: 15px;
     flex: none;
+  }
+  .novice-crops-note {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 9px;
+  }
+  .novice-crops-note button {
+    width: 100%;
+    min-height: 36px;
   }
   .veg.in + .veg.in {
     margin-top: 10px;
@@ -4595,7 +4658,7 @@ body.cart-open .cart-nudge {
 }
 .veg-qty-ctl {
   display: grid;
-  grid-template-columns: 32px minmax(58px, 1fr) 32px;
+  grid-template-columns: 30px 48px 30px;
   align-items: center;
   gap: 0;
   background: #fff;
@@ -4605,8 +4668,8 @@ body.cart-open .cart-nudge {
   box-shadow: 0 2px 8px rgba(31, 58, 38, 0.05);
 }
 .veg-step {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border: none;
   background: transparent;
   color: var(--verde);
@@ -4623,8 +4686,8 @@ body.cart-open .cart-nudge {
   background: rgba(47, 107, 58, 0.08);
 }
 .veg-qty-input {
-  width: 100%;
-  height: 32px;
+  width: 48px;
+  height: 30px;
   border: 0;
   border-left: 1px solid rgba(47, 107, 58, 0.14);
   border-right: 1px solid rgba(47, 107, 58, 0.14);
@@ -4646,15 +4709,7 @@ body.cart-open .cart-nudge {
   outline-offset: -2px;
 }
 .veg-qty-slider {
-  display: block;
-  width: 100%;
-  margin: 8px 0 0;
-  accent-color: var(--verde);
-  cursor: pointer;
-}
-.veg-qty-slider:focus-visible {
-  outline: 2px solid rgba(47, 107, 58, 0.28);
-  outline-offset: 3px;
+  display: none;
 }
 
 /* PDP hero: immagine, titolo e metadati della pianta. */
