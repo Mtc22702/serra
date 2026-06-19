@@ -1388,7 +1388,7 @@ function unlockDetailPageScroll() {
   document.body.style.left = "";
   document.body.style.right = "";
   document.body.style.width = "";
-  window.scrollTo(0, detailScrollY);
+  window.scrollTo({ top: detailScrollY, behavior: "instant" });
 }
 function openDetail(id) {
   const p = BYID[id];
@@ -2091,3 +2091,252 @@ if (catalogSearchLink) {
     window.setTimeout(() => input?.focus({ preventScroll: true }), 350);
   });
 }
+
+/* Animazione serra: mappa SVG con aiuole + glyphs + pannello colture laterale. */
+(function initGreenhouseAnim() {
+  const svg    = document.getElementById("hcgSvg");
+  const peek   = document.getElementById("hcgPeek");
+  const inner  = document.getElementById("hcgPeekInner");
+  if (!svg || !peek || !inner) return;
+
+  /* ── Piante: dati reali da plants-data.js ───────────────────────────── */
+  const EMOJI_MAP = { pomodoro:"🍅", carota:"🥕", lattuga:"🥬", basilico:"🌿" };
+  const QTY_MAP   = { pomodoro: 4,   carota:  6,  lattuga:  6,  basilico: 12  };
+  const PLANT_IDS = ["pomodoro", "carota", "lattuga", "basilico"];
+  const plantById = Object.fromEntries((window.PLANTS || []).map(p => [p.id, p]));
+  const PLANTS = PLANT_IDS.map(id => ({
+    ...plantById[id],
+    emoji: EMOJI_MAP[id],
+    qty:   QTY_MAP[id]
+  })).filter(p => p.id);
+
+  /* ── Layout: 2 colonne, aiuole di altezza variabile ─────────────────── */
+  // Colonna 1 (x=5, w=92): Pomodoro + Carota  |  Colonna 2 (x=105, w=110): Lattuga + Basilico
+  const BEDS = [
+    { p: PLANTS[0], x:   5, y:  5, w:  92, h:  68, cols: 2, rows: 2, r: 11 }, // Pomodoro 4 piante
+    { p: PLANTS[1], x:   5, y:  81, w:  92, h:  74, cols: 2, rows: 3, r:  9 }, // Carota 6 piante
+    { p: PLANTS[2], x: 105, y:  5, w: 110, h:  50, cols: 3, rows: 2, r:  8 }, // Lattuga 6 piante
+    { p: PLANTS[3], x: 105, y:  63, w: 110, h:  92, cols: 3, rows: 4, r:  7 }, // Basilico 12 piante
+  ];
+
+  /* ── Posizioni piante in un'aiuola ──────────────────────────────────── */
+  function bedPlantPositions(bed) {
+    const pts = [];
+    for (let row = 0; row < bed.rows; row++) {
+      for (let col = 0; col < bed.cols; col++) {
+        pts.push({
+          cx: bed.x + (bed.w / (bed.cols + 1)) * (col + 1),
+          cy: bed.y + (bed.h / (bed.rows + 1)) * (row + 1)
+        });
+      }
+    }
+    return pts;
+  }
+
+  /* ── Glyph reale (portato da script.js) ────────────────────────────── */
+  function makeRng(seed) {
+    let s = seed;
+    return () => { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0x100000000; };
+  }
+  const _shade = "rgba(0,0,0,.13)";
+  function _leafPath(len, wid) {
+    return `M0 0 C ${wid} ${-len*.16},${wid*.55} ${-len*.85},0 ${-len} C ${-wid*.55} ${-len*.85},${-wid} ${-len*.16},0 0 Z`;
+  }
+  function _lobedLeafPath(len, wid) {
+    return `M0 0 Q ${wid*.4} ${-len*.1} ${wid*.5} ${-len*.25} Q ${wid*.15} ${-len*.3} ${wid*.55} ${-len*.45} Q ${wid*.1} ${-len*.5} ${wid*.45} ${-len*.7} Q ${wid*.05} ${-len*.75} 0 ${-len} Q ${-wid*.05} ${-len*.75} ${-wid*.45} ${-len*.7} Q ${-wid*.1} ${-len*.5} ${-wid*.55} ${-len*.45} Q ${-wid*.15} ${-len*.3} ${-wid*.5} ${-len*.25} Q ${-wid*.4} ${-len*.1} 0 0 Z`;
+  }
+  function _palmatePath(r) {
+    let d = "M0 0 ";
+    for (let k = -2; k <= 2; k++) {
+      const a = k * 0.5, lx = Math.sin(a)*r, ly = -Math.cos(a)*r;
+      d += `Q ${Math.sin(a-.2)*r*.6} ${-Math.cos(a-.2)*r*.6} ${lx} ${ly} Q ${Math.sin(a+.2)*r*.6} ${-Math.cos(a+.2)*r*.6} 0 0 `;
+    }
+    return d + "Z";
+  }
+  function glyph(plant, r, rng) {
+    const c = plant.col || { l1:"#4f8f3a", l2:"#3d7a2c" };
+    const sh = `<ellipse cx="${r*.08}" cy="${r*.12}" rx="${r*.95}" ry="${r*.85}" fill="${_shade}"/>`;
+    let s = "";
+    switch (plant.arch) {
+      case "rosetta": {
+        s += sh;
+        const N = 10 + Math.floor(rng()*4);
+        for (let ring = 0; ring < 2; ring++) {
+          const f = ring ? .62 : 1, n = ring ? 7 : N;
+          for (let i = 0; i < n; i++) {
+            const a = (i/n)*360+(ring?20:0)+rng()*14, len=r*f*(.85+rng()*.25), wid=len*.5;
+            const col = ring ? c.l1 : i%2 ? c.l2 : c.l1;
+            s += `<g transform="rotate(${a})"><path d="${_leafPath(len,wid)}" fill="${col}"/><path d="M0 0 L0 ${-len*.9}" stroke="rgba(0,0,0,.10)" stroke-width="${len*.03}" fill="none"/></g>`;
+          }
+        }
+        s += `<circle r="${r*.16}" fill="${c.fr||c.l1}"/>`;
+        break;
+      }
+      case "frastagliata": {
+        s += sh;
+        const N = 9+Math.floor(rng()*4);
+        for (let i=0;i<N;i++) {
+          const a=(i/N)*360+rng()*20, len=r*(.8+rng()*.3), wid=len*.45;
+          s += `<g transform="rotate(${a})"><path d="${_lobedLeafPath(len,wid)}" fill="${i%2?c.l2:c.l1}"/></g>`;
+        }
+        s += `<circle r="${r*.1}" fill="${c.l2}"/>`;
+        break;
+      }
+      case "cespuglio": {
+        s += sh;
+        const N = 14+Math.floor(rng()*6);
+        for (let i=0;i<N;i++) {
+          const a=rng()*360, dist=rng()*r*.55, len=r*(.4+rng()*.3), wid=len*.62;
+          const x=Math.cos(a*Math.PI/180)*dist, y=Math.sin(a*Math.PI/180)*dist;
+          s += `<g transform="translate(${x} ${y}) rotate(${rng()*360})"><path d="${_leafPath(len,wid)}" fill="${i%2?c.l1:c.l2}"/></g>`;
+        }
+        break;
+      }
+      case "frutto": {
+        s += sh;
+        const N = 8+Math.floor(rng()*3);
+        for (let i=0;i<N;i++) {
+          const a=(i/N)*360+rng()*16, len=r*(.9+rng()*.2), wid=len*.5;
+          s += `<g transform="rotate(${a})"><path d="${_lobedLeafPath(len,wid)}" fill="${i%2?c.l2:c.l1}"/></g>`;
+        }
+        const fr=c.fr||"#e2452f", nf=2+Math.floor(rng()*3);
+        for (let i=0;i<nf;i++) {
+          const a=rng()*360, dist=r*(.2+rng()*.4), x=Math.cos(a)*dist, y=Math.sin(a)*dist, fr2=r*.17*(.8+rng()*.4);
+          s += `<circle cx="${x}" cy="${y}" r="${fr2}" fill="${fr}"/><circle cx="${x-fr2*.3}" cy="${y-fr2*.3}" r="${fr2*.35}" fill="rgba(255,255,255,.5)"/>`;
+        }
+        break;
+      }
+      case "piumosa": {
+        s += `<ellipse cx="${r*.06}" cy="${r*.1}" rx="${r*.8}" ry="${r*.75}" fill="${_shade}"/>`;
+        const N = 7+Math.floor(rng()*4);
+        for (let i=0;i<N;i++) {
+          const a=(i/N)*360+rng()*20, len=r*(.8+rng()*.3);
+          let frond=`<path d="M0 0 L0 ${-len}" stroke="${i%2?c.l1:c.l2}" stroke-width="${r*.05}" fill="none"/>`;
+          const segs=4+Math.floor(rng()*3);
+          for (let j=1;j<=segs;j++) {
+            const yy=-len*j/(segs+1), ll=len*.22*(1-j/(segs+2));
+            frond += `<path d="M0 ${yy} l ${ll} ${-ll*.5}" stroke="${c.l1}" stroke-width="${r*.03}"/><path d="M0 ${yy} l ${-ll} ${-ll*.5}" stroke="${c.l1}" stroke-width="${r*.03}"/>`;
+          }
+          s += `<g transform="rotate(${a})">${frond}</g>`;
+        }
+        if (c.fr) s += `<circle r="${r*.12}" fill="${c.fr}"/>`;
+        break;
+      }
+      default: {
+        s += sh;
+        const N = 9+Math.floor(rng()*3);
+        for (let i=0;i<N;i++) {
+          const a=(i/N)*360+rng()*14, len=r*(.82+rng()*.22), wid=len*.52;
+          s += `<g transform="rotate(${a})"><path d="${_leafPath(len,wid)}" fill="${i%2?c.l2:c.l1}"/></g>`;
+        }
+        s += `<circle r="${r*.13}" fill="${c.l1}"/>`;
+      }
+    }
+    return `<g>${s}</g>`;
+  }
+
+  /* ── Costruisce la mappa (aiuole statiche, piante aggiunte dopo) ─────── */
+  function buildMap() {
+    let defs = `<defs>`;
+    BEDS.forEach((_, i) => {
+      defs += `<linearGradient id="hbg${i}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="rgba(98,74,52,0.58)"/>
+        <stop offset="65%"  stop-color="rgba(78,58,40,0.84)"/>
+        <stop offset="100%" stop-color="rgba(58,43,28,0.94)"/>
+      </linearGradient>`;
+    });
+    defs += `</defs>`;
+    let s = "";
+    // piccolo corridoio tra le due colonne
+    s += `<rect x="100" y="5" width="5" height="150" rx="2" fill="rgba(210,200,180,0.18)"/>`;
+    BEDS.forEach((b, i) => {
+      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="7"
+              fill="url(#hbg${i})" stroke="rgba(255,255,255,0.17)" stroke-width="0.8"/>`;
+    });
+    svg.innerHTML = defs + s;
+  }
+
+  /* ── Aggiunge una piantina animata ──────────────────────────────────── */
+  function addPlant(cx, cy, plant, r, seed) {
+    const rng = makeRng(seed);
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.style.opacity = "0";
+    g.style.transition = "opacity 0.4s ease, transform 0.48s cubic-bezier(0.34,1.56,0.64,1)";
+    g.style.transformOrigin = "center";
+    g.style.transform = `translate(${cx}px,${cy}px) scale(0)`;
+    const label = r >= 9
+      ? `<text y="0" text-anchor="middle" dominant-baseline="central" font-size="${Math.max(r*1.2,8)}" style="pointer-events:none;user-select:none;font-family:system-ui">${plant.emoji}</text>`
+      : "";
+    g.innerHTML = glyph(plant, r, rng) + label;
+    svg.appendChild(g);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      g.style.opacity = "1";
+      g.style.transform = `translate(${cx}px,${cy}px) scale(1)`;
+    }));
+  }
+
+  /* ── Pannello colture laterale ──────────────────────────────────────── */
+  function buildPanel() {
+    inner.innerHTML = PLANTS.map(p =>
+      `<div class="hcg-card">
+        <span class="hcg-card-ico">${p.emoji}</span>
+        <div class="hcg-card-info">
+          <span class="hcg-card-name">${p.nome || p.name}</span>
+          <span class="hcg-card-meta">${p.sole==="pieno"?"☀️":"🌤️"} · ${p.gg} gg</span>
+        </div>
+        <span class="hcg-card-qty">${p.qty} pz</span>
+      </div>`
+    ).join("");
+  }
+
+  /* ── Ciclo animazione ───────────────────────────────────────────────── */
+  let timers = [];
+  function t(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  function runCycle() {
+    clearTimers();
+    buildMap();
+    peek.classList.remove("hcg-peek--in");
+    inner.querySelectorAll(".hcg-card").forEach(c => c.classList.remove("hcg-card--in"));
+
+    // piante in sequenza: aiuola per aiuola
+    let delay = 180;
+    BEDS.forEach((bed, bi) => {
+      const pts = bedPlantPositions(bed);
+      // basilico (ultimo) appare più veloce per il numero alto
+      const step = bed.p.name === "Basilico" ? 140 : 260;
+      pts.forEach((pt, pi) => {
+        const d = delay;
+        t(() => addPlant(pt.cx, pt.cy, bed.p, bed.r, bi * 100 + pi), d);
+        delay += step;
+      });
+      delay += 100; // piccola pausa tra aiuole
+    });
+
+    // pannello scivola dentro
+    const panelIn = delay + 300;
+    t(() => {
+      peek.classList.add("hcg-peek--in");
+      inner.querySelectorAll(".hcg-card").forEach((c, i) =>
+        setTimeout(() => c.classList.add("hcg-card--in"), i * 110));
+    }, panelIn);
+
+    // pausa → reset → loop
+    t(() => {
+      peek.classList.remove("hcg-peek--in");
+      inner.querySelectorAll(".hcg-card").forEach(c => c.classList.remove("hcg-card--in"));
+      t(runCycle, 500);
+    }, panelIn + 600 + 2600);
+  }
+
+  buildPanel();
+  buildMap();
+
+  const observer = new IntersectionObserver(
+    (entries) => { if (entries[0].isIntersecting) { observer.disconnect(); runCycle(); } },
+    { threshold: 0.2 }
+  );
+  const container = document.querySelector(".hcg");
+  if (container) observer.observe(container);
+}());
