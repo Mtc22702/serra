@@ -707,7 +707,7 @@
         "hero.cfg_or": "oppure sfoglia il catalogo semi",
         "hero.cfg_personas_label": "Entra come",
         "hero.cfg_novizio": "Principiante",
-        "hero.cfg_intermedio": "Con esperienza",
+        "hero.cfg_intermedio": "Intermedio",
         "hero.cfg_esperto": "Esperto",
         "hero.cfg_caption": "Anteprima · vista dall'alto",
         "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
@@ -1178,8 +1178,8 @@
           "Aggiungi o togli colture. Il filtro In serra mostra solo quelle già presenti nel progetto.",
         noviceCropsNoteTitle: "Vuoi aggiungere nuove piante?",
         noviceCropsNoteText:
-          "In modalità Principiante puoi regolare o rimuovere quelle già scelte. Per aggiungerne altre passa a Pratico.",
-        noviceCropsUpgrade: "Passa a Pratico",
+          "In modalità Principiante puoi regolare o rimuovere quelle già scelte. Per aggiungerne altre passa a Intermedio.",
+        noviceCropsUpgrade: "Passa a Intermedio",
         modeFitTitle: "Piano automatico",
         modeFitHint: "Imposta misure e clima — la serra si riempie da sola",
         modeExpertTitle: "Scegli le colture",
@@ -1192,7 +1192,7 @@
         personaNovDesc:
           "Ti guido passo passo: clima, serra e un orto pronto fino al carrello",
         personaIntTitle: "Ho un po' di esperienza",
-        personaIntLevel: "(Pratico)",
+        personaIntLevel: "(Intermedio)",
         personaIntDesc:
           "Parti guidato, poi personalizza le colture e aggiungi semi fuori stagione",
         personaExpTitle: "So già cosa voglio",
@@ -1210,10 +1210,10 @@
         qtySliderAria: "Regola quantità per",
         clearGreenhouseHint: "Rimuove tutte le colture dal progetto.",
         clearGreenhouseLockedHint:
-          "Disponibile solo in modalità Pratico o Esperto.",
+          "Disponibile solo in modalità Intermedio o Esperto.",
         clearGreenhouseTitle: "Rimuove tutte le piante dalla serra",
         clearGreenhouseLockedTitle:
-          "Per svuotare la serra passa a Pratico o Esperto",
+          "Per svuotare la serra passa a Intermedio o Esperto",
         goToGreenhouse: "Vai alla serra",
         goToGreenhouseAria: "Vai alla vista della serra",
         plantSheetTitle: "Scheda pianta",
