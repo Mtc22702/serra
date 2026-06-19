@@ -68,7 +68,7 @@ button {
   align-items: start;
 }
 
-/* Footer configuratore legacy: blocco mantenuto per compatibilità. */
+/* Footer configuratore storico: blocco mantenuto per compatibilità. */
 .conf-footer {
   background: var(--verde-scuro);
   color: rgba(255, 255, 255, 0.65);
@@ -319,7 +319,7 @@ button {
   font-size: 12px;
 }
 
-/* Summary text */
+/* Riepilogo guidato: testo breve di supporto. */
 .guided-summary {
   color: var(--verde);
   font-size: 11px;
@@ -2917,7 +2917,7 @@ body.cart-open .cart-nudge {
   padding-top: 12px;
 }
 
-/* "Vai alla serra" button: hidden on desktop, visible on single-col layout */
+/* Accesso rapido alla serra: visibile solo nel layout a colonna singola. */
 .mobile-go-to-scene {
   display: none;
 }
@@ -2980,7 +2980,7 @@ body.cart-open .cart-nudge {
     max-width: 560px;
     margin: 0 auto;
   }
-  /* Tablet: plant detail stacked (image above content) */
+  /* Tablet: dettaglio pianta disposto in verticale. */
   .stage .panel--plant-detail #pdpContent {
     gap: 10px;
   }
@@ -3374,7 +3374,7 @@ body.cart-open .cart-nudge {
   .opt.on::after {
     display: none;
   }
-  /* stage actions */
+  /* Azioni scena: disposizione verticale su schermi intermedi. */
   .stage-actions {
     flex-direction: column;
     align-items: stretch;
@@ -3875,7 +3875,7 @@ body.cart-open .cart-nudge {
   display: none !important;
 }
 
-/* Category header inside veg-list */
+/* Intestazioni categorie: separatori nella lista colture. */
 .veg-cat-header {
   display: flex;
   align-items: center;
@@ -3900,7 +3900,7 @@ body.cart-open .cart-nudge {
   background: rgba(31, 58, 38, 0.1);
 }
 
-/* Enhanced veg name + difficulty row */
+/* Nome coltura: riga con difficoltà e metadati. */
 .veg-nameline {
   display: flex;
   align-items: center;
@@ -4822,7 +4822,7 @@ body.cart-open .cart-nudge {
   border: 1px solid rgba(200, 240, 216, 0.3);
   backdrop-filter: blur(6px);
 }
-/* override: hero-diff already positioned by js className; meta row places it */
+/* Metadati PDP: il badge difficoltà segue la riga informativa. */
 .pdp-hero-meta .pdp-hero-diff {
   position: static;
 }
@@ -5245,7 +5245,7 @@ body.cart-open .cart-nudge {
     margin: 0 0 3px;
   }
 
-  /* Mobile: single column stacked */
+  /* Mobile: contenuto disposto in una sola colonna. */
   .stage .panel--plant-detail #pdpContent {
     display: flex;
     flex-direction: column;
@@ -5265,7 +5265,7 @@ body.cart-open .cart-nudge {
     text-align: left;
   }
 
-  /* Hero: wide banner aspect on mobile */
+  /* Hero PDP: immagine panoramica su mobile. */
   .pdp-hero-wrap {
     border-radius: 14px;
     aspect-ratio: 16 / 9;
@@ -5402,9 +5402,8 @@ body.cart-open .cart-nudge {
 }
 
 /* =========================================================
-   REFRESH PERSONAS — selettore livello in ingresso + comportamento
-   per novizio / intermedio / esperto. Blocco aggiunto in coda: override
-   mirati, nessuna regola esistente rimossa.
+   Profili utente: selettore livello e comportamento per persona.
+   Blocco in coda con regole mirate.
    ========================================================= */
 
 :root {

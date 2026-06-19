@@ -8,7 +8,7 @@
     />
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-06-19-47";
+      window.SERRA_APP_VERSION = "2026-06-19-54";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -147,7 +147,7 @@
     </header>
 
     <div class="app">
-      <!-- Bridge JS: controlli nascosti richiesti dalla logica esistente. -->
+      <!-- Stato tecnico: controlli condivisi con la logica della pagina. -->
       <div hidden aria-hidden="true">
         <span id="mainLangLabel">Lingua</span>
         <select id="inLang">
@@ -156,9 +156,9 @@
         </select>
       </div>
 
-      <!-- Intro guidata: spiega modalità, stato corrente e prossimi passi. -->
+      <!-- Intro guidata: scelta del percorso e riepilogo della serra. -->
       <div class="guided-intro" id="guidedIntro">
-        <!-- Intro sinistra: brand e riepilogo misure/clima. -->
+        <!-- Riepilogo iniziale: brand, clima, mese e dimensioni. -->
         <div class="guided-intro-head">
           <div class="guided-brand-row">
             <span class="guided-brand-mark" aria-hidden="true">
@@ -181,9 +181,9 @@
           </div>
         </div>
 
-        <!-- Intro destra: passi rapidi e scelta modalità. -->
+        <!-- Percorsi utente: livelli e passi consigliati. -->
         <div class="guided-intro-right">
-          <!-- Selettore livello: instrada novizio / intermedio / esperto. -->
+          <!-- Scelta esperienza: principiante, intermedio o esperto. -->
           <div class="persona-pick">
             <div class="persona-pick-head">
               <b class="persona-pick-label" id="personaPickLabel"
@@ -265,7 +265,7 @@
             </div>
           </div>
 
-          <!-- Passi: percorso guidato per il novizio (dimensioni, riscaldamento, mese). -->
+          <!-- Percorso principiante: preparazione guidata della serra. -->
           <div class="guided-intro-main guided-intro-novizio">
             <b class="guided-steps-label" id="guidedIntroNovTitle"
               >Prepara la tua serra</b
@@ -306,7 +306,7 @@
             </button>
           </div>
 
-          <!-- Passi: percorso per chi ha già un po' di esperienza. -->
+          <!-- Percorso intermedio: personalizzazione assistita. -->
           <div class="guided-intro-main guided-intro-intermedio">
             <b class="guided-steps-label" id="guidedIntroTitle"
               >Personalizza il tuo orto</b
@@ -339,7 +339,7 @@
             </ol>
           </div>
 
-          <!-- Passi: percorso per chi sa già cosa vuole. -->
+          <!-- Percorso esperto: composizione manuale della serra. -->
           <div class="guided-intro-main guided-intro-esperto">
             <b class="guided-steps-label" id="guidedIntroExpTitle"
               >Componi la serra a mano</b
@@ -374,7 +374,7 @@
         </div>
       </div>
 
-      <!-- Colonna sinistra: controlli per misure, clima e preset. -->
+      <!-- Impostazioni serra: misure, clima, mese e preset. -->
       <div class="col-left">
         <div class="mode-section is-active" data-mode-section="fit">
           <div class="panel panel--settings" id="panelSettings">
@@ -632,7 +632,7 @@
         </div>
       </div>
 
-      <!-- Area centrale: vista dall'alto della serra e strumenti vista. -->
+      <!-- Vista progetto: mappa dall'alto, overlay e stampa. -->
       <div class="stage">
         <div class="stage-head">
           <div class="stage-title-row">
@@ -685,7 +685,7 @@
             </div>
           </div>
         </div>
-        <!-- Scheda pianta: dettaglio dell'aiuola selezionata. -->
+        <!-- Scheda pianta: dettaglio della coltura selezionata. -->
         <div class="panel panel--plant-detail" id="panelPlantDetail" hidden>
           <div class="pad">
             <div class="pdp-header">
@@ -717,7 +717,7 @@
         </div>
         <div class="scene-wrap"><div class="scene" id="scene"></div></div>
 
-        <!-- Stato vuoto: guida mostrata quando non ci sono colture. -->
+        <!-- Stato vuoto: suggerimento mostrato senza colture. -->
         <div class="stage-empty-banner" id="stageEmptyBanner" hidden>
           <span class="seb-icon" aria-hidden="true">🌿</span>
           <div class="seb-copy">
@@ -735,7 +735,7 @@
         <div class="print-summary" id="printSummary"></div>
       </div>
 
-      <!-- Colonna destra: colture selezionabili, azioni e lista semi. -->
+      <!-- Colture e carrello: selezione piante, azioni e semi. -->
       <div class="col-right">
         <div class="mode-section" data-mode-section="expert">
           <div class="panel panel--customize" id="panelCustomize">
@@ -947,7 +947,7 @@
               <div class="summary" id="summary"></div>
               <ul class="shop" id="shop"></ul>
             </div>
-            <!-- Footer azioni: CTA primario e azione secondaria modifica colture. -->
+            <!-- Azioni lista semi: acquisto e modifica colture. -->
             <div class="yield-footer">
               <div class="cart-btn-slot" id="cartBtnSlot"></div>
               <button

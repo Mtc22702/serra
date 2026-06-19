@@ -8,7 +8,7 @@
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-06-19-53";
+      window.SERRA_APP_VERSION = "2026-06-19-54";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -131,7 +131,7 @@
       <div class="hero-bg-plants" id="heroBgPlants"></div>
       <div class="hero-content">
 
-        <!-- Kicker con mese integrato -->
+        <!-- Stato stagione: mese e contesto corrente. -->
         <div class="hero-season-kicker">
           <span class="hero-kicker-pulse" aria-hidden="true"></span>
           <span id="heroKicker">🌱&nbsp;Stagione attiva</span>
@@ -139,7 +139,7 @@
           <span id="heroMonth" class="hero-kicker-month">Giugno</span>
         </div>
 
-        <!-- Headline centrata -->
+        <!-- Messaggio principale della home. -->
         <h1 class="hero-headline" data-i18n="hero.headline">
           Semi freschi per la tua serra.
         </h1>
@@ -148,7 +148,7 @@
         </p>
         <span id="heroTagline" hidden></span>
 
-        <!-- Controlli clima -->
+        <!-- Filtri clima: zona e riscaldamento. -->
         <div class="hero-controls" aria-label="Filtri clima">
           <div class="hero-controls-pill">
             <div class="hero-ctrl-block">
@@ -182,7 +182,7 @@
           <span class="hero-filter-note" id="heroFilterNote"></span>
         </div>
 
-        <!-- Configuratore: card originale con i suoi CTA -->
+        <!-- Accesso al configuratore: percorsi guidati e anteprima. -->
         <div class="hero-cfg">
           <div class="hero-cfg-inner">
             <div class="hero-cfg-text">
@@ -263,18 +263,18 @@
       </div>
     </section>
 
-    <!-- Catalogo semi: ricerca, filtri e lista piante per acquisto diretto. -->
+    <!-- Catalogo: ricerca, filtri e lista semi. -->
     <section class="stagione-section catalog-pro-section" id="stagione">
       <div class="catalog-pro-shell">
 
-        <!-- Intestazione contestuale -->
+        <!-- Intestazione catalogo. -->
         <header class="cat-head">
           <div class="section-kicker stagione-kicker" data-i18n="catalog.kicker">Cosa piantare</div>
           <div class="section-heading stagione-title" id="stagioneTitle">Semi giusti, scelti con metodo</div>
           <div class="stagione-meta" id="stagioneMeta"></div>
         </header>
 
-        <!-- Barra filtri -->
+        <!-- Strumenti catalogo: mese, tipo, ricerca e ordinamento. -->
         <div class="catalog-tools catalog-tools--pro catalog-tools--advanced" aria-label="Filtri catalogo semi">
           <div class="catalog-filter-group catalog-filter-group--month">
             <div class="catalog-filter-group-head">
@@ -298,11 +298,11 @@
                   <strong data-i18n="catalog.filter_type_hint">Scegli una famiglia</strong>
                 </div>
               </div>
-              <!-- Filtro per tipo: chip scrollabili generati da JS -->
+              <!-- Tipi coltura: generati dalla logica catalogo. -->
               <div class="catalog-category-rail" id="catalogCategoryRail"></div>
             </div>
 
-            <!-- Riga search + sort + ambito -->
+            <!-- Ricerca catalogo e filtri rapidi. -->
             <div class="catalog-filter-group catalog-filter-group--search">
               <div class="catalog-filter-group-head">
                 <span class="catalog-filter-step">3</span>
@@ -353,7 +353,7 @@
                   <option value="price" data-i18n="catalog.sort_price">Prezzo più basso</option>
                 </select>
 
-                <!-- Select tipo: nascosto visivamente, usato dal JS per sincronizzare lo stato -->
+                <!-- Stato tecnico: select sincronizzata con le chip categoria. -->
                 <select id="catalogType" onchange="setCatalogType(this.value)" aria-hidden="true" style="display:none">
                   <option value=""></option>
                   <option value="frutto">frutto</option>
@@ -404,7 +404,7 @@
       </div>
     </section>
 
-    <!-- Abbinamenti: compatibilità utili tra colture. -->
+    <!-- Abbinamenti: coppie compatibili per il mese selezionato. -->
     <section class="abbinamenti-section" id="abbinamenti">
       <div class="abbinamenti-inner">
         <div class="flow-section-head">
@@ -431,7 +431,7 @@
       </div>
     </section>
 
-    <!-- Kit del mese: gruppo di semi già compatibili. -->
+    <!-- Kit del mese: gruppo pronto di semi compatibili. -->
     <section class="kit-section" id="kit">
       <div class="kit-card">
         <div class="kit-info">
@@ -469,7 +469,7 @@
       </div>
     </section>
 
-    <!-- Configuratore CTA: rimando alla progettazione della serra. -->
+    <!-- Configuratore: passaggio finale verso la progettazione. -->
     <section class="conf-section">
       <div class="conf-card">
         <div class="conf-visual" aria-hidden="true">
