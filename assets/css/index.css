@@ -119,6 +119,10 @@ nav {
   font-weight: 600;
   pointer-events: none;
 }
+.nav-link--home {
+  pointer-events: auto;
+  cursor: pointer;
+}
 .nav-link--cta {
   background: var(--green-lt);
   color: #fff !important;
@@ -5547,6 +5551,10 @@ body.cart-open .back-to-top {
   font-weight: 700;
   pointer-events: none;
 }
+.site-header .nav-link--home {
+  pointer-events: auto;
+  cursor: pointer;
+}
 .site-header .nav-link--cta {
   background: var(--green-lt);
   color: #fff;
@@ -7679,6 +7687,10 @@ body.cart-open .back-to-top {
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.12);
   font-size: 1.2rem;
+}
+.hero-cfg-level-ico .level-plant-ico {
+  width: 26px;
+  height: 26px;
 }
 .hero-cfg-level-body {
   flex: 1;

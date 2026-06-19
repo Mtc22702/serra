@@ -71,40 +71,41 @@
           /></span>
           <span class="nav-brand-copy">
             <strong class="nav-brand-text">Orto in Serra</strong>
-            <small>Coltiva con un piano</small>
+            <small data-i18n-conf="nav.brand_sub">Coltiva con un piano</small>
           </span>
         </a>
         <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
           <a href="index.html" class="nav-link" data-i18n-conf="nav.home"
-            >Home</a
+            >🏠 Home</a
           >
           <a
             href="index.html#stagione"
             class="nav-link"
             data-i18n-conf="nav.stagione"
-            >Catalogo completo</a
+            >🌿 Catalogo completo</a
           >
           <a
             href="index.html#abbinamenti"
             class="nav-link"
             data-i18n-conf="nav.abbinamenti"
-            >Abbinamenti</a
+            >🤝 Abbinamenti</a
           >
           <a href="index.html#kit" class="nav-link" data-i18n-conf="footer.kit"
-            >Kit del mese</a
+            >📦 Kit del mese</a
           >
           <a
-            href="configuratore.html"
-            class="nav-link nav-link--current"
+            href="#"
+            class="nav-link nav-link--current nav-link--home"
             aria-current="page"
             data-i18n-conf="nav.configuratore"
+            onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"
             >📐 Configuratore</a
           >
           <a
             href="index.html#contatti"
             class="nav-link"
             data-i18n-conf="nav.contatti"
-            >Contatti</a
+            >✉️ Contatti</a
           >
         </nav>
         <div class="nav-actions">
@@ -206,7 +207,7 @@
                 role="tab"
                 aria-selected="false"
               >
-                <span class="persona-card-ico" aria-hidden="true">🌱</span>
+                <span class="persona-card-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"></span>
                 <span class="persona-card-body">
                   <b>
                     <span id="personaNovTitle">Sono alle prime armi</span>
@@ -227,7 +228,7 @@
                 role="tab"
                 aria-selected="true"
               >
-                <span class="persona-card-ico" aria-hidden="true">🌿</span>
+                <span class="persona-card-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"></span>
                 <span class="persona-card-body">
                   <b>
                     <span id="personaIntTitle">Ho un po' di esperienza</span>
@@ -248,7 +249,7 @@
                 role="tab"
                 aria-selected="false"
               >
-                <span class="persona-card-ico" aria-hidden="true">🌾</span>
+                <span class="persona-card-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"></span>
                 <span class="persona-card-body">
                   <b>
                     <span id="personaExpTitle">So già cosa voglio</span>

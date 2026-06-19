@@ -5548,6 +5548,14 @@ body.cart-open .cart-nudge {
     background 0.16s ease,
     transform 0.16s ease;
 }
+.level-plant-ico {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+.persona-card.is-active .persona-card-ico .level-plant-ico {
+  filter: brightness(0) invert(1);
+}
 .persona-card-body {
   flex: 1;
   min-width: 0;
