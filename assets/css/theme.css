@@ -994,8 +994,8 @@ html[data-theme="dark"] body :where(
   }
   .site-header .theme-toggle-icon { font-size: 19px !important; }
   .site-header .nav-lang {
-    width: 68px !important;
-    min-width: 68px !important;
+    width: 60px !important;
+    min-width: 60px !important;
     min-height: 40px !important;
     height: 40px !important;
     padding: 0 !important;
@@ -1003,10 +1003,14 @@ html[data-theme="dark"] body :where(
     border-radius: 11px !important;
   }
   .site-header .nav-lang select {
-    width: 66px !important;
-    min-width: 66px !important;
-    padding: 0 !important;
+    display: block;
+    width: 58px !important;
+    min-width: 58px !important;
+    padding: 0 3px !important;
     font-size: .72rem !important;
+    text-align: center !important;
+    text-align-last: center !important;
+    letter-spacing: .015em;
   }
   .site-header .cart-btn {
     width: 62px !important;

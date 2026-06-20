@@ -2566,10 +2566,11 @@ function visualItemsForBed(bed, maxItems) {
   return items;
 }
 
-function fitLabelSize(text, width, height) {
-  const maxByWidth = (width - 14) / Math.max(text.length * 0.55, 1);
-  const maxByHeight = Math.max(8, height * 0.18);
-  return Math.max(5, Math.min(13, maxByWidth, maxByHeight));
+function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
+  const greenhouseScale = Math.min(sceneWidth, sceneHeight) * 0.016;
+  const maxByWidth = (width - 28) / Math.max(text.length * 0.56, 1);
+  const maxByHeight = height * 0.14;
+  return Math.max(4.8, Math.min(9.5, greenhouseScale, maxByWidth, maxByHeight));
 }
 
 function buildScene() {
@@ -2759,12 +2760,20 @@ function buildScene() {
       }
     });
     const label = plantText(bed.plant, "nome");
-    const labelSize = fitLabelSize(label, bed.w, bed.h);
-    const labelY = by + Math.max(18, labelSize + 8);
+    const labelSize = fitLabelSize(label, bed.w, bed.h, vbW, vbH);
+    const labelReserve = bed.w >= 70 && bed.h >= 55 ? 17 : 0;
+    const labelCenterX = bx + bed.w / 2;
+    const labelMaxW = Math.max(24, bed.w - labelReserve * 2 - 8);
+    const labelH = labelSize + 5;
+    const labelTop = by + 4;
     const labelW = Math.min(
-      bed.w - 10,
-      Math.max(44, label.length * labelSize * 0.58 + 18)
+      labelMaxW,
+      Math.max(28, label.length * labelSize * 0.56 + 8)
     );
+    const naturalLabelTextW = label.length * labelSize * 0.56;
+    const labelTextFit = naturalLabelTextW > labelW - 6
+      ? ` textLength="${Math.max(18, labelW - 6)}" lengthAdjust="spacingAndGlyphs"`
+      : "";
     // quote tecniche (stile disegno tecnico)
     const wM = `${(bed.w / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
     const hM = `${(bed.h / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
@@ -2812,8 +2821,8 @@ function buildScene() {
     g += `</g>`;
     g += pendingEmoji.join("");
     g += `<g pointer-events="none">`;
-    g += `<rect x="${bx + bed.w / 2 - labelW / 2}" y="${labelY - labelSize - 8}" width="${labelW}" height="${labelSize + 13}" rx="${Math.min(8, (labelSize + 13) / 2)}" fill="rgba(255,253,246,.94)" stroke="rgba(31,58,38,.35)" stroke-width=".8"/>`;
-    g += `<text x="${bx + bed.w / 2}" y="${labelY - 3}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${labelSize}" font-weight="800" fill="#1f3a26" stroke="rgba(255,253,246,.9)" stroke-width="1.8" paint-order="stroke">${label}</text>`;
+    g += `<rect x="${labelCenterX - labelW / 2}" y="${labelTop}" width="${labelW}" height="${labelH}" rx="${Math.min(5, labelH / 2)}" fill="${nightMode ? "rgba(20,43,32,.68)" : "rgba(249,251,245,.62)"}" stroke="${nightMode ? "rgba(176,221,190,.3)" : "rgba(31,80,49,.24)"}" stroke-width=".6"/>`;
+    g += `<text x="${labelCenterX}" y="${labelTop + labelH / 2}" dominant-baseline="middle" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${labelSize}" font-weight="750" fill="${nightMode ? "#e8f4eb" : "#254331"}"${labelTextFit}>${label}</text>`;
     g += `</g>`;
     // sovrapposizione analitica
     if (state.overlay) {
