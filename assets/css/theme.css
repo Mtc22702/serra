@@ -1,0 +1,919 @@
+/* Tema condiviso: modalità chiara/scura per homepage e configuratore. */
+:root {
+  color-scheme: light;
+  --theme-surface: #fffdf8;
+  --theme-surface-2: #f3f6ed;
+  --theme-surface-3: #e8eee2;
+  --theme-line: rgba(31, 67, 50, 0.15);
+  --theme-text: #1f3428;
+  --theme-muted: #667168;
+  --theme-shadow: 0 14px 38px rgba(24, 53, 36, 0.12);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #091410;
+  --white: #14231d;
+  --sand-lt: #101d18;
+  --sand: #28362c;
+  --text: #edf5ef;
+  --muted: #a9b9ae;
+  --border: #30453a;
+  --green-dk: #d6eadc;
+  --green: #73bf8a;
+  --green-lt: #64c58a;
+  --lime: #76d49a;
+  --crema: #0b1712;
+  --carta: #13221b;
+  --inchiostro: #e9f3ec;
+  --verde-scuro: #d5e9da;
+  --verde: #69b77d;
+  --verde-chiaro: #79c78d;
+  --ghiaia: #34443b;
+  --terra: #b89b82;
+  --terra-scuro: #d0b69e;
+  --bordo: 1px solid rgba(173, 211, 186, 0.15);
+  --ombra: 0 16px 42px rgba(0, 0, 0, 0.34);
+  --theme-surface: #13221b;
+  --theme-surface-2: #182a21;
+  --theme-surface-3: #21362a;
+  --theme-line: rgba(172, 214, 187, 0.16);
+  --theme-text: #edf5ef;
+  --theme-muted: #a9b9ae;
+  --theme-shadow: 0 16px 42px rgba(0, 0, 0, 0.36);
+}
+
+body,
+.site-header,
+.panel,
+.stage,
+.guided-intro,
+.catalog-pro-shell,
+.catalog-tools,
+.cart-drawer,
+.cookie-banner {
+  transition: background-color .24s ease, color .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  padding: 0;
+  border: 1px solid rgba(45, 106, 79, .16);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .72);
+  color: #245a3d;
+  box-shadow: 0 5px 15px rgba(31, 67, 50, .08), inset 0 1px rgba(255, 255, 255, .8);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+}
+.theme-toggle:hover { transform: translateY(-2px); border-color: rgba(82, 183, 136, .48); }
+.theme-toggle-icon { position: absolute; font-size: 21px; line-height: 1; transition: opacity .18s, transform .25s; }
+.theme-toggle-sun { opacity: 0; transform: rotate(-45deg) scale(.7); }
+.theme-toggle-moon { opacity: 1; transform: rotate(0) scale(1); }
+html[data-theme="dark"] .theme-toggle {
+  background: #1b3026;
+  color: #ffd778;
+  border-color: rgba(255, 215, 120, .2);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, .28), inset 0 1px rgba(255, 255, 255, .07);
+}
+html[data-theme="dark"] .theme-toggle-sun { opacity: 1; transform: rotate(0) scale(1); }
+html[data-theme="dark"] .theme-toggle-moon { opacity: 0; transform: rotate(45deg) scale(.7); }
+
+html[data-theme="dark"] body {
+  background: #091410;
+  color: var(--theme-text);
+}
+html[data-theme="dark"] body::before { opacity: .22; }
+html[data-theme="dark"] .site-header {
+  background: rgba(10, 23, 18, .94) !important;
+  border-bottom-color: var(--theme-line) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .3) !important;
+  backdrop-filter: blur(16px);
+}
+html[data-theme="dark"] .nav-brand,
+html[data-theme="dark"] .nav-brand-text,
+html[data-theme="dark"] .nav-link,
+html[data-theme="dark"] .site-header small { color: var(--theme-text); }
+html[data-theme="dark"] .nav-link:hover,
+html[data-theme="dark"] .nav-link--current {
+  background: rgba(105, 183, 125, .16) !important;
+  border-color: rgba(105, 183, 125, .3) !important;
+  color: #dff3e5 !important;
+}
+html[data-theme="dark"] .nav-lang,
+html[data-theme="dark"] .nav-lang select,
+html[data-theme="dark"] .cart-btn,
+html[data-theme="dark"] select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea {
+  background-color: #17271f !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-line) !important;
+}
+html[data-theme="dark"] .nav-menu-toggle span { background: #dcebe1; }
+
+/* Homepage: contenitori, catalogo e schede tecniche. */
+html[data-theme="dark"] .hero-bg-plants { filter: brightness(.55) saturate(.76) contrast(1.06); }
+html[data-theme="dark"] .hero-immersive { background-color: #0a1712; }
+html[data-theme="dark"] :where(
+  .climate-control-panel, .climate-help-popover, .hero-promise,
+  .catalog-pro-shell, .catalog-tools, .catalog-filter-group,
+  .catalog-insight-card, .catalog-search-suggestions,
+  .season-card, .plant-card, .product-card, .veg-card,
+  .companions-panel, .companion-card, .kit-card,
+  .detail-panel, .detail-content, .detail-tabs-shell,
+  .detail-summary-card, .detail-stat, .detail-info-card,
+  .detail-spacing, .detail-tab-panel, .detail-disease-card,
+  .cart-drawer, .cart-item, .cart-summary, .cookie-banner
+) {
+  background: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-line) !important;
+  box-shadow: var(--theme-shadow);
+}
+html[data-theme="dark"] :where(
+  .catalog-month-btn, .catalog-chip, .catalog-category-btn,
+  .detail-tab, .detail-sow-row, .detail-cultivation-item,
+  .detail-disease-info, .detail-disease-info--action,
+  .spacing-visual, .pdp-spacing-visual, .cart-qty-control
+) {
+  background: var(--theme-surface-2) !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-line) !important;
+}
+html[data-theme="dark"] :where(.section-heading, .kit-name, .detail-title, .cart-title, h1, h2, h3, strong) { color: var(--theme-text); }
+html[data-theme="dark"] :where(.section-sub, .catalog-hint, .detail-subtitle, .detail-copy, .kit-desc, .cart-footer-note, .panel .sub) { color: var(--theme-muted) !important; }
+html[data-theme="dark"] .stagione-section,
+html[data-theme="dark"] .companions-section,
+html[data-theme="dark"] .kit-section { background-color: #0c1813 !important; }
+html[data-theme="dark"] .catalog-search-box { background: var(--theme-surface-2) !important; border-color: var(--theme-line) !important; }
+html[data-theme="dark"] .detail-tab.active { color: #fff !important; }
+html[data-theme="dark"] .detail-tab-icon { background: rgba(255,255,255,.08) !important; }
+html[data-theme="dark"] .detail-tab.active .detail-tab-icon { background: rgba(255,255,255,.88) !important; }
+html[data-theme="dark"] .cart-backdrop { background: rgba(0, 7, 4, .74); }
+
+/* Configuratore: pannelli laterali, canvas e schede. */
+html[data-theme="dark"] .app {
+  background: radial-gradient(circle at 50% 18%, rgba(50, 96, 66, .13), transparent 44%);
+}
+html[data-theme="dark"] :where(
+  .guided-intro, .guided-intro-main, .guided-summary,
+  .panel, .stage, .view-toolbar, .scene-wrap,
+  .stage-empty-banner, .bed-detail, .plant-detail,
+  .pdp-section, .pdp-hero-card, .pdp-tabbar,
+  .pdp-spacing-tile, .pdp-info-card, .pdp-accordion,
+  .veg, .seed-list, .yield-summary, .cart-nudge
+) {
+  background: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-line) !important;
+  box-shadow: var(--theme-shadow);
+}
+html[data-theme="dark"] :where(
+  .guided-step, .guided-tag, .control, .stepper,
+  .view-select, .view-select select, .view-print-btn,
+  .pdp-tab, .pdp-stat, .pdp-care-item, .pdp-accordion-header,
+  .veg-row, .veg.in, .seed-row, .action-card
+) {
+  background: var(--theme-surface-2) !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-line) !important;
+}
+html[data-theme="dark"] :where(.panel-title, .stage-title, .pdp-title, .pdp-section-title, .veg-name, .guided-intro h1, .guided-intro h2) { color: var(--theme-text) !important; }
+html[data-theme="dark"] :where(.stage-subtitle, .guided-brand-copy p, .pdp-copy, .pdp-hint, .scale-note, .empty-note) { color: var(--theme-muted) !important; }
+html[data-theme="dark"] .scene-wrap {
+  background: linear-gradient(145deg, #13231c, #0d1813) !important;
+  border-color: rgba(163, 207, 178, .16) !important;
+}
+html[data-theme="dark"] .scene svg { box-shadow: 0 15px 38px rgba(0,0,0,.48), inset 0 0 0 1px rgba(190,225,201,.12); }
+html[data-theme="dark"] .pdp-tab.active,
+html[data-theme="dark"] .btn.primary,
+html[data-theme="dark"] .cart-checkout-btn { color: #fff !important; }
+
+html[data-theme="dark"] ::selection { background: rgba(105, 183, 125, .34); color: #fff; }
+@media (max-width: 720px) {
+  .theme-toggle { width: 38px; height: 38px; flex-basis: 38px; border-radius: 11px; }
+  .theme-toggle-icon { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle, .theme-toggle-icon { transition: none; }
+}
+
+/* Dark mode v2: gerarchia più morbida, contrasto leggibile e colori semantici. */
+html[data-theme="dark"] {
+  --dark-page: #121f19;
+  --dark-section: #17271f;
+  --dark-surface: #1d3027;
+  --dark-raised: #263c31;
+  --dark-soft: #30483b;
+  --dark-border: rgba(181, 218, 193, .17);
+  --dark-border-strong: rgba(181, 218, 193, .27);
+  --dark-text: #f0f4ef;
+  --dark-muted: #b8c4bb;
+  --dark-subtle: #91a095;
+  --dark-green: #8bd49e;
+  --dark-gold: #ebc56d;
+  --theme-surface: var(--dark-surface);
+  --theme-surface-2: var(--dark-raised);
+  --theme-surface-3: var(--dark-soft);
+  --theme-line: var(--dark-border);
+  --theme-text: var(--dark-text);
+  --theme-muted: var(--dark-muted);
+  --bg: var(--dark-page);
+  --white: var(--dark-surface);
+  --sand-lt: var(--dark-section);
+  --text: var(--dark-text);
+  --muted: var(--dark-muted);
+  --border: #354b3e;
+  --carta: var(--dark-surface);
+  --crema: var(--dark-page);
+  --inchiostro: var(--dark-text);
+  --verde-scuro: var(--dark-text);
+}
+html[data-theme="dark"] body {
+  background: var(--dark-page) !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] .site-header { background: rgba(20, 34, 27, .96) !important; }
+html[data-theme="dark"] .nav-brand-mark { background: #23382e !important; border-color: var(--dark-border) !important; }
+
+/* Testi: primari, descrittivi e didascalie. */
+html[data-theme="dark"] :where(
+  .hero-headline, .section-heading, .kit-name, .detail-title,
+  .panel-title, .stage-title, .pdp-title, .cart-title,
+  .catalog-filter-label, .veg-name, .plant-name,
+  .guided-brand-copy strong, .guided-steps-label,
+  .detail-diseases-head h3, .detail-disease-card summary,
+  .detail-disease-info b, .pdp-accordion-header
+) { color: var(--dark-text) !important; }
+html[data-theme="dark"] :where(
+  .hero-sub, .hero-filter-note, .section-sub, .catalog-hint,
+  .kit-desc, .flow-head-note, .detail-subtitle, .detail-copy,
+  .detail-tech-card p, .detail-disease-info p, .detail-treatment-note,
+  .panel .sub, .stage-subtitle, .scale-note, .overlay-legend,
+  .guided-brand-copy p, .guided-info-card, .guided-plant-title span,
+  .mode-tab small, label.fld, .crops-count, .customize-sub,
+  .crop-actions-copy span, .section-label, .summary,
+  .pdp-subtitle, .pdp-desc, .pdp-tile-hint, .pdp-spacing-hint,
+  .pdp-month-bar-head, .pdp-sow-row, .persona-card-body small,
+  .cart-footer-note, .contatti-item p
+) { color: var(--dark-muted) !important; }
+html[data-theme="dark"] :where(
+  .detail-tile-label, .pdp-tile-label, .pdp-header-title,
+  .spec .k, .spec .hint, .muted-inline, .bedchip-sub,
+  .bedchip .c, .bedchip-gg, .shop-plant small,
+  .yield-metric span, .novice-crops-note span
+) { color: var(--dark-subtle) !important; }
+
+/* Hero e scelta percorso: superfici leggibili senza perdere l'atmosfera. */
+html[data-theme="dark"] .hero-immersive {
+  background: linear-gradient(160deg, #182b22 0%, #14231d 48%, #111a16 100%) !important;
+}
+html[data-theme="dark"] .hero-bg-plants { filter: brightness(.68) saturate(.82) contrast(1.02); opacity: .78; }
+html[data-theme="dark"] :where(.hero-zone-btn, .hero-heated-btn, .hero-controls-pill, .hero-filter-note) {
+  background: rgba(35, 55, 45, .88) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] :where(.percorso-primary, .percorso-choice, .hero-path .percorso-primary, .hero-path .percorso-choice) {
+  background: linear-gradient(145deg, rgba(34, 53, 43, .97), rgba(26, 41, 34, .98)) !important;
+  border-color: var(--dark-border-strong) !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] .percorso-choice--semi,
+html[data-theme="dark"] .hero-path .percorso-choice--semi { background: linear-gradient(145deg, #302c25, #211f1b) !important; }
+html[data-theme="dark"] .percorso-benefits li {
+  background: rgba(128, 190, 147, .11) !important;
+  color: #d6e7da !important;
+}
+html[data-theme="dark"] :where(.percorso-path--auto, .percorso-cta-btn--green) {
+  background: #e8f2eb !important;
+  color: #183a28 !important;
+}
+html[data-theme="dark"] .percorso-cta-btn--earth { background: #f0dfcd !important; color: #56351f !important; }
+html[data-theme="dark"] .hero-heated-btn.active { background: #3b321d !important; color: #f1d47d !important; }
+
+/* Catalogo, abbinamenti, kit e contatti. */
+html[data-theme="dark"] :where(.stagione-section, .abbinamenti-section, .kit-section, .contatti-section) {
+  background: var(--dark-section) !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] :where(
+  .catalog-pro-shell, .catalog-tools--advanced, .catalog-filter-group,
+  .catalog-search-suggestions, .plant-card-compact, .abbinamento-card,
+  .kit-card, .contatti-item, .map-placeholder-inner
+) {
+  background: var(--dark-surface) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,.2);
+}
+html[data-theme="dark"] :where(
+  .month-tile, .catalog-category-chip, .catalog-scope--advanced .catalog-chip,
+  .catalog-reset-btn, .catalog-insights span, .catalog-hint--pro,
+  .catalog-search--pro .catalog-search-box, .kit-meta-row span, .kit-plan-link
+) {
+  background: var(--dark-raised) !important;
+  color: var(--dark-muted) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] :where(
+  .catalog-scope--advanced .catalog-chip .chip-lbl,
+  .catalog-scope--advanced #catalogAllToggle .chip-lbl,
+  .catalog-scope--advanced #catalogEasyOnly .chip-lbl
+) { color: var(--dark-text) !important; }
+html[data-theme="dark"] .catalog-category-chip.active,
+html[data-theme="dark"] .catalog-chip.active { background: #376f49 !important; color: #fff !important; }
+html[data-theme="dark"] :where(.off-season-badge, .veg-offseason) { background: #233747 !important; color: #b9d9ee !important; }
+html[data-theme="dark"] .plant-card-compact.in-cart,
+html[data-theme="dark"] .abbinamento-card.in-cart { background: #203a2b !important; }
+
+/* Schede tecniche homepage: ogni livello resta distinto. */
+html[data-theme="dark"] .detail-panel,
+html[data-theme="dark"] .stage > .panel--plant-detail {
+  background: linear-gradient(180deg, #1d2e26, #17241e) !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] :where(
+  .detail-tabs-shell, .detail-tech-card, .detail-disease-card,
+  .detail-spacing, .detail-tile, .month-bar, .detail-companions,
+  .detail-sow, .detail-sow-header, .pdp-tile, .pdp-spacing-tile,
+  .pdp-accordion, .pdp-sow-section, .pdp-month-bar, .pdp-companions,
+  .pdp-desc
+) {
+  background: var(--dark-raised) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] :where(.detail-tab, .panel--plant-detail .detail-tab, .pdp-tab) {
+  background: #263a30 !important;
+  color: var(--dark-muted) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] :where(.detail-tab:hover, .panel--plant-detail .detail-tab:hover, .pdp-tab:hover) {
+  background: #30483b !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] :where(.detail-tab.active, .panel--plant-detail .detail-tab.active, .pdp-tab.active) { color: #fff !important; }
+html[data-theme="dark"] .detail-disease-info { background: #302924 !important; }
+html[data-theme="dark"] .detail-disease-info--action { background: #20382a !important; }
+html[data-theme="dark"] .detail-pests .detail-disease-info--action { background: #272b40 !important; }
+html[data-theme="dark"] .detail-pests .detail-disease-info--products { background: #3a321f !important; }
+html[data-theme="dark"] :where(.detail-diseases-count, .detail-disease-toggle) { color: #e3b9a4 !important; }
+html[data-theme="dark"] .detail-pests :where(.detail-diseases-count, .detail-disease-toggle) { color: #c9c1f2 !important; }
+html[data-theme="dark"] .detail-nota,
+html[data-theme="dark"] .detail-sow-tip,
+html[data-theme="dark"] .pdp-tip { background: #352f20 !important; color: #f0d997 !important; }
+html[data-theme="dark"] :where(.companion-chip.friend, .pdp-companion-chip--friend) { background: #244331 !important; color: #b7e6c6 !important; }
+html[data-theme="dark"] :where(.companion-chip.foe, .pdp-companion-chip--foe) { background: #482a28 !important; color: #f2bbb4 !important; }
+html[data-theme="dark"] :where(
+  .detail-close, .badge, .spacing-label, .count-ctl button,
+  .pdp-back-btn, .pdp-hero-emoji, .pdp-dot--outlined
+) {
+  background: #2a4035 !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] .badge--sun { background: #3b321d !important; color: #f0d077 !important; }
+html[data-theme="dark"] .badge--water { background: #213a35 !important; color: #a8d8ca !important; }
+
+/* Configuratore: pagina e pannelli con tre livelli di profondità. */
+html[data-theme="dark"] .app { background: radial-gradient(circle at 50% 14%, #1a2b22 0%, var(--dark-page) 58%) !important; }
+html[data-theme="dark"] :where(.guided-intro, .panel, .stage, #panelCustomize, .panel--plant-detail) {
+  background: var(--dark-surface) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+  box-shadow: 0 14px 36px rgba(0,0,0,.24);
+}
+html[data-theme="dark"] :where(
+  .guided-steps li, .guided-info-card, .guided-tags .tag,
+  .guided-intro-actions .mode-tab, .mode-tab, .preset-inline,
+  #panelCustomize .veg-list, .customize-sub, .crops-customize-footer,
+  .action-card, .veg, .veg.in, .veg-search-box,
+  .veg-filter-tab, .yield-metric, .shop li, .checkline,
+  .pdp-back-btn, .veg-qty-ctl, .veg-qty-input
+) {
+  background: var(--dark-raised) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] :where(input[type="number"], select, .stepper, .crops-month-selector select) {
+  background: #263a30 !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border-strong) !important;
+}
+html[data-theme="dark"] :where(.guided-steps li, .guided-tags .tag, .guided-info-card, .veg-qty-topline, .sow-row, .plant-desc, .seb-copy span) { color: var(--dark-muted) !important; }
+html[data-theme="dark"] :where(.persona-card, .modal-step, .opt, .checkline) {
+  background: var(--dark-raised) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] :where(.persona-card-body small, .modal-step small, .opt small) { color: var(--dark-muted) !important; }
+html[data-theme="dark"] .scene-wrap { background: #17241e !important; }
+html[data-theme="dark"] .crop-action-btn--primary { background: #263d2c !important; color: #cfe8d4 !important; }
+html[data-theme="dark"] .crop-action-btn--secondary { background: #273748 !important; color: #c9ddf1 !important; }
+html[data-theme="dark"] .crop-action-btn--danger { background: #472a2a !important; color: #f0c0ba !important; }
+html[data-theme="dark"] .helper-note,
+html[data-theme="dark"] .guide { background: #382f20 !important; color: #eed99e !important; }
+html[data-theme="dark"] .warn.tip { background: #203a2a !important; color: #bde0c6 !important; }
+
+/* Carrello, modali e banner. */
+html[data-theme="dark"] :where(.cart-drawer, .cart-item, .cart-footer, .modal, .cookie-banner, .cart-nudge) {
+  background: var(--dark-surface) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] .cart-footer { background: #1e3027 !important; }
+html[data-theme="dark"] .cart-nudge button,
+html[data-theme="dark"] .back-to-top { background: #e7f0e9 !important; color: #173823 !important; }
+
+/* Diagrammi delle distanze: niente rettangoli bianchi dentro le schede. */
+html[data-theme="dark"] .spacing-svg {
+  --spacing-diagram-bg: #20332a;
+  --spacing-diagram-text: #edf4ef;
+  --spacing-diagram-grid: rgba(180, 215, 191, .16);
+}
+
+@media (max-width: 720px) {
+  html[data-theme="dark"] .nav-links { background: #192820 !important; border-color: var(--dark-border) !important; }
+}
+
+/* Audit finale delle superfici annidate che avevano ancora fondi chiari. */
+html[data-theme="dark"] body :where(.detail-diseases, .panel--plant-detail .detail-diseases) {
+  background: linear-gradient(145deg, #2d2722, #251f1c) !important;
+  color: var(--dark-text) !important;
+  border-color: rgba(217, 151, 113, .26) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .22) !important;
+}
+html[data-theme="dark"] body :where(.detail-pests, .panel--plant-detail .detail-pests) {
+  background: linear-gradient(145deg, #27283a, #202332) !important;
+  border-color: rgba(153, 141, 211, .28) !important;
+}
+html[data-theme="dark"] body :where(.detail-diseases-head h3, .panel--plant-detail .detail-diseases-head h3) {
+  color: #f1d0bd !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-diseases-head h3, .panel--plant-detail .detail-pests .detail-diseases-head h3) {
+  color: #d9d2ff !important;
+}
+html[data-theme="dark"] body :where(.detail-diseases-head p, .panel--plant-detail .detail-diseases-head p) {
+  color: #c8b6ac !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-diseases-head p, .panel--plant-detail .detail-pests .detail-diseases-head p) {
+  color: #bebbd1 !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-card, .panel--plant-detail .detail-disease-card) {
+  background: #26372f !important;
+  border-color: rgba(205, 167, 143, .18) !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-disease-card, .panel--plant-detail .detail-pests .detail-disease-card) {
+  background: #25352f !important;
+  border-color: rgba(160, 150, 217, .2) !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-card summary, .panel--plant-detail .detail-disease-card summary) {
+  color: #f1ece7 !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-card summary:hover, .detail-disease-card[open] summary) {
+  background: rgba(230, 167, 130, .1) !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-disease-card summary:hover, .detail-pests .detail-disease-card[open] summary) {
+  background: rgba(156, 143, 219, .12) !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-info, .panel--plant-detail .detail-disease-info) {
+  background: #332d28 !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-info--action, .panel--plant-detail .detail-disease-info--action) {
+  background: #20382b !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-disease-info--action, .panel--plant-detail .detail-pests .detail-disease-info--action) {
+  background: #292d43 !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-disease-info--products, .panel--plant-detail .detail-pests .detail-disease-info--products) {
+  background: #3b321f !important;
+  border-color: rgba(231, 190, 103, .25) !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-info p, .panel--plant-detail .detail-disease-info p) {
+  color: #d7d2cd !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-info b, .panel--plant-detail .detail-disease-info b) {
+  color: #e5bda6 !important;
+}
+html[data-theme="dark"] body :where(.detail-disease-info--action b, .panel--plant-detail .detail-disease-info--action b) {
+  color: #9bd6ad !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-disease-info--action b, .panel--plant-detail .detail-pests .detail-disease-info--action b) {
+  color: #c8c0f2 !important;
+}
+html[data-theme="dark"] body :where(.detail-pests .detail-disease-info--products b, .panel--plant-detail .detail-pests .detail-disease-info--products b) {
+  color: #f0d083 !important;
+}
+html[data-theme="dark"] body .detail-treatment-note { color: #b9b4ad !important; border-color: rgba(218, 188, 171, .16) !important; }
+
+html[data-theme="dark"] body .novice-crops-note {
+  background: linear-gradient(145deg, #39311f, #263327) !important;
+  border-color: rgba(232, 195, 108, .3) !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,.2) !important;
+}
+html[data-theme="dark"] body .novice-crops-note b { color: #f2dfa5 !important; }
+html[data-theme="dark"] body .novice-crops-note span { color: #c9c5b5 !important; }
+
+html[data-theme="dark"] body :where(
+  .detail-tile--quantity, .panel--plant-detail .detail-tile--quantity,
+  .stage-empty-banner, .empty-state, .empty-helper,
+  .cart-empty, .cart-summary, .cart-item,
+  .catalog-status, .catalog-search-suggestions li,
+  .guided-plant-info .guided-info-card
+) {
+  background: var(--dark-raised) !important;
+  color: var(--dark-text) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] body :where(.guided-plant-title span, .guided-plant-chips span) { color: var(--dark-muted) !important; }
+html[data-theme="dark"] body .guided-plant-chips span { background: #2c4337 !important; }
+
+html[data-theme="dark"] body ::placeholder { color: #89998e !important; opacity: 1; }
+html[data-theme="dark"] body hr { border-color: var(--dark-border) !important; }
+html[data-theme="dark"] body :where(button:disabled, .disabled) { opacity: .58; }
+html[data-theme="dark"] { scrollbar-color: #456152 #101813; }
+
+/* Catalogo dark: azioni nette e categorie immediatamente riconoscibili. */
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn {
+  background: linear-gradient(135deg, #36975a, #267846) !important;
+  color: #fff !important;
+  border: 1px solid rgba(137, 222, 162, .44) !important;
+  box-shadow: 0 7px 18px rgba(4, 20, 11, .28) !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.22);
+}
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn:hover {
+  background: linear-gradient(135deg, #43ad6b, #2e8c51) !important;
+  border-color: rgba(176, 241, 193, .62) !important;
+  box-shadow: 0 10px 24px rgba(12, 50, 27, .38) !important;
+}
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn.added {
+  background: #284d36 !important;
+  color: #bfe8ca !important;
+  border-color: #57966a !important;
+}
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn.added:hover {
+  background: #7d3535 !important;
+  color: #fff !important;
+  border-color: #c66b67 !important;
+}
+html[data-theme="dark"] body .catalog-pro-section .compact-add-btn {
+  background: #233d30 !important;
+  color: #a9edbf !important;
+  border: 2px solid #65cf88 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2) !important;
+}
+html[data-theme="dark"] body .catalog-pro-section .compact-add-btn:hover {
+  background: #338d54 !important;
+  color: #fff !important;
+  border-color: #8ce3a7 !important;
+}
+html[data-theme="dark"] body .catalog-pro-section .compact-add-btn.added {
+  background: #2c6841 !important;
+  color: #fff !important;
+  border-color: #8ce3a7 !important;
+}
+
+html[data-theme="dark"] body :where(.photo-type-tag, .compact-badge)[data-plant-type] {
+  border: 1px solid currentColor !important;
+  font-weight: 850 !important;
+  text-shadow: none !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,.24) !important;
+}
+html[data-theme="dark"] body .photo-type-tag[data-plant-type] {
+  backdrop-filter: blur(8px) saturate(.85);
+  -webkit-backdrop-filter: blur(8px) saturate(.85);
+}
+html[data-theme="dark"] body :where(.photo-type-tag, .compact-badge)[data-plant-type="frutto"] {
+  background: rgba(82, 38, 31, .94) !important;
+  color: #ffc0ad !important;
+  border-color: #a95f4d !important;
+}
+html[data-theme="dark"] body :where(.photo-type-tag, .compact-badge)[data-plant-type="foglia"] {
+  background: rgba(28, 70, 45, .94) !important;
+  color: #b9edc8 !important;
+  border-color: #57986b !important;
+}
+html[data-theme="dark"] body :where(.photo-type-tag, .compact-badge)[data-plant-type="radice"] {
+  background: rgba(71, 50, 28, .95) !important;
+  color: #f3cf92 !important;
+  border-color: #a17a43 !important;
+}
+html[data-theme="dark"] body :where(.photo-type-tag, .compact-badge)[data-plant-type="legume"] {
+  background: rgba(31, 57, 76, .95) !important;
+  color: #bee2f6 !important;
+  border-color: #5786a4 !important;
+}
+html[data-theme="dark"] body :where(.photo-type-tag, .compact-badge)[data-plant-type="aromatica"] {
+  background: rgba(55, 44, 73, .95) !important;
+  color: #ddcef6 !important;
+  border-color: #8370a4 !important;
+}
+
+/* Footer dark: palette indipendente dai token usati per titoli e testi. */
+html[data-theme="dark"] body footer.footer-botanico {
+  background: linear-gradient(180deg, #0e2018 0%, #091710 100%) !important;
+  color: #e8f2eb !important;
+  border-top: 1px solid rgba(133, 211, 157, .25) !important;
+}
+html[data-theme="dark"] body .footer-plant-strip {
+  background: #10261b !important;
+  border-bottom-color: rgba(151, 216, 170, .16) !important;
+}
+html[data-theme="dark"] body .footer-plant-icon {
+  opacity: .72;
+  filter: saturate(.9) brightness(.88) drop-shadow(0 3px 8px rgba(0,0,0,.3));
+}
+html[data-theme="dark"] body .footer-main {
+  background: transparent !important;
+  color: #e8f2eb !important;
+}
+html[data-theme="dark"] body :where(.footer-brand-name, .footer-logo-row, .footer-main strong) {
+  color: #f2f7f3 !important;
+}
+html[data-theme="dark"] body .footer-logo {
+  filter: brightness(0) invert(1);
+  opacity: .86;
+}
+html[data-theme="dark"] body :where(.footer-nav-title, .footer-legal-title, .footer-tip-kicker) {
+  color: #78d596 !important;
+}
+html[data-theme="dark"] body :where(.footer-nav-list a, .footer-legal-list a) {
+  color: #b9c9bf !important;
+}
+html[data-theme="dark"] body :where(.footer-nav-list a:hover, .footer-legal-list a:hover) {
+  color: #fff !important;
+}
+html[data-theme="dark"] body :where(.footer-motto, .footer-tip-text) {
+  color: #a9bbb0 !important;
+}
+html[data-theme="dark"] body .footer-tip-inline {
+  border-top-color: rgba(173, 218, 187, .14) !important;
+}
+html[data-theme="dark"] body .footer-social a {
+  background: #193126 !important;
+  border-color: rgba(153, 215, 172, .22) !important;
+}
+html[data-theme="dark"] body .footer-social a:hover {
+  background: #27503a !important;
+  border-color: rgba(153, 226, 176, .48) !important;
+}
+html[data-theme="dark"] body .footer-social-icon {
+  filter: brightness(0) invert(1) !important;
+  opacity: .82;
+}
+html[data-theme="dark"] body .footer-bottom {
+  border-top-color: rgba(173, 218, 187, .14) !important;
+  background: rgba(3, 13, 8, .22) !important;
+}
+html[data-theme="dark"] body :where(.footer-company-info, .footer-gdpr-copy, .footer-gdpr-links a) {
+  color: #7f9688 !important;
+}
+
+/* Sistema pulsanti dark condiviso da Home e Configuratore. */
+html[data-theme="dark"] {
+  --button-primary: #328f53;
+  --button-primary-hover: #3da764;
+  --button-primary-border: #69c984;
+  --button-secondary: #293f34;
+  --button-secondary-hover: #344f40;
+  --button-secondary-border: rgba(168, 216, 182, .27);
+  --button-danger: #4a2b2d;
+  --button-danger-hover: #643638;
+  --button-danger-border: #a85a5d;
+  --button-disabled: #24332b;
+  --button-disabled-text: #829288;
+}
+
+/* Azioni primarie. */
+html[data-theme="dark"] body :where(
+  .abbin-add-btn, .kit-cta-btn, .detail-add-btn,
+  .cart-checkout-btn, .cookie-accept-btn,
+  .conf-btn.primary, .btn-primary, .btn-success,
+  .conf-cart-export-btn, .crops-fill-main-btn,
+  .crop-action-btn--primary, .novice-crops-note button,
+  .catalog-import-btn, .guided-nov-cta, .empty-cta,
+  .percorso-cta-btn--green
+) {
+  background: linear-gradient(135deg, #399c5b, var(--button-primary)) !important;
+  color: #fff !important;
+  border: 1px solid var(--button-primary-border) !important;
+  box-shadow: 0 7px 18px rgba(5, 25, 13, .28) !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  outline-color: #1d3027 !important;
+}
+html[data-theme="dark"] body :where(
+  .abbin-add-btn, .kit-cta-btn, .detail-add-btn,
+  .cart-checkout-btn, .cookie-accept-btn,
+  .conf-btn.primary, .btn-primary, .btn-success,
+  .conf-cart-export-btn, .crops-fill-main-btn,
+  .crop-action-btn--primary, .novice-crops-note button,
+  .catalog-import-btn, .guided-nov-cta, .empty-cta,
+  .percorso-cta-btn--green
+):hover {
+  background: linear-gradient(135deg, #48b76d, var(--button-primary-hover)) !important;
+  color: #fff !important;
+  border-color: #91dfa8 !important;
+  box-shadow: 0 10px 24px rgba(8, 46, 23, .38) !important;
+}
+
+/* Azioni secondarie e di navigazione. */
+html[data-theme="dark"] body :where(
+  .kit-plan-link, .conf-btn.secondary, .btn-soft,
+  .view-print-btn, .yield-edit-crops-btn,
+  .cookie-reject-btn, .catalog-reset-btn,
+  .pdp-back-btn, .back-home-btn, .cart-nudge button,
+  .percorso-cta-alt, .percorso-path--free,
+  .crop-action-btn--secondary
+) {
+  background: var(--button-secondary) !important;
+  color: #dce9df !important;
+  border: 1px solid var(--button-secondary-border) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.17) !important;
+}
+html[data-theme="dark"] body :where(
+  .kit-plan-link, .conf-btn.secondary, .btn-soft,
+  .view-print-btn, .yield-edit-crops-btn,
+  .cookie-reject-btn, .catalog-reset-btn,
+  .pdp-back-btn, .back-home-btn, .cart-nudge button,
+  .percorso-cta-alt, .percorso-path--free,
+  .crop-action-btn--secondary
+):hover {
+  background: var(--button-secondary-hover) !important;
+  color: #fff !important;
+  border-color: rgba(173, 224, 188, .46) !important;
+}
+
+/* Azioni distruttive: rimuovi, svuota, cancella. */
+html[data-theme="dark"] body :where(
+  .btn-danger, .btn-ghost, .cart-clear-btn,
+  .crop-action-btn--danger, .crops-clear-btn,
+  .catalog-reset-btn, .del, .veg.in .add
+) {
+  background: var(--button-danger) !important;
+  color: #f3c3c3 !important;
+  border: 1px solid var(--button-danger-border) !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] body :where(
+  .btn-danger, .btn-ghost, .cart-clear-btn,
+  .crop-action-btn--danger, .crops-clear-btn,
+  .catalog-reset-btn, .del, .veg.in .add
+):hover {
+  background: var(--button-danger-hover) !important;
+  color: #fff !important;
+  border-color: #d0797c !important;
+}
+
+/* Pulsanti compatti, quantità e icone. */
+html[data-theme="dark"] body :where(
+  .compact-add-btn, .step-btn, .count-ctl button,
+  .pdp-count button, .veg-qty-ctl button,
+  .guided-count button, .catalog-search-clear,
+  .cart-close, .detail-close, .back-to-top
+) {
+  background: #263d31 !important;
+  color: #a9e9bc !important;
+  border-color: #5eae75 !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,.18) !important;
+}
+html[data-theme="dark"] body :where(
+  .compact-add-btn, .step-btn, .count-ctl button,
+  .pdp-count button, .veg-qty-ctl button,
+  .guided-count button, .catalog-search-clear,
+  .cart-close, .detail-close, .back-to-top
+):hover {
+  background: #347f4d !important;
+  color: #fff !important;
+  border-color: #8ddda4 !important;
+}
+
+/* Selettori, tab e chip attivi. */
+html[data-theme="dark"] body :where(
+  .hero-zone-btn.active, .catalog-chip.active,
+  .catalog-category-chip.active, .mode-tab.is-active,
+  .detail-tab.active, .pdp-tab.active,
+  .veg-filter-tab.active, .persona-card.is-active
+) {
+  background: #326f47 !important;
+  color: #fff !important;
+  border-color: #74c98d !important;
+  box-shadow: 0 0 0 2px rgba(116, 201, 141, .14) !important;
+}
+html[data-theme="dark"] body :where(
+  .hero-zone-btn:not(.active), .catalog-chip:not(.active),
+  .catalog-category-chip:not(.active), .mode-tab:not(.is-active),
+  .detail-tab:not(.active), .pdp-tab:not(.active),
+  .veg-filter-tab:not(.active), .persona-card:not(.is-active)
+) {
+  background: var(--button-secondary) !important;
+  color: #c6d5ca !important;
+  border-color: var(--button-secondary-border) !important;
+}
+html[data-theme="dark"] body :where(
+  .hero-zone-btn:not(.active), .catalog-chip:not(.active),
+  .catalog-category-chip:not(.active), .mode-tab:not(.is-active),
+  .detail-tab:not(.active), .pdp-tab:not(.active),
+  .veg-filter-tab:not(.active), .persona-card:not(.is-active)
+):hover {
+  background: var(--button-secondary-hover) !important;
+  color: #fff !important;
+}
+
+/* Stati già aggiunti e disabilitati. */
+html[data-theme="dark"] body :where(
+  .abbin-add-btn.added, .top-add-btn.added,
+  .compact-add-btn.added, .detail-add-btn.added
+) {
+  background: #285f3d !important;
+  color: #d7f2df !important;
+  border-color: #67b77d !important;
+}
+html[data-theme="dark"] body :where(
+  .top-add-btn.added, .compact-add-btn.added,
+  .detail-add-btn.added
+):hover {
+  background: #7a3436 !important;
+  color: #fff !important;
+  border-color: #c76c70 !important;
+}
+html[data-theme="dark"] body :where(
+  button:disabled, .btn.disabled, .conf-btn.disabled,
+  .crop-action-btn:disabled, .is-level-locked:disabled
+) {
+  background: var(--button-disabled) !important;
+  color: var(--button-disabled-text) !important;
+  border-color: rgba(151, 174, 158, .14) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  opacity: .72 !important;
+}
+html[data-theme="dark"] body button:focus-visible {
+  outline: 3px solid rgba(137, 220, 161, .58) !important;
+  outline-offset: 3px !important;
+}
+
+/* Header: controlli coerenti ma più discreti delle CTA. */
+html[data-theme="dark"] body :where(.site-header .cart-btn, .theme-toggle, .site-header .nav-menu-toggle) {
+  background: #20352a !important;
+  color: #e6f1e9 !important;
+  border-color: rgba(164, 216, 179, .25) !important;
+}
+html[data-theme="dark"] body :where(.site-header .cart-btn, .theme-toggle, .site-header .nav-menu-toggle):hover {
+  background: #2b4938 !important;
+  border-color: rgba(172, 229, 188, .46) !important;
+}
+html[data-theme="dark"] body .theme-toggle { color: #ffd878 !important; }
+
+/* Eccezioni semantiche: terra e filtro catalogo completo. */
+html[data-theme="dark"] body .percorso-cta-btn--earth {
+  background: #8a5a32 !important;
+  color: #fff4e8 !important;
+  border: 1px solid #c18a55 !important;
+}
+html[data-theme="dark"] body .percorso-cta-btn--earth:hover {
+  background: #a36b3c !important;
+  border-color: #dda56c !important;
+}
+html[data-theme="dark"] body :where(#catalogAllToggle.active, .catalog-chip#catalogAllToggle.active) {
+  background: #755a24 !important;
+  color: #fff1bd !important;
+  border-color: #c8a557 !important;
+}
+
+/* Difficoltà delle colture: stessa codifica in catalogo, lista e schede. */
+html[data-theme="dark"] body .diff-easy {
+  background: #214832 !important;
+  color: #b4eec3 !important;
+  border: 1px solid #4f9f68 !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] body .diff-medium {
+  background: #4b391e !important;
+  color: #f2d181 !important;
+  border: 1px solid #9d7a3c !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] body .diff-hard {
+  background: #502927 !important;
+  color: #ffb7af !important;
+  border: 1px solid #aa554f !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] body :where(
+  .veg-diff, .bedchip-diff,
+  .pdp-hero-diff, .detail-hero-diff
+) {
+  font-weight: 850 !important;
+  letter-spacing: .02em;
+}

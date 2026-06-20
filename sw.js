@@ -1,5 +1,5 @@
 // Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
-const CACHE_VERSION = "2026-06-19-77";
+const CACHE_VERSION = "2026-06-20-85";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -9,6 +9,8 @@ const PRECACHE = [
   "./manifest.json",
   "./assets/css/index.css",
   "./assets/css/style.css",
+  "./assets/css/theme.css",
+  "./assets/js/theme.js",
   "./assets/js/i18n.js",
   "./assets/js/plants-data.js",
   "./assets/js/index.js",

@@ -1763,15 +1763,15 @@ function spacingInfographicSvg(p) {
     <marker id="sH${pid}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0,1 L7,4 L0,7 Z" fill="#1b5e3a"/></marker>
     <marker id="sV${pid}" viewBox="0 0 8 8" refX="4" refY="7" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M1,0 L4,7 L7,0 Z" fill="#40916c"/></marker>
   </defs>
-  <rect x="8" y="23" width="176" height="86" rx="12" fill="#f7fbf5" stroke="rgba(45,106,79,.16)"/>
-  <path d="M24 45 H176 M24 89 H176 M34 31 V103 M78 31 V103 M122 31 V103 M166 31 V103" stroke="rgba(45,106,79,.14)" stroke-width="1"/>
+  <rect x="8" y="23" width="176" height="86" rx="12" fill="var(--spacing-diagram-bg,#f7fbf5)" stroke="rgba(45,106,79,.16)"/>
+  <path d="M24 45 H176 M24 89 H176 M34 31 V103 M78 31 V103 M122 31 V103 M166 31 V103" stroke="var(--spacing-diagram-grid,rgba(45,106,79,.14))" stroke-width="1"/>
   ${seedlings}
   <line x1="${cx[0] + R + 3}" y1="${cy[0] - 15}" x2="${cx[1] - R - 3}" y2="${cy[0] - 15}" stroke="#1b5e3a" stroke-width="1.7" marker-start="url(#sH${pid})" marker-end="url(#sH${pid})"/>
-  <text x="97" y="8" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${rLbl}</text>
+  <text x="97" y="8" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="var(--spacing-diagram-text,#16251b)">${rLbl}</text>
   <rect x="67" y="11" width="60" height="18" rx="9" fill="#1b5e3a"/>
   <text x="97" y="24" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${d} cm</text>
   <line x1="198" y1="${cy[0] + R + 3}" x2="198" y2="${cy[1] - R - 3}" stroke="#40916c" stroke-width="1.7" marker-start="url(#sV${pid})" marker-end="url(#sV${pid})"/>
-  <text x="206" y="49" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
+  <text x="206" y="49" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="var(--spacing-diagram-text,#16251b)">${bLbl}</text>
   <rect x="184" y="59" width="44" height="18" rx="9" fill="#40916c"/>
   <text x="206" y="72" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
 </svg>`;
@@ -2573,6 +2573,7 @@ function fitLabelSize(text, width, height) {
 }
 
 function buildScene() {
+  const nightMode = document.documentElement.dataset.theme === "dark";
   const L = computeLayout();
   const Wi = L.Wi,
     Li = L.Li;
@@ -2602,7 +2603,7 @@ function buildScene() {
     </pattern>
     <linearGradient id="gravelLight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1ebdb"/><stop offset=".52" stop-color="#d5cab4"/><stop offset="1" stop-color="#b7aa91"/></linearGradient>
     <pattern id="grass" width="40" height="40" patternUnits="userSpaceOnUse">
-      <rect width="40" height="40" fill="#9fb083"/>${grassSpecks()}
+      <rect width="40" height="40" fill="${nightMode ? "#243b2c" : "#9fb083"}"/>${grassSpecks()}
     </pattern>
     <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#b47b45"/><stop offset="35%" stop-color="#936039"/><stop offset="72%" stop-color="#714628"/><stop offset="100%" stop-color="#4d2e1b"/>
@@ -2622,9 +2623,15 @@ function buildScene() {
     <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffffff"/><stop offset="32%" stop-color="#e8eeee"/><stop offset="62%" stop-color="#aebbbb"/><stop offset="100%" stop-color="#758585"/>
     </linearGradient>
-    <radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".34"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".08"/><stop offset="1" stop-color="#183d28" stop-opacity=".25"/></radialGradient>
+    ${nightMode
+      ? `<radialGradient id="daylight" cx="48%" cy="38%" r="78%"><stop stop-color="#315842" stop-opacity=".08"/><stop offset=".55" stop-color="#071812" stop-opacity=".3"/><stop offset="1" stop-color="#020907" stop-opacity=".72"/></radialGradient>`
+      : `<radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".34"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".08"/><stop offset="1" stop-color="#183d28" stop-opacity=".25"/></radialGradient>`}
+    <linearGradient id="nightGlass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a20" stop-opacity=".34"/><stop offset=".5" stop-color="#0b2021" stop-opacity=".2"/><stop offset="1" stop-color="#020b0d" stop-opacity=".42"/></linearGradient>
+    <radialGradient id="lampPool"><stop offset="0" stop-color="#fff4b0" stop-opacity=".72"/><stop offset=".25" stop-color="#ffe58a" stop-opacity=".42"/><stop offset=".62" stop-color="#e9d272" stop-opacity=".16"/><stop offset="1" stop-color="#d5bf62" stop-opacity="0"/></radialGradient>
+    <radialGradient id="lampBulb"><stop offset="0" stop-color="#fffde5"/><stop offset=".45" stop-color="#fff3a4"/><stop offset="1" stop-color="#e7b942"/></radialGradient>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#102b1a" flood-opacity=".34"/></filter>
     <filter id="bedLift" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#241408" flood-opacity=".38"/></filter>
+    <filter id="lampBloom" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="4.5"/></filter>
     <pattern id="dirtPath" width="36" height="36" patternUnits="userSpaceOnUse">
       <rect width="36" height="36" fill="#c4a55e"/>
       ${dirtPathSpecks()}
@@ -2815,6 +2822,20 @@ function buildScene() {
   });
   g += `</g>`; // fine clip
 
+  // --- notte e illuminazione artificiale interna ---
+  const lampX = ox + Wi / 2;
+  const lampYs = [oy + Li * .19, oy + Li * .5, oy + Li * .81];
+  const poolRx = Math.max(38, Math.min(Wi * .46, 118));
+  const poolRy = Math.max(42, Math.min(Li * .19, 94));
+  if (nightMode) {
+    g += `<g clip-path="url(#interiorClip)" pointer-events="none">`;
+    g += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="url(#nightGlass)"/>`;
+    lampYs.forEach((lampY) => {
+      g += `<ellipse cx="${lampX}" cy="${lampY}" rx="${poolRx}" ry="${poolRy}" fill="url(#lampPool)" style="mix-blend-mode:screen"/>`;
+    });
+    g += `</g>`;
+  }
+
   // --- linea "fine serra" se c'è sforamento ---
   if (L.overflow) {
     g += `<line x1="${ox}" y1="${oy + Li}" x2="${ox + Wi}" y2="${oy + Li}" stroke="#b4452c" stroke-width="4" stroke-dasharray="14 8"/>`;
@@ -2823,11 +2844,23 @@ function buildScene() {
   // --- STRUTTURA SERRA sovrapposta (vetri + telaio) ---
   g += glassStructure(ox, oy, Wi, Li, PAD, totW, totH);
 
-  // --- bussola sole ---
+  // --- tre lampade centrali accese soltanto nella scena notturna ---
+  if (nightMode) {
+    lampYs.forEach((lampY) => {
+      g += `<g transform="translate(${lampX} ${lampY})" pointer-events="none">`;
+      g += `<circle r="14" fill="#ffe37a" opacity=".24" filter="url(#lampBloom)"/>`;
+      g += `<circle r="7.2" fill="#34413d" stroke="#aab5ae" stroke-width="1.3"/>`;
+      g += `<circle r="4.6" fill="url(#lampBulb)" stroke="#fff8ce" stroke-width=".8"/>`;
+      g += `<circle cx="-1.4" cy="-1.5" r="1.4" fill="#fff" opacity=".92"/>`;
+      g += `</g>`;
+    });
+  }
+
+  // --- indicatore giorno/notte coerente con il tema ---
   g += `<g transform="translate(${vbW - PAD - 2} ${PAD + 18})" opacity="0.9">
-        <circle r="15" fill="#fff" stroke="#d9a441" stroke-width="2"/>
-        <text x="0" y="5" text-anchor="middle" font-size="16">☀️</text>
-        <text x="0" y="30" text-anchor="middle" font-family="Outfit" font-size="9" fill="#7b6a3a">${tx("compassSouth")}</text>
+        <circle r="15" fill="${nightMode ? "#10231f" : "#fff"}" stroke="${nightMode ? "#e7d98d" : "#d9a441"}" stroke-width="${nightMode ? "1.5" : "2"}"/>
+        <text x="0" y="5" text-anchor="middle" font-size="16">${nightMode ? "🌙" : "☀️"}</text>
+        <text x="0" y="30" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="${nightMode ? "#e9dfaa" : "#7b6a3a"}">${nightMode ? tx("nightLabel") : tx("compassSouth")}</text>
       </g>`;
 
   return {
@@ -5851,6 +5884,9 @@ window.addEventListener("storage", (event) => {
   saveConfig(true);
   render();
 });
+
+// Il cambio tema aggiorna subito la serra: giorno in light mode, notte in dark mode.
+window.addEventListener("serra:themechange", () => render());
 
 initConfig();
 initEvents();

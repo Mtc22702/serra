@@ -827,15 +827,15 @@ function spacingInfographic(p) {
     <marker id="sH${pid}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0,1 L7,4 L0,7 Z" fill="#1b5e3a"/></marker>
     <marker id="sV${pid}" viewBox="0 0 8 8" refX="4" refY="7" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M1,0 L4,7 L7,0 Z" fill="#40916c"/></marker>
   </defs>
-  <rect x="8" y="23" width="176" height="86" rx="12" fill="#f7fbf5" stroke="rgba(45,106,79,.16)"/>
-  <path d="M24 45 H176 M24 89 H176 M34 31 V103 M78 31 V103 M122 31 V103 M166 31 V103" stroke="rgba(45,106,79,.14)" stroke-width="1"/>
+  <rect x="8" y="23" width="176" height="86" rx="12" fill="var(--spacing-diagram-bg,#f7fbf5)" stroke="rgba(45,106,79,.16)"/>
+  <path d="M24 45 H176 M24 89 H176 M34 31 V103 M78 31 V103 M122 31 V103 M166 31 V103" stroke="var(--spacing-diagram-grid,rgba(45,106,79,.14))" stroke-width="1"/>
   ${seedlings}
   <line x1="${cx[0] + R + 3}" y1="${cy[0] - 15}" x2="${cx[1] - R - 3}" y2="${cy[0] - 15}" stroke="#1b5e3a" stroke-width="1.7" marker-start="url(#sH${pid})" marker-end="url(#sH${pid})"/>
-  <text x="97" y="8" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${rLbl}</text>
+  <text x="97" y="8" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="var(--spacing-diagram-text,#16251b)">${rLbl}</text>
   <rect x="67" y="11" width="60" height="18" rx="9" fill="#1b5e3a"/>
   <text x="97" y="24" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${d} cm</text>
   <line x1="198" y1="${cy[0] + R + 3}" x2="198" y2="${cy[1] - R - 3}" stroke="#40916c" stroke-width="1.7" marker-start="url(#sV${pid})" marker-end="url(#sV${pid})"/>
-  <text x="206" y="49" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
+  <text x="206" y="49" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="var(--spacing-diagram-text,#16251b)">${bLbl}</text>
   <rect x="184" y="59" width="44" height="18" rx="9" fill="#40916c"/>
   <text x="206" y="72" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
 </svg>`;
@@ -1059,7 +1059,7 @@ function renderEditorialPlants() {
       return `<div class="plant-card-top${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
         <div class="top-photo">
           <img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" />
-          <span class="photo-type-tag" style="${ts}">${typeLabel(tipo)}</span>
+          <span class="photo-type-tag" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
           <span class="photo-cart-check">✓</span>
         </div>
         <div class="top-body">
@@ -1098,7 +1098,7 @@ function renderEditorialPlants() {
         <div class="compact-info">
           <div class="compact-name-row">
             <span class="compact-name">${plantName(p.id)}</span>
-            <span class="compact-badge" style="${ts}">${typeLabel(tipo)}</span>
+            <span class="compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
             ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
           </div>
           <p class="compact-note">${plantNote(p)}</p>
