@@ -3987,6 +3987,7 @@ function setConfigDetailTab(tab, moveFocus = false) {
       const active = panel.dataset.detailPanel === tab;
       panel.classList.toggle("active", active);
       panel.hidden = !active;
+      if (active) panel.scrollTo({ top: 0, behavior: "instant" });
     });
 }
 

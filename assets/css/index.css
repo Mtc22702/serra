@@ -3470,13 +3470,14 @@ body.detail-open .back-to-top {
   display: none !important;
 }
 .detail-panel {
+  --detail-panel-height: min(96.6dvh, calc(100dvh - 2rem));
   background: linear-gradient(180deg, #fffdf8 0%, #f4f6ec 100%);
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 24px;
   width: 100%;
   max-width: 680px;
-  height: 92dvh;
-  max-height: 92dvh;
+  height: var(--detail-panel-height);
+  max-height: var(--detail-panel-height);
   display: flex;
   flex-direction: column;
   overflow: hidden;
