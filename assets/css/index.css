@@ -6249,7 +6249,7 @@ body.cart-open .back-to-top {
   transform: rotate(-45deg);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   :root {
     --nav-h: 68px;
   }
