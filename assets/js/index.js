@@ -3687,6 +3687,18 @@ if (catalogSearchLink) {
     };
   }
   const _shade = "rgba(0,0,0,.13)";
+  const _laterPlantSvgIds = new Set([
+    "broccolo_romanesco",
+    "friggitello",
+    "agretti",
+    "borragine",
+    "catalogna",
+    "acetosa",
+    "leurda",
+    "melissa",
+    "cerfoglio",
+    "cimbru"
+  ]);
   function harvestVector(plant, size) {
     const s = size, c = plant.col || {};
     const finish = (content) => `<g style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
@@ -3719,14 +3731,10 @@ if (catalogSearchLink) {
     return d + "Z";
   }
   function glyph(plant, r, rng) {
-    // Solo rendering della mini-serra: animazione, posizioni ed emoji restano
-    // quelle originali; cambia esclusivamente l'illustrazione botanica.
-    if (plant?.id) {
-      const size = r * 1.7;
-      const src = window.serraAsset(
-        `assets/img/svg/${plant.id}.svg`
-      );
-      return `<image href="${src}" x="${-size / 2}" y="${-size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
+    if (_laterPlantSvgIds.has(plant?.id)) {
+      const size = r * 2;
+      const src = window.serraAsset(`assets/img/svg/${plant.id}.svg`);
+      return `<image href="${src}" x="${-r}" y="${-r}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
     }
     const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
     const sh = `<ellipse cx="${r * 0.08}" cy="${r * 0.12}" rx="${r * 0.95}" ry="${r * 0.85}" fill="${_shade}"/>`;

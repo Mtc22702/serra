@@ -2511,16 +2511,24 @@ function shouldShowHarvestVector(plant) {
   ]).has(plant.id);
 }
 
+const LATER_PLANT_SVG_IDS = new Set([
+  "broccolo_romanesco",
+  "friggitello",
+  "agretti",
+  "borragine",
+  "catalogna",
+  "acetosa",
+  "leurda",
+  "melissa",
+  "cerfoglio",
+  "cimbru"
+]);
+
 function glyph(plant, r, rng) {
-  // Solo rendering: il motore ha già calcolato questa posizione usando d/dr.
-  // L'illustrazione occupa circa il 93% del passo sulla fila: più grande, ma
-  // ancora con margine sufficiente per non alterare le distanze assegnate.
-  if (plant?.id) {
-    const size = r * 1.7;
-    const src = window.serraAsset(
-      `assets/img/svg/${plant.id}.svg`
-    );
-    return `<image href="${src}" x="${-size / 2}" y="${-size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
+  if (LATER_PLANT_SVG_IDS.has(plant?.id)) {
+    const size = r * 2;
+    const src = window.serraAsset(`assets/img/svg/${plant.id}.svg`);
+    return `<image href="${src}" x="${-r}" y="${-r}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
   }
   const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
   const sh = `<ellipse cx="${r * 0.08}" cy="${r * 0.12}" rx="${r * 0.95}" ry="${r * 0.85}" fill="${shade}"/>`;

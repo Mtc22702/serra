@@ -1,5 +1,5 @@
 // Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
-const CACHE_VERSION = "2026-06-20-143";
+const CACHE_VERSION = "2026-06-20-145";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -21,6 +21,16 @@ const PRECACHE = [
   "./assets/img/svg/camminamento-pattern.svg",
   "./assets/img/svg/misure-pattern.svg",
   "./assets/img/svg/clima-pattern.svg",
+  "./assets/img/svg/acetosa.svg",
+  "./assets/img/svg/agretti.svg",
+  "./assets/img/svg/borragine.svg",
+  "./assets/img/svg/broccolo_romanesco.svg",
+  "./assets/img/svg/catalogna.svg",
+  "./assets/img/svg/cerfoglio.svg",
+  "./assets/img/svg/cimbru.svg",
+  "./assets/img/svg/friggitello.svg",
+  "./assets/img/svg/leurda.svg",
+  "./assets/img/svg/melissa.svg",
   "./assets/img/svg/aglio.svg",
   "./assets/img/svg/aneto.svg",
   "./assets/img/svg/anguria.svg",
