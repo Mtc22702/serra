@@ -4941,6 +4941,8 @@ body.cart-open .cart-nudge {
   flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   padding: 4px 0 8px !important;
   gap: 10px;
 }

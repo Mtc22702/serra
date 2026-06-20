@@ -3504,6 +3504,8 @@ body.detail-open .back-to-top {
   flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .detail-panel .detail-tabs-shell {
