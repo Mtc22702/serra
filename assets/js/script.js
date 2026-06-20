@@ -2382,7 +2382,77 @@ function palmatePath(r) {
 }
 const shade = "rgba(0,0,0,.13)";
 
+/* Miniatura vettoriale del raccolto. È solo decorazione: non partecipa al
+   calcolo di quantità, righe, colonne o distanze d/dr. */
+function harvestVector(plant, size) {
+  const id = plant.id;
+  const s = size;
+  const col = plant.col || {};
+  const finish = (content) => `<g class="harvest-vector" style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
+  const roots = ["carota", "pastinaca", "radice_prezemolo", "daikon", "scorzonera", "ravanello", "rapa", "barbabietola", "rafano"];
+  const long = ["melanzana", "cetriolo", "zucchina", "cucamelon", "kiwano"];
+  const legumes = ["fagiolino", "fagiolo", "pisello", "fava", "soia_edamame", "cece", "lenticchia", "fagiolo_borlotto"];
+  let art;
+  if (long.includes(id)) {
+    const c = id === "melanzana" ? "#684078" : id === "kiwano" ? "#d99a35" : "#4f8b43";
+    const paint = id === "melanzana" ? "url(#harvestPurple)" : id === "kiwano" ? "url(#harvestOrange)" : "url(#harvestGreen)";
+    art = `<g transform="rotate(-24)"><ellipse rx="${s * .2}" ry="${s * .42}" fill="${paint}" stroke="#315a34" stroke-width="${s * .05}"/><ellipse cx="${-s * .06}" cy="${-s * .1}" rx="${s * .05}" ry="${s * .2}" fill="#fff" opacity=".38"/><path d="M0 ${-s * .37} l${s * .17} ${-s * .1} l${-s * .14} ${s * .21} l${-s * .16} ${-s * .17}Z" fill="#315f31"/></g>`;
+  } else if (id.includes("peper")) {
+    art = `<path d="M0 ${-s * .38} C${s * .34} ${-s * .42} ${s * .38} ${s * .16} ${s * .2} ${s * .4} C${s * .08} ${s * .51} ${-s * .08} ${s * .51} ${-s * .2} ${s * .4} C${-s * .38} ${s * .16} ${-s * .34} ${-s * .42} 0 ${-s * .38}Z" fill="url(#harvestRed)" stroke="#7d352d" stroke-width="${s * .05}"/><path d="M0 ${-s * .34} q${s * .04} ${-s * .2} ${s * .15} ${-s * .18}" fill="none" stroke="#39703b" stroke-width="${s * .09}" stroke-linecap="round"/>`;
+  } else if (roots.includes(id)) {
+    const c = id === "carota" ? "#ed7b2c" : id === "barbabietola" ? "#953c55" : id === "ravanello" ? "#d94c55" : "#eadfbd";
+    const paint = id === "carota" ? "url(#harvestOrange)" : ["barbabietola", "ravanello"].includes(id) ? "url(#harvestRed)" : "url(#harvestCream)";
+    art = `<path d="M0 ${-s * .3} C${s * .3} ${-s * .23} ${s * .23} ${s * .2} 0 ${s * .48} C${-s * .23} ${s * .2} ${-s * .3} ${-s * .23} 0 ${-s * .3}Z" fill="${paint}" stroke="#854c35" stroke-width="${s * .045}"/><path d="M0 ${-s * .27} q${s * .08} ${-s * .2} ${s * .25} ${-s * .22} M0 ${-s * .27} q${-s * .08} ${-s * .2} ${-s * .25} ${-s * .22}" fill="none" stroke="#4b843f" stroke-width="${s * .1}" stroke-linecap="round"/>`;
+  } else if (plant.arch === "bulbo") {
+    const c = id === "cipolla_rossa" ? "#9b5876" : id === "aglio" ? "#eee6d2" : "#e4ca8d";
+    art = `<ellipse cy="${s * .08}" rx="${s * .32}" ry="${s * .36}" fill="${id === "cipolla_rossa" ? "url(#harvestPurple)" : "url(#harvestCream)"}" stroke="#8b744e" stroke-width="${s * .05}"/><path d="M0 ${-s * .22} q${s * .03} ${-s * .18} ${s * .12} ${-s * .25}" fill="none" stroke="#4c8243" stroke-width="${s * .1}" stroke-linecap="round"/>`;
+  } else if (plant.arch === "brassica") {
+    const c = col.head || (id === "cavolfiore" ? "#e6dfbd" : "#659353");
+    art = "";
+    for (let i = 0; i < 9; i++) { const a = i * 2.39996, d = s * .22 * Math.sqrt(i / 9); art += `<circle cx="${Math.cos(a) * d}" cy="${Math.sin(a) * d}" r="${s * .17}" fill="${id === "cavolfiore" ? "url(#harvestCream)" : "url(#harvestGreen)"}" stroke="#476b43" stroke-width="${s * .025}"/>`; }
+  } else if (legumes.includes(id)) {
+    art = `<path d="M${-s * .38} ${s * .2} Q0 ${-s * .42} ${s * .4} ${-s * .08} Q${s * .12} ${s * .42} ${-s * .38} ${s * .2}Z" fill="url(#harvestGreen)" stroke="#3f6e38" stroke-width="${s * .05}"/><circle cx="${-s * .14}" cy="${s * .09}" r="${s * .07}" fill="#c4df8c"/><circle cx="${s * .08}" cy="${-s * .08}" r="${s * .07}" fill="#c4df8c"/>`;
+  } else if (plant.arch === "cucurbita") {
+    const c = id === "zucca" ? "#df7d2f" : id === "anguria" ? "#4e8548" : "#d9b65a";
+    art = `<circle r="${s * .36}" fill="${id === "zucca" ? "url(#harvestOrange)" : id === "anguria" ? "url(#harvestGreen)" : "url(#harvestCream)"}" stroke="#5d6538" stroke-width="${s * .05}"/><path d="M${-s * .15} ${-s * .31} Q0 0 ${-s * .15} ${s * .31} M${s * .15} ${-s * .31} Q0 0 ${s * .15} ${s * .31}" fill="none" stroke="#fff" stroke-width="${s * .035}" opacity=".4"/>`;
+  } else if (id === "fragola") {
+    art = `<path d="M0 ${s * .42} C${s * .36} ${s * .05} ${s * .3} ${-s * .32} 0 ${-s * .34} C${-s * .3} ${-s * .32} ${-s * .36} ${s * .05} 0 ${s * .42}Z" fill="url(#harvestRed)" stroke="#963b33" stroke-width="${s * .045}"/><path d="M0 ${-s * .3} l${s * .23} ${-s * .1} l${-s * .12} ${s * .2} l${-s * .22} ${-s * .2}Z" fill="#3d793a"/>`;
+  } else if (plant.arch === "frutto") {
+    art = `<circle r="${s * .36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * .05}"/><ellipse cx="${-s * .11}" cy="${-s * .12}" rx="${s * .07}" ry="${s * .12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * .31} l${s * .2} ${-s * .1} l${-s * .16} ${s * .2} l${-s * .18} ${-s * .18}Z" fill="#356c35"/>`;
+  } else {
+    art = `<g transform="rotate(-32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g>`;
+  }
+  return finish(art);
+}
+
+function shouldShowHarvestVector(plant) {
+  if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
+  return new Set([
+    "broccolo",
+    "cavolfiore",
+    "cavolo",
+    "verza",
+    "cavolorapa",
+    "cavoletti",
+    "cavolo_rosso",
+    "cavolo_navone",
+    "carciofo",
+    "asparago",
+    "finocchio"
+  ]).has(plant.id);
+}
+
 function glyph(plant, r, rng) {
+  // Solo rendering: il motore ha già calcolato questa posizione usando d/dr.
+  // L'illustrazione resta più piccola del passo sulla fila, quindi non altera
+  // visivamente la distanza assegnata a ciascuna pianta.
+  if (plant?.id) {
+    const size = r * 1.5;
+    const src = window.serraAsset(
+      `assets/img/svg/${plant.id}.svg`
+    );
+    return `<image href="${src}" x="${-size / 2}" y="${-size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
+  }
   const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
   const sh = `<ellipse cx="${r * 0.08}" cy="${r * 0.12}" rx="${r * 0.95}" ry="${r * 0.85}" fill="${shade}"/>`;
   let s = "";
@@ -2853,6 +2923,11 @@ function buildScene() {
 
   // --- definizioni SVG: motivi terra, ghiaia, prato, riflessi vetro ---
   g += `<defs>
+    <radialGradient id="harvestRed" cx="30%" cy="24%" r="78%"><stop offset="0" stop-color="#ff9a82"/><stop offset=".28" stop-color="#e84e3d"/><stop offset=".72" stop-color="#b52e2b"/><stop offset="1" stop-color="#651f25"/></radialGradient>
+    <radialGradient id="harvestGreen" cx="28%" cy="22%" r="82%"><stop offset="0" stop-color="#b9db75"/><stop offset=".3" stop-color="#6fa34d"/><stop offset=".72" stop-color="#3f743b"/><stop offset="1" stop-color="#21472d"/></radialGradient>
+    <radialGradient id="harvestOrange" cx="30%" cy="22%" r="80%"><stop offset="0" stop-color="#ffd06c"/><stop offset=".32" stop-color="#ed8a35"/><stop offset=".74" stop-color="#bd5528"/><stop offset="1" stop-color="#74301f"/></radialGradient>
+    <radialGradient id="harvestPurple" cx="28%" cy="22%" r="82%"><stop offset="0" stop-color="#c292c9"/><stop offset=".3" stop-color="#754b83"/><stop offset=".72" stop-color="#4c2d61"/><stop offset="1" stop-color="#281b3d"/></radialGradient>
+    <radialGradient id="harvestCream" cx="30%" cy="22%" r="82%"><stop offset="0" stop-color="#fffdf1"/><stop offset=".36" stop-color="#eadfb9"/><stop offset=".76" stop-color="#b8a36f"/><stop offset="1" stop-color="#74633f"/></radialGradient>
     <pattern id="soil" width="46" height="46" patternUnits="userSpaceOnUse">
       <rect width="46" height="46" fill="#5e4632"/>
       <rect width="46" height="46" fill="url(#soilGrad)"/>
@@ -3026,10 +3101,10 @@ function buildScene() {
       const rot = Math.floor(rng() * 360);
       g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng)}</g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
-      if (fe && emojiIndexes.has(i)) {
+      if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
         const fs = Math.max(rr * 1.2, 8);
         pendingEmoji.push(
-          `<text x="${ox + pos.x}" y="${oy + pos.y}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" style="pointer-events:none;user-select:none">${fe}</text>`
+          `<g transform="translate(${ox + pos.x} ${oy + pos.y})">${harvestVector(bed.plant, fs)}</g>`
         );
       }
     });

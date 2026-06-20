@@ -3658,6 +3658,21 @@ if (catalogSearchLink) {
     };
   }
   const _shade = "rgba(0,0,0,.13)";
+  function harvestVector(plant, size) {
+    const s = size, c = plant.col || {};
+    const finish = (content) => `<g style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
+    if (plant.id === "carota") return finish(`<path d="M0 ${-s * .3} C${s * .3} ${-s * .23} ${s * .23} ${s * .2} 0 ${s * .48} C${-s * .23} ${s * .2} ${-s * .3} ${-s * .23} 0 ${-s * .3}Z" fill="url(#harvestOrange)" stroke="#854c35" stroke-width="${s * .045}"/><path d="M0 ${-s * .27} q${s * .08} ${-s * .2} ${s * .25} ${-s * .22} M0 ${-s * .27} q${-s * .08} ${-s * .2} ${-s * .25} ${-s * .22}" fill="none" stroke="#4b843f" stroke-width="${s * .1}" stroke-linecap="round"/>`);
+    if (plant.id === "pomodoro") return finish(`<circle r="${s * .36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * .05}"/><ellipse cx="${-s * .11}" cy="${-s * .12}" rx="${s * .07}" ry="${s * .12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * .31} l${s * .2} ${-s * .1} l${-s * .16} ${s * .2} l${-s * .18} ${-s * .18}Z" fill="#356c35"/>`);
+    return finish(`<g transform="rotate(-32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g>`);
+  }
+  function shouldShowHarvestVector(plant) {
+    if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
+    return new Set([
+      "broccolo", "cavolfiore", "cavolo", "verza", "cavolorapa",
+      "cavoletti", "cavolo_rosso", "cavolo_navone", "carciofo", "asparago",
+      "finocchio"
+    ]).has(plant.id);
+  }
   function _leafPath(len, wid) {
     return `M0 0 C ${wid} ${-len * 0.16},${wid * 0.55} ${-len * 0.85},0 ${-len} C ${-wid * 0.55} ${-len * 0.85},${-wid} ${-len * 0.16},0 0 Z`;
   }
@@ -3675,6 +3690,15 @@ if (catalogSearchLink) {
     return d + "Z";
   }
   function glyph(plant, r, rng) {
+    // Solo rendering della mini-serra: animazione, posizioni ed emoji restano
+    // quelle originali; cambia esclusivamente l'illustrazione botanica.
+    if (plant?.id) {
+      const size = r * 1.5;
+      const src = window.serraAsset(
+        `assets/img/svg/${plant.id}.svg`
+      );
+      return `<image href="${src}" x="${-size / 2}" y="${-size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
+    }
     const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
     const sh = `<ellipse cx="${r * 0.08}" cy="${r * 0.12}" rx="${r * 0.95}" ry="${r * 0.85}" fill="${_shade}"/>`;
     let s = "";
@@ -3778,7 +3802,10 @@ if (catalogSearchLink) {
 
   /* ── Costruisce la mappa (aiuole statiche, piante aggiunte dopo) ─────── */
   function buildMap() {
-    let defs = `<defs>`;
+    let defs = `<defs>
+      <radialGradient id="harvestRed" cx="30%" cy="24%" r="78%"><stop offset="0" stop-color="#ff9a82"/><stop offset=".28" stop-color="#e84e3d"/><stop offset=".72" stop-color="#b52e2b"/><stop offset="1" stop-color="#651f25"/></radialGradient>
+      <radialGradient id="harvestGreen" cx="28%" cy="22%" r="82%"><stop offset="0" stop-color="#b9db75"/><stop offset=".3" stop-color="#6fa34d"/><stop offset=".72" stop-color="#3f743b"/><stop offset="1" stop-color="#21472d"/></radialGradient>
+      <radialGradient id="harvestOrange" cx="30%" cy="22%" r="80%"><stop offset="0" stop-color="#ffd06c"/><stop offset=".32" stop-color="#ed8a35"/><stop offset=".74" stop-color="#bd5528"/><stop offset="1" stop-color="#74301f"/></radialGradient>`;
     BEDS.forEach((_, i) => {
       defs += `<linearGradient id="hbg${i}" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%"   stop-color="rgba(98,74,52,0.58)"/>
@@ -3807,8 +3834,8 @@ if (catalogSearchLink) {
     g.style.transformOrigin = "center";
     g.style.transform = `translate(${cx}px,${cy}px) scale(0)`;
     const label =
-      r >= 9
-        ? `<text y="0" text-anchor="middle" dominant-baseline="central" font-size="${Math.max(r * 1.2, 8)}" style="pointer-events:none;user-select:none;font-family:system-ui">${plant.emoji}</text>`
+      r >= 9 && shouldShowHarvestVector(plant)
+        ? harvestVector(plant, Math.max(r * 1.2, 8))
         : "";
     g.innerHTML = glyph(plant, r, rng) + label;
     svg.appendChild(g);
