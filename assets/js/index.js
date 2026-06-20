@@ -1741,7 +1741,7 @@ function setDetailTab(tab, moveFocus = false) {
     });
     if (window.matchMedia("(max-width: 660px)").matches) {
       detailPanel
-        .querySelector(".detail-body")
+        .querySelector(".detail-scroll")
         ?.scrollTo({ top: 0, behavior: "instant" });
     }
   }

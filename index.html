@@ -8,7 +8,7 @@
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-06-20-142";
+      window.SERRA_APP_VERSION = "2026-06-20-143";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -818,7 +818,8 @@
         >
           ✕
         </button>
-        <div class="detail-photo-wrap">
+        <div class="detail-scroll">
+          <div class="detail-photo-wrap">
           <img id="detailPhoto" src="" alt="" />
           <div class="detail-photo-gradient"></div>
           <div class="detail-hero-meta">
@@ -826,8 +827,8 @@
             <span class="detail-hero-diff" id="detailDiff"></span>
           </div>
           <div class="detail-photo-name" id="detailName"></div>
-        </div>
-        <div class="detail-body">
+          </div>
+          <div class="detail-body">
           <div class="detail-tabs-shell">
             <div class="detail-tabs-heading">
               <strong data-i18n="detail.tabs_title">Sezioni della scheda</strong
@@ -1066,6 +1067,7 @@
             <div class="detail-tech-grid" id="detailHarvestGuide"></div>
           </div>
 
+          </div>
         </div>
         <div class="detail-footer">
           <button
