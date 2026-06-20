@@ -9315,7 +9315,7 @@ body.cart-open .back-to-top {
 
 /* Footer */
 .preconfig-footer {
-  padding: 8px 14px 14px;
+  padding: 8px 14px calc(36px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
   gap: 6px;
