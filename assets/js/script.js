@@ -75,42 +75,241 @@ const BYID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 // sia dalle schede pianta sia dall'auto-riempimento.
 const DIFFICULTY = {
   // Facili: rapide, tolleranti, ideali per chi inizia.
-  lattuga:1, rucola:1, ravanello:1, fagiolino:1, basilico:1,
-  prezzemolo:1, carota:1, cipolla:1, cipolla_rossa:1, cipollotto:1,
-  spinaci:1, bietola:1, valerianella:1, zucchina:1, scalogno:1,
-  cicoria:1, pakchoi:1, rapa:1, aglio:1, erba_cipollina:1,
-  menta:1, maggiorana:1, calendula:1, nasturzio:1, crescione:1,
-  mizuna:1, senape_foglia:1, tatsoi:1, loboda:1, broccolo_rapa:1,
+  lattuga: 1,
+  rucola: 1,
+  ravanello: 1,
+  fagiolino: 1,
+  basilico: 1,
+  prezzemolo: 1,
+  carota: 1,
+  cipolla: 1,
+  cipolla_rossa: 1,
+  cipollotto: 1,
+  spinaci: 1,
+  bietola: 1,
+  valerianella: 1,
+  zucchina: 1,
+  scalogno: 1,
+  cicoria: 1,
+  pakchoi: 1,
+  rapa: 1,
+  aglio: 1,
+  erba_cipollina: 1,
+  menta: 1,
+  maggiorana: 1,
+  calendula: 1,
+  nasturzio: 1,
+  crescione: 1,
+  mizuna: 1,
+  senape_foglia: 1,
+  tatsoi: 1,
+  loboda: 1,
+  broccolo_rapa: 1,
   // Medie: richiedono un po' di attenzione o tempi più lunghi.
-  pomodoro:2, peperone:2, cetriolo:2, fragola:2, finocchio:2,
-  pisello:2, porro:2, indivia:2, barbabietola:2, aneto:2,
-  coriandolo:2, timo:2, origano:2, salvia:2, rosmarino:2,
-  radicchio:2, fagiolo:2, fagiolo_borlotto:2, fava:2, cece:2,
-  lenticchia:2, soia_edamame:2, patata:2, pastinaca:2, radice_prezemolo:2,
-  daikon:2, cavolo_cinese:2, leustean:2, dragoncello:2, camomilla:2,
+  pomodoro: 2,
+  peperone: 2,
+  cetriolo: 2,
+  fragola: 2,
+  finocchio: 2,
+  pisello: 2,
+  porro: 2,
+  indivia: 2,
+  barbabietola: 2,
+  aneto: 2,
+  coriandolo: 2,
+  timo: 2,
+  origano: 2,
+  salvia: 2,
+  rosmarino: 2,
+  radicchio: 2,
+  fagiolo: 2,
+  fagiolo_borlotto: 2,
+  fava: 2,
+  cece: 2,
+  lenticchia: 2,
+  soia_edamame: 2,
+  patata: 2,
+  pastinaca: 2,
+  radice_prezemolo: 2,
+  daikon: 2,
+  cavolo_cinese: 2,
+  leustean: 2,
+  dragoncello: 2,
+  camomilla: 2,
   // Difficili o esotiche: lente, delicate, perenni o poco comuni.
-  peperoncino:3, melanzana:3, zucca:3, melone:3, anguria:3,
-  cavolo:3, verza:3, broccolo:3, cavolfiore:3, cavolonero:3,
-  cavolorapa:3, cavoletti:3, sedano:3, cavolo_rosso:3, cavolo_navone:3,
-  sedano_rapa:3, rafano:3, patata_dolce:3, scorzonera:3, topinambur:3,
-  asparago:3, carciofo:3, cardo:3, mais_dolce:3, gombo:3,
-  tomatillo:3, physalis:3, kiwano:3, cucamelon:3, stevia_dolce:3,
-  shiso:3
+  peperoncino: 3,
+  melanzana: 3,
+  zucca: 3,
+  melone: 3,
+  anguria: 3,
+  cavolo: 3,
+  verza: 3,
+  broccolo: 3,
+  cavolfiore: 3,
+  cavolonero: 3,
+  cavolorapa: 3,
+  cavoletti: 3,
+  sedano: 3,
+  cavolo_rosso: 3,
+  cavolo_navone: 3,
+  sedano_rapa: 3,
+  rafano: 3,
+  patata_dolce: 3,
+  scorzonera: 3,
+  topinambur: 3,
+  asparago: 3,
+  carciofo: 3,
+  cardo: 3,
+  mais_dolce: 3,
+  gombo: 3,
+  tomatillo: 3,
+  physalis: 3,
+  kiwano: 3,
+  cucamelon: 3,
+  stevia_dolce: 3,
+  shiso: 3
 };
 
 // Colture difficili perche poco comuni o esotiche: il principiante non le
 // riceve nemmeno nel fallback delle stagioni con poche alternative.
 const EXOTIC_PLANTS = new Set([
-  "mais_dolce", "gombo", "tomatillo", "physalis", "kiwano", "cucamelon",
-  "stevia_dolce", "shiso"
+  "mais_dolce",
+  "gombo",
+  "tomatillo",
+  "physalis",
+  "kiwano",
+  "cucamelon",
+  "stevia_dolce",
+  "shiso"
 ]);
 const CAT_ORDER = [
-  { key:"frutti",     label:"Frutti & ortaggi",  ids:["pomodoro","peperone","peperoncino","melanzana","zucchina","zucca","cetriolo","melone","anguria","fragola","mais_dolce","gombo","tomatillo","physalis","kiwano","cucamelon"] },
-  { key:"foglie",     label:"Insalate & foglie",  ids:["lattuga","rucola","spinaci","bietola","cicoria","indivia","pakchoi","valerianella","radicchio","loboda","stevia_dolce","asparago","carciofo","cardo","crescione","mizuna","senape_foglia","tatsoi","cavolo_cinese","cavolo_rosso","broccolo_rapa"] },
-  { key:"radici",     label:"Radici & bulbi",     ids:["carota","ravanello","barbabietola","rapa","finocchio","cipolla","aglio","porro","scalogno","pastinaca","radice_prezemolo","sedano_rapa","rafano","patata","patata_dolce","cipolla_rossa","cipollotto","daikon","scorzonera","topinambur","cavolo_navone"] },
-  { key:"aromatiche", label:"Aromatiche",         ids:["basilico","prezzemolo","aneto","coriandolo","timo","origano","salvia","rosmarino","erba_cipollina","leustean","dragoncello","menta","maggiorana","camomilla","calendula","nasturzio","shiso"] },
-  { key:"legumi",     label:"Legumi",             ids:["fagiolino","fagiolo","pisello","fava","soia_edamame","cece","lenticchia","fagiolo_borlotto"] },
-  { key:"cavoli",     label:"Cavoli & brassiche", ids:["cavolo","verza","broccolo","cavolfiore","cavolonero","cavolorapa","cavoletti","sedano"] }
+  {
+    key: "frutti",
+    label: "Frutti & ortaggi",
+    ids: [
+      "pomodoro",
+      "peperone",
+      "peperoncino",
+      "melanzana",
+      "zucchina",
+      "zucca",
+      "cetriolo",
+      "melone",
+      "anguria",
+      "fragola",
+      "mais_dolce",
+      "gombo",
+      "tomatillo",
+      "physalis",
+      "kiwano",
+      "cucamelon"
+    ]
+  },
+  {
+    key: "foglie",
+    label: "Insalate & foglie",
+    ids: [
+      "lattuga",
+      "rucola",
+      "spinaci",
+      "bietola",
+      "cicoria",
+      "indivia",
+      "pakchoi",
+      "valerianella",
+      "radicchio",
+      "loboda",
+      "stevia_dolce",
+      "asparago",
+      "carciofo",
+      "cardo",
+      "crescione",
+      "mizuna",
+      "senape_foglia",
+      "tatsoi",
+      "cavolo_cinese",
+      "cavolo_rosso",
+      "broccolo_rapa"
+    ]
+  },
+  {
+    key: "radici",
+    label: "Radici & bulbi",
+    ids: [
+      "carota",
+      "ravanello",
+      "barbabietola",
+      "rapa",
+      "finocchio",
+      "cipolla",
+      "aglio",
+      "porro",
+      "scalogno",
+      "pastinaca",
+      "radice_prezemolo",
+      "sedano_rapa",
+      "rafano",
+      "patata",
+      "patata_dolce",
+      "cipolla_rossa",
+      "cipollotto",
+      "daikon",
+      "scorzonera",
+      "topinambur",
+      "cavolo_navone"
+    ]
+  },
+  {
+    key: "aromatiche",
+    label: "Aromatiche",
+    ids: [
+      "basilico",
+      "prezzemolo",
+      "aneto",
+      "coriandolo",
+      "timo",
+      "origano",
+      "salvia",
+      "rosmarino",
+      "erba_cipollina",
+      "leustean",
+      "dragoncello",
+      "menta",
+      "maggiorana",
+      "camomilla",
+      "calendula",
+      "nasturzio",
+      "shiso"
+    ]
+  },
+  {
+    key: "legumi",
+    label: "Legumi",
+    ids: [
+      "fagiolino",
+      "fagiolo",
+      "pisello",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
+    ]
+  },
+  {
+    key: "cavoli",
+    label: "Cavoli & brassiche",
+    ids: [
+      "cavolo",
+      "verza",
+      "broccolo",
+      "cavolfiore",
+      "cavolonero",
+      "cavolorapa",
+      "cavoletti",
+      "sedano"
+    ]
+  }
 ];
 
 const FRUIT_EMOJI = {
@@ -303,8 +502,7 @@ const PLANT_DESC = {
       "Erba aromatica caratteristica della cucina mediterranea. Protagonista sulla pizza e nei sughi; si secca perfettamente.",
     salvia:
       "Pianta aromatica perenne dalle foglie vellutate grigio-verdi. Usata con carne, burro e pasta fresca.",
-    pastinaca:
-      "Dolce dopo il freddo; semina diretta e terreno profondo.",
+    pastinaca: "Dolce dopo il freddo; semina diretta e terreno profondo.",
     radice_prezemolo:
       "Coltura tradizionale rumena: radice bianca aromatica per zuppe e ciorbe.",
     sedano_rapa:
@@ -313,84 +511,55 @@ const PLANT_DESC = {
       "Radice piccante molto usata in Romania; contenila perché è vigorosa.",
     patata:
       "In serra anticipa il raccolto; rincalza quando gli steli crescono.",
-    patata_dolce:
-      "Ama caldo stabile e suolo leggero; ideale in serra lunga.",
-    cipolla_rossa:
-      "Bulbo dolce e colorato; ottima per raccolti scalari.",
+    patata_dolce: "Ama caldo stabile e suolo leggero; ideale in serra lunga.",
+    cipolla_rossa: "Bulbo dolce e colorato; ottima per raccolti scalari.",
     cipollotto:
       "Pronto rapidamente; raccogli giovane prima che ingrossi troppo.",
-    erba_cipollina:
-      "Aromatica perenne; taglia spesso per foglie tenere.",
+    erba_cipollina: "Aromatica perenne; taglia spesso per foglie tenere.",
     loboda:
       "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco.",
-    stevia_dolce:
-      "Acetosa per minestre primaverili; raccogli foglie giovani.",
-    leustean:
-      "Il profumo classico delle ciorbe rumene; perenne e vigoroso.",
-    dragoncello:
-      "Aromatica fine per aceti e conserve; evita ristagni.",
-    menta:
-      "Molto vigorosa: meglio in vaso o area controllata.",
-    maggiorana:
-      "Aromatica delicata; ama caldo, luce e terreno drenato.",
-    camomilla:
-      "Fiori per tisane; attira insetti utili e profuma la serra.",
+    stevia_dolce: "Acetosa per minestre primaverili; raccogli foglie giovani.",
+    leustean: "Il profumo classico delle ciorbe rumene; perenne e vigoroso.",
+    dragoncello: "Aromatica fine per aceti e conserve; evita ristagni.",
+    menta: "Molto vigorosa: meglio in vaso o area controllata.",
+    maggiorana: "Aromatica delicata; ama caldo, luce e terreno drenato.",
+    camomilla: "Fiori per tisane; attira insetti utili e profuma la serra.",
     calendula:
       "Fiore utile nell’orto: attira impollinatori e colora le aiuole.",
-    nasturzio:
-      "Fiori e foglie commestibili; utile come pianta esca per afidi.",
+    nasturzio: "Fiori e foglie commestibili; utile come pianta esca per afidi.",
     mais_dolce:
       "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
-    gombo:
-      "Ama molto caldo; raccogli i baccelli piccoli e teneri.",
+    gombo: "Ama molto caldo; raccogli i baccelli piccoli e teneri.",
     tomatillo:
       "Serve almeno due piante per fruttificare bene; ottimo per salse.",
-    physalis:
-      "Frutti dolci in lanterna; in serra matura meglio.",
-    kiwano:
-      "Cucurbitacea esotica per serre calde; falla arrampicare.",
-    cucamelon:
-      "Piccoli frutti croccanti; produttivo su rete in serra.",
-    asparago:
-      "Perenne: richiede pazienza, ma produce per molti anni.",
-    carciofo:
-      "Coltura grande e decorativa; proteggi dal gelo intenso.",
-    cardo:
-      "Parente del carciofo; imbianchisci le coste prima del raccolto.",
+    physalis: "Frutti dolci in lanterna; in serra matura meglio.",
+    kiwano: "Cucurbitacea esotica per serre calde; falla arrampicare.",
+    cucamelon: "Piccoli frutti croccanti; produttivo su rete in serra.",
+    asparago: "Perenne: richiede pazienza, ma produce per molti anni.",
+    carciofo: "Coltura grande e decorativa; proteggi dal gelo intenso.",
+    cardo: "Parente del carciofo; imbianchisci le coste prima del raccolto.",
     crescione:
       "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti.",
-    mizuna:
-      "Senape giapponese facile; foglie frastagliate per mix insalata.",
+    mizuna: "Senape giapponese facile; foglie frastagliate per mix insalata.",
     senape_foglia:
       "Foglie piccanti; semina in fresco per evitare fioritura precoce.",
-    tatsoi:
-      "Rosetta compatta, molto resistente al freddo.",
-    cavolo_cinese:
-      "Forma un cespo tenero; proteggi da caldo e stress idrico.",
+    tatsoi: "Rosetta compatta, molto resistente al freddo.",
+    cavolo_cinese: "Forma un cespo tenero; proteggi da caldo e stress idrico.",
     daikon:
       "Ravanello lungo: terreno profondo e raccolta prima che lignifichi.",
-    scorzonera:
-      "Radice nera lunga; richiede suolo leggero e profondo.",
+    scorzonera: "Radice nera lunga; richiede suolo leggero e profondo.",
     topinambur:
       "Tubero rustico e produttivo; delimita lo spazio perché si espande.",
-    fava:
-      "Legume precoce e resistente al fresco; migliora il terreno.",
+    fava: "Legume precoce e resistente al fresco; migliora il terreno.",
     soia_edamame:
       "Raccogli i baccelli verdi quando i semi sono pieni ma teneri.",
-    cece:
-      "Ama asciutto e caldo; non eccedere con acqua in serra.",
-    lenticchia:
-      "Piccolo legume rustico; adatto a bordure asciutte.",
-    fagiolo_borlotto:
-      "Per baccelli freschi o granella; usa tutori robusti.",
-    cavolo_rosso:
-      "Cespo compatto e colorato; ottimo per raccolti autunnali.",
-    cavolo_navone:
-      "Radice grande e rustica; utile per autunno e inverno.",
-    broccolo_rapa:
-      "Raccogli cime e foglie prima della piena fioritura.",
-    shiso:
-      "Aromatica asiatica profumata; bella anche in vaso in serra."
+    cece: "Ama asciutto e caldo; non eccedere con acqua in serra.",
+    lenticchia: "Piccolo legume rustico; adatto a bordure asciutte.",
+    fagiolo_borlotto: "Per baccelli freschi o granella; usa tutori robusti.",
+    cavolo_rosso: "Cespo compatto e colorato; ottimo per raccolti autunnali.",
+    cavolo_navone: "Radice grande e rustica; utile per autunno e inverno.",
+    broccolo_rapa: "Raccogli cime e foglie prima della piena fioritura.",
+    shiso: "Aromatica asiatica profumata; bella anche in vaso in serra."
   },
   ro: {
     pomodoro:
@@ -485,106 +654,64 @@ const PLANT_DESC = {
       "Plantă aromatică mediteraneeană. Vedeta pizzei și sosurilor; se usucă perfect.",
     salvia:
       "Plantă perenă cu frunze catifelate cenușiu-verzi. Cu carne, unt și paste proaspete.",
-    pastinaca:
-      "Păstârnac",
-    radice_prezemolo:
-      "Pătrunjel rădăcină",
-    sedano_rapa:
-      "Țelină rădăcină",
-    rafano:
-      "Hrean",
-    patata:
-      "Cartof",
-    patata_dolce:
-      "Cartof dulce",
-    cipolla_rossa:
-      "Ceapă roșie",
-    cipollotto:
-      "Ceapă verde",
-    erba_cipollina:
-      "Chives / Cepșoară",
-    loboda:
-      "Lobodă",
-    stevia_dolce:
-      "Ștevie",
-    leustean:
-      "Leuștean",
-    dragoncello:
-      "Tarhon",
-    menta:
-      "Mentă",
-    maggiorana:
-      "Măghiran",
-    camomilla:
-      "Mușețel",
-    calendula:
-      "Gălbenele",
-    nasturzio:
-      "Conduraș",
-    mais_dolce:
-      "Porumb dulce",
-    gombo:
-      "Bame",
-    tomatillo:
-      "Tomatillo",
-    physalis:
-      "Physalis",
-    kiwano:
-      "Kiwano",
-    cucamelon:
-      "Cucamelon",
-    asparago:
-      "Sparanghel",
-    carciofo:
-      "Anghinare",
-    cardo:
-      "Cardon",
-    crescione:
-      "Năsturel",
-    mizuna:
-      "Mizuna",
-    senape_foglia:
-      "Muștar frunze",
-    tatsoi:
-      "Tatsoi",
-    cavolo_cinese:
-      "Varză chinezească",
-    daikon:
-      "Daikon",
-    scorzonera:
-      "Scorțonera",
-    topinambur:
-      "Topinambur",
-    fava:
-      "Bob",
-    soia_edamame:
-      "Soia edamame",
-    cece:
-      "Năut",
-    lenticchia:
-      "Linte",
-    fagiolo_borlotto:
-      "Fasole pestriță",
-    cavolo_rosso:
-      "Varză roșie",
-    cavolo_navone:
-      "Gulie furajeră / Nap",
-    broccolo_rapa:
-      "Rapini",
-    shiso:
-      "Shiso"
+    pastinaca: "Păstârnac",
+    radice_prezemolo: "Pătrunjel rădăcină",
+    sedano_rapa: "Țelină rădăcină",
+    rafano: "Hrean",
+    patata: "Cartof",
+    patata_dolce: "Cartof dulce",
+    cipolla_rossa: "Ceapă roșie",
+    cipollotto: "Ceapă verde",
+    erba_cipollina: "Chives / Cepșoară",
+    loboda: "Lobodă",
+    stevia_dolce: "Ștevie",
+    leustean: "Leuștean",
+    dragoncello: "Tarhon",
+    menta: "Mentă",
+    maggiorana: "Măghiran",
+    camomilla: "Mușețel",
+    calendula: "Gălbenele",
+    nasturzio: "Conduraș",
+    mais_dolce: "Porumb dulce",
+    gombo: "Bame",
+    tomatillo: "Tomatillo",
+    physalis: "Physalis",
+    kiwano: "Kiwano",
+    cucamelon: "Cucamelon",
+    asparago: "Sparanghel",
+    carciofo: "Anghinare",
+    cardo: "Cardon",
+    crescione: "Năsturel",
+    mizuna: "Mizuna",
+    senape_foglia: "Muștar frunze",
+    tatsoi: "Tatsoi",
+    cavolo_cinese: "Varză chinezească",
+    daikon: "Daikon",
+    scorzonera: "Scorțonera",
+    topinambur: "Topinambur",
+    fava: "Bob",
+    soia_edamame: "Soia edamame",
+    cece: "Năut",
+    lenticchia: "Linte",
+    fagiolo_borlotto: "Fasole pestriță",
+    cavolo_rosso: "Varză roșie",
+    cavolo_navone: "Gulie furajeră / Nap",
+    broccolo_rapa: "Rapini",
+    shiso: "Shiso"
   }
 };
 
 const SOWING_GUIDE = {
   pomodoro: {
-    method: "Semina in vasetto o alveolo al caldo; in serra si trapianta una piantina robusta.",
+    method:
+      "Semina in vasetto o alveolo al caldo; in serra si trapianta una piantina robusta.",
     depth: "0,5-1 cm",
     thin: "Trapianta quando ha 4-6 foglie vere, lasciando 50 cm sulla fila e 80 cm tra file.",
     tip: "Interra leggermente il fusto e prepara subito tutore o filo verticale."
   },
   peperone: {
-    method: "Semina protetta in alveolo; meglio trapiantare piante già formate.",
+    method:
+      "Semina protetta in alveolo; meglio trapiantare piante già formate.",
     depth: "0,5 cm",
     thin: "Trapianta a 40 cm sulla fila e 60 cm tra file quando le notti sono miti.",
     tip: "Germina lentamente: serve caldo costante e terreno mai zuppo."
@@ -602,25 +729,29 @@ const SOWING_GUIDE = {
     tip: "Ama terreno caldo: evita trapianti anticipati in substrato freddo."
   },
   zucchina: {
-    method: "Semina diretta a postarella o in vasetto da trapiantare con pane integro.",
+    method:
+      "Semina diretta a postarella o in vasetto da trapiantare con pane integro.",
     depth: "2-3 cm",
     thin: "Lascia 1 pianta ogni 80 cm sulla fila e 100 cm tra file.",
     tip: "Metti 2 semi per buca e tieni la piantina più vigorosa."
   },
   zucca: {
-    method: "Semina diretta a postarella o in vaso grande, poi trapianto delicato.",
+    method:
+      "Semina diretta a postarella o in vaso grande, poi trapianto delicato.",
     depth: "2-3 cm",
     thin: "Lascia 1 pianta ogni 100 cm sulla fila e 130 cm tra file.",
     tip: "Dalle spazio fin dall'inizio: soffre se viene compressa."
   },
   cetriolo: {
-    method: "Semina diretta o in vasetto; in serra rende bene su rete verticale.",
+    method:
+      "Semina diretta o in vasetto; in serra rende bene su rete verticale.",
     depth: "1,5-2 cm",
     thin: "Lascia 40 cm sulla fila e 100 cm tra file o sostegni.",
     tip: "Trapianta senza rompere le radici e lega presto i tralci."
   },
   melone: {
-    method: "Semina a postarella o in vasetto caldo, poi trapianto con pane integro.",
+    method:
+      "Semina a postarella o in vasetto caldo, poi trapianto con pane integro.",
     depth: "2 cm",
     thin: "Lascia 90 cm sulla fila e 120 cm tra file.",
     tip: "Pacciama e bagna al piede; riduci l'acqua quando i frutti maturano."
@@ -632,7 +763,8 @@ const SOWING_GUIDE = {
     tip: "In serra piccola usa poche piante: ogni pianta occupa molto volume."
   },
   lattuga: {
-    method: "Semina in alveolo o a spaglio leggero; trapianto consigliato per cespi ordinati.",
+    method:
+      "Semina in alveolo o a spaglio leggero; trapianto consigliato per cespi ordinati.",
     depth: "0,3-0,5 cm",
     thin: "Dirada o trapianta a 25 cm sulla fila e 30 cm tra file.",
     tip: "Semina poco e spesso per raccolte scalari."
@@ -656,7 +788,8 @@ const SOWING_GUIDE = {
     tip: "Ama fresco e umidità costante; col caldo monta a seme."
   },
   bietola: {
-    method: "Semina diretta o in alveolo; i semi sono glomeruli con più piantine.",
+    method:
+      "Semina diretta o in alveolo; i semi sono glomeruli con più piantine.",
     depth: "1-2 cm",
     thin: "Dirada a 30 cm sulla fila e 40 cm tra file.",
     tip: "Raccogli foglie esterne senza tagliare il cuore."
@@ -698,7 +831,8 @@ const SOWING_GUIDE = {
     tip: "Raccogli giovane: se resta troppo ingrossa e indurisce."
   },
   carota: {
-    method: "Semina diretta a file nel terreno fine e profondo; non ama il trapianto.",
+    method:
+      "Semina diretta a file nel terreno fine e profondo; non ama il trapianto.",
     depth: "0,5-1 cm",
     thin: "Dirada progressivamente a 8 cm sulla fila e 25 cm tra file.",
     tip: "Tieni umido fino alla germinazione, che può essere lenta."
@@ -710,7 +844,8 @@ const SOWING_GUIDE = {
     tip: "Rincalza leggermente per imbianchire il grumolo."
   },
   prezzemolo: {
-    method: "Semina diretta o in vasetto; ammollo dei semi utile per partire meglio.",
+    method:
+      "Semina diretta o in vasetto; ammollo dei semi utile per partire meglio.",
     depth: "0,5 cm",
     thin: "Dirada a 20 cm; raccogli a taglio lasciando ricacciare.",
     tip: "Germina lentamente: non lasciare seccare il letto di semina."
@@ -746,7 +881,8 @@ const SOWING_GUIDE = {
     tip: "Usa spicchi esterni grandi: danno teste migliori."
   },
   porro: {
-    method: "Semina in semenzaio, poi trapianta quando ha lo spessore di una matita.",
+    method:
+      "Semina in semenzaio, poi trapianta quando ha lo spessore di una matita.",
     depth: "0,5-1 cm",
     thin: "Trapianta a 15 cm sulla fila e 30 cm tra file.",
     tip: "Trapianta in solchi e rincalza per fusti più bianchi."
@@ -776,7 +912,8 @@ const SOWING_GUIDE = {
     tip: "Ama fresco: in serra meglio autunno o fine inverno."
   },
   fragola: {
-    method: "Meglio trapiantare piantine o stoloni radicati; seme lento e variabile.",
+    method:
+      "Meglio trapiantare piantine o stoloni radicati; seme lento e variabile.",
     depth: "Colletto a livello del terreno",
     thin: "Lascia 30 cm sulla fila e 40 cm tra file.",
     tip: "Non coprire il cuore della pianta e pacciama per frutti puliti."
@@ -914,13 +1051,15 @@ const SOWING_GUIDE = {
     tip: "Aromatica perenne; taglia spesso per foglie tenere."
   },
   loboda: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
     tip: "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco."
   },
   stevia_dolce: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 30 cm sulla fila e 40 cm tra file.",
     tip: "Acetosa per minestre primaverili; raccogli foglie giovani."
@@ -968,85 +1107,99 @@ const SOWING_GUIDE = {
     tip: "Fiori e foglie commestibili; utile come pianta esca per afidi."
   },
   mais_dolce: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 30 cm sulla fila e 70 cm tra file.",
     tip: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi."
   },
   gombo: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
     tip: "Ama molto caldo; raccogli i baccelli piccoli e teneri."
   },
   tomatillo: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 50 cm sulla fila e 80 cm tra file.",
     tip: "Serve almeno due piante per fruttificare bene; ottimo per salse."
   },
   physalis: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
     tip: "Frutti dolci in lanterna; in serra matura meglio."
   },
   kiwano: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 60 cm sulla fila e 100 cm tra file.",
     tip: "Cucurbitacea esotica per serre calde; falla arrampicare."
   },
   cucamelon: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 30 cm sulla fila e 60 cm tra file.",
     tip: "Piccoli frutti croccanti; produttivo su rete in serra."
   },
   asparago: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 40 cm sulla fila e 80 cm tra file.",
     tip: "Perenne: richiede pazienza, ma produce per molti anni."
   },
   carciofo: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 80 cm sulla fila e 100 cm tra file.",
     tip: "Coltura grande e decorativa; proteggi dal gelo intenso."
   },
   cardo: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 60 cm sulla fila e 90 cm tra file.",
     tip: "Parente del carciofo; imbianchisci le coste prima del raccolto."
   },
   crescione: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 15 cm sulla fila e 20 cm tra file.",
     tip: "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti."
   },
   mizuna: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 20 cm sulla fila e 30 cm tra file.",
     tip: "Senape giapponese facile; foglie frastagliate per mix insalata."
   },
   senape_foglia: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
     tip: "Foglie piccanti; semina in fresco per evitare fioritura precoce."
   },
   tatsoi: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 20 cm sulla fila e 30 cm tra file.",
     tip: "Rosetta compatta, molto resistente al freddo."
   },
   cavolo_cinese: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 35 cm sulla fila e 50 cm tra file.",
     tip: "Forma un cespo tenero; proteggi da caldo e stress idrico."
@@ -1100,7 +1253,8 @@ const SOWING_GUIDE = {
     tip: "Per baccelli freschi o granella; usa tutori robusti."
   },
   cavolo_rosso: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 45 cm sulla fila e 60 cm tra file.",
     tip: "Cespo compatto e colorato; ottimo per raccolti autunnali."
@@ -1112,7 +1266,8 @@ const SOWING_GUIDE = {
     tip: "Radice grande e rustica; utile per autunno e inverno."
   },
   broccolo_rapa: {
-    method: "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
+    method:
+      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 25 cm sulla fila e 40 cm tra file.",
     tip: "Raccogli cime e foglie prima della piena fioritura."
@@ -1505,9 +1660,13 @@ function clearBootParams() {
 function updateGuidedIntroDynamic() {
   const months = MONTHS[state.lang] || MONTHS.it;
   const monthName = months[state.mese - 1] || "";
-  const zoneLabel = { freddo: tx("cold"), temperato: tx("temperate"), caldo: tx("warm") }[state.zona] || tx("temperate");
+  const zoneLabel =
+    { freddo: tx("cold"), temperato: tx("temperate"), caldo: tx("warm") }[
+      state.zona
+    ] || tx("temperate");
   const pill = document.getElementById("guidedMonthPill");
-  if (pill) pill.textContent = `📅 ${monthName} · ${tx("tagZone")} ${zoneLabel}`;
+  if (pill)
+    pill.textContent = `📅 ${monthName} · ${tx("tagZone")} ${zoneLabel}`;
 }
 
 function setMode(mode, scroll = false) {
@@ -1657,10 +1816,12 @@ function updateVegSearchUI() {
   if (!visible) vegSearchQuery = "";
   if (input) {
     input.value = vegSearchQuery;
-    input.placeholder = state.lang === "ro" ? "Cauta o planta..." : "Cerca una pianta...";
+    input.placeholder =
+      state.lang === "ro" ? "Cauta o planta..." : "Cerca una pianta...";
   }
   const label = document.querySelector('label[for="vegSearchInput"]');
-  if (label) label.textContent = state.lang === "ro" ? "Cauta cultura" : "Cerca coltura";
+  if (label)
+    label.textContent = state.lang === "ro" ? "Cauta cultura" : "Cerca coltura";
   if (clear) {
     clear.hidden = !vegSearchQuery;
     clear.title = state.lang === "ro" ? "Sterge cautarea" : "Cancella ricerca";
@@ -1792,39 +1953,78 @@ function localizedSowingGuide(plant) {
   const sow = SOWING_GUIDE[plant.id];
   if (!sow || state.lang !== "ro") return sow;
   const direct = new Set([
-    "carota", "rucola", "spinaci", "coriandolo", "aneto", "fagiolino",
-    "fagiolo", "pisello", "ravanello", "barbabietola", "rapa", "valerianella"
+    "carota",
+    "rucola",
+    "spinaci",
+    "coriandolo",
+    "aneto",
+    "fagiolino",
+    "fagiolo",
+    "pisello",
+    "ravanello",
+    "barbabietola",
+    "rapa",
+    "valerianella"
   ]);
   const bulbs = new Set(["aglio", "scalogno", "cipolla"]);
   const aromatics = new Set(["rosmarino", "timo", "origano", "salvia"]);
   const warm = new Set([
-    "pomodoro", "peperone", "peperoncino", "melanzana", "zucchina", "zucca",
-    "cetriolo", "melone", "anguria", "basilico"
+    "pomodoro",
+    "peperone",
+    "peperoncino",
+    "melanzana",
+    "zucchina",
+    "zucca",
+    "cetriolo",
+    "melone",
+    "anguria",
+    "basilico"
   ]);
   const name = plantText(plant, "nome").toLowerCase();
   const row = plant.d;
   const between = plant.dr || plant.d;
-  let method = "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
-  if (direct.has(plant.id)) method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
-  if (bulbs.has(plant.id)) method = "Plantează bulbili sau căței sănătoși, apoi păstrează rândurile curate.";
-  if (aromatics.has(plant.id)) method = "Cel mai sigur este transplantul de plăntuțe; semănarea este posibilă, dar mai lentă.";
-  if (warm.has(plant.id)) method = "Seamănă protejat la cald; în seră transplantează o plăntuță bine formată.";
-  if (plant.id === "fragola") method = "Transplantează plăntuțe sau stoloni înrădăcinați; semănarea din sămânță este lentă.";
+  let method =
+    "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
+  if (direct.has(plant.id))
+    method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
+  if (bulbs.has(plant.id))
+    method =
+      "Plantează bulbili sau căței sănătoși, apoi păstrează rândurile curate.";
+  if (aromatics.has(plant.id))
+    method =
+      "Cel mai sigur este transplantul de plăntuțe; semănarea este posibilă, dar mai lentă.";
+  if (warm.has(plant.id))
+    method =
+      "Seamănă protejat la cald; în seră transplantează o plăntuță bine formată.";
+  if (plant.id === "fragola")
+    method =
+      "Transplantează plăntuțe sau stoloni înrădăcinați; semănarea din sămânță este lentă.";
 
   let depth = sow.depth
     .replace("Colletto a livello del terreno", "Coletul la nivelul solului")
-    .replace("Superficiale, copertura leggerissima", "Superficial, acoperire foarte ușoară");
+    .replace(
+      "Superficiale, copertura leggerissima",
+      "Superficial, acoperire foarte ușoară"
+    );
   let thin = `Lasă ${row} cm pe rând și ${between} cm între rânduri.`;
   if (plant.dr === plant.d || !plant.dr) thin = `Lasă ${row} cm între plante.`;
 
-  let tip = "Menține umiditatea constantă la pornire și evită aglomerarea plantelor.";
-  if (plant.acqua === "alta") tip = "Udă regulat, mai ales după transplantare și în zilele calde.";
-  if (plant.acqua === "bassa") tip = "Evită excesul de apă: are nevoie de sol drenat și aerisit.";
-  if (warm.has(plant.id)) tip = "Așteaptă nopți blânde și evită substratul rece la transplantare.";
-  if (direct.has(plant.id)) tip = "Rărește devreme, ca fiecare plantă să aibă spațiul ei real.";
-  if (aromatics.has(plant.id)) tip = "Ține-o la lumină și nu o acoperi cu culturi mai înalte.";
-  if (plant.id === "lattuga") tip = "Seamănă puțin și des pentru recolte eșalonate.";
-  if (plant.id === "fragola") tip = "Nu acoperi inima plantei și mulcește pentru fructe curate.";
+  let tip =
+    "Menține umiditatea constantă la pornire și evită aglomerarea plantelor.";
+  if (plant.acqua === "alta")
+    tip = "Udă regulat, mai ales după transplantare și în zilele calde.";
+  if (plant.acqua === "bassa")
+    tip = "Evită excesul de apă: are nevoie de sol drenat și aerisit.";
+  if (warm.has(plant.id))
+    tip = "Așteaptă nopți blânde și evită substratul rece la transplantare.";
+  if (direct.has(plant.id))
+    tip = "Rărește devreme, ca fiecare plantă să aibă spațiul ei real.";
+  if (aromatics.has(plant.id))
+    tip = "Ține-o la lumină și nu o acoperi cu culturi mai înalte.";
+  if (plant.id === "lattuga")
+    tip = "Seamănă puțin și des pentru recolte eșalonate.";
+  if (plant.id === "fragola")
+    tip = "Nu acoperi inima plantei și mulcește pentru fructe curate.";
 
   return { method, depth, thin, tip: `${name}: ${tip}` };
 }
@@ -1833,7 +2033,8 @@ function localizedSowingGuide(plant) {
 // Usa un percorso a serpentina per ottenere un motivo a mattoni, non a colonne.
 function emojiSpreadIndexes(itemCount, cols, targetCount) {
   if (!targetCount) return new Set();
-  if (itemCount <= targetCount) return new Set(Array.from({ length: itemCount }, (_, i) => i));
+  if (itemCount <= targetCount)
+    return new Set(Array.from({ length: itemCount }, (_, i) => i));
   const safeCols = Math.max(1, cols);
   const rows = Math.ceil(itemCount / safeCols);
   const snake = [];
@@ -1848,7 +2049,7 @@ function emojiSpreadIndexes(itemCount, cols, targetCount) {
   }
   const result = new Set();
   for (let k = 0; k < targetCount; k++) {
-    result.add(snake[Math.floor((k + 0.5) * snake.length / targetCount)]);
+    result.add(snake[Math.floor(((k + 0.5) * snake.length) / targetCount)]);
   }
   return result;
 }
@@ -1865,7 +2066,9 @@ function updatePresetAppliedUI() {
   document.getElementById("presetBar")?.classList.toggle("is-applied", active);
   if (!active) return;
 
-  const option = document.querySelector(`#inPreset option[value="${state.activePreset}"]`);
+  const option = document.querySelector(
+    `#inPreset option[value="${state.activePreset}"]`
+  );
   const presetName = option?.textContent?.trim() || state.activePreset;
   const title = document.getElementById("presetAppliedTitle");
   const hint = document.getElementById("presetAppliedHint");
@@ -1883,7 +2086,6 @@ function setText(selector, key) {
   const el = document.querySelector(selector);
   if (el) el.textContent = tx(key);
 }
-
 
 function setOptionText(selectId, value, key) {
   const opt = document.querySelector(`#${selectId} option[value="${value}"]`);
@@ -1932,7 +2134,8 @@ function applyLanguage() {
     const key = el.dataset.i18nConf;
     const translated = SITE_I18N[state.lang]?.[key];
     if (!translated) return;
-    if (translated.includes("<") || translated.includes("&")) el.innerHTML = translated;
+    if (translated.includes("<") || translated.includes("&"))
+      el.innerHTML = translated;
     else el.textContent = translated;
   });
   syncLanguageControls();
@@ -1942,8 +2145,14 @@ function applyLanguage() {
   setText(".brand p", "brandSub");
   setText("#guidedAppTitle", "guidedAppTitle");
   setText("#guidedAppSub", "guidedAppSub");
-  setText(".modal-kicker", isGuidedBoot() ? "guidedModalKicker" : "modalKicker");
-  setText(".modal .hero h2", isGuidedBoot() ? "guidedModalTitle" : "modalTitle");
+  setText(
+    ".modal-kicker",
+    isGuidedBoot() ? "guidedModalKicker" : "modalKicker"
+  );
+  setText(
+    ".modal .hero h2",
+    isGuidedBoot() ? "guidedModalTitle" : "modalTitle"
+  );
   setText(".modal .hero p", isGuidedBoot() ? "guidedModalCopy" : "modalCopy");
   setText("#guidedIntroTitle", "guidedIntroTitle");
   setText("#personaPickLabel", "personaPickLabel");
@@ -1957,18 +2166,24 @@ function applyLanguage() {
   setText("#personaExpTitle", "personaExpTitle");
   setText("#personaExpLevel", "personaExpLevel");
   setText("#personaExpDesc", "personaExpDesc");
-  const introSteps = document.querySelectorAll("#guidedIntroSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
+  const introSteps = document.querySelectorAll(
+    "#guidedIntroSteps li > span:not(.guided-step-num):not(.guided-step-ico)"
+  );
   if (introSteps[0]) introSteps[0].innerHTML = tx("howTo1");
   if (introSteps[1]) introSteps[1].innerHTML = tx("howTo2");
   if (introSteps[2]) introSteps[2].innerHTML = tx("howTo3");
   setText("#guidedIntroNovTitle", "guidedIntroNovTitle");
   setText("#guidedNovCtaLabel", "guidedNovCta");
-  const introNovSteps = document.querySelectorAll("#guidedIntroNovSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
+  const introNovSteps = document.querySelectorAll(
+    "#guidedIntroNovSteps li > span:not(.guided-step-num):not(.guided-step-ico)"
+  );
   if (introNovSteps[0]) introNovSteps[0].innerHTML = tx("guidedNovStep1");
   if (introNovSteps[1]) introNovSteps[1].innerHTML = tx("guidedNovStep2");
   if (introNovSteps[2]) introNovSteps[2].innerHTML = tx("guidedNovStep3");
   setText("#guidedIntroExpTitle", "guidedIntroExpTitle");
-  const introExpSteps = document.querySelectorAll("#guidedIntroExpSteps li > span:not(.guided-step-num):not(.guided-step-ico)");
+  const introExpSteps = document.querySelectorAll(
+    "#guidedIntroExpSteps li > span:not(.guided-step-num):not(.guided-step-ico)"
+  );
   if (introExpSteps[0]) introExpSteps[0].innerHTML = tx("guidedExpStep1");
   if (introExpSteps[1]) introExpSteps[1].innerHTML = tx("guidedExpStep2");
   if (introExpSteps[2]) introExpSteps[2].innerHTML = tx("guidedExpStep3");
@@ -1980,10 +2195,12 @@ function applyLanguage() {
     in: { it: "Già aggiunte", ro: "Deja adăugate" },
     "all-beds": { it: "Tutti i semi", ro: "Toate semințele" }
   };
-  document.querySelectorAll(".veg-filter-tab").forEach(tab => {
+  document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
     const f = tab.dataset.filter;
     const ico = filterIconMap[f] || "🌿";
-    const lbl = (filterLblMap[f] || filterLblMap.all)[state.lang] || (filterLblMap[f] || filterLblMap.all).it;
+    const lbl =
+      (filterLblMap[f] || filterLblMap.all)[state.lang] ||
+      (filterLblMap[f] || filterLblMap.all).it;
     tab.innerHTML = `<span class="tab-ico" aria-hidden="true">${ico}</span><span class="tab-lbl">${lbl}</span><span class="tab-count">—</span>`;
   });
   updateVegSearchUI();
@@ -2089,10 +2306,12 @@ function applyLanguage() {
   setText(".pdp-header-title", "plantSheetTitle");
   setText("#pdpBackBtn span", "closePlantSheet");
   const pdpBackBtn = document.getElementById("pdpBackBtn");
-  if (pdpBackBtn) pdpBackBtn.setAttribute("aria-label", tx("closePlantSheetAria"));
+  if (pdpBackBtn)
+    pdpBackBtn.setAttribute("aria-label", tx("closePlantSheetAria"));
   setText(".mobile-go-to-scene span", "goToGreenhouse");
   const mobileGoToScene = document.querySelector(".mobile-go-to-scene");
-  if (mobileGoToScene) mobileGoToScene.setAttribute("aria-label", tx("goToGreenhouseAria"));
+  if (mobileGoToScene)
+    mobileGoToScene.setAttribute("aria-label", tx("goToGreenhouseAria"));
   setText("#btnRipristina .btn-label", "restoreAutoFill");
   setText("#btnClear .btn-label", "clearGreenhouse");
   updateClearGreenhouseCopy();
@@ -2101,7 +2320,8 @@ function applyLanguage() {
   setText("#yieldEditCropsLabel", "yieldEditCropsLabel");
   setText("#yieldEditCropsHint", "yieldEditCropsHint");
   const yieldEditBtn = document.getElementById("btnEditCropsFromYield");
-  if (yieldEditBtn) yieldEditBtn.setAttribute("aria-label", tx("yieldEditCropsAria"));
+  if (yieldEditBtn)
+    yieldEditBtn.setAttribute("aria-label", tx("yieldEditCropsAria"));
   setText("#modeFitTitle", "modeFitTitle");
   setText("#modeFitHint", "modeFitHint");
   setText("#modeExpertTitle", "modeExpertTitle");
@@ -2485,8 +2705,8 @@ function computeLayout() {
     overflow = false;
   state.beds.forEach((b, idx) => {
     const p = BYID[b.plantId];
-    const S = p.d;                // distanza sulla fila (tra piante nella stessa fila)
-    const Sc = p.dr || p.d;      // distanza tra file (tra file adiacenti, usata nella larghezza)
+    const S = p.d; // distanza sulla fila (tra piante nella stessa fila)
+    const Sc = p.dr || p.d; // distanza tra file (tra file adiacenti, usata nella larghezza)
     const isFila = b.layout === "fila" && Li >= 480 && columnCount > 1;
     // Le file corrono in senso Y (lunghezza), la distanza TRA file (Sc) va in X (larghezza)
     // e la distanza SULLA fila (S) va in Y (altezza del letto).
@@ -2498,7 +2718,9 @@ function computeLayout() {
     const rows = isFila
       ? maxSlotsForSpan(Li - 2 * MARGIN - 2 * BEDPAD, S)
       : Math.max(1, Math.ceil(b.count / cols));
-    const naturalBedH = isFila ? Li - 2 * MARGIN : 2 * BEDPAD + Math.max(1, rows) * Sr;
+    const naturalBedH = isFila
+      ? Li - 2 * MARGIN
+      : 2 * BEDPAD + Math.max(1, rows) * Sr;
     const minVisualBedH = Math.max(46, visualPlantRadius(p) * 3 + 18);
     const bedH = isFila ? naturalBedH : Math.max(naturalBedH, minVisualBedH);
     // Colonna "ancorata": se l'aiuola ha una colonna assegnata (e ancora valida)
@@ -2511,8 +2733,12 @@ function computeLayout() {
     } else {
       col = columns.reduce((best, current) => {
         const score = (column) => {
-          const conflictPenalty = areIncompatible(p, column.lastPlant) ? state.path * 3 : 0;
-          const companionBonus = areCompanions(p, column.lastPlant) ? state.path * 0.35 : 0;
+          const conflictPenalty = areIncompatible(p, column.lastPlant)
+            ? state.path * 3
+            : 0;
+          const companionBonus = areCompanions(p, column.lastPlant)
+            ? state.path * 0.35
+            : 0;
           return column.y + conflictPenalty - companionBonus;
         };
         return score(current) < score(best) ? current : best;
@@ -2582,10 +2808,14 @@ function visualItemsForBed(bed, maxItems) {
   // qui si scelgono solo quali file rendere visibili).
   const cols = Math.max(1, bed.cols);
   const totalRows = Math.max(1, Math.ceil(bed.positions.length / cols));
-  const showRows = Math.max(1, Math.min(totalRows, Math.floor(maxItems / cols)));
+  const showRows = Math.max(
+    1,
+    Math.min(totalRows, Math.floor(maxItems / cols))
+  );
   const items = [];
   for (let s = 0; s < showRows; s++) {
-    const row = showRows === 1 ? 0 : Math.round((s * (totalRows - 1)) / (showRows - 1));
+    const row =
+      showRows === 1 ? 0 : Math.round((s * (totalRows - 1)) / (showRows - 1));
     for (let c = 0; c < cols; c++) {
       const sourceIndex = row * cols + c;
       if (sourceIndex < bed.positions.length) {
@@ -2654,9 +2884,11 @@ function buildScene() {
     <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffffff"/><stop offset="32%" stop-color="#e8eeee"/><stop offset="62%" stop-color="#aebbbb"/><stop offset="100%" stop-color="#758585"/>
     </linearGradient>
-    ${nightMode
-      ? `<radialGradient id="daylight" cx="48%" cy="38%" r="78%"><stop stop-color="#315842" stop-opacity=".08"/><stop offset=".55" stop-color="#071812" stop-opacity=".3"/><stop offset="1" stop-color="#020907" stop-opacity=".72"/></radialGradient>`
-      : `<radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".34"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".08"/><stop offset="1" stop-color="#183d28" stop-opacity=".25"/></radialGradient>`}
+    ${
+      nightMode
+        ? `<radialGradient id="daylight" cx="48%" cy="38%" r="78%"><stop stop-color="#315842" stop-opacity=".08"/><stop offset=".55" stop-color="#071812" stop-opacity=".3"/><stop offset="1" stop-color="#020907" stop-opacity=".72"/></radialGradient>`
+        : `<radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".34"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".08"/><stop offset="1" stop-color="#183d28" stop-opacity=".25"/></radialGradient>`
+    }
     <linearGradient id="nightGlass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a20" stop-opacity=".34"/><stop offset=".5" stop-color="#0b2021" stop-opacity=".2"/><stop offset="1" stop-color="#020b0d" stop-opacity=".42"/></linearGradient>
     <radialGradient id="lampPool"><stop offset="0" stop-color="#fff4b0" stop-opacity=".72"/><stop offset=".25" stop-color="#ffe58a" stop-opacity=".42"/><stop offset=".62" stop-color="#e9d272" stop-opacity=".16"/><stop offset="1" stop-color="#d5bf62" stop-opacity="0"/></radialGradient>
     <radialGradient id="lampBulb"><stop offset="0" stop-color="#fffde5"/><stop offset=".45" stop-color="#fff3a4"/><stop offset="1" stop-color="#e7b942"/></radialGradient>
@@ -2767,12 +2999,20 @@ function buildScene() {
     g += `<rect x="${bx + 2}" y="${by + 2}" width="${Math.max(0, bed.w - 4)}" height="${Math.max(0, bed.h - 4)}" rx="2" fill="none" stroke="rgba(30,15,7,.3)" stroke-width="1" pointer-events="none"/>`;
     // piantine
     const r = visualPlantRadius(bed.plant);
-    const bedGlyphBudget = totalPlants <= MAX_GLYPH
-      ? bed.count
-      : Math.max(6, Math.floor((bed.count * MAX_GLYPH) / totalPlants));
+    const bedGlyphBudget =
+      totalPlants <= MAX_GLYPH
+        ? bed.count
+        : Math.max(6, Math.floor((bed.count * MAX_GLYPH) / totalPlants));
     const bedItems = visualItemsForBed(bed, bedGlyphBudget);
-    const emojiCount = Math.min(Math.max(1, Math.round(Math.sqrt(bed.count) * 1.3)), bedItems.length);
-    const emojiIndexes = emojiSpreadIndexes(bedItems.length, bed.cols, emojiCount);
+    const emojiCount = Math.min(
+      Math.max(1, Math.round(Math.sqrt(bed.count) * 1.3)),
+      bedItems.length
+    );
+    const emojiIndexes = emojiSpreadIndexes(
+      bedItems.length,
+      bed.cols,
+      emojiCount
+    );
     const pendingEmoji = [];
     bedItems.forEach(({ pos, sourceIndex }, i) => {
       if (drawn >= MAX_GLYPH) return;
@@ -2801,9 +3041,10 @@ function buildScene() {
       Math.max(28, label.length * labelSize * 0.56 + 8)
     );
     const naturalLabelTextW = label.length * labelSize * 0.56;
-    const labelTextFit = naturalLabelTextW > labelW - 6
-      ? ` textLength="${Math.max(18, labelW - 6)}" lengthAdjust="spacingAndGlyphs"`
-      : "";
+    const labelTextFit =
+      naturalLabelTextW > labelW - 6
+        ? ` textLength="${Math.max(18, labelW - 6)}" lengthAdjust="spacingAndGlyphs"`
+        : "";
     // quote tecniche (stile disegno tecnico)
     const wM = `${(bed.w / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
     const hM = `${(bed.h / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
@@ -2863,9 +3104,9 @@ function buildScene() {
 
   // --- notte e illuminazione artificiale interna ---
   const lampX = ox + Wi / 2;
-  const lampYs = [oy + Li * .19, oy + Li * .5, oy + Li * .81];
-  const poolRx = Math.max(38, Math.min(Wi * .46, 118));
-  const poolRy = Math.max(42, Math.min(Li * .19, 94));
+  const lampYs = [oy + Li * 0.19, oy + Li * 0.5, oy + Li * 0.81];
+  const poolRx = Math.max(38, Math.min(Wi * 0.46, 118));
+  const poolRy = Math.max(42, Math.min(Li * 0.19, 94));
   if (nightMode) {
     g += `<g clip-path="url(#interiorClip)" pointer-events="none">`;
     g += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="url(#nightGlass)"/>`;
@@ -2916,28 +3157,28 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   const bars = Math.max(2, Math.round(Wi / 60));
   for (let i = 1; i < bars; i++) {
     const x = ox + (Wi * i) / bars;
-    s += `<line x1="${x + .7}" y1="${oy}" x2="${x + .7}" y2="${oy + Li}" stroke="rgba(25,57,62,.075)" stroke-width="1.25" pointer-events="none"/>`;
+    s += `<line x1="${x + 0.7}" y1="${oy}" x2="${x + 0.7}" y2="${oy + Li}" stroke="rgba(25,57,62,.075)" stroke-width="1.25" pointer-events="none"/>`;
     s += `<line x1="${x}" y1="${oy}" x2="${x}" y2="${oy + Li}" stroke="rgba(255,255,255,.3)" stroke-width=".7" pointer-events="none"/>`;
   }
   // traversi orizzontali
   const cross = Math.max(2, Math.round(Li / 60));
   for (let i = 1; i < cross; i++) {
     const y = oy + (Li * i) / cross;
-    s += `<line x1="${ox}" y1="${y + .7}" x2="${ox + Wi}" y2="${y + .7}" stroke="rgba(21,50,55,.065)" stroke-width="1.2" pointer-events="none"/>`;
+    s += `<line x1="${ox}" y1="${y + 0.7}" x2="${ox + Wi}" y2="${y + 0.7}" stroke="rgba(21,50,55,.065)" stroke-width="1.2" pointer-events="none"/>`;
     s += `<line x1="${ox}" y1="${y}" x2="${ox + Wi}" y2="${y}" stroke="rgba(255,255,255,.25)" stroke-width=".65" pointer-events="none"/>`;
   }
   // riflessi lunghi del vetro, senza colmo centrale
   const ridgeX = ox + Wi / 2;
   s += `<polygon points="${ox + 5},${oy + 5} ${ridgeX - 7},${oy + 5} ${ridgeX - 30},${oy + Li - 5} ${ox + 5},${oy + Li - 5}" fill="rgba(224,249,252,.035)" pointer-events="none"/>`;
-  s += `<polygon points="${ox + Wi * .08},${oy + 5} ${ox + Wi * .24},${oy + 5} ${ox + Wi * .12},${oy + Li - 5} ${ox + Wi * .02},${oy + Li - 5}" fill="rgba(255,255,255,.085)" pointer-events="none"/>`;
-  s += `<polygon points="${ridgeX + Wi * .09},${oy + 5} ${ridgeX + Wi * .2},${oy + 5} ${ridgeX + Wi * .33},${oy + Li - 5} ${ridgeX + Wi * .22},${oy + Li - 5}" fill="rgba(255,255,255,.05)" pointer-events="none"/>`;
+  s += `<polygon points="${ox + Wi * 0.08},${oy + 5} ${ox + Wi * 0.24},${oy + 5} ${ox + Wi * 0.12},${oy + Li - 5} ${ox + Wi * 0.02},${oy + Li - 5}" fill="rgba(255,255,255,.085)" pointer-events="none"/>`;
+  s += `<polygon points="${ridgeX + Wi * 0.09},${oy + 5} ${ridgeX + Wi * 0.2},${oy + 5} ${ridgeX + Wi * 0.33},${oy + Li - 5} ${ridgeX + Wi * 0.22},${oy + Li - 5}" fill="rgba(255,255,255,.05)" pointer-events="none"/>`;
   // controventi agli angoli
-  const brace = Math.min(25, Wi * .1, Li * .1);
+  const brace = Math.min(25, Wi * 0.1, Li * 0.1);
   s += `<path d="M${ox + 3} ${oy + brace} L${ox + brace} ${oy + 3} M${ox + Wi - 3} ${oy + brace} L${ox + Wi - brace} ${oy + 3} M${ox + 3} ${oy + Li - brace} L${ox + brace} ${oy + Li - 3} M${ox + Wi - 3} ${oy + Li - brace} L${ox + Wi - brace} ${oy + Li - 3}" fill="none" stroke="rgba(80,101,103,.72)" stroke-width="1.6" pointer-events="none"/>`;
   // profilato perimetrale sottile: ombra, alluminio e filo di luce
   s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" rx="4" fill="none" stroke="rgba(37,58,61,.58)" stroke-width="5.5" pointer-events="none"/>`;
   s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" rx="4" fill="none" stroke="url(#frame)" stroke-width="3.8" pointer-events="none"/>`;
-  s += `<rect x="${ox - .45}" y="${oy - .45}" width="${Wi + .9}" height="${Li + .9}" rx="4.5" fill="none" stroke="rgba(246,252,252,.8)" stroke-width=".75" pointer-events="none"/>`;
+  s += `<rect x="${ox - 0.45}" y="${oy - 0.45}" width="${Wi + 0.9}" height="${Li + 0.9}" rx="4.5" fill="none" stroke="rgba(246,252,252,.8)" stroke-width=".75" pointer-events="none"/>`;
   s += `<rect x="${ox + 2.4}" y="${oy + 2.4}" width="${Wi - 4.8}" height="${Li - 4.8}" rx="2.5" fill="none" stroke="rgba(48,70,72,.62)" stroke-width=".8" pointer-events="none"/>`;
   // porta in basso al centro
   const doorX = ox + Wi / 2;
@@ -2947,7 +3188,7 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   s += `<rect x="${doorX - dw / 2}" y="${doorY}" width="${dw}" height="${doorH}" rx="2.5" fill="rgba(213,238,241,.9)" stroke="#60787a" stroke-width="1.4" pointer-events="none"/>`;
   s += `<line x1="${doorX}" y1="${doorY + 2}" x2="${doorX}" y2="${doorY + doorH - 2}" stroke="rgba(91,111,112,.72)" stroke-width="1.5" pointer-events="none"/>`;
   s += `<rect x="${doorX - dw / 2 + 4}" y="${doorY + 3}" width="${dw - 8}" height="${doorH - 6}" rx="2" fill="url(#glass)" stroke="rgba(255,255,255,.62)" stroke-width=".8" pointer-events="none"/>`;
-  s += `<circle cx="${doorX + dw * .18}" cy="${doorY + doorH / 2}" r="1.45" fill="#9a7138" stroke="rgba(255,255,255,.7)" stroke-width=".45" pointer-events="none"/>`;
+  s += `<circle cx="${doorX + dw * 0.18}" cy="${doorY + doorH / 2}" r="1.45" fill="#9a7138" stroke="rgba(255,255,255,.7)" stroke-width=".45" pointer-events="none"/>`;
   s += `<text x="${doorX}" y="${doorY + doorH + 12}" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="#4b5d5e" stroke="rgba(255,255,255,.82)" stroke-width="2" paint-order="stroke" pointer-events="none">${tx("greenhouseEntrance")}</text>`;
   return s;
 }
@@ -3066,13 +3307,23 @@ function overlayShape(bed, bx, by) {
    ========================================================================= */
 function vegCardHTML(p, inb, outOfSeason = false) {
   const diff = DIFFICULTY[p.id] || 2;
-  const diffLabel = diff === 1 ? tx("diffEasy") : diff === 2 ? tx("diffMedium") : tx("diffHard");
-  const diffClass = diff === 1 ? "diff-easy" : diff === 2 ? "diff-medium" : "diff-hard";
+  const diffLabel =
+    diff === 1
+      ? tx("diffEasy")
+      : diff === 2
+        ? tx("diffMedium")
+        : tx("diffHard");
+  const diffClass =
+    diff === 1 ? "diff-easy" : diff === 2 ? "diff-medium" : "diff-hard";
   const soleIco = p.sole === "pieno" ? "☀️" : "🌤️";
-  const harvestTag = p.gg ? `⏱ ${p.gg} ${tx("daysShort")}` : `∞ ${tx("perennial")}`;
-  const offSeasonBadge = outOfSeason ? `<span class="veg-offseason">${tx("offSeason")}</span>` : "";
+  const harvestTag = p.gg
+    ? `⏱ ${p.gg} ${tx("daysShort")}`
+    : `∞ ${tx("perennial")}`;
+  const offSeasonBadge = outOfSeason
+    ? `<span class="veg-offseason">${tx("offSeason")}</span>`
+    : "";
   if (inb) {
-    const bed = state.beds.find(b => b.plantId === p.id);
+    const bed = state.beds.find((b) => b.plantId === p.id);
     const count = bed ? bed.count : 0;
     const locked = Boolean(bed?.countLocked);
     const lockBadge = locked
@@ -3128,10 +3379,10 @@ function renderVegList() {
     vegFilter = "in";
   }
   const sem = seminabili();
-  const present = new Set(state.beds.map(b => b.plantId));
+  const present = new Set(state.beds.map((b) => b.plantId));
 
   const subEl = document.getElementById("seminabiliSub");
-  const semSet = new Set(sem.map(p => p.id));
+  const semSet = new Set(sem.map((p) => p.id));
   if (vegFilter === "in") {
     const n = state.beds.length;
     const label = n === 1 ? tx("cropSingular") : tx("cropPlural");
@@ -3150,7 +3401,7 @@ function renderVegList() {
     in: state.beds.length,
     "all-beds": PLANTS.length
   };
-  document.querySelectorAll(".veg-filter-tab").forEach(tab => {
+  document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.filter === vegFilter);
     const countEl = tab.querySelector(".tab-count");
     if (countEl) countEl.textContent = countMap[tab.dataset.filter] ?? "—";
@@ -3158,7 +3409,7 @@ function renderVegList() {
 
   let filtered;
   if (vegFilter === "in") {
-    filtered = PLANTS.filter(p => present.has(p.id));
+    filtered = PLANTS.filter((p) => present.has(p.id));
   } else if (vegFilter === "all-beds") {
     filtered = PLANTS;
   } else {
@@ -3176,26 +3427,30 @@ function renderVegList() {
         p.nome_ro,
         p.categoria,
         p.category
-      ].map(normalizeVegSearchText).join(" ");
+      ]
+        .map(normalizeVegSearchText)
+        .join(" ");
       return haystack.includes(searchNeedle);
     });
     if (subEl) {
       const shown = filtered.length;
       const base = subEl.innerHTML;
-      const searchMsg = state.lang === "ro"
-        ? ` · afisate ${shown} din ${totalBeforeSearch}`
-        : ` · mostrate ${shown} di ${totalBeforeSearch}`;
+      const searchMsg =
+        state.lang === "ro"
+          ? ` · afisate ${shown} din ${totalBeforeSearch}`
+          : ` · mostrate ${shown} di ${totalBeforeSearch}`;
       subEl.innerHTML = `${base}<span class="search-count-note">${searchMsg}</span>`;
     }
   }
 
   const vl = document.getElementById("vegList");
   if (!filtered.length) {
-    const msg = searchNeedle && state.livello !== "novizio"
-      ? `<div class="empty-note">${state.lang === "ro" ? "Nicio cultura gasita." : "Nessuna coltura trovata."}</div>`
-      : (vegFilter === "in" || vegFilter === "all-beds"
-        ? `<div class="empty-note">${tx("vegNoMore")}</div>`
-        : `<div class="empty-note">${tx("noCrops", { month: monthName(state.mese) })}</div>`);
+    const msg =
+      searchNeedle && state.livello !== "novizio"
+        ? `<div class="empty-note">${state.lang === "ro" ? "Nicio cultura gasita." : "Nessuna coltura trovata."}</div>`
+        : vegFilter === "in" || vegFilter === "all-beds"
+          ? `<div class="empty-note">${tx("vegNoMore")}</div>`
+          : `<div class="empty-note">${tx("noCrops", { month: monthName(state.mese) })}</div>`;
     vl.innerHTML = msg;
     updateVegListScrollAffordance();
     return;
@@ -3222,7 +3477,9 @@ function renderVegList() {
       : "";
   vl.innerHTML =
     noviceUpgrade +
-    filtered.map(p => vegCardHTML(p, present.has(p.id), !semSet.has(p.id))).join("");
+    filtered
+      .map((p) => vegCardHTML(p, present.has(p.id), !semSet.has(p.id)))
+      .join("");
   updateVegListScrollAffordance();
 }
 
@@ -3233,7 +3490,9 @@ function updateVegListScrollAffordance() {
   if (!list || !wrap || !hint) return;
   requestAnimationFrame(() => {
     const scrollable = list.scrollHeight > list.clientHeight + 2;
-    const atEnd = !scrollable || list.scrollTop + list.clientHeight >= list.scrollHeight - 6;
+    const atEnd =
+      !scrollable ||
+      list.scrollTop + list.clientHeight >= list.scrollHeight - 6;
     hint.hidden = !scrollable;
     wrap.classList.toggle("has-overflow", scrollable);
     wrap.classList.toggle("is-at-end", atEnd);
@@ -3261,8 +3520,13 @@ function updateClearGreenhouseCopy() {
   if (!clearBtn) return;
   const noviceLocked = state.livello === "novizio";
   const hint = clearBtn.querySelector(".btn-hint");
-  if (hint) hint.innerHTML = noviceLocked ? tx("clearGreenhouseLockedHint") : tx("clearGreenhouseHint");
-  clearBtn.title = noviceLocked ? tx("clearGreenhouseLockedTitle") : tx("clearGreenhouseTitle");
+  if (hint)
+    hint.innerHTML = noviceLocked
+      ? tx("clearGreenhouseLockedHint")
+      : tx("clearGreenhouseHint");
+  clearBtn.title = noviceLocked
+    ? tx("clearGreenhouseLockedTitle")
+    : tx("clearGreenhouseTitle");
 }
 
 function getStagione(m) {
@@ -3274,8 +3538,16 @@ function getStagione(m) {
 
 function renderFooter() {
   const stag = getStagione(state.mese);
-  const sharedDict = window.SERRA_I18N?.index?.[state.lang] || window.SERRA_I18N?.index?.it || {};
-  const seasonKey = { inverno: "winter", primavera: "spring", estate: "summer", autunno: "autumn" }[stag];
+  const sharedDict =
+    window.SERRA_I18N?.index?.[state.lang] ||
+    window.SERRA_I18N?.index?.it ||
+    {};
+  const seasonKey = {
+    inverno: "winter",
+    primavera: "spring",
+    estate: "summer",
+    autunno: "autumn"
+  }[stag];
   const stagLabel = sharedDict["season_name." + seasonKey] || stag;
   const tagEl = document.getElementById("footerSeasonTag");
   if (tagEl) tagEl.innerHTML = stagLabel;
@@ -3359,7 +3631,12 @@ function render() {
     if (b) b.textContent = tx("emptyBannerTitle");
     // Il novizio non ha il pulsante "Riempi la serra" né la card Personalizza
     // completa: gli mostriamo un messaggio adatto al suo flusso automatico.
-    if (s) s.innerHTML = tx(state.livello === "novizio" ? "emptyBannerCopyNovice" : "emptyBannerCopy");
+    if (s)
+      s.innerHTML = tx(
+        state.livello === "novizio"
+          ? "emptyBannerCopyNovice"
+          : "emptyBannerCopy"
+      );
     emptyBanner.hidden = state.beds.length > 0;
   }
 
@@ -3396,14 +3673,22 @@ function renderBeds() {
     bl.innerHTML = `<div class="empty-note">${tx("noBeds")}</div>`;
     return;
   }
-  const semSet = new Set(seminabili().map(p => p.id));
+  const semSet = new Set(seminabili().map((p) => p.id));
   bl.innerHTML = state.beds
     .map((b, i) => {
       const p = BYID[b.plantId];
       const diff = DIFFICULTY[p.id] || 2;
-      const diffLabel = diff === 1 ? tx("diffEasy") : diff === 2 ? tx("diffMedium") : tx("diffHard");
-      const diffClass = diff === 1 ? "diff-easy" : diff === 2 ? "diff-medium" : "diff-hard";
-      const offSeasonBadge = !semSet.has(p.id) ? `<span class="veg-offseason">${tx("offSeason")}</span>` : "";
+      const diffLabel =
+        diff === 1
+          ? tx("diffEasy")
+          : diff === 2
+            ? tx("diffMedium")
+            : tx("diffHard");
+      const diffClass =
+        diff === 1 ? "diff-easy" : diff === 2 ? "diff-medium" : "diff-hard";
+      const offSeasonBadge = !semSet.has(p.id)
+        ? `<span class="veg-offseason">${tx("offSeason")}</span>`
+        : "";
       return `<div class="bedchip ${i === state.selected ? "sel" : ""}" data-sel="${i}">
       <span class="bedico" role="img" aria-label="${plantText(p, "nome")}">${FRUIT_EMOJI[p.id] || "🌱"}</span>
       <div class="bedchip-body">
@@ -3464,7 +3749,10 @@ function isResponsiveConfiguratorLayout() {
 }
 
 function scrollPlantDetailPanelIntoView(behavior = "smooth") {
-  scrollElementBelowHeader(document.getElementById("panelPlantDetail"), behavior);
+  scrollElementBelowHeader(
+    document.getElementById("panelPlantDetail"),
+    behavior
+  );
 }
 
 function scrollGreenhouseImageIntoView(behavior = "auto") {
@@ -3517,7 +3805,13 @@ function openSettingsPanelAndFocusDimensions() {
   });
 }
 
-const CONFIG_DETAIL_TABS = ["overview", "cultivation", "calendar", "care", "harvest"];
+const CONFIG_DETAIL_TABS = [
+  "overview",
+  "cultivation",
+  "calendar",
+  "care",
+  "harvest"
+];
 
 function detailText(key, vars = {}) {
   const dict = window.SERRA_I18N?.index || {};
@@ -3530,27 +3824,36 @@ function detailText(key, vars = {}) {
 
 function setConfigDetailTab(tab, moveFocus = false) {
   if (!CONFIG_DETAIL_TABS.includes(tab)) tab = "overview";
-  document.querySelectorAll("#pdpContent [data-detail-tab]").forEach((button) => {
-    const active = button.dataset.detailTab === tab;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-selected", String(active));
-    button.tabIndex = active ? 0 : -1;
-    if (active && moveFocus) button.focus();
-  });
-  document.querySelectorAll("#pdpContent [data-detail-panel]").forEach((panel) => {
-    const active = panel.dataset.detailPanel === tab;
-    panel.classList.toggle("active", active);
-    panel.hidden = !active;
-  });
+  document
+    .querySelectorAll("#pdpContent [data-detail-tab]")
+    .forEach((button) => {
+      const active = button.dataset.detailTab === tab;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+      button.tabIndex = active ? 0 : -1;
+      if (active && moveFocus) button.focus();
+    });
+  document
+    .querySelectorAll("#pdpContent [data-detail-panel]")
+    .forEach((panel) => {
+      const active = panel.dataset.detailPanel === tab;
+      panel.classList.toggle("active", active);
+      panel.hidden = !active;
+    });
 }
 
 function handleConfigDetailTabKey(event) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
-  const current = CONFIG_DETAIL_TABS.indexOf(event.currentTarget.dataset.detailTab);
+  const current = CONFIG_DETAIL_TABS.indexOf(
+    event.currentTarget.dataset.detailTab
+  );
   let next = current;
-  if (event.key === "ArrowRight") next = (current + 1) % CONFIG_DETAIL_TABS.length;
-  if (event.key === "ArrowLeft") next = (current - 1 + CONFIG_DETAIL_TABS.length) % CONFIG_DETAIL_TABS.length;
+  if (event.key === "ArrowRight")
+    next = (current + 1) % CONFIG_DETAIL_TABS.length;
+  if (event.key === "ArrowLeft")
+    next =
+      (current - 1 + CONFIG_DETAIL_TABS.length) % CONFIG_DETAIL_TABS.length;
   if (event.key === "Home") next = 0;
   if (event.key === "End") next = CONFIG_DETAIL_TABS.length - 1;
   setConfigDetailTab(CONFIG_DETAIL_TABS[next], true);
@@ -3558,9 +3861,12 @@ function handleConfigDetailTabKey(event) {
 
 function configDetailTabIcon(tab) {
   const paths = {
-    overview: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
-    cultivation: '<path d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"/>',
-    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/>',
+    overview:
+      '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+    cultivation:
+      '<path d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"/>',
+    calendar:
+      '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/>',
     care: '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"/>',
     harvest: '<path d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"/>'
   };
@@ -3570,32 +3876,54 @@ function configDetailTabIcon(tab) {
 function configDetailProfile(p, sow) {
   const ro = state.lang === "ro";
   const type = TIPO[p.id] || "foglia";
-  const soil = ro ? {
-    frutto: "Sol profund, fertil și bine drenat, îmbogățit cu compost matur.",
-    foglia: "Sol afânat, bogat în materie organică și uniform umed, fără băltire.",
-    radice: "Sol fin, afânat și fără pietre; evită gunoiul de grajd proaspăt.",
-    aromatica: "Substrat aerat și drenat; fertilizarea excesivă reduce aroma.",
-    legume: "Sol drenat și moderat fertil, fără exces de azot."
-  } : {
-    frutto: "Terreno profondo, fertile e ben drenato, arricchito con compost maturo.",
-    foglia: "Terreno soffice, ricco di sostanza organica e uniformemente umido, senza ristagni.",
-    radice: "Terreno fine, sciolto e privo di sassi; evita letame fresco.",
-    aromatica: "Substrato arioso e drenante; concimazioni eccessive riducono l'aroma.",
-    legume: "Terreno drenato e moderatamente fertile, senza eccessi di azoto."
-  };
-  const care = ro ? {
-    frutto: "Susține plantele înalte, aerisește frunzișul și elimină frunzele bolnave.",
-    foglia: "Rărește la timp, menține solul curat și recoltează fără a răni centrul plantei.",
-    radice: "Rărește devreme și evită lucrările adânci care pot răni rădăcinile.",
-    aromatica: "Ciupirea vârfurilor menține planta compactă și prelungește producția.",
-    legume: "Oferă suport soiurilor cățărătoare și recoltează păstăile frecvent."
-  } : {
-    frutto: "Sostieni le piante alte, arieggia la chioma e rimuovi le foglie malate.",
-    foglia: "Dirada per tempo, mantieni il suolo pulito e raccogli senza ferire il cuore.",
-    radice: "Dirada presto ed evita lavorazioni profonde che possano ferire le radici.",
-    aromatica: "Cimare gli apici mantiene la pianta compatta e prolunga la produzione.",
-    legume: "Predisponi sostegni per le varietà rampicanti e raccogli spesso i baccelli."
-  };
+  const soil = ro
+    ? {
+        frutto:
+          "Sol profund, fertil și bine drenat, îmbogățit cu compost matur.",
+        foglia:
+          "Sol afânat, bogat în materie organică și uniform umed, fără băltire.",
+        radice:
+          "Sol fin, afânat și fără pietre; evită gunoiul de grajd proaspăt.",
+        aromatica:
+          "Substrat aerat și drenat; fertilizarea excesivă reduce aroma.",
+        legume: "Sol drenat și moderat fertil, fără exces de azot."
+      }
+    : {
+        frutto:
+          "Terreno profondo, fertile e ben drenato, arricchito con compost maturo.",
+        foglia:
+          "Terreno soffice, ricco di sostanza organica e uniformemente umido, senza ristagni.",
+        radice: "Terreno fine, sciolto e privo di sassi; evita letame fresco.",
+        aromatica:
+          "Substrato arioso e drenante; concimazioni eccessive riducono l'aroma.",
+        legume:
+          "Terreno drenato e moderatamente fertile, senza eccessi di azoto."
+      };
+  const care = ro
+    ? {
+        frutto:
+          "Susține plantele înalte, aerisește frunzișul și elimină frunzele bolnave.",
+        foglia:
+          "Rărește la timp, menține solul curat și recoltează fără a răni centrul plantei.",
+        radice:
+          "Rărește devreme și evită lucrările adânci care pot răni rădăcinile.",
+        aromatica:
+          "Ciupirea vârfurilor menține planta compactă și prelungește producția.",
+        legume:
+          "Oferă suport soiurilor cățărătoare și recoltează păstăile frecvent."
+      }
+    : {
+        frutto:
+          "Sostieni le piante alte, arieggia la chioma e rimuovi le foglie malate.",
+        foglia:
+          "Dirada per tempo, mantieni il suolo pulito e raccogli senza ferire il cuore.",
+        radice:
+          "Dirada presto ed evita lavorazioni profonde che possano ferire le radici.",
+        aromatica:
+          "Cimare gli apici mantiene la pianta compatta e prolunga la produzione.",
+        legume:
+          "Predisponi sostegni per le varietà rampicanti e raccogli spesso i baccelli."
+      };
   const prevention = ro
     ? "Aerisește zilnic, udă dimineața la bază și îndepărtează imediat țesuturile bolnave."
     : "Arieggia ogni giorno, irriga al mattino alla base e rimuovi subito i tessuti malati.";
@@ -3605,46 +3933,162 @@ function configDetailProfile(p, sow) {
   return {
     cultivation: [
       [detailText("detail.tech_soil"), soil[type]],
-      [detailText("detail.tech_exposure"), sow?.esposizione || (p.sole === "pieno" ? tx("fullSun") : tx("halfShade"))],
-      [detailText("detail.tech_irrigation"), sow?.annaffiatura || waterLabel(p.acqua)],
-      [detailText("detail.tech_feeding"), ro ? "Folosește compost matur și evită excesele de îngrășământ." : "Usa compost maturo ed evita eccessi di fertilizzante."]
+      [
+        detailText("detail.tech_exposure"),
+        sow?.esposizione ||
+          (p.sole === "pieno" ? tx("fullSun") : tx("halfShade"))
+      ],
+      [
+        detailText("detail.tech_irrigation"),
+        sow?.annaffiatura || waterLabel(p.acqua)
+      ],
+      [
+        detailText("detail.tech_feeding"),
+        ro
+          ? "Folosește compost matur și evită excesele de îngrășământ."
+          : "Usa compost maturo ed evita eccessi di fertilizzante."
+      ]
     ],
     care: [
       [detailText("detail.tech_maintenance"), care[type]],
       [detailText("detail.tech_prevention"), prevention],
-      [detailText("detail.tech_rotation"), ro ? "Nu replanta aceeași familie în același loc în ciclul următor." : "Non ripiantare la stessa famiglia nello stesso spazio nel ciclo successivo."]
+      [
+        detailText("detail.tech_rotation"),
+        ro
+          ? "Nu replanta aceeași familie în același loc în ciclul următor."
+          : "Non ripiantare la stessa famiglia nello stesso spazio nel ciclo successivo."
+      ]
     ],
     harvest: [
       [detailText("detail.tech_maturity"), harvestValue(p)],
       [detailText("detail.tech_harvest_method"), harvest],
       [detailText("detail.tech_yield"), yieldLabel(p.resa)],
-      [detailText("detail.tech_storage"), ro ? "Păstrează numai produse sănătoase, uscate și răcite rapid." : "Conserva solo prodotti sani, asciutti e raffreddati rapidamente."]
+      [
+        detailText("detail.tech_storage"),
+        ro
+          ? "Păstrează numai produse sănătoase, uscate și răcite rapid."
+          : "Conserva solo prodotti sani, asciutti e raffreddati rapidamente."
+      ]
     ]
   };
 }
 
 function renderConfigTechCards(items) {
-  return items.map(([title, text]) => `<article class="detail-tech-card"><h4>${title}</h4><p>${text}</p></article>`).join("");
+  return items
+    .map(
+      ([title, text]) =>
+        `<article class="detail-tech-card"><h4>${title}</h4><p>${text}</p></article>`
+    )
+    .join("");
 }
 
 const CONFIG_DISEASE_GROUPS = {
-  solanaceae: ["late", "alternaria", "botrytis"], cucurbits: ["powdery", "downy", "botrytis"],
-  brassicas: ["downy", "alternaria", "clubroot"], alliums: ["downy", "white_rot", "rust"],
-  apiaceae: ["cercospora", "sclerotinia", "powdery"], leafy: ["downy", "botrytis", "sclerotinia"],
-  chenopods: ["downy", "cercospora", "damping"], legumes: ["anthracnose", "rust", "powdery"],
-  herbs: ["powdery", "root_rot", "rust"], basil: ["basil_downy", "fusarium", "botrytis"],
-  strawberry: ["botrytis", "powdery", "root_rot"], other: ["powdery", "botrytis", "root_rot"]
+  solanaceae: ["late", "alternaria", "botrytis"],
+  cucurbits: ["powdery", "downy", "botrytis"],
+  brassicas: ["downy", "alternaria", "clubroot"],
+  alliums: ["downy", "white_rot", "rust"],
+  apiaceae: ["cercospora", "sclerotinia", "powdery"],
+  leafy: ["downy", "botrytis", "sclerotinia"],
+  chenopods: ["downy", "cercospora", "damping"],
+  legumes: ["anthracnose", "rust", "powdery"],
+  herbs: ["powdery", "root_rot", "rust"],
+  basil: ["basil_downy", "fusarium", "botrytis"],
+  strawberry: ["botrytis", "powdery", "root_rot"],
+  other: ["powdery", "botrytis", "root_rot"]
 };
 
 function configDiseaseGroup(id) {
   const has = (ids) => ids.includes(id);
-  if (has(["pomodoro","peperone","peperoncino","melanzana","patata","tomatillo","physalis"])) return "solanaceae";
-  if (has(["zucchina","zucca","cetriolo","melone","anguria","kiwano","cucamelon"])) return "cucurbits";
-  if (has(["rucola","cavolo","verza","broccolo","cavolfiore","cavolonero","cavolorapa","ravanello","rafano","pakchoi","cavoletti","rapa","mizuna","senape_foglia","tatsoi","cavolo_cinese","daikon","cavolo_rosso","cavolo_navone","broccolo_rapa"])) return "brassicas";
-  if (has(["cipolla","aglio","porro","scalogno","cipolla_rossa","cipollotto","erba_cipollina"])) return "alliums";
-  if (has(["carota","finocchio","prezzemolo","coriandolo","aneto","sedano","pastinaca","radice_prezemolo","sedano_rapa","leustean"])) return "apiaceae";
-  if (has(["spinaci","bietola","barbabietola","loboda"])) return "chenopods";
-  if (has(["fagiolino","fagiolo","pisello","fava","soia_edamame","cece","lenticchia","fagiolo_borlotto"])) return "legumes";
+  if (
+    has([
+      "pomodoro",
+      "peperone",
+      "peperoncino",
+      "melanzana",
+      "patata",
+      "tomatillo",
+      "physalis"
+    ])
+  )
+    return "solanaceae";
+  if (
+    has([
+      "zucchina",
+      "zucca",
+      "cetriolo",
+      "melone",
+      "anguria",
+      "kiwano",
+      "cucamelon"
+    ])
+  )
+    return "cucurbits";
+  if (
+    has([
+      "rucola",
+      "cavolo",
+      "verza",
+      "broccolo",
+      "cavolfiore",
+      "cavolonero",
+      "cavolorapa",
+      "ravanello",
+      "rafano",
+      "pakchoi",
+      "cavoletti",
+      "rapa",
+      "mizuna",
+      "senape_foglia",
+      "tatsoi",
+      "cavolo_cinese",
+      "daikon",
+      "cavolo_rosso",
+      "cavolo_navone",
+      "broccolo_rapa"
+    ])
+  )
+    return "brassicas";
+  if (
+    has([
+      "cipolla",
+      "aglio",
+      "porro",
+      "scalogno",
+      "cipolla_rossa",
+      "cipollotto",
+      "erba_cipollina"
+    ])
+  )
+    return "alliums";
+  if (
+    has([
+      "carota",
+      "finocchio",
+      "prezzemolo",
+      "coriandolo",
+      "aneto",
+      "sedano",
+      "pastinaca",
+      "radice_prezemolo",
+      "sedano_rapa",
+      "leustean"
+    ])
+  )
+    return "apiaceae";
+  if (has(["spinaci", "bietola", "barbabietola", "loboda"])) return "chenopods";
+  if (
+    has([
+      "fagiolino",
+      "fagiolo",
+      "pisello",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
+    ])
+  )
+    return "legumes";
   if (id === "basilico") return "basil";
   if (id === "fragola") return "strawberry";
   if ((TIPO[id] || "") === "aromatica") return "herbs";
@@ -3655,46 +4099,168 @@ function configDiseaseGroup(id) {
 function configDiseaseCatalog() {
   const ro = state.lang === "ro";
   const base = {
-    late: ["Peronospora", "Macchie scure e muffa chiara sotto le foglie.", "Rimuovi le parti colpite, evita di bagnare le foglie e arieggia."],
-    alternaria: ["Alternariosi", "Macchie brune concentriche sulle foglie più vecchie.", "Elimina residui e foglie infette, irriga alla base e pratica la rotazione."],
-    botrytis: ["Muffa grigia", "Tessuti molli ricoperti da una polvere grigia.", "Asporta le parti colpite, riduci condensa e umidità e dirada la chioma."],
-    powdery: ["Oidio", "Patina bianca farinosa e progressivo ingiallimento.", "Rimuovi le foglie colpite, migliora l'aria e usa solo prodotti autorizzati."],
-    downy: ["Peronospora", "Chiazze gialle sopra e muffa grigiastra sotto le foglie.", "Irriga al mattino alla base, elimina le foglie malate e arieggia."],
-    clubroot: ["Ernia delle crucifere", "Radici gonfie e pianta che appassisce nelle ore calde.", "Rimuovi la pianta con le radici, migliora drenaggio e rotazione."],
-    white_rot: ["Marciume bianco", "Ingiallimento e feltro bianco alla base.", "Elimina pianta e terreno aderente; non ripiantare alli nello stesso suolo."],
-    rust: ["Ruggine", "Pustole arancioni o brune sotto le foglie.", "Elimina le foglie colpite, arieggia e non eccedere con azoto."],
-    cercospora: ["Cercosporiosi", "Piccole macchie con centro chiaro e bordo scuro.", "Rimuovi residui, non bagnare le foglie e aumenta la distanza."],
-    sclerotinia: ["Sclerotinia", "Marciume acquoso al colletto e muffa bianca cotonosa.", "Rimuovi completamente la pianta e riduci umidità e densità."],
-    damping: ["Moria delle piantine", "Piantine che collassano con colletto scuro e sottile.", "Usa substrato pulito, semina meno fitta e non saturare il terriccio."],
-    anthracnose: ["Antracnosi", "Lesioni scure e infossate su foglie, steli o baccelli.", "Rimuovi le parti malate, usa seme sano e ruota le leguminose."],
-    root_rot: ["Marciume radicale", "Appassimento con terreno umido e radici brune e molli.", "Riduci acqua, migliora drenaggio ed elimina le piante gravi."],
-    basil_downy: ["Peronospora del basilico", "Ingiallimento tra le nervature e muffa scura sotto le foglie.", "Elimina le piante colpite, irriga alla base e arieggia."],
-    fusarium: ["Fusariosi", "Ingiallimento, avvizzimento e vasi interni bruni.", "Rimuovi la pianta, rinnova il substrato e usa varietà resistenti."]
+    late: [
+      "Peronospora",
+      "Macchie scure e muffa chiara sotto le foglie.",
+      "Rimuovi le parti colpite, evita di bagnare le foglie e arieggia."
+    ],
+    alternaria: [
+      "Alternariosi",
+      "Macchie brune concentriche sulle foglie più vecchie.",
+      "Elimina residui e foglie infette, irriga alla base e pratica la rotazione."
+    ],
+    botrytis: [
+      "Muffa grigia",
+      "Tessuti molli ricoperti da una polvere grigia.",
+      "Asporta le parti colpite, riduci condensa e umidità e dirada la chioma."
+    ],
+    powdery: [
+      "Oidio",
+      "Patina bianca farinosa e progressivo ingiallimento.",
+      "Rimuovi le foglie colpite, migliora l'aria e usa solo prodotti autorizzati."
+    ],
+    downy: [
+      "Peronospora",
+      "Chiazze gialle sopra e muffa grigiastra sotto le foglie.",
+      "Irriga al mattino alla base, elimina le foglie malate e arieggia."
+    ],
+    clubroot: [
+      "Ernia delle crucifere",
+      "Radici gonfie e pianta che appassisce nelle ore calde.",
+      "Rimuovi la pianta con le radici, migliora drenaggio e rotazione."
+    ],
+    white_rot: [
+      "Marciume bianco",
+      "Ingiallimento e feltro bianco alla base.",
+      "Elimina pianta e terreno aderente; non ripiantare alli nello stesso suolo."
+    ],
+    rust: [
+      "Ruggine",
+      "Pustole arancioni o brune sotto le foglie.",
+      "Elimina le foglie colpite, arieggia e non eccedere con azoto."
+    ],
+    cercospora: [
+      "Cercosporiosi",
+      "Piccole macchie con centro chiaro e bordo scuro.",
+      "Rimuovi residui, non bagnare le foglie e aumenta la distanza."
+    ],
+    sclerotinia: [
+      "Sclerotinia",
+      "Marciume acquoso al colletto e muffa bianca cotonosa.",
+      "Rimuovi completamente la pianta e riduci umidità e densità."
+    ],
+    damping: [
+      "Moria delle piantine",
+      "Piantine che collassano con colletto scuro e sottile.",
+      "Usa substrato pulito, semina meno fitta e non saturare il terriccio."
+    ],
+    anthracnose: [
+      "Antracnosi",
+      "Lesioni scure e infossate su foglie, steli o baccelli.",
+      "Rimuovi le parti malate, usa seme sano e ruota le leguminose."
+    ],
+    root_rot: [
+      "Marciume radicale",
+      "Appassimento con terreno umido e radici brune e molli.",
+      "Riduci acqua, migliora drenaggio ed elimina le piante gravi."
+    ],
+    basil_downy: [
+      "Peronospora del basilico",
+      "Ingiallimento tra le nervature e muffa scura sotto le foglie.",
+      "Elimina le piante colpite, irriga alla base e arieggia."
+    ],
+    fusarium: [
+      "Fusariosi",
+      "Ingiallimento, avvizzimento e vasi interni bruni.",
+      "Rimuovi la pianta, rinnova il substrato e usa varietà resistenti."
+    ]
   };
   if (!ro) return base;
   const translated = {
-    late:["Mană","Pete întunecate și puf deschis pe dosul frunzelor.","Îndepărtează părțile afectate, nu uda frunzișul și aerisește."],
-    alternaria:["Alternarioză","Pete brune concentrice pe frunzele bătrâne.","Elimină resturile bolnave, udă la bază și rotește culturile."],
-    botrytis:["Putregai cenușiu","Țesuturi moi acoperite cu pulbere cenușie.","Îndepărtează părțile afectate și reduce condensul și umiditatea."],
-    powdery:["Făinare","Depunere albă făinoasă și îngălbenire.","Elimină frunzele bolnave, aerisește și folosește doar produse autorizate."],
-    downy:["Mană","Pete galbene deasupra și puf cenușiu sub frunze.","Udă dimineața la bază, elimină frunzele bolnave și aerisește."],
-    clubroot:["Hernia rădăcinilor","Rădăcini umflate și ofilire la căldură.","Scoate planta cu rădăcini și îmbunătățește drenajul și rotația."],
-    white_rot:["Putregai alb","Îngălbenire și pâslă albă la bază.","Elimină planta și solul lipit; nu replanta Allium în același loc."],
-    rust:["Rugină","Pustule portocalii sau brune sub frunze.","Elimină frunzele afectate, aerisește și limitează azotul."],
-    cercospora:["Cercosporioză","Pete mici cu centru deschis și margine închisă.","Elimină resturile, nu uda frunzișul și mărește distanța."],
-    sclerotinia:["Sclerotinia","Putregai apos la colet și mucegai alb vată.","Elimină complet planta și redu umiditatea și densitatea."],
-    damping:["Căderea plăntuțelor","Plăntuțe căzute cu colet subțire și închis.","Folosește substrat curat, seamănă rar și nu îmbiba solul."],
-    anthracnose:["Antracnoză","Leziuni întunecate și adâncite pe frunze sau păstăi.","Îndepărtează părțile bolnave, folosește sămânță sănătoasă și rotește."],
-    root_rot:["Putregai radicular","Ofilire în sol umed și rădăcini brune, moi.","Redu udarea, îmbunătățește drenajul și elimină plantele grav afectate."],
-    basil_downy:["Mana busuiocului","Îngălbenire între nervuri și puf închis sub frunze.","Elimină plantele bolnave, udă la bază și aerisește."],
-    fusarium:["Fuzarioză","Îngălbenire, ofilire și vase interne brune.","Elimină planta, schimbă substratul și folosește soiuri rezistente."]
+    late: [
+      "Mană",
+      "Pete întunecate și puf deschis pe dosul frunzelor.",
+      "Îndepărtează părțile afectate, nu uda frunzișul și aerisește."
+    ],
+    alternaria: [
+      "Alternarioză",
+      "Pete brune concentrice pe frunzele bătrâne.",
+      "Elimină resturile bolnave, udă la bază și rotește culturile."
+    ],
+    botrytis: [
+      "Putregai cenușiu",
+      "Țesuturi moi acoperite cu pulbere cenușie.",
+      "Îndepărtează părțile afectate și reduce condensul și umiditatea."
+    ],
+    powdery: [
+      "Făinare",
+      "Depunere albă făinoasă și îngălbenire.",
+      "Elimină frunzele bolnave, aerisește și folosește doar produse autorizate."
+    ],
+    downy: [
+      "Mană",
+      "Pete galbene deasupra și puf cenușiu sub frunze.",
+      "Udă dimineața la bază, elimină frunzele bolnave și aerisește."
+    ],
+    clubroot: [
+      "Hernia rădăcinilor",
+      "Rădăcini umflate și ofilire la căldură.",
+      "Scoate planta cu rădăcini și îmbunătățește drenajul și rotația."
+    ],
+    white_rot: [
+      "Putregai alb",
+      "Îngălbenire și pâslă albă la bază.",
+      "Elimină planta și solul lipit; nu replanta Allium în același loc."
+    ],
+    rust: [
+      "Rugină",
+      "Pustule portocalii sau brune sub frunze.",
+      "Elimină frunzele afectate, aerisește și limitează azotul."
+    ],
+    cercospora: [
+      "Cercosporioză",
+      "Pete mici cu centru deschis și margine închisă.",
+      "Elimină resturile, nu uda frunzișul și mărește distanța."
+    ],
+    sclerotinia: [
+      "Sclerotinia",
+      "Putregai apos la colet și mucegai alb vată.",
+      "Elimină complet planta și redu umiditatea și densitatea."
+    ],
+    damping: [
+      "Căderea plăntuțelor",
+      "Plăntuțe căzute cu colet subțire și închis.",
+      "Folosește substrat curat, seamănă rar și nu îmbiba solul."
+    ],
+    anthracnose: [
+      "Antracnoză",
+      "Leziuni întunecate și adâncite pe frunze sau păstăi.",
+      "Îndepărtează părțile bolnave, folosește sămânță sănătoasă și rotește."
+    ],
+    root_rot: [
+      "Putregai radicular",
+      "Ofilire în sol umed și rădăcini brune, moi.",
+      "Redu udarea, îmbunătățește drenajul și elimină plantele grav afectate."
+    ],
+    basil_downy: [
+      "Mana busuiocului",
+      "Îngălbenire între nervuri și puf închis sub frunze.",
+      "Elimină plantele bolnave, udă la bază și aerisește."
+    ],
+    fusarium: [
+      "Fuzarioză",
+      "Îngălbenire, ofilire și vase interne brune.",
+      "Elimină planta, schimbă substratul și folosește soiuri rezistente."
+    ]
   };
   return translated;
 }
 
 function configDiseasesForPlant(p) {
   const catalog = configDiseaseCatalog();
-  return CONFIG_DISEASE_GROUPS[configDiseaseGroup(p.id)].map(key => catalog[key]).filter(Boolean);
+  return CONFIG_DISEASE_GROUPS[configDiseaseGroup(p.id)]
+    .map((key) => catalog[key])
+    .filter(Boolean);
 }
 
 function renderConfigDiseases(p) {
@@ -3707,117 +4273,384 @@ function renderConfigDiseases(p) {
 }
 
 const CONFIG_PEST_GROUPS = {
-  solanaceae: ["aphids","whiteflies","mites"], cucurbits: ["aphids","whiteflies","mites"],
-  brassicas: ["flea","caterpillars","aphids"], alliums: ["thrips","onion_fly","leafminers"],
-  apiaceae: ["carrot_fly","aphids","leafminers"], leafy: ["flea","slugs","aphids"],
-  chenopods: ["leafminers","aphids","flea"], legumes: ["aphids","weevils","mites"],
-  herbs: ["aphids","whiteflies","mites"], basil: ["aphids","thrips","slugs"],
-  strawberry: ["mites","aphids","slugs"], other: ["aphids","slugs","thrips"]
+  solanaceae: ["aphids", "whiteflies", "mites"],
+  cucurbits: ["aphids", "whiteflies", "mites"],
+  brassicas: ["flea", "caterpillars", "aphids"],
+  alliums: ["thrips", "onion_fly", "leafminers"],
+  apiaceae: ["carrot_fly", "aphids", "leafminers"],
+  leafy: ["flea", "slugs", "aphids"],
+  chenopods: ["leafminers", "aphids", "flea"],
+  legumes: ["aphids", "weevils", "mites"],
+  herbs: ["aphids", "whiteflies", "mites"],
+  basil: ["aphids", "thrips", "slugs"],
+  strawberry: ["mites", "aphids", "slugs"],
+  other: ["aphids", "slugs", "thrips"]
 };
 
 function configPestCatalog() {
-  if (state.lang === "ro") return {
-    aphids:["Afide","Colonii pe lăstari, frunze răsucite și secreții lipicioase.","Spală focarele mici, taie vârfurile foarte atacate și folosește săpun moale autorizat dacă persistă."],
-    whiteflies:["Musculița albă","Insecte albe care zboară la atingere și frunze lipicioase, galbene.","Folosește capcane galbene, aspiră adulții dimineața și elimină frunzele grav infestate."],
-    mites:["Acarianul roșu","Puncte galbene și pânze fine sub frunze, mai ales cu aer cald și uscat.","Spală dosul frunzelor, elimină focarele și introdu acarieni prădători dacă sunt disponibili."],
-    flea:["Purici de pământ (altice)","Gândăcei mici, adesea negri, care sar și fac multe găuri rotunde.","Folosește plasă fină pe plantele tinere, elimină buruienile crucifere și menține solul uniform umed."],
-    caterpillars:["Omizi","Găuri neregulate, margini roase și excremente întunecate.","Îndepărtează manual, folosește plasă și doar la atac confirmat Bacillus thuringiensis autorizat."],
-    thrips:["Trips","Dungi argintii, puncte negre și frunze deformate.","Folosește capcane albastre, elimină părțile atacate și evită aerul prea uscat."],
-    onion_fly:["Musca cepei","Îngălbenire și larve albe în bulb sau la bază.","Scoate plantele atacate, folosește plasă fină și rotește culturile de Allium."],
-    leafminers:["Minatori foliari","Galerii deschise și șerpuitoare în frunză.","Elimină frunzele cu galerii înainte de ieșirea larvei și folosește plasă fină."],
-    carrot_fly:["Musca morcovului","Frunziș roșiatic și galerii ruginii în rădăcini.","Protejează cu plasă fină, îndepărtează resturile după rărire și rotește cultura."],
-    slugs:["Limacși și melci","Găuri mari neregulate și urme lucioase de mucus.","Culege seara, elimină ascunzătorile și folosește doar momeli autorizate cu fosfat feric."],
-    weevils:["Gărgărițe","Margini ciupite și semințe sau păstăi perforate.","Îndepărtează adulții și semințele infestate, curăță resturile și rotește cultura."]
-  };
+  if (state.lang === "ro")
+    return {
+      aphids: [
+        "Afide",
+        "Colonii pe lăstari, frunze răsucite și secreții lipicioase.",
+        "Spală focarele mici, taie vârfurile foarte atacate și folosește săpun moale autorizat dacă persistă."
+      ],
+      whiteflies: [
+        "Musculița albă",
+        "Insecte albe care zboară la atingere și frunze lipicioase, galbene.",
+        "Folosește capcane galbene, aspiră adulții dimineața și elimină frunzele grav infestate."
+      ],
+      mites: [
+        "Acarianul roșu",
+        "Puncte galbene și pânze fine sub frunze, mai ales cu aer cald și uscat.",
+        "Spală dosul frunzelor, elimină focarele și introdu acarieni prădători dacă sunt disponibili."
+      ],
+      flea: [
+        "Purici de pământ (altice)",
+        "Gândăcei mici, adesea negri, care sar și fac multe găuri rotunde.",
+        "Folosește plasă fină pe plantele tinere, elimină buruienile crucifere și menține solul uniform umed."
+      ],
+      caterpillars: [
+        "Omizi",
+        "Găuri neregulate, margini roase și excremente întunecate.",
+        "Îndepărtează manual, folosește plasă și doar la atac confirmat Bacillus thuringiensis autorizat."
+      ],
+      thrips: [
+        "Trips",
+        "Dungi argintii, puncte negre și frunze deformate.",
+        "Folosește capcane albastre, elimină părțile atacate și evită aerul prea uscat."
+      ],
+      onion_fly: [
+        "Musca cepei",
+        "Îngălbenire și larve albe în bulb sau la bază.",
+        "Scoate plantele atacate, folosește plasă fină și rotește culturile de Allium."
+      ],
+      leafminers: [
+        "Minatori foliari",
+        "Galerii deschise și șerpuitoare în frunză.",
+        "Elimină frunzele cu galerii înainte de ieșirea larvei și folosește plasă fină."
+      ],
+      carrot_fly: [
+        "Musca morcovului",
+        "Frunziș roșiatic și galerii ruginii în rădăcini.",
+        "Protejează cu plasă fină, îndepărtează resturile după rărire și rotește cultura."
+      ],
+      slugs: [
+        "Limacși și melci",
+        "Găuri mari neregulate și urme lucioase de mucus.",
+        "Culege seara, elimină ascunzătorile și folosește doar momeli autorizate cu fosfat feric."
+      ],
+      weevils: [
+        "Gărgărițe",
+        "Margini ciupite și semințe sau păstăi perforate.",
+        "Îndepărtează adulții și semințele infestate, curăță resturile și rotește cultura."
+      ]
+    };
   return {
-    aphids:["Afidi","Colonie su germogli, foglie arricciate e melata appiccicosa.","Lava i piccoli focolai, taglia gli apici molto colpiti e usa sapone molle autorizzato se persistono."],
-    whiteflies:["Mosca bianca","Insetti bianchi che volano al tocco e foglie appiccicose e gialle.","Usa trappole gialle, aspira gli adulti al mattino e rimuovi le foglie molto infestate."],
-    mites:["Ragnetto rosso","Puntinatura gialla e ragnatele sottili sotto le foglie, soprattutto con caldo secco.","Lava la pagina inferiore, elimina i focolai e introduci acari predatori se disponibili."],
-    flea:["Altiche","Piccoli coleotteri spesso neri che saltano e producono molti forellini rotondi.","Usa rete fine sulle piante giovani, elimina le infestanti crucifere e mantieni il suolo uniformemente umido."],
-    caterpillars:["Bruchi e cavolaie","Fori irregolari, margini rosicchiati ed escrementi scuri.","Rimuovi a mano, usa rete e solo con attacco confermato Bacillus thuringiensis autorizzato."],
-    thrips:["Tripidi","Striature argentate, puntini neri e foglie deformate.","Usa trappole blu, elimina le parti colpite ed evita aria eccessivamente secca."],
-    onion_fly:["Mosca della cipolla","Ingiallimento e larve bianche nel bulbo o alla base.","Rimuovi le piante attaccate, usa rete fine e ruota le colture di alli."],
-    leafminers:["Minatori fogliari","Gallerie chiare e sinuose scavate nella foglia.","Elimina le foglie minate prima che la larva esca e usa rete fine."],
-    carrot_fly:["Mosca della carota","Foglie rossastre e gallerie color ruggine nelle radici.","Proteggi con rete fine, rimuovi i residui del diradamento e ruota la coltura."],
-    slugs:["Limacce e chiocciole","Grandi fori irregolari e tracce lucide di bava.","Raccogli la sera, elimina i rifugi e usa solo esche autorizzate al fosfato ferrico."],
-    weevils:["Tonchi e oziorrinchi","Margini intaccati e semi o baccelli perforati.","Rimuovi adulti e semi infestati, pulisci i residui e ruota la coltura."]
+    aphids: [
+      "Afidi",
+      "Colonie su germogli, foglie arricciate e melata appiccicosa.",
+      "Lava i piccoli focolai, taglia gli apici molto colpiti e usa sapone molle autorizzato se persistono."
+    ],
+    whiteflies: [
+      "Mosca bianca",
+      "Insetti bianchi che volano al tocco e foglie appiccicose e gialle.",
+      "Usa trappole gialle, aspira gli adulti al mattino e rimuovi le foglie molto infestate."
+    ],
+    mites: [
+      "Ragnetto rosso",
+      "Puntinatura gialla e ragnatele sottili sotto le foglie, soprattutto con caldo secco.",
+      "Lava la pagina inferiore, elimina i focolai e introduci acari predatori se disponibili."
+    ],
+    flea: [
+      "Altiche",
+      "Piccoli coleotteri spesso neri che saltano e producono molti forellini rotondi.",
+      "Usa rete fine sulle piante giovani, elimina le infestanti crucifere e mantieni il suolo uniformemente umido."
+    ],
+    caterpillars: [
+      "Bruchi e cavolaie",
+      "Fori irregolari, margini rosicchiati ed escrementi scuri.",
+      "Rimuovi a mano, usa rete e solo con attacco confermato Bacillus thuringiensis autorizzato."
+    ],
+    thrips: [
+      "Tripidi",
+      "Striature argentate, puntini neri e foglie deformate.",
+      "Usa trappole blu, elimina le parti colpite ed evita aria eccessivamente secca."
+    ],
+    onion_fly: [
+      "Mosca della cipolla",
+      "Ingiallimento e larve bianche nel bulbo o alla base.",
+      "Rimuovi le piante attaccate, usa rete fine e ruota le colture di alli."
+    ],
+    leafminers: [
+      "Minatori fogliari",
+      "Gallerie chiare e sinuose scavate nella foglia.",
+      "Elimina le foglie minate prima che la larva esca e usa rete fine."
+    ],
+    carrot_fly: [
+      "Mosca della carota",
+      "Foglie rossastre e gallerie color ruggine nelle radici.",
+      "Proteggi con rete fine, rimuovi i residui del diradamento e ruota la coltura."
+    ],
+    slugs: [
+      "Limacce e chiocciole",
+      "Grandi fori irregolari e tracce lucide di bava.",
+      "Raccogli la sera, elimina i rifugi e usa solo esche autorizzate al fosfato ferrico."
+    ],
+    weevils: [
+      "Tonchi e oziorrinchi",
+      "Margini intaccati e semi o baccelli perforati.",
+      "Rimuovi adulti e semi infestati, pulisci i residui e ruota la coltura."
+    ]
   };
 }
 
 function configPestProducts() {
-  if (state.lang === "ro") return {
-    aphids:"Săpun potasic sau ulei de neem pe colonii și sub frunze; pentru atac puternic, piretrine naturale.",
-    whiteflies:"Ulei de neem ori horticol pe ouă și nimfe, săpun potasic pe stadiile mobile; Beauveria bassiana la umiditate adecvată.",
-    mites:"Ulei de neem sau horticol sub frunze, apoi acaricid specific; biologic, Phytoseiulus persimilis.",
-    flea:"Ulei de neem/azadiractină ca repelent și inhibitor al hrănirii; spinosad ori piretrine contra adulților. Aplică devreme și seara.",
-    caterpillars:"Bacillus thuringiensis var. kurstaki pe omizi mici; spinosad pe larve mai dificile, evitând florile cu albine.",
-    thrips:"Spinosad în zonele ascunse; alternativ ulei de neem/azadiractină sau săpun potasic.",
-    onion_fly:"Steinernema feltiae în sol umed contra larvelor; spinosad numai dacă eticheta include cultura și musca țintă.",
-    leafminers:"Spinosad pe larve tinere; azadiractină/ulei de neem la începutul galeriilor.",
-    carrot_fly:"Steinernema feltiae în sol contra larvelor; piretrine pe adulți numai unde eticheta include morcovul.",
-    slugs:"Momeli granulare cu fosfat feric, împrăștiate uniform și reînnoite după ploaie sau udare.",
-    weevils:"Ulei de neem/azadiractină ori piretrine pe adulți; Steinernema kraussei sau Heterorhabditis bacteriophora în sol."
-  };
+  if (state.lang === "ro")
+    return {
+      aphids:
+        "Săpun potasic sau ulei de neem pe colonii și sub frunze; pentru atac puternic, piretrine naturale.",
+      whiteflies:
+        "Ulei de neem ori horticol pe ouă și nimfe, săpun potasic pe stadiile mobile; Beauveria bassiana la umiditate adecvată.",
+      mites:
+        "Ulei de neem sau horticol sub frunze, apoi acaricid specific; biologic, Phytoseiulus persimilis.",
+      flea: "Ulei de neem/azadiractină ca repelent și inhibitor al hrănirii; spinosad ori piretrine contra adulților. Aplică devreme și seara.",
+      caterpillars:
+        "Bacillus thuringiensis var. kurstaki pe omizi mici; spinosad pe larve mai dificile, evitând florile cu albine.",
+      thrips:
+        "Spinosad în zonele ascunse; alternativ ulei de neem/azadiractină sau săpun potasic.",
+      onion_fly:
+        "Steinernema feltiae în sol umed contra larvelor; spinosad numai dacă eticheta include cultura și musca țintă.",
+      leafminers:
+        "Spinosad pe larve tinere; azadiractină/ulei de neem la începutul galeriilor.",
+      carrot_fly:
+        "Steinernema feltiae în sol contra larvelor; piretrine pe adulți numai unde eticheta include morcovul.",
+      slugs:
+        "Momeli granulare cu fosfat feric, împrăștiate uniform și reînnoite după ploaie sau udare.",
+      weevils:
+        "Ulei de neem/azadiractină ori piretrine pe adulți; Steinernema kraussei sau Heterorhabditis bacteriophora în sol."
+    };
   return {
-    aphids:"Sapone molle potassico o olio di neem sulle colonie e sotto le foglie; per attacchi forti, piretrine naturali.",
-    whiteflies:"Olio di neem o olio orticolo su uova e neanidi, sapone molle sugli stadi mobili; Beauveria bassiana con umidità adeguata.",
-    mites:"Olio di neem o olio orticolo sotto le foglie, poi acaricida specifico se necessario; nel biologico Phytoseiulus persimilis.",
-    flea:"Olio di neem/azadiractina sulle foglie giovani come repellente e antialimentare; spinosad o piretrine contro gli adulti. Tratta presto e la sera.",
-    caterpillars:"Bacillus thuringiensis var. kurstaki sui bruchi piccoli; spinosad sulle larve più difficili, evitando i fiori visitati dalle api.",
-    thrips:"Spinosad nei punti nascosti; in alternativa olio di neem/azadiractina o sapone molle con copertura accurata.",
-    onion_fly:"Nematodi Steinernema feltiae nel terreno umido contro le larve; spinosad solo se previsto per allio e mosca bersaglio.",
-    leafminers:"Spinosad sulle larve giovani; azadiractina/olio di neem all'inizio delle mine per ridurre alimentazione e sviluppo.",
-    carrot_fly:"Nematodi Steinernema feltiae nel suolo contro le larve; piretrine sugli adulti solo dove previste per la carota.",
-    slugs:"Esche granulari al fosfato ferrico, sparse uniformemente e rinnovate dopo pioggia o irrigazione secondo etichetta.",
-    weevils:"Olio di neem/azadiractina o piretrine sugli adulti; Steinernema kraussei o Heterorhabditis bacteriophora contro le larve nel terreno."
+    aphids:
+      "Sapone molle potassico o olio di neem sulle colonie e sotto le foglie; per attacchi forti, piretrine naturali.",
+    whiteflies:
+      "Olio di neem o olio orticolo su uova e neanidi, sapone molle sugli stadi mobili; Beauveria bassiana con umidità adeguata.",
+    mites:
+      "Olio di neem o olio orticolo sotto le foglie, poi acaricida specifico se necessario; nel biologico Phytoseiulus persimilis.",
+    flea: "Olio di neem/azadiractina sulle foglie giovani come repellente e antialimentare; spinosad o piretrine contro gli adulti. Tratta presto e la sera.",
+    caterpillars:
+      "Bacillus thuringiensis var. kurstaki sui bruchi piccoli; spinosad sulle larve più difficili, evitando i fiori visitati dalle api.",
+    thrips:
+      "Spinosad nei punti nascosti; in alternativa olio di neem/azadiractina o sapone molle con copertura accurata.",
+    onion_fly:
+      "Nematodi Steinernema feltiae nel terreno umido contro le larve; spinosad solo se previsto per allio e mosca bersaglio.",
+    leafminers:
+      "Spinosad sulle larve giovani; azadiractina/olio di neem all'inizio delle mine per ridurre alimentazione e sviluppo.",
+    carrot_fly:
+      "Nematodi Steinernema feltiae nel suolo contro le larve; piretrine sugli adulti solo dove previste per la carota.",
+    slugs:
+      "Esche granulari al fosfato ferrico, sparse uniformemente e rinnovate dopo pioggia o irrigazione secondo etichetta.",
+    weevils:
+      "Olio di neem/azadiractina o piretrine sugli adulti; Steinernema kraussei o Heterorhabditis bacteriophora contro le larve nel terreno."
   };
 }
 
 function configTargetedPestProducts(p) {
   const ro = state.lang === "ro";
   const group = configDiseaseGroup(p.id);
-  const plans = ro ? {
-    solanaceae:{aphids:"Săpun potasic pe colonii; flonicamid la atac puternic.",whiteflies:"Beauveria bassiana pe nimfe; pyriproxyfen pentru întreruperea ciclului.",mites:"Abamectin pe forme mobile, hexythiazox pe ouă sau Phytoseiulus persimilis."},
-    cucurbits:{aphids:"Flonicamid pentru oprirea hrănirii; săpun potasic pe focare mici.",whiteflies:"Beauveria bassiana și săpun potasic pe nimfele expuse.",mites:"Hexythiazox pe ouă, abamectin pe forme mobile sau Phytoseiulus persimilis."},
-    brassicas:{flea:"Spinosad ori piretrine pe adulți activi, aplicate devreme pe plante tinere.",caterpillars:"Bacillus thuringiensis kurstaki pe omizi mici; spinosad pe larve mai mari.",aphids:"Flonicamid în rozete; săpun potasic pe coloniile expuse."},
-    alliums:{thrips:"Spinosad în teaca frunzelor; Beauveria bassiana la umiditate adecvată.",onion_fly:"Steinernema feltiae în sol umed contra larvelor.",leafminers:"Spinosad la primele galerii; cyromazine pe larve tinere."},
-    apiaceae:{carrot_fly:"Steinernema feltiae în sol contra larvelor; piretrine pe adulți în zbor.",aphids:"Săpun potasic; flonicamid dacă frunzele sunt răsucite.",leafminers:"Spinosad la începutul galeriilor."},
-    leafy:{flea:"Piretrine pe adulți; spinosad dacă paguba continuă.",slugs:"Fosfat feric granular pe sol.",aphids:"Săpun potasic; piretrine numai pentru colonii persistente."},
-    chenopods:{leafminers:"Spinosad la primele galerii.",aphids:"Săpun potasic; flonicamid dacă frunzele se deformează.",flea:"Piretrine pe adulți; spinosad pe atac persistent."},
-    legumes:{aphids:"Flonicamid pe vârfuri și flori; săpun potasic pe focare mici.",weevils:"Piretrine pe adulți; Heterorhabditis bacteriophora în sol.",mites:"Abamectin sau Phytoseiulus persimilis."},
-    herbs:{aphids:"Săpun potasic; piretrine numai la atac puternic.",whiteflies:"Beauveria bassiana și săpun potasic pe nimfe.",mites:"Phytoseiulus persimilis sau ulei horticol ușor sub frunze."},
-    basil:{aphids:"Săpun potasic pe vârfuri, apoi clătire înainte de consum.",thrips:"Spinosad sau Beauveria bassiana în vârfurile tinere.",slugs:"Fosfat feric pe sol, fără contact cu frunzele."},
-    strawberry:{mites:"Phytoseiulus persimilis; bifenazate dacă populația crește.",aphids:"Săpun potasic înainte de înflorire; flonicamid la atac persistent.",slugs:"Fosfat feric între plante, fără contact cu fructele."},
-    other:{aphids:"Săpun potasic; flonicamid la atac persistent.",slugs:"Fosfat feric granular pe sol.",thrips:"Spinosad sau Beauveria bassiana."}
-  } : {
-    solanaceae:{aphids:"Sapone molle sulle colonie; flonicamid con attacco forte.",whiteflies:"Beauveria bassiana sulle neanidi; pyriproxyfen per interrompere il ciclo.",mites:"Abamectina sulle forme mobili, hexythiazox sulle uova o Phytoseiulus persimilis."},
-    cucurbits:{aphids:"Flonicamid per bloccare l'alimentazione; sapone molle sui piccoli focolai.",whiteflies:"Beauveria bassiana e sapone molle sulle neanidi esposte.",mites:"Hexythiazox sulle uova, abamectina sulle forme mobili o Phytoseiulus persimilis."},
-    brassicas:{flea:"Spinosad o piretrine sugli adulti attivi, applicati presto sulle piante giovani.",caterpillars:"Bacillus thuringiensis kurstaki sui bruchi piccoli; spinosad sulle larve grandi.",aphids:"Flonicamid nelle rosette; sapone molle sulle colonie esposte."},
-    alliums:{thrips:"Spinosad nella guaina fogliare; Beauveria bassiana con umidità adeguata.",onion_fly:"Steinernema feltiae nel terreno umido contro le larve.",leafminers:"Spinosad alle prime mine; cyromazine sulle larve giovani."},
-    apiaceae:{carrot_fly:"Steinernema feltiae nel terreno contro le larve; piretrine sugli adulti in volo.",aphids:"Sapone molle; flonicamid se le foglie sono arricciate.",leafminers:"Spinosad all'inizio delle gallerie."},
-    leafy:{flea:"Piretrine sugli adulti; spinosad se il danno continua.",slugs:"Fosfato ferrico granulare sul terreno.",aphids:"Sapone molle; piretrine solo per colonie persistenti."},
-    chenopods:{leafminers:"Spinosad alle prime gallerie.",aphids:"Sapone molle; flonicamid se le foglie si deformano.",flea:"Piretrine sugli adulti; spinosad su attacco persistente."},
-    legumes:{aphids:"Flonicamid su apici e fiori; sapone molle sui piccoli focolai.",weevils:"Piretrine sugli adulti; Heterorhabditis bacteriophora nel terreno.",mites:"Abamectina o Phytoseiulus persimilis."},
-    herbs:{aphids:"Sapone molle; piretrine solo con attacco forte.",whiteflies:"Beauveria bassiana e sapone molle sulle neanidi.",mites:"Phytoseiulus persimilis o olio orticolo leggero sotto le foglie."},
-    basil:{aphids:"Sapone molle sui germogli, poi risciacquo prima del consumo.",thrips:"Spinosad o Beauveria bassiana nei germogli giovani.",slugs:"Fosfato ferrico sul terreno, senza contatto con le foglie."},
-    strawberry:{mites:"Phytoseiulus persimilis; bifenazate se la popolazione cresce.",aphids:"Sapone molle prima della fioritura; flonicamid su attacco persistente.",slugs:"Fosfato ferrico tra le piante, senza contatto con i frutti."},
-    other:{aphids:"Sapone molle; flonicamid su attacco persistente.",slugs:"Fosfato ferrico granulare sul terreno.",thrips:"Spinosad o Beauveria bassiana."}
-  };
+  const plans = ro
+    ? {
+        solanaceae: {
+          aphids: "Săpun potasic pe colonii; flonicamid la atac puternic.",
+          whiteflies:
+            "Beauveria bassiana pe nimfe; pyriproxyfen pentru întreruperea ciclului.",
+          mites:
+            "Abamectin pe forme mobile, hexythiazox pe ouă sau Phytoseiulus persimilis."
+        },
+        cucurbits: {
+          aphids:
+            "Flonicamid pentru oprirea hrănirii; săpun potasic pe focare mici.",
+          whiteflies: "Beauveria bassiana și săpun potasic pe nimfele expuse.",
+          mites:
+            "Hexythiazox pe ouă, abamectin pe forme mobile sau Phytoseiulus persimilis."
+        },
+        brassicas: {
+          flea: "Spinosad ori piretrine pe adulți activi, aplicate devreme pe plante tinere.",
+          caterpillars:
+            "Bacillus thuringiensis kurstaki pe omizi mici; spinosad pe larve mai mari.",
+          aphids: "Flonicamid în rozete; săpun potasic pe coloniile expuse."
+        },
+        alliums: {
+          thrips:
+            "Spinosad în teaca frunzelor; Beauveria bassiana la umiditate adecvată.",
+          onion_fly: "Steinernema feltiae în sol umed contra larvelor.",
+          leafminers: "Spinosad la primele galerii; cyromazine pe larve tinere."
+        },
+        apiaceae: {
+          carrot_fly:
+            "Steinernema feltiae în sol contra larvelor; piretrine pe adulți în zbor.",
+          aphids: "Săpun potasic; flonicamid dacă frunzele sunt răsucite.",
+          leafminers: "Spinosad la începutul galeriilor."
+        },
+        leafy: {
+          flea: "Piretrine pe adulți; spinosad dacă paguba continuă.",
+          slugs: "Fosfat feric granular pe sol.",
+          aphids: "Săpun potasic; piretrine numai pentru colonii persistente."
+        },
+        chenopods: {
+          leafminers: "Spinosad la primele galerii.",
+          aphids: "Săpun potasic; flonicamid dacă frunzele se deformează.",
+          flea: "Piretrine pe adulți; spinosad pe atac persistent."
+        },
+        legumes: {
+          aphids:
+            "Flonicamid pe vârfuri și flori; săpun potasic pe focare mici.",
+          weevils: "Piretrine pe adulți; Heterorhabditis bacteriophora în sol.",
+          mites: "Abamectin sau Phytoseiulus persimilis."
+        },
+        herbs: {
+          aphids: "Săpun potasic; piretrine numai la atac puternic.",
+          whiteflies: "Beauveria bassiana și săpun potasic pe nimfe.",
+          mites: "Phytoseiulus persimilis sau ulei horticol ușor sub frunze."
+        },
+        basil: {
+          aphids: "Săpun potasic pe vârfuri, apoi clătire înainte de consum.",
+          thrips: "Spinosad sau Beauveria bassiana în vârfurile tinere.",
+          slugs: "Fosfat feric pe sol, fără contact cu frunzele."
+        },
+        strawberry: {
+          mites: "Phytoseiulus persimilis; bifenazate dacă populația crește.",
+          aphids:
+            "Săpun potasic înainte de înflorire; flonicamid la atac persistent.",
+          slugs: "Fosfat feric între plante, fără contact cu fructele."
+        },
+        other: {
+          aphids: "Săpun potasic; flonicamid la atac persistent.",
+          slugs: "Fosfat feric granular pe sol.",
+          thrips: "Spinosad sau Beauveria bassiana."
+        }
+      }
+    : {
+        solanaceae: {
+          aphids: "Sapone molle sulle colonie; flonicamid con attacco forte.",
+          whiteflies:
+            "Beauveria bassiana sulle neanidi; pyriproxyfen per interrompere il ciclo.",
+          mites:
+            "Abamectina sulle forme mobili, hexythiazox sulle uova o Phytoseiulus persimilis."
+        },
+        cucurbits: {
+          aphids:
+            "Flonicamid per bloccare l'alimentazione; sapone molle sui piccoli focolai.",
+          whiteflies:
+            "Beauveria bassiana e sapone molle sulle neanidi esposte.",
+          mites:
+            "Hexythiazox sulle uova, abamectina sulle forme mobili o Phytoseiulus persimilis."
+        },
+        brassicas: {
+          flea: "Spinosad o piretrine sugli adulti attivi, applicati presto sulle piante giovani.",
+          caterpillars:
+            "Bacillus thuringiensis kurstaki sui bruchi piccoli; spinosad sulle larve grandi.",
+          aphids:
+            "Flonicamid nelle rosette; sapone molle sulle colonie esposte."
+        },
+        alliums: {
+          thrips:
+            "Spinosad nella guaina fogliare; Beauveria bassiana con umidità adeguata.",
+          onion_fly: "Steinernema feltiae nel terreno umido contro le larve.",
+          leafminers:
+            "Spinosad alle prime mine; cyromazine sulle larve giovani."
+        },
+        apiaceae: {
+          carrot_fly:
+            "Steinernema feltiae nel terreno contro le larve; piretrine sugli adulti in volo.",
+          aphids: "Sapone molle; flonicamid se le foglie sono arricciate.",
+          leafminers: "Spinosad all'inizio delle gallerie."
+        },
+        leafy: {
+          flea: "Piretrine sugli adulti; spinosad se il danno continua.",
+          slugs: "Fosfato ferrico granulare sul terreno.",
+          aphids: "Sapone molle; piretrine solo per colonie persistenti."
+        },
+        chenopods: {
+          leafminers: "Spinosad alle prime gallerie.",
+          aphids: "Sapone molle; flonicamid se le foglie si deformano.",
+          flea: "Piretrine sugli adulti; spinosad su attacco persistente."
+        },
+        legumes: {
+          aphids:
+            "Flonicamid su apici e fiori; sapone molle sui piccoli focolai.",
+          weevils:
+            "Piretrine sugli adulti; Heterorhabditis bacteriophora nel terreno.",
+          mites: "Abamectina o Phytoseiulus persimilis."
+        },
+        herbs: {
+          aphids: "Sapone molle; piretrine solo con attacco forte.",
+          whiteflies: "Beauveria bassiana e sapone molle sulle neanidi.",
+          mites:
+            "Phytoseiulus persimilis o olio orticolo leggero sotto le foglie."
+        },
+        basil: {
+          aphids:
+            "Sapone molle sui germogli, poi risciacquo prima del consumo.",
+          thrips: "Spinosad o Beauveria bassiana nei germogli giovani.",
+          slugs: "Fosfato ferrico sul terreno, senza contatto con le foglie."
+        },
+        strawberry: {
+          mites:
+            "Phytoseiulus persimilis; bifenazate se la popolazione cresce.",
+          aphids:
+            "Sapone molle prima della fioritura; flonicamid su attacco persistente.",
+          slugs: "Fosfato ferrico tra le piante, senza contatto con i frutti."
+        },
+        other: {
+          aphids: "Sapone molle; flonicamid su attacco persistente.",
+          slugs: "Fosfato ferrico granulare sul terreno.",
+          thrips: "Spinosad o Beauveria bassiana."
+        }
+      };
   const overrides = {
-    rucola:{flea:ro?"Pentru rucola: ulei de neem/azadiractină ca repelent și spinosad dacă găurile continuă pe frunzele noi.":"Per la rucola: olio di neem/azadiractina come repellente e spinosad se i fori continuano sulle foglie nuove."},
-    pomodoro:{whiteflies:ro?"Pentru tomate: Beauveria bassiana pe nimfe, Encarsia formosa pentru control continuu și pyriproxyfen dacă ciclul persistă.":"Per il pomodoro: Beauveria bassiana sulle neanidi, Encarsia formosa per il controllo continuo e pyriproxyfen se il ciclo persiste."},
-    basilico:{thrips:ro?"Pentru busuioc: Beauveria bassiana sau spinosad în vârfuri; evită uleiurile aproape de recoltare.":"Per il basilico: Beauveria bassiana o spinosad nei germogli; evita oli vicino alla raccolta."},
-    fragola:{mites:ro?"Pentru căpșun: Phytoseiulus persimilis la debut; bifenazate dacă apar pânze.":"Per la fragola: Phytoseiulus persimilis all'inizio; bifenazate se compaiono ragnatele."}
+    rucola: {
+      flea: ro
+        ? "Pentru rucola: ulei de neem/azadiractină ca repelent și spinosad dacă găurile continuă pe frunzele noi."
+        : "Per la rucola: olio di neem/azadiractina come repellente e spinosad se i fori continuano sulle foglie nuove."
+    },
+    pomodoro: {
+      whiteflies: ro
+        ? "Pentru tomate: Beauveria bassiana pe nimfe, Encarsia formosa pentru control continuu și pyriproxyfen dacă ciclul persistă."
+        : "Per il pomodoro: Beauveria bassiana sulle neanidi, Encarsia formosa per il controllo continuo e pyriproxyfen se il ciclo persiste."
+    },
+    basilico: {
+      thrips: ro
+        ? "Pentru busuioc: Beauveria bassiana sau spinosad în vârfuri; evită uleiurile aproape de recoltare."
+        : "Per il basilico: Beauveria bassiana o spinosad nei germogli; evita oli vicino alla raccolta."
+    },
+    fragola: {
+      mites: ro
+        ? "Pentru căpșun: Phytoseiulus persimilis la debut; bifenazate dacă apar pânze."
+        : "Per la fragola: Phytoseiulus persimilis all'inizio; bifenazate se compaiono ragnatele."
+    }
   };
-  return {...(plans.other||{}),...(plans[group]||{}),...(overrides[p.id]||{})};
+  return {
+    ...(plans.other || {}),
+    ...(plans[group] || {}),
+    ...(overrides[p.id] || {})
+  };
 }
 
 function renderConfigPests(p) {
   const catalog = configPestCatalog();
   const products = configTargetedPestProducts(p);
-  const keys = CONFIG_PEST_GROUPS[configDiseaseGroup(p.id)] || CONFIG_PEST_GROUPS.other;
-  const pests = keys.map(key => catalog[key]).filter(Boolean);
-  return `<section class="detail-diseases detail-pests"><div class="detail-diseases-head"><div><h3>${detailText("detail.pests_title")}</h3><p>${detailText("detail.pests_subtitle")}</p></div><span class="detail-diseases-count">${detailText("detail.pests_count", { count: pests.length })}</span></div><div class="detail-disease-list">${pests.map((item,index)=>{const key=keys[index];return `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${item[0]}</span><span class="detail-disease-toggle">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.pest_signs")}</b><p>${item[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.pest_action")}</b><p>${item[2]}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${detailText("detail.pest_products")} · ${plantText(p, "nome")}</b><p>${products[key]}</p></div></div></details>`}).join("")}</div><p class="detail-treatment-note">${detailText("detail.pest_note")}</p></section>`;
+  const keys =
+    CONFIG_PEST_GROUPS[configDiseaseGroup(p.id)] || CONFIG_PEST_GROUPS.other;
+  const pests = keys.map((key) => catalog[key]).filter(Boolean);
+  return `<section class="detail-diseases detail-pests"><div class="detail-diseases-head"><div><h3>${detailText("detail.pests_title")}</h3><p>${detailText("detail.pests_subtitle")}</p></div><span class="detail-diseases-count">${detailText("detail.pests_count", { count: pests.length })}</span></div><div class="detail-disease-list">${pests
+    .map((item, index) => {
+      const key = keys[index];
+      return `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${item[0]}</span><span class="detail-disease-toggle">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.pest_signs")}</b><p>${item[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.pest_action")}</b><p>${item[2]}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${detailText("detail.pest_products")} · ${plantText(p, "nome")}</b><p>${products[key]}</p></div></div></details>`;
+    })
+    .join(
+      ""
+    )}</div><p class="detail-treatment-note">${detailText("detail.pest_note")}</p></section>`;
 }
 
 function openPlantDetailPanel() {
@@ -3869,15 +4702,27 @@ function renderPlantDetailPanel() {
   const distBetween = p.dr || p.d;
 
   const diffLevel = DIFFICULTY[p.id] || 2;
-  const diffLabel = diffLevel === 1 ? tx("diffEasy") : diffLevel === 2 ? tx("diffMedium") : tx("diffHard");
-  const diffClass = diffLevel === 1 ? "diff-easy" : diffLevel === 2 ? "diff-medium" : "diff-hard";
+  const diffLabel =
+    diffLevel === 1
+      ? tx("diffEasy")
+      : diffLevel === 2
+        ? tx("diffMedium")
+        : tx("diffHard");
+  const diffClass =
+    diffLevel === 1
+      ? "diff-easy"
+      : diffLevel === 2
+        ? "diff-medium"
+        : "diff-hard";
 
   // abbinamenti
   const nemiche = p.nemiche ? p.nemiche.map(plantNameById).filter(Boolean) : [];
 
   // segmenti della barra mesi
   const allMonths = [...effectiveMonths(p)].sort((a, b) => a - b);
-  const activeMonthsLabel = allMonths.map(m => monthName(m).slice(0, 3)).join(", ");
+  const activeMonthsLabel = allMonths
+    .map((m) => monthName(m).slice(0, 3))
+    .join(", ");
   const monthLegend =
     state.lang === "ro"
       ? {
@@ -3900,12 +4745,13 @@ function renderPlantDetailPanel() {
   }).join("");
 
   // tipo
-  const tipoEntry = CAT_ORDER.find(c => c.ids.includes(p.id));
+  const tipoEntry = CAT_ORDER.find((c) => c.ids.includes(p.id));
   const tipoLabel = tipoEntry ? tx(`vegCat_${tipoEntry.key}`) : "";
 
   const soleIcon = p.sole === "pieno" ? "☀️" : "🌤️";
   const soleLabel = p.sole === "pieno" ? tx("fullSun") : tx("halfShade");
-  const acquaIcon = p.acqua === "alta" ? "💧💧💧" : p.acqua === "media" ? "💧💧" : "💧";
+  const acquaIcon =
+    p.acqua === "alta" ? "💧💧💧" : p.acqua === "media" ? "💧💧" : "💧";
   const svgSpacing = spacingInfographicSvg(p);
   const profile = configDetailProfile(p, sow);
   const sowRow = (icon, label, value) =>
@@ -3959,7 +4805,16 @@ function renderPlantDetailPanel() {
 
       <div class="detail-tab-panel" data-detail-panel="calendar" hidden>
         <div class="detail-section-heading"><span>${detailText("detail.calendar_title")}</span><small>${detailText("detail.calendar_subtitle")}</small></div>
-        <div class="month-bar"><div class="month-bar-head"><span>${monthLegend.title}</span><b>${activeMonthsLabel}</b></div><div class="month-segments" aria-label="${monthLegend.title}">${Array.from({ length: 12 }, (_, i) => { const on = effectiveMonths(p).has(i + 1); const cur = i + 1 === state.mese; return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}"><span class="month-seg-abbr">${monthName(i + 1).slice(0, 3)}</span></div>`; }).join("")}</div><div class="month-bar-legend"><span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span><span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span></div></div>
+        <div class="month-bar"><div class="month-bar-head"><span>${monthLegend.title}</span><b>${activeMonthsLabel}</b></div><div class="month-segments" aria-label="${monthLegend.title}">${Array.from(
+          { length: 12 },
+          (_, i) => {
+            const on = effectiveMonths(p).has(i + 1);
+            const cur = i + 1 === state.mese;
+            return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}"><span class="month-seg-abbr">${monthName(i + 1).slice(0, 3)}</span></div>`;
+          }
+        ).join(
+          ""
+        )}</div><div class="month-bar-legend"><span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span><span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span></div></div>
       </div>
 
       <div class="detail-tab-panel" data-detail-panel="care" hidden>
@@ -3967,7 +4822,7 @@ function renderPlantDetailPanel() {
         <div class="detail-tech-grid">${renderConfigTechCards(profile.care)}</div>
         ${renderConfigDiseases(p)}
         ${renderConfigPests(p)}
-        ${(amiche.length || nemiche.length) ? `<div class="detail-companions">${amiche.length ? `<div class="detail-companions-group"><div class="detail-companions-label">${tx("friends")}</div><div class="companion-list">${amiche.map(n => `<span class="companion-chip friend">${n}</span>`).join("")}</div></div>` : ""}${nemiche.length ? `<div class="detail-companions-group"><div class="detail-companions-label detail-companions-label--foe">${tx("enemies")}</div><div class="companion-list">${nemiche.map(n => `<span class="companion-chip foe">${n}</span>`).join("")}</div></div>` : ""}</div>` : ""}
+        ${amiche.length || nemiche.length ? `<div class="detail-companions">${amiche.length ? `<div class="detail-companions-group"><div class="detail-companions-label">${tx("friends")}</div><div class="companion-list">${amiche.map((n) => `<span class="companion-chip friend">${n}</span>`).join("")}</div></div>` : ""}${nemiche.length ? `<div class="detail-companions-group"><div class="detail-companions-label detail-companions-label--foe">${tx("enemies")}</div><div class="companion-list">${nemiche.map((n) => `<span class="companion-chip foe">${n}</span>`).join("")}</div></div>` : ""}</div>` : ""}
       </div>
 
       <div class="detail-tab-panel" data-detail-panel="harvest" hidden>
@@ -4100,7 +4955,10 @@ function renderSummary() {
         1,
         Math.ceil(b.count / (PACK_DATA[b.plantId]?.seeds ?? 100))
       );
-      const packLabel = packs === 1 ? tx("cart.pack_one") : tx("cart.pack_many", { count: packs });
+      const packLabel =
+        packs === 1
+          ? tx("cart.pack_one")
+          : tx("cart.pack_many", { count: packs });
       const emoji = FRUIT_EMOJI[p.id] || "🌱";
       return `<li>
         <span class="shop-emoji" role="img" aria-hidden="true">${emoji}</span>
@@ -4115,7 +4973,8 @@ function renderSummary() {
 
   const yieldBadge = document.getElementById("yieldToggleBadge");
   if (yieldBadge) {
-    yieldBadge.textContent = state.beds.length > 0 ? `${state.beds.length} var.` : "";
+    yieldBadge.textContent =
+      state.beds.length > 0 ? `${state.beds.length} var.` : "";
   }
 
   const exportBtn = document.createElement("button");
@@ -4336,7 +5195,10 @@ function countForFilaPlant(p) {
 }
 
 function defaultCount(p) {
-  return Math.max(minimumCountForPlant(p), countForPlant(p, targetRowsForPlant(p)));
+  return Math.max(
+    minimumCountForPlant(p),
+    countForPlant(p, targetRowsForPlant(p))
+  );
 }
 
 function starterCountForAutoPlant(p, useFila = false) {
@@ -4369,7 +5231,10 @@ function normalizeSavedBeds(beds) {
       const p = BYID[bed?.plantId];
       const savedLayout = bed?.layout === "fila" ? "fila" : "blocco";
       // Corregge layout salvati errati: se la pianta non è idonea al layout fila, usa blocco
-      const layout = (savedLayout === "fila" && p && !canUseFilaLayout(p)) ? "blocco" : savedLayout;
+      const layout =
+        savedLayout === "fila" && p && !canUseFilaLayout(p)
+          ? "blocco"
+          : savedLayout;
       return {
         plantId: bed?.plantId,
         count: Math.max(1, Math.round(parseInt(bed?.count) || 1)),
@@ -4402,13 +5267,16 @@ function sortBedsForLayout() {
   const ordered = [];
   const remaining = state.beds.slice();
   while (remaining.length) {
-    const last = ordered.length ? BYID[ordered[ordered.length - 1].plantId] : null;
+    const last = ordered.length
+      ? BYID[ordered[ordered.length - 1].plantId]
+      : null;
     let bestIndex = 0;
     let bestScore = Infinity;
     remaining.forEach((bed, index) => {
       const p = BYID[bed.plantId];
       const conflictsWithPlaced = ordered.reduce(
-        (sum, placed) => sum + (areIncompatible(p, BYID[placed.plantId]) ? 1 : 0),
+        (sum, placed) =>
+          sum + (areIncompatible(p, BYID[placed.plantId]) ? 1 : 0),
         0
       );
       const score =
@@ -4442,18 +5310,30 @@ function shrinkOverflowToFit(options = {}) {
       ? candidates.filter((b) => !b.countLocked)
       : candidates;
     if (preserveLockedCounts && flexibleCandidates.length === 0) break;
-    const shrinkCandidates = preserveLockedCounts ? flexibleCandidates : candidates;
+    const shrinkCandidates = preserveLockedCounts
+      ? flexibleCandidates
+      : candidates;
 
     // Aiuole con più di una fila completa: riducile per prime.
     const reducible = shrinkCandidates
-      .filter((b) => b.count > Math.max(rowSizeForPlant(b.plant), minimumCountForPlant(b.plant)))
+      .filter(
+        (b) =>
+          b.count >
+          Math.max(rowSizeForPlant(b.plant), minimumCountForPlant(b.plant))
+      )
       .sort((a, b) => b.count - a.count || b.plant.d - a.plant.d);
 
     if (reducible.length > 0) {
       const largest = reducible[0];
       const step = rowSizeForPlant(largest.plant);
-      const minCount = Math.max(rowSizeForPlant(largest.plant), minimumCountForPlant(largest.plant));
-      state.beds[largest.index].count = Math.max(minCount, largest.count - step);
+      const minCount = Math.max(
+        rowSizeForPlant(largest.plant),
+        minimumCountForPlant(largest.plant)
+      );
+      state.beds[largest.index].count = Math.max(
+        minCount,
+        largest.count - step
+      );
     } else if (allowRemove) {
       // Tutte le aiuole sono già al minimo: rimuovi quella con ingombro maggiore.
       const toRemove = shrinkCandidates.sort(
@@ -4504,10 +5384,13 @@ function resetSelectedCropCountsForOptimization() {
   state.beds.forEach((bed) => {
     const plant = BYID[bed.plantId];
     if (!plant) return;
-    const useFila = canUseFilaLayout(plant) && !hasFila && bed.layout === "fila";
+    const useFila =
+      canUseFilaLayout(plant) && !hasFila && bed.layout === "fila";
     if (useFila) hasFila = true;
     bed.layout = useFila ? "fila" : "blocco";
-    bed.count = useFila ? countForFilaPlant(plant) : starterCountForAutoPlant(plant, false);
+    bed.count = useFila
+      ? countForFilaPlant(plant)
+      : starterCountForAutoPlant(plant, false);
     bed.countLocked = false;
   });
 }
@@ -4518,7 +5401,8 @@ function normalizeSelectedCropInputsForOptimization() {
   state.beds.forEach((bed) => {
     const plant = BYID[bed.plantId];
     if (!plant) return;
-    const useFila = canUseFilaLayout(plant) && !hasFila && bed.layout === "fila";
+    const useFila =
+      canUseFilaLayout(plant) && !hasFila && bed.layout === "fila";
     if (useFila) hasFila = true;
     bed.layout = useFila ? "fila" : "blocco";
     bed.count = Math.max(1, Math.round(parseInt(bed.count) || 1));
@@ -4567,12 +5451,13 @@ function flexibleCropReductionCandidates(layout, lockedPlantId, options = {}) {
       return { bed, index, plant, layoutBed, floorCount, minCount, surplus };
     })
     .filter(Boolean)
-    .sort((a, b) =>
-      Number(b.bed.count > b.minCount) - Number(a.bed.count > a.minCount) ||
-      b.surplus - a.surplus ||
-      b.bed.count - a.bed.count ||
-      b.layoutBed.h - a.layoutBed.h ||
-      b.plant.d - a.plant.d
+    .sort(
+      (a, b) =>
+        Number(b.bed.count > b.minCount) - Number(a.bed.count > a.minCount) ||
+        b.surplus - a.surplus ||
+        b.bed.count - a.bed.count ||
+        b.layoutBed.h - a.layoutBed.h ||
+        b.plant.d - a.plant.d
     );
 }
 
@@ -4592,7 +5477,10 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
     const item = candidates[0];
     const step = Math.max(1, rowSizeForPlant(item.plant));
     const before = item.bed.count;
-    item.bed.count = Math.max(item.floorCount, item.bed.count - Math.min(step, item.surplus));
+    item.bed.count = Math.max(
+      item.floorCount,
+      item.bed.count - Math.min(step, item.surplus)
+    );
     if (item.bed.count === before) break;
     rebalanceManualLayoutOnly();
     guard++;
@@ -4603,13 +5491,19 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
 function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
   const hasFlexibleAdjustments = () => {
     const beforeById = new Map(beforeSnapshot.map((bed) => [bed.plantId, bed]));
-    return state.beds.some((bed) => {
-      if (bed.plantId === lockedPlantId) return false;
-      const before = beforeById.get(bed.plantId);
-      return !before || before.count !== bed.count || before.layout !== bed.layout;
-    }) || beforeSnapshot.some((bed) =>
-      bed.plantId !== lockedPlantId &&
-      !state.beds.some((current) => current.plantId === bed.plantId)
+    return (
+      state.beds.some((bed) => {
+        if (bed.plantId === lockedPlantId) return false;
+        const before = beforeById.get(bed.plantId);
+        return (
+          !before || before.count !== bed.count || before.layout !== bed.layout
+        );
+      }) ||
+      beforeSnapshot.some(
+        (bed) =>
+          bed.plantId !== lockedPlantId &&
+          !state.beds.some((current) => current.plantId === bed.plantId)
+      )
     );
   };
   rebalanceManualLayoutOnly();
@@ -4629,11 +5523,17 @@ function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
 
 /* Bilanciamento centrale del layout: usato da auto-riempimento, aggiunte,
    rimozioni e cambio misure. Le opzioni decidono se preservare conteggi manuali. */
-function autoBalanceLayout(keepSelection = true, expandToSpace = true, options = {}) {
+function autoBalanceLayout(
+  keepSelection = true,
+  expandToSpace = true,
+  options = {}
+) {
   const selectedPlant = keepSelection ? rememberSelection() : null;
   const respectDiversityLimit =
     options.respectDiversityLimit === true ||
-    (options.respectDiversityLimit !== false && state.autoPlan && state.livello !== "esperto");
+    (options.respectDiversityLimit !== false &&
+      state.autoPlan &&
+      state.livello !== "esperto");
   // expandFilaBedsToLength va chiamata sempre (non solo quando expandToSpace=true)
   // perché usableBedWidth() dipende da state.beds.length: aggiungendo o rimuovendo
   // una pianta il numero di colonne cambia e il count corretto per le file si aggiorna.
@@ -4642,22 +5542,31 @@ function autoBalanceLayout(keepSelection = true, expandToSpace = true, options =
   expandFilaBedsToLength(options.fillFilaToLength !== false, {
     preserveLockedCounts: options.preserveLockedCounts === true
   });
-  if (expandToSpace) enforceMinimumBedCounts({ preserveLockedCounts: options.preserveLockedCounts === true });
+  if (expandToSpace)
+    enforceMinimumBedCounts({
+      preserveLockedCounts: options.preserveLockedCounts === true
+    });
   sortBedsForLayout();
   rebalanceColumnsFresh();
-  shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
-  if (expandToSpace) expandAutoFillToSpace({
-    skipLockedCounts: options.expandLockedCounts === false,
-    respectDiversityLimit
+  shrinkOverflowToFit({
+    preserveLockedCounts: options.preserveLockedCounts === true
   });
+  if (expandToSpace)
+    expandAutoFillToSpace({
+      skipLockedCounts: options.expandLockedCounts === false,
+      respectDiversityLimit
+    });
   // Riordina per tenere le piante alte dietro a quelle basse (ordine anti-ombra).
   sortBedsForLayout();
   rebalanceColumnsFresh();
-  if (expandToSpace) expandAutoFillToSpace({
-    skipLockedCounts: options.expandLockedCounts === false,
-    respectDiversityLimit
+  if (expandToSpace)
+    expandAutoFillToSpace({
+      skipLockedCounts: options.expandLockedCounts === false,
+      respectDiversityLimit
+    });
+  shrinkOverflowToFit({
+    preserveLockedCounts: options.preserveLockedCounts === true
   });
-  shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
   restoreSelection(selectedPlant);
 }
 
@@ -4673,7 +5582,10 @@ function addPlant(id) {
   // un po' le altre per fare spazio.
   state.beds.push({
     plantId: id,
-    count: Math.max(1, Math.min(defaultCount(p), starterCountForAutoPlant(p, false))),
+    count: Math.max(
+      1,
+      Math.min(defaultCount(p), starterCountForAutoPlant(p, false))
+    ),
     layout: "blocco",
     countLocked: false
   });
@@ -4728,7 +5640,11 @@ function removePlantById(id) {
 function refreshForSeasonChange() {
   // Il novizio è sempre automatico: ogni cambio di mese/zona rigenera il piano
   // (così non resta mai bloccato in un piano manuale senza il pulsante "Riempi").
-  if (state.autoPlan || state.livello === "novizio" || state.beds.length === 0) {
+  if (
+    state.autoPlan ||
+    state.livello === "novizio" ||
+    state.beds.length === 0
+  ) {
     autoFill();
   } else {
     // Cambio stagione su piano manuale: le colonne si ridecidono per il nuovo
@@ -4765,7 +5681,9 @@ function fillSelectedPlants() {
   }
   state.autoPlan = false;
   state.manualPlanNotice = "";
-  const manualCounts = new Map(state.beds.map((bed) => [bed.plantId, bed.count]));
+  const manualCounts = new Map(
+    state.beds.map((bed) => [bed.plantId, bed.count])
+  );
   normalizeSelectedCropInputsForOptimization();
   state.beds.forEach((bed) => {
     const plant = BYID[bed.plantId];
@@ -4796,9 +5714,11 @@ function changePlantCount(id, delta) {
   state.autoPlan = false;
   const fitResult = fitLockedCountChange(id, before);
   state.manualPlanNotice =
-    fitResult === "rejected" ? "manualCountRejected" :
-    fitResult === "adjusted" ? "manualCountAdjusted" :
-    "";
+    fitResult === "rejected"
+      ? "manualCountRejected"
+      : fitResult === "adjusted"
+        ? "manualCountAdjusted"
+        : "";
   restoreSelection(selectedPlant);
   commitColumnAssignment();
   saveConfig(true);
@@ -4818,9 +5738,11 @@ function setPlantCount(id, value) {
   state.autoPlan = false;
   const fitResult = fitLockedCountChange(id, before);
   state.manualPlanNotice =
-    fitResult === "rejected" ? "manualCountRejected" :
-    fitResult === "adjusted" ? "manualCountAdjusted" :
-    "";
+    fitResult === "rejected"
+      ? "manualCountRejected"
+      : fitResult === "adjusted"
+        ? "manualCountAdjusted"
+        : "";
   restoreSelection(selectedPlant);
   commitColumnAssignment();
   saveConfig(true);
@@ -4830,8 +5752,10 @@ function setPlantCount(id, value) {
 /* Utility del piano automatico: percorso compatto, punteggio di spazio vuoto
    e snapshot per confrontare/annullare ottimizzazioni. */
 function compactPathForAutoFill() {
-  if (state.larghezza >= 6 && state.lunghezza >= 7) return Math.min(state.path, 45);
-  if (state.larghezza >= 4.2 && state.lunghezza >= 6) return Math.min(state.path, 50);
+  if (state.larghezza >= 6 && state.lunghezza >= 7)
+    return Math.min(state.path, 45);
+  if (state.larghezza >= 4.2 && state.lunghezza >= 6)
+    return Math.min(state.path, 50);
   return state.path;
 }
 
@@ -4895,13 +5819,17 @@ function restoreBedsSnapshot(snapshot) {
 function finalizeAutoFillWithOptimizeBaseline() {
   const original = cloneBedsSnapshot();
   const beforeLayout = computeLayout();
-  const beforeScore = beforeLayout.overflow ? Infinity : layoutWasteScore(beforeLayout);
+  const beforeScore = beforeLayout.overflow
+    ? Infinity
+    : layoutWasteScore(beforeLayout);
 
   resetSelectedCropCountsForOptimization();
   autoBalanceLayout(false, true);
 
   const afterLayout = computeLayout();
-  const afterScore = afterLayout.overflow ? Infinity : layoutWasteScore(afterLayout);
+  const afterScore = afterLayout.overflow
+    ? Infinity
+    : layoutWasteScore(afterLayout);
   if (afterScore < beforeScore - 0.1) return;
   restoreBedsSnapshot(original);
 }
@@ -4925,12 +5853,14 @@ function expandAutoFillToSpace(options = {}) {
         const plant = BYID[bed.plantId];
         return { index, bed, plant, layoutBed };
       })
-      .filter((item) =>
-        item.plant &&
-        item.bed.layout !== "fila" &&
-        item.layoutBed &&
-        (!respectDiversityLimit || item.bed.count < autoExpansionLimitForPlant(item.plant)) &&
-        (!skipLockedCounts || !item.bed.countLocked)
+      .filter(
+        (item) =>
+          item.plant &&
+          item.bed.layout !== "fila" &&
+          item.layoutBed &&
+          (!respectDiversityLimit ||
+            item.bed.count < autoExpansionLimitForPlant(item.plant)) &&
+          (!skipLockedCounts || !item.bed.countLocked)
       )
       .sort((a, b) => {
         const ah = currentLayout.columnHeights[a.layoutBed.columnIndex] || 0;
@@ -4940,7 +5870,9 @@ function expandAutoFillToSpace(options = {}) {
 
     for (const item of candidates) {
       const before = state.beds[item.index].count;
-      const limit = respectDiversityLimit ? autoExpansionLimitForPlant(item.plant) : Infinity;
+      const limit = respectDiversityLimit
+        ? autoExpansionLimitForPlant(item.plant)
+        : Infinity;
       state.beds[item.index].count = Math.min(
         limit,
         state.beds[item.index].count + rowSizeForPlant(item.plant)
@@ -4981,12 +5913,14 @@ function expandAutoFillToSpace(options = {}) {
         const plant = BYID[bed.plantId];
         return { index, bed, plant, layoutBed };
       })
-      .filter((item) =>
-        item.plant &&
-        item.bed.layout !== "fila" &&
-        item.layoutBed &&
-        (!respectDiversityLimit || item.bed.count < autoExpansionLimitForPlant(item.plant)) &&
-        (!skipLockedCounts || !item.bed.countLocked)
+      .filter(
+        (item) =>
+          item.plant &&
+          item.bed.layout !== "fila" &&
+          item.layoutBed &&
+          (!respectDiversityLimit ||
+            item.bed.count < autoExpansionLimitForPlant(item.plant)) &&
+          (!skipLockedCounts || !item.bed.countLocked)
       )
       .sort((a, b) => {
         const ah = currentLayout.columnHeights[a.layoutBed.columnIndex] || 0;
@@ -5030,9 +5964,23 @@ function expandAutoFillToSpace(options = {}) {
 
 // Ortaggi comuni e gratificanti: hanno priorità a parità di difficoltà.
 const AUTO_PREFERRED = [
-  "pomodoro", "basilico", "lattuga", "rucola", "carota", "zucchina",
-  "fagiolino", "cetriolo", "peperone", "prezzemolo", "spinaci", "ravanello",
-  "cipolla", "fragola", "bietola", "timo", "origano"
+  "pomodoro",
+  "basilico",
+  "lattuga",
+  "rucola",
+  "carota",
+  "zucchina",
+  "fagiolino",
+  "cetriolo",
+  "peperone",
+  "prezzemolo",
+  "spinaci",
+  "ravanello",
+  "cipolla",
+  "fragola",
+  "bietola",
+  "timo",
+  "origano"
 ];
 
 // Difficoltà di una coltura (1-3); fallback prudente a 3 se non classificata.
@@ -5062,7 +6010,9 @@ function autoCandidatePool() {
     pool = seasonal.filter((p) => autoDifficulty(p) <= 2);
     // In stagioni povere allarga fino alle difficili, ma mai alle esotiche.
     if (pool.length < 4) {
-      pool = seasonal.filter((p) => autoDifficulty(p) <= 3 && !EXOTIC_PLANTS.has(p.id));
+      pool = seasonal.filter(
+        (p) => autoDifficulty(p) <= 3 && !EXOTIC_PLANTS.has(p.id)
+      );
     }
   } else {
     pool = seasonal.slice();
@@ -5082,11 +6032,18 @@ function ensureMinimalFill(candidates) {
   for (const p of candidates) {
     let best = 0;
     for (let c = minimumCountForPlant(p); c >= 1; c--) {
-      state.beds = [{ plantId: p.id, count: c, layout: "blocco", countLocked: false }];
-      if (!computeLayout().overflow) { best = c; break; }
+      state.beds = [
+        { plantId: p.id, count: c, layout: "blocco", countLocked: false }
+      ];
+      if (!computeLayout().overflow) {
+        best = c;
+        break;
+      }
     }
     if (best > 0) {
-      state.beds = [{ plantId: p.id, count: best, layout: "blocco", countLocked: false }];
+      state.beds = [
+        { plantId: p.id, count: best, layout: "blocco", countLocked: false }
+      ];
       return true;
     }
   }
@@ -5127,7 +6084,9 @@ function autoFill(options = {}) {
     return true;
   };
   for (const p of sortedCandidates) {
-    const conflicts = state.beds.some((bed) => areIncompatible(p, BYID[bed.plantId]));
+    const conflicts = state.beds.some((bed) =>
+      areIncompatible(p, BYID[bed.plantId])
+    );
     const hasCompatibleAlternative = sortedCandidates.some(
       (candidate) =>
         candidate.id !== p.id &&
@@ -5150,8 +6109,8 @@ function autoFill(options = {}) {
   for (const p of skippedConflicts) {
     if (state.beds.length >= minVarieties) break;
     if (state.beds.some((bed) => bed.plantId === p.id)) continue;
-    const newConflicts = state.beds.filter(
-      (bed) => areIncompatible(p, BYID[bed.plantId])
+    const newConflicts = state.beds.filter((bed) =>
+      areIncompatible(p, BYID[bed.plantId])
     ).length;
     if (newConflicts > 0) continue; // salta: creerebbe incompatibilità
     addAutoCandidate(p);
@@ -5164,8 +6123,8 @@ function autoFill(options = {}) {
     for (const p of skippedConflicts) {
       if (state.beds.length >= Math.ceil(minVarieties / 2)) break;
       if (state.beds.some((bed) => bed.plantId === p.id)) continue;
-      const newConflicts = state.beds.filter(
-        (bed) => areIncompatible(p, BYID[bed.plantId])
+      const newConflicts = state.beds.filter((bed) =>
+        areIncompatible(p, BYID[bed.plantId])
       ).length;
       if (newConflicts <= 1 && addAutoCandidate(p)) acceptedCompromises++;
     }
@@ -5182,8 +6141,12 @@ function autoFill(options = {}) {
     if (computeLayout().overflow) {
       state.beds.pop();
     } else {
-      state.beds[0].count = Math.max(minimumCountForPlant(p), countForPlant(p, 1));
-      if (computeLayout().overflow) state.beds[0].count = minimumCountForPlant(p);
+      state.beds[0].count = Math.max(
+        minimumCountForPlant(p),
+        countForPlant(p, 1)
+      );
+      if (computeLayout().overflow)
+        state.beds[0].count = minimumCountForPlant(p);
     }
   }
   // Ricalcola i conteggi iniziali con il layout a colonne definitivo.
@@ -5199,9 +6162,10 @@ function autoFill(options = {}) {
   state.beds.forEach((bed) => {
     const plant = BYID[bed.plantId];
     if (!plant) return;
-    bed.count = bed.layout === "fila"
-      ? countForFilaPlant(plant)
-      : starterCountForAutoPlant(plant, false);
+    bed.count =
+      bed.layout === "fila"
+        ? countForFilaPlant(plant)
+        : starterCountForAutoPlant(plant, false);
     bed.countLocked = false;
   });
   // Usa la stessa sequenza di autoBalanceLayout(true, true) usata da "ottimizza colture":
@@ -5217,7 +6181,8 @@ function autoFill(options = {}) {
   // Se nessuna coltura e' entrata ai conteggi minimi (serra molto piccola) prova
   // la rete di sicurezza; se non c'e' proprio nulla da seminare in questa zona/mese
   // segnala il motivo invece di lasciare la serra vuota senza spiegazioni.
-  if (state.beds.length === 0 && candidates.length) ensureMinimalFill(candidates);
+  if (state.beds.length === 0 && candidates.length)
+    ensureMinimalFill(candidates);
   // Top-off: quando le varieta disponibili sono poche (es. profilo novizio in
   // mesi poveri) le colture toccano il loro tetto di diversita e restano vuoti.
   // Qui, senza limite di diversita, facciamo crescere le colture gia presenti per
@@ -5262,10 +6227,17 @@ function exportConfToCart() {
   if (!state.beds.length) return;
   const seen = new Set();
   const items = state.beds
-    .filter(b => { if (seen.has(b.plantId)) return false; seen.add(b.plantId); return true; })
-    .map(b => ({
+    .filter((b) => {
+      if (seen.has(b.plantId)) return false;
+      seen.add(b.plantId);
+      return true;
+    })
+    .map((b) => ({
       id: b.plantId,
-      bustine: Math.max(1, Math.ceil(b.count / (PACK_DATA[b.plantId]?.seeds ?? 100)))
+      bustine: Math.max(
+        1,
+        Math.ceil(b.count / (PACK_DATA[b.plantId]?.seeds ?? 100))
+      )
     }));
   try {
     localStorage.setItem("ois.cart", JSON.stringify(items));
@@ -5282,7 +6254,7 @@ function importCartToPlan() {
   } catch (_) {
     raw = [];
   }
-  const ids = raw.map(i => typeof i === "string" ? i : i.id);
+  const ids = raw.map((i) => (typeof i === "string" ? i : i.id));
   const uniqueIds = ids.filter(
     (id, index) => BYID[id] && ids.indexOf(id) === index
   );
@@ -5314,8 +6286,14 @@ function focusManualPlanningPath() {
   window.setTimeout(() => {
     const crops = document.getElementById("panelCustomize");
     if (crops) {
-      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h") || "66", 10);
-      const top = crops.getBoundingClientRect().top + window.scrollY - navH - 12;
+      const navH = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          "--nav-h"
+        ) || "66",
+        10
+      );
+      const top =
+        crops.getBoundingClientRect().top + window.scrollY - navH - 12;
       window.scrollTo({ top, behavior: "smooth" });
       crops.classList.add("is-focus-pulse");
       window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
@@ -5482,11 +6460,13 @@ function initEvents() {
     autoFill();
     collapseSettingsPanelAfterAutoPlan();
   });
-  document.getElementById("btnPresetSeasonal")?.addEventListener("click", () => {
-    saveConfig(true);
-    setMode("fit", false);
-    autoFill();
-  });
+  document
+    .getElementById("btnPresetSeasonal")
+    ?.addEventListener("click", () => {
+      saveConfig(true);
+      setMode("fit", false);
+      autoFill();
+    });
   document
     .getElementById("btnArrangeSelected")
     .addEventListener("click", arrangeSelectedPlantsExact);
@@ -5570,19 +6550,30 @@ function initEvents() {
     syncSizeControls();
     setStartModalVisible(true);
   });
-  document.getElementById("btnEditCropsFromYield")?.addEventListener("click", () => {
-    setMode("expert", false);
-    const crops = document.getElementById("panelCustomize");
-    if (crops) {
-      window.requestAnimationFrame(() => {
-        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h") || "66", 10);
-        const top = crops.getBoundingClientRect().top + window.scrollY - navH - 12;
-        window.scrollTo({ top, behavior: "smooth" });
-        crops.classList.add("is-focus-pulse");
-        window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
-      });
-    }
-  });
+  document
+    .getElementById("btnEditCropsFromYield")
+    ?.addEventListener("click", () => {
+      setMode("expert", false);
+      const crops = document.getElementById("panelCustomize");
+      if (crops) {
+        window.requestAnimationFrame(() => {
+          const navH = parseInt(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--nav-h"
+            ) || "66",
+            10
+          );
+          const top =
+            crops.getBoundingClientRect().top + window.scrollY - navH - 12;
+          window.scrollTo({ top, behavior: "smooth" });
+          crops.classList.add("is-focus-pulse");
+          window.setTimeout(
+            () => crops.classList.remove("is-focus-pulse"),
+            1600
+          );
+        });
+      }
+    });
   // delega su lista seminabili
   document.getElementById("vegList").addEventListener("click", (e) => {
     const upgradeBtn = e.target.closest("[data-upgrade-level]");
@@ -5614,7 +6605,7 @@ function initEvents() {
   });
 
   // filtri piante
-  document.querySelectorAll(".veg-filter-tab").forEach(tab => {
+  document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
       vegFilter = tab.dataset.filter;
       renderVegList();
@@ -5634,9 +6625,11 @@ function initEvents() {
     }
     renderVegList();
   });
-  document.getElementById("vegList")?.addEventListener("scroll", updateVegListScrollAffordance, {
-    passive: true
-  });
+  document
+    .getElementById("vegList")
+    ?.addEventListener("scroll", updateVegListScrollAffordance, {
+      passive: true
+    });
   window.addEventListener("resize", updateVegListScrollAffordance);
 
   // modale avvio
@@ -5651,8 +6644,10 @@ function initEvents() {
     })
   );
   document.getElementById("startBtn")?.addEventListener("click", () => {
-    state.zona = document.querySelector("#zoneOpts .opt.on")?.dataset.zone ?? state.zona;
-    state.riscaldata = document.getElementById("heatedChk")?.checked ?? state.riscaldata;
+    state.zona =
+      document.querySelector("#zoneOpts .opt.on")?.dataset.zone ?? state.zona;
+    state.riscaldata =
+      document.getElementById("heatedChk")?.checked ?? state.riscaldata;
     state.larghezza = Math.max(
       1,
       parseFloat(document.getElementById("startW")?.value) || state.larghezza
@@ -5701,7 +6696,8 @@ function initConfig() {
   applyLanguage();
   syncSizeControls();
   syncClimateControls();
-  if (saved && hasSharedLang && saved.lang !== state.lang) saveConfig(Boolean(saved.done));
+  if (saved && hasSharedLang && saved.lang !== state.lang)
+    saveConfig(Boolean(saved.done));
   setStartModalVisible(!saved?.done && !isGuidedBoot() && !isFreeProjectBoot());
 }
 
@@ -5712,106 +6708,107 @@ function initConfig() {
    prezzi, badge, overlay carrello e messaggi di checkout.
    ========================================================================= */
 const PACK_DATA = {
-  pomodoro:    { seeds: 20,  price: 3.50 },
-  peperone:    { seeds: 15,  price: 3.20 },
-  peperoncino: { seeds: 15,  price: 3.20 },
-  melanzana:   { seeds: 20,  price: 3.50 },
-  zucchina:    { seeds: 10,  price: 3.80 },
-  zucca:       { seeds: 8,   price: 3.80 },
-  cetriolo:    { seeds: 15,  price: 3.20 },
-  melone:      { seeds: 12,  price: 3.50 },
-  anguria:     { seeds: 10,  price: 3.80 },
-  lattuga:     { seeds: 400, price: 2.40 },
-  radicchio:   { seeds: 300, price: 2.50 },
-  rucola:      { seeds: 500, price: 2.20 },
-  spinaci:     { seeds: 200, price: 2.40 },
-  bietola:     { seeds: 150, price: 2.60 },
-  cavolo:      { seeds: 100, price: 2.80 },
-  verza:       { seeds: 100, price: 2.80 },
-  broccolo:    { seeds: 100, price: 2.80 },
-  cavolfiore:  { seeds: 100, price: 2.80 },
-  cavolonero:  { seeds: 100, price: 2.80 },
-  cavolorapa:  { seeds: 100, price: 2.80 },
-  carota:      { seeds: 300, price: 2.30 },
-  finocchio:   { seeds: 200, price: 2.50 },
-  prezzemolo:  { seeds: 200, price: 2.60 },
-  basilico:    { seeds: 300, price: 2.60 },
-  coriandolo:  { seeds: 200, price: 2.60 },
-  aneto:       { seeds: 200, price: 2.60 },
-  cipolla:     { seeds: 200, price: 2.30 },
-  aglio:       { seeds: 50,  price: 3.00 },
-  porro:       { seeds: 200, price: 2.40 },
-  scalogno:    { seeds: 100, price: 2.80 },
-  fagiolino:   { seeds: 40,  price: 2.80 },
-  fagiolo:     { seeds: 30,  price: 3.00 },
-  pisello:     { seeds: 50,  price: 2.80 },
-  fragola:     { seeds: 100, price: 3.20 },
-  sedano:      { seeds: 300, price: 2.60 },
-  ravanello:   { seeds: 300, price: 2.20 },
-  barbabietola:{ seeds: 100, price: 2.40 },
-  cicoria:     { seeds: 300, price: 2.40 },
-  indivia:     { seeds: 300, price: 2.50 },
-  pakchoi:     { seeds: 200, price: 2.60 },
-  cavoletti:   { seeds: 100, price: 2.80 },
-  rapa:        { seeds: 200, price: 2.30 },
-  valerianella:{ seeds: 300, price: 2.40 },
-  rosmarino:   { seeds: 100, price: 3.00 },
-  timo:        { seeds: 200, price: 2.80 },
-  origano:     { seeds: 300, price: 2.80 },
-  salvia:      { seeds: 100, price: 2.80 },
+  pomodoro: { seeds: 20, price: 3.5 },
+  peperone: { seeds: 15, price: 3.2 },
+  peperoncino: { seeds: 15, price: 3.2 },
+  melanzana: { seeds: 20, price: 3.5 },
+  zucchina: { seeds: 10, price: 3.8 },
+  zucca: { seeds: 8, price: 3.8 },
+  cetriolo: { seeds: 15, price: 3.2 },
+  melone: { seeds: 12, price: 3.5 },
+  anguria: { seeds: 10, price: 3.8 },
+  lattuga: { seeds: 400, price: 2.4 },
+  radicchio: { seeds: 300, price: 2.5 },
+  rucola: { seeds: 500, price: 2.2 },
+  spinaci: { seeds: 200, price: 2.4 },
+  bietola: { seeds: 150, price: 2.6 },
+  cavolo: { seeds: 100, price: 2.8 },
+  verza: { seeds: 100, price: 2.8 },
+  broccolo: { seeds: 100, price: 2.8 },
+  cavolfiore: { seeds: 100, price: 2.8 },
+  cavolonero: { seeds: 100, price: 2.8 },
+  cavolorapa: { seeds: 100, price: 2.8 },
+  carota: { seeds: 300, price: 2.3 },
+  finocchio: { seeds: 200, price: 2.5 },
+  prezzemolo: { seeds: 200, price: 2.6 },
+  basilico: { seeds: 300, price: 2.6 },
+  coriandolo: { seeds: 200, price: 2.6 },
+  aneto: { seeds: 200, price: 2.6 },
+  cipolla: { seeds: 200, price: 2.3 },
+  aglio: { seeds: 50, price: 3.0 },
+  porro: { seeds: 200, price: 2.4 },
+  scalogno: { seeds: 100, price: 2.8 },
+  fagiolino: { seeds: 40, price: 2.8 },
+  fagiolo: { seeds: 30, price: 3.0 },
+  pisello: { seeds: 50, price: 2.8 },
+  fragola: { seeds: 100, price: 3.2 },
+  sedano: { seeds: 300, price: 2.6 },
+  ravanello: { seeds: 300, price: 2.2 },
+  barbabietola: { seeds: 100, price: 2.4 },
+  cicoria: { seeds: 300, price: 2.4 },
+  indivia: { seeds: 300, price: 2.5 },
+  pakchoi: { seeds: 200, price: 2.6 },
+  cavoletti: { seeds: 100, price: 2.8 },
+  rapa: { seeds: 200, price: 2.3 },
+  valerianella: { seeds: 300, price: 2.4 },
+  rosmarino: { seeds: 100, price: 3.0 },
+  timo: { seeds: 200, price: 2.8 },
+  origano: { seeds: 300, price: 2.8 },
+  salvia: { seeds: 100, price: 2.8 },
   // Legumi
-  fava:             { seeds: 20,  price: 3.00 },
-  cece:             { seeds: 30,  price: 3.00 },
-  lenticchia:       { seeds: 50,  price: 2.80 },
-  soia_edamame:     { seeds: 30,  price: 3.20 },
-  fagiolo_borlotto: { seeds: 25,  price: 3.00 },
+  fava: { seeds: 20, price: 3.0 },
+  cece: { seeds: 30, price: 3.0 },
+  lenticchia: { seeds: 50, price: 2.8 },
+  soia_edamame: { seeds: 30, price: 3.2 },
+  fagiolo_borlotto: { seeds: 25, price: 3.0 },
   // Radici e bulbi
-  patata:           { seeds: 10,  price: 4.50 },
-  patata_dolce:     { seeds: 5,   price: 5.00 },
-  pastinaca:        { seeds: 200, price: 2.50 },
-  radice_prezemolo: { seeds: 200, price: 2.50 },
-  sedano_rapa:      { seeds: 300, price: 2.60 },
-  rafano:           { seeds: 50,  price: 2.80 },
-  cipolla_rossa:    { seeds: 200, price: 2.30 },
-  cipollotto:       { seeds: 200, price: 2.30 },
-  daikon:           { seeds: 100, price: 2.50 },
-  scorzonera:       { seeds: 100, price: 2.80 },
-  topinambur:       { seeds: 10,  price: 4.00 },
-  cavolo_navone:    { seeds: 200, price: 2.50 },
+  patata: { seeds: 10, price: 4.5 },
+  patata_dolce: { seeds: 5, price: 5.0 },
+  pastinaca: { seeds: 200, price: 2.5 },
+  radice_prezemolo: { seeds: 200, price: 2.5 },
+  sedano_rapa: { seeds: 300, price: 2.6 },
+  rafano: { seeds: 50, price: 2.8 },
+  cipolla_rossa: { seeds: 200, price: 2.3 },
+  cipollotto: { seeds: 200, price: 2.3 },
+  daikon: { seeds: 100, price: 2.5 },
+  scorzonera: { seeds: 100, price: 2.8 },
+  topinambur: { seeds: 10, price: 4.0 },
+  cavolo_navone: { seeds: 200, price: 2.5 },
   // Foglie e insalate
-  loboda:           { seeds: 100, price: 2.50 },
-  stevia_dolce:     { seeds: 100, price: 3.20 },
-  asparago:         { seeds: 20,  price: 3.50 },
-  carciofo:         { seeds: 10,  price: 4.00 },
-  cardo:            { seeds: 20,  price: 3.50 },
-  crescione:        { seeds: 500, price: 2.20 },
-  mizuna:           { seeds: 300, price: 2.40 },
-  senape_foglia:    { seeds: 300, price: 2.40 },
-  tatsoi:           { seeds: 300, price: 2.40 },
-  cavolo_cinese:    { seeds: 200, price: 2.60 },
-  cavolo_rosso:     { seeds: 100, price: 2.80 },
-  broccolo_rapa:    { seeds: 200, price: 2.50 },
+  loboda: { seeds: 100, price: 2.5 },
+  stevia_dolce: { seeds: 100, price: 3.2 },
+  asparago: { seeds: 20, price: 3.5 },
+  carciofo: { seeds: 10, price: 4.0 },
+  cardo: { seeds: 20, price: 3.5 },
+  crescione: { seeds: 500, price: 2.2 },
+  mizuna: { seeds: 300, price: 2.4 },
+  senape_foglia: { seeds: 300, price: 2.4 },
+  tatsoi: { seeds: 300, price: 2.4 },
+  cavolo_cinese: { seeds: 200, price: 2.6 },
+  cavolo_rosso: { seeds: 100, price: 2.8 },
+  broccolo_rapa: { seeds: 200, price: 2.5 },
   // Frutti esotici
-  mais_dolce:       { seeds: 30,  price: 3.50 },
-  gombo:            { seeds: 20,  price: 3.80 },
-  tomatillo:        { seeds: 20,  price: 3.50 },
-  physalis:         { seeds: 20,  price: 3.50 },
-  kiwano:           { seeds: 10,  price: 4.00 },
-  cucamelon:        { seeds: 15,  price: 4.00 },
+  mais_dolce: { seeds: 30, price: 3.5 },
+  gombo: { seeds: 20, price: 3.8 },
+  tomatillo: { seeds: 20, price: 3.5 },
+  physalis: { seeds: 20, price: 3.5 },
+  kiwano: { seeds: 10, price: 4.0 },
+  cucamelon: { seeds: 15, price: 4.0 },
   // Aromatiche e fiori
-  erba_cipollina:   { seeds: 200, price: 2.80 },
-  leustean:         { seeds: 100, price: 3.00 },
-  dragoncello:      { seeds: 100, price: 3.00 },
-  menta:            { seeds: 200, price: 2.80 },
-  maggiorana:       { seeds: 300, price: 2.60 },
-  camomilla:        { seeds: 300, price: 2.40 },
-  calendula:        { seeds: 100, price: 2.40 },
-  nasturzio:        { seeds: 50,  price: 2.80 },
-  shiso:            { seeds: 100, price: 3.20 },
+  erba_cipollina: { seeds: 200, price: 2.8 },
+  leustean: { seeds: 100, price: 3.0 },
+  dragoncello: { seeds: 100, price: 3.0 },
+  menta: { seeds: 200, price: 2.8 },
+  maggiorana: { seeds: 300, price: 2.6 },
+  camomilla: { seeds: 300, price: 2.4 },
+  calendula: { seeds: 100, price: 2.4 },
+  nasturzio: { seeds: 50, price: 2.8 },
+  shiso: { seeds: 100, price: 3.2 }
 };
 function formatMoney(value) {
   return new Intl.NumberFormat(state.lang === "ro" ? "ro-RO" : "it-IT", {
-    style: "currency", currency: "EUR"
+    style: "currency",
+    currency: "EUR"
   }).format(value);
 }
 
@@ -5820,7 +6817,9 @@ let confCart = [];
 function loadConfCart() {
   try {
     const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
-    confCart = raw.map(i => typeof i === "string" ? { id: i, bustine: 1 } : i);
+    confCart = raw.map((i) =>
+      typeof i === "string" ? { id: i, bustine: 1 } : i
+    );
   } catch (_) {
     confCart = [];
   }
@@ -5855,20 +6854,26 @@ function updateConfCartUI() {
   foot.hidden = false;
   if (clearBtn) clearBtn.hidden = false;
 
-  items.innerHTML = confCart
-    .map(({ id, bustine }) => {
-      const p = BYID[id];
-      if (!p) return "";
-      const photo = PLANT_PHOTOS[id] || "";
-      const emoji = FRUIT_EMOJI[id] || "🌱";
-      const pd = PACK_DATA[id] || { seeds: 100, price: 2.50 };
-      const bustLabel = bustine === 1 ? tx("cart.pack_one") : tx("cart.pack_many", { count: bustine });
-      const seedLabel = tx("cart.seeds_per_pack", { count: pd.seeds });
-      const priceLabel = tx("cart.per_pack");
-      return `<div class="cart-item">
-        ${photo
-          ? `<img src="${photo}" alt="${plantText(p, "nome")}" loading="lazy" />`
-          : `<span style="font-size:2rem;line-height:1;flex-shrink:0">${emoji}</span>`}
+  items.innerHTML =
+    confCart
+      .map(({ id, bustine }) => {
+        const p = BYID[id];
+        if (!p) return "";
+        const photo = PLANT_PHOTOS[id] || "";
+        const emoji = FRUIT_EMOJI[id] || "🌱";
+        const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
+        const bustLabel =
+          bustine === 1
+            ? tx("cart.pack_one")
+            : tx("cart.pack_many", { count: bustine });
+        const seedLabel = tx("cart.seeds_per_pack", { count: pd.seeds });
+        const priceLabel = tx("cart.per_pack");
+        return `<div class="cart-item">
+        ${
+          photo
+            ? `<img src="${photo}" alt="${plantText(p, "nome")}" loading="lazy" />`
+            : `<span style="font-size:2rem;line-height:1;flex-shrink:0">${emoji}</span>`
+        }
         <span class="cart-item-copy">
           <span class="cart-item-name">${plantText(p, "nome")}</span>
           <span class="cart-item-meta">${plantText(p, "nota") || ""}</span>
@@ -5879,16 +6884,16 @@ function updateConfCartUI() {
         </span>
         <button class="cart-item-remove" onclick="removeFromConfCart('${id}')" title="${tx("remove")}">✕</button>
       </div>`;
-    })
-    .join("") +
+      })
+      .join("") +
     `<div class="cart-total-row">
       <span>${tx("cart.total")}</span>
-      <b>${formatMoney(confCart.reduce((s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.50) * bustine, 0))}</b>
+      <b>${formatMoney(confCart.reduce((s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine, 0))}</b>
     </div>`;
 }
 
 function removeFromConfCart(id) {
-  confCart = confCart.filter(i => i.id !== id);
+  confCart = confCart.filter((i) => i.id !== id);
   saveConfCart();
   updateConfCartUI();
   const existingBtn = document.getElementById("confCartExportBtn");
@@ -5920,20 +6925,36 @@ function showConfCartNudge(count) {
   const meta = document.getElementById("cartNudgeMeta");
   if (!nudge || !title || !meta) return;
   title.textContent = tx("cart.nudge_title");
-  meta.textContent = count === 1 ? tx("cart.nudge_meta_one") : tx("cart.nudge_meta_many", { count });
+  meta.textContent =
+    count === 1
+      ? tx("cart.nudge_meta_one")
+      : tx("cart.nudge_meta_many", { count });
   nudge.classList.add("visible");
   clearTimeout(showConfCartNudge._t);
-  showConfCartNudge._t = setTimeout(() => nudge.classList.remove("visible"), 3800);
+  showConfCartNudge._t = setTimeout(
+    () => nudge.classList.remove("visible"),
+    3800
+  );
 }
 
 function alertConfCheckout() {
-  const lines = confCart.map(({ id, bustine }) => {
-    const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
-    const pd = PACK_DATA[id] || { price: 2.50 };
-    const b = bustine === 1 ? tx("cart.pack_one") : tx("cart.pack_many", { count: bustine });
-    return `- ${nome}: ${b} × ${formatMoney(pd.price)} = ${formatMoney(bustine * pd.price)}`;
-  }).join("\n");
-  const total = formatMoney(confCart.reduce((s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.50) * bustine, 0));
+  const lines = confCart
+    .map(({ id, bustine }) => {
+      const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
+      const pd = PACK_DATA[id] || { price: 2.5 };
+      const b =
+        bustine === 1
+          ? tx("cart.pack_one")
+          : tx("cart.pack_many", { count: bustine });
+      return `- ${nome}: ${b} × ${formatMoney(pd.price)} = ${formatMoney(bustine * pd.price)}`;
+    })
+    .join("\n");
+  const total = formatMoney(
+    confCart.reduce(
+      (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
+      0
+    )
+  );
   alert(tx("cart.checkout_msg", { lines, total }));
 }
 
@@ -6028,7 +7049,12 @@ if (LIVELLI.has(_bootLivello)) {
   } else if (!_bootIntentApplied && !_bootCfg) {
     // Prima visita: riempimento automatico.
     autoFill();
-  } else if (!_bootIntentApplied && _bootCfg?.done && state.autoPlan && state.beds.length === 0) {
+  } else if (
+    !_bootIntentApplied &&
+    _bootCfg?.done &&
+    state.autoPlan &&
+    state.beds.length === 0
+  ) {
     // Utente di ritorno con piano automatico ma serra vuota, per esempio dopo cambio mese.
     autoFill();
   } else if (!_bootIntentApplied) {

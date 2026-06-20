@@ -47,7 +47,9 @@
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
-        var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
@@ -66,7 +68,11 @@
           serraAsset("assets/css/style.css") +
           '" />'
       );
-      document.write('<link rel="stylesheet" href="' + serraAsset("assets/css/theme.css") + '" />');
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/theme.css") +
+          '" />'
+      );
     </script>
   </head>
   <body>
@@ -106,7 +112,10 @@
             class="nav-link nav-link--current nav-link--home"
             aria-current="page"
             data-i18n-conf="nav.configuratore"
-            onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"
+            onclick="
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              return false;
+            "
             >📐 Configuratore</a
           >
           <a
@@ -128,9 +137,19 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <button class="theme-toggle" type="button" aria-label="Attiva modalità scura" aria-pressed="false" title="Cambia tema">
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Attiva modalità scura"
+            aria-pressed="false"
+            title="Cambia tema"
+          >
+            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
+              >☾</span
+            >
+            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
+              >☀</span
+            >
           </button>
           <div class="nav-lang">
             <span class="nav-action-icon" aria-hidden="true">🌐</span>
@@ -219,15 +238,22 @@
                 role="tab"
                 aria-selected="false"
               >
-                <span class="persona-card-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"></span>
+                <span class="persona-card-ico" aria-hidden="true"
+                  ><img
+                    src="assets/img/svg/plant_lv1.svg"
+                    alt=""
+                    class="level-plant-ico"
+                /></span>
                 <span class="persona-card-body">
                   <b>
                     <span id="personaNovTitle">Sono alle prime armi</span>
-                    <span class="persona-level-label" id="personaNovLevel">(Principiante)</span>
+                    <span class="persona-level-label" id="personaNovLevel"
+                      >(Principiante)</span
+                    >
                   </b>
                   <small id="personaNovDesc"
-                    >Ti guido passo passo: clima, serra e un orto pronto fino
-                    al carrello</small
+                    >Ti guido passo passo: clima, serra e un orto pronto fino al
+                    carrello</small
                   >
                 </span>
                 <span class="persona-card-go" aria-hidden="true">→</span>
@@ -240,11 +266,18 @@
                 role="tab"
                 aria-selected="true"
               >
-                <span class="persona-card-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"></span>
+                <span class="persona-card-ico" aria-hidden="true"
+                  ><img
+                    src="assets/img/svg/plant_lv2.svg"
+                    alt=""
+                    class="level-plant-ico"
+                /></span>
                 <span class="persona-card-body">
                   <b>
                     <span id="personaIntTitle">Ho un po' di esperienza</span>
-                    <span class="persona-level-label" id="personaIntLevel">(Intermedio)</span>
+                    <span class="persona-level-label" id="personaIntLevel"
+                      >(Intermedio)</span
+                    >
                   </b>
                   <small id="personaIntDesc"
                     >Parti guidato, poi personalizza le colture e aggiungi semi
@@ -261,11 +294,18 @@
                 role="tab"
                 aria-selected="false"
               >
-                <span class="persona-card-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"></span>
+                <span class="persona-card-ico" aria-hidden="true"
+                  ><img
+                    src="assets/img/svg/plant_lv3.svg"
+                    alt=""
+                    class="level-plant-ico"
+                /></span>
                 <span class="persona-card-body">
                   <b>
                     <span id="personaExpTitle">So già cosa voglio</span>
-                    <span class="persona-level-label" id="personaExpLevel">(Esperto)</span>
+                    <span class="persona-level-label" id="personaExpLevel"
+                      >(Esperto)</span
+                    >
                   </b>
                   <small id="personaExpDesc"
                     >Sfoglia tutto il catalogo, di stagione o no, e componi la
@@ -308,13 +348,11 @@
                 >
               </li>
             </ol>
-            <button
-              class="guided-nov-cta"
-              type="button"
-              id="guidedNovCta"
-            >
+            <button class="guided-nov-cta" type="button" id="guidedNovCta">
               <span aria-hidden="true">📐</span>
-              <span id="guidedNovCtaLabel">Verifica le dimensioni della serra</span>
+              <span id="guidedNovCtaLabel"
+                >Verifica le dimensioni della serra</span
+              >
             </button>
           </div>
 
@@ -361,8 +399,8 @@
                 <span class="guided-step-num" aria-hidden="true">1</span>
                 <span class="guided-step-ico" aria-hidden="true">📐</span>
                 <span
-                  >Imposta <strong>misure, clima e mese</strong> per il
-                  catalogo completo</span
+                  >Imposta <strong>misure, clima e mese</strong> per il catalogo
+                  completo</span
                 >
               </li>
               <li>
@@ -377,8 +415,8 @@
                 <span class="guided-step-num" aria-hidden="true">3</span>
                 <span class="guided-step-ico" aria-hidden="true">🧩</span>
                 <span
-                  >Disponi le <strong>aiuole</strong> e regola quantità e
-                  layout a mano</span
+                  >Disponi le <strong>aiuole</strong> e regola quantità e layout
+                  a mano</span
                 >
               </li>
             </ol>
@@ -422,8 +460,13 @@
                 </button>
               </div>
               <div class="panel-body">
-                <div class="section-label" id="sizesSectionLabel">1. Misure interne</div>
-                <div class="row field settings-visual-field settings-visual-field--dimensions" id="dimensionsField">
+                <div class="section-label" id="sizesSectionLabel">
+                  1. Misure interne
+                </div>
+                <div
+                  class="row field settings-visual-field settings-visual-field--dimensions"
+                  id="dimensionsField"
+                >
                   <div>
                     <label class="fld">Larghezza</label>
                     <div class="stepper">
@@ -508,7 +551,9 @@
                   </div>
                 </div>
                 <div class="field" id="pathField">
-                  <label class="fld section-label path-section-label" id="lblPath"
+                  <label
+                    class="fld section-label path-section-label"
+                    id="lblPath"
                     >Camminamento tra aiuole</label
                   >
                   <div
@@ -556,8 +601,13 @@
                     <span style="font-size: 12px; color: #5a6a5a">cm</span>
                   </div>
                 </div>
-                <div class="section-label" id="climateSectionLabel">2. Clima</div>
-                <div class="row field settings-visual-field settings-visual-field--climate" id="climateField">
+                <div class="section-label" id="climateSectionLabel">
+                  2. Clima
+                </div>
+                <div
+                  class="row field settings-visual-field settings-visual-field--climate"
+                  id="climateField"
+                >
                   <div>
                     <label class="fld">Zona</label>
                     <select id="inZona">
@@ -574,7 +624,10 @@
                     </select>
                   </div>
                 </div>
-                <div class="section-label auto-plan-control" id="autoPlanSectionLabel">
+                <div
+                  class="section-label auto-plan-control"
+                  id="autoPlanSectionLabel"
+                >
                   3. Piano automatico
                 </div>
                 <div class="crops-month-selector auto-plan-control">
@@ -630,18 +683,26 @@
               </span>
               <span class="preset-visual-copy">
                 <label class="fld">Layout già pronti</label>
-                <small id="presetBarHint">Scegli una disposizione completa da cui partire</small>
+                <small id="presetBarHint"
+                  >Scegli una disposizione completa da cui partire</small
+                >
               </span>
             </div>
             <select id="inPreset">
               <option value="">Scegli un esempio…</option>
-              <optgroup label="Per stagione" data-i18n-optgroup="catPresetSeason">
+              <optgroup
+                label="Per stagione"
+                data-i18n-optgroup="catPresetSeason"
+              >
                 <option value="primaverile">Orto di primavera</option>
                 <option value="estivo">Orto estivo abbondante</option>
                 <option value="autunnale">Orto d'autunno</option>
                 <option value="invernale">Serra invernale verde</option>
               </optgroup>
-              <optgroup label="Per tipo di coltura" data-i18n-optgroup="catPresetType">
+              <optgroup
+                label="Per tipo di coltura"
+                data-i18n-optgroup="catPresetType"
+              >
                 <option value="foglie">Taglio continuo di foglie</option>
                 <option value="radici">Radici e bulbi facili</option>
                 <option value="brassicacee">Cavoli da serra fresca</option>
@@ -650,7 +711,10 @@
                 <option value="frutti">Ortaggi da frutto</option>
                 <option value="cucurbitacee">Zucche e cetrioli</option>
               </optgroup>
-              <optgroup label="Per obiettivo" data-i18n-optgroup="catPresetGoal">
+              <optgroup
+                label="Per obiettivo"
+                data-i18n-optgroup="catPresetGoal"
+              >
                 <option value="principiante">Orto del principiante</option>
                 <option value="insalate">Insalate facili tutto l'anno</option>
                 <option value="salsa">Tutto per la salsa di pomodoro</option>
@@ -662,9 +726,15 @@
             <div class="preset-applied" id="presetApplied" role="status" hidden>
               <span class="preset-applied-copy">
                 <b id="presetAppliedTitle">Layout applicato</b>
-                <small id="presetAppliedHint">Puoi modificarlo oppure tornare al piano stagionale.</small>
+                <small id="presetAppliedHint"
+                  >Puoi modificarlo oppure tornare al piano stagionale.</small
+                >
               </span>
-              <button class="preset-seasonal-btn" id="btnPresetSeasonal" type="button">
+              <button
+                class="preset-seasonal-btn"
+                id="btnPresetSeasonal"
+                type="button"
+              >
                 Torna al piano del mese
               </button>
             </div>
@@ -794,7 +864,11 @@
                   role="group"
                   aria-label="Filtra piante"
                 >
-                  <button class="veg-filter-tab active" type="button" data-filter="all">
+                  <button
+                    class="veg-filter-tab active"
+                    type="button"
+                    data-filter="all"
+                  >
                     <span class="tab-ico" aria-hidden="true">🌿</span>
                     <span class="tab-lbl">Seminabili ora</span>
                     <span class="tab-count">—</span>
@@ -804,14 +878,20 @@
                     <span class="tab-lbl">Già aggiunte</span>
                     <span class="tab-count">—</span>
                   </button>
-                  <button class="veg-filter-tab" type="button" data-filter="all-beds">
+                  <button
+                    class="veg-filter-tab"
+                    type="button"
+                    data-filter="all-beds"
+                  >
                     <span class="tab-ico" aria-hidden="true">⌕</span>
                     <span class="tab-lbl">Tutti i semi</span>
                     <span class="tab-count">—</span>
                   </button>
                 </div>
                 <div class="veg-search-wrap" id="vegSearchWrap" hidden>
-                  <label class="veg-search-label" for="vegSearchInput">Cerca coltura</label>
+                  <label class="veg-search-label" for="vegSearchInput"
+                    >Cerca coltura</label
+                  >
                   <div class="veg-search-box">
                     <span class="veg-search-icon" aria-hidden="true">⌕</span>
                     <input
@@ -856,7 +936,9 @@
                 </button>
                 <div class="veg-scroll-hint" id="vegScrollHint" hidden>
                   <span>Scorri per vedere tutte le colture</span>
-                  <span class="veg-scroll-hint-arrow" aria-hidden="true">↓</span>
+                  <span class="veg-scroll-hint-arrow" aria-hidden="true"
+                    >↓</span
+                  >
                 </div>
                 <div class="veg-list-scroll-wrap" id="vegListScrollWrap">
                   <div class="veg-list" id="vegList"></div>
@@ -978,9 +1060,15 @@
                     type="button"
                     aria-expanded="true"
                   >
-                    <span class="panel-toggle-seeds-icon" aria-hidden="true">🌱</span>
+                    <span class="panel-toggle-seeds-icon" aria-hidden="true"
+                      >🌱</span
+                    >
                     <span class="panel-toggle-label">Chiudi</span>
-                    <span class="panel-toggle-badge" id="yieldToggleBadge" aria-hidden="true"></span>
+                    <span
+                      class="panel-toggle-badge"
+                      id="yieldToggleBadge"
+                      aria-hidden="true"
+                    ></span>
                     <span class="panel-toggle-icon" aria-hidden="true">⌃</span>
                   </button>
                 </div>
@@ -1002,9 +1090,22 @@
                 type="button"
                 aria-label="Modifica le colture della serra"
               >
-                <svg class="yield-edit-crops-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                <svg
+                  class="yield-edit-crops-svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
                 </svg>
                 <span id="yieldEditCropsLabel">Modifica colture</span>
                 <span id="yieldEditCropsHint" hidden></span>
@@ -1103,18 +1204,44 @@
       <div class="footer-main">
         <div class="footer-brand-col">
           <div class="footer-logo-row">
-            <img class="footer-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra"/>
+            <img
+              class="footer-logo"
+              src="assets/img/svg/logo.svg"
+              alt="Orto in Serra"
+            />
             <span class="footer-brand-name">Orto in Serra</span>
           </div>
           <div class="footer-motto">"Pianta con cura, raccogli con gioia."</div>
           <div class="footer-social">
-            <a href="#" title="Instagram" aria-label="Instagram"><img src="assets/img/svg/icon-instagram.svg" alt="" class="footer-social-icon"></a>
-            <a href="#" title="Facebook" aria-label="Facebook"><img src="assets/img/svg/icon-facebook.svg" alt="" class="footer-social-icon"></a>
-            <a href="#" title="YouTube" aria-label="YouTube"><img src="assets/img/svg/icon-youtube.svg" alt="" class="footer-social-icon"></a>
+            <a href="#" title="Instagram" aria-label="Instagram"
+              ><img
+                src="assets/img/svg/icon-instagram.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="Facebook" aria-label="Facebook"
+              ><img
+                src="assets/img/svg/icon-facebook.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="YouTube" aria-label="YouTube"
+              ><img
+                src="assets/img/svg/icon-youtube.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
           </div>
           <div class="footer-tip-inline">
-            <div class="footer-tip-kicker" data-i18n-conf="footer.consiglio_kicker">Consiglio del mese</div>
-            <div class="footer-tip-text" id="footerTip">Annaffia alla base, mai sulle foglie: previeni l'oidio.</div>
+            <div
+              class="footer-tip-kicker"
+              data-i18n-conf="footer.consiglio_kicker"
+            >
+              Consiglio del mese
+            </div>
+            <div class="footer-tip-text" id="footerTip">
+              Annaffia alla base, mai sulle foglie: previeni l'oidio.
+            </div>
           </div>
         </div>
         <div class="footer-nav-col">
@@ -1122,41 +1249,104 @@
             Esplora
           </div>
           <ul class="footer-nav-list">
-            <li><a href="configuratore.html"><span data-i18n-conf="nav.configuratore">📐 Configuratore</span></a></li>
-            <li><a href="index.html#abbinamenti"><span data-i18n-conf="nav.abbinamenti">🌿 Abbinamenti</span></a></li>
-            <li><a href="index.html#kit"><span data-i18n-conf="footer.kit">📦 Kit del mese</span></a></li>
-            <li><a href="index.html#contatti"><span data-i18n-conf="nav.contatti">✉️ Contatti</span></a></li>
+            <li>
+              <a href="configuratore.html"
+                ><span data-i18n-conf="nav.configuratore"
+                  >📐 Configuratore</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="index.html#abbinamenti"
+                ><span data-i18n-conf="nav.abbinamenti">🌿 Abbinamenti</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html#kit"
+                ><span data-i18n-conf="footer.kit">📦 Kit del mese</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html#contatti"
+                ><span data-i18n-conf="nav.contatti">✉️ Contatti</span></a
+              >
+            </li>
           </ul>
         </div>
         <div class="footer-nav-col">
-          <div class="footer-legal-title" data-i18n-conf="footer.legale">Legale</div>
+          <div class="footer-legal-title" data-i18n-conf="footer.legale">
+            Legale
+          </div>
           <ul class="footer-legal-list">
-            <li><a href="#" onclick="return false;" data-i18n-conf="footer.privacy">Privacy Policy</a></li>
-            <li><a href="#" onclick="return false;" data-i18n-conf="footer.cookie">Cookie Policy</a></li>
-            <li><a href="#" onclick="return false;" data-i18n-conf="footer.termini">Termini di Servizio</a></li>
+            <li>
+              <a
+                href="#"
+                onclick="return false;"
+                data-i18n-conf="footer.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n-conf="footer.cookie"
+                >Cookie Policy</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="return false;"
+                data-i18n-conf="footer.termini"
+                >Termini di Servizio</a
+              >
+            </li>
           </ul>
           <div class="footer-support-block">
-            <div class="footer-nav-title" data-i18n-conf="footer.supporto_title">Supporto</div>
+            <div
+              class="footer-nav-title"
+              data-i18n-conf="footer.supporto_title"
+            >
+              Supporto
+            </div>
             <ul class="footer-legal-list">
-              <li><a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a></li>
+              <li>
+                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+              </li>
               <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-company-info">Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023 Impruneta (FI)</div>
-        <div class="footer-gdpr-copy" id="footerCopy">© 2025 Orto in Serra · <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span></div>
+        <div class="footer-company-info">
+          Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023
+          Impruneta (FI)
+        </div>
+        <div class="footer-gdpr-copy" id="footerCopy">
+          © 2025 Orto in Serra ·
+          <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span>
+        </div>
       </div>
     </footer>
 
     <!-- Script pagina: menu, traduzioni e logica configuratore. -->
     <script>
-      document.write('<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/script.js") + '"><\/script>');
+      document.write(
+        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          serraAsset("assets/js/plants-data.js") +
+          '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/script.js") + '"><\/script>'
+      );
     </script>
     <!-- Torna su: mostra il pulsante dopo lo scroll. -->
     <script>

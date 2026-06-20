@@ -51,7 +51,9 @@
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
-        var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
@@ -61,7 +63,11 @@
           serraAsset("assets/css/index.css") +
           '" />'
       );
-      document.write('<link rel="stylesheet" href="' + serraAsset("assets/css/theme.css") + '" />');
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/theme.css") +
+          '" />'
+      );
     </script>
   </head>
   <body>
@@ -78,7 +84,17 @@
           </span>
         </a>
         <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
-          <a href="#" class="nav-link nav-link--current nav-link--home" aria-current="page" data-i18n="nav.home" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">🏠 Home</a>
+          <a
+            href="#"
+            class="nav-link nav-link--current nav-link--home"
+            aria-current="page"
+            data-i18n="nav.home"
+            onclick="
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              return false;
+            "
+            >🏠 Home</a
+          >
           <a href="#stagione" class="nav-link" data-i18n="nav.stagione"
             >🌿 Catalogo completo</a
           >
@@ -110,9 +126,19 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <button class="theme-toggle" type="button" aria-label="Attiva modalità scura" aria-pressed="false" title="Cambia tema">
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Attiva modalità scura"
+            aria-pressed="false"
+            title="Cambia tema"
+          >
+            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
+              >☾</span
+            >
+            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
+              >☀</span
+            >
           </button>
           <div class="nav-lang">
             <span class="nav-action-icon" aria-hidden="true">🌐</span>
@@ -142,7 +168,6 @@
     <section class="hero-immersive" id="hero">
       <div class="hero-bg-plants" id="heroBgPlants"></div>
       <div class="hero-content">
-
         <!-- Stato stagione: mese e contesto corrente. -->
         <div class="hero-season-kicker">
           <span class="hero-kicker-pulse" aria-hidden="true"></span>
@@ -156,7 +181,8 @@
           Semi freschi per la tua serra.
         </h1>
         <p class="hero-sub" data-i18n="hero.sub">
-          40+ varietà filtrate per clima e mese. Aggiungi al carrello e coltiva con metodo.
+          40+ varietà filtrate per clima e mese. Aggiungi al carrello e coltiva
+          con metodo.
         </p>
         <span id="heroTagline" hidden></span>
 
@@ -164,34 +190,70 @@
         <div class="hero-controls" aria-label="Filtri clima">
           <div class="hero-controls-pill">
             <div class="hero-ctrl-block">
-              <span class="hero-controls-hint" data-i18n="hero.controls_hint">Com'è il clima fuori dalla tua serra?</span>
+              <span class="hero-controls-hint" data-i18n="hero.controls_hint"
+                >Com'è il clima fuori dalla tua serra?</span
+              >
               <div class="hero-zone-options">
-                <button class="hero-zone-btn" data-zone="freddo" onclick="setZone('freddo')">
+                <button
+                  class="hero-zone-btn"
+                  data-zone="freddo"
+                  onclick="setZone('freddo')"
+                >
                   <span class="hero-zone-icon" aria-hidden="true">❄️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label">Fredda</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label"
+                    >Fredda</span
+                  >
                   <small data-i18n="hero.zone_cold_hint">inverni rigidi</small>
                 </button>
-                <button class="hero-zone-btn active" data-zone="temperato" onclick="setZone('temperato')">
+                <button
+                  class="hero-zone-btn active"
+                  data-zone="temperato"
+                  onclick="setZone('temperato')"
+                >
                   <span class="hero-zone-icon" aria-hidden="true">🌤️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label">Temperata</span>
-                  <small data-i18n="hero.zone_temp_hint">gelate occasionali</small>
+                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label"
+                    >Temperata</span
+                  >
+                  <small data-i18n="hero.zone_temp_hint"
+                    >gelate occasionali</small
+                  >
                 </button>
-                <button class="hero-zone-btn" data-zone="caldo" onclick="setZone('caldo')">
+                <button
+                  class="hero-zone-btn"
+                  data-zone="caldo"
+                  onclick="setZone('caldo')"
+                >
                   <span class="hero-zone-icon" aria-hidden="true">☀️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label">Calda</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label"
+                    >Calda</span
+                  >
                   <small data-i18n="hero.zone_warm_hint">inverni miti</small>
                 </button>
               </div>
             </div>
             <div class="hero-ctrl-block">
-              <span class="hero-controls-hint" id="heroHeatedLabel">Riscaldamento spento</span>
-              <button class="hero-heated-btn" id="heroHeatedBtn" onclick="toggleHeated()">
-                <span class="hero-heat-track" aria-hidden="true"><span class="hero-heat-dot"></span></span>
-                <span data-i18n="hero.greenhouse_label">Riscaldamento serra</span>
+              <span class="hero-controls-hint" id="heroHeatedLabel"
+                >Riscaldamento spento</span
+              >
+              <button
+                class="hero-heated-btn"
+                id="heroHeatedBtn"
+                onclick="toggleHeated()"
+              >
+                <span class="hero-heat-track" aria-hidden="true"
+                  ><span class="hero-heat-dot"></span
+                ></span>
+                <span data-i18n="hero.greenhouse_label"
+                  >Riscaldamento serra</span
+                >
               </button>
             </div>
           </div>
-          <span class="hero-filter-note" id="heroFilterNote" aria-live="polite"></span>
+          <span
+            class="hero-filter-note"
+            id="heroFilterNote"
+            aria-live="polite"
+          ></span>
         </div>
 
         <!-- Accesso al configuratore: percorsi guidati e anteprima. -->
@@ -206,48 +268,104 @@
                 Progetta la tua serra, vista dall'alto
               </h2>
               <p class="hero-cfg-desc" data-i18n="hero.cfg_desc">
-                Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.
+                Misure reali, clima e colture disposte aiuola per aiuola. Vedi
+                com'è prima ancora di seminare.
               </p>
               <div class="hero-cfg-actions">
-                <button class="hero-cfg-cta" type="button" id="cfgOpenBtn"
-                  aria-expanded="false" aria-controls="cfgLevels" onclick="toggleCfgLevels()">
+                <button
+                  class="hero-cfg-cta"
+                  type="button"
+                  id="cfgOpenBtn"
+                  aria-expanded="false"
+                  aria-controls="cfgLevels"
+                  onclick="toggleCfgLevels()"
+                >
                   <span class="hero-cfg-cta-ico" aria-hidden="true">📐</span>
                   <span data-i18n="hero.cfg_cta">Apri il configuratore</span>
                   <span class="hero-cfg-cta-arrow" aria-hidden="true">▾</span>
                 </button>
-                <div class="hero-cfg-levels" id="cfgLevels" role="group"
-                  aria-label="Scegli il livello" hidden>
-                  <span class="hero-cfg-levels-title" data-i18n="hero.cfg_levels_title">Che tipo di coltivatore sei?</span>
+                <div
+                  class="hero-cfg-levels"
+                  id="cfgLevels"
+                  role="group"
+                  aria-label="Scegli il livello"
+                  hidden
+                >
+                  <span
+                    class="hero-cfg-levels-title"
+                    data-i18n="hero.cfg_levels_title"
+                    >Che tipo di coltivatore sei?</span
+                  >
                   <div class="hero-cfg-levels-grid">
-                    <a class="hero-cfg-level" href="configuratore.html?livello=novizio&guided=1">
-                      <span class="hero-cfg-level-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"></span>
+                    <a
+                      class="hero-cfg-level"
+                      href="configuratore.html?livello=novizio&guided=1"
+                    >
+                      <span class="hero-cfg-level-ico" aria-hidden="true"
+                        ><img
+                          src="assets/img/svg/plant_lv1.svg"
+                          alt=""
+                          class="level-plant-ico"
+                      /></span>
                       <span class="hero-cfg-level-body">
                         <b data-i18n="hero.cfg_novizio">Principiante</b>
-                        <small data-i18n="hero.cfg_nov_hint">Orto pronto, guidato passo passo</small>
+                        <small data-i18n="hero.cfg_nov_hint"
+                          >Orto pronto, guidato passo passo</small
+                        >
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true">→</span>
+                      <span class="hero-cfg-level-arrow" aria-hidden="true"
+                        >→</span
+                      >
                     </a>
-                    <a class="hero-cfg-level" href="configuratore.html?livello=intermedio&guided=1">
-                      <span class="hero-cfg-level-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"></span>
+                    <a
+                      class="hero-cfg-level"
+                      href="configuratore.html?livello=intermedio&guided=1"
+                    >
+                      <span class="hero-cfg-level-ico" aria-hidden="true"
+                        ><img
+                          src="assets/img/svg/plant_lv2.svg"
+                          alt=""
+                          class="level-plant-ico"
+                      /></span>
                       <span class="hero-cfg-level-body">
                         <b data-i18n="hero.cfg_intermedio">Intermedio</b>
-                        <small data-i18n="hero.cfg_int_hint">Guidato, ma personalizzabile</small>
+                        <small data-i18n="hero.cfg_int_hint"
+                          >Guidato, ma personalizzabile</small
+                        >
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true">→</span>
+                      <span class="hero-cfg-level-arrow" aria-hidden="true"
+                        >→</span
+                      >
                     </a>
-                    <a class="hero-cfg-level" href="configuratore.html?livello=esperto&mode=expert&empty=1">
-                      <span class="hero-cfg-level-ico" aria-hidden="true"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"></span>
+                    <a
+                      class="hero-cfg-level"
+                      href="configuratore.html?livello=esperto&mode=expert&empty=1"
+                    >
+                      <span class="hero-cfg-level-ico" aria-hidden="true"
+                        ><img
+                          src="assets/img/svg/plant_lv3.svg"
+                          alt=""
+                          class="level-plant-ico"
+                      /></span>
                       <span class="hero-cfg-level-body">
                         <b data-i18n="hero.cfg_esperto">Esperto</b>
-                        <small data-i18n="hero.cfg_exp_hint">Catalogo completo, scelta libera</small>
+                        <small data-i18n="hero.cfg_exp_hint"
+                          >Catalogo completo, scelta libera</small
+                        >
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true">→</span>
+                      <span class="hero-cfg-level-arrow" aria-hidden="true"
+                        >→</span
+                      >
                     </a>
                   </div>
                 </div>
                 <a class="hero-cfg-catalog-link" href="#stagione">
-                  <span data-i18n="hero.cfg_or">oppure sfoglia il catalogo semi</span>
-                  <span class="hero-cfg-catalog-arrow" aria-hidden="true">→</span>
+                  <span data-i18n="hero.cfg_or"
+                    >oppure sfoglia il catalogo semi</span
+                  >
+                  <span class="hero-cfg-catalog-arrow" aria-hidden="true"
+                    >→</span
+                  >
                 </a>
               </div>
             </div>
@@ -255,15 +373,21 @@
               <div class="hcg">
                 <div class="hcg-glass">
                   <div class="hcg-glare"></div>
-                  <svg class="hcg-svg" id="hcgSvg" viewBox="0 0 220 160"
+                  <svg
+                    class="hcg-svg"
+                    id="hcgSvg"
+                    viewBox="0 0 220 160"
                     xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="xMidYMid meet"></svg>
+                    preserveAspectRatio="xMidYMid meet"
+                  ></svg>
                   <div class="hcg-peek" id="hcgPeek">
                     <div class="hcg-peek-fade-left"></div>
                     <div class="hcg-peek-inner" id="hcgPeekInner"></div>
                   </div>
                 </div>
-                <span class="hcg-caption" data-i18n="hero.cfg_caption">Anteprima · vista dall'alto</span>
+                <span class="hcg-caption" data-i18n="hero.cfg_caption"
+                  >Anteprima · vista dall'alto</span
+                >
               </div>
             </div>
           </div>
@@ -278,21 +402,32 @@
     <!-- Catalogo: ricerca, filtri e lista semi. -->
     <section class="stagione-section catalog-pro-section" id="stagione">
       <div class="catalog-pro-shell">
-
         <!-- Intestazione catalogo. -->
         <header class="cat-head">
-          <div class="section-kicker stagione-kicker" data-i18n="catalog.kicker">Cosa piantare</div>
-          <div class="section-heading stagione-title" id="stagioneTitle">Semi giusti, scelti con metodo</div>
+          <div
+            class="section-kicker stagione-kicker"
+            data-i18n="catalog.kicker"
+          >
+            Cosa piantare
+          </div>
+          <div class="section-heading stagione-title" id="stagioneTitle">
+            Semi giusti, scelti con metodo
+          </div>
           <div class="stagione-meta" id="stagioneMeta"></div>
         </header>
 
         <!-- Strumenti catalogo: mese, tipo, ricerca e ordinamento. -->
-        <div class="catalog-tools catalog-tools--pro catalog-tools--advanced" aria-label="Filtri catalogo semi">
+        <div
+          class="catalog-tools catalog-tools--pro catalog-tools--advanced"
+          aria-label="Filtri catalogo semi"
+        >
           <div class="catalog-filter-group catalog-filter-group--month">
             <div class="catalog-filter-group-head">
               <span class="catalog-filter-step">1</span>
               <div>
-                <span class="catalog-filter-label" data-i18n="calendar.kicker">L'anno in serra</span>
+                <span class="catalog-filter-label" data-i18n="calendar.kicker"
+                  >L'anno in serra</span
+                >
                 <strong id="monthStripHelp">Scorri e scegli un mese</strong>
               </div>
             </div>
@@ -306,8 +441,14 @@
               <div class="catalog-filter-group-head">
                 <span class="catalog-filter-step">2</span>
                 <div>
-                  <span class="catalog-filter-label" data-i18n="catalog.filter_type_label">Tipo</span>
-                  <strong data-i18n="catalog.filter_type_hint">Scegli una famiglia</strong>
+                  <span
+                    class="catalog-filter-label"
+                    data-i18n="catalog.filter_type_label"
+                    >Tipo</span
+                  >
+                  <strong data-i18n="catalog.filter_type_hint"
+                    >Scegli una famiglia</strong
+                  >
                 </div>
               </div>
               <!-- Tipi coltura: generati dalla logica catalogo. -->
@@ -319,14 +460,22 @@
               <div class="catalog-filter-group-head">
                 <span class="catalog-filter-step">3</span>
                 <div>
-                  <span class="catalog-filter-label" data-i18n="catalog.filter_search_label">Ricerca</span>
-                  <strong data-i18n="catalog.filter_search_hint">Affina i risultati</strong>
+                  <span
+                    class="catalog-filter-label"
+                    data-i18n="catalog.filter_search_label"
+                    >Ricerca</span
+                  >
+                  <strong data-i18n="catalog.filter_search_hint"
+                    >Affina i risultati</strong
+                  >
                 </div>
               </div>
               <div class="cat-bar">
                 <label class="catalog-search catalog-search--pro">
                   <span class="catalog-search-box">
-                    <span class="catalog-search-icon" aria-hidden="true">⌕</span>
+                    <span class="catalog-search-icon" aria-hidden="true"
+                      >⌕</span
+                    >
                     <input
                       id="catalogSearch"
                       type="search"
@@ -346,9 +495,16 @@
                       class="catalog-search-clear"
                       onclick="clearCatalogSearch()"
                       aria-label="Cancella ricerca"
-                    >✕</button>
+                    >
+                      ✕
+                    </button>
                   </span>
-                  <ul id="catalogSearchSuggestions" class="catalog-search-suggestions" role="listbox" hidden></ul>
+                  <ul
+                    id="catalogSearchSuggestions"
+                    class="catalog-search-suggestions"
+                    role="listbox"
+                    hidden
+                  ></ul>
                 </label>
 
                 <select
@@ -357,16 +513,33 @@
                   onchange="setCatalogSort(this.value)"
                   aria-label="Ordina per"
                 >
-                  <option value="season" data-i18n="catalog.sort_season">Consigliati</option>
-                  <option value="name" data-i18n="catalog.sort_name">Nome A-Z</option>
-                  <option value="fast" data-i18n="catalog.sort_fast">Raccolta più veloce</option>
-                  <option value="yield" data-i18n="catalog.sort_yield">Resa più alta</option>
-                  <option value="distance" data-i18n="catalog.sort_distance">Più compatti</option>
-                  <option value="price" data-i18n="catalog.sort_price">Prezzo più basso</option>
+                  <option value="season" data-i18n="catalog.sort_season">
+                    Consigliati
+                  </option>
+                  <option value="name" data-i18n="catalog.sort_name">
+                    Nome A-Z
+                  </option>
+                  <option value="fast" data-i18n="catalog.sort_fast">
+                    Raccolta più veloce
+                  </option>
+                  <option value="yield" data-i18n="catalog.sort_yield">
+                    Resa più alta
+                  </option>
+                  <option value="distance" data-i18n="catalog.sort_distance">
+                    Più compatti
+                  </option>
+                  <option value="price" data-i18n="catalog.sort_price">
+                    Prezzo più basso
+                  </option>
                 </select>
 
                 <!-- Stato tecnico: select sincronizzata con le chip categoria. -->
-                <select id="catalogType" onchange="setCatalogType(this.value)" aria-hidden="true" style="display:none">
+                <select
+                  id="catalogType"
+                  onchange="setCatalogType(this.value)"
+                  aria-hidden="true"
+                  style="display: none"
+                >
                   <option value=""></option>
                   <option value="frutto">frutto</option>
                   <option value="foglia">foglia</option>
@@ -375,26 +548,56 @@
                   <option value="aromatica">aromatica</option>
                 </select>
 
-                <div class="catalog-scope catalog-scope--advanced" aria-label="Ambito catalogo">
-                  <button class="catalog-chip active" id="catalogSeasonOnly" type="button"
-                    onclick="toggleCatalogSeasonOnly()" aria-pressed="true">
+                <div
+                  class="catalog-scope catalog-scope--advanced"
+                  aria-label="Ambito catalogo"
+                >
+                  <button
+                    class="catalog-chip active"
+                    id="catalogSeasonOnly"
+                    type="button"
+                    onclick="toggleCatalogSeasonOnly()"
+                    aria-pressed="true"
+                  >
                     <span class="chip-ico" aria-hidden="true">📅</span>
-                    <span class="chip-lbl" data-i18n="catalog.season_only">Adatti adesso</span>
+                    <span class="chip-lbl" data-i18n="catalog.season_only"
+                      >Adatti adesso</span
+                    >
                     <span class="chip-count" aria-hidden="true">—</span>
                   </button>
-                  <button class="catalog-chip" id="catalogAllToggle" type="button"
-                    onclick="toggleCatalogFull()" aria-pressed="false">
-                    <span class="chip-lbl" data-i18n="catalog.filter_all_plants">Tutto il catalogo</span>
+                  <button
+                    class="catalog-chip"
+                    id="catalogAllToggle"
+                    type="button"
+                    onclick="toggleCatalogFull()"
+                    aria-pressed="false"
+                  >
+                    <span class="chip-lbl" data-i18n="catalog.filter_all_plants"
+                      >Tutto il catalogo</span
+                    >
                     <span class="chip-count" aria-hidden="true">—</span>
                   </button>
-                  <button class="catalog-chip" id="catalogEasyOnly" type="button"
-                    onclick="toggleCatalogEasyOnly()" aria-pressed="false">
+                  <button
+                    class="catalog-chip"
+                    id="catalogEasyOnly"
+                    type="button"
+                    onclick="toggleCatalogEasyOnly()"
+                    aria-pressed="false"
+                  >
                     <span class="chip-ico" aria-hidden="true">⭐</span>
-                    <span class="chip-lbl" data-i18n="catalog.easy_only">Facili</span>
+                    <span class="chip-lbl" data-i18n="catalog.easy_only"
+                      >Facili</span
+                    >
                     <span class="chip-count" aria-hidden="true">—</span>
                   </button>
-                  <button class="catalog-reset-btn" id="catalogReset" type="button"
-                    onclick="showFullCatalog()" data-i18n="catalog.reset" hidden>
+                  <button
+                    class="catalog-reset-btn"
+                    id="catalogReset"
+                    type="button"
+                    onclick="showFullCatalog()"
+                    data-i18n="catalog.reset"
+                    hidden
+                  >
                     ✕ Azzera
                   </button>
                 </div>
@@ -403,13 +606,19 @@
           </div>
         </div>
 
-        <div class="catalog-insights" id="catalogInsights" aria-live="polite"></div>
+        <div
+          class="catalog-insights"
+          id="catalogInsights"
+          aria-live="polite"
+        ></div>
         <div class="catalog-status" id="catalogStatus" hidden></div>
         <div class="catalog-hint catalog-hint--pro" id="catalogHint">
           <span class="catalog-hint-icon">💡</span>
           <span data-i18n="catalog.hint_before">Tocca per i dettagli · </span>
           <b class="catalog-hint-plus">+</b>
-          <span data-i18n="catalog.hint_after"> per aggiungere al carrello</span>
+          <span data-i18n="catalog.hint_after">
+            per aggiungere al carrello</span
+          >
         </div>
         <div id="editorialPlants"></div>
         <div class="plant-compact-list compact-plants" id="compactPlants"></div>
@@ -465,7 +674,11 @@
             >
               + Aggiungi tutto al carrello
             </button>
-            <button class="kit-plan-link" type="button" onclick="addKitAndPlan()">
+            <button
+              class="kit-plan-link"
+              type="button"
+              onclick="addKitAndPlan()"
+            >
               <span data-i18n="kit.plan_link">Aggiungi kit e pianifica</span>
               <span aria-hidden="true">→</span>
             </button>
@@ -485,42 +698,147 @@
     <section class="conf-section">
       <div class="conf-card">
         <div class="conf-visual" aria-hidden="true">
-          <svg class="conf-static-svg" viewBox="0 0 170 128" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <svg
+            class="conf-static-svg"
+            viewBox="0 0 170 128"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid meet"
+          >
             <defs>
               <linearGradient id="confStaticGlass" x1="0" y1="0" x2="1" y2="1">
-                <stop stop-color="#315f48"/><stop offset="1" stop-color="#102d20"/>
+                <stop stop-color="#315f48" />
+                <stop offset="1" stop-color="#102d20" />
               </linearGradient>
               <linearGradient id="confStaticSoil" x1="0" y1="0" x2="0" y2="1">
-                <stop stop-color="#725a40"/><stop offset="1" stop-color="#443220"/>
+                <stop stop-color="#725a40" />
+                <stop offset="1" stop-color="#443220" />
               </linearGradient>
-              <filter id="confStaticShadow" x="-20%" y="-20%" width="140%" height="150%">
-                <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#07150e" flood-opacity=".48"/>
+              <filter
+                id="confStaticShadow"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="150%"
+              >
+                <feDropShadow
+                  dx="0"
+                  dy="3"
+                  stdDeviation="3"
+                  flood-color="#07150e"
+                  flood-opacity=".48"
+                />
               </filter>
             </defs>
-            <rect x="3" y="3" width="164" height="122" rx="12" fill="url(#confStaticGlass)" stroke="rgba(255,255,255,.42)" stroke-width="1.5"/>
-            <rect x="8" y="8" width="154" height="112" rx="9" fill="rgba(220,238,224,.08)" stroke="rgba(255,255,255,.16)"/>
-            <path d="M85 9V119 M9 62H161" stroke="rgba(226,239,228,.17)" stroke-width="1"/>
-            <g filter="url(#confStaticShadow)" stroke="rgba(239,222,190,.25)" stroke-width="1">
-              <rect x="12" y="12" width="66" height="46" rx="7" fill="url(#confStaticSoil)"/>
-              <rect x="12" y="66" width="66" height="50" rx="7" fill="url(#confStaticSoil)"/>
-              <rect x="92" y="12" width="66" height="36" rx="7" fill="url(#confStaticSoil)"/>
-              <rect x="92" y="56" width="66" height="60" rx="7" fill="url(#confStaticSoil)"/>
+            <rect
+              x="3"
+              y="3"
+              width="164"
+              height="122"
+              rx="12"
+              fill="url(#confStaticGlass)"
+              stroke="rgba(255,255,255,.42)"
+              stroke-width="1.5"
+            />
+            <rect
+              x="8"
+              y="8"
+              width="154"
+              height="112"
+              rx="9"
+              fill="rgba(220,238,224,.08)"
+              stroke="rgba(255,255,255,.16)"
+            />
+            <path
+              d="M85 9V119 M9 62H161"
+              stroke="rgba(226,239,228,.17)"
+              stroke-width="1"
+            />
+            <g
+              filter="url(#confStaticShadow)"
+              stroke="rgba(239,222,190,.25)"
+              stroke-width="1"
+            >
+              <rect
+                x="12"
+                y="12"
+                width="66"
+                height="46"
+                rx="7"
+                fill="url(#confStaticSoil)"
+              />
+              <rect
+                x="12"
+                y="66"
+                width="66"
+                height="50"
+                rx="7"
+                fill="url(#confStaticSoil)"
+              />
+              <rect
+                x="92"
+                y="12"
+                width="66"
+                height="36"
+                rx="7"
+                fill="url(#confStaticSoil)"
+              />
+              <rect
+                x="92"
+                y="56"
+                width="66"
+                height="60"
+                rx="7"
+                fill="url(#confStaticSoil)"
+              />
             </g>
-            <g font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="central">
-              <text x="31" y="28" font-size="14">🍅</text><text x="58" y="28" font-size="14">🍅</text>
-              <text x="31" y="46" font-size="14">🍅</text><text x="58" y="46" font-size="14">🍅</text>
-              <text x="29" y="79" font-size="12">🥕</text><text x="59" y="79" font-size="12">🥕</text>
-              <text x="29" y="94" font-size="12">🥕</text><text x="59" y="94" font-size="12">🥕</text>
-              <text x="29" y="104" font-size="12">🥕</text><text x="59" y="104" font-size="12">🥕</text>
-              <text x="106" y="25" font-size="12">🥬</text><text x="125" y="25" font-size="12">🥬</text><text x="144" y="25" font-size="12">🥬</text>
-              <text x="106" y="39" font-size="12">🥬</text><text x="125" y="39" font-size="12">🥬</text><text x="144" y="39" font-size="12">🥬</text>
-              <text x="104" y="68" font-size="10">🌿</text><text x="125" y="68" font-size="10">🌿</text><text x="146" y="68" font-size="10">🌿</text>
-              <text x="104" y="82" font-size="10">🌿</text><text x="125" y="82" font-size="10">🌿</text><text x="146" y="82" font-size="10">🌿</text>
-              <text x="104" y="96" font-size="10">🌿</text><text x="125" y="96" font-size="10">🌿</text><text x="146" y="96" font-size="10">🌿</text>
-              <text x="104" y="105" font-size="10">🌿</text><text x="125" y="105" font-size="10">🌿</text><text x="146" y="105" font-size="10">🌿</text>
+            <g
+              font-family="system-ui, sans-serif"
+              text-anchor="middle"
+              dominant-baseline="central"
+            >
+              <text x="31" y="28" font-size="14">🍅</text>
+              <text x="58" y="28" font-size="14">🍅</text>
+              <text x="31" y="46" font-size="14">🍅</text>
+              <text x="58" y="46" font-size="14">🍅</text>
+              <text x="29" y="79" font-size="12">🥕</text>
+              <text x="59" y="79" font-size="12">🥕</text>
+              <text x="29" y="94" font-size="12">🥕</text>
+              <text x="59" y="94" font-size="12">🥕</text>
+              <text x="29" y="104" font-size="12">🥕</text>
+              <text x="59" y="104" font-size="12">🥕</text>
+              <text x="106" y="25" font-size="12">🥬</text>
+              <text x="125" y="25" font-size="12">🥬</text>
+              <text x="144" y="25" font-size="12">🥬</text>
+              <text x="106" y="39" font-size="12">🥬</text>
+              <text x="125" y="39" font-size="12">🥬</text>
+              <text x="144" y="39" font-size="12">🥬</text>
+              <text x="104" y="68" font-size="10">🌿</text>
+              <text x="125" y="68" font-size="10">🌿</text>
+              <text x="146" y="68" font-size="10">🌿</text>
+              <text x="104" y="82" font-size="10">🌿</text>
+              <text x="125" y="82" font-size="10">🌿</text>
+              <text x="146" y="82" font-size="10">🌿</text>
+              <text x="104" y="96" font-size="10">🌿</text>
+              <text x="125" y="96" font-size="10">🌿</text>
+              <text x="146" y="96" font-size="10">🌿</text>
+              <text x="104" y="105" font-size="10">🌿</text>
+              <text x="125" y="105" font-size="10">🌿</text>
+              <text x="146" y="105" font-size="10">🌿</text>
             </g>
-            <path d="M15 10 L83 10 L56 120 L12 120 Z" fill="rgba(255,255,255,.07)"/>
-            <rect x="3" y="3" width="164" height="122" rx="12" fill="none" stroke="rgba(220,241,228,.5)" stroke-width="2"/>
+            <path
+              d="M15 10 L83 10 L56 120 L12 120 Z"
+              fill="rgba(255,255,255,.07)"
+            />
+            <rect
+              x="3"
+              y="3"
+              width="164"
+              height="122"
+              rx="12"
+              fill="none"
+              stroke="rgba(220,241,228,.5)"
+              stroke-width="2"
+            />
           </svg>
         </div>
         <div class="conf-text">
@@ -531,29 +849,47 @@
             Pianifica la tua serra dall'alto
           </div>
           <p class="conf-desc" data-i18n="conf.desc">
-            Inserisci misure, mese e zona: il configuratore ti mostra cosa seminare, dove metterlo e quanti semi preparare.
+            Inserisci misure, mese e zona: il configuratore ti mostra cosa
+            seminare, dove metterlo e quanti semi preparare.
           </p>
           <div class="conf-features">
-            <span class="conf-feature-chip">📐&nbsp;<span data-i18n="conf.feature_measures">Misure reali</span></span>
-            <span class="conf-feature-chip">🌱&nbsp;<span data-i18n="conf.feature_spacing">Spaziatura</span></span>
-            <span class="conf-feature-chip">✓&nbsp;<span data-i18n="conf.feature_compat">Compatibilità</span></span>
-            <span class="conf-feature-chip">🖨&nbsp;<span data-i18n="conf.feature_print">Stampa</span></span>
+            <span class="conf-feature-chip"
+              >📐&nbsp;<span data-i18n="conf.feature_measures"
+                >Misure reali</span
+              ></span
+            >
+            <span class="conf-feature-chip"
+              >🌱&nbsp;<span data-i18n="conf.feature_spacing"
+                >Spaziatura</span
+              ></span
+            >
+            <span class="conf-feature-chip"
+              >✓&nbsp;<span data-i18n="conf.feature_compat"
+                >Compatibilità</span
+              ></span
+            >
+            <span class="conf-feature-chip"
+              >🖨&nbsp;<span data-i18n="conf.feature_print">Stampa</span></span
+            >
           </div>
         </div>
         <div class="conf-actions">
           <a
             href="configuratore.html?preset=principiante&guided=1"
             class="conf-btn primary"
-            ><span data-i18n="conf.open">Apri il configuratore</span>
-            →</a
+            ><span data-i18n="conf.open">Apri il configuratore</span> →</a
           >
           <div class="conf-import-block">
-            <span class="conf-import-block-label" data-i18n="conf.import_label">Hai già dei semi nel carrello?</span>
+            <span class="conf-import-block-label" data-i18n="conf.import_label"
+              >Hai già dei semi nel carrello?</span
+            >
             <a
               class="conf-btn secondary conf-import-btn disabled"
               id="confImportBtn"
               aria-disabled="true"
-              ><span aria-hidden="true">📐</span> <span data-i18n="conf.import">Importa carrello nel piano</span> →</a
+              ><span aria-hidden="true">📐</span>
+              <span data-i18n="conf.import">Importa carrello nel piano</span>
+              →</a
             >
             <div class="conf-cart-hint" id="confCartHint" hidden>
               🛒&nbsp;<span id="confCartHintText"></span>
@@ -657,54 +993,119 @@
       <div class="footer-main">
         <div class="footer-brand-col">
           <div class="footer-logo-row">
-            <img class="footer-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra"/>
+            <img
+              class="footer-logo"
+              src="assets/img/svg/logo.svg"
+              alt="Orto in Serra"
+            />
             <span class="footer-brand-name">Orto in Serra</span>
           </div>
           <div class="footer-motto">"Pianta con cura, raccogli con gioia."</div>
           <div class="footer-social">
-            <a href="#" title="Instagram" aria-label="Instagram"><img src="assets/img/svg/icon-instagram.svg" alt="" class="footer-social-icon"></a>
-            <a href="#" title="Facebook" aria-label="Facebook"><img src="assets/img/svg/icon-facebook.svg" alt="" class="footer-social-icon"></a>
-            <a href="#" title="YouTube" aria-label="YouTube"><img src="assets/img/svg/icon-youtube.svg" alt="" class="footer-social-icon"></a>
+            <a href="#" title="Instagram" aria-label="Instagram"
+              ><img
+                src="assets/img/svg/icon-instagram.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="Facebook" aria-label="Facebook"
+              ><img
+                src="assets/img/svg/icon-facebook.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="YouTube" aria-label="YouTube"
+              ><img
+                src="assets/img/svg/icon-youtube.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
           </div>
           <div class="footer-tip-inline">
-            <div class="footer-tip-kicker" data-i18n="footer.consiglio_kicker">Consiglio del mese</div>
+            <div class="footer-tip-kicker" data-i18n="footer.consiglio_kicker">
+              Consiglio del mese
+            </div>
             <div class="footer-tip-text" id="footerTip">Caricamento...</div>
           </div>
         </div>
         <div class="footer-nav-col">
           <div class="footer-nav-title" data-i18n="footer.esplora">Esplora</div>
           <ul class="footer-nav-list">
-            <li><a href="configuratore.html"><span data-i18n="nav.configuratore">📐 Configuratore</span></a></li>
-            <li><a href="#abbinamenti"><span data-i18n="nav.abbinamenti">🌿 Abbinamenti</span></a></li>
-            <li><a href="#kit"><span data-i18n="footer.kit">📦 Kit del mese</span></a></li>
-            <li><a href="#contatti"><span data-i18n="nav.contatti">✉️ Contatti</span></a></li>
+            <li>
+              <a href="configuratore.html"
+                ><span data-i18n="nav.configuratore">📐 Configuratore</span></a
+              >
+            </li>
+            <li>
+              <a href="#abbinamenti"
+                ><span data-i18n="nav.abbinamenti">🌿 Abbinamenti</span></a
+              >
+            </li>
+            <li>
+              <a href="#kit"
+                ><span data-i18n="footer.kit">📦 Kit del mese</span></a
+              >
+            </li>
+            <li>
+              <a href="#contatti"
+                ><span data-i18n="nav.contatti">✉️ Contatti</span></a
+              >
+            </li>
           </ul>
         </div>
         <div class="footer-nav-col">
           <div class="footer-legal-title" data-i18n="footer.legale">Legale</div>
           <ul class="footer-legal-list">
-            <li><a href="#" onclick="return false;" data-i18n="footer.privacy">Privacy Policy</a></li>
-            <li><a href="#" onclick="return false;" data-i18n="footer.cookie">Cookie Policy</a></li>
-            <li><a href="#" onclick="return false;" data-i18n="footer.termini">Termini di Servizio</a></li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n="footer.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n="footer.cookie"
+                >Cookie Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n="footer.termini"
+                >Termini di Servizio</a
+              >
+            </li>
           </ul>
           <div class="footer-support-block">
-            <div class="footer-nav-title" data-i18n="footer.supporto_title">Supporto</div>
+            <div class="footer-nav-title" data-i18n="footer.supporto_title">
+              Supporto
+            </div>
             <ul class="footer-legal-list">
-              <li><a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a></li>
+              <li>
+                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+              </li>
               <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-company-info">Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023 Impruneta (FI)</div>
-        <div class="footer-gdpr-copy" id="footerCopy">© 2025 Orto in Serra · <span data-i18n="footer.rights">Tutti i diritti riservati</span></div>
+        <div class="footer-company-info">
+          Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023
+          Impruneta (FI)
+        </div>
+        <div class="footer-gdpr-copy" id="footerCopy">
+          © 2025 Orto in Serra ·
+          <span data-i18n="footer.rights">Tutti i diritti riservati</span>
+        </div>
       </div>
     </footer>
 
     <!-- Dettaglio pianta: pannello dinamico aperto dal catalogo. -->
     <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
-      <div class="detail-panel" id="detailPanel" role="dialog" aria-modal="true" aria-labelledby="detailName">
+      <div
+        class="detail-panel"
+        id="detailPanel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detailName"
+      >
         <button
           class="detail-close"
           type="button"
@@ -724,58 +1125,240 @@
         </div>
         <div class="detail-body">
           <div class="detail-tabs-shell">
-          <div class="detail-tabs-heading"><strong data-i18n="detail.tabs_title">Sezioni della scheda</strong><span data-i18n="detail.tabs_hint">Seleziona una voce per cambiare contenuto</span></div>
-          <div class="detail-tabs" role="tablist" aria-label="Sezioni della scheda tecnica">
-            <button class="detail-tab active" type="button" role="tab" aria-selected="true" aria-controls="detailTabOverview" data-detail-tab="overview" onclick="setDetailTab('overview')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span><span data-i18n="detail.tab_overview">Panoramica</span></button>
-            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabCultivation" data-detail-tab="cultivation" onclick="setDetailTab('cultivation')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span><span data-i18n="detail.tab_cultivation">Coltivazione</span></button>
-            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabCalendar" data-detail-tab="calendar" onclick="setDetailTab('calendar')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/></svg></span><span data-i18n="detail.tab_calendar">Calendario</span></button>
-            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabCare" data-detail-tab="care" onclick="setDetailTab('care')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"/></svg></span><span data-i18n="detail.tab_care">Cure</span></button>
-            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabHarvest" data-detail-tab="harvest" onclick="setDetailTab('harvest')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"/></svg></span><span data-i18n="detail.tab_harvest">Raccolta</span></button>
-          </div>
+            <div class="detail-tabs-heading">
+              <strong data-i18n="detail.tabs_title">Sezioni della scheda</strong
+              ><span data-i18n="detail.tabs_hint"
+                >Seleziona una voce per cambiare contenuto</span
+              >
+            </div>
+            <div
+              class="detail-tabs"
+              role="tablist"
+              aria-label="Sezioni della scheda tecnica"
+            >
+              <button
+                class="detail-tab active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="detailTabOverview"
+                data-detail-tab="overview"
+                onclick="setDetailTab('overview')"
+                onkeydown="handleDetailTabKey(event)"
+              >
+                <span class="detail-tab-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"
+                    /></svg></span
+                ><span data-i18n="detail.tab_overview">Panoramica</span>
+              </button>
+              <button
+                class="detail-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="detailTabCultivation"
+                data-detail-tab="cultivation"
+                onclick="setDetailTab('cultivation')"
+                onkeydown="handleDetailTabKey(event)"
+              >
+                <span class="detail-tab-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"
+                    /></svg></span
+                ><span data-i18n="detail.tab_cultivation">Coltivazione</span>
+              </button>
+              <button
+                class="detail-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="detailTabCalendar"
+                data-detail-tab="calendar"
+                onclick="setDetailTab('calendar')"
+                onkeydown="handleDetailTabKey(event)"
+              >
+                <span class="detail-tab-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path
+                      d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"
+                    /></svg></span
+                ><span data-i18n="detail.tab_calendar">Calendario</span>
+              </button>
+              <button
+                class="detail-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="detailTabCare"
+                data-detail-tab="care"
+                onclick="setDetailTab('care')"
+                onkeydown="handleDetailTabKey(event)"
+              >
+                <span class="detail-tab-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"
+                    /></svg></span
+                ><span data-i18n="detail.tab_care">Cure</span>
+              </button>
+              <button
+                class="detail-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="detailTabHarvest"
+                data-detail-tab="harvest"
+                onclick="setDetailTab('harvest')"
+                onkeydown="handleDetailTabKey(event)"
+              >
+                <span class="detail-tab-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"
+                    /></svg></span
+                ><span data-i18n="detail.tab_harvest">Raccolta</span>
+              </button>
+            </div>
           </div>
 
-          <div class="detail-tab-panel active" id="detailTabOverview" role="tabpanel" data-detail-panel="overview">
+          <div
+            class="detail-tab-panel active"
+            id="detailTabOverview"
+            role="tabpanel"
+            data-detail-panel="overview"
+          >
             <div class="detail-badges" id="detailBadges"></div>
             <div class="detail-nota" id="detailNota" hidden></div>
             <div class="detail-stats" id="detailStats"></div>
           </div>
 
-          <div class="detail-tab-panel" id="detailTabCultivation" role="tabpanel" data-detail-panel="cultivation" hidden>
-            <div class="detail-section-heading"><span data-i18n="detail.cultivation_title">Guida alla coltivazione</span><small data-i18n="detail.cultivation_subtitle">Dalla semina alla pianta adulta</small></div>
-            <div class="detail-sow" id="detailSow"><div class="detail-sow-body" id="detailSowBody"></div></div>
+          <div
+            class="detail-tab-panel"
+            id="detailTabCultivation"
+            role="tabpanel"
+            data-detail-panel="cultivation"
+            hidden
+          >
+            <div class="detail-section-heading">
+              <span data-i18n="detail.cultivation_title"
+                >Guida alla coltivazione</span
+              ><small data-i18n="detail.cultivation_subtitle"
+                >Dalla semina alla pianta adulta</small
+              >
+            </div>
+            <div class="detail-sow" id="detailSow">
+              <div class="detail-sow-body" id="detailSowBody"></div>
+            </div>
             <div class="detail-spacing" id="detailSpacing"></div>
             <div class="detail-tech-grid" id="detailCultivationExtra"></div>
           </div>
 
-          <div class="detail-tab-panel" id="detailTabCalendar" role="tabpanel" data-detail-panel="calendar" hidden>
-            <div class="detail-section-heading"><span data-i18n="detail.calendar_title">Calendario stagionale</span><small data-i18n="detail.calendar_subtitle">Adattato a zona climatica e riscaldamento</small></div>
+          <div
+            class="detail-tab-panel"
+            id="detailTabCalendar"
+            role="tabpanel"
+            data-detail-panel="calendar"
+            hidden
+          >
+            <div class="detail-section-heading">
+              <span data-i18n="detail.calendar_title"
+                >Calendario stagionale</span
+              ><small data-i18n="detail.calendar_subtitle"
+                >Adattato a zona climatica e riscaldamento</small
+              >
+            </div>
             <div class="month-bar" id="detailMonthBar"></div>
           </div>
 
-          <div class="detail-tab-panel" id="detailTabCare" role="tabpanel" data-detail-panel="care" hidden>
-            <div class="detail-section-heading"><span data-i18n="detail.care_title">Cure e problemi comuni</span><small data-i18n="detail.care_subtitle">Prevenzione, manutenzione e consociazioni</small></div>
+          <div
+            class="detail-tab-panel"
+            id="detailTabCare"
+            role="tabpanel"
+            data-detail-panel="care"
+            hidden
+          >
+            <div class="detail-section-heading">
+              <span data-i18n="detail.care_title">Cure e problemi comuni</span
+              ><small data-i18n="detail.care_subtitle"
+                >Prevenzione, manutenzione e consociazioni</small
+              >
+            </div>
             <div class="detail-tech-grid" id="detailCareGuide"></div>
-            <section class="detail-diseases" aria-labelledby="detailDiseasesTitle">
+            <section
+              class="detail-diseases"
+              aria-labelledby="detailDiseasesTitle"
+            >
               <div class="detail-diseases-head">
                 <div>
-                  <h3 id="detailDiseasesTitle" data-i18n="detail.diseases_title">Malattie comuni</h3>
-                  <p data-i18n="detail.diseases_subtitle">Riconosci i sintomi e intervieni in modo mirato</p>
+                  <h3
+                    id="detailDiseasesTitle"
+                    data-i18n="detail.diseases_title"
+                  >
+                    Malattie comuni
+                  </h3>
+                  <p data-i18n="detail.diseases_subtitle">
+                    Riconosci i sintomi e intervieni in modo mirato
+                  </p>
                 </div>
-                <span class="detail-diseases-count" id="detailDiseasesCount"></span>
+                <span
+                  class="detail-diseases-count"
+                  id="detailDiseasesCount"
+                ></span>
               </div>
               <div class="detail-disease-list" id="detailDiseaseList"></div>
-              <p class="detail-treatment-note" data-i18n="detail.treatment_note">Prima di usare un prodotto fitosanitario, verifica che sia autorizzato per la coltura e segui sempre l'etichetta.</p>
+              <p
+                class="detail-treatment-note"
+                data-i18n="detail.treatment_note"
+              >
+                Prima di usare un prodotto fitosanitario, verifica che sia
+                autorizzato per la coltura e segui sempre l'etichetta.
+              </p>
             </section>
-            <section class="detail-diseases detail-pests" aria-labelledby="detailPestsTitle">
-              <div class="detail-diseases-head"><div><h3 id="detailPestsTitle" data-i18n="detail.pests_title">Insetti e parassiti</h3><p data-i18n="detail.pests_subtitle">Riconosci il danno prima di scegliere l'intervento</p></div><span class="detail-diseases-count" id="detailPestsCount"></span></div>
+            <section
+              class="detail-diseases detail-pests"
+              aria-labelledby="detailPestsTitle"
+            >
+              <div class="detail-diseases-head">
+                <div>
+                  <h3 id="detailPestsTitle" data-i18n="detail.pests_title">
+                    Insetti e parassiti
+                  </h3>
+                  <p data-i18n="detail.pests_subtitle">
+                    Riconosci il danno prima di scegliere l'intervento
+                  </p>
+                </div>
+                <span
+                  class="detail-diseases-count"
+                  id="detailPestsCount"
+                ></span>
+              </div>
               <div class="detail-disease-list" id="detailPestList"></div>
-              <p class="detail-treatment-note" data-i18n="detail.pest_note">Controlla anche la pagina inferiore delle foglie. Se non riconosci il parassita, fotografa insetto e danno prima di trattare.</p>
+              <p class="detail-treatment-note" data-i18n="detail.pest_note">
+                Controlla anche la pagina inferiore delle foglie. Se non
+                riconosci il parassita, fotografa insetto e danno prima di
+                trattare.
+              </p>
             </section>
             <div class="detail-companions" id="detailCompanions"></div>
           </div>
 
-          <div class="detail-tab-panel" id="detailTabHarvest" role="tabpanel" data-detail-panel="harvest" hidden>
-            <div class="detail-section-heading"><span data-i18n="detail.harvest_title">Raccolta e utilizzo</span><small data-i18n="detail.harvest_subtitle">Quando raccogliere e come conservare</small></div>
+          <div
+            class="detail-tab-panel"
+            id="detailTabHarvest"
+            role="tabpanel"
+            data-detail-panel="harvest"
+            hidden
+          >
+            <div class="detail-section-heading">
+              <span data-i18n="detail.harvest_title">Raccolta e utilizzo</span
+              ><small data-i18n="detail.harvest_subtitle"
+                >Quando raccogliere e come conservare</small
+              >
+            </div>
             <div class="detail-tech-grid" id="detailHarvestGuide"></div>
           </div>
 
@@ -826,8 +1409,12 @@
           >
             <span aria-hidden="true">📐</span>
             <span class="cart-conf-link-inner">
-              <span data-i18n="cart.plan">Pianifica la disposizione in serra</span>
-              <small class="cart-conf-link-hint" data-i18n="cart.plan_hint">Porta i semi scelti nel configuratore</small>
+              <span data-i18n="cart.plan"
+                >Pianifica la disposizione in serra</span
+              >
+              <small class="cart-conf-link-hint" data-i18n="cart.plan_hint"
+                >Porta i semi scelti nel configuratore</small
+              >
             </span>
             <span aria-hidden="true">→</span>
           </a>
@@ -954,11 +1541,23 @@
     </script>
     <!-- Script pagina: menu, traduzioni e logica ecommerce. -->
     <script>
-      document.write('<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>');
-      document.write('<script src="' + serraAsset("assets/js/index.js") + '"><\/script>');
+      document.write(
+        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          serraAsset("assets/js/plants-data.js") +
+          '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/index.js") + '"><\/script>'
+      );
     </script>
   </body>
 </html>

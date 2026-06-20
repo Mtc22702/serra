@@ -557,7 +557,8 @@
         "catalog.stat_months": "mesi filtrati",
         "catalog.stat_cart": "nel carrello",
         "catalog.quickfilter_label": "Sfoglia per tipo",
-        "catalog.quickfilter_hint": "Clicca per filtrare il catalogo istantaneamente",
+        "catalog.quickfilter_hint":
+          "Clicca per filtrare il catalogo istantaneamente",
         "catalog.type_frutto": "Frutti",
         "catalog.type_foglia": "Foglie",
         "catalog.type_radice": "Radici",
@@ -566,7 +567,8 @@
         "catalog.card_kicker": "Checklist rapida",
         "catalog.card_title": "Prima di aggiungere semi",
         "catalog.card_subtitle": "Controlla questi quattro segnali",
-        "catalog.card_tip": "Apri la scheda di una pianta per vedere subito se è il momento giusto per seminarla.",
+        "catalog.card_tip":
+          "Apri la scheda di una pianta per vedere subito se è il momento giusto per seminarla.",
         "catalog.feature_sowing_title": "Finestra di semina",
         "catalog.feature_sowing_sub": "adatta al mese selezionato",
         "catalog.feature_climate_title": "Compatibilità clima",
@@ -712,14 +714,16 @@
         "cookie.reject": "Solo essenziali",
         "hero.kicker_active": "Stagione attiva",
         "hero.headline": "Semi freschi per la tua serra.",
-        "hero.sub": "40+ varietà filtrate per clima e mese. Aggiungi al carrello e pianta con metodo.",
+        "hero.sub":
+          "40+ varietà filtrate per clima e mese. Aggiungi al carrello e pianta con metodo.",
         "hero.action_catalog": "Sfoglia il catalogo",
         "hero.action_cfg": "Configura la serra",
         "hero.controls_hint": "Com'è il clima fuori dalla tua serra?",
         "hero.path_label": "Scegli il tuo percorso",
         "hero.cfg_badge": "Strumento interattivo",
         "hero.cfg_title": "Progetta la tua serra, vista dall'alto",
-        "hero.cfg_desc": "Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.",
+        "hero.cfg_desc":
+          "Misure reali, clima e colture disposte aiuola per aiuola. Vedi com'è prima ancora di seminare.",
         "hero.cfg_cta": "Apri il configuratore",
         "hero.cfg_or": "oppure sfoglia il catalogo semi",
         "hero.cfg_personas_label": "Entra come",
@@ -775,20 +779,24 @@
         "detail.tech_yield": "Resa indicativa",
         "detail.tech_storage": "Conservazione",
         "detail.diseases_title": "Malattie comuni",
-        "detail.diseases_subtitle": "Riconosci i sintomi e intervieni in modo mirato",
+        "detail.diseases_subtitle":
+          "Riconosci i sintomi e intervieni in modo mirato",
         "detail.diseases_count": "{count} patologie",
         "detail.disease_symptoms": "Sintomi da osservare",
         "detail.disease_action": "Cosa fare",
-        "detail.treatment_note": "Prima di usare un prodotto fitosanitario, verifica che sia autorizzato per la coltura e segui sempre l'etichetta.",
+        "detail.treatment_note":
+          "Prima di usare un prodotto fitosanitario, verifica che sia autorizzato per la coltura e segui sempre l'etichetta.",
         "detail.quantity_bed": "Quantità nell'aiuola",
         "detail.plants_count": "{count} piante",
         "detail.pests_title": "Insetti e parassiti",
-        "detail.pests_subtitle": "Riconosci il danno prima di scegliere l'intervento",
+        "detail.pests_subtitle":
+          "Riconosci il danno prima di scegliere l'intervento",
         "detail.pests_count": "{count} parassiti",
         "detail.pest_signs": "Segni da osservare",
         "detail.pest_action": "Come intervenire",
         "detail.pest_products": "Prodotti fitosanitari",
-        "detail.pest_note": "Controlla anche la pagina inferiore delle foglie. Se non riconosci il parassita, fotografa insetto e danno prima di trattare.",
+        "detail.pest_note":
+          "Controlla anche la pagina inferiore delle foglie. Se non riconosci il parassita, fotografa insetto e danno prima di trattare.",
         "detail.sow_method": "Metodo",
         "detail.sow_depth": "Profondità",
         "detail.sow_thin": "Spaziatura",
@@ -796,7 +804,7 @@
         "detail.sow_temp": "Temperatura di germinazione",
         "detail.sow_germ": "Tempo di germinazione",
         "detail.sow_exposure": "Esposizione",
-        "detail.sow_water": "Irrigazione",
+        "detail.sow_water": "Irrigazione"
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -931,7 +939,8 @@
         "catalog.card_kicker": "Verificare rapidă",
         "catalog.card_title": "Înainte să adaugi semințe",
         "catalog.card_subtitle": "Verifică aceste patru semnale",
-        "catalog.card_tip": "Deschide fișa unei plante pentru a vedea imediat dacă este momentul potrivit pentru semănat.",
+        "catalog.card_tip":
+          "Deschide fișa unei plante pentru a vedea imediat dacă este momentul potrivit pentru semănat.",
         "catalog.feature_sowing_title": "Fereastră de semănare",
         "catalog.feature_sowing_sub": "potrivită lunii selectate",
         "catalog.feature_climate_title": "Compatibilitate climă",
@@ -1078,14 +1087,16 @@
         "cookie.reject": "Doar esențiale",
         "hero.kicker_active": "Sezon activ",
         "hero.headline": "Semințe proaspete pentru sera ta.",
-        "hero.sub": "40+ soiuri filtrate după climă și lună. Adaugă în coș și plantează cu metodă.",
+        "hero.sub":
+          "40+ soiuri filtrate după climă și lună. Adaugă în coș și plantează cu metodă.",
         "hero.action_catalog": "Răsfoiește catalogul",
         "hero.action_cfg": "Configurează sera",
         "hero.controls_hint": "Cum este clima din afara serei tale?",
         "hero.path_label": "Alege traseul tău",
         "hero.cfg_badge": "Instrument interactiv",
         "hero.cfg_title": "Proiectează-ți sera, văzută de sus",
-        "hero.cfg_desc": "Dimensiuni reale, climă și culturi aranjate strat cu strat. Vezi cum arată înainte să semeni.",
+        "hero.cfg_desc":
+          "Dimensiuni reale, climă și culturi aranjate strat cu strat. Vezi cum arată înainte să semeni.",
         "hero.cfg_cta": "Deschide configuratorul",
         "hero.cfg_or": "sau răsfoiește catalogul de semințe",
         "hero.cfg_personas_label": "Intră ca",
@@ -1145,16 +1156,19 @@
         "detail.diseases_count": "{count} boli",
         "detail.disease_symptoms": "Simptome de urmărit",
         "detail.disease_action": "Ce trebuie făcut",
-        "detail.treatment_note": "Înainte de a folosi un produs fitosanitar, verifică dacă este autorizat pentru cultură și respectă întotdeauna eticheta.",
+        "detail.treatment_note":
+          "Înainte de a folosi un produs fitosanitar, verifică dacă este autorizat pentru cultură și respectă întotdeauna eticheta.",
         "detail.quantity_bed": "Cantitate în strat",
         "detail.plants_count": "{count} plante",
         "detail.pests_title": "Insecte și dăunători",
-        "detail.pests_subtitle": "Recunoaște paguba înainte de a alege intervenția",
+        "detail.pests_subtitle":
+          "Recunoaște paguba înainte de a alege intervenția",
         "detail.pests_count": "{count} dăunători",
         "detail.pest_signs": "Semne de urmărit",
         "detail.pest_action": "Cum se intervine",
         "detail.pest_products": "Produse fitosanitare",
-        "detail.pest_note": "Verifică și dosul frunzelor. Dacă nu recunoști dăunătorul, fotografiază insecta și paguba înainte de tratament.",
+        "detail.pest_note":
+          "Verifică și dosul frunzelor. Dacă nu recunoști dăunătorul, fotografiază insecta și paguba înainte de tratament.",
         "detail.sow_method": "Metodă",
         "detail.sow_depth": "Adâncime",
         "detail.sow_thin": "Spațiere",
@@ -1162,7 +1176,7 @@
         "detail.sow_temp": "Temperatura de germinare",
         "detail.sow_germ": "Timp de germinare",
         "detail.sow_exposure": "Expunere",
-        "detail.sow_water": "Udare",
+        "detail.sow_water": "Udare"
       }
     },
     /* Configuratore: pannelli, controlli, carrello e messaggi tecnici. */

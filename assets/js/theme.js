@@ -14,12 +14,23 @@
     const ro = (root.lang || "it").toLowerCase().startsWith("ro");
     document.querySelectorAll(".theme-toggle").forEach((button) => {
       button.setAttribute("aria-pressed", String(dark));
-      button.setAttribute("aria-label", ro
-        ? (dark ? "Activează modul luminos" : "Activează modul întunecat")
-        : (dark ? "Attiva modalità chiara" : "Attiva modalità scura"));
+      button.setAttribute(
+        "aria-label",
+        ro
+          ? dark
+            ? "Activează modul luminos"
+            : "Activează modul întunecat"
+          : dark
+            ? "Attiva modalità chiara"
+            : "Attiva modalità scura"
+      );
       button.title = ro
-        ? (dark ? "Mod luminos" : "Mod întunecat")
-        : (dark ? "Modalità chiara" : "Modalità scura");
+        ? dark
+          ? "Mod luminos"
+          : "Mod întunecat"
+        : dark
+          ? "Modalità chiara"
+          : "Modalità scura";
     });
     if (themeMeta) themeMeta.content = dark ? "#0b1814" : "#2f6b3a";
   }
@@ -28,7 +39,11 @@
     root.dataset.theme = theme === "dark" ? "dark" : "light";
     if (persist) localStorage.setItem("serra-theme", root.dataset.theme);
     syncControls();
-    window.dispatchEvent(new CustomEvent("serra:themechange", { detail: { theme: root.dataset.theme } }));
+    window.dispatchEvent(
+      new CustomEvent("serra:themechange", {
+        detail: { theme: root.dataset.theme }
+      })
+    );
   }
 
   document.addEventListener("click", (event) => {
@@ -38,10 +53,15 @@
   });
 
   media.addEventListener?.("change", (event) => {
-    if (!localStorage.getItem("serra-theme")) setTheme(event.matches ? "dark" : "light", false);
+    if (!localStorage.getItem("serra-theme"))
+      setTheme(event.matches ? "dark" : "light", false);
   });
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", syncControls);
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", syncControls);
   else syncControls();
-  new MutationObserver(syncControls).observe(root, { attributes: true, attributeFilter: ["lang"] });
+  new MutationObserver(syncControls).observe(root, {
+    attributes: true,
+    attributeFilter: ["lang"]
+  });
 })();
