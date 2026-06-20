@@ -312,6 +312,18 @@ html[data-theme="dark"] :where(.percorso-path--auto, .percorso-cta-btn--green) {
 }
 html[data-theme="dark"] .percorso-cta-btn--earth { background: #f0dfcd !important; color: #56351f !important; }
 html[data-theme="dark"] .hero-heated-btn.active { background: #3b321d !important; color: #f1d47d !important; }
+html[data-theme="dark"] #inRisc.is-heated {
+  background: #3b321d !important;
+  border-color: #d7a93a !important;
+  color: #f1d47d !important;
+  box-shadow: 0 0 0 2px rgba(215, 169, 58, 0.14) !important;
+}
+html[data-theme="dark"] .preset-visual-icon {
+  color: #85d38e;
+  background: linear-gradient(145deg, #29483a, #20382e) !important;
+  border-color: var(--dark-border-strong) !important;
+}
+html[data-theme="dark"] .preset-visual-copy small { color: var(--dark-muted) !important; }
 
 /* Catalogo, abbinamenti, kit e contatti. */
 html[data-theme="dark"] :where(.stagione-section, .abbinamenti-section, .kit-section, .contatti-section) {

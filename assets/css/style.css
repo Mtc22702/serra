@@ -1049,7 +1049,10 @@ select:focus {
 }
 
 .preset-inline--standalone {
+  position: relative;
+  overflow: hidden;
   margin-top: 0;
+  padding: 12px;
   border: 1.5px solid rgba(47, 107, 58, 0.18);
   background:
     linear-gradient(
@@ -1059,6 +1062,71 @@ select:focus {
     ),
     var(--carta);
   box-shadow: 0 10px 24px rgba(31, 58, 38, 0.1);
+}
+.preset-inline--standalone::after {
+  content: "";
+  position: absolute;
+  right: -22px;
+  bottom: -24px;
+  width: 96px;
+  height: 76px;
+  border: 1px solid rgba(47, 107, 58, 0.1);
+  border-radius: 22px;
+  background:
+    linear-gradient(90deg, transparent 48%, rgba(47, 107, 58, 0.09) 49%, rgba(47, 107, 58, 0.09) 51%, transparent 52%),
+    linear-gradient(transparent 48%, rgba(47, 107, 58, 0.09) 49%, rgba(47, 107, 58, 0.09) 51%, transparent 52%);
+  transform: rotate(-9deg);
+  pointer-events: none;
+}
+.preset-visual-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.preset-visual-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 44px;
+  border: 1px solid rgba(47, 107, 58, 0.18);
+  border-radius: 12px;
+  color: var(--verde);
+  background: linear-gradient(145deg, rgba(222, 241, 216, 0.96), rgba(255, 253, 246, 0.9));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 5px 12px rgba(31,58,38,.08);
+}
+.preset-visual-icon svg {
+  width: 38px;
+  height: 32px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.preset-visual-icon svg rect:not(:first-child) {
+  fill: rgba(91, 156, 74, 0.14);
+}
+.preset-visual-icon svg circle {
+  fill: #67b86f;
+  stroke: none;
+}
+.preset-visual-copy {
+  min-width: 0;
+}
+.preset-visual-copy .fld {
+  margin: 0 0 2px;
+}
+.preset-visual-copy small {
+  display: block;
+  color: #6c796d;
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+.preset-inline--standalone > select {
+  position: relative;
+  z-index: 1;
 }
 
 .preset-inline--standalone .fld {
@@ -1472,12 +1540,23 @@ select:focus {
 }
 .settings-visual-field--climate {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(84px, 0.75fr);
+  grid-template-columns: minmax(0, 1.12fr) minmax(92px, 0.88fr);
   gap: 10px;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.5), rgba(249, 252, 247, 0.48)),
     url("../img/svg/clima-pattern.svg");
   background-size: auto, 112px 76px;
+}
+#climateField select {
+  padding-inline: 8px 22px;
+  font-size: 12px;
+}
+#inRisc.is-heated {
+  border-color: #f0b429;
+  background-color: #fff8e1;
+  color: #8a4f00;
+  box-shadow: 0 0 0 2px rgba(240, 180, 41, 0.14);
+  font-weight: 700;
 }
 .settings-visual-field > div {
   position: relative;

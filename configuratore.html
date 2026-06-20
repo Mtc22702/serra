@@ -8,7 +8,7 @@
     />
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-06-20-102";
+      window.SERRA_APP_VERSION = "2026-06-20-103";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -613,7 +613,26 @@
             </div>
           </div>
           <div class="preset-inline preset-inline--standalone" id="presetBar">
-            <label class="fld">Layout già pronti</label>
+            <div class="preset-visual-head">
+              <span class="preset-visual-icon" aria-hidden="true">
+                <svg viewBox="0 0 52 42" fill="none">
+                  <rect x="2" y="2" width="48" height="38" rx="8" />
+                  <rect x="7" y="7" width="15" height="12" rx="3" />
+                  <rect x="30" y="7" width="15" height="12" rx="3" />
+                  <rect x="7" y="23" width="15" height="12" rx="3" />
+                  <rect x="30" y="23" width="15" height="12" rx="3" />
+                  <path d="M26 6v30" />
+                  <circle cx="14.5" cy="13" r="2" />
+                  <circle cx="37.5" cy="13" r="2" />
+                  <circle cx="14.5" cy="29" r="2" />
+                  <circle cx="37.5" cy="29" r="2" />
+                </svg>
+              </span>
+              <span class="preset-visual-copy">
+                <label class="fld">Layout già pronti</label>
+                <small id="presetBarHint">Scegli una disposizione completa da cui partire</small>
+              </span>
+            </div>
             <select id="inPreset">
               <option value="">Scegli un esempio…</option>
               <optgroup label="Per stagione" data-i18n-optgroup="catPresetSeason">

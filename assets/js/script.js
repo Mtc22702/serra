@@ -1432,7 +1432,11 @@ function syncClimateControls() {
   const heated = document.getElementById("inRisc");
   const modalHeated = document.getElementById("heatedChk");
   if (zone) zone.value = state.zona;
-  if (heated) heated.value = state.riscaldata ? "si" : "no";
+  if (heated) {
+    heated.value = state.riscaldata ? "si" : "no";
+    heated.classList.toggle("is-heated", state.riscaldata);
+    heated.dataset.heated = String(state.riscaldata);
+  }
   if (modalHeated) modalHeated.checked = state.riscaldata;
   document.querySelectorAll("#zoneOpts .opt").forEach((opt) => {
     opt.classList.toggle("on", opt.dataset.zone === state.zona);
@@ -2000,6 +2004,7 @@ function applyLanguage() {
   if (fld[3]) fld[3].textContent = tx("zone");
   if (fld[4]) fld[4].textContent = tx("greenhouse");
   setText("#presetBar .fld", "readyLayouts");
+  setText("#presetBarHint", "readyLayoutsHint");
   setOptionText("inZona", "freddo", "zoneColdTitle");
   setOptionText("inZona", "temperato", "zoneTempTitle");
   setOptionText("inZona", "caldo", "zoneWarmTitle");
