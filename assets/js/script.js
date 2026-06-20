@@ -2403,6 +2403,31 @@ function usableBedWidth() {
   return Math.max(40, (Wi - 2 * MARGIN - (n - 1) * state.path) / n);
 }
 
+/* Ancoraggio colonne: registra su ogni aiuola la colonna assegnata dall'ultimo
+   layout, così le operazioni successive (modifica quantità, riempi spazi) restano
+   stabili invece di far rimescolare la disposizione dal packer greedy. */
+function commitColumnAssignment() {
+  const L = computeLayout();
+  L.beds.forEach((lb) => {
+    if (state.beds[lb.idx]) state.beds[lb.idx].col = lb.columnIndex;
+  });
+}
+/* Rimuove l'ancoraggio (es. al cambio dimensioni/stagione) per far ridecidere
+   le colonne da zero. */
+function clearColumnAssignment() {
+  state.beds.forEach((bed) => {
+    delete bed.col;
+  });
+}
+/* Ricalcola da zero una disposizione greedy bilanciata delle colonne e la fissa:
+   usato all'interno del ribilanciamento così lo spazio liberato (es. dopo una
+   riduzione manuale) viene ridistribuito tra le colonne, ma poi l'espansione che
+   segue lavora su colonne ancorate e stabili senza rimescolare tutto. */
+function rebalanceColumnsFresh() {
+  clearColumnAssignment();
+  commitColumnAssignment();
+}
+
 function computeLayout() {
   const Wi = state.larghezza * 100,
     Li = state.lunghezza * 100; // interno cm
@@ -2435,14 +2460,23 @@ function computeLayout() {
     const naturalBedH = isFila ? Li - 2 * MARGIN : 2 * BEDPAD + Math.max(1, rows) * Sr;
     const minVisualBedH = Math.max(46, visualPlantRadius(p) * 3 + 18);
     const bedH = isFila ? naturalBedH : Math.max(naturalBedH, minVisualBedH);
-    const col = columns.reduce((best, current) => {
-      const score = (column) => {
-        const conflictPenalty = areIncompatible(p, column.lastPlant) ? state.path * 3 : 0;
-        const companionBonus = areCompanions(p, column.lastPlant) ? state.path * 0.35 : 0;
-        return column.y + conflictPenalty - companionBonus;
-      };
-      return score(current) < score(best) ? current : best;
-    });
+    // Colonna "ancorata": se l'aiuola ha una colonna assegnata (e ancora valida)
+    // la rispettiamo, così modificare una quantità non rimescola tutta la serra.
+    // Senza ancoraggio si usa il greedy (colonna più bassa, con penalità/bonus
+    // di compatibilità) — usato dal piano automatico che decide da zero.
+    let col;
+    if (Number.isInteger(b.col) && b.col >= 0 && b.col < columnCount) {
+      col = columns[b.col];
+    } else {
+      col = columns.reduce((best, current) => {
+        const score = (column) => {
+          const conflictPenalty = areIncompatible(p, column.lastPlant) ? state.path * 3 : 0;
+          const companionBonus = areCompanions(p, column.lastPlant) ? state.path * 0.35 : 0;
+          return column.y + conflictPenalty - companionBonus;
+        };
+        return score(current) < score(best) ? current : best;
+      });
+    }
     const y = col.y;
     const positions = [];
     let placed = 0;
@@ -3576,8 +3610,14 @@ function renderWarnings(L) {
     out += `<div class="warn bad"><span class="i">📏</span><div>${tx("overflowWarning")}</div></div>`;
   if (state.autoPlanNotice)
     out += `<div class="warn tip"><span class="i">ℹ️</span><div>${tx(state.autoPlanNotice)}</div></div>`;
-  if (state.manualPlanNotice)
-    out += `<div class="warn tip"><span class="i">ℹ️</span><div>${tx(state.manualPlanNotice)}</div></div>`;
+  if (state.manualPlanNotice) {
+    // I fallimenti veri (coltura non aggiunta / quantità rifiutata) sono in rosso e
+    // ben visibili; gli avvisi solo informativi restano come suggerimento tenue.
+    const manualBad =
+      state.manualPlanNotice === "addNoSpace" ||
+      state.manualPlanNotice === "manualCountRejected";
+    out += `<div class="warn ${manualBad ? "bad" : "tip"}"><span class="i">${manualBad ? "⚠️" : "ℹ️"}</span><div>${tx(state.manualPlanNotice)}</div></div>`;
+  }
   // suggerimenti amiche presenti
   const goodPairs = [];
   const seen2 = new Set();
@@ -4207,6 +4247,7 @@ function autoBalanceLayout(keepSelection = true, expandToSpace = true, options =
   });
   if (expandToSpace) enforceMinimumBedCounts({ preserveLockedCounts: options.preserveLockedCounts === true });
   sortBedsForLayout();
+  rebalanceColumnsFresh();
   shrinkOverflowToFit({ preserveLockedCounts: options.preserveLockedCounts === true });
   if (expandToSpace) expandAutoFillToSpace({
     skipLockedCounts: options.expandLockedCounts === false,
@@ -4214,6 +4255,7 @@ function autoBalanceLayout(keepSelection = true, expandToSpace = true, options =
   });
   // Riordina per tenere le piante alte dietro a quelle basse (ordine anti-ombra).
   sortBedsForLayout();
+  rebalanceColumnsFresh();
   if (expandToSpace) expandAutoFillToSpace({
     skipLockedCounts: options.expandLockedCounts === false,
     respectDiversityLimit
@@ -4250,8 +4292,18 @@ function addPlant(id) {
     preserveLockedCounts: true,
     expandLockedCounts: false
   });
+  // Se la serra era piena e non c'era spazio, il bilanciamento ha dovuto togliere
+  // la coltura appena aggiunta: avvisa l'utente (avviso rosso nel pannello + popup)
+  // invece di farla sparire in silenzio.
+  const noSpace = !state.beds.some((b) => b.plantId === id);
+  if (noSpace) {
+    state.manualPlanNotice = "addNoSpace";
+    state.selected = -1;
+  }
+  commitColumnAssignment();
   saveConfig(true);
   render();
+  if (noSpace) alert(tx("addNoSpace"));
 }
 
 /* Rimozione manuale: non riempie automaticamente lo spazio liberato. */
@@ -4269,6 +4321,7 @@ function removePlantById(id) {
     preserveLockedCounts: true,
     expandLockedCounts: false
   });
+  commitColumnAssignment();
   saveConfig(true);
   render();
 }
@@ -4279,7 +4332,11 @@ function refreshForSeasonChange() {
   if (state.autoPlan || state.beds.length === 0) {
     autoFill();
   } else {
+    // Cambio stagione su piano manuale: le colonne si ridecidono per il nuovo
+    // contesto, poi si rifissano.
+    clearColumnAssignment();
     autoBalanceLayout(true, false);
+    commitColumnAssignment();
     render();
   }
 }
@@ -4295,6 +4352,7 @@ function arrangeSelectedPlantsExact() {
   state.manualPlanNotice = "";
   normalizeSelectedCropInputsForOptimization();
   rebalanceManualLayoutOnly();
+  commitColumnAssignment();
   saveConfig(true);
   render();
 }
@@ -4322,6 +4380,7 @@ function fillSelectedPlants() {
     preserveLockedCounts: true
   });
   restoreManualCountsWhenPossible(manualCounts);
+  commitColumnAssignment();
   saveConfig(true);
   render();
 }
@@ -4342,6 +4401,7 @@ function changePlantCount(id, delta) {
     fitResult === "adjusted" ? "manualCountAdjusted" :
     "";
   restoreSelection(selectedPlant);
+  commitColumnAssignment();
   saveConfig(true);
   render();
 }
@@ -4363,6 +4423,7 @@ function setPlantCount(id, value) {
     fitResult === "adjusted" ? "manualCountAdjusted" :
     "";
   restoreSelection(selectedPlant);
+  commitColumnAssignment();
   saveConfig(true);
   render();
 }
@@ -4381,7 +4442,11 @@ function refreshAutoPlanForGeometry(compactPaths = true) {
     return;
   }
   saveConfig(true);
+  // Cambio misure su piano manuale: il numero di colonne può cambiare, quindi
+  // si ridecidono le colonne e poi si rifissano.
+  clearColumnAssignment();
   autoBalanceLayout(true, true);
+  commitColumnAssignment();
   render();
 }
 
@@ -4412,7 +4477,8 @@ function cloneBedsSnapshot() {
     plantId: bed.plantId,
     count: bed.count,
     layout: bed.layout,
-    countLocked: Boolean(bed.countLocked)
+    countLocked: Boolean(bed.countLocked),
+    col: bed.col
   }));
 }
 
@@ -4421,7 +4487,8 @@ function restoreBedsSnapshot(snapshot) {
     plantId: bed.plantId,
     count: bed.count,
     layout: bed.layout,
-    countLocked: Boolean(bed.countLocked)
+    countLocked: Boolean(bed.countLocked),
+    col: bed.col
   }));
 }
 
@@ -4756,6 +4823,9 @@ function autoFill(options = {}) {
   // riempire la terra rimasta libera, cosi la serra non resta mai mezza vuota.
   expandAutoFillToSpace({ respectDiversityLimit: false });
   if (state.beds.length === 0) state.autoPlanNotice = "autoPlanEmptySeason";
+  // Fissa le colonne decise dal piano automatico: le modifiche manuali successive
+  // partiranno da questa disposizione senza rimescolarla.
+  commitColumnAssignment();
   state.selected = -1;
   saveConfig(true);
   render();
