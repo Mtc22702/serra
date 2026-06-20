@@ -1990,10 +1990,9 @@ function applyLanguage() {
   setText(".disclaimer", "disclaimer");
   setText(".panel-head h2", "settingsTitle");
   setText(".panel-head .sub", "settingsSub");
-  const labels = document.querySelectorAll(".section-label");
-  if (labels[0]) labels[0].textContent = tx("sizes");
-  if (labels[1]) labels[1].textContent = tx("climate");
-  if (labels[2]) labels[2].textContent = tx("quickStart");
+  setText("#sizesSectionLabel", "sizes");
+  setText("#climateSectionLabel", "climate");
+  setText("#autoPlanSectionLabel", "quickStart");
   const fld = document.querySelectorAll("#panelSettings .fld");
   if (fld[0]) fld[0].textContent = tx("width");
   if (fld[1]) fld[1].textContent = tx("length");

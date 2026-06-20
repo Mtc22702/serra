@@ -1452,6 +1452,134 @@ select:focus {
 .field {
   margin-bottom: 13px;
 }
+.settings-visual-field {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid rgba(47, 107, 58, 0.14);
+  border-radius: 13px;
+  background-color: rgba(245, 250, 242, 0.84);
+  background-repeat: repeat;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.68),
+    0 5px 14px rgba(31, 58, 38, 0.055);
+}
+.settings-visual-field--dimensions {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.48), rgba(249, 252, 247, 0.48)),
+    url("../img/svg/misure-pattern.svg");
+  background-size: auto, 96px 72px;
+}
+.settings-visual-field--climate {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(84px, 0.75fr);
+  gap: 10px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(249, 252, 247, 0.48)),
+    url("../img/svg/clima-pattern.svg");
+  background-size: auto, 112px 76px;
+}
+.settings-visual-field > div {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+.settings-visual-field label.fld {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+#pathField {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  padding: 11px;
+  border: 1px solid rgba(91, 83, 66, 0.24);
+  border-radius: 13px;
+  background-color: #d8d0bd;
+  background-image:
+    linear-gradient(rgba(255, 253, 247, 0.48), rgba(245, 240, 228, 0.42)),
+    url("../img/svg/camminamento-pattern.svg");
+  background-size: auto, 54px 54px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 5px 14px rgba(73, 63, 45, 0.08);
+}
+#pathField > .fld {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+#pathField > .row.field {
+  display: grid;
+  grid-template-columns: minmax(68px, 1fr) auto auto;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-bottom: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(91, 83, 66, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 253, 247, 0.76);
+  box-shadow: 0 2px 8px rgba(74, 64, 47, 0.05);
+  backdrop-filter: blur(3px);
+}
+#pathField #inPath {
+  width: 100%;
+  min-width: 0;
+}
+#pathField .stepper-sm {
+  width: 104px;
+  min-width: 104px;
+}
+#pathField .stepper-sm .step-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+}
+html[data-theme="dark"] .settings-visual-field {
+  border-color: rgba(164, 198, 170, 0.16);
+  background-color: rgba(22, 48, 37, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 5px 14px rgba(0, 0, 0, 0.14);
+}
+html[data-theme="dark"] .settings-visual-field--dimensions {
+  background-image:
+    linear-gradient(rgba(18, 43, 32, 0.7), rgba(18, 43, 32, 0.76)),
+    url("../img/svg/misure-pattern.svg");
+}
+html[data-theme="dark"] .settings-visual-field--climate {
+  background-image:
+    linear-gradient(rgba(18, 43, 32, 0.68), rgba(18, 43, 32, 0.76)),
+    url("../img/svg/clima-pattern.svg");
+}
+html[data-theme="dark"] .settings-visual-field label.fld {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
+}
+html[data-theme="dark"] #pathField {
+  border-color: rgba(197, 187, 163, 0.24);
+  background-color: #817966;
+  background-image:
+    linear-gradient(rgba(17, 35, 27, 0.58), rgba(17, 35, 27, 0.66)),
+    url("../img/svg/camminamento-pattern.svg");
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 5px 14px rgba(0, 0, 0, 0.18);
+}
+html[data-theme="dark"] #pathField > .fld,
+html[data-theme="dark"] #pathField > .row.field {
+  border-color: rgba(207, 219, 207, 0.13);
+  background: rgba(21, 48, 37, 0.82);
+}
+html[data-theme="dark"] #pathField > .fld {
+  background: transparent;
+}
 .section-label {
   display: flex;
   align-items: center;
