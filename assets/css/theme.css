@@ -654,6 +654,45 @@ html[data-theme="dark"] .catalog-chip.active {
   background: #376f49 !important;
   color: #fff !important;
 }
+html[data-theme="dark"] .catalog-clima-bar .hero-zone-btn {
+  background: var(--dark-raised) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] .catalog-clima-bar .hero-zone-btn:hover {
+  border-color: var(--dark-border-strong) !important;
+  background: rgba(82, 183, 136, 0.1) !important;
+}
+html[data-theme="dark"] .catalog-clima-bar .hero-zone-btn.active {
+  background: #376f49 !important;
+  border-color: #376f49 !important;
+  color: #fff !important;
+}
+html[data-theme="dark"] .catalog-heated-toggle {
+  background: var(--dark-raised) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] .catalog-heated-toggle:hover {
+  border-color: var(--dark-border-strong) !important;
+  background: rgba(82, 183, 136, 0.1) !important;
+}
+html[data-theme="dark"] .catalog-heated-toggle.active {
+  background: rgba(240, 180, 41, 0.15) !important;
+  border-color: #c9941f !important;
+  color: #f5c84a !important;
+}
+html[data-theme="dark"] .catalog-heated-toggle.active .catalog-heat-track {
+  background: #c9941f !important;
+}
+html[data-theme="dark"] .catalog-clima-divider {
+  background: var(--dark-border) !important;
+}
+html[data-theme="dark"] .catalog-filter-note {
+  background: rgba(82, 183, 136, 0.07) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-muted) !important;
+}
 html[data-theme="dark"] :where(.off-season-badge, .veg-offseason) {
   background: #233747 !important;
   color: #b9d9ee !important;

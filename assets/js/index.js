@@ -1027,17 +1027,26 @@ function applyDynamicStaticText() {
       : t("hero.heated_off");
   if (heatedBtn)
     heatedBtn.setAttribute("aria-pressed", String(state.riscaldata));
+  const catalogHeatedLabel = document.getElementById("catalogHeatedLabel");
+  const catalogHeatedBtn = document.getElementById("catalogHeatedBtn");
+  if (catalogHeatedLabel)
+    catalogHeatedLabel.textContent = state.riscaldata
+      ? t("hero.heated_on")
+      : t("hero.heated_off");
+  if (catalogHeatedBtn)
+    catalogHeatedBtn.setAttribute("aria-pressed", String(state.riscaldata));
+  const zoneNote = {
+    freddo: "hero.filter_note_zone_cold",
+    temperato: "hero.filter_note_zone_temp",
+    caldo: "hero.filter_note_zone_warm"
+  }[state.zona];
+  const noteText = state.riscaldata
+    ? t("hero.filter_note_heated")
+    : t(zoneNote);
   const note = document.getElementById("heroFilterNote");
-  if (note) {
-    const zoneNote = {
-      freddo: "hero.filter_note_zone_cold",
-      temperato: "hero.filter_note_zone_temp",
-      caldo: "hero.filter_note_zone_warm"
-    }[state.zona];
-    note.textContent = state.riscaldata
-      ? t("hero.filter_note_heated")
-      : t(zoneNote);
-  }
+  if (note) note.textContent = noteText;
+  const catalogNote = document.getElementById("catalogFilterNote");
+  if (catalogNote) catalogNote.textContent = noteText;
 }
 
 /* Sezione hero: aggiorna mese, frase guida, clima e piante decorative. */
@@ -1055,7 +1064,10 @@ function renderHero() {
   });
   document
     .getElementById("heroHeatedBtn")
-    .classList.toggle("active", state.riscaldata);
+    ?.classList.toggle("active", state.riscaldata);
+  document
+    .getElementById("catalogHeatedBtn")
+    ?.classList.toggle("active", state.riscaldata);
   applyDynamicStaticText();
 
   /* Piante fluttuanti decorative. */
