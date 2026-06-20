@@ -3457,7 +3457,7 @@ footer.footer-botanico {
   padding: 1rem;
   backdrop-filter: blur(8px);
   overscroll-behavior: contain;
-  touch-action: none;
+  touch-action: pan-y;
 }
 .detail-overlay.open {
   display: flex;
@@ -3510,6 +3510,8 @@ body.detail-open .back-to-top {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   padding-right: 0.18rem;
 }
@@ -6763,8 +6765,15 @@ body.cart-open .back-to-top {
   }
 
   .detail-panel {
-    height: 86dvh;
-    max-height: 86dvh;
+    --detail-mobile-height: min(
+      94.6dvh,
+      calc(
+        100dvh - 1.4rem - env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px)
+      )
+    );
+    height: var(--detail-mobile-height);
+    max-height: var(--detail-mobile-height);
     border-radius: 20px;
   }
 
