@@ -3091,7 +3091,6 @@ function vegCardHTML(p, inb, outOfSeason = false) {
         </div>
         <span class="veg-diff ${diffClass}">${diffLabel}</span>
       </div>
-      <button class="add remove-from-seed" data-remove-plant="${p.id}" title="${tx("remove")}">×</button>
     </div>
     <div class="veg-qty-panel">
       <div class="veg-qty-topline">
@@ -3104,6 +3103,7 @@ function vegCardHTML(p, inb, outOfSeason = false) {
         <button class="veg-step" data-veg-cnt="1" data-veg-plant="${p.id}" aria-label="${tx("qtyIncrease")}">+</button>
       </div>
     </div>
+    <button class="add remove-from-seed" data-remove-plant="${p.id}" title="${tx("remove")}">×</button>
   </div>`;
   }
   return `<div class="veg">

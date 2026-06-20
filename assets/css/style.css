@@ -2008,6 +2008,7 @@ html[data-theme="dark"] #pathField > .fld {
 /* Pianta già nella serra: sfondo verde tenue */
 .veg.in {
   display: block;
+  position: relative;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(244, 250, 241, 0.96));
   border-color: rgba(47, 107, 58, 0.2);
   padding: 8px;
@@ -2023,9 +2024,15 @@ html[data-theme="dark"] #pathField > .fld {
 }
 .veg-in-main {
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) 30px;
+  grid-template-columns: 32px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
+  padding-right: 40px;
+}
+.veg.in > .remove-from-seed {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 .veg.in .ico {
   width: 32px;
@@ -3806,15 +3813,16 @@ body.cart-open .cart-nudge {
     justify-content: space-between;
   }
 
-  /* veg.in mobile: info pianta e controlli quantita nella stessa riga compatta. */
+  /* veg.in mobile: info pianta a sinistra, controlli quantita al centro,
+     pulsante rimozione come 3ª colonna separata per evitare click accidentali. */
   .veg.in {
     background: rgba(47, 107, 58, 0.08);
     border-color: rgba(47, 107, 58, 0.28);
     box-shadow: inset 3px 0 0 rgba(47, 107, 58, 0.45);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     grid-auto-rows: auto;
-    gap: 8px;
+    gap: 8px 10px;
     min-height: 78px;
     height: auto;
     padding: 8px 9px;
@@ -3822,11 +3830,20 @@ body.cart-open .cart-nudge {
     align-items: center;
   }
   .veg-in-main {
-    grid-template-columns: 32px minmax(0, 1fr) 28px;
+    grid-template-columns: 32px minmax(0, 1fr);
+    padding-right: 0;
     gap: 7px;
     min-width: 0;
     grid-row: 1;
     grid-column: 1;
+  }
+  .veg.in > .remove-from-seed {
+    position: static;
+    top: auto;
+    right: auto;
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
   }
   .veg.in .ico {
     width: 32px;
@@ -5984,7 +6001,7 @@ body.cart-open .cart-nudge {
 .persona-pick-label {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.1;
   color: var(--verde-scuro);
 }
@@ -6209,12 +6226,39 @@ body.livello-esperto .guided-intro-esperto {
   .guided-intro {
     padding: 12px 13px;
   }
+  .persona-pick {
+    background: rgba(47, 107, 58, 0.07);
+    border: 2px solid rgba(47, 107, 58, 0.24);
+    border-radius: 14px;
+    padding: 14px 12px;
+    margin-top: 4px;
+  }
+  .persona-pick-head {
+    gap: 4px;
+  }
+  .persona-pick-label {
+    font-size: 18px;
+  }
+  .persona-pick-hint {
+    font-size: 12px;
+  }
   .persona-card {
-    padding: 11px 12px 11px 14px;
+    padding: 12px 13px 12px 15px;
+    min-height: 70px;
+    border-width: 2px;
   }
   .persona-card-ico {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     font-size: 19px;
+  }
+  .persona-card-body b {
+    font-size: 14px;
+  }
+  .persona-card::before {
+    width: 5px;
+  }
+  .persona-card.is-active::before {
+    width: 7px;
   }
 }
