@@ -5603,7 +5603,13 @@ body.cart-open .cart-nudge {
 body.livello-novizio #pathField,
 body.livello-novizio #presetBar,
 body.livello-novizio .view-select-wrap,
-body.livello-novizio .veg-filters {
+body.livello-novizio .veg-filters,
+/* Il novizio riempie la serra automaticamente a ogni cambio di mese/zona/misure:
+   il pulsante "Riempi la serra" sarebbe ridondante, quindi lo nascondiamo. */
+body.livello-novizio .crops-fill-main-btn,
+/* Azioni manuali avanzate (sistema/riempi spazi/svuota): non servono al novizio,
+   che lavora solo in automatico. */
+body.livello-novizio .crops-customize-footer {
   display: none !important;
 }
 /* Ognuno dei tre blocchi passi-guidati è mostrato solo per il livello

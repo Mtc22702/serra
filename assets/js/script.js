@@ -1579,6 +1579,17 @@ function setLivello(liv, { mapMode = true } = {}) {
    comportamento adatto alla persona, poi salva. */
 function chooseLivello(liv) {
   const prev = state.livello;
+  // Passare a Principiante rigenera l'orto in automatico: se c'è un piano costruito
+  // a mano (non automatico) chiedi conferma per non cancellarlo per sbaglio.
+  if (
+    liv === "novizio" &&
+    prev !== "novizio" &&
+    !state.autoPlan &&
+    state.beds.length > 0 &&
+    !confirm(tx("confirmNoviceReset"))
+  ) {
+    return;
+  }
   setLivello(liv);
   if (liv === "esperto") {
     // L'esperto vuole il controllo: catalogo completo, scelta a mano.
@@ -3224,7 +3235,9 @@ function render() {
     const b = emptyBanner.querySelector(".seb-copy b");
     const s = emptyBanner.querySelector(".seb-copy span");
     if (b) b.textContent = tx("emptyBannerTitle");
-    if (s) s.innerHTML = tx("emptyBannerCopy");
+    // Il novizio non ha il pulsante "Riempi la serra" né la card Personalizza
+    // completa: gli mostriamo un messaggio adatto al suo flusso automatico.
+    if (s) s.innerHTML = tx(state.livello === "novizio" ? "emptyBannerCopyNovice" : "emptyBannerCopy");
     emptyBanner.hidden = state.beds.length > 0;
   }
 
@@ -4329,7 +4342,9 @@ function removePlantById(id) {
 /* Cambio stagione/misure: se il piano e automatico rigenera, altrimenti conserva
    la scelta manuale e ribilancia solo il necessario. */
 function refreshForSeasonChange() {
-  if (state.autoPlan || state.beds.length === 0) {
+  // Il novizio è sempre automatico: ogni cambio di mese/zona rigenera il piano
+  // (così non resta mai bloccato in un piano manuale senza il pulsante "Riempi").
+  if (state.autoPlan || state.livello === "novizio" || state.beds.length === 0) {
     autoFill();
   } else {
     // Cambio stagione su piano manuale: le colonne si ridecidono per il nuovo
@@ -4437,7 +4452,8 @@ function compactPathForAutoFill() {
 }
 
 function refreshAutoPlanForGeometry(compactPaths = true) {
-  if (state.autoPlan) {
+  // Come sopra: per il novizio il cambio misure rigenera sempre il piano.
+  if (state.autoPlan || state.livello === "novizio") {
     autoFill({ compactPaths });
     return;
   }
@@ -5585,7 +5601,10 @@ if (LIVELLI.has(_bootLivello)) {
     setMode("fit", false);
     resetNoviceAdvancedOptions();
     syncVegFilterTabs();
-    if (!_bootIntentApplied) autoFill();
+    // Ingresso guidato del novizio: usa l'auto-riempimento STAGIONALE (coerente col
+    // mese), non un preset fisso che potrebbe essere fuori stagione. Come per
+    // l'intermedio, con guided=1 si rigenera sempre il piano di stagione.
+    if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
     else render();
     collapseSettingsPanelAfterAutoPlan();
     scrollToScene();

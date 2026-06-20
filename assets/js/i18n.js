@@ -1300,6 +1300,10 @@
         emptyBannerTitle: "La serra è vuota",
         emptyBannerCopy:
           "Premi <strong>Riempi la serra</strong> per iniziare in automatico, oppure scegli le piante una per una dalla card <strong>Personalizza</strong>.",
+        emptyBannerCopyNovice:
+          "La serra si riempie da sola: cambia <strong>mese</strong>, <strong>zona</strong> o <strong>misure</strong> e ti prepariamo subito un nuovo orto di stagione.",
+        confirmNoviceReset:
+          "In modalità Principiante l'orto viene rigenerato in automatico e le modifiche manuali andranno perse. Vuoi continuare?",
         svgLabel: "Serra vista dall'alto",
         compassSouth: "SUD",
         greenhouseEntrance: "ingresso",
@@ -1632,6 +1636,10 @@
         emptyBannerTitle: "Sera este goală",
         emptyBannerCopy:
           "Apasă <strong>Umple sera</strong> pentru a porni automat, sau alege plantele una câte una din cardul <strong>Personalizează</strong>.",
+        emptyBannerCopyNovice:
+          "Sera se umple singură: schimbă <strong>luna</strong>, <strong>zona</strong> sau <strong>dimensiunile</strong> și îți pregătim imediat o grădină de sezon.",
+        confirmNoviceReset:
+          "În modul Începător grădina este regenerată automat și modificările manuale se vor pierde. Vrei să continui?",
         svgLabel: "Seră văzută de sus",
         compassSouth: "SUD",
         greenhouseEntrance: "intrare",
