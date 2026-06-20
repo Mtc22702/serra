@@ -1,6 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="Cicoria">
+<defs data-botanical-realism="v2">
+  <filter id="botanicalDepth" x="-28%" y="-28%" width="168%" height="176%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.15" result="softAlpha"/>
+    <feSpecularLighting in="softAlpha" surfaceScale="3.2" specularConstant="0.32" specularExponent="18" lighting-color="#fffbe8" result="specular">
+      <feDistantLight azimuth="225" elevation="58"/>
+    </feSpecularLighting>
+    <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularClipped"/>
+    <feBlend in="SourceGraphic" in2="specularClipped" mode="screen" result="litPlant"/>
+    <feDropShadow in="litPlant" dx="1.1" dy="2.1" stdDeviation="1.35" flood-color="#132315" flood-opacity="0.38"/>
+  </filter>
+</defs>
   <ellipse cx="2" cy="5" rx="45" ry="39" fill="#2f1d10" opacity=".13"/>
-  <g class="plant-glyph plant-glyph--frastagliata" style="isolation:isolate"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(5.204269129317254)"><path d="M0 0 C2.62992885999126 -3.4787418782953177 10.51971543996504 -3.826616066124849 8.035893738862184 -9.392603071397359
+  <g class="plant-glyph plant-glyph--frastagliata" style="isolation:isolate;filter:url(#botanicalDepth)"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(5.204269129317254)"><path d="M0 0 C2.62992885999126 -3.4787418782953177 10.51971543996504 -3.826616066124849 8.035893738862184 -9.392603071397359
       C6.13650067331294 -12.523470761863143 12.857429982179493 -13.91496751318127 9.058643851081007 -18.089457767135652
       C6.720929308866554 -21.220325457601437 9.935286804411428 -25.046941523726286 5.552072037759327 -27.134186650703477
       C3.50657181332168 -29.221431777680667 2.3377145422144534 -32.70017365597598 0 -34.787418782953175

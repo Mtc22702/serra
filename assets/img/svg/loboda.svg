@@ -1,6 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="Loboda">
+<defs data-botanical-realism="v2">
+  <filter id="botanicalDepth" x="-28%" y="-28%" width="168%" height="176%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.15" result="softAlpha"/>
+    <feSpecularLighting in="softAlpha" surfaceScale="3.2" specularConstant="0.32" specularExponent="18" lighting-color="#fffbe8" result="specular">
+      <feDistantLight azimuth="225" elevation="58"/>
+    </feSpecularLighting>
+    <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularClipped"/>
+    <feBlend in="SourceGraphic" in2="specularClipped" mode="screen" result="litPlant"/>
+    <feDropShadow in="litPlant" dx="1.1" dy="2.1" stdDeviation="1.35" flood-color="#132315" flood-opacity="0.38"/>
+  </filter>
+</defs>
   <ellipse cx="2" cy="5" rx="45" ry="39" fill="#2f1d10" opacity=".13"/>
-  <g class="plant-glyph plant-glyph--rosetta" style="isolation:isolate"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(7.131157063413411)"><path d="M0 0 C11.568182661957945 -2.9853374611504377 20.151027862765453 -8.974670742583504 16.046188853683603 -13.807185757820774
+  <g class="plant-glyph plant-glyph--rosetta" style="isolation:isolate;filter:url(#botanicalDepth)"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(7.131157063413411)"><path d="M0 0 C11.568182661957945 -2.9853374611504377 20.151027862765453 -8.974670742583504 16.046188853683603 -13.807185757820774
       C13.43401857517697 -23.13636532391589 6.34384210494468 -33.585046437942424 0 -37.31671826438047
       C-6.34384210494468 -33.585046437942424 -13.43401857517697 -23.13636532391589 -16.046188853683603 -13.807185757820774
       C-20.151027862765453 -8.974670742583504 -11.568182661957945 -2.9853374611504377 0 0Z" fill="#376b34" stroke="#2a5128" stroke-width="0.6717009287588483" stroke-linejoin="round"/>

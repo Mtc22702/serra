@@ -1,6 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="Barbabietola">
+<defs data-botanical-realism="v2">
+  <filter id="botanicalDepth" x="-28%" y="-28%" width="168%" height="176%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.15" result="softAlpha"/>
+    <feSpecularLighting in="softAlpha" surfaceScale="3.2" specularConstant="0.32" specularExponent="18" lighting-color="#fffbe8" result="specular">
+      <feDistantLight azimuth="225" elevation="58"/>
+    </feSpecularLighting>
+    <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularClipped"/>
+    <feBlend in="SourceGraphic" in2="specularClipped" mode="screen" result="litPlant"/>
+    <feDropShadow in="litPlant" dx="1.1" dy="2.1" stdDeviation="1.35" flood-color="#132315" flood-opacity="0.38"/>
+  </filter>
+</defs>
   <ellipse cx="2" cy="5" rx="45" ry="39" fill="#2f1d10" opacity=".13"/>
-  <g class="plant-glyph plant-glyph--rosetta" style="isolation:isolate"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(1.3621201529167593)"><path d="M0 0 C11.095643959197309 -2.8633919894702733 19.327895928924345 -8.608072168345009 15.39073194340272 -13.243187951300014
+  <g class="plant-glyph plant-glyph--rosetta" style="isolation:isolate;filter:url(#botanicalDepth)"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(1.3621201529167593)"><path d="M0 0 C11.095643959197309 -2.8633919894702733 19.327895928924345 -8.608072168345009 15.39073194340272 -13.243187951300014
       C12.88526395261623 -22.191287918394618 6.084707977624332 -32.21315988154058 0 -35.79239986837842
       C-6.084707977624332 -32.21315988154058 -12.88526395261623 -22.191287918394618 -15.39073194340272 -13.243187951300014
       C-19.327895928924345 -8.608072168345009 -11.095643959197309 -2.8633919894702733 0 0Z" fill="#4d3850" stroke="#3b2b3d" stroke-width="0.6442631976308115" stroke-linejoin="round"/>

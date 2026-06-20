@@ -1,6 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="Verza">
+<defs data-botanical-realism="v2">
+  <filter id="botanicalDepth" x="-28%" y="-28%" width="168%" height="176%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.15" result="softAlpha"/>
+    <feSpecularLighting in="softAlpha" surfaceScale="3.2" specularConstant="0.32" specularExponent="18" lighting-color="#fffbe8" result="specular">
+      <feDistantLight azimuth="225" elevation="58"/>
+    </feSpecularLighting>
+    <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularClipped"/>
+    <feBlend in="SourceGraphic" in2="specularClipped" mode="screen" result="litPlant"/>
+    <feDropShadow in="litPlant" dx="1.1" dy="2.1" stdDeviation="1.35" flood-color="#132315" flood-opacity="0.38"/>
+  </filter>
+</defs>
   <ellipse cx="2" cy="5" rx="45" ry="39" fill="#2f1d10" opacity=".13"/>
-  <g class="plant-glyph plant-glyph--brassica" style="isolation:isolate"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(6.078539279289544)"><path d="M0 0 C15.163374486300262 -2.8773006615370513 26.413620072910135 -8.64988511374576 21.033067835835848 -13.307515559608863
+  <g class="plant-glyph plant-glyph--brassica" style="isolation:isolate;filter:url(#botanicalDepth)"><ellipse cx="4.1000000000000005" cy="7.38" rx="38.949999999999996" ry="33.21" fill="#112718" opacity="0.2"/><g transform="rotate(6.078539279289544)"><path d="M0 0 C15.163374486300262 -2.8773006615370513 26.413620072910135 -8.64988511374576 21.033067835835848 -13.307515559608863
       C17.609080048606756 -22.29908012691215 8.31539891184208 -32.36963244229183 0 -35.96625826921314
       C-8.31539891184208 -32.36963244229183 -17.609080048606756 -22.29908012691215 -21.033067835835848 -13.307515559608863
       C-26.413620072910135 -8.64988511374576 -15.163374486300262 -2.8773006615370513 0 0Z" fill="#456545" stroke="#344d34" stroke-width="0.6473926488458365" stroke-linejoin="round"/>
