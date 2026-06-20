@@ -3868,3 +3868,254 @@ if (catalogSearchLink) {
   const container = document.querySelector(".hcg");
   if (container) observer.observe(container);
 })();
+
+/* ── Pre-config bottom sheet ─────────────────────────────────────────────── */
+(function () {
+  const CONFIG_KEY = "serra.config.v1";
+
+  function readSavedCfg() {
+    try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || "null"); } catch { return null; }
+  }
+
+  function savePreconfigToStorage() {
+    const w = Math.min(12, Math.max(1, parseFloat(document.getElementById("pcW")?.value) || 3));
+    const l = Math.min(30, Math.max(1, parseFloat(document.getElementById("pcL")?.value) || 5));
+    const path = Math.min(120, Math.max(30, parseInt(document.getElementById("pcPathNum")?.value) || 60));
+    const zona = document.getElementById("pcZona")?.value ?? "temperato";
+    const riscaldata = document.getElementById("pcRisc")?.value === "si";
+    const mese = parseInt(document.getElementById("pcMese")?.value) || (new Date().getMonth() + 1);
+    const existing = readSavedCfg() || {};
+    try {
+      localStorage.setItem(CONFIG_KEY, JSON.stringify({
+        ...existing, larghezza: w, lunghezza: l, path, zona, riscaldata, mese
+      }));
+    } catch {}
+    return { w, l, path, zona, riscaldata, mese };
+  }
+
+  function syncPcSlider(inputId, sliderId) {
+    const input = document.getElementById(inputId);
+    const slider = document.getElementById(sliderId);
+    if (input && slider) slider.value = input.value;
+  }
+
+  function syncPcInputFromSlider(sliderId, inputId) {
+    const slider = document.getElementById(sliderId);
+    const input = document.getElementById(inputId);
+    if (slider && input) input.value = slider.value;
+  }
+
+  function syncPcPath(source) {
+    const slider = document.getElementById("pcPath");
+    const num = document.getElementById("pcPathNum");
+    if (!slider || !num) return;
+    const raw = parseInt(source === "slider" ? slider.value : num.value) || 60;
+    const snapped = Math.round(Math.min(120, Math.max(30, raw)) / 5) * 5;
+    slider.value = snapped;
+    num.value = snapped;
+    updatePreconfigSummary();
+  }
+
+  function updatePreconfigSummary() {
+    const el = document.getElementById("preconfigSummary");
+    if (!el) return;
+    const w = parseFloat(document.getElementById("pcW")?.value) || 3;
+    const l = parseFloat(document.getElementById("pcL")?.value) || 5;
+    const path = parseInt(document.getElementById("pcPathNum")?.value) || 60;
+    const zona = document.getElementById("pcZona")?.value ?? "temperato";
+    const heated = document.getElementById("pcRisc")?.value === "si";
+    const mese = parseInt(document.getElementById("pcMese")?.value) || (new Date().getMonth() + 1);
+    const zonaLabels = { freddo: "❄️ Fredda", temperato: "🌤️ Temperata", caldo: "☀️ Calda" };
+    el.textContent = `${w}×${l} m · cam. ${path} cm · ${zonaLabels[zona]}${heated ? " · 🔥 Riscaldata" : ""} · ${NOMI_MESI[mese - 1]}`;
+  }
+
+  function syncPcRiscSelect(heated) {
+    const sel = document.getElementById("pcRisc");
+    if (sel) sel.value = heated ? "si" : "no";
+  }
+
+  // stub non più usato — tenuto per compatibilità
+  function setPcHeated(active) { syncPcRiscSelect(active); }
+
+  function populatePcMonths() {
+    const sel = document.getElementById("pcMese");
+    if (!sel || sel.options.length > 0) return;
+    NOMI_MESI.forEach((m, i) => {
+      const opt = document.createElement("option");
+      opt.value = i + 1;
+      opt.textContent = m;
+      sel.appendChild(opt);
+    });
+  }
+
+  function updatePreconfigCta() {
+    const active = document.querySelector(".preconfig-persona-btn.active");
+    const cta = document.getElementById("preconfigCta");
+    if (!cta) return;
+    if (active) {
+      cta.href = active.dataset.url;
+      cta.classList.remove("preconfig-cta--disabled");
+      cta.removeAttribute("aria-disabled");
+    } else {
+      cta.href = "#";
+      cta.classList.add("preconfig-cta--disabled");
+      cta.setAttribute("aria-disabled", "true");
+    }
+  }
+
+  function openPreconfigSheet(targetUrl) {
+    const overlay = document.getElementById("preconfigOverlay");
+    if (!overlay) return;
+    populatePcMonths();
+
+    const saved = readSavedCfg();
+    const w = saved?.larghezza ?? 3;
+    const l = saved?.lunghezza ?? 5;
+    const zona = saved?.zona ?? "temperato";
+    const riscaldata = Boolean(saved?.riscaldata);
+    const mese = saved?.mese ?? (new Date().getMonth() + 1);
+
+    const path = saved?.path ?? 60;
+    const pcW = document.getElementById("pcW");
+    const pcL = document.getElementById("pcL");
+    if (pcW) pcW.value = w;
+    if (pcL) pcL.value = l;
+    syncPcSlider("pcW", "pcWSlider");
+    syncPcSlider("pcL", "pcLSlider");
+    const pcPath = document.getElementById("pcPath");
+    const pcPathNum = document.getElementById("pcPathNum");
+    if (pcPath) pcPath.value = path;
+    if (pcPathNum) pcPathNum.value = path;
+    const pcZona = document.getElementById("pcZona");
+    if (pcZona) pcZona.value = zona;
+    syncPcRiscSelect(riscaldata);
+    const pcMese = document.getElementById("pcMese");
+    if (pcMese) pcMese.value = mese;
+    updatePreconfigSummary();
+
+    /* Persona: mostra/nascondi sezione in base alla presenza del livello nell'URL */
+    const urlParams = new URL(targetUrl, location.href).searchParams;
+    const livello = urlParams.get("livello");
+    const personaSection = document.getElementById("preconfigPersonaSection");
+    const hasLivello = Boolean(livello);
+
+    if (personaSection) personaSection.hidden = hasLivello;
+
+    document.querySelectorAll(".preconfig-persona-btn").forEach(btn => {
+      const isActive = hasLivello ? btn.dataset.livello === livello : false;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-pressed", String(isActive));
+    });
+
+    /* Se il livello è già noto, il CTA punta direttamente all'URL */
+    const cta = document.getElementById("preconfigCta");
+    if (cta && hasLivello) {
+      cta.href = targetUrl;
+      cta.classList.remove("preconfig-cta--disabled");
+      cta.removeAttribute("aria-disabled");
+    } else {
+      updatePreconfigCta();
+    }
+
+    overlay.removeAttribute("hidden");
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => overlay.classList.add("is-open"));
+    });
+    document.body.style.overflow = "hidden";
+  }
+
+  function closePreconfigSheet() {
+    const overlay = document.getElementById("preconfigOverlay");
+    if (!overlay) return;
+    overlay.classList.remove("is-open");
+    const onEnd = () => {
+      overlay.setAttribute("hidden", "");
+      document.body.style.overflow = "";
+    };
+    overlay.addEventListener("transitionend", onEnd, { once: true });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    populatePcMonths();
+
+    /* Intercetta tutti i link al configuratore: 3 livelli hero + nav + footer */
+    document.querySelectorAll(".hero-cfg-level, .nav-link--configuratore").forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        openPreconfigSheet(this.href);
+      });
+    });
+
+    /* Chiudi: backdrop e X */
+    document.getElementById("preconfigBackdrop")?.addEventListener("click", closePreconfigSheet);
+    document.getElementById("preconfigClose")?.addEventListener("click", closePreconfigSheet);
+
+    /* Zona e Serra select */
+    document.getElementById("pcZona")?.addEventListener("change", updatePreconfigSummary);
+    document.getElementById("pcRisc")?.addEventListener("change", updatePreconfigSummary);
+
+    /* Persona selector */
+    document.querySelectorAll(".preconfig-persona-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        document.querySelectorAll(".preconfig-persona-btn").forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-pressed", "false");
+        });
+        this.classList.add("active");
+        this.setAttribute("aria-pressed", "true");
+        updatePreconfigCta();
+      });
+    });
+
+    /* Stepper +/- */
+    document.querySelectorAll(".preconfig-step-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const input = document.getElementById(this.dataset.target);
+        if (!input) return;
+        const step = parseFloat(this.dataset.step);
+        const min = parseFloat(input.min) || 1;
+        const max = parseFloat(input.max) || 40;
+        const val = Math.round((Math.min(max, Math.max(min, (parseFloat(input.value) || 0) + step))) * 10) / 10;
+        input.value = val;
+        updatePreconfigSummary();
+      });
+    });
+
+    /* Slider misure — sincronizzati con stepper */
+    document.getElementById("pcWSlider")?.addEventListener("input", () => {
+      syncPcInputFromSlider("pcWSlider", "pcW"); updatePreconfigSummary();
+    });
+    document.getElementById("pcLSlider")?.addEventListener("input", () => {
+      syncPcInputFromSlider("pcLSlider", "pcL"); updatePreconfigSummary();
+    });
+    document.getElementById("pcW")?.addEventListener("input", () => syncPcSlider("pcW", "pcWSlider"));
+    document.getElementById("pcL")?.addEventListener("input", () => syncPcSlider("pcL", "pcLSlider"));
+
+    /* Slider e stepper camminamento */
+    document.getElementById("pcPath")?.addEventListener("input", () => syncPcPath("slider"));
+    document.getElementById("pcPathNum")?.addEventListener("change", () => syncPcPath("num"));
+
+    /* Summary su cambio altri input */
+    ["pcW", "pcL", "pcMese"].forEach(id => {
+      document.getElementById(id)?.addEventListener("change", updatePreconfigSummary);
+    });
+
+    /* CTA: salva e naviga (blocca se nessuna persona selezionata) */
+    document.getElementById("preconfigCta")?.addEventListener("click", function (e) {
+      if (this.classList.contains("preconfig-cta--disabled")) {
+        e.preventDefault();
+        document.querySelector(".preconfig-persona-row")?.classList.add("preconfig-persona-shake");
+        setTimeout(() => document.querySelector(".preconfig-persona-row")?.classList.remove("preconfig-persona-shake"), 500);
+        return;
+      }
+      savePreconfigToStorage();
+    });
+
+    /* Chiudi con Escape */
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && !document.getElementById("preconfigOverlay")?.hasAttribute("hidden")) {
+        closePreconfigSheet();
+      }
+    });
+  });
+})();

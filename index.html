@@ -106,7 +106,7 @@
           >
           <a
             href="configuratore.html"
-            class="nav-link"
+            class="nav-link nav-link--configuratore"
             data-i18n="nav.configuratore"
             >📐 Configuratore</a
           >
@@ -773,7 +773,7 @@
           <div class="footer-nav-title" data-i18n="footer.esplora">Esplora</div>
           <ul class="footer-nav-list">
             <li>
-              <a href="configuratore.html"
+              <a href="configuratore.html" class="nav-link--configuratore"
                 ><span data-i18n="nav.configuratore">📐 Configuratore</span></a
               >
             </li>
@@ -1233,6 +1233,135 @@
         >
           Accetta
         </button>
+      </div>
+    </div>
+
+    <!-- Pre-config bottom sheet: impostazioni serra prima di entrare nel configuratore (mobile). -->
+    <div class="preconfig-overlay" id="preconfigOverlay" hidden aria-modal="true" role="dialog" aria-labelledby="preconfigTitle">
+      <div class="preconfig-backdrop" id="preconfigBackdrop"></div>
+      <div class="preconfig-sheet" id="preconfigSheet">
+        <div class="preconfig-handle" aria-hidden="true"></div>
+
+        <!-- Header panel — uguale alla card La tua serra -->
+        <div class="preconfig-panel-head">
+          <div class="preconfig-head-left">
+            <span class="preconfig-head-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l7-7 7 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+                <polyline points="7 19 7 12 13 12 13 19"/>
+              </svg>
+            </span>
+            <div>
+              <h2 class="preconfig-title" id="preconfigTitle">La tua serra</h2>
+              <span class="preconfig-head-tag">Imposta i parametri</span>
+            </div>
+          </div>
+          <button class="preconfig-close" id="preconfigClose" aria-label="Chiudi pannello">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 4l12 12M16 4L4 16"/></svg>
+          </button>
+        </div>
+
+        <div class="preconfig-body">
+
+          <!-- 1. Misure interne -->
+          <div class="preconfig-section-label">1. Misure interne</div>
+          <div class="preconfig-vfield preconfig-vfield--dims">
+            <div>
+              <label class="preconfig-fld">Larghezza</label>
+              <div class="preconfig-stepper">
+                <button class="preconfig-step-btn" data-target="pcW" data-step="-0.5" aria-label="Riduci larghezza">−</button>
+                <input class="preconfig-step-input" type="number" id="pcW" min="1" max="12" step="0.5" value="3" inputmode="decimal"/>
+                <button class="preconfig-step-btn" data-target="pcW" data-step="0.5" aria-label="Aumenta larghezza">+</button>
+              </div>
+              <input type="range" id="pcWSlider" min="1" max="12" step="0.5" value="3" class="preconfig-dim-slider" aria-label="Larghezza slider"/>
+            </div>
+            <div>
+              <label class="preconfig-fld">Lunghezza</label>
+              <div class="preconfig-stepper">
+                <button class="preconfig-step-btn" data-target="pcL" data-step="-0.5" aria-label="Riduci lunghezza">−</button>
+                <input class="preconfig-step-input" type="number" id="pcL" min="1" max="30" step="0.5" value="5" inputmode="decimal"/>
+                <button class="preconfig-step-btn" data-target="pcL" data-step="0.5" aria-label="Aumenta lunghezza">+</button>
+              </div>
+              <input type="range" id="pcLSlider" min="1" max="30" step="0.5" value="5" class="preconfig-dim-slider" aria-label="Lunghezza slider"/>
+            </div>
+          </div>
+
+          <!-- Camminamento tra aiuole (stile pathField) -->
+          <div class="preconfig-section-label">Camminamento tra aiuole</div>
+          <div class="preconfig-path-field">
+            <div class="preconfig-path-row">
+              <input type="range" id="pcPath" min="30" max="120" step="5" value="60" class="preconfig-path-slider"/>
+              <div class="preconfig-stepper preconfig-stepper--sm">
+                <button class="preconfig-step-btn" data-target="pcPathNum" data-step="-5" aria-label="−">−</button>
+                <input class="preconfig-step-input" type="number" id="pcPathNum" min="30" max="120" step="5" value="60" inputmode="numeric" pattern="[0-9]*"/>
+                <button class="preconfig-step-btn" data-target="pcPathNum" data-step="5" aria-label="+">+</button>
+              </div>
+              <span class="preconfig-path-unit">cm</span>
+            </div>
+          </div>
+
+          <!-- 2. Clima (2 select identici al configuratore) -->
+          <div class="preconfig-section-label">2. Clima</div>
+          <div class="preconfig-vfield preconfig-vfield--climate">
+            <div>
+              <label class="preconfig-fld" for="pcZona">Zona</label>
+              <select id="pcZona" class="preconfig-select">
+                <option value="freddo">Fredda</option>
+                <option value="temperato" selected>Temperata</option>
+                <option value="caldo">Calda</option>
+              </select>
+            </div>
+            <div>
+              <label class="preconfig-fld" for="pcRisc">Serra</label>
+              <select id="pcRisc" class="preconfig-select">
+                <option value="no">Fredda</option>
+                <option value="si">Riscaldata</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tipo coltivatore: visibile solo se si entra senza livello (nav/footer) -->
+          <div id="preconfigPersonaSection">
+          <div class="preconfig-section-label">Chi sei?</div>
+          <div class="preconfig-persona-row">
+            <button class="preconfig-persona-btn" data-livello="novizio" data-url="configuratore.html?livello=novizio&guided=1">
+              <img src="assets/img/svg/plant_lv1.svg" alt="" class="preconfig-persona-ico"/>
+              <span class="preconfig-persona-name">Principiante</span>
+              <small>orto guidato</small>
+            </button>
+            <button class="preconfig-persona-btn" data-livello="intermedio" data-url="configuratore.html?livello=intermedio&guided=1">
+              <img src="assets/img/svg/plant_lv2.svg" alt="" class="preconfig-persona-ico"/>
+              <span class="preconfig-persona-name">Intermedio</span>
+              <small>guidato + libero</small>
+            </button>
+            <button class="preconfig-persona-btn" data-livello="esperto" data-url="configuratore.html?livello=esperto&mode=expert&empty=1">
+              <img src="assets/img/svg/plant_lv3.svg" alt="" class="preconfig-persona-ico"/>
+              <span class="preconfig-persona-name">Esperto</span>
+              <small>scelta libera</small>
+            </button>
+          </div>
+
+          </div><!-- /preconfigPersonaSection -->
+
+          <!-- 3. Mese di semina -->
+          <div class="preconfig-section-label">3. Mese di semina</div>
+          <div class="preconfig-month-wrap">
+            <span class="preconfig-month-icon" aria-hidden="true">📅</span>
+            <select id="pcMese" class="preconfig-month-select" aria-label="Mese di semina"></select>
+            <span class="preconfig-month-arrow" aria-hidden="true">
+              <svg viewBox="0 0 12 8" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+            </span>
+          </div>
+
+        </div>
+
+        <div class="preconfig-footer">
+          <div class="preconfig-summary" id="preconfigSummary"></div>
+          <a class="preconfig-cta" id="preconfigCta" href="#">
+            <span>Vai al configuratore</span>
+            <span class="preconfig-cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </div>
 
