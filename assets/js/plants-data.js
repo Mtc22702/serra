@@ -29,7 +29,8 @@
         "carota",
         "prezzemolo",
         "lattuga",
-        "sedano"
+        "sedano",
+        "borragine"
       ],
       nemiche: [
         "cavolo",
@@ -38,6 +39,7 @@
         "cavolfiore",
         "cavolonero",
         "cavolorapa",
+        "broccolo_romanesco",
         "finocchio",
         "cetriolo",
         "cavoletti"
@@ -63,7 +65,7 @@
       gg: 90,
       mesi: [2, 3, 4],
       amiche: ["basilico", "pomodoro"],
-      nemiche: ["fagiolino", "fagiolo"],
+      nemiche: ["fagiolino", "fagiolo", "broccolo_romanesco"],
       resa: 1,
       nota: "Ama il caldo. Concima quando inizia a fruttificare.",
       col: {
@@ -723,12 +725,13 @@
       acqua: "media",
       gg: 65,
       mesi: [4, 5, 6, 7],
-      amiche: ["carota", "cetriolo", "lattuga", "zucchina"],
+      amiche: ["carota", "cetriolo", "lattuga", "zucchina", "cimbru"],
       nemiche: [
         "cipolla",
         "aglio",
         "porro",
         "scalogno",
+        "leurda",
         "peperone",
         "finocchio"
       ],
@@ -751,12 +754,13 @@
       acqua: "media",
       gg: 75,
       mesi: [4, 5, 6],
-      amiche: ["carota", "cetriolo", "zucchina"],
+      amiche: ["carota", "cetriolo", "zucchina", "cimbru"],
       nemiche: [
         "cipolla",
         "aglio",
         "porro",
         "scalogno",
+        "leurda",
         "peperone",
         "finocchio"
       ],
@@ -1966,6 +1970,186 @@
         l2: "#416b39"
       },
       tipo: "aromatica"
+    },
+    {
+      id: "broccolo_romanesco",
+      nome: "Broccolo romanesco",
+      arch: "foglia",
+      d: 50,
+      dr: 60,
+      h: "alta",
+      sole: "pieno",
+      acqua: "media",
+      gg: 75,
+      mesi: [2, 3, 7, 8],
+      amiche: ["carota", "cipolla", "sedano", "lattuga"],
+      nemiche: ["pomodoro", "peperone"],
+      resa: 0.6,
+      nota: "Varietà ornamentale di broccolo con testa a spirale. Sapore delicato.",
+      col: { l1: "#7a9a6a", l2: "#5c7a4a" },
+      tipo: "foglia"
+    },
+    {
+      id: "friggitello",
+      nome: "Friggitello",
+      arch: "frutto",
+      d: 40,
+      dr: 50,
+      h: "media",
+      sole: "pieno",
+      acqua: "media",
+      gg: 70,
+      mesi: [2, 3, 4],
+      amiche: ["basilico", "carota", "cipolla"],
+      nemiche: ["finocchio"],
+      resa: 0.8,
+      nota: "Peperone dolce allungato tipico dell'Italia meridionale. Ottimo fritto.",
+      col: { l1: "#4a8a3a", l2: "#366a28", fr: "#a8c850" },
+      tipo: "frutto"
+    },
+    {
+      id: "agretti",
+      nome: "Agretti",
+      arch: "cespuglio",
+      d: 15,
+      dr: 25,
+      h: "bassa",
+      sole: "pieno",
+      acqua: "media",
+      gg: 45,
+      mesi: [2, 3, 4],
+      amiche: ["lattuga", "spinaci", "ravanello"],
+      nemiche: [],
+      resa: 0.15,
+      nota: "Ortaggio primaverile tipico italiano. Si consuma lessato con olio.",
+      col: { l1: "#4a7a3a", l2: "#366028" },
+      tipo: "foglia"
+    },
+    {
+      id: "borragine",
+      nome: "Borragine",
+      arch: "cespuglio",
+      d: 30,
+      dr: 40,
+      h: "media",
+      sole: "pieno",
+      acqua: "bassa",
+      gg: 55,
+      mesi: [3, 4, 5, 9],
+      amiche: ["pomodoro", "zucchina", "fragola"],
+      nemiche: [],
+      resa: 0.1,
+      nota: "Fiori e foglie commestibili. Attira api e insetti utili. Ottima pianta companion.",
+      col: { l1: "#4a7a54", l2: "#345a3c" },
+      tipo: "aromatica"
+    },
+    {
+      id: "catalogna",
+      nome: "Catalogna",
+      arch: "rosetta",
+      d: 25,
+      dr: 35,
+      h: "media",
+      sole: "pieno",
+      acqua: "media",
+      gg: 60,
+      mesi: [7, 8, 9],
+      amiche: ["carota", "lattuga", "cipolla"],
+      nemiche: [],
+      resa: 0.35,
+      nota: "Cicoria tipica romana. Le puntarelle (germogli centrali) si mangiano crude con acciughe.",
+      col: { l1: "#6a8a5a", l2: "#4e6842" },
+      tipo: "foglia"
+    },
+    {
+      id: "acetosa",
+      nome: "Acetosa",
+      arch: "rosetta",
+      d: 30,
+      dr: 40,
+      h: "bassa",
+      sole: "mezzombra",
+      acqua: "media",
+      gg: 55,
+      mesi: [2, 3, 9],
+      amiche: ["fragola", "cipolla", "erba_cipollina"],
+      nemiche: [],
+      resa: 0.2,
+      nota: "Foglie acidule usate in zuppe primaverili (borș cu macriș). Perenne.",
+      col: { l1: "#5a8a4a", l2: "#426636" },
+      tipo: "foglia"
+    },
+    {
+      id: "leurda",
+      nome: "Leurda",
+      arch: "cespuglio",
+      d: 20,
+      dr: 25,
+      h: "bassa",
+      sole: "mezzombra",
+      acqua: "media",
+      gg: 60,
+      mesi: [8, 9, 10],
+      amiche: ["carota", "barbabietola", "fragola"],
+      nemiche: ["fagiolino", "fagiolo"],
+      resa: 0.15,
+      nota: "Aglio selvatico con foglie commestibili. Tipico della cucina primaverile rumena.",
+      col: { l1: "#4a8040", l2: "#346030" },
+      tipo: "aromatica"
+    },
+    {
+      id: "melissa",
+      nome: "Melissa",
+      arch: "cespuglio",
+      d: 40,
+      dr: 50,
+      h: "media",
+      sole: "mezzombra",
+      acqua: "media",
+      gg: 60,
+      mesi: [3, 4, 5],
+      amiche: ["pomodoro", "zucchina", "cetriolo"],
+      nemiche: [],
+      resa: 0.15,
+      nota: "Aromatica perenne al profumo di limone. Ottima per tisane e in cucina.",
+      col: { l1: "#7a9a5a", l2: "#5c7842" },
+      tipo: "aromatica"
+    },
+    {
+      id: "cerfoglio",
+      nome: "Cerfoglio",
+      arch: "frastagliata",
+      d: 15,
+      dr: 20,
+      h: "bassa",
+      sole: "mezzombra",
+      acqua: "media",
+      gg: 40,
+      mesi: [2, 3, 8, 9],
+      amiche: ["carota", "ravanello", "lattuga"],
+      nemiche: [],
+      resa: 0.1,
+      nota: "Aromatica delicata dal sapore erbaceo-aniceto. Si usa fresca, mai cotta.",
+      col: { l1: "#6a9a5a", l2: "#4e7642" },
+      tipo: "aromatica"
+    },
+    {
+      id: "cimbru",
+      nome: "Cimbru",
+      arch: "cespuglio",
+      d: 25,
+      dr: 30,
+      h: "bassa",
+      sole: "pieno",
+      acqua: "bassa",
+      gg: 65,
+      mesi: [3, 4, 5],
+      amiche: ["fagiolino", "fagiolo", "cipolla", "carota"],
+      nemiche: [],
+      resa: 0.1,
+      nota: "L'erba aromatica più usata in Romania: indispensabile per fagioli, sottaceti e sarmale.",
+      col: { l1: "#6a9050", l2: "#4e6e3c" },
+      tipo: "aromatica"
     }
   ];
 
@@ -3075,6 +3259,116 @@
         "Annaffiature regolari: lascia asciugare leggermente la superficie tra un'irrigazione e l'altra.",
       tempGerm: "18–22 °C",
       giorniGerm: "10–20 giorni"
+    },
+    broccolo_romanesco: {
+      method: "Semina in alveolo a febbraio-marzo o luglio-agosto per raccolta autunnale.",
+      depth: "1 cm",
+      thin: "Trapianta a 50 cm sulla fila e 60 cm tra file.",
+      tip: "Testa a spirale unica; raccogli quando la testa è compatta e verde-gialla.",
+      periodo: "Febbraio, Marzo, Luglio, Agosto",
+      esposizione: "Pieno sole (almeno 6 ore).",
+      annaffiatura: "Regolare e costante; non lasciare asciugare.",
+      tempGerm: "15–20 °C",
+      giorniGerm: "7–10 giorni"
+    },
+    friggitello: {
+      method: "Semina in alveolo a febbraio, trapianto dopo le gelate primaverili.",
+      depth: "0.5-1 cm",
+      thin: "Trapianta a 40 cm sulla fila e 50 cm tra file.",
+      tip: "Raccogli verde per friggere o lascia ingiallire per gusto più dolce.",
+      periodo: "Febbraio, Marzo, Aprile",
+      esposizione: "Pieno sole.",
+      annaffiatura: "Regolare; evita ristagni.",
+      tempGerm: "22–26 °C",
+      giorniGerm: "10–15 giorni"
+    },
+    agretti: {
+      method: "Semina diretta in file a febbraio-aprile. Semi a breve germinabilità: usa semi freschi.",
+      depth: "1-2 cm",
+      thin: "Dirada a 10-15 cm sulla fila.",
+      tip: "Usa semi freschissimi (max 1 anno): la germinabilità cala rapidamente.",
+      periodo: "Febbraio, Marzo, Aprile",
+      esposizione: "Pieno sole.",
+      annaffiatura: "Regolare; tollera terreni leggermente salini.",
+      tempGerm: "10–18 °C",
+      giorniGerm: "10–20 giorni"
+    },
+    borragine: {
+      method: "Semina diretta o in alveolo. Si autosemina facilmente.",
+      depth: "1 cm",
+      thin: "Dirada a 30 cm sulla fila.",
+      tip: "Raccogli i fiori azzurri per insalate; foglie giovani in zuppe e frittate.",
+      periodo: "Marzo, Aprile, Maggio, Settembre",
+      esposizione: "Pieno sole o mezza ombra.",
+      annaffiatura: "Moderata; tollera la siccità una volta radicata.",
+      tempGerm: "15–20 °C",
+      giorniGerm: "7–14 giorni"
+    },
+    catalogna: {
+      method: "Semina diretta o in alveolo da luglio ad agosto per raccolta autunnale-invernale.",
+      depth: "0.5-1 cm",
+      thin: "Dirada o trapianta a 25 cm sulla fila e 35 cm tra file.",
+      tip: "Raccogli le puntarelle centrali prima che vadano a fiore; usa le foglie esterne come cicoria.",
+      periodo: "Luglio, Agosto, Settembre",
+      esposizione: "Pieno sole.",
+      annaffiatura: "Regolare; non lasciare asciugare durante la germinazione.",
+      tempGerm: "15–20 °C",
+      giorniGerm: "7–12 giorni"
+    },
+    acetosa: {
+      method: "Semina in alveolo o divisione di cespo. Perenne: un impianto dura anni.",
+      depth: "0.5 cm",
+      thin: "Trapianta a 30 cm sulla fila e 40 cm tra file.",
+      tip: "Raccoglie foglie giovani in primavera. Taglia le infiorescenze per prolungare la produzione.",
+      periodo: "Febbraio, Marzo, Settembre",
+      esposizione: "Sole o mezza ombra.",
+      annaffiatura: "Moderata; tollera periodi di siccità.",
+      tempGerm: "15–20 °C",
+      giorniGerm: "10–14 giorni"
+    },
+    leurda: {
+      method: "Si propaga per divisione di bulbi in autunno o da semi (lenti a germinare).",
+      depth: "3-5 cm per i bulbi",
+      thin: "Pianta bulbi a 15-20 cm di distanza.",
+      tip: "Raccogli le foglie in primavera prima della fioritura; fortissimo aroma agliaceo.",
+      periodo: "Agosto, Settembre, Ottobre (bulbi)",
+      esposizione: "Ombra o mezza ombra.",
+      annaffiatura: "Regolare; non tolera la siccità.",
+      tempGerm: "10–15 °C",
+      giorniGerm: "20–30 giorni (semi lenti)"
+    },
+    melissa: {
+      method: "Semina in superficie o divisione di cespo (si propaga facilmente).",
+      depth: "0-0.5 cm (semi superficiali)",
+      thin: "Trapianta o dirada a 40 cm.",
+      tip: "Perenne vigorosa: meglio in vaso o area controllata. Taglia spesso per foglie tenere.",
+      periodo: "Marzo, Aprile, Maggio",
+      esposizione: "Pieno sole o mezza ombra.",
+      annaffiatura: "Regolare; soffre il ristagno.",
+      tempGerm: "15–20 °C",
+      giorniGerm: "14–21 giorni"
+    },
+    cerfoglio: {
+      method: "Semina diretta in file, non ama il trapianto. Semina scalare ogni 3 settimane.",
+      depth: "0.5-1 cm",
+      thin: "Dirada a 10-15 cm sulla fila.",
+      tip: "Non esporre al caldo diretto: va a seme rapidamente. Preferisce mezza ombra in estate.",
+      periodo: "Febbraio, Marzo, Agosto, Settembre",
+      esposizione: "Mezza ombra in estate, pieno sole in primavera/autunno.",
+      annaffiatura: "Regolare; mantieni il terreno umido.",
+      tempGerm: "10–15 °C",
+      giorniGerm: "10–15 giorni"
+    },
+    cimbru: {
+      method: "Semina in superficie o divisione di pianta.",
+      depth: "0-0.5 cm (semi superficiali)",
+      thin: "Dirada o trapianta a 20-25 cm.",
+      tip: "Essenziale nella cucina rumena per fagioli, sottaceti e carne. Raccoglila prima della fioritura.",
+      periodo: "Marzo, Aprile, Maggio",
+      esposizione: "Pieno sole.",
+      annaffiatura: "Scarsa; tollera la siccità. Evita ristagni.",
+      tempGerm: "18–22 °C",
+      giorniGerm: "10–14 giorni"
     }
   };
 
@@ -3641,6 +3935,66 @@
       depth: "0,5-1 cm",
       thin: "Rărește sau transplantează la aproximativ 30 cm pe rând și 45 cm între rânduri.",
       tip: "Aromatică asiatică parfumată; arată bine și în ghiveci, în seră."
+    },
+    broccolo_romanesco: {
+      method: "Seamănă în ghiveci feb-mar sau iul-aug pentru recoltă de toamnă.",
+      depth: "1 cm",
+      thin: "Transplantează la 50 cm pe rând și 60 cm între rânduri.",
+      tip: "Capul spiralat unic; recoltează când este compact și galben-verde."
+    },
+    friggitello: {
+      method: "Seamănă în alveolă în feb, transplant după înghețuri.",
+      depth: "0.5-1 cm",
+      thin: "Transplantează la 40 cm pe rând și 50 cm între rânduri.",
+      tip: "Recoltează verde pentru prăjit sau lasă să îngălbenească pentru gust mai dulce."
+    },
+    agretti: {
+      method: "Seamănă direct în rânduri feb-apr. Semințe cu germinabilitate scurtă: folosește semințe proaspete.",
+      depth: "1-2 cm",
+      thin: "Rărește la 10-15 cm pe rând.",
+      tip: "Folosește semințe proaspete (max 1 an): germinabilitatea scade rapid."
+    },
+    borragine: {
+      method: "Seamănă direct sau în alveolă. Se autoînsămânțează ușor.",
+      depth: "1 cm",
+      thin: "Rărește la 30 cm pe rând.",
+      tip: "Recoltează florile albastre pentru salate; frunzele tinere în supe."
+    },
+    catalogna: {
+      method: "Seamănă direct sau în alveolă iulie-august pentru recoltă de toamnă-iarnă.",
+      depth: "0.5-1 cm",
+      thin: "Rărește sau transplantează la 25 cm pe rând și 35 cm între rânduri.",
+      tip: "Recoltează puntarellele centrale înainte să înflorească; folosește frunzele externe ca cicoare."
+    },
+    acetosa: {
+      method: "Seamănă în alveolă sau împarte tufele. Perenă: o plantare durează ani.",
+      depth: "0.5 cm",
+      thin: "Transplantează la 30 cm pe rând și 40 cm între rânduri.",
+      tip: "Culege frunzele tinere primăvara. Taie inflorescențele pentru a prelungi producția."
+    },
+    leurda: {
+      method: "Se înmulțește prin divizarea bulbilor toamna sau din semințe (germinare lentă).",
+      depth: "3-5 cm pentru bulbi",
+      thin: "Plantează bulbii la 15-20 cm distanță.",
+      tip: "Culege frunzele primăvara înainte de înflorire; aromă puternică de usturoi."
+    },
+    melissa: {
+      method: "Seamănă la suprafață sau împarte tufe (se propagă ușor).",
+      depth: "0-0.5 cm",
+      thin: "Transplantează sau rărește la 40 cm.",
+      tip: "Perenă viguroasă: mai bine în ghiveci. Taie des pentru frunze fragede."
+    },
+    cerfoglio: {
+      method: "Seamănă direct în rânduri, nu suportă transplantul. Seamănă eșalonat la 3 săpt.",
+      depth: "0.5-1 cm",
+      thin: "Rărește la 10-15 cm pe rând.",
+      tip: "Nu expune la căldură directă: bolțează rapid. Preferă semi-umbra vara."
+    },
+    cimbru: {
+      method: "Seamănă la suprafață sau împarte tufele.",
+      depth: "0-0.5 cm",
+      thin: "Rărește sau transplantează la 20-25 cm.",
+      tip: "Esențial în bucătăria românească pentru fasole, murături și carne. Culege înainte de înflorire."
     }
   };
 
@@ -3731,7 +4085,17 @@
     cavolo_rosso: "foglia",
     cavolo_navone: "radice",
     broccolo_rapa: "foglia",
-    shiso: "aromatica"
+    shiso: "aromatica",
+    broccolo_romanesco: "foglia",
+    friggitello: "frutto",
+    agretti: "foglia",
+    borragine: "aromatica",
+    catalogna: "foglia",
+    acetosa: "foglia",
+    leurda: "aromatica",
+    melissa: "aromatica",
+    cerfoglio: "aromatica",
+    cimbru: "aromatica"
   };
 
   const DATA = { PLANTS, SOWING_GUIDE, SOWING_GUIDE_RO, TIPO };

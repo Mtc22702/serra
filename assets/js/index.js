@@ -79,6 +79,12 @@ const DIFFICULTY = {
   tatsoi: 1,
   loboda: 1,
   broccolo_rapa: 1,
+  agretti: 1,
+  borragine: 1,
+  acetosa: 1,
+  melissa: 1,
+  cerfoglio: 1,
+  cimbru: 1,
   // Medie: richiedono un po' di attenzione o tempi più lunghi.
   pomodoro: 2,
   peperone: 2,
@@ -139,7 +145,11 @@ const DIFFICULTY = {
   physalis: 3,
   cucamelon: 3,
   stevia_dolce: 3,
-  shiso: 3
+  shiso: 3,
+  broccolo_romanesco: 2,
+  friggitello: 2,
+  catalogna: 2,
+  leurda: 2
 };
 
 /* Metadati piante: altezze, spaziature e guide di semina. */
@@ -280,7 +290,17 @@ const PLANT_SPACING = {
   cavolo_rosso: { d: 45, dr: 60 },
   cavolo_navone: { d: 35, dr: 50 },
   broccolo_rapa: { d: 25, dr: 40 },
-  shiso: { d: 30, dr: 45 }
+  shiso: { d: 30, dr: 45 },
+  broccolo_romanesco: { d: 50, dr: 60 },
+  friggitello: { d: 40, dr: 50 },
+  agretti: { d: 15, dr: 25 },
+  borragine: { d: 30, dr: 40 },
+  catalogna: { d: 25, dr: 35 },
+  acetosa: { d: 30, dr: 40 },
+  leurda: { d: 20, dr: 25 },
+  melissa: { d: 40, dr: 50 },
+  cerfoglio: { d: 15, dr: 20 },
+  cimbru: { d: 25, dr: 30 }
 };
 
 const SOWING_GUIDE = window.SOWING_GUIDE;
@@ -398,7 +418,17 @@ const FRUIT_EMOJI = {
   cavolo_rosso: "🥬",
   cavolo_navone: "🌿",
   broccolo_rapa: "🥬",
-  shiso: "🌿"
+  shiso: "🌿",
+  broccolo_romanesco: "🥦",
+  friggitello: "🫑",
+  agretti: "🌿",
+  borragine: "🌸",
+  catalogna: "🥬",
+  acetosa: "🌿",
+  leurda: "🧄",
+  melissa: "🌿",
+  cerfoglio: "🌿",
+  cimbru: "🌿"
 };
 function plantSvgSrc(id) {
   return `assets/img/svg/${id}.svg`;
@@ -846,7 +876,8 @@ function localizedSowingGuide(plant) {
     "physalis",
     "cucamelon",
     "mais_dolce",
-    "patata_dolce"
+    "patata_dolce",
+    "friggitello"
   ]);
 
   let method =
@@ -1980,7 +2011,8 @@ assignDiseaseGroup("solanaceae", [
   "melanzana",
   "patata",
   "tomatillo",
-  "physalis"
+  "physalis",
+  "friggitello"
 ]);
 assignDiseaseGroup("cucurbitaceae", [
   "zucchina",
@@ -2010,7 +2042,8 @@ assignDiseaseGroup("brassicaceae", [
   "daikon",
   "cavolo_rosso",
   "cavolo_navone",
-  "broccolo_rapa"
+  "broccolo_rapa",
+  "broccolo_romanesco"
 ]);
 assignDiseaseGroup("allium", [
   "cipolla",
@@ -2040,7 +2073,10 @@ assignDiseaseGroup("leafy", [
   "indivia",
   "valerianella",
   "cardo",
-  "scorzonera"
+  "scorzonera",
+  "catalogna",
+  "agretti",
+  "acetosa"
 ]);
 assignDiseaseGroup("chenopods", [
   "spinaci",
@@ -2067,14 +2103,18 @@ assignDiseaseGroup("herbs", [
   "dragoncello",
   "menta",
   "maggiorana",
-  "shiso"
+  "shiso",
+  "melissa",
+  "cerfoglio",
+  "cimbru"
 ]);
 assignDiseaseGroup("basil", ["basilico"]);
 assignDiseaseGroup("strawberry", ["fragola"]);
 assignDiseaseGroup("corn", ["mais_dolce"]);
 assignDiseaseGroup("asparagus", ["asparago"]);
 assignDiseaseGroup("artichoke", ["carciofo"]);
-assignDiseaseGroup("flowers", ["camomilla"]);
+assignDiseaseGroup("flowers", ["camomilla", "borragine"]);
+assignDiseaseGroup("allium_wild", ["leurda"]);
 assignDiseaseGroup("sweet_potato", ["patata_dolce"]);
 assignDiseaseGroup("watercress", ["crescione"]);
 assignDiseaseGroup("topinambur", ["topinambur"]);

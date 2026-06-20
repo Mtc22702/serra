@@ -412,6 +412,46 @@
         shiso: {
           nome: "Shiso",
           nota: "Aromatică asiatică parfumată; frumoasă și în ghiveci în seră."
+        },
+        broccolo_romanesco: {
+          nome: "Broccoli romanesc",
+          nota: "Varietate de broccoli cu capul spiralat caracteristic. Gust delicat și ornamental."
+        },
+        friggitello: {
+          nome: "Ardei friggitello",
+          nota: "Ardei dulce alungit tipic din centrul și sudul Italiei. Excelent la prăjit."
+        },
+        agretti: {
+          nome: "Agretti",
+          nota: "Legumă primăvăratică italiană cu tulpini subțiri și cărnoase. Se mănâncă fiartă cu ulei de măsline."
+        },
+        borragine: {
+          nome: "Borago",
+          nota: "Flori și frunze comestibile albastre. Atrage albinele; excelentă lângă roșii și castraveți."
+        },
+        catalogna: {
+          nome: "Catalogna",
+          nota: "Cicoare romană: puntarellele centrale se mănâncă crude cu anșoa și usturoi."
+        },
+        acetosa: {
+          nome: "Macriș",
+          nota: "Frunze acide cu gust de lămâie, excelente în borș. Perenă: revine în fiecare an."
+        },
+        leurda: {
+          nome: "Leurdă",
+          nota: "Usturoi sălbatic cu frunze comestibile. Tipic bucătăriei românești de primăvară."
+        },
+        melissa: {
+          nome: "Melisă / Roiniță",
+          nota: "Aromată perenă cu parfum de lămâie. Excelentă pentru ceaiuri și în bucătărie."
+        },
+        cerfoglio: {
+          nome: "Hasmațuchi",
+          nota: "Aromată delicată cu gust între pătrunjel și anason. Se folosește doar proaspătă."
+        },
+        cimbru: {
+          nome: "Cimbru",
+          nota: "Cea mai folosită aromă în bucătăria românească: indispensabilă pentru fasole, murături și sarmale."
         }
       }
     },

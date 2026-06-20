@@ -103,6 +103,12 @@ const DIFFICULTY = {
   tatsoi: 1,
   loboda: 1,
   broccolo_rapa: 1,
+  agretti: 1,
+  borragine: 1,
+  acetosa: 1,
+  melissa: 1,
+  cerfoglio: 1,
+  cimbru: 1,
   // Medie: richiedono un po' di attenzione o tempi più lunghi.
   pomodoro: 2,
   peperone: 2,
@@ -163,7 +169,11 @@ const DIFFICULTY = {
   physalis: 3,
   cucamelon: 3,
   stevia_dolce: 3,
-  shiso: 3
+  shiso: 3,
+  broccolo_romanesco: 2,
+  friggitello: 2,
+  catalogna: 2,
+  leurda: 2
 };
 
 // Colture difficili perche poco comuni o esotiche: il principiante non le
@@ -194,7 +204,8 @@ const CAT_ORDER = [
       "mais_dolce",
       "tomatillo",
       "physalis",
-      "cucamelon"
+      "cucamelon",
+      "friggitello"
     ]
   },
   {
@@ -221,7 +232,10 @@ const CAT_ORDER = [
       "tatsoi",
       "cavolo_cinese",
       "cavolo_rosso",
-      "broccolo_rapa"
+      "broccolo_rapa",
+      "agretti",
+      "catalogna",
+      "acetosa"
     ]
   },
   {
@@ -269,7 +283,12 @@ const CAT_ORDER = [
       "menta",
       "maggiorana",
       "camomilla",
-      "shiso"
+      "shiso",
+      "borragine",
+      "leurda",
+      "melissa",
+      "cerfoglio",
+      "cimbru"
     ]
   },
   {
@@ -297,7 +316,8 @@ const CAT_ORDER = [
       "cavolonero",
       "cavolorapa",
       "cavoletti",
-      "sedano"
+      "sedano",
+      "broccolo_romanesco"
     ]
   }
 ];
@@ -389,7 +409,17 @@ const FRUIT_EMOJI = {
   cavolo_rosso: "🥬",
   cavolo_navone: "🌿",
   broccolo_rapa: "🥬",
-  shiso: "🌿"
+  shiso: "🌿",
+  broccolo_romanesco: "🥦",
+  friggitello: "🫑",
+  agretti: "🌿",
+  borragine: "🌸",
+  catalogna: "🥬",
+  acetosa: "🌿",
+  leurda: "🧄",
+  melissa: "🌿",
+  cerfoglio: "🌿",
+  cimbru: "🌿"
 };
 const PLANT_RO = window.SERRA_I18N?.plants?.ro || {};
 
@@ -540,7 +570,17 @@ const PLANT_DESC = {
     cavolo_rosso: "Cespo compatto e colorato; ottimo per raccolti autunnali.",
     cavolo_navone: "Radice grande e rustica; utile per autunno e inverno.",
     broccolo_rapa: "Raccogli cime e foglie prima della piena fioritura.",
-    shiso: "Aromatica asiatica profumata; bella anche in vaso in serra."
+    shiso: "Aromatica asiatica profumata; bella anche in vaso in serra.",
+    broccolo_romanesco: "Varietà di broccolo con caratteristica testa conico-spiralata. Saborita e ornamentale.",
+    friggitello: "Peperone dolce allungato tipico del centro-sud Italia. Ottimo fritto o in padella.",
+    agretti: "Ortaggio primaverile a steli sottili carnosi. Si consuma lessato con olio d'oliva e limone.",
+    borragine: "Foglie e fiori azzurri commestibili. Attira impollinatori; ottima vicino a pomodori e cetrioli.",
+    catalogna: "Cicoria romana: le puntarelle centrali si gustano crude con acciughe e aglio.",
+    acetosa: "Foglie acidule dalle note di limone, ottime nelle zuppe. Perenne: torna ogni anno.",
+    leurda: "Aglio selvatico dai sapori delicati; foglie usate in pesto, zuppe e frittate primaverili.",
+    melissa: "Perenne profumata al limone. Tienila in zona controllata: si diffonde rapidamente.",
+    cerfoglio: "Aromatica primaverile dal sapore delicato tra prezzemolo e anice. Va usata solo fresca.",
+    cimbru: "Santoreggia estiva dall'aroma intenso simile al timo. Fondamentale in Romania per fagioli e sottaceti."
   },
   ro: {
     pomodoro:
@@ -674,7 +714,17 @@ const PLANT_DESC = {
     cavolo_rosso: "Varză roșie",
     cavolo_navone: "Gulie furajeră / Nap",
     broccolo_rapa: "Rapini",
-    shiso: "Shiso"
+    shiso: "Shiso",
+    broccolo_romanesco: "Broccoli romanesc",
+    friggitello: "Ardei friggitello",
+    agretti: "Agretti",
+    borragine: "Borago",
+    catalogna: "Catalogna / Puntarelle",
+    acetosa: "Macriș",
+    leurda: "Leurdă",
+    melissa: "Melisă",
+    cerfoglio: "Hasmațuchi",
+    cimbru: "Cimbru"
   }
 };
 
@@ -1228,6 +1278,66 @@ const SOWING_GUIDE = {
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 30 cm sulla fila e 45 cm tra file.",
     tip: "Aromatica asiatica profumata; bella anche in vaso in serra."
+  },
+  broccolo_romanesco: {
+    method: "Semina in alveolo a febbraio-marzo o luglio-agosto per raccolta autunnale.",
+    depth: "1 cm",
+    thin: "Trapianta a 50 cm sulla fila e 60 cm tra file.",
+    tip: "Testa a spirale unica; raccogli quando la testa è compatta e verde-gialla."
+  },
+  friggitello: {
+    method: "Semina in alveolo a febbraio, trapianto dopo le gelate primaverili.",
+    depth: "0.5-1 cm",
+    thin: "Trapianta a 40 cm sulla fila e 50 cm tra file.",
+    tip: "Raccogli verde per friggere o lascia ingiallire per gusto più dolce."
+  },
+  agretti: {
+    method: "Semina diretta in file a febbraio-aprile. Semi a breve germinabilità: usa semi freschi.",
+    depth: "1-2 cm",
+    thin: "Dirada a 10-15 cm sulla fila.",
+    tip: "Usa semi freschissimi (max 1 anno): la germinabilità cala rapidamente."
+  },
+  borragine: {
+    method: "Semina diretta o in alveolo. Si autosemina facilmente.",
+    depth: "1 cm",
+    thin: "Dirada a 30 cm sulla fila.",
+    tip: "Raccogli i fiori azzurri per insalate; foglie giovani in zuppe e frittate."
+  },
+  catalogna: {
+    method: "Semina diretta o in alveolo da luglio ad agosto per raccolta autunnale-invernale.",
+    depth: "0.5-1 cm",
+    thin: "Dirada o trapianta a 25 cm sulla fila e 35 cm tra file.",
+    tip: "Raccogli le puntarelle centrali prima che vadano a fiore."
+  },
+  acetosa: {
+    method: "Semina in alveolo o divisione di cespo. Perenne: un impianto dura anni.",
+    depth: "0.5 cm",
+    thin: "Trapianta a 30 cm sulla fila e 40 cm tra file.",
+    tip: "Raccoglie foglie giovani in primavera. Taglia le infiorescenze per prolungare la produzione."
+  },
+  leurda: {
+    method: "Si propaga per divisione di bulbi in autunno o da semi (lenti a germinare).",
+    depth: "3-5 cm per i bulbi",
+    thin: "Pianta bulbi a 15-20 cm di distanza.",
+    tip: "Raccogli le foglie in primavera prima della fioritura; fortissimo aroma agliaceo."
+  },
+  melissa: {
+    method: "Semina in superficie o divisione di cespo (si propaga facilmente).",
+    depth: "0-0.5 cm (semi superficiali)",
+    thin: "Trapianta o dirada a 40 cm.",
+    tip: "Perenne vigorosa: meglio in vaso o area controllata. Taglia spesso per foglie tenere."
+  },
+  cerfoglio: {
+    method: "Semina diretta in file, non ama il trapianto. Semina scalare ogni 3 settimane.",
+    depth: "0.5-1 cm",
+    thin: "Dirada a 10-15 cm sulla fila.",
+    tip: "Non esporre al caldo diretto: va a seme rapidamente. Preferisce mezza ombra in estate."
+  },
+  cimbru: {
+    method: "Semina in superficie o divisione di pianta.",
+    depth: "0-0.5 cm (semi superficiali)",
+    thin: "Dirada o trapianta a 20-25 cm.",
+    tip: "Essenziale nella cucina rumena per fagioli, sottaceti e carne. Raccoglila prima della fioritura."
   }
 };
 
@@ -1326,7 +1436,17 @@ const PLANT_PHOTOS = {
   cavolo_rosso: "assets/img/photo/cavolo_rosso.jpg",
   cavolo_navone: "assets/img/photo/cavolo_navone.jpg",
   broccolo_rapa: "assets/img/photo/broccolo_rapa.jpg",
-  shiso: "assets/img/photo/shiso.jpg"
+  shiso: "assets/img/photo/shiso.jpg",
+  broccolo_romanesco: "assets/img/photo/broccolo_romanesco.jpg",
+  friggitello: "assets/img/photo/friggitello.jpg",
+  agretti: "assets/img/photo/agretti.jpg",
+  borragine: "assets/img/photo/borragine.jpg",
+  catalogna: "assets/img/photo/catalogna.jpg",
+  acetosa: "assets/img/photo/acetosa.jpg",
+  leurda: "assets/img/photo/leurda.jpg",
+  melissa: "assets/img/photo/melissa.jpg",
+  cerfoglio: "assets/img/photo/cerfoglio.jpg",
+  cimbru: "assets/img/photo/cimbru.jpg"
 };
 
 /* Preimpostazioni orti: configurazioni pronte caricate dal selettore. */
@@ -2385,7 +2505,9 @@ function shouldShowHarvestVector(plant) {
     "cavolo_navone",
     "carciofo",
     "asparago",
-    "finocchio"
+    "finocchio",
+    "broccolo_romanesco",
+    "catalogna"
   ]).has(plant.id);
 }
 
@@ -6843,7 +6965,17 @@ const PACK_DATA = {
   menta: { seeds: 200, price: 2.8 },
   maggiorana: { seeds: 300, price: 2.6 },
   camomilla: { seeds: 300, price: 2.4 },
-  shiso: { seeds: 100, price: 3.2 }
+  shiso: { seeds: 100, price: 3.2 },
+  broccolo_romanesco: { seeds: 100, price: 2.8 },
+  friggitello: { seeds: 30, price: 3.0 },
+  agretti: { seeds: 500, price: 3.2 },
+  borragine: { seeds: 50, price: 2.6 },
+  catalogna: { seeds: 200, price: 2.4 },
+  acetosa: { seeds: 300, price: 2.5 },
+  leurda: { seeds: 50, price: 3.5 },
+  melissa: { seeds: 500, price: 2.8 },
+  cerfoglio: { seeds: 500, price: 2.6 },
+  cimbru: { seeds: 1000, price: 2.4 }
 };
 function formatMoney(value) {
   return new Intl.NumberFormat(state.lang === "ro" ? "ro-RO" : "it-IT", {
