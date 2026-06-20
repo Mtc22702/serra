@@ -420,6 +420,7 @@ html[data-theme="dark"] :where(.guided-intro, .panel, .stage, #panelCustomize, .
 html[data-theme="dark"] :where(
   .guided-steps li, .guided-info-card, .guided-tags .tag,
   .guided-intro-actions .mode-tab, .mode-tab, .preset-inline,
+  .preset-applied, .preset-seasonal-btn,
   #panelCustomize .veg-list, .customize-sub, .crops-customize-footer,
   .action-card, .veg, .veg.in, .veg-search-box,
   .veg-filter-tab, .yield-metric, .shop li, .checkline,

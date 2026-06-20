@@ -1364,6 +1364,7 @@ const state = {
   mese: new Date().getMonth() + 1,
   beds: [],
   autoPlan: true,
+  activePreset: "",
   overlay: "",
   selected: -1,
   autoPlanNotice: "",
@@ -1403,6 +1404,7 @@ function saveConfig(done = true) {
         path: state.path,
         mese: state.mese,
         autoPlan: state.autoPlan,
+        activePreset: state.activePreset,
         livello: state.livello,
         beds: state.beds.map((bed) => ({
           plantId: bed.plantId,
@@ -1855,6 +1857,28 @@ function monthName(index) {
   return (MONTHS[state.lang] || MONTHS.it)[index - 1];
 }
 
+function updatePresetAppliedUI() {
+  const box = document.getElementById("presetApplied");
+  if (!box) return;
+  const active = Boolean(state.activePreset && PRESETS[state.activePreset]);
+  box.hidden = !active;
+  document.getElementById("presetBar")?.classList.toggle("is-applied", active);
+  if (!active) return;
+
+  const option = document.querySelector(`#inPreset option[value="${state.activePreset}"]`);
+  const presetName = option?.textContent?.trim() || state.activePreset;
+  const title = document.getElementById("presetAppliedTitle");
+  const hint = document.getElementById("presetAppliedHint");
+  const button = document.getElementById("btnPresetSeasonal");
+  if (title) title.textContent = tx("presetApplied", { name: presetName });
+  if (hint) hint.textContent = tx("presetAppliedHint");
+  if (button) {
+    const label = tx("returnSeasonalPlan", { month: monthName(state.mese) });
+    button.textContent = label;
+    button.setAttribute("aria-label", label);
+  }
+}
+
 function setText(selector, key) {
   const el = document.querySelector(selector);
   if (el) el.textContent = tx(key);
@@ -2033,6 +2057,7 @@ function applyLanguage() {
     .forEach((og) => {
       og.label = tx(og.dataset.i18nOptgroup);
     });
+  updatePresetAppliedUI();
   setText("#btnOpenSetup", "openSetup");
   setText("#sowAtLabel", "sowAt");
   const sowMonthSelect = document.getElementById("inMese");
@@ -3266,6 +3291,7 @@ function render() {
   // badge mese sul pulsante "Riempi la serra"
   const bmt = document.getElementById("btnMonthTag");
   if (bmt) bmt.textContent = monthName(state.mese);
+  updatePresetAppliedUI();
   // lista seminabili
   renderVegList();
   updateCropActionControls();
@@ -5054,6 +5080,7 @@ function ensureMinimalFill(candidates) {
 function autoFill(options = {}) {
   const { compactPaths = true } = options;
   state.autoPlan = true;
+  state.activePreset = "";
   state.autoPlanNotice = "";
   state.manualPlanNotice = "";
   if (compactPaths) state.path = compactPathForAutoFill();
@@ -5202,7 +5229,14 @@ function loadPreset(key) {
     countLocked: false
   }));
   state.autoPlan = false;
+  state.activePreset = key;
   autoBalanceLayout(false, true);
+  // Il bilanciamento puo dover ridurre alcune aiuole per eliminare un overflow
+  // e lasciare, come effetto finale, una colonna molto piu corta delle altre.
+  // Completa quindi il preset aumentando solo le colture gia previste, senza
+  // introdurne di nuove e senza superare lo spazio realmente disponibile.
+  expandAutoFillToSpace({ respectDiversityLimit: false });
+  commitColumnAssignment();
   saveConfig(true);
   render();
 }
@@ -5407,7 +5441,7 @@ function initEvents() {
   document.getElementById("inPreset").addEventListener("change", (e) => {
     if (e.target.value) {
       loadPreset(e.target.value);
-      setMode("expert", false);
+      setMode("fit", false);
       e.target.value = "";
     }
   });
@@ -5430,6 +5464,11 @@ function initEvents() {
     setMode("fit", false);
     autoFill();
     collapseSettingsPanelAfterAutoPlan();
+  });
+  document.getElementById("btnPresetSeasonal")?.addEventListener("click", () => {
+    saveConfig(true);
+    setMode("fit", false);
+    autoFill();
   });
   document
     .getElementById("btnArrangeSelected")
@@ -5632,6 +5671,7 @@ function initConfig() {
       state.mese = savedMonth;
     }
     state.autoPlan = saved.autoPlan !== false;
+    state.activePreset = PRESETS[saved.activePreset] ? saved.activePreset : "";
     if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
     state.beds = normalizeSavedBeds(saved.beds);
     autoBalanceLayout(true, false);

@@ -1248,6 +1248,10 @@
         greenhouse: "Serra",
         readyLayouts: "Layout già pronti",
         readyLayoutsHint: "Scegli una disposizione completa da cui partire",
+        presetApplied: "{name} applicato",
+        presetAppliedHint:
+          "Puoi modificarlo oppure tornare alle colture consigliate per il mese scelto.",
+        returnSeasonalPlan: "Torna al piano di {month}",
         presetDefault: "Scegli un esempio",
         presetInsalate: "Insalate facili tutto l'anno",
         presetSalsa: "Tutto per la salsa di pomodoro",
@@ -1587,6 +1591,10 @@
         greenhouse: "Seră",
         readyLayouts: "Planuri pregătite",
         readyLayoutsHint: "Alege un plan complet de la care să pornești",
+        presetApplied: "{name} aplicat",
+        presetAppliedHint:
+          "Îl poți modifica sau poți reveni la culturile recomandate pentru luna aleasă.",
+        returnSeasonalPlan: "Revino la planul pentru {month}",
         presetDefault: "Alege un exemplu",
         presetInsalate: "Salate ușoare tot anul",
         presetSalsa: "Totul pentru sos de roșii",
