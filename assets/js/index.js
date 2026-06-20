@@ -1734,11 +1734,17 @@ function setDetailTab(tab, moveFocus = false) {
     if (active) panel.scrollTo({ top: 0, behavior: "instant" });
   });
   const detailPanel = document.getElementById("detailPanel");
-  if (detailPanel)
+  if (detailPanel) {
     detailPanel.scrollTo({
       top: 0,
       behavior: "instant"
     });
+    if (window.matchMedia("(max-width: 660px)").matches) {
+      detailPanel
+        .querySelector(".detail-body")
+        ?.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }
 }
 
 function handleDetailTabKey(event) {
