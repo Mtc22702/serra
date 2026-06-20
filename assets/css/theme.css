@@ -868,6 +868,42 @@ html[data-theme="dark"]
 html[data-theme="dark"] .veg-scroll-hint {
   color: var(--dark-muted) !important;
 }
+html[data-theme="dark"] .guided-steps-summary {
+  background: rgba(82, 183, 136, 0.07) !important;
+  border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] .guided-steps-summary:hover {
+  background: rgba(82, 183, 136, 0.12) !important;
+  border-color: var(--dark-border-strong) !important;
+}
+html[data-theme="dark"] .gss-hint {
+  color: var(--dark-muted) !important;
+}
+html[data-theme="dark"] .gss-arrow {
+  color: #6fcf97 !important;
+}
+html[data-theme="dark"] .stage-month-pill {
+  background: #1d3027 !important;
+  border-color: rgba(82, 183, 136, 0.25) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+html[data-theme="dark"] .smp-label {
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] .smp-kicker,
+html[data-theme="dark"] .smp-arrow {
+  color: #6fcf97 !important;
+}
+html[data-theme="dark"] .saph-num {
+  background: rgba(82, 183, 136, 0.15) !important;
+  color: #6fcf97 !important;
+}
+html[data-theme="dark"] .stage-auto-plan-header {
+  color: var(--dark-muted) !important;
+}
+html[data-theme="dark"] .saph-line {
+  background: rgba(255,255,255,0.1) !important;
+}
 html[data-theme="dark"]
   :where(input[type="number"], select, .stepper, .crops-month-selector select) {
   background: #263a30 !important;

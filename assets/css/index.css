@@ -5007,10 +5007,16 @@ body.cart-open .back-to-top {
   .hero-content {
     width: 100%;
     max-width: 100%;
-    padding: 1.4rem 1.2rem 2.4rem;
+    padding: 1.4rem 1.2rem 2.8rem;
     gap: 1.1rem;
     justify-content: center;
     min-height: calc(100svh - var(--nav-h));
+  }
+  @media (max-height: 700px) {
+    .hero-content {
+      gap: 0.75rem;
+      padding: 1rem 1.2rem 2rem;
+    }
   }
   .hero-season-kicker {
     max-width: 100%;

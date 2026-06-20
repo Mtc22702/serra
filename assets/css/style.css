@@ -259,6 +259,69 @@ button {
 .guided-intro-copy {
   display: none;
 }
+
+/* Accordion guided-steps: details/summary con apertura/chiusura */
+.guided-steps-details {
+  width: 100%;
+}
+.guided-steps-details[open] .gss-arrow {
+  transform: rotate(180deg);
+}
+.guided-steps-summary {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 11px;
+  border-radius: 11px;
+  background: rgba(47, 107, 58, 0.06);
+  border: 1px solid rgba(47, 107, 58, 0.13);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.guided-steps-summary::-webkit-details-marker {
+  display: none;
+}
+.guided-steps-summary:hover {
+  background: rgba(47, 107, 58, 0.1);
+  border-color: rgba(47, 107, 58, 0.22);
+}
+.gss-icon {
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.gss-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.gss-body .guided-steps-label {
+  font-size: 12px;
+  white-space: normal;
+}
+.gss-hint {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6a7f6e;
+  line-height: 1.2;
+}
+.gss-arrow {
+  flex-shrink: 0;
+  color: var(--verde);
+  opacity: 0.65;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+.guided-steps-details .guided-steps {
+  margin-top: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
 .guided-steps {
   list-style: none;
   margin: 0;
@@ -2215,6 +2278,123 @@ html[data-theme="dark"] #pathField > .fld {
   font-size: 12px;
   color: #7b857b;
 }
+
+/* ── Stage auto-plan row: sezione piano automatico mobile ── */
+.stage-auto-plan-row {
+  display: none; /* visibile solo su mobile */
+  flex-direction: column;
+  gap: 8px;
+}
+.stage-auto-plan-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #6a755f;
+}
+.saph-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(47, 107, 58, 0.12);
+  color: var(--verde-scuro);
+  font-size: 10px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.saph-text {
+  white-space: nowrap;
+}
+.saph-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(31, 58, 38, 0.12);
+}
+.saph-print-btn {
+  display: none; /* mostrato solo su mobile via media query */
+  flex-shrink: 0;
+  min-height: 32px;
+  width: 32px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+/* Stage month pill: selettore mese elegante */
+.stage-month-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px 11px 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1.5px solid rgba(47, 107, 58, 0.2);
+  box-shadow:
+    0 1px 3px rgba(27, 67, 50, 0.06),
+    0 4px 12px rgba(27, 67, 50, 0.07);
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  transition: border-color 0.16s, box-shadow 0.16s, transform 0.12s;
+}
+.stage-month-pill:active {
+  transform: scale(0.985);
+  box-shadow: 0 1px 3px rgba(27, 67, 50, 0.06);
+}
+.smp-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.smp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.smp-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--verde);
+  line-height: 1;
+}
+.smp-label {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--verde-scuro);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.smp-arrow {
+  flex-shrink: 0;
+  color: var(--verde);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+}
+.smp-select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px; /* evita auto-zoom su iOS */
+  -webkit-appearance: none;
+  appearance: none;
+}
 .view-select-wrap {
   position: relative;
   display: inline-flex;
@@ -4060,6 +4240,25 @@ body.cart-open .cart-nudge {
   .crop-actions-copy span,
   .crop-action-text .btn-hint {
     font-size: 11px;
+  }
+
+  /* Stage auto-plan row: visibile su mobile dentro stage-title-row */
+  .stage-auto-plan-row {
+    display: flex;
+    order: 1; /* dopo il titolo, prima della toolbar */
+  }
+  /* Bottone stampa mobile: visibile nell'header del piano automatico */
+  .saph-print-btn {
+    display: inline-flex;
+  }
+  /* Nasconde il bottone stampa originale su mobile */
+  #btnStampa {
+    display: none;
+  }
+  /* Nasconde sezione originale dal pannello laterale su mobile */
+  .crops-month-selector.auto-plan-control,
+  #autoPlanSectionLabel {
+    display: none !important;
   }
 }
 /* ── guided intro: spotlight sulle misure ── */
@@ -6477,9 +6676,7 @@ body.cart-open .cart-nudge {
 /* --- Semplificazioni per livello --- */
 /* Novizio: percorso lineare. Nasconde controlli avanzati e i passi tecnici,
    lascia il flusso "serra pronta → carrello". */
-body.livello-novizio #pathField,
 body.livello-novizio #presetBar,
-body.livello-novizio .view-select-wrap,
 body.livello-novizio .veg-filters,
 /* Il novizio riempie la serra automaticamente a ogni cambio di mese/zona/misure:
    il pulsante "Riempi la serra" sarebbe ridondante, quindi lo nascondiamo. */

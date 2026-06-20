@@ -1778,7 +1778,7 @@ function chooseLivello(liv) {
     resetNoviceAdvancedOptions();
     autoFill();
     syncVegFilterTabs();
-    collapseSettingsPanelAfterAutoPlan();
+    if (isResponsiveConfiguratorLayout()) collapseSettingsPanelAfterAutoPlan();
     scrollToScene();
   }
   saveConfig(true);
@@ -1793,7 +1793,6 @@ function syncVegFilterTabs() {
 }
 
 function resetNoviceAdvancedOptions() {
-  state.path = 60;
   state.overlay = "";
   syncSizeControls();
   syncOverlaySelectLabel();
@@ -6345,11 +6344,18 @@ function applyBootIntent() {
    sulla scena. La funzione initConfig subito dopo recupera lo stato salvato.
    ========================================================================= */
 function fillMonths() {
+  const months = MONTHS[state.lang] || MONTHS.it;
+  const monthHtml = months.map((m, i) => `<option value="${i + 1}">${m}</option>`).join("");
   const sel = document.getElementById("inMese");
-  sel.innerHTML = (MONTHS[state.lang] || MONTHS.it)
-    .map((m, i) => `<option value="${i + 1}">${m}</option>`)
-    .join("");
+  sel.innerHTML = monthHtml;
   sel.value = state.mese;
+  const selStage = document.getElementById("inMeseStage");
+  if (selStage) {
+    selStage.innerHTML = monthHtml;
+    selStage.value = state.mese;
+  }
+  const pillLabel = document.getElementById("stageMonthPillLabel");
+  if (pillLabel) pillLabel.textContent = months[state.mese - 1] || "";
 }
 
 function initEvents() {
@@ -6413,6 +6419,18 @@ function initEvents() {
   });
   document.getElementById("inMese").addEventListener("change", (e) => {
     state.mese = parseInt(e.target.value);
+    const selStage = document.getElementById("inMeseStage");
+    if (selStage) selStage.value = e.target.value;
+    const pillLabel = document.getElementById("stageMonthPillLabel");
+    if (pillLabel) pillLabel.textContent = (MONTHS[state.lang] || MONTHS.it)[state.mese - 1] || "";
+    saveConfig(true);
+    refreshForSeasonChange();
+  });
+  document.getElementById("inMeseStage")?.addEventListener("change", (e) => {
+    state.mese = parseInt(e.target.value);
+    document.getElementById("inMese").value = e.target.value;
+    const pillLabel = document.getElementById("stageMonthPillLabel");
+    if (pillLabel) pillLabel.textContent = (MONTHS[state.lang] || MONTHS.it)[state.mese - 1] || "";
     saveConfig(true);
     refreshForSeasonChange();
   });
@@ -7032,7 +7050,6 @@ if (LIVELLI.has(_bootLivello)) {
     // l'intermedio, con guided=1 si rigenera sempre il piano di stagione.
     if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
     else render();
-    collapseSettingsPanelAfterAutoPlan();
     scrollToScene();
   }
   saveConfig(true);
@@ -7071,3 +7088,13 @@ if (LIVELLI.has(_bootLivello)) {
 syncVegFilterTabs();
 /* Chiusura boot: aggiorna i testi dinamici del percorso guidato. */
 updateGuidedIntroDynamic();
+/* Di default il pannello "La tua serra" è chiuso in tutte le modalità su mobile/tablet. */
+collapseSettingsPanelAfterAutoPlan();
+/* Su desktop, il principiante trova il pannello aperto per orientarsi subito. */
+if (state.livello === "novizio" && !isResponsiveConfiguratorLayout()) {
+  const _novPanel = document.getElementById("panelSettings");
+  if (_novPanel) {
+    _novPanel.classList.remove("is-collapsed");
+    updateAllPanelToggles();
+  }
+}
