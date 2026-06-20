@@ -35,7 +35,7 @@ const MARGIN = 18; // ghiaia tra muro e prima aiuola
 const PATH = 34; // camminamento tra le aiuole
 const BED_GAP = 6; // separazione sottile tra colture consecutive nella stessa aiuola lunga
 const BEDPAD = 9; // terra di bordo dentro ogni aiuola
-const MAX_GLYPH = 900; // tetto piantine disegnate (prestazioni)
+const MAX_GLYPH = 1400; // tetto piantine disegnate (prestazioni)
 const MIN_VISUAL_GLYPH_R = 8; // rende leggibili colture molto fitte (carote, ravanelli)
 
 const MESI = [
@@ -1812,17 +1812,6 @@ function localizedSowingGuide(plant) {
   return { method, depth, thin, tip: `${name}: ${tip}` };
 }
 
-function representativePlantIndexes(count, maxItems) {
-  const total = Math.max(0, count);
-  const take = Math.min(total, maxItems);
-  if (!take) return new Set();
-  const indexes = new Set();
-  for (let k = 0; k < take; k++) {
-    indexes.add(Math.min(total - 1, Math.floor(((k + 0.5) * total) / take)));
-  }
-  return indexes;
-}
-
 // Sceglie targetCount indici distribuiti su una griglia 2D.
 // Usa un percorso a serpentina per ottenere un motivo a mattoni, non a colonne.
 function emojiSpreadIndexes(itemCount, cols, targetCount) {
@@ -2509,12 +2498,27 @@ function visualItemsForBed(bed, maxItems) {
   if (bed.positions.length <= maxItems) {
     return bed.positions.map((pos, sourceIndex) => ({ pos, sourceIndex }));
   }
-  return [...representativePlantIndexes(bed.positions.length, maxItems)]
-    .sort((a, b) => a - b)
-    .map((sourceIndex) => ({
-      pos: bed.positions[sourceIndex],
-      sourceIndex
-    }));
+  // Quando le piante superano il budget di glifi (limite di performance) bisogna
+  // mostrarne solo una parte. Riduciamo il NUMERO DI FILE, non i singoli posti
+  // sparsi: scegliamo quante file mostrare in base al budget e le distribuiamo
+  // uniformemente sull'altezza dell'aiuola, disegnando tutte le colonne di ogni
+  // fila mostrata. Cosi le piante restano in griglia ordinata e allineata invece
+  // di apparire disposte a caso (le posizioni vere sono gia su griglia regolare,
+  // qui si scelgono solo quali file rendere visibili).
+  const cols = Math.max(1, bed.cols);
+  const totalRows = Math.max(1, Math.ceil(bed.positions.length / cols));
+  const showRows = Math.max(1, Math.min(totalRows, Math.floor(maxItems / cols)));
+  const items = [];
+  for (let s = 0; s < showRows; s++) {
+    const row = showRows === 1 ? 0 : Math.round((s * (totalRows - 1)) / (showRows - 1));
+    for (let c = 0; c < cols; c++) {
+      const sourceIndex = row * cols + c;
+      if (sourceIndex < bed.positions.length) {
+        items.push({ pos: bed.positions[sourceIndex], sourceIndex });
+      }
+    }
+  }
+  return items;
 }
 
 function fitLabelSize(text, width, height) {
@@ -2650,6 +2654,13 @@ function buildScene() {
     g += `<text x="${ox + Wi / 2}" y="${oy + Li / 2}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${Math.min(Wi, Li) * 0.06}" fill="#8c8470">${tx("emptyGreenhouse")}</text>`;
   }
   let drawn = 0;
+  // Piante totali da disegnare nell'intera serra: se stanno sotto il tetto
+  // globale (MAX_GLYPH) le disegniamo TUTTE alla loro spaziatura reale (d e dr
+  // della scheda). Solo quando il totale supera il tetto distribuiamo il budget
+  // in proporzione alla dimensione di ogni aiuola, evitando di penalizzare le
+  // aiuole numerose con un limite per-aiuola fisso (che faceva sembrare le file
+  // piu distanti del vero passo).
+  const totalPlants = L.beds.reduce((sum, b) => sum + b.count, 0);
   L.beds.forEach((bed) => {
     const bx = ox + bed.x,
       by = oy + bed.y;
@@ -2659,11 +2670,9 @@ function buildScene() {
     g += `<rect x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" rx="3" fill="url(#soil)"/>`;
     // piantine
     const r = visualPlantRadius(bed.plant);
-    const maxBudget = Math.max(
-      6,
-      Math.floor(MAX_GLYPH / Math.max(L.beds.length, 1))
-    );
-    const bedGlyphBudget = Math.min(bed.count, maxBudget);
+    const bedGlyphBudget = totalPlants <= MAX_GLYPH
+      ? bed.count
+      : Math.max(6, Math.floor((bed.count * MAX_GLYPH) / totalPlants));
     const bedItems = visualItemsForBed(bed, bedGlyphBudget);
     const emojiCount = Math.min(Math.max(1, Math.round(Math.sqrt(bed.count) * 1.3)), bedItems.length);
     const emojiIndexes = emojiSpreadIndexes(bedItems.length, bed.cols, emojiCount);
