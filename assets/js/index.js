@@ -1731,12 +1731,13 @@ function setDetailTab(tab, moveFocus = false) {
     const active = panel.dataset.detailPanel === tab;
     panel.classList.toggle("active", active);
     panel.hidden = !active;
+    if (active) panel.scrollTo({ top: 0, behavior: "instant" });
   });
   const detailPanel = document.getElementById("detailPanel");
   if (detailPanel)
     detailPanel.scrollTo({
-      top: Math.max(0, document.querySelector(".detail-tabs")?.offsetTop || 0),
-      behavior: "smooth"
+      top: 0,
+      behavior: "instant"
     });
 }
 

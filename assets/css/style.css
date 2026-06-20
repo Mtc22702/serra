@@ -4924,9 +4924,10 @@ body.cart-open .cart-nudge {
   gap: 12px;
 }
 .stage .panel--plant-detail .pdp-hero-wrap {
-  width: 100%;
+  width: 80%;
   aspect-ratio: 16 / 9;
   min-height: unset;
+  margin-inline: auto;
 }
 .stage .panel--plant-detail .detail-body,
 .stage .panel--plant-detail .pdp-detail-body {

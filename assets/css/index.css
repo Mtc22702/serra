@@ -3475,8 +3475,11 @@ body.detail-open .back-to-top {
   border-radius: 24px;
   width: 100%;
   max-width: 680px;
-  max-height: 88dvh;
-  overflow-y: auto;
+  height: 92dvh;
+  max-height: 92dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   position: relative;
   animation: slideUp 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 24px 70px rgba(20, 38, 27, 0.28);
@@ -3486,6 +3489,35 @@ body.detail-open .back-to-top {
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
 }
+.detail-panel .detail-photo-wrap,
+.detail-panel .detail-tabs-shell,
+.detail-panel .detail-add-btn {
+  flex: 0 0 auto;
+}
+
+.detail-panel .detail-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.detail-panel .detail-tabs-shell {
+  position: relative;
+}
+
+.detail-panel .detail-tab-panel.active {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-right: 0.18rem;
+}
+
+.detail-panel .detail-add-btn {
+  position: static;
+  margin-top: 0;
+}
 @keyframes slideUp {
   from {
     transform: translateY(60px);
@@ -3493,7 +3525,9 @@ body.detail-open .back-to-top {
   }
 }
 .detail-photo-wrap {
-  height: clamp(210px, 34dvh, 300px);
+  width: 80%;
+  height: clamp(168px, 27.2dvh, 240px);
+  margin-inline: auto;
   overflow: hidden;
   background: var(--sand);
   border-radius: 24px 24px 0 0;
@@ -6729,12 +6763,13 @@ body.cart-open .back-to-top {
   }
 
   .detail-panel {
+    height: 86dvh;
     max-height: 86dvh;
     border-radius: 20px;
   }
 
   .detail-photo-wrap {
-    height: clamp(190px, 30dvh, 240px);
+    height: clamp(152px, 24dvh, 192px);
     border-radius: 20px 20px 0 0;
   }
 
