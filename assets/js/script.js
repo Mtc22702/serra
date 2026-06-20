@@ -2444,10 +2444,10 @@ function shouldShowHarvestVector(plant) {
 
 function glyph(plant, r, rng) {
   // Solo rendering: il motore ha già calcolato questa posizione usando d/dr.
-  // L'illustrazione resta più piccola del passo sulla fila, quindi non altera
-  // visivamente la distanza assegnata a ciascuna pianta.
+  // L'illustrazione occupa circa il 93% del passo sulla fila: più grande, ma
+  // ancora con margine sufficiente per non alterare le distanze assegnate.
   if (plant?.id) {
-    const size = r * 1.5;
+    const size = r * 1.7;
     const src = window.serraAsset(
       `assets/img/svg/${plant.id}.svg`
     );
@@ -2904,7 +2904,7 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
   const greenhouseScale = Math.min(sceneWidth, sceneHeight) * 0.016;
   const maxByWidth = (width - 28) / Math.max(text.length * 0.56, 1);
   const maxByHeight = height * 0.14;
-  return Math.max(4.8, Math.min(9.5, greenhouseScale, maxByWidth, maxByHeight));
+  return Math.max(5.76, Math.min(11.4, greenhouseScale * 1.2, maxByWidth * 1.2, maxByHeight * 1.2));
 }
 
 function buildScene() {
@@ -2954,21 +2954,21 @@ function buildScene() {
       <path d="M8 7 C18 4 25 10 34 7" fill="none" stroke="rgba(255,220,166,.18)" stroke-width=".8"/>
     </pattern>
     <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#dff5f7" stop-opacity=".035"/>
-      <stop offset="30%" stop-color="#ffffff" stop-opacity=".13"/>
-      <stop offset="44%" stop-color="#ffffff" stop-opacity=".02"/>
-      <stop offset="76%" stop-color="#b7d8df" stop-opacity=".055"/>
-      <stop offset="100%" stop-color="#7eabb5" stop-opacity=".075"/>
+      <stop offset="0%" stop-color="#dff5f7" stop-opacity=".02"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity=".06"/>
+      <stop offset="44%" stop-color="#ffffff" stop-opacity=".01"/>
+      <stop offset="76%" stop-color="#b7d8df" stop-opacity=".025"/>
+      <stop offset="100%" stop-color="#7eabb5" stop-opacity=".035"/>
     </linearGradient>
     <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffffff"/><stop offset="32%" stop-color="#e8eeee"/><stop offset="62%" stop-color="#aebbbb"/><stop offset="100%" stop-color="#758585"/>
     </linearGradient>
     ${
       nightMode
-        ? `<radialGradient id="daylight" cx="48%" cy="38%" r="78%"><stop stop-color="#315842" stop-opacity=".08"/><stop offset=".55" stop-color="#071812" stop-opacity=".3"/><stop offset="1" stop-color="#020907" stop-opacity=".72"/></radialGradient>`
-        : `<radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".34"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".08"/><stop offset="1" stop-color="#183d28" stop-opacity=".25"/></radialGradient>`
+        ? `<radialGradient id="daylight" cx="48%" cy="38%" r="78%"><stop stop-color="#315842" stop-opacity=".04"/><stop offset=".55" stop-color="#071812" stop-opacity=".14"/><stop offset="1" stop-color="#020907" stop-opacity=".38"/></radialGradient>`
+        : `<radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".16"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".04"/><stop offset="1" stop-color="#183d28" stop-opacity=".11"/></radialGradient>`
     }
-    <linearGradient id="nightGlass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a20" stop-opacity=".34"/><stop offset=".5" stop-color="#0b2021" stop-opacity=".2"/><stop offset="1" stop-color="#020b0d" stop-opacity=".42"/></linearGradient>
+    <linearGradient id="nightGlass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a20" stop-opacity=".16"/><stop offset=".5" stop-color="#0b2021" stop-opacity=".09"/><stop offset="1" stop-color="#020b0d" stop-opacity=".2"/></linearGradient>
     <radialGradient id="lampPool"><stop offset="0" stop-color="#fff4b0" stop-opacity=".72"/><stop offset=".25" stop-color="#ffe58a" stop-opacity=".42"/><stop offset=".62" stop-color="#e9d272" stop-opacity=".16"/><stop offset="1" stop-color="#d5bf62" stop-opacity="0"/></radialGradient>
     <radialGradient id="lampBulb"><stop offset="0" stop-color="#fffde5"/><stop offset=".45" stop-color="#fff3a4"/><stop offset="1" stop-color="#e7b942"/></radialGradient>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#102b1a" flood-opacity=".34"/></filter>
@@ -3102,9 +3102,9 @@ function buildScene() {
       g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng)}</g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
-        const fs = Math.max(rr * 1.2, 8);
+        const fs = Math.max(rr * 1.2, 8) * 0.8;
         pendingEmoji.push(
-          `<g transform="translate(${ox + pos.x} ${oy + pos.y})">${harvestVector(bed.plant, fs)}</g>`
+          `<text x="${ox + pos.x}" y="${oy + pos.y}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" style="pointer-events:none;user-select:none">${fe}</text>`
         );
       }
     });

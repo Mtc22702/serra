@@ -3693,7 +3693,7 @@ if (catalogSearchLink) {
     // Solo rendering della mini-serra: animazione, posizioni ed emoji restano
     // quelle originali; cambia esclusivamente l'illustrazione botanica.
     if (plant?.id) {
-      const size = r * 1.5;
+      const size = r * 1.7;
       const src = window.serraAsset(
         `assets/img/svg/${plant.id}.svg`
       );
@@ -3835,7 +3835,7 @@ if (catalogSearchLink) {
     g.style.transform = `translate(${cx}px,${cy}px) scale(0)`;
     const label =
       r >= 9 && shouldShowHarvestVector(plant)
-        ? harvestVector(plant, Math.max(r * 1.2, 8))
+        ? `<text y="0" text-anchor="middle" dominant-baseline="central" font-size="${Math.max(r * 1.2, 8) * 0.8}" style="pointer-events:none;user-select:none;font-family:system-ui">${plant.emoji}</text>`
         : "";
     g.innerHTML = glyph(plant, r, rng) + label;
     svg.appendChild(g);
