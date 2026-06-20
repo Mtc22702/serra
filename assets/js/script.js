@@ -3861,6 +3861,10 @@ function renderPlantDetailPanel() {
   const acquaIcon = p.acqua === "alta" ? "💧💧💧" : p.acqua === "media" ? "💧💧" : "💧";
   const svgSpacing = spacingInfographicSvg(p);
   const profile = configDetailProfile(p, sow);
+  const sowRow = (icon, label, value) =>
+    `<div class="detail-sow-row"><span class="detail-sow-row-icon" aria-hidden="true">${icon}</span><span class="detail-sow-row-copy"><b>${label}</b> — ${value}</span></div>`;
+  const sowTip = (value) =>
+    `<blockquote class="detail-sow-tip"><span class="detail-sow-row-icon" aria-hidden="true">💡</span><span class="detail-sow-row-copy">${value}</span></blockquote>`;
 
   container.innerHTML = `
     <div class="pdp-hero-wrap">
@@ -3901,7 +3905,7 @@ function renderPlantDetailPanel() {
 
       <div class="detail-tab-panel" data-detail-panel="cultivation" hidden>
         <div class="detail-section-heading"><span>${detailText("detail.cultivation_title")}</span><small>${detailText("detail.cultivation_subtitle")}</small></div>
-        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? `<div class="detail-sow-row"><b>${tx("sowMethod")}</b> — ${sow.method}</div>` : ""}${sow.periodo ? `<div class="detail-sow-row"><b>${detailText("detail.sow_period")}</b> — ${sow.periodo}</div>` : ""}${sow.depth ? `<div class="detail-sow-row"><b>${tx("sowDepth")}</b> — ${sow.depth}</div>` : ""}${sow.thin ? `<div class="detail-sow-row"><b>${tx("sowThin")}</b> — ${sow.thin}</div>` : ""}${sow.tip ? `<blockquote class="detail-sow-tip">${sow.tip}</blockquote>` : ""}</div></div>` : ""}
+        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? sowRow("🌱", tx("sowMethod"), sow.method) : ""}${sow.periodo ? sowRow("📅", detailText("detail.sow_period"), sow.periodo) : ""}${sow.depth ? sowRow("📏", tx("sowDepth"), sow.depth) : ""}${sow.thin ? sowRow("📐", tx("sowThin"), sow.thin) : ""}${sow.tip ? sowTip(sow.tip) : ""}</div></div>` : ""}
         <div class="detail-spacing"><div class="detail-spacing-header"><span class="detail-tile-label">${tx("distance")}</span><b class="detail-spacing-val">${spacingValue(p)}</b></div>${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}</div>
         <div class="detail-tech-grid">${renderConfigTechCards(profile.cultivation)}</div>
       </div>

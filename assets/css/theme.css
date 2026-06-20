@@ -1070,3 +1070,58 @@ html[data-theme="dark"] .site-header .nav-menu-toggle {
   background: #326f47 !important;
   border-color: #72c58a !important;
 }
+
+/* Ritmo condiviso fra icone, immagini e testo. */
+:root {
+  --icon-text-gap: .52rem;
+  --icon-text-gap-compact: .38rem;
+}
+
+:where(
+  .nav-link, .cart-btn, .btn-icon, .conf-btn,
+  .hero-zone-btn, .hero-heated-btn,
+  .hero-cfg-cta, .hero-cfg-catalog-link, .hero-cfg-level,
+  .percorso-cta-btn, .catalog-category-chip, .catalog-chip,
+  .catalog-hint, .kit-cta-btn, .kit-plan-link,
+  .persona-card, .guided-steps li, .guided-nov-cta,
+  .settings-head, .panel-toggle, .stage-empty-banner,
+  .crop-action-btn, .yield-edit-crops-btn,
+  .cart-checkout-btn, .cart-nudge button,
+  .contatti-item, .pdp-back-btn,
+  .detail-disease-card summary, .bedchip,
+  .veg-in-main, .veg-main, .action-card
+) {
+  column-gap: var(--icon-text-gap) !important;
+}
+
+:where(
+  .badge, .vtag, .top-fact, .compact-facts-row span,
+  .kit-meta-row span, .conf-feature-chip,
+  .guided-tags .tag, .guided-plant-chips span,
+  .detail-sow-row, .pdp-sow-row,
+  .chip-count, .off-season-badge
+) {
+  column-gap: var(--icon-text-gap-compact) !important;
+}
+
+/* Tab e riquadri con icona sopra al testo. */
+:where(.detail-tab, .pdp-tab, .detail-tile, .pdp-tile) {
+  row-gap: .34rem !important;
+}
+
+/* Emoji incluse nello stesso nodo di testo: spazio appena più leggibile. */
+:where(
+  .nav-link, .footer-nav-list a,
+  .footer-legal-list a, .abbin-add-btn,
+  .kit-cta-btn, .catalog-reset-btn,
+  .btn-month-tag, .scale-note
+) {
+  word-spacing: .12em;
+}
+
+@media (max-width: 660px) {
+  :root {
+    --icon-text-gap: .46rem;
+    --icon-text-gap-compact: .34rem;
+  }
+}

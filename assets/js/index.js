@@ -2134,19 +2134,23 @@ function openDetail(id, preserveTab = false) {
   // Guida alla semina.
   const sowEl = document.getElementById("detailSow");
   const sowBodyEl = document.getElementById("detailSowBody");
+  const sowRow = (icon, label, value) =>
+    `<div class="detail-sow-row"><span class="detail-sow-row-icon" aria-hidden="true">${icon}</span><span class="detail-sow-row-copy"><b>${label}</b> — ${value}</span></div>`;
+  const sowTip = (value) =>
+    `<blockquote class="detail-sow-tip"><span class="detail-sow-row-icon" aria-hidden="true">💡</span><span class="detail-sow-row-copy">${value}</span></blockquote>`;
   let sowHtml = "";
   if (guide) {
-    if (guide.method)      sowHtml += `<div class="detail-sow-row"><b>🌱 ${t("detail.sow_method")}</b> — ${guide.method}</div>`;
-    if (guide.periodo)     sowHtml += `<div class="detail-sow-row"><b>📅 ${t("detail.sow_period")}</b> — ${guide.periodo}</div>`;
-    if (guide.depth)       sowHtml += `<div class="detail-sow-row"><b>📏 ${t("detail.sow_depth")}</b> — ${guide.depth}</div>`;
-    if (guide.thin)        sowHtml += `<div class="detail-sow-row"><b>📐 ${t("detail.sow_thin")}</b> — ${guide.thin}</div>`;
-    if (guide.tempGerm && guide.tempGerm !== "—")     sowHtml += `<div class="detail-sow-row"><b>🌡️ ${t("detail.sow_temp")}</b> — ${guide.tempGerm}</div>`;
-    if (guide.giorniGerm && guide.giorniGerm !== "—") sowHtml += `<div class="detail-sow-row"><b>⏳ ${t("detail.sow_germ")}</b> — ${guide.giorniGerm}</div>`;
-    if (guide.esposizione) sowHtml += `<div class="detail-sow-row"><b>☀️ ${t("detail.sow_exposure")}</b> — ${guide.esposizione}</div>`;
-    if (guide.annaffiatura) sowHtml += `<div class="detail-sow-row"><b>💧 ${t("detail.sow_water")}</b> — ${guide.annaffiatura}</div>`;
-    if (guide.tip || nota) sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${guide.tip || nota}</blockquote>`;
+    if (guide.method)      sowHtml += sowRow("🌱", t("detail.sow_method"), guide.method);
+    if (guide.periodo)     sowHtml += sowRow("📅", t("detail.sow_period"), guide.periodo);
+    if (guide.depth)       sowHtml += sowRow("📏", t("detail.sow_depth"), guide.depth);
+    if (guide.thin)        sowHtml += sowRow("📐", t("detail.sow_thin"), guide.thin);
+    if (guide.tempGerm && guide.tempGerm !== "—")     sowHtml += sowRow("🌡️", t("detail.sow_temp"), guide.tempGerm);
+    if (guide.giorniGerm && guide.giorniGerm !== "—") sowHtml += sowRow("⏳", t("detail.sow_germ"), guide.giorniGerm);
+    if (guide.esposizione) sowHtml += sowRow("☀️", t("detail.sow_exposure"), guide.esposizione);
+    if (guide.annaffiatura) sowHtml += sowRow("💧", t("detail.sow_water"), guide.annaffiatura);
+    if (guide.tip || nota) sowHtml += sowTip(guide.tip || nota);
   } else if (nota) {
-    sowHtml += `<blockquote class="detail-sow-tip">💡&nbsp;${nota}</blockquote>`;
+    sowHtml += sowTip(nota);
   }
   sowBodyEl.innerHTML = sowHtml;
   sowEl.hidden = !sowHtml;

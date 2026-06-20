@@ -4312,6 +4312,9 @@ body.detail-open .back-to-top {
   padding: 0.96rem;
 }
 .detail-sow-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.62rem;
   font-size: 0.84rem;
   color: #3d5440;
   line-height: 1.58;
@@ -4320,11 +4323,27 @@ body.detail-open .back-to-top {
   background: rgba(245, 252, 247, 0.9);
   border: 1px solid rgba(45, 106, 79, 0.1);
 }
+.detail-sow-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1.2rem;
+  width: 1.2rem;
+  min-height: 1.45em;
+  line-height: 1.25;
+}
+.detail-sow-row-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
 .detail-sow-row b {
   color: var(--green-dk);
   font-weight: 700;
 }
 .detail-sow-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.62rem;
   margin: 0;
   padding: 0.72rem 0.88rem;
   border-left: 4px solid #d9a441;
