@@ -512,10 +512,8 @@
         "cetriolo",
         "spinaci",
         "carota",
-        "gombo",
         "tomatillo",
         "physalis",
-        "kiwano",
         "cucamelon"
       ],
       resa: 0.3,
@@ -1453,48 +1451,6 @@
       tipo: "aromatica"
     },
     {
-      id: "calendula",
-      nome: "Calendula",
-      arch: "cespuglio",
-      d: 30,
-      dr: 40,
-      h: "media",
-      sole: "pieno",
-      acqua: "bassa",
-      gg: 65,
-      mesi: [3, 4, 5, 9],
-      amiche: ["pomodoro", "cavolo", "carota"],
-      nemiche: [],
-      resa: 0.05,
-      nota: "Fiore utile nell’orto: attira impollinatori e colora le aiuole.",
-      col: {
-        l1: "#5a8a4f",
-        l2: "#416b39"
-      },
-      tipo: "aromatica"
-    },
-    {
-      id: "nasturzio",
-      nome: "Nasturzio",
-      arch: "rampicante",
-      d: 30,
-      dr: 50,
-      h: "media",
-      sole: "pieno",
-      acqua: "media",
-      gg: 60,
-      mesi: [4, 5, 6],
-      amiche: ["pomodoro", "cavolo", "carota"],
-      nemiche: [],
-      resa: 0.08,
-      nota: "Fiori e foglie commestibili; utile come pianta esca per afidi.",
-      col: {
-        l1: "#5a8a4f",
-        l2: "#416b39"
-      },
-      tipo: "aromatica"
-    },
-    {
       id: "mais_dolce",
       nome: "Mais dolce",
       arch: "frutto",
@@ -1509,28 +1465,6 @@
       nemiche: [],
       resa: 1,
       nota: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
-      col: {
-        l1: "#3f7a3a",
-        l2: "#2f5e2c",
-        fr: "#e07a2f"
-      },
-      tipo: "frutto"
-    },
-    {
-      id: "gombo",
-      nome: "Gombo",
-      arch: "frutto",
-      d: 45,
-      dr: 70,
-      h: "alta",
-      sole: "pieno",
-      acqua: "media",
-      gg: 80,
-      mesi: [4, 5, 6],
-      amiche: ["basilico", "cipolla", "prezzemolo"],
-      nemiche: ["finocchio"],
-      resa: 0.7,
-      nota: "Ama molto caldo; raccogli i baccelli piccoli e teneri.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -1575,28 +1509,6 @@
       nemiche: ["finocchio"],
       resa: 0.5,
       nota: "Frutti dolci in lanterna; in serra matura meglio.",
-      col: {
-        l1: "#3f7a3a",
-        l2: "#2f5e2c",
-        fr: "#e07a2f"
-      },
-      tipo: "frutto"
-    },
-    {
-      id: "kiwano",
-      nome: "Kiwano",
-      arch: "rampicante",
-      d: 60,
-      dr: 100,
-      h: "alta",
-      sole: "pieno",
-      acqua: "media",
-      gg: 120,
-      mesi: [4, 5],
-      amiche: ["basilico", "cipolla", "prezzemolo"],
-      nemiche: ["finocchio"],
-      resa: 1.5,
-      nota: "Cucurbitacea esotica per serre calde; falla arrampicare.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -2856,49 +2768,12 @@
       tempGerm: "18–22 °C",
       giorniGerm: "10–20 giorni"
     },
-    calendula: {
-      method: "Semina superficiale o trapianto di piantina giovane.",
-      depth: "0,5-1 cm",
-      thin: "Dirada o trapianta a circa 30 cm sulla fila e 40 cm tra file.",
-      tip: "Fiore utile nell’orto: attira impollinatori e colora le aiuole.",
-      periodo: "Aprile, Maggio, Giugno, Ottobre",
-      esposizione: "Pieno sole (almeno 6 ore di luce diretta).",
-      annaffiatura:
-        "Annaffiature moderate: tollera bene brevi periodi di siccità, evita ristagni.",
-      tempGerm: "18–22 °C",
-      giorniGerm: "10–20 giorni"
-    },
-    nasturzio: {
-      method: "Semina superficiale o trapianto di piantina giovane.",
-      depth: "0,5-1 cm",
-      thin: "Dirada o trapianta a circa 30 cm sulla fila e 50 cm tra file.",
-      tip: "Fiori e foglie commestibili; utile come pianta esca per afidi.",
-      periodo: "Maggio, Giugno, Luglio",
-      esposizione: "Pieno sole (almeno 6 ore di luce diretta).",
-      annaffiatura:
-        "Annaffiature regolari: lascia asciugare leggermente la superficie tra un'irrigazione e l'altra.",
-      tempGerm: "18–22 °C",
-      giorniGerm: "10–20 giorni"
-    },
     mais_dolce: {
       method:
         "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
       depth: "0,5-1 cm",
       thin: "Dirada o trapianta a circa 30 cm sulla fila e 70 cm tra file.",
       tip: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
-      periodo: "Maggio, Giugno, Luglio",
-      esposizione: "Pieno sole (almeno 6 ore di luce diretta).",
-      annaffiatura:
-        "Annaffiature regolari: lascia asciugare leggermente la superficie tra un'irrigazione e l'altra.",
-      tempGerm: "20–25 °C",
-      giorniGerm: "7–14 giorni"
-    },
-    gombo: {
-      method:
-        "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-      depth: "0,5-1 cm",
-      thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
-      tip: "Ama molto caldo; raccogli i baccelli piccoli e teneri.",
       periodo: "Maggio, Giugno, Luglio",
       esposizione: "Pieno sole (almeno 6 ore di luce diretta).",
       annaffiatura:
@@ -2926,19 +2801,6 @@
       thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
       tip: "Frutti dolci in lanterna; in serra matura meglio.",
       periodo: "Aprile, Maggio, Giugno",
-      esposizione: "Pieno sole (almeno 6 ore di luce diretta).",
-      annaffiatura:
-        "Annaffiature regolari: lascia asciugare leggermente la superficie tra un'irrigazione e l'altra.",
-      tempGerm: "20–25 °C",
-      giorniGerm: "7–14 giorni"
-    },
-    kiwano: {
-      method:
-        "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-      depth: "0,5-1 cm",
-      thin: "Dirada o trapianta a circa 60 cm sulla fila e 100 cm tra file.",
-      tip: "Cucurbitacea esotica per serre calde; falla arrampicare.",
-      periodo: "Maggio, Giugno",
       esposizione: "Pieno sole (almeno 6 ore di luce diretta).",
       annaffiatura:
         "Annaffiature regolari: lascia asciugare leggermente la superficie tra un'irrigazione e l'altra.",
@@ -3622,31 +3484,12 @@
       thin: "Rărește sau transplantează la aproximativ 25 cm pe rând și 35 cm între rânduri.",
       tip: "Flori pentru ceaiuri; atrage insecte utile și parfumează sera."
     },
-    calendula: {
-      method: "Seamănă superficial sau transplantează un răsad tânăr.",
-      depth: "0,5-1 cm",
-      thin: "Rărește sau transplantează la aproximativ 30 cm pe rând și 40 cm între rânduri.",
-      tip: "Floare utilă în grădină: atrage polenizatori și colorează straturile."
-    },
-    nasturzio: {
-      method: "Seamănă superficial sau transplantează un răsad tânăr.",
-      depth: "0,5-1 cm",
-      thin: "Rărește sau transplantează la aproximativ 30 cm pe rând și 50 cm între rânduri.",
-      tip: "Flori și frunze comestibile; utilă ca plantă-capcană pentru afide."
-    },
     mais_dolce: {
       method:
         "Seamănă direct sau în alveolă, apoi transplantează când răsadul este robust.",
       depth: "0,5-1 cm",
       thin: "Rărește sau transplantează la aproximativ 30 cm pe rând și 70 cm între rânduri.",
       tip: "Are nevoie de grupuri de plante pentru o polenizare bună; ideal la margini."
-    },
-    gombo: {
-      method:
-        "Seamănă direct sau în alveolă, apoi transplantează când răsadul este robust.",
-      depth: "0,5-1 cm",
-      thin: "Rărește sau transplantează la aproximativ 45 cm pe rând și 70 cm între rânduri.",
-      tip: "Iubește căldura puternică; recoltează păstăile mici și fragede."
     },
     tomatillo: {
       method:
@@ -3661,13 +3504,6 @@
       depth: "0,5-1 cm",
       thin: "Rărește sau transplantează la aproximativ 45 cm pe rând și 70 cm între rânduri.",
       tip: "Fructe dulci în «lampion»; se coc mai bine în seră."
-    },
-    kiwano: {
-      method:
-        "Seamănă direct sau în alveolă, apoi transplantează când răsadul este robust.",
-      depth: "0,5-1 cm",
-      thin: "Rărește sau transplantează la aproximativ 60 cm pe rând și 100 cm între rânduri.",
-      tip: "Cucurbitacee exotică pentru sere calde; las-o să se cațăre."
     },
     cucamelon: {
       method:
@@ -3872,13 +3708,9 @@
     menta: "aromatica",
     maggiorana: "aromatica",
     camomilla: "aromatica",
-    calendula: "aromatica",
-    nasturzio: "aromatica",
     mais_dolce: "frutto",
-    gombo: "frutto",
     tomatillo: "frutto",
     physalis: "frutto",
-    kiwano: "frutto",
     cucamelon: "frutto",
     asparago: "foglia",
     carciofo: "foglia",

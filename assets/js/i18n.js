@@ -317,21 +317,9 @@
           nome: "Mușețel",
           nota: "Flori pentru ceai; atrage insecte utile și parfumează sera."
         },
-        calendula: {
-          nome: "Gălbenele",
-          nota: "Floare utilă în grădină: atrage polenizatori și colorează straturile."
-        },
-        nasturzio: {
-          nome: "Conduraș",
-          nota: "Flori și frunze comestibile; util ca plantă-capcană pentru afide."
-        },
         mais_dolce: {
           nome: "Porumb dulce",
           nota: "Are nevoie de grupuri de plante pentru polenizare bună; ideal pe margini."
-        },
-        gombo: {
-          nome: "Bame",
-          nota: "Iubește multă căldură; recoltează păstăile mici și fragede."
         },
         tomatillo: {
           nome: "Tomatillo",
@@ -340,10 +328,6 @@
         physalis: {
           nome: "Physalis",
           nota: "Fructe dulci în înveliș ca o lanternă; în seră se coace mai bine."
-        },
-        kiwano: {
-          nome: "Kiwano",
-          nota: "Cucurbitacee exotică pentru sere calde; condu-o pe spalier."
         },
         cucamelon: {
           nome: "Cucamelon",

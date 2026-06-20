@@ -97,8 +97,6 @@ const DIFFICULTY = {
   erba_cipollina: 1,
   menta: 1,
   maggiorana: 1,
-  calendula: 1,
-  nasturzio: 1,
   crescione: 1,
   mizuna: 1,
   senape_foglia: 1,
@@ -161,10 +159,8 @@ const DIFFICULTY = {
   carciofo: 3,
   cardo: 3,
   mais_dolce: 3,
-  gombo: 3,
   tomatillo: 3,
   physalis: 3,
-  kiwano: 3,
   cucamelon: 3,
   stevia_dolce: 3,
   shiso: 3
@@ -174,10 +170,8 @@ const DIFFICULTY = {
 // riceve nemmeno nel fallback delle stagioni con poche alternative.
 const EXOTIC_PLANTS = new Set([
   "mais_dolce",
-  "gombo",
   "tomatillo",
   "physalis",
-  "kiwano",
   "cucamelon",
   "stevia_dolce",
   "shiso"
@@ -198,10 +192,8 @@ const CAT_ORDER = [
       "anguria",
       "fragola",
       "mais_dolce",
-      "gombo",
       "tomatillo",
       "physalis",
-      "kiwano",
       "cucamelon"
     ]
   },
@@ -277,8 +269,6 @@ const CAT_ORDER = [
       "menta",
       "maggiorana",
       "camomilla",
-      "calendula",
-      "nasturzio",
       "shiso"
     ]
   },
@@ -376,13 +366,9 @@ const FRUIT_EMOJI = {
   menta: "🌿",
   maggiorana: "🌿",
   camomilla: "🌼",
-  calendula: "🌼",
-  nasturzio: "🌼",
   mais_dolce: "🌽",
-  gombo: "🌶️",
   tomatillo: "🍅",
   physalis: "🍒",
-  kiwano: "🥒",
   cucamelon: "🥒",
   asparago: "🌿",
   carciofo: "🌿",
@@ -524,16 +510,11 @@ const PLANT_DESC = {
     menta: "Molto vigorosa: meglio in vaso o area controllata.",
     maggiorana: "Aromatica delicata; ama caldo, luce e terreno drenato.",
     camomilla: "Fiori per tisane; attira insetti utili e profuma la serra.",
-    calendula:
-      "Fiore utile nell’orto: attira impollinatori e colora le aiuole.",
-    nasturzio: "Fiori e foglie commestibili; utile come pianta esca per afidi.",
     mais_dolce:
       "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
-    gombo: "Ama molto caldo; raccogli i baccelli piccoli e teneri.",
     tomatillo:
       "Serve almeno due piante per fruttificare bene; ottimo per salse.",
     physalis: "Frutti dolci in lanterna; in serra matura meglio.",
-    kiwano: "Cucurbitacea esotica per serre calde; falla arrampicare.",
     cucamelon: "Piccoli frutti croccanti; produttivo su rete in serra.",
     asparago: "Perenne: richiede pazienza, ma produce per molti anni.",
     carciofo: "Coltura grande e decorativa; proteggi dal gelo intenso.",
@@ -670,13 +651,9 @@ const PLANT_DESC = {
     menta: "Mentă",
     maggiorana: "Măghiran",
     camomilla: "Mușețel",
-    calendula: "Gălbenele",
-    nasturzio: "Conduraș",
     mais_dolce: "Porumb dulce",
-    gombo: "Bame",
     tomatillo: "Tomatillo",
     physalis: "Physalis",
-    kiwano: "Kiwano",
     cucamelon: "Cucamelon",
     asparago: "Sparanghel",
     carciofo: "Anghinare",
@@ -1094,31 +1071,12 @@ const SOWING_GUIDE = {
     thin: "Dirada o trapianta a circa 25 cm sulla fila e 35 cm tra file.",
     tip: "Fiori per tisane; attira insetti utili e profuma la serra."
   },
-  calendula: {
-    method: "Semina superficiale o trapianto di piantina giovane.",
-    depth: "0,5-1 cm",
-    thin: "Dirada o trapianta a circa 30 cm sulla fila e 40 cm tra file.",
-    tip: "Fiore utile nell’orto: attira impollinatori e colora le aiuole."
-  },
-  nasturzio: {
-    method: "Semina superficiale o trapianto di piantina giovane.",
-    depth: "0,5-1 cm",
-    thin: "Dirada o trapianta a circa 30 cm sulla fila e 50 cm tra file.",
-    tip: "Fiori e foglie commestibili; utile come pianta esca per afidi."
-  },
   mais_dolce: {
     method:
       "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 30 cm sulla fila e 70 cm tra file.",
     tip: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi."
-  },
-  gombo: {
-    method:
-      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-    depth: "0,5-1 cm",
-    thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
-    tip: "Ama molto caldo; raccogli i baccelli piccoli e teneri."
   },
   tomatillo: {
     method:
@@ -1133,13 +1091,6 @@ const SOWING_GUIDE = {
     depth: "0,5-1 cm",
     thin: "Dirada o trapianta a circa 45 cm sulla fila e 70 cm tra file.",
     tip: "Frutti dolci in lanterna; in serra matura meglio."
-  },
-  kiwano: {
-    method:
-      "Semina diretta o in alveolo, poi trapianto quando la pianta è robusta.",
-    depth: "0,5-1 cm",
-    thin: "Dirada o trapianta a circa 60 cm sulla fila e 100 cm tra file.",
-    tip: "Cucurbitacea esotica per serre calde; falla arrampicare."
   },
   cucamelon: {
     method:
@@ -1352,13 +1303,9 @@ const PLANT_PHOTOS = {
   menta: "assets/img/photo/menta.jpg",
   maggiorana: "assets/img/photo/maggiorana.jpg",
   camomilla: "assets/img/photo/camomilla.jpg",
-  calendula: "assets/img/photo/calendula.jpg",
-  nasturzio: "assets/img/photo/nasturzio.jpg",
   mais_dolce: "assets/img/photo/mais_dolce.jpg",
-  gombo: "assets/img/photo/gombo.jpg",
   tomatillo: "assets/img/photo/tomatillo.jpg",
   physalis: "assets/img/photo/physalis.jpg",
-  kiwano: "assets/img/photo/kiwano.jpg",
   cucamelon: "assets/img/photo/cucamelon.jpg",
   asparago: "assets/img/photo/asparago.jpg",
   carciofo: "assets/img/photo/carciofo.jpg",
@@ -2390,12 +2337,12 @@ function harvestVector(plant, size) {
   const col = plant.col || {};
   const finish = (content) => `<g class="harvest-vector" style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
   const roots = ["carota", "pastinaca", "radice_prezemolo", "daikon", "scorzonera", "ravanello", "rapa", "barbabietola", "rafano"];
-  const long = ["melanzana", "cetriolo", "zucchina", "cucamelon", "kiwano"];
+  const long = ["melanzana", "cetriolo", "zucchina", "cucamelon"];
   const legumes = ["fagiolino", "fagiolo", "pisello", "fava", "soia_edamame", "cece", "lenticchia", "fagiolo_borlotto"];
   let art;
   if (long.includes(id)) {
-    const c = id === "melanzana" ? "#684078" : id === "kiwano" ? "#d99a35" : "#4f8b43";
-    const paint = id === "melanzana" ? "url(#harvestPurple)" : id === "kiwano" ? "url(#harvestOrange)" : "url(#harvestGreen)";
+    const c = id === "melanzana" ? "#684078" : "#4f8b43";
+    const paint = id === "melanzana" ? "url(#harvestPurple)" : "url(#harvestGreen)";
     art = `<g transform="rotate(-24)"><ellipse rx="${s * .2}" ry="${s * .42}" fill="${paint}" stroke="#315a34" stroke-width="${s * .05}"/><ellipse cx="${-s * .06}" cy="${-s * .1}" rx="${s * .05}" ry="${s * .2}" fill="#fff" opacity=".38"/><path d="M0 ${-s * .37} l${s * .17} ${-s * .1} l${-s * .14} ${s * .21} l${-s * .16} ${-s * .17}Z" fill="#315f31"/></g>`;
   } else if (id.includes("peper")) {
     art = `<path d="M0 ${-s * .38} C${s * .34} ${-s * .42} ${s * .38} ${s * .16} ${s * .2} ${s * .4} C${s * .08} ${s * .51} ${-s * .08} ${s * .51} ${-s * .2} ${s * .4} C${-s * .38} ${s * .16} ${-s * .34} ${-s * .42} 0 ${-s * .38}Z" fill="url(#harvestRed)" stroke="#7d352d" stroke-width="${s * .05}"/><path d="M0 ${-s * .34} q${s * .04} ${-s * .2} ${s * .15} ${-s * .18}" fill="none" stroke="#39703b" stroke-width="${s * .09}" stroke-linecap="round"/>`;
@@ -4097,7 +4044,6 @@ function configDiseaseGroup(id) {
       "cetriolo",
       "melone",
       "anguria",
-      "kiwano",
       "cucamelon"
     ])
   )
@@ -6887,10 +6833,8 @@ const PACK_DATA = {
   broccolo_rapa: { seeds: 200, price: 2.5 },
   // Frutti esotici
   mais_dolce: { seeds: 30, price: 3.5 },
-  gombo: { seeds: 20, price: 3.8 },
   tomatillo: { seeds: 20, price: 3.5 },
   physalis: { seeds: 20, price: 3.5 },
-  kiwano: { seeds: 10, price: 4.0 },
   cucamelon: { seeds: 15, price: 4.0 },
   // Aromatiche e fiori
   erba_cipollina: { seeds: 200, price: 2.8 },
@@ -6899,8 +6843,6 @@ const PACK_DATA = {
   menta: { seeds: 200, price: 2.8 },
   maggiorana: { seeds: 300, price: 2.6 },
   camomilla: { seeds: 300, price: 2.4 },
-  calendula: { seeds: 100, price: 2.4 },
-  nasturzio: { seeds: 50, price: 2.8 },
   shiso: { seeds: 100, price: 3.2 }
 };
 function formatMoney(value) {

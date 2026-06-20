@@ -73,8 +73,6 @@ const DIFFICULTY = {
   erba_cipollina: 1,
   menta: 1,
   maggiorana: 1,
-  calendula: 1,
-  nasturzio: 1,
   crescione: 1,
   mizuna: 1,
   senape_foglia: 1,
@@ -137,10 +135,8 @@ const DIFFICULTY = {
   carciofo: 3,
   cardo: 3,
   mais_dolce: 3,
-  gombo: 3,
   tomatillo: 3,
   physalis: 3,
-  kiwano: 3,
   cucamelon: 3,
   stevia_dolce: 3,
   shiso: 3
@@ -261,13 +257,9 @@ const PLANT_SPACING = {
   menta: { d: 30, dr: 50 },
   maggiorana: { d: 25, dr: 35 },
   camomilla: { d: 25, dr: 35 },
-  calendula: { d: 30, dr: 40 },
-  nasturzio: { d: 30, dr: 50 },
   mais_dolce: { d: 30, dr: 70 },
-  gombo: { d: 45, dr: 70 },
   tomatillo: { d: 50, dr: 80 },
   physalis: { d: 45, dr: 70 },
-  kiwano: { d: 60, dr: 100 },
   cucamelon: { d: 30, dr: 60 },
   asparago: { d: 40, dr: 80 },
   carciofo: { d: 80, dr: 100 },
@@ -383,13 +375,9 @@ const FRUIT_EMOJI = {
   menta: "🌿",
   maggiorana: "🌿",
   camomilla: "🌼",
-  calendula: "🌼",
-  nasturzio: "🌼",
   mais_dolce: "🌽",
-  gombo: "🌶️",
   tomatillo: "🍅",
   physalis: "🍒",
-  kiwano: "🥒",
   cucamelon: "🥒",
   asparago: "🌿",
   carciofo: "🌿",
@@ -841,8 +829,6 @@ function localizedSowingGuide(plant) {
     "menta",
     "maggiorana",
     "camomilla",
-    "calendula",
-    "nasturzio",
     "shiso"
   ]);
   const warm = new Set([
@@ -856,10 +842,8 @@ function localizedSowingGuide(plant) {
     "melone",
     "anguria",
     "basilico",
-    "gombo",
     "tomatillo",
     "physalis",
-    "kiwano",
     "cucamelon",
     "mais_dolce",
     "patata_dolce"
@@ -2004,7 +1988,6 @@ assignDiseaseGroup("cucurbitaceae", [
   "cetriolo",
   "melone",
   "anguria",
-  "kiwano",
   "cucamelon"
 ]);
 assignDiseaseGroup("brassicaceae", [
@@ -2091,11 +2074,10 @@ assignDiseaseGroup("strawberry", ["fragola"]);
 assignDiseaseGroup("corn", ["mais_dolce"]);
 assignDiseaseGroup("asparagus", ["asparago"]);
 assignDiseaseGroup("artichoke", ["carciofo"]);
-assignDiseaseGroup("flowers", ["camomilla", "calendula", "nasturzio"]);
+assignDiseaseGroup("flowers", ["camomilla"]);
 assignDiseaseGroup("sweet_potato", ["patata_dolce"]);
 assignDiseaseGroup("watercress", ["crescione"]);
 assignDiseaseGroup("topinambur", ["topinambur"]);
-assignDiseaseGroup("okra", ["gombo"]);
 
 function diseaseCatalog() {
   const ro = currentLang === "ro";
