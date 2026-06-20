@@ -835,7 +835,7 @@ function spacingInfographic(p) {
   <rect x="67" y="11" width="60" height="18" rx="9" fill="#1b5e3a"/>
   <text x="97" y="24" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${d} cm</text>
   <line x1="198" y1="${cy[0] + R + 3}" x2="198" y2="${cy[1] - R - 3}" stroke="#40916c" stroke-width="1.7" marker-start="url(#sV${pid})" marker-end="url(#sV${pid})"/>
-  <text x="206" y="55" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
+  <text x="206" y="49" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
   <rect x="184" y="59" width="44" height="18" rx="9" fill="#40916c"/>
   <text x="206" y="72" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
 </svg>`;

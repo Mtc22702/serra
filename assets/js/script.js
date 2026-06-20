@@ -30,7 +30,7 @@
    Misure reali espresse in centimetri, limiti di rendering e riferimenti ai
    dizionari i18n caricati da assets/js/i18n.js.
    ========================================================================= */
-const WALL = 12; // spessore telaio serra
+const WALL = 7; // ingombro del sottile telaio perimetrale della serra
 const MARGIN = 18; // ghiaia tra muro e prima aiuola
 const PATH = 34; // camminamento tra le aiuole
 const BED_GAP = 6; // separazione sottile tra colture consecutive nella stessa aiuola lunga
@@ -1771,7 +1771,7 @@ function spacingInfographicSvg(p) {
   <rect x="67" y="11" width="60" height="18" rx="9" fill="#1b5e3a"/>
   <text x="97" y="24" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${d} cm</text>
   <line x1="198" y1="${cy[0] + R + 3}" x2="198" y2="${cy[1] - R - 3}" stroke="#40916c" stroke-width="1.7" marker-start="url(#sV${pid})" marker-end="url(#sV${pid})"/>
-  <text x="206" y="55" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
+  <text x="206" y="49" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
   <rect x="184" y="59" width="44" height="18" rx="9" fill="#40916c"/>
   <text x="206" y="72" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
 </svg>`;
@@ -2596,24 +2596,35 @@ function buildScene() {
       <stop offset="0%" stop-color="#6f553d"/><stop offset="100%" stop-color="#4a3829"/>
     </radialGradient>
     <pattern id="gravel" width="34" height="34" patternUnits="userSpaceOnUse">
-      <rect width="34" height="34" fill="#d6cdb9"/>${gravelSpecks()}
+      <rect width="34" height="34" fill="#d8d0bd"/>
+      <rect width="34" height="34" fill="url(#gravelLight)" opacity=".72"/>
+      ${gravelSpecks()}
     </pattern>
+    <linearGradient id="gravelLight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1ebdb"/><stop offset=".52" stop-color="#d5cab4"/><stop offset="1" stop-color="#b7aa91"/></linearGradient>
     <pattern id="grass" width="40" height="40" patternUnits="userSpaceOnUse">
       <rect width="40" height="40" fill="#9fb083"/>${grassSpecks()}
     </pattern>
     <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#9c6a3c"/><stop offset="50%" stop-color="#7c5230"/><stop offset="100%" stop-color="#5f3e23"/>
+      <stop offset="0%" stop-color="#b47b45"/><stop offset="35%" stop-color="#936039"/><stop offset="72%" stop-color="#714628"/><stop offset="100%" stop-color="#4d2e1b"/>
     </linearGradient>
+    <pattern id="woodGrain" width="72" height="18" patternUnits="userSpaceOnUse">
+      <rect width="72" height="18" fill="url(#wood)"/>
+      <path d="M0 4 C14 1 23 8 38 4 S59 1 72 5 M0 12 C18 8 29 16 47 11 S62 9 72 13" fill="none" stroke="rgba(55,29,14,.3)" stroke-width="1"/>
+      <path d="M8 7 C18 4 25 10 34 7" fill="none" stroke="rgba(255,220,166,.18)" stroke-width=".8"/>
+    </pattern>
     <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity=".0"/>
-      <stop offset="42%" stop-color="#ffffff" stop-opacity=".22"/>
-      <stop offset="50%" stop-color="#ffffff" stop-opacity=".05"/>
-      <stop offset="100%" stop-color="#cfe0e6" stop-opacity=".10"/>
+      <stop offset="0%" stop-color="#dff5f7" stop-opacity=".035"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity=".13"/>
+      <stop offset="44%" stop-color="#ffffff" stop-opacity=".02"/>
+      <stop offset="76%" stop-color="#b7d8df" stop-opacity=".055"/>
+      <stop offset="100%" stop-color="#7eabb5" stop-opacity=".075"/>
     </linearGradient>
     <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fbfdfd"/><stop offset="100%" stop-color="#c9d3d3"/>
+      <stop offset="0%" stop-color="#ffffff"/><stop offset="32%" stop-color="#e8eeee"/><stop offset="62%" stop-color="#aebbbb"/><stop offset="100%" stop-color="#758585"/>
     </linearGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#1f3a26" flood-opacity="0.28"/></filter>
+    <radialGradient id="daylight" cx="25%" cy="12%" r="92%"><stop stop-color="#fff9d9" stop-opacity=".34"/><stop offset=".48" stop-color="#d9edc8" stop-opacity=".08"/><stop offset="1" stop-color="#183d28" stop-opacity=".25"/></radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#102b1a" flood-opacity=".34"/></filter>
+    <filter id="bedLift" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#241408" flood-opacity=".38"/></filter>
     <pattern id="dirtPath" width="36" height="36" patternUnits="userSpaceOnUse">
       <rect width="36" height="36" fill="#c4a55e"/>
       ${dirtPathSpecks()}
@@ -2656,10 +2667,12 @@ function buildScene() {
 
   // --- prato attorno ---
   g += `<rect x="0" y="0" width="${vbW}" height="${vbH}" fill="url(#grass)"/>`;
+  g += `<rect x="0" y="0" width="${vbW}" height="${vbH}" fill="url(#daylight)" pointer-events="none"/>`;
   // --- ombra serra ---
-  g += `<rect x="${PAD + 6}" y="${PAD + 10}" width="${totW}" height="${totH}" rx="12" fill="#1f3a26" opacity="0.22"/>`;
+  g += `<rect x="${PAD + 5}" y="${PAD + 8}" width="${totW}" height="${totH}" rx="11" fill="#102719" opacity=".26" filter="url(#soft)"/>`;
   // --- telaio esterno ---
-  g += `<rect x="${PAD}" y="${PAD}" width="${totW}" height="${totH}" rx="12" fill="url(#frame)" stroke="#aeb9b9" stroke-width="2"/>`;
+  g += `<rect x="${PAD}" y="${PAD}" width="${totW}" height="${totH}" rx="10" fill="#657779" stroke="#42575a" stroke-width="1.3"/>`;
+  g += `<rect x="${PAD + 1.5}" y="${PAD + 1.5}" width="${totW - 3}" height="${totH - 3}" rx="8.5" fill="none" stroke="rgba(240,248,248,.72)" stroke-width=".9" pointer-events="none"/>`;
   // --- interno: terra scura di base ---
   g += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" rx="6" fill="#3a2710"/>`;
 
@@ -2668,15 +2681,15 @@ function buildScene() {
 
   // --- camminamenti con piastrelle ---
   // margini laterali
-  g += `<rect x="${ox}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#dirtPath)"/>`;
-  g += `<rect x="${ox + Wi - MARGIN}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#dirtPath)"/>`;
+  g += `<rect x="${ox}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#gravel)"/>`;
+  g += `<rect x="${ox + Wi - MARGIN}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#gravel)"/>`;
   // margini superiore e inferiore
-  g += `<rect x="${ox + MARGIN}" y="${oy}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#dirtPath)"/>`;
-  g += `<rect x="${ox + MARGIN}" y="${oy + Li - MARGIN}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#dirtPath)"/>`;
+  g += `<rect x="${ox + MARGIN}" y="${oy}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#gravel)"/>`;
+  g += `<rect x="${ox + MARGIN}" y="${oy + Li - MARGIN}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#gravel)"/>`;
   // corridoi verticali tra colonne
   for (let i = 0; i < L.columnCount - 1; i++) {
     const pX = MARGIN + (i + 1) * L.bedW + i * state.path;
-    g += `<rect x="${ox + pX}" y="${oy}" width="${state.path}" height="${Li}" fill="url(#dirtPath)"/>`;
+    g += `<rect x="${ox + pX}" y="${oy}" width="${state.path}" height="${Li}" fill="url(#gravel)"/>`;
   }
   // corridoi orizzontali tra file di aiuole nella stessa colonna
   const colMap = {};
@@ -2691,7 +2704,7 @@ function buildScene() {
       const gapY = sorted[i].y + sorted[i].h;
       const gapH = sorted[i + 1].y - gapY;
       if (gapH > 0)
-        g += `<rect x="${ox + sorted[i].x}" y="${oy + gapY}" width="${sorted[i].w}" height="${gapH}" fill="url(#dirtPath)"/>`;
+        g += `<rect x="${ox + sorted[i].x}" y="${oy + gapY}" width="${sorted[i].w}" height="${gapH}" fill="url(#gravel)"/>`;
     }
   });
 
@@ -2711,8 +2724,9 @@ function buildScene() {
       by = oy + bed.y;
     // bordo legno aiuola rialzata
     g += `<g class="bedhit" data-bed="${bed.idx}">`;
-    g += `<rect class="bed-border" x="${bx - 6}" y="${by - 6}" width="${bed.w + 12}" height="${bed.h + 12}" rx="7" fill="url(#wood)" stroke="rgba(0,0,0,.25)" stroke-width="2"/>`;
-    g += `<rect x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" rx="3" fill="url(#soil)"/>`;
+    g += `<rect class="bed-border" x="${bx - 6}" y="${by - 6}" width="${bed.w + 12}" height="${bed.h + 12}" rx="7" fill="url(#woodGrain)" stroke="rgba(42,22,10,.55)" stroke-width="2" filter="url(#bedLift)"/>`;
+    g += `<rect x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" rx="3" fill="url(#soil)" stroke="rgba(255,221,169,.16)" stroke-width="1.2"/>`;
+    g += `<rect x="${bx + 2}" y="${by + 2}" width="${Math.max(0, bed.w - 4)}" height="${Math.max(0, bed.h - 4)}" rx="2" fill="none" stroke="rgba(30,15,7,.3)" stroke-width="1" pointer-events="none"/>`;
     // piantine
     const r = visualPlantRadius(bed.plant);
     const bedGlyphBudget = totalPlants <= MAX_GLYPH
@@ -2826,30 +2840,43 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   let s = "";
   // riflesso vetro generale
   s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="url(#glass)" pointer-events="none"/>`;
-  // barre vetro leggere: danno struttura senza coprire ortaggi o nomi
+  // pannelli del tetto: giunti e montanti in alluminio
   const bars = Math.max(2, Math.round(Wi / 60));
   for (let i = 1; i < bars; i++) {
     const x = ox + (Wi * i) / bars;
-    s += `<line x1="${x}" y1="${oy}" x2="${x}" y2="${oy + Li}" stroke="rgba(255,255,255,.28)" stroke-width="1.5" pointer-events="none"/>`;
+    s += `<line x1="${x + .7}" y1="${oy}" x2="${x + .7}" y2="${oy + Li}" stroke="rgba(25,57,62,.075)" stroke-width="1.25" pointer-events="none"/>`;
+    s += `<line x1="${x}" y1="${oy}" x2="${x}" y2="${oy + Li}" stroke="rgba(255,255,255,.3)" stroke-width=".7" pointer-events="none"/>`;
   }
   // traversi orizzontali
   const cross = Math.max(2, Math.round(Li / 60));
   for (let i = 1; i < cross; i++) {
     const y = oy + (Li * i) / cross;
-    s += `<line x1="${ox}" y1="${y}" x2="${ox + Wi}" y2="${y}" stroke="rgba(255,255,255,.18)" stroke-width="1.2" pointer-events="none"/>`;
+    s += `<line x1="${ox}" y1="${y + .7}" x2="${ox + Wi}" y2="${y + .7}" stroke="rgba(21,50,55,.065)" stroke-width="1.2" pointer-events="none"/>`;
+    s += `<line x1="${ox}" y1="${y}" x2="${ox + Wi}" y2="${y}" stroke="rgba(255,255,255,.25)" stroke-width=".65" pointer-events="none"/>`;
   }
-  // riflesso luminoso diagonale
-  s += `<polygon points="${ox},${oy} ${ox + Wi * 0.34},${oy} ${ox},${oy + Li * 0.5}" fill="rgba(255,255,255,.10)" pointer-events="none"/>`;
-  // telaio perimetrale interno
-  s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="none" stroke="url(#frame)" stroke-width="${WALL}" pointer-events="none"/>`;
-  s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="none" stroke="#aeb9b9" stroke-width="1.5" pointer-events="none"/>`;
+  // riflessi lunghi del vetro, senza colmo centrale
+  const ridgeX = ox + Wi / 2;
+  s += `<polygon points="${ox + 5},${oy + 5} ${ridgeX - 7},${oy + 5} ${ridgeX - 30},${oy + Li - 5} ${ox + 5},${oy + Li - 5}" fill="rgba(224,249,252,.035)" pointer-events="none"/>`;
+  s += `<polygon points="${ox + Wi * .08},${oy + 5} ${ox + Wi * .24},${oy + 5} ${ox + Wi * .12},${oy + Li - 5} ${ox + Wi * .02},${oy + Li - 5}" fill="rgba(255,255,255,.085)" pointer-events="none"/>`;
+  s += `<polygon points="${ridgeX + Wi * .09},${oy + 5} ${ridgeX + Wi * .2},${oy + 5} ${ridgeX + Wi * .33},${oy + Li - 5} ${ridgeX + Wi * .22},${oy + Li - 5}" fill="rgba(255,255,255,.05)" pointer-events="none"/>`;
+  // controventi agli angoli
+  const brace = Math.min(25, Wi * .1, Li * .1);
+  s += `<path d="M${ox + 3} ${oy + brace} L${ox + brace} ${oy + 3} M${ox + Wi - 3} ${oy + brace} L${ox + Wi - brace} ${oy + 3} M${ox + 3} ${oy + Li - brace} L${ox + brace} ${oy + Li - 3} M${ox + Wi - 3} ${oy + Li - brace} L${ox + Wi - brace} ${oy + Li - 3}" fill="none" stroke="rgba(80,101,103,.72)" stroke-width="1.6" pointer-events="none"/>`;
+  // profilato perimetrale sottile: ombra, alluminio e filo di luce
+  s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" rx="4" fill="none" stroke="rgba(37,58,61,.58)" stroke-width="5.5" pointer-events="none"/>`;
+  s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" rx="4" fill="none" stroke="url(#frame)" stroke-width="3.8" pointer-events="none"/>`;
+  s += `<rect x="${ox - .45}" y="${oy - .45}" width="${Wi + .9}" height="${Li + .9}" rx="4.5" fill="none" stroke="rgba(246,252,252,.8)" stroke-width=".75" pointer-events="none"/>`;
+  s += `<rect x="${ox + 2.4}" y="${oy + 2.4}" width="${Wi - 4.8}" height="${Li - 4.8}" rx="2.5" fill="none" stroke="rgba(48,70,72,.62)" stroke-width=".8" pointer-events="none"/>`;
   // porta in basso al centro
   const doorX = ox + Wi / 2;
   const dw = Math.min(Wi * 0.34, 90);
-  const doorY = oy + Li - WALL / 2 - 2;
-  const doorH = WALL + 8;
-  s += `<rect x="${doorX - dw / 2}" y="${doorY}" width="${dw}" height="${doorH}" rx="3" fill="#e7ad55" stroke="#b07f30" stroke-width="1.5" pointer-events="none"/>`;
-  s += `<text x="${doorX}" y="${doorY + doorH / 2 + 3.5}" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#5f3e23" pointer-events="none">${tx("greenhouseEntrance")}</text>`;
+  const doorH = 12;
+  const doorY = oy + Li - doorH / 2;
+  s += `<rect x="${doorX - dw / 2}" y="${doorY}" width="${dw}" height="${doorH}" rx="2.5" fill="rgba(213,238,241,.9)" stroke="#60787a" stroke-width="1.4" pointer-events="none"/>`;
+  s += `<line x1="${doorX}" y1="${doorY + 2}" x2="${doorX}" y2="${doorY + doorH - 2}" stroke="rgba(91,111,112,.72)" stroke-width="1.5" pointer-events="none"/>`;
+  s += `<rect x="${doorX - dw / 2 + 4}" y="${doorY + 3}" width="${dw - 8}" height="${doorH - 6}" rx="2" fill="url(#glass)" stroke="rgba(255,255,255,.62)" stroke-width=".8" pointer-events="none"/>`;
+  s += `<circle cx="${doorX + dw * .18}" cy="${doorY + doorH / 2}" r="1.45" fill="#9a7138" stroke="rgba(255,255,255,.7)" stroke-width=".45" pointer-events="none"/>`;
+  s += `<text x="${doorX}" y="${doorY + doorH + 12}" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="#4b5d5e" stroke="rgba(255,255,255,.82)" stroke-width="2" paint-order="stroke" pointer-events="none">${tx("greenhouseEntrance")}</text>`;
   return s;
 }
 
@@ -2882,9 +2909,15 @@ function soilSpecks() {
 function gravelSpecks() {
   let s = "";
   const r = rngFrom(777);
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 18; i++) {
     const g = 170 + Math.floor(r() * 60);
-    s += `<circle cx="${r() * 34}" cy="${r() * 34}" r="${1.5 + r() * 2.2}" fill="rgb(${g},${g - 8},${g - 22})"/>`;
+    const x = r() * 34;
+    const y = r() * 34;
+    const rx = 1.4 + r() * 2.4;
+    const ry = 0.8 + r() * 1.5;
+    const angle = -28 + r() * 56;
+    s += `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${angle} ${x} ${y})" fill="rgb(${g},${g - 8},${g - 22})" stroke="rgba(78,72,58,.3)" stroke-width=".45"/>`;
+    s += `<ellipse cx="${x - 0.45}" cy="${y - 0.35}" rx="${Math.max(0.45, rx * 0.42)}" ry="${Math.max(0.3, ry * 0.28)}" fill="rgba(255,255,255,.38)"/>`;
   }
   return s;
 }
