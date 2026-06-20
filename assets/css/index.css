@@ -6457,7 +6457,13 @@ body.cart-open .back-to-top {
 }
 
 .site-header-inner {
-  max-width: 1420px;
+  max-width: none;
+}
+
+@media (min-width: 901px) {
+  .site-header-inner {
+    padding-inline: clamp(20px, 2.1vw, 42px);
+  }
 }
 
 .site-header .cart-btn {

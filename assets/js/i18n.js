@@ -1211,6 +1211,7 @@
         guidedIntroBuyHint: "Vai al catalogo e al carrello",
         guidedIntroSummary:
           "{beds} varietà · {plants} piante · circa {yield} di raccolto",
+        vegScrollHint: "Scorri per vedere tutte le colture",
         modalSizeTitle: "Dimensioni serra",
         modalSizeCopy: "Inserisci le misure interne: resteranno salvate.",
         modalZoneTitle: "Zona climatica",
@@ -1554,6 +1555,7 @@
         guidedIntroBuyHint: "Mergi la catalog și coș",
         guidedIntroSummary:
           "{beds} soiuri · {plants} plante · aproximativ {yield} recoltă",
+        vegScrollHint: "Derulează pentru a vedea toate culturile",
         modalSizeTitle: "Dimensiunile serei",
         modalSizeCopy: "Introdu dimensiunile interioare: vor rămâne salvate.",
         modalZoneTitle: "Zonă climatică",

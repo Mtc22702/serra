@@ -421,6 +421,7 @@ html[data-theme="dark"] :where(
   .guided-steps li, .guided-info-card, .guided-tags .tag,
   .guided-intro-actions .mode-tab, .mode-tab, .preset-inline,
   .preset-applied, .preset-seasonal-btn,
+  .veg-scroll-hint-arrow,
   #panelCustomize .veg-list, .customize-sub, .crops-customize-footer,
   .action-card, .veg, .veg.in, .veg-search-box,
   .veg-filter-tab, .yield-metric, .shop li, .checkline,
@@ -429,6 +430,12 @@ html[data-theme="dark"] :where(
   background: var(--dark-raised) !important;
   color: var(--dark-text) !important;
   border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] .veg-list-scroll-wrap.has-overflow:not(.is-at-end)::after {
+  background: linear-gradient(180deg, rgba(29, 45, 36, 0), rgba(29, 45, 36, 0.97));
+}
+html[data-theme="dark"] .veg-scroll-hint {
+  color: var(--dark-muted) !important;
 }
 html[data-theme="dark"] :where(input[type="number"], select, .stepper, .crops-month-selector select) {
   background: #263a30 !important;

@@ -1972,6 +1972,7 @@ function applyLanguage() {
   if (introExpSteps[0]) introExpSteps[0].innerHTML = tx("guidedExpStep1");
   if (introExpSteps[1]) introExpSteps[1].innerHTML = tx("guidedExpStep2");
   if (introExpSteps[2]) introExpSteps[2].innerHTML = tx("guidedExpStep3");
+  setText("#vegScrollHint span:first-child", "vegScrollHint");
   /* Traduci le tab filtro piante */
   const filterIconMap = { all: "🌿", in: "✓", "all-beds": "⌕" };
   const filterLblMap = {
@@ -3196,6 +3197,7 @@ function renderVegList() {
         ? `<div class="empty-note">${tx("vegNoMore")}</div>`
         : `<div class="empty-note">${tx("noCrops", { month: monthName(state.mese) })}</div>`);
     vl.innerHTML = msg;
+    updateVegListScrollAffordance();
     return;
   }
 
@@ -3221,6 +3223,21 @@ function renderVegList() {
   vl.innerHTML =
     noviceUpgrade +
     filtered.map(p => vegCardHTML(p, present.has(p.id), !semSet.has(p.id))).join("");
+  updateVegListScrollAffordance();
+}
+
+function updateVegListScrollAffordance() {
+  const list = document.getElementById("vegList");
+  const wrap = document.getElementById("vegListScrollWrap");
+  const hint = document.getElementById("vegScrollHint");
+  if (!list || !wrap || !hint) return;
+  requestAnimationFrame(() => {
+    const scrollable = list.scrollHeight > list.clientHeight + 2;
+    const atEnd = !scrollable || list.scrollTop + list.clientHeight >= list.scrollHeight - 6;
+    hint.hidden = !scrollable;
+    wrap.classList.toggle("has-overflow", scrollable);
+    wrap.classList.toggle("is-at-end", atEnd);
+  });
 }
 
 function updateCropActionControls() {
@@ -5617,6 +5634,10 @@ function initEvents() {
     }
     renderVegList();
   });
+  document.getElementById("vegList")?.addEventListener("scroll", updateVegListScrollAffordance, {
+    passive: true
+  });
+  window.addEventListener("resize", updateVegListScrollAffordance);
 
   // modale avvio
   document.querySelectorAll("#zoneOpts .opt").forEach((o) =>
