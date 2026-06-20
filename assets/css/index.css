@@ -8840,6 +8840,37 @@ body.cart-open .back-to-top {
   }
 }
 
+/* Desktop: no scroll — compatta spaziature per far stare tutto in vista */
+@media (min-width: 661px) {
+  .preconfig-sheet {
+    max-height: 96svh;
+    overflow-y: visible;
+  }
+  .preconfig-footer {
+    padding: 8px 14px 12px;
+  }
+  .preconfig-section-label {
+    margin: 4px 0 3px;
+  }
+  .preconfig-sizes-note {
+    margin-bottom: 3px;
+    padding: 4px 9px;
+  }
+  .pc-persona-cards {
+    gap: 3px;
+  }
+  .pc-persona-card {
+    padding: 6px 12px 6px 14px;
+  }
+  .pc-persona-ico {
+    width: 28px; height: 28px;
+  }
+  .preconfig-month-wrap {
+    min-height: 40px;
+    margin-bottom: 8px;
+  }
+}
+
 /* Panel head — stile identico a La tua serra */
 .preconfig-panel-head {
   display: flex;
