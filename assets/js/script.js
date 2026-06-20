@@ -1819,8 +1819,13 @@ function updateVegSearchUI() {
       state.lang === "ro" ? "Cauta o planta..." : "Cerca una pianta...";
   }
   const label = document.querySelector('label[for="vegSearchInput"]');
-  if (label)
+  if (label) {
     label.textContent = state.lang === "ro" ? "Cauta cultura" : "Cerca coltura";
+    document.documentElement.style.setProperty(
+      "--veg-search-badge",
+      state.lang === "ro" ? '"Cauta aici"' : '"Cerca qui"'
+    );
+  }
   if (clear) {
     clear.hidden = !vegSearchQuery;
     clear.title = state.lang === "ro" ? "Sterge cautarea" : "Cancella ricerca";

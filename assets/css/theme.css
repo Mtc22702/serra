@@ -269,6 +269,14 @@ html[data-theme="dark"] .catalog-search-box {
   background: var(--theme-surface-2) !important;
   border-color: var(--theme-line) !important;
 }
+html[data-theme="dark"] .catalog-search-note {
+  color: var(--dark-muted) !important;
+  background: rgba(82,183,136,.06) !important;
+  border-left-color: rgba(82,183,136,.28) !important;
+}
+html[data-theme="dark"] .catalog-search-badge {
+  background: #376f49 !important;
+}
 html[data-theme="dark"] .detail-tab.active {
   color: #fff !important;
 }
@@ -856,6 +864,16 @@ html[data-theme="dark"]
   background: var(--dark-raised) !important;
   color: var(--dark-text) !important;
   border-color: var(--dark-border) !important;
+}
+html[data-theme="dark"] .veg-search-box {
+  border-color: rgba(82,183,136,.45) !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.14) !important;
+}
+html[data-theme="dark"] .veg-search-label {
+  color: var(--dark-text) !important;
+}
+html[data-theme="dark"] .veg-search-label::after {
+  background: #376f49 !important;
 }
 html[data-theme="dark"]
   .veg-list-scroll-wrap.has-overflow:not(.is-at-end)::after {

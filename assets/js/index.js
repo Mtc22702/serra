@@ -3536,6 +3536,44 @@ document
     });
   });
 
+/* Campo ricerca: focus + animazione attenzione quando entra nel viewport.
+   Su desktop: focus reale. Su mobile: solo animazione visiva (evita tastiera). */
+(function () {
+  const searchLabel = document.querySelector(".catalog-search--pro");
+  const searchInput = document.getElementById("catalogSearch");
+  if (!searchLabel || !searchInput) return;
+
+  function triggerSearchAttention(focus) {
+    searchLabel.classList.add("catalog-search--attention");
+    searchLabel.addEventListener("animationend", function handler() {
+      searchLabel.classList.remove("catalog-search--attention");
+      searchLabel.removeEventListener("animationend", handler);
+    });
+    if (focus && window.innerWidth > 660) {
+      searchInput.focus({ preventScroll: true });
+    }
+  }
+
+  /* IntersectionObserver: si attiva solo quando l'input è ben visibile */
+  var searchObserver = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      /* Piccolo delay per non interrompere lo scroll momentum */
+      setTimeout(function() { triggerSearchAttention(true); }, 300);
+      searchObserver.disconnect();
+    }
+  }, { threshold: 0.85 });
+
+  searchObserver.observe(searchLabel);
+
+  /* CTA "oppure sfoglia il catalogo semi": focus immediato dopo lo scroll */
+  var catalogLink = document.querySelector(".hero-cfg-catalog-link");
+  if (catalogLink) {
+    catalogLink.addEventListener("click", function() {
+      setTimeout(function() { triggerSearchAttention(true); }, 600);
+    });
+  }
+})();
+
 if (window.location.hash === "#stagione") {
   window.setTimeout(() => {
     scrollElementBelowNav(
@@ -3925,8 +3963,13 @@ if (catalogSearchLink) {
     const zona = document.getElementById("pcZona")?.value ?? "temperato";
     const heated = document.getElementById("pcRisc")?.value === "si";
     const mese = parseInt(document.getElementById("pcMese")?.value) || (new Date().getMonth() + 1);
-    const zonaLabels = { freddo: "❄️ Fredda", temperato: "🌤️ Temperata", caldo: "☀️ Calda" };
-    el.textContent = `${w}×${l} m · cam. ${path} cm · ${zonaLabels[zona]}${heated ? " · 🔥 Riscaldata" : ""} · ${NOMI_MESI[mese - 1]}`;
+    const lang = document.documentElement.lang === "ro" ? "ro" : "it";
+    const months = (window.SERRA_I18N && window.SERRA_I18N.months && window.SERRA_I18N.months[lang])
+      || [];
+    const monthName = months[mese - 1] || mese;
+    const zonaLabel = pcT("hero.zone_" + (zona === "freddo" ? "cold" : zona === "temperato" ? "temp" : "warm") + "_label") || zona;
+    const heatedLabel = pcT("preconfig.serra_heated") || "🔥";
+    el.textContent = `${w}×${l} m · cam. ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
   }
 
   function syncPcRiscSelect(heated) {
@@ -3937,19 +3980,108 @@ if (catalogSearchLink) {
   // stub non più usato — tenuto per compatibilità
   function setPcHeated(active) { syncPcRiscSelect(active); }
 
+  var PC_MONTHS = {
+    it: ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
+         "Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"],
+    ro: ["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie",
+         "Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"]
+  };
+
   function populatePcMonths() {
     const sel = document.getElementById("pcMese");
-    if (!sel || sel.options.length > 0) return;
-    NOMI_MESI.forEach((m, i) => {
+    if (!sel) return;
+    const lang = document.documentElement.lang === "ro" ? "ro" : "it";
+    const months = PC_MONTHS[lang] || PC_MONTHS.it;
+    const currentVal = sel.value;
+    sel.innerHTML = "";
+    months.forEach(function(m, i) {
       const opt = document.createElement("option");
       opt.value = i + 1;
       opt.textContent = m;
       sel.appendChild(opt);
     });
+    if (currentVal) sel.value = currentVal;
+  }
+
+  /* Traduzioni preconfig integrate nell'IIFE — nessuna dipendenza esterna */
+  var PC_TR = {
+    it: {
+      "preconfig.title":          "La tua serra",
+      "preconfig.tag":            "Imposta i parametri",
+      "preconfig.sizes_label":    "1. Misure interne",
+      "preconfig.sizes_badge":    "Fondamentale",
+      "preconfig.sizes_note":     "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
+      "preconfig.width":          "Larghezza",
+      "preconfig.length":         "Lunghezza",
+      "preconfig.path_label":     "Camminamento tra aiuole",
+      "preconfig.climate_label":  "2. Clima",
+      "preconfig.zona_label":     "Zona",
+      "preconfig.serra_label":    "Serra",
+      "preconfig.serra_cold":     "Fredda",
+      "preconfig.serra_heated":   "Riscaldata",
+      "preconfig.month_label":    "3. Mese di semina",
+      "preconfig.cta":            "Vai al configuratore",
+      "hero.cfg_levels_title":    "Che tipo di coltivatore sei?",
+      "hero.cfg_novizio":         "Principiante",
+      "hero.cfg_nov_hint":        "Orto pronto, guidato passo passo",
+      "hero.cfg_intermedio":      "Intermedio",
+      "hero.cfg_int_hint":        "Guidato, ma personalizzabile",
+      "hero.cfg_esperto":         "Esperto",
+      "hero.cfg_exp_hint":        "Catalogo completo, scelta libera",
+      "hero.zone_cold_label":     "Fredda",
+      "hero.zone_temp_label":     "Temperata",
+      "hero.zone_warm_label":     "Calda"
+    },
+    ro: {
+      "preconfig.title":          "Sera ta",
+      "preconfig.tag":            "Setează parametrii",
+      "preconfig.sizes_label":    "1. Dimensiuni interne",
+      "preconfig.sizes_badge":    "Esențial",
+      "preconfig.sizes_note":     "Dimensiunile determină câte straturi și plante poți cultiva.",
+      "preconfig.width":          "Lățime",
+      "preconfig.length":         "Lungime",
+      "preconfig.path_label":     "Cărare între straturi",
+      "preconfig.climate_label":  "2. Climă",
+      "preconfig.zona_label":     "Zonă",
+      "preconfig.serra_label":    "Seră",
+      "preconfig.serra_cold":     "Rece",
+      "preconfig.serra_heated":   "Încălzită",
+      "preconfig.month_label":    "3. Luna de semănat",
+      "preconfig.cta":            "Mergi la configurator",
+      "hero.cfg_levels_title":    "Ce fel de cultivator ești?",
+      "hero.cfg_novizio":         "Începător",
+      "hero.cfg_nov_hint":        "Grădină gata, ghidat pas cu pas",
+      "hero.cfg_intermedio":      "Intermediar",
+      "hero.cfg_int_hint":        "Ghidat, dar personalizabil",
+      "hero.cfg_esperto":         "Expert",
+      "hero.cfg_exp_hint":        "Catalog complet, alegere liberă",
+      "hero.zone_cold_label":     "Rece",
+      "hero.zone_temp_label":     "Temperată",
+      "hero.zone_warm_label":     "Caldă"
+    }
+  };
+
+  function pcT(key) {
+    var lang = document.documentElement.lang === "ro" ? "ro" : "it";
+    return (PC_TR[lang] && PC_TR[lang][key]) || (PC_TR.it && PC_TR.it[key]) || key;
+  }
+
+  function applyPreconfigLang() {
+    const overlay = document.getElementById("preconfigOverlay");
+    if (!overlay) return;
+    overlay.querySelectorAll("[data-i18n]").forEach(function(el) {
+      const key = el.getAttribute("data-i18n");
+      const val = pcT(key);
+      if (val && val !== key) {
+        if (val.indexOf("<") !== -1 || val.indexOf("&") !== -1) el.innerHTML = val;
+        else el.textContent = val;
+      }
+    });
+    populatePcMonths();
   }
 
   function updatePreconfigCta() {
-    const active = document.querySelector(".preconfig-persona-btn.active");
+    const active = document.querySelector("#preconfigPersonaSection .pc-persona-card.is-active");
     const cta = document.getElementById("preconfigCta");
     if (!cta) return;
     if (active) {
@@ -3966,7 +4098,7 @@ if (catalogSearchLink) {
   function openPreconfigSheet(targetUrl) {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
-    populatePcMonths();
+    applyPreconfigLang();
 
     const saved = readSavedCfg();
     const w = saved?.larghezza ?? 3;
@@ -4001,9 +4133,9 @@ if (catalogSearchLink) {
 
     if (personaSection) personaSection.hidden = hasLivello;
 
-    document.querySelectorAll(".preconfig-persona-btn").forEach(btn => {
+    document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(btn => {
       const isActive = hasLivello ? btn.dataset.livello === livello : false;
-      btn.classList.toggle("active", isActive);
+      btn.classList.toggle("is-active", isActive);
       btn.setAttribute("aria-pressed", String(isActive));
     });
 
@@ -4019,7 +4151,20 @@ if (catalogSearchLink) {
 
     overlay.removeAttribute("hidden");
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => overlay.classList.add("is-open"));
+      requestAnimationFrame(() => {
+        overlay.classList.add("is-open");
+        /* Animazione attenzione sui campi misure dopo l'apertura */
+        setTimeout(function() {
+          const dimsCard = overlay.querySelector(".preconfig-vfield--primary");
+          if (!dimsCard) return;
+          dimsCard.classList.remove("dims-attention");
+          void dimsCard.offsetWidth; /* forza reflow per riavviare l'animazione */
+          dimsCard.classList.add("dims-attention");
+          dimsCard.addEventListener("animationend", function() {
+            dimsCard.classList.remove("dims-attention");
+          }, { once: true });
+        }, 280);
+      });
     });
     document.body.style.overflow = "hidden";
   }
@@ -4036,8 +4181,6 @@ if (catalogSearchLink) {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    populatePcMonths();
-
     /* Intercetta tutti i link al configuratore: 3 livelli hero + nav + footer */
     document.querySelectorAll(".hero-cfg-level, .nav-link--configuratore").forEach(link => {
       link.addEventListener("click", function (e) {
@@ -4054,14 +4197,14 @@ if (catalogSearchLink) {
     document.getElementById("pcZona")?.addEventListener("change", updatePreconfigSummary);
     document.getElementById("pcRisc")?.addEventListener("change", updatePreconfigSummary);
 
-    /* Persona selector */
-    document.querySelectorAll(".preconfig-persona-btn").forEach(btn => {
+    /* Persona selector (dentro il modal) */
+    document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(btn => {
       btn.addEventListener("click", function () {
-        document.querySelectorAll(".preconfig-persona-btn").forEach(b => {
-          b.classList.remove("active");
+        document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(b => {
+          b.classList.remove("is-active");
           b.setAttribute("aria-pressed", "false");
         });
-        this.classList.add("active");
+        this.classList.add("is-active");
         this.setAttribute("aria-pressed", "true");
         updatePreconfigCta();
       });
@@ -4100,14 +4243,8 @@ if (catalogSearchLink) {
       document.getElementById(id)?.addEventListener("change", updatePreconfigSummary);
     });
 
-    /* CTA: salva e naviga (blocca se nessuna persona selezionata) */
-    document.getElementById("preconfigCta")?.addEventListener("click", function (e) {
-      if (this.classList.contains("preconfig-cta--disabled")) {
-        e.preventDefault();
-        document.querySelector(".preconfig-persona-row")?.classList.add("preconfig-persona-shake");
-        setTimeout(() => document.querySelector(".preconfig-persona-row")?.classList.remove("preconfig-persona-shake"), 500);
-        return;
-      }
+    /* CTA: salva e naviga (click bloccato da pointer-events:none se disabled) */
+    document.getElementById("preconfigCta")?.addEventListener("click", function () {
       savePreconfigToStorage();
     });
 
@@ -4117,5 +4254,11 @@ if (catalogSearchLink) {
         closePreconfigSheet();
       }
     });
+
+    /* Aggiorna traduzioni modal al cambio lingua */
+    new MutationObserver(() => {
+      applyPreconfigLang();
+      updatePreconfigSummary();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
   });
 })();

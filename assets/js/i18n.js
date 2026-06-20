@@ -584,6 +584,8 @@
         "catalog.filter_type_hint": "Scegli una famiglia",
         "catalog.filter_search_label": "Ricerca",
         "catalog.filter_search_hint": "Affina i risultati",
+        "catalog.search_badge": "Cerca qui",
+        "catalog.search_note": "Digita pomodoro, basilico, lattuga… trova subito la pianta.",
         "catalog.type_label": "Tipo",
         "catalog.type_all": "Tutti",
         "catalog.category_label": "Categorie",
@@ -805,7 +807,22 @@
         "detail.sow_temp": "Temperatura di germinazione",
         "detail.sow_germ": "Tempo di germinazione",
         "detail.sow_exposure": "Esposizione",
-        "detail.sow_water": "Irrigazione"
+        "detail.sow_water": "Irrigazione",
+        "preconfig.title": "La tua serra",
+        "preconfig.tag": "Imposta i parametri",
+        "preconfig.sizes_label": "1. Misure interne",
+        "preconfig.sizes_badge": "Fondamentale",
+        "preconfig.sizes_note": "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
+        "preconfig.width": "Larghezza",
+        "preconfig.length": "Lunghezza",
+        "preconfig.path_label": "Camminamento tra aiuole",
+        "preconfig.climate_label": "2. Clima",
+        "preconfig.zona_label": "Zona",
+        "preconfig.serra_label": "Serra",
+        "preconfig.serra_cold": "Fredda",
+        "preconfig.serra_heated": "Riscaldata",
+        "preconfig.month_label": "3. Mese di semina",
+        "preconfig.cta": "Vai al configuratore"
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -957,6 +974,8 @@
         "catalog.filter_type_hint": "Alege o familie",
         "catalog.filter_search_label": "Căutare",
         "catalog.filter_search_hint": "Rafinează rezultatele",
+        "catalog.search_badge": "Caută aici",
+        "catalog.search_note": "Tastează roșii, busuioc, salată… găsești imediat planta.",
         "catalog.type_label": "Tip",
         "catalog.type_all": "Toate",
         "catalog.category_label": "Categorii",
@@ -1869,7 +1888,22 @@
         "print.shopping": "De pregătit",
         "print.total": "Total estimat",
         "cart.checkout_msg":
-          "Nu există plată online momentan.\n\nScrie-ne la info@ortoinserra.it sau sună la +39 055 987 0123 cu lista ta:\n{lines}\n\nTotal: {total}"
+          "Nu există plată online momentan.\n\nScrie-ne la info@ortoinserra.it sau sună la +39 055 987 0123 cu lista ta:\n{lines}\n\nTotal: {total}",
+        "preconfig.title": "Sera ta",
+        "preconfig.tag": "Setează parametrii",
+        "preconfig.sizes_label": "1. Dimensiuni interne",
+        "preconfig.sizes_badge": "Esențial",
+        "preconfig.sizes_note": "Dimensiunile determină câte straturi și plante poți cultiva.",
+        "preconfig.width": "Lățime",
+        "preconfig.length": "Lungime",
+        "preconfig.path_label": "Cărare între straturi",
+        "preconfig.climate_label": "2. Climă",
+        "preconfig.zona_label": "Zonă",
+        "preconfig.serra_label": "Seră",
+        "preconfig.serra_cold": "Rece",
+        "preconfig.serra_heated": "Încălzită",
+        "preconfig.month_label": "3. Luna de semănat",
+        "preconfig.cta": "Mergi la configurator"
       }
     }
   };

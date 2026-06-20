@@ -227,66 +227,33 @@
                     data-i18n="hero.cfg_levels_title"
                     >Che tipo di coltivatore sei?</span
                   >
-                  <div class="hero-cfg-levels-grid">
-                    <a
-                      class="hero-cfg-level"
-                      href="configuratore.html?livello=novizio&guided=1"
-                    >
-                      <span class="hero-cfg-level-ico" aria-hidden="true"
-                        ><img
-                          src="assets/img/svg/plant_lv1.svg"
-                          alt=""
-                          class="level-plant-ico"
-                      /></span>
-                      <span class="hero-cfg-level-body">
+                  <div class="pc-persona-cards hero-cfg-levels-grid">
+                    <a class="pc-persona-card pc-persona-card--novizio hero-cfg-level"
+                       href="configuratore.html?livello=novizio&guided=1">
+                      <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"/></span>
+                      <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_novizio">Principiante</b>
-                        <small data-i18n="hero.cfg_nov_hint"
-                          >Orto pronto, guidato passo passo</small
-                        >
+                        <small data-i18n="hero.cfg_nov_hint">Orto pronto, guidato passo passo</small>
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true"
-                        >→</span
-                      >
+                      <span class="pc-persona-go" aria-hidden="true">→</span>
                     </a>
-                    <a
-                      class="hero-cfg-level"
-                      href="configuratore.html?livello=intermedio&guided=1"
-                    >
-                      <span class="hero-cfg-level-ico" aria-hidden="true"
-                        ><img
-                          src="assets/img/svg/plant_lv2.svg"
-                          alt=""
-                          class="level-plant-ico"
-                      /></span>
-                      <span class="hero-cfg-level-body">
+                    <a class="pc-persona-card pc-persona-card--intermedio hero-cfg-level"
+                       href="configuratore.html?livello=intermedio&guided=1">
+                      <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"/></span>
+                      <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_intermedio">Intermedio</b>
-                        <small data-i18n="hero.cfg_int_hint"
-                          >Guidato, ma personalizzabile</small
-                        >
+                        <small data-i18n="hero.cfg_int_hint">Guidato, ma personalizzabile</small>
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true"
-                        >→</span
-                      >
+                      <span class="pc-persona-go" aria-hidden="true">→</span>
                     </a>
-                    <a
-                      class="hero-cfg-level"
-                      href="configuratore.html?livello=esperto&mode=expert&empty=1"
-                    >
-                      <span class="hero-cfg-level-ico" aria-hidden="true"
-                        ><img
-                          src="assets/img/svg/plant_lv3.svg"
-                          alt=""
-                          class="level-plant-ico"
-                      /></span>
-                      <span class="hero-cfg-level-body">
+                    <a class="pc-persona-card pc-persona-card--esperto hero-cfg-level"
+                       href="configuratore.html?livello=esperto&mode=expert&empty=1">
+                      <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"/></span>
+                      <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_esperto">Esperto</b>
-                        <small data-i18n="hero.cfg_exp_hint"
-                          >Catalogo completo, scelta libera</small
-                        >
+                        <small data-i18n="hero.cfg_exp_hint">Catalogo completo, scelta libera</small>
                       </span>
-                      <span class="hero-cfg-level-arrow" aria-hidden="true"
-                        >→</span
-                      >
+                      <span class="pc-persona-go" aria-hidden="true">→</span>
                     </a>
                   </div>
                 </div>
@@ -409,18 +376,14 @@
             <!-- Ricerca catalogo e filtri rapidi. -->
             <div class="catalog-filter-group catalog-filter-group--search">
               <div class="catalog-filter-group-head">
-                <span class="catalog-filter-step">3</span>
+                <span class="catalog-filter-step catalog-filter-step--search">3</span>
                 <div>
-                  <span
-                    class="catalog-filter-label"
-                    data-i18n="catalog.filter_search_label"
-                    >Ricerca</span
-                  >
-                  <strong data-i18n="catalog.filter_search_hint"
-                    >Affina i risultati</strong
-                  >
+                  <span class="catalog-filter-label" data-i18n="catalog.filter_search_label">Ricerca</span>
+                  <strong data-i18n="catalog.filter_search_hint">Affina i risultati</strong>
                 </div>
+                <span class="catalog-search-badge" data-i18n="catalog.search_badge">Cerca qui</span>
               </div>
+              <p class="catalog-search-note" data-i18n="catalog.search_note">Digita pomodoro, basilico, lattuga… trova subito la pianta.</p>
               <div class="cat-bar">
                 <label class="catalog-search catalog-search--pro">
                   <span class="catalog-search-box">
@@ -1252,8 +1215,8 @@
               </svg>
             </span>
             <div>
-              <h2 class="preconfig-title" id="preconfigTitle">La tua serra</h2>
-              <span class="preconfig-head-tag">Imposta i parametri</span>
+              <h2 class="preconfig-title" id="preconfigTitle" data-i18n="preconfig.title">La tua serra</h2>
+              <span class="preconfig-head-tag" data-i18n="preconfig.tag">Imposta i parametri</span>
             </div>
           </div>
           <button class="preconfig-close" id="preconfigClose" aria-label="Chiudi pannello">
@@ -1264,30 +1227,34 @@
         <div class="preconfig-body">
 
           <!-- 1. Misure interne -->
-          <div class="preconfig-section-label">1. Misure interne</div>
-          <div class="preconfig-vfield preconfig-vfield--dims">
+          <div class="preconfig-section-label preconfig-section-label--primary">
+            <span data-i18n="preconfig.sizes_label">1. Misure interne</span>
+            <span class="preconfig-priority-badge" data-i18n="preconfig.sizes_badge">Fondamentale</span>
+          </div>
+          <p class="preconfig-sizes-note" data-i18n="preconfig.sizes_note">Le dimensioni determinano quante aiuole e piante puoi coltivare.</p>
+          <div class="preconfig-vfield preconfig-vfield--dims preconfig-vfield--primary">
             <div>
-              <label class="preconfig-fld">Larghezza</label>
+              <label class="preconfig-fld" data-i18n="preconfig.width">Larghezza</label>
               <div class="preconfig-stepper">
-                <button class="preconfig-step-btn" data-target="pcW" data-step="-0.5" aria-label="Riduci larghezza">−</button>
+                <button class="preconfig-step-btn" data-target="pcW" data-step="-0.5" aria-label="−">−</button>
                 <input class="preconfig-step-input" type="number" id="pcW" min="1" max="12" step="0.5" value="3" inputmode="decimal"/>
-                <button class="preconfig-step-btn" data-target="pcW" data-step="0.5" aria-label="Aumenta larghezza">+</button>
+                <button class="preconfig-step-btn" data-target="pcW" data-step="0.5" aria-label="+">+</button>
               </div>
-              <input type="range" id="pcWSlider" min="1" max="12" step="0.5" value="3" class="preconfig-dim-slider" aria-label="Larghezza slider"/>
+              <input type="range" id="pcWSlider" min="1" max="12" step="0.5" value="3" hidden aria-hidden="true"/>
             </div>
             <div>
-              <label class="preconfig-fld">Lunghezza</label>
+              <label class="preconfig-fld" data-i18n="preconfig.length">Lunghezza</label>
               <div class="preconfig-stepper">
-                <button class="preconfig-step-btn" data-target="pcL" data-step="-0.5" aria-label="Riduci lunghezza">−</button>
+                <button class="preconfig-step-btn" data-target="pcL" data-step="-0.5" aria-label="−">−</button>
                 <input class="preconfig-step-input" type="number" id="pcL" min="1" max="30" step="0.5" value="5" inputmode="decimal"/>
-                <button class="preconfig-step-btn" data-target="pcL" data-step="0.5" aria-label="Aumenta lunghezza">+</button>
+                <button class="preconfig-step-btn" data-target="pcL" data-step="0.5" aria-label="+">+</button>
               </div>
-              <input type="range" id="pcLSlider" min="1" max="30" step="0.5" value="5" class="preconfig-dim-slider" aria-label="Lunghezza slider"/>
+              <input type="range" id="pcLSlider" min="1" max="30" step="0.5" value="5" hidden aria-hidden="true"/>
             </div>
           </div>
 
-          <!-- Camminamento tra aiuole (stile pathField) -->
-          <div class="preconfig-section-label">Camminamento tra aiuole</div>
+          <!-- Camminamento tra aiuole -->
+          <div class="preconfig-section-label" data-i18n="preconfig.path_label">Camminamento tra aiuole</div>
           <div class="preconfig-path-field">
             <div class="preconfig-path-row">
               <input type="range" id="pcPath" min="30" max="120" step="5" value="60" class="preconfig-path-slider"/>
@@ -1300,54 +1267,62 @@
             </div>
           </div>
 
-          <!-- 2. Clima (2 select identici al configuratore) -->
-          <div class="preconfig-section-label">2. Clima</div>
+          <!-- 2. Clima -->
+          <div class="preconfig-section-label" data-i18n="preconfig.climate_label">2. Clima</div>
           <div class="preconfig-vfield preconfig-vfield--climate">
             <div>
-              <label class="preconfig-fld" for="pcZona">Zona</label>
+              <label class="preconfig-fld" for="pcZona" data-i18n="preconfig.zona_label">Zona</label>
               <select id="pcZona" class="preconfig-select">
-                <option value="freddo">Fredda</option>
-                <option value="temperato" selected>Temperata</option>
-                <option value="caldo">Calda</option>
+                <option value="freddo" data-i18n="hero.zone_cold_label">Fredda</option>
+                <option value="temperato" selected data-i18n="hero.zone_temp_label">Temperata</option>
+                <option value="caldo" data-i18n="hero.zone_warm_label">Calda</option>
               </select>
             </div>
             <div>
-              <label class="preconfig-fld" for="pcRisc">Serra</label>
+              <label class="preconfig-fld" for="pcRisc" data-i18n="preconfig.serra_label">Serra</label>
               <select id="pcRisc" class="preconfig-select">
-                <option value="no">Fredda</option>
-                <option value="si">Riscaldata</option>
+                <option value="no" data-i18n="preconfig.serra_cold">Fredda</option>
+                <option value="si" data-i18n="preconfig.serra_heated">Riscaldata</option>
               </select>
             </div>
           </div>
 
           <!-- Tipo coltivatore: visibile solo se si entra senza livello (nav/footer) -->
           <div id="preconfigPersonaSection">
-          <div class="preconfig-section-label">Chi sei?</div>
-          <div class="preconfig-persona-row">
-            <button class="preconfig-persona-btn" data-livello="novizio" data-url="configuratore.html?livello=novizio&guided=1">
-              <img src="assets/img/svg/plant_lv1.svg" alt="" class="preconfig-persona-ico"/>
-              <span class="preconfig-persona-name">Principiante</span>
-              <small>orto guidato</small>
-            </button>
-            <button class="preconfig-persona-btn" data-livello="intermedio" data-url="configuratore.html?livello=intermedio&guided=1">
-              <img src="assets/img/svg/plant_lv2.svg" alt="" class="preconfig-persona-ico"/>
-              <span class="preconfig-persona-name">Intermedio</span>
-              <small>guidato + libero</small>
-            </button>
-            <button class="preconfig-persona-btn" data-livello="esperto" data-url="configuratore.html?livello=esperto&mode=expert&empty=1">
-              <img src="assets/img/svg/plant_lv3.svg" alt="" class="preconfig-persona-ico"/>
-              <span class="preconfig-persona-name">Esperto</span>
-              <small>scelta libera</small>
-            </button>
-          </div>
-
+            <div class="preconfig-section-label" data-i18n="hero.cfg_levels_title">Che tipo di coltivatore sei?</div>
+            <div class="pc-persona-cards">
+              <button class="pc-persona-card pc-persona-card--novizio" data-livello="novizio" data-url="configuratore.html?livello=novizio&guided=1" aria-pressed="false">
+                <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"/></span>
+                <span class="pc-persona-body">
+                  <b data-i18n="hero.cfg_novizio">Principiante</b>
+                  <small data-i18n="hero.cfg_nov_hint">Orto pronto, guidato passo passo</small>
+                </span>
+                <span class="pc-persona-go" aria-hidden="true">→</span>
+              </button>
+              <button class="pc-persona-card pc-persona-card--intermedio" data-livello="intermedio" data-url="configuratore.html?livello=intermedio&guided=1" aria-pressed="false">
+                <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"/></span>
+                <span class="pc-persona-body">
+                  <b data-i18n="hero.cfg_intermedio">Intermedio</b>
+                  <small data-i18n="hero.cfg_int_hint">Guidato, ma personalizzabile</small>
+                </span>
+                <span class="pc-persona-go" aria-hidden="true">→</span>
+              </button>
+              <button class="pc-persona-card pc-persona-card--esperto" data-livello="esperto" data-url="configuratore.html?livello=esperto&mode=expert&empty=1" aria-pressed="false">
+                <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"/></span>
+                <span class="pc-persona-body">
+                  <b data-i18n="hero.cfg_esperto">Esperto</b>
+                  <small data-i18n="hero.cfg_exp_hint">Catalogo completo, scelta libera</small>
+                </span>
+                <span class="pc-persona-go" aria-hidden="true">→</span>
+              </button>
+            </div>
           </div><!-- /preconfigPersonaSection -->
 
           <!-- 3. Mese di semina -->
-          <div class="preconfig-section-label">3. Mese di semina</div>
+          <div class="preconfig-section-label" data-i18n="preconfig.month_label">3. Mese di semina</div>
           <div class="preconfig-month-wrap">
             <span class="preconfig-month-icon" aria-hidden="true">📅</span>
-            <select id="pcMese" class="preconfig-month-select" aria-label="Mese di semina"></select>
+            <select id="pcMese" class="preconfig-month-select"></select>
             <span class="preconfig-month-arrow" aria-hidden="true">
               <svg viewBox="0 0 12 8" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
             </span>
@@ -1358,7 +1333,7 @@
         <div class="preconfig-footer">
           <div class="preconfig-summary" id="preconfigSummary"></div>
           <a class="preconfig-cta" id="preconfigCta" href="#">
-            <span>Vai al configuratore</span>
+            <span data-i18n="preconfig.cta">Vai al configuratore</span>
             <span class="preconfig-cta-arrow" aria-hidden="true">→</span>
           </a>
         </div>
