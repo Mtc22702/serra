@@ -1347,6 +1347,8 @@
           "Le aiuole superano la lunghezza della serra. Riduci il numero di piante o ingrandisci la serra (linea rossa = fine serra).",
         autoPlanCompromise:
           "Ho aggiunto una coltura meno ideale perché in questo mese ci sono poche alternative compatibili.",
+        autoPlanEmptySeason:
+          "In questa zona e in questo mese non ci sono colture adatte alla semina: prova un altro mese, cambia zona climatica oppure attiva il riscaldamento.",
         manualCountRejected:
           "Questa quantità non entra nello spazio disponibile: ho mantenuto il valore precedente.",
         manualCountAdjusted:
@@ -1675,6 +1677,8 @@
           "Straturile depășesc lungimea serei. Redu numărul de plante sau mărește sera (linia roșie = capătul serei).",
         autoPlanCompromise:
           "Am adăugat o cultură mai puțin ideală deoarece luna aceasta există puține alternative compatibile.",
+        autoPlanEmptySeason:
+          "În această zonă și în această lună nu există culturi potrivite pentru semănat: încearcă altă lună, schimbă zona climatică sau activează încălzirea.",
         manualCountRejected:
           "Această cantitate nu încape în spațiul disponibil: am păstrat valoarea anterioară.",
         manualCountAdjusted:

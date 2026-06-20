@@ -2358,11 +2358,16 @@ function effectiveMonths(plant) {
       set.add(m === 12 ? 1 : m + 1);
     });
   } else if (state.zona === "freddo") {
+    // Zona fredda non riscaldata: niente semine nel cuore dell'inverno (dicembre
+    // e gennaio). La finestra utile si restringe a febbraio-novembre; i mesi
+    // originali della pianta che cadono fuori da questa finestra vengono esclusi.
+    // E' sempre un sottoinsieme dei mesi temperati, quindi non puo' mai produrre
+    // piu colture di una serra temperata ne lasciare "mesi fantasma" irraggiungibili.
+    // Attivando il riscaldamento si rientra nel ramo "expand" qui sopra e la
+    // finestra torna ad allargarsi.
     set.clear();
     plant.mesi.forEach((m) => {
-      // In zona fredda la finestra utile si avvicina ai mesi piu miti:
-      // semine primaverili ritardate, semine autunnali anticipate.
-      set.add(m <= 7 ? m + 1 : m - 1);
+      if (m >= 2 && m <= 11) set.add(m);
     });
   }
   return set;
@@ -4214,22 +4219,25 @@ function addPlant(id) {
   if (state.beds.some((b) => b.plantId === id)) return;
   const p = BYID[id];
   if (!p) return;
-  const useFila =
-    canUseFilaLayout(p) && !state.beds.some((bed) => bed.layout === "fila");
+  // Aggiunta manuale sempre a blocco con un conteggio modesto: una pianta a fila
+  // occuperebbe un'intera colonna (alta quanto la serra) e, in una serra piena,
+  // costringerebbe a rimuovere molte colture. A blocco invece basta restringere
+  // un po' le altre per fare spazio.
   state.beds.push({
     plantId: id,
-    count: useFila ? countForFilaPlant(p) : defaultCount(p),
-    layout: useFila ? "fila" : "blocco",
+    count: Math.max(1, Math.min(defaultCount(p), starterCountForAutoPlant(p, false))),
+    layout: "blocco",
     countLocked: false
   });
   state.autoPlan = false;
   state.manualPlanNotice = "";
   state.selected = state.beds.findIndex((b) => b.plantId === id);
-  // expandToSpace=false: in modalità manuale il sistema non espande le piante
-  // esistenti né applica i conteggi minimi forzati — altrimenti enforceMinimumBedCounts
-  // + expandAutoFillToSpace riempiono lo spazio, shrinkOverflowToFit rimuove
-  // una pianta già presente e l'utente vede una sostituzione invece di un'aggiunta.
-  autoBalanceLayout(true, false, {
+  // expandToSpace=true: dopo aver fatto spazio restringendo le colture flessibili
+  // (i conteggi bloccati a mano restano intatti) lo spazio residuo viene riempito,
+  // così la serra non si svuota a metà. Con autoPlan ormai false il limite di
+  // diversità non si applica e le colture presenti possono crescere a riempire;
+  // una coltura viene rimossa solo se è geometricamente inevitabile.
+  autoBalanceLayout(true, true, {
     preserveLockedCounts: true,
     expandLockedCounts: false
   });
@@ -4379,7 +4387,14 @@ function autoExpansionLimitForPlant(p) {
   const row = Math.max(1, rowSizeForPlant(p));
   const min = minimumCountForPlant(p);
   const baseline = Math.max(starterCountForAutoPlant(p, false), min);
-  const rows = state.livello === "novizio" ? 6 : 8;
+  // Il tetto di espansione per coltura cresce con l'area della serra: serre grandi
+  // verrebbero altrimenti lasciate con terra incolta perche ogni coltura toccava
+  // troppo presto il proprio massimo, e il riempitore non aveva piu candidati da
+  // far crescere. Il novizio parte da un tetto base piu basso (orto piu gestibile)
+  // ma anche per lui scala con la superficie reale.
+  const area = state.larghezza * state.lunghezza;
+  const rowsBase = state.livello === "novizio" ? 6 : 8;
+  const rows = rowsBase + Math.floor(area / 10);
   return Math.max(baseline, min * 3, row * rows);
 }
 
@@ -4583,6 +4598,26 @@ function autoCandidatePool() {
   );
 }
 
+/* Rete di sicurezza per serre molto piccole: piazza la migliore candidata al
+   massimo numero di piante che entra fisicamente (anche sotto il minimo
+   agronomico, fino a 1), provando i candidati in ordine di punteggio. Evita che
+   una serra minuscola resti completamente vuota quando c'e spazio per qualcosa. */
+function ensureMinimalFill(candidates) {
+  for (const p of candidates) {
+    let best = 0;
+    for (let c = minimumCountForPlant(p); c >= 1; c--) {
+      state.beds = [{ plantId: p.id, count: c, layout: "blocco", countLocked: false }];
+      if (!computeLayout().overflow) { best = c; break; }
+    }
+    if (best > 0) {
+      state.beds = [{ plantId: p.id, count: best, layout: "blocco", countLocked: false }];
+      return true;
+    }
+  }
+  state.beds = [];
+  return false;
+}
+
 function autoFill(options = {}) {
   const { compactPaths = true } = options;
   state.autoPlan = true;
@@ -4702,6 +4737,16 @@ function autoFill(options = {}) {
   // restavano troppo bassi e lasciavano terra libera; questo secondo passaggio
   // viene tenuto solo se migliora davvero il riempimento e non crea overflow.
   finalizeAutoFillWithOptimizeBaseline();
+  // Se nessuna coltura e' entrata ai conteggi minimi (serra molto piccola) prova
+  // la rete di sicurezza; se non c'e' proprio nulla da seminare in questa zona/mese
+  // segnala il motivo invece di lasciare la serra vuota senza spiegazioni.
+  if (state.beds.length === 0 && candidates.length) ensureMinimalFill(candidates);
+  // Top-off: quando le varieta disponibili sono poche (es. profilo novizio in
+  // mesi poveri) le colture toccano il loro tetto di diversita e restano vuoti.
+  // Qui, senza limite di diversita, facciamo crescere le colture gia presenti per
+  // riempire la terra rimasta libera, cosi la serra non resta mai mezza vuota.
+  expandAutoFillToSpace({ respectDiversityLimit: false });
+  if (state.beds.length === 0) state.autoPlanNotice = "autoPlanEmptySeason";
   state.selected = -1;
   saveConfig(true);
   render();
