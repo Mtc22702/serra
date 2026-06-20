@@ -1736,7 +1736,7 @@ function spacingInfographicSvg(p) {
   const H = 118;
   const R = 7;
   const cx = [34, 78, 122, 166];
-  const cy = [32, 76];
+  const cy = [45, 89];
   const pid = p.id.replace(/[^a-z]/g, "");
   const rLbl = tx("distanceInRow");
   const bLbl = tx("distanceBetweenRows");
@@ -1763,17 +1763,17 @@ function spacingInfographicSvg(p) {
     <marker id="sH${pid}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0,1 L7,4 L0,7 Z" fill="#1b5e3a"/></marker>
     <marker id="sV${pid}" viewBox="0 0 8 8" refX="4" refY="7" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M1,0 L4,7 L7,0 Z" fill="#40916c"/></marker>
   </defs>
-  <rect x="8" y="10" width="176" height="86" rx="12" fill="#f7fbf5" stroke="rgba(45,106,79,.16)"/>
-  <path d="M24 32 H176 M24 76 H176 M34 18 V90 M78 18 V90 M122 18 V90 M166 18 V90" stroke="rgba(45,106,79,.14)" stroke-width="1"/>
+  <rect x="8" y="23" width="176" height="86" rx="12" fill="#f7fbf5" stroke="rgba(45,106,79,.16)"/>
+  <path d="M24 45 H176 M24 89 H176 M34 31 V103 M78 31 V103 M122 31 V103 M166 31 V103" stroke="rgba(45,106,79,.14)" stroke-width="1"/>
   ${seedlings}
   <line x1="${cx[0] + R + 3}" y1="${cy[0] - 15}" x2="${cx[1] - R - 3}" y2="${cy[0] - 15}" stroke="#1b5e3a" stroke-width="1.7" marker-start="url(#sH${pid})" marker-end="url(#sH${pid})"/>
-  <rect x="67" y="2" width="60" height="18" rx="9" fill="#1b5e3a"/>
-  <text x="97" y="15" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${d} cm</text>
-  <text x="97" y="109" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="750" fill="#1b5e3a">${rLbl}</text>
+  <text x="97" y="8" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${rLbl}</text>
+  <rect x="67" y="11" width="60" height="18" rx="9" fill="#1b5e3a"/>
+  <text x="97" y="24" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${d} cm</text>
   <line x1="198" y1="${cy[0] + R + 3}" x2="198" y2="${cy[1] - R - 3}" stroke="#40916c" stroke-width="1.7" marker-start="url(#sV${pid})" marker-end="url(#sV${pid})"/>
-  <rect x="184" y="45" width="44" height="18" rx="9" fill="#40916c"/>
-  <text x="206" y="58" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
-  <text x="206" y="109" font-size="8" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="750" fill="#40916c">${bLbl}</text>
+  <text x="206" y="55" font-size="7.5" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#16251b">${bLbl}</text>
+  <rect x="184" y="59" width="44" height="18" rx="9" fill="#40916c"/>
+  <text x="206" y="72" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
 </svg>`;
 }
 
@@ -3395,6 +3395,309 @@ function openSettingsPanelAndFocusDimensions() {
   });
 }
 
+const CONFIG_DETAIL_TABS = ["overview", "cultivation", "calendar", "care", "harvest"];
+
+function detailText(key, vars = {}) {
+  const dict = window.SERRA_I18N?.index || {};
+  let value = dict[state.lang]?.[key] || dict.it?.[key] || key;
+  Object.entries(vars).forEach(([name, replacement]) => {
+    value = value.replaceAll(`{${name}}`, String(replacement));
+  });
+  return value;
+}
+
+function setConfigDetailTab(tab, moveFocus = false) {
+  if (!CONFIG_DETAIL_TABS.includes(tab)) tab = "overview";
+  document.querySelectorAll("#pdpContent [data-detail-tab]").forEach((button) => {
+    const active = button.dataset.detailTab === tab;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+    button.tabIndex = active ? 0 : -1;
+    if (active && moveFocus) button.focus();
+  });
+  document.querySelectorAll("#pdpContent [data-detail-panel]").forEach((panel) => {
+    const active = panel.dataset.detailPanel === tab;
+    panel.classList.toggle("active", active);
+    panel.hidden = !active;
+  });
+}
+
+function handleConfigDetailTabKey(event) {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const current = CONFIG_DETAIL_TABS.indexOf(event.currentTarget.dataset.detailTab);
+  let next = current;
+  if (event.key === "ArrowRight") next = (current + 1) % CONFIG_DETAIL_TABS.length;
+  if (event.key === "ArrowLeft") next = (current - 1 + CONFIG_DETAIL_TABS.length) % CONFIG_DETAIL_TABS.length;
+  if (event.key === "Home") next = 0;
+  if (event.key === "End") next = CONFIG_DETAIL_TABS.length - 1;
+  setConfigDetailTab(CONFIG_DETAIL_TABS[next], true);
+}
+
+function configDetailTabIcon(tab) {
+  const paths = {
+    overview: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+    cultivation: '<path d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/>',
+    care: '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"/>',
+    harvest: '<path d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"/>'
+  };
+  return `<span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24">${paths[tab]}</svg></span>`;
+}
+
+function configDetailProfile(p, sow) {
+  const ro = state.lang === "ro";
+  const type = TIPO[p.id] || "foglia";
+  const soil = ro ? {
+    frutto: "Sol profund, fertil și bine drenat, îmbogățit cu compost matur.",
+    foglia: "Sol afânat, bogat în materie organică și uniform umed, fără băltire.",
+    radice: "Sol fin, afânat și fără pietre; evită gunoiul de grajd proaspăt.",
+    aromatica: "Substrat aerat și drenat; fertilizarea excesivă reduce aroma.",
+    legume: "Sol drenat și moderat fertil, fără exces de azot."
+  } : {
+    frutto: "Terreno profondo, fertile e ben drenato, arricchito con compost maturo.",
+    foglia: "Terreno soffice, ricco di sostanza organica e uniformemente umido, senza ristagni.",
+    radice: "Terreno fine, sciolto e privo di sassi; evita letame fresco.",
+    aromatica: "Substrato arioso e drenante; concimazioni eccessive riducono l'aroma.",
+    legume: "Terreno drenato e moderatamente fertile, senza eccessi di azoto."
+  };
+  const care = ro ? {
+    frutto: "Susține plantele înalte, aerisește frunzișul și elimină frunzele bolnave.",
+    foglia: "Rărește la timp, menține solul curat și recoltează fără a răni centrul plantei.",
+    radice: "Rărește devreme și evită lucrările adânci care pot răni rădăcinile.",
+    aromatica: "Ciupirea vârfurilor menține planta compactă și prelungește producția.",
+    legume: "Oferă suport soiurilor cățărătoare și recoltează păstăile frecvent."
+  } : {
+    frutto: "Sostieni le piante alte, arieggia la chioma e rimuovi le foglie malate.",
+    foglia: "Dirada per tempo, mantieni il suolo pulito e raccogli senza ferire il cuore.",
+    radice: "Dirada presto ed evita lavorazioni profonde che possano ferire le radici.",
+    aromatica: "Cimare gli apici mantiene la pianta compatta e prolunga la produzione.",
+    legume: "Predisponi sostegni per le varietà rampicanti e raccogli spesso i baccelli."
+  };
+  const prevention = ro
+    ? "Aerisește zilnic, udă dimineața la bază și îndepărtează imediat țesuturile bolnave."
+    : "Arieggia ogni giorno, irriga al mattino alla base e rimuovi subito i tessuti malati.";
+  const harvest = ro
+    ? "Recoltează la maturitate, cu unelte curate, fără a răni planta. Consumă sau răcește produsul cât mai repede."
+    : "Raccogli a maturazione con utensili puliti, senza ferire la pianta. Consuma o raffredda il prodotto rapidamente.";
+  return {
+    cultivation: [
+      [detailText("detail.tech_soil"), soil[type]],
+      [detailText("detail.tech_exposure"), sow?.esposizione || (p.sole === "pieno" ? tx("fullSun") : tx("halfShade"))],
+      [detailText("detail.tech_irrigation"), sow?.annaffiatura || waterLabel(p.acqua)],
+      [detailText("detail.tech_feeding"), ro ? "Folosește compost matur și evită excesele de îngrășământ." : "Usa compost maturo ed evita eccessi di fertilizzante."]
+    ],
+    care: [
+      [detailText("detail.tech_maintenance"), care[type]],
+      [detailText("detail.tech_prevention"), prevention],
+      [detailText("detail.tech_rotation"), ro ? "Nu replanta aceeași familie în același loc în ciclul următor." : "Non ripiantare la stessa famiglia nello stesso spazio nel ciclo successivo."]
+    ],
+    harvest: [
+      [detailText("detail.tech_maturity"), harvestValue(p)],
+      [detailText("detail.tech_harvest_method"), harvest],
+      [detailText("detail.tech_yield"), yieldLabel(p.resa)],
+      [detailText("detail.tech_storage"), ro ? "Păstrează numai produse sănătoase, uscate și răcite rapid." : "Conserva solo prodotti sani, asciutti e raffreddati rapidamente."]
+    ]
+  };
+}
+
+function renderConfigTechCards(items) {
+  return items.map(([title, text]) => `<article class="detail-tech-card"><h4>${title}</h4><p>${text}</p></article>`).join("");
+}
+
+const CONFIG_DISEASE_GROUPS = {
+  solanaceae: ["late", "alternaria", "botrytis"], cucurbits: ["powdery", "downy", "botrytis"],
+  brassicas: ["downy", "alternaria", "clubroot"], alliums: ["downy", "white_rot", "rust"],
+  apiaceae: ["cercospora", "sclerotinia", "powdery"], leafy: ["downy", "botrytis", "sclerotinia"],
+  chenopods: ["downy", "cercospora", "damping"], legumes: ["anthracnose", "rust", "powdery"],
+  herbs: ["powdery", "root_rot", "rust"], basil: ["basil_downy", "fusarium", "botrytis"],
+  strawberry: ["botrytis", "powdery", "root_rot"], other: ["powdery", "botrytis", "root_rot"]
+};
+
+function configDiseaseGroup(id) {
+  const has = (ids) => ids.includes(id);
+  if (has(["pomodoro","peperone","peperoncino","melanzana","patata","tomatillo","physalis"])) return "solanaceae";
+  if (has(["zucchina","zucca","cetriolo","melone","anguria","kiwano","cucamelon"])) return "cucurbits";
+  if (has(["rucola","cavolo","verza","broccolo","cavolfiore","cavolonero","cavolorapa","ravanello","rafano","pakchoi","cavoletti","rapa","mizuna","senape_foglia","tatsoi","cavolo_cinese","daikon","cavolo_rosso","cavolo_navone","broccolo_rapa"])) return "brassicas";
+  if (has(["cipolla","aglio","porro","scalogno","cipolla_rossa","cipollotto","erba_cipollina"])) return "alliums";
+  if (has(["carota","finocchio","prezzemolo","coriandolo","aneto","sedano","pastinaca","radice_prezemolo","sedano_rapa","leustean"])) return "apiaceae";
+  if (has(["spinaci","bietola","barbabietola","loboda"])) return "chenopods";
+  if (has(["fagiolino","fagiolo","pisello","fava","soia_edamame","cece","lenticchia","fagiolo_borlotto"])) return "legumes";
+  if (id === "basilico") return "basil";
+  if (id === "fragola") return "strawberry";
+  if ((TIPO[id] || "") === "aromatica") return "herbs";
+  if ((TIPO[id] || "") === "foglia") return "leafy";
+  return "other";
+}
+
+function configDiseaseCatalog() {
+  const ro = state.lang === "ro";
+  const base = {
+    late: ["Peronospora", "Macchie scure e muffa chiara sotto le foglie.", "Rimuovi le parti colpite, evita di bagnare le foglie e arieggia."],
+    alternaria: ["Alternariosi", "Macchie brune concentriche sulle foglie più vecchie.", "Elimina residui e foglie infette, irriga alla base e pratica la rotazione."],
+    botrytis: ["Muffa grigia", "Tessuti molli ricoperti da una polvere grigia.", "Asporta le parti colpite, riduci condensa e umidità e dirada la chioma."],
+    powdery: ["Oidio", "Patina bianca farinosa e progressivo ingiallimento.", "Rimuovi le foglie colpite, migliora l'aria e usa solo prodotti autorizzati."],
+    downy: ["Peronospora", "Chiazze gialle sopra e muffa grigiastra sotto le foglie.", "Irriga al mattino alla base, elimina le foglie malate e arieggia."],
+    clubroot: ["Ernia delle crucifere", "Radici gonfie e pianta che appassisce nelle ore calde.", "Rimuovi la pianta con le radici, migliora drenaggio e rotazione."],
+    white_rot: ["Marciume bianco", "Ingiallimento e feltro bianco alla base.", "Elimina pianta e terreno aderente; non ripiantare alli nello stesso suolo."],
+    rust: ["Ruggine", "Pustole arancioni o brune sotto le foglie.", "Elimina le foglie colpite, arieggia e non eccedere con azoto."],
+    cercospora: ["Cercosporiosi", "Piccole macchie con centro chiaro e bordo scuro.", "Rimuovi residui, non bagnare le foglie e aumenta la distanza."],
+    sclerotinia: ["Sclerotinia", "Marciume acquoso al colletto e muffa bianca cotonosa.", "Rimuovi completamente la pianta e riduci umidità e densità."],
+    damping: ["Moria delle piantine", "Piantine che collassano con colletto scuro e sottile.", "Usa substrato pulito, semina meno fitta e non saturare il terriccio."],
+    anthracnose: ["Antracnosi", "Lesioni scure e infossate su foglie, steli o baccelli.", "Rimuovi le parti malate, usa seme sano e ruota le leguminose."],
+    root_rot: ["Marciume radicale", "Appassimento con terreno umido e radici brune e molli.", "Riduci acqua, migliora drenaggio ed elimina le piante gravi."],
+    basil_downy: ["Peronospora del basilico", "Ingiallimento tra le nervature e muffa scura sotto le foglie.", "Elimina le piante colpite, irriga alla base e arieggia."],
+    fusarium: ["Fusariosi", "Ingiallimento, avvizzimento e vasi interni bruni.", "Rimuovi la pianta, rinnova il substrato e usa varietà resistenti."]
+  };
+  if (!ro) return base;
+  const translated = {
+    late:["Mană","Pete întunecate și puf deschis pe dosul frunzelor.","Îndepărtează părțile afectate, nu uda frunzișul și aerisește."],
+    alternaria:["Alternarioză","Pete brune concentrice pe frunzele bătrâne.","Elimină resturile bolnave, udă la bază și rotește culturile."],
+    botrytis:["Putregai cenușiu","Țesuturi moi acoperite cu pulbere cenușie.","Îndepărtează părțile afectate și reduce condensul și umiditatea."],
+    powdery:["Făinare","Depunere albă făinoasă și îngălbenire.","Elimină frunzele bolnave, aerisește și folosește doar produse autorizate."],
+    downy:["Mană","Pete galbene deasupra și puf cenușiu sub frunze.","Udă dimineața la bază, elimină frunzele bolnave și aerisește."],
+    clubroot:["Hernia rădăcinilor","Rădăcini umflate și ofilire la căldură.","Scoate planta cu rădăcini și îmbunătățește drenajul și rotația."],
+    white_rot:["Putregai alb","Îngălbenire și pâslă albă la bază.","Elimină planta și solul lipit; nu replanta Allium în același loc."],
+    rust:["Rugină","Pustule portocalii sau brune sub frunze.","Elimină frunzele afectate, aerisește și limitează azotul."],
+    cercospora:["Cercosporioză","Pete mici cu centru deschis și margine închisă.","Elimină resturile, nu uda frunzișul și mărește distanța."],
+    sclerotinia:["Sclerotinia","Putregai apos la colet și mucegai alb vată.","Elimină complet planta și redu umiditatea și densitatea."],
+    damping:["Căderea plăntuțelor","Plăntuțe căzute cu colet subțire și închis.","Folosește substrat curat, seamănă rar și nu îmbiba solul."],
+    anthracnose:["Antracnoză","Leziuni întunecate și adâncite pe frunze sau păstăi.","Îndepărtează părțile bolnave, folosește sămânță sănătoasă și rotește."],
+    root_rot:["Putregai radicular","Ofilire în sol umed și rădăcini brune, moi.","Redu udarea, îmbunătățește drenajul și elimină plantele grav afectate."],
+    basil_downy:["Mana busuiocului","Îngălbenire între nervuri și puf închis sub frunze.","Elimină plantele bolnave, udă la bază și aerisește."],
+    fusarium:["Fuzarioză","Îngălbenire, ofilire și vase interne brune.","Elimină planta, schimbă substratul și folosește soiuri rezistente."]
+  };
+  return translated;
+}
+
+function configDiseasesForPlant(p) {
+  const catalog = configDiseaseCatalog();
+  return CONFIG_DISEASE_GROUPS[configDiseaseGroup(p.id)].map(key => catalog[key]).filter(Boolean);
+}
+
+function renderConfigDiseases(p) {
+  const diseases = configDiseasesForPlant(p);
+  return `<section class="detail-diseases">
+    <div class="detail-diseases-head"><div><h3>${detailText("detail.diseases_title")}</h3><p>${detailText("detail.diseases_subtitle")}</p></div><span class="detail-diseases-count">${detailText("detail.diseases_count", { count: diseases.length })}</span></div>
+    <div class="detail-disease-list">${diseases.map((d) => `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${d[0]}</span><span class="detail-disease-toggle">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.disease_symptoms")}</b><p>${d[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.disease_action")}</b><p>${d[2]}</p></div></div></details>`).join("")}</div>
+    <p class="detail-treatment-note">${detailText("detail.treatment_note")}</p>
+  </section>`;
+}
+
+const CONFIG_PEST_GROUPS = {
+  solanaceae: ["aphids","whiteflies","mites"], cucurbits: ["aphids","whiteflies","mites"],
+  brassicas: ["flea","caterpillars","aphids"], alliums: ["thrips","onion_fly","leafminers"],
+  apiaceae: ["carrot_fly","aphids","leafminers"], leafy: ["flea","slugs","aphids"],
+  chenopods: ["leafminers","aphids","flea"], legumes: ["aphids","weevils","mites"],
+  herbs: ["aphids","whiteflies","mites"], basil: ["aphids","thrips","slugs"],
+  strawberry: ["mites","aphids","slugs"], other: ["aphids","slugs","thrips"]
+};
+
+function configPestCatalog() {
+  if (state.lang === "ro") return {
+    aphids:["Afide","Colonii pe lăstari, frunze răsucite și secreții lipicioase.","Spală focarele mici, taie vârfurile foarte atacate și folosește săpun moale autorizat dacă persistă."],
+    whiteflies:["Musculița albă","Insecte albe care zboară la atingere și frunze lipicioase, galbene.","Folosește capcane galbene, aspiră adulții dimineața și elimină frunzele grav infestate."],
+    mites:["Acarianul roșu","Puncte galbene și pânze fine sub frunze, mai ales cu aer cald și uscat.","Spală dosul frunzelor, elimină focarele și introdu acarieni prădători dacă sunt disponibili."],
+    flea:["Purici de pământ (altice)","Gândăcei mici, adesea negri, care sar și fac multe găuri rotunde.","Folosește plasă fină pe plantele tinere, elimină buruienile crucifere și menține solul uniform umed."],
+    caterpillars:["Omizi","Găuri neregulate, margini roase și excremente întunecate.","Îndepărtează manual, folosește plasă și doar la atac confirmat Bacillus thuringiensis autorizat."],
+    thrips:["Trips","Dungi argintii, puncte negre și frunze deformate.","Folosește capcane albastre, elimină părțile atacate și evită aerul prea uscat."],
+    onion_fly:["Musca cepei","Îngălbenire și larve albe în bulb sau la bază.","Scoate plantele atacate, folosește plasă fină și rotește culturile de Allium."],
+    leafminers:["Minatori foliari","Galerii deschise și șerpuitoare în frunză.","Elimină frunzele cu galerii înainte de ieșirea larvei și folosește plasă fină."],
+    carrot_fly:["Musca morcovului","Frunziș roșiatic și galerii ruginii în rădăcini.","Protejează cu plasă fină, îndepărtează resturile după rărire și rotește cultura."],
+    slugs:["Limacși și melci","Găuri mari neregulate și urme lucioase de mucus.","Culege seara, elimină ascunzătorile și folosește doar momeli autorizate cu fosfat feric."],
+    weevils:["Gărgărițe","Margini ciupite și semințe sau păstăi perforate.","Îndepărtează adulții și semințele infestate, curăță resturile și rotește cultura."]
+  };
+  return {
+    aphids:["Afidi","Colonie su germogli, foglie arricciate e melata appiccicosa.","Lava i piccoli focolai, taglia gli apici molto colpiti e usa sapone molle autorizzato se persistono."],
+    whiteflies:["Mosca bianca","Insetti bianchi che volano al tocco e foglie appiccicose e gialle.","Usa trappole gialle, aspira gli adulti al mattino e rimuovi le foglie molto infestate."],
+    mites:["Ragnetto rosso","Puntinatura gialla e ragnatele sottili sotto le foglie, soprattutto con caldo secco.","Lava la pagina inferiore, elimina i focolai e introduci acari predatori se disponibili."],
+    flea:["Altiche","Piccoli coleotteri spesso neri che saltano e producono molti forellini rotondi.","Usa rete fine sulle piante giovani, elimina le infestanti crucifere e mantieni il suolo uniformemente umido."],
+    caterpillars:["Bruchi e cavolaie","Fori irregolari, margini rosicchiati ed escrementi scuri.","Rimuovi a mano, usa rete e solo con attacco confermato Bacillus thuringiensis autorizzato."],
+    thrips:["Tripidi","Striature argentate, puntini neri e foglie deformate.","Usa trappole blu, elimina le parti colpite ed evita aria eccessivamente secca."],
+    onion_fly:["Mosca della cipolla","Ingiallimento e larve bianche nel bulbo o alla base.","Rimuovi le piante attaccate, usa rete fine e ruota le colture di alli."],
+    leafminers:["Minatori fogliari","Gallerie chiare e sinuose scavate nella foglia.","Elimina le foglie minate prima che la larva esca e usa rete fine."],
+    carrot_fly:["Mosca della carota","Foglie rossastre e gallerie color ruggine nelle radici.","Proteggi con rete fine, rimuovi i residui del diradamento e ruota la coltura."],
+    slugs:["Limacce e chiocciole","Grandi fori irregolari e tracce lucide di bava.","Raccogli la sera, elimina i rifugi e usa solo esche autorizzate al fosfato ferrico."],
+    weevils:["Tonchi e oziorrinchi","Margini intaccati e semi o baccelli perforati.","Rimuovi adulti e semi infestati, pulisci i residui e ruota la coltura."]
+  };
+}
+
+function configPestProducts() {
+  if (state.lang === "ro") return {
+    aphids:"Săpun potasic sau ulei de neem pe colonii și sub frunze; pentru atac puternic, piretrine naturale.",
+    whiteflies:"Ulei de neem ori horticol pe ouă și nimfe, săpun potasic pe stadiile mobile; Beauveria bassiana la umiditate adecvată.",
+    mites:"Ulei de neem sau horticol sub frunze, apoi acaricid specific; biologic, Phytoseiulus persimilis.",
+    flea:"Ulei de neem/azadiractină ca repelent și inhibitor al hrănirii; spinosad ori piretrine contra adulților. Aplică devreme și seara.",
+    caterpillars:"Bacillus thuringiensis var. kurstaki pe omizi mici; spinosad pe larve mai dificile, evitând florile cu albine.",
+    thrips:"Spinosad în zonele ascunse; alternativ ulei de neem/azadiractină sau săpun potasic.",
+    onion_fly:"Steinernema feltiae în sol umed contra larvelor; spinosad numai dacă eticheta include cultura și musca țintă.",
+    leafminers:"Spinosad pe larve tinere; azadiractină/ulei de neem la începutul galeriilor.",
+    carrot_fly:"Steinernema feltiae în sol contra larvelor; piretrine pe adulți numai unde eticheta include morcovul.",
+    slugs:"Momeli granulare cu fosfat feric, împrăștiate uniform și reînnoite după ploaie sau udare.",
+    weevils:"Ulei de neem/azadiractină ori piretrine pe adulți; Steinernema kraussei sau Heterorhabditis bacteriophora în sol."
+  };
+  return {
+    aphids:"Sapone molle potassico o olio di neem sulle colonie e sotto le foglie; per attacchi forti, piretrine naturali.",
+    whiteflies:"Olio di neem o olio orticolo su uova e neanidi, sapone molle sugli stadi mobili; Beauveria bassiana con umidità adeguata.",
+    mites:"Olio di neem o olio orticolo sotto le foglie, poi acaricida specifico se necessario; nel biologico Phytoseiulus persimilis.",
+    flea:"Olio di neem/azadiractina sulle foglie giovani come repellente e antialimentare; spinosad o piretrine contro gli adulti. Tratta presto e la sera.",
+    caterpillars:"Bacillus thuringiensis var. kurstaki sui bruchi piccoli; spinosad sulle larve più difficili, evitando i fiori visitati dalle api.",
+    thrips:"Spinosad nei punti nascosti; in alternativa olio di neem/azadiractina o sapone molle con copertura accurata.",
+    onion_fly:"Nematodi Steinernema feltiae nel terreno umido contro le larve; spinosad solo se previsto per allio e mosca bersaglio.",
+    leafminers:"Spinosad sulle larve giovani; azadiractina/olio di neem all'inizio delle mine per ridurre alimentazione e sviluppo.",
+    carrot_fly:"Nematodi Steinernema feltiae nel suolo contro le larve; piretrine sugli adulti solo dove previste per la carota.",
+    slugs:"Esche granulari al fosfato ferrico, sparse uniformemente e rinnovate dopo pioggia o irrigazione secondo etichetta.",
+    weevils:"Olio di neem/azadiractina o piretrine sugli adulti; Steinernema kraussei o Heterorhabditis bacteriophora contro le larve nel terreno."
+  };
+}
+
+function configTargetedPestProducts(p) {
+  const ro = state.lang === "ro";
+  const group = configDiseaseGroup(p.id);
+  const plans = ro ? {
+    solanaceae:{aphids:"Săpun potasic pe colonii; flonicamid la atac puternic.",whiteflies:"Beauveria bassiana pe nimfe; pyriproxyfen pentru întreruperea ciclului.",mites:"Abamectin pe forme mobile, hexythiazox pe ouă sau Phytoseiulus persimilis."},
+    cucurbits:{aphids:"Flonicamid pentru oprirea hrănirii; săpun potasic pe focare mici.",whiteflies:"Beauveria bassiana și săpun potasic pe nimfele expuse.",mites:"Hexythiazox pe ouă, abamectin pe forme mobile sau Phytoseiulus persimilis."},
+    brassicas:{flea:"Spinosad ori piretrine pe adulți activi, aplicate devreme pe plante tinere.",caterpillars:"Bacillus thuringiensis kurstaki pe omizi mici; spinosad pe larve mai mari.",aphids:"Flonicamid în rozete; săpun potasic pe coloniile expuse."},
+    alliums:{thrips:"Spinosad în teaca frunzelor; Beauveria bassiana la umiditate adecvată.",onion_fly:"Steinernema feltiae în sol umed contra larvelor.",leafminers:"Spinosad la primele galerii; cyromazine pe larve tinere."},
+    apiaceae:{carrot_fly:"Steinernema feltiae în sol contra larvelor; piretrine pe adulți în zbor.",aphids:"Săpun potasic; flonicamid dacă frunzele sunt răsucite.",leafminers:"Spinosad la începutul galeriilor."},
+    leafy:{flea:"Piretrine pe adulți; spinosad dacă paguba continuă.",slugs:"Fosfat feric granular pe sol.",aphids:"Săpun potasic; piretrine numai pentru colonii persistente."},
+    chenopods:{leafminers:"Spinosad la primele galerii.",aphids:"Săpun potasic; flonicamid dacă frunzele se deformează.",flea:"Piretrine pe adulți; spinosad pe atac persistent."},
+    legumes:{aphids:"Flonicamid pe vârfuri și flori; săpun potasic pe focare mici.",weevils:"Piretrine pe adulți; Heterorhabditis bacteriophora în sol.",mites:"Abamectin sau Phytoseiulus persimilis."},
+    herbs:{aphids:"Săpun potasic; piretrine numai la atac puternic.",whiteflies:"Beauveria bassiana și săpun potasic pe nimfe.",mites:"Phytoseiulus persimilis sau ulei horticol ușor sub frunze."},
+    basil:{aphids:"Săpun potasic pe vârfuri, apoi clătire înainte de consum.",thrips:"Spinosad sau Beauveria bassiana în vârfurile tinere.",slugs:"Fosfat feric pe sol, fără contact cu frunzele."},
+    strawberry:{mites:"Phytoseiulus persimilis; bifenazate dacă populația crește.",aphids:"Săpun potasic înainte de înflorire; flonicamid la atac persistent.",slugs:"Fosfat feric între plante, fără contact cu fructele."},
+    other:{aphids:"Săpun potasic; flonicamid la atac persistent.",slugs:"Fosfat feric granular pe sol.",thrips:"Spinosad sau Beauveria bassiana."}
+  } : {
+    solanaceae:{aphids:"Sapone molle sulle colonie; flonicamid con attacco forte.",whiteflies:"Beauveria bassiana sulle neanidi; pyriproxyfen per interrompere il ciclo.",mites:"Abamectina sulle forme mobili, hexythiazox sulle uova o Phytoseiulus persimilis."},
+    cucurbits:{aphids:"Flonicamid per bloccare l'alimentazione; sapone molle sui piccoli focolai.",whiteflies:"Beauveria bassiana e sapone molle sulle neanidi esposte.",mites:"Hexythiazox sulle uova, abamectina sulle forme mobili o Phytoseiulus persimilis."},
+    brassicas:{flea:"Spinosad o piretrine sugli adulti attivi, applicati presto sulle piante giovani.",caterpillars:"Bacillus thuringiensis kurstaki sui bruchi piccoli; spinosad sulle larve grandi.",aphids:"Flonicamid nelle rosette; sapone molle sulle colonie esposte."},
+    alliums:{thrips:"Spinosad nella guaina fogliare; Beauveria bassiana con umidità adeguata.",onion_fly:"Steinernema feltiae nel terreno umido contro le larve.",leafminers:"Spinosad alle prime mine; cyromazine sulle larve giovani."},
+    apiaceae:{carrot_fly:"Steinernema feltiae nel terreno contro le larve; piretrine sugli adulti in volo.",aphids:"Sapone molle; flonicamid se le foglie sono arricciate.",leafminers:"Spinosad all'inizio delle gallerie."},
+    leafy:{flea:"Piretrine sugli adulti; spinosad se il danno continua.",slugs:"Fosfato ferrico granulare sul terreno.",aphids:"Sapone molle; piretrine solo per colonie persistenti."},
+    chenopods:{leafminers:"Spinosad alle prime gallerie.",aphids:"Sapone molle; flonicamid se le foglie si deformano.",flea:"Piretrine sugli adulti; spinosad su attacco persistente."},
+    legumes:{aphids:"Flonicamid su apici e fiori; sapone molle sui piccoli focolai.",weevils:"Piretrine sugli adulti; Heterorhabditis bacteriophora nel terreno.",mites:"Abamectina o Phytoseiulus persimilis."},
+    herbs:{aphids:"Sapone molle; piretrine solo con attacco forte.",whiteflies:"Beauveria bassiana e sapone molle sulle neanidi.",mites:"Phytoseiulus persimilis o olio orticolo leggero sotto le foglie."},
+    basil:{aphids:"Sapone molle sui germogli, poi risciacquo prima del consumo.",thrips:"Spinosad o Beauveria bassiana nei germogli giovani.",slugs:"Fosfato ferrico sul terreno, senza contatto con le foglie."},
+    strawberry:{mites:"Phytoseiulus persimilis; bifenazate se la popolazione cresce.",aphids:"Sapone molle prima della fioritura; flonicamid su attacco persistente.",slugs:"Fosfato ferrico tra le piante, senza contatto con i frutti."},
+    other:{aphids:"Sapone molle; flonicamid su attacco persistente.",slugs:"Fosfato ferrico granulare sul terreno.",thrips:"Spinosad o Beauveria bassiana."}
+  };
+  const overrides = {
+    rucola:{flea:ro?"Pentru rucola: ulei de neem/azadiractină ca repelent și spinosad dacă găurile continuă pe frunzele noi.":"Per la rucola: olio di neem/azadiractina come repellente e spinosad se i fori continuano sulle foglie nuove."},
+    pomodoro:{whiteflies:ro?"Pentru tomate: Beauveria bassiana pe nimfe, Encarsia formosa pentru control continuu și pyriproxyfen dacă ciclul persistă.":"Per il pomodoro: Beauveria bassiana sulle neanidi, Encarsia formosa per il controllo continuo e pyriproxyfen se il ciclo persiste."},
+    basilico:{thrips:ro?"Pentru busuioc: Beauveria bassiana sau spinosad în vârfuri; evită uleiurile aproape de recoltare.":"Per il basilico: Beauveria bassiana o spinosad nei germogli; evita oli vicino alla raccolta."},
+    fragola:{mites:ro?"Pentru căpșun: Phytoseiulus persimilis la debut; bifenazate dacă apar pânze.":"Per la fragola: Phytoseiulus persimilis all'inizio; bifenazate se compaiono ragnatele."}
+  };
+  return {...(plans.other||{}),...(plans[group]||{}),...(overrides[p.id]||{})};
+}
+
+function renderConfigPests(p) {
+  const catalog = configPestCatalog();
+  const products = configTargetedPestProducts(p);
+  const keys = CONFIG_PEST_GROUPS[configDiseaseGroup(p.id)] || CONFIG_PEST_GROUPS.other;
+  const pests = keys.map(key => catalog[key]).filter(Boolean);
+  return `<section class="detail-diseases detail-pests"><div class="detail-diseases-head"><div><h3>${detailText("detail.pests_title")}</h3><p>${detailText("detail.pests_subtitle")}</p></div><span class="detail-diseases-count">${detailText("detail.pests_count", { count: pests.length })}</span></div><div class="detail-disease-list">${pests.map((item,index)=>{const key=keys[index];return `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${item[0]}</span><span class="detail-disease-toggle">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.pest_signs")}</b><p>${item[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.pest_action")}</b><p>${item[2]}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${detailText("detail.pest_products")} · ${plantText(p, "nome")}</b><p>${products[key]}</p></div></div></details>`}).join("")}</div><p class="detail-treatment-note">${detailText("detail.pest_note")}</p></section>`;
+}
+
 function openPlantDetailPanel() {
   const panel = document.getElementById("panelPlantDetail");
   const settings = document.getElementById("panelSettings");
@@ -3482,6 +3785,7 @@ function renderPlantDetailPanel() {
   const soleLabel = p.sole === "pieno" ? tx("fullSun") : tx("halfShade");
   const acquaIcon = p.acqua === "alta" ? "💧💧💧" : p.acqua === "media" ? "💧💧" : "💧";
   const svgSpacing = spacingInfographicSvg(p);
+  const profile = configDetailProfile(p, sow);
 
   container.innerHTML = `
     <div class="pdp-hero-wrap">
@@ -3499,101 +3803,55 @@ function renderPlantDetailPanel() {
       </div>
     </div>
     <div class="detail-body pdp-detail-body">
-      <div class="detail-badges">
-        <span class="badge badge--sun">${soleIcon} ${soleLabel}</span>
-        <span class="badge badge--water">${acquaIcon} ${waterLabel(p.acqua)}</span>
-        ${tipoLabel ? `<span class="badge badge--type" style="background:rgba(45,106,79,.1);color:#1b4332">${tipoLabel}</span>` : ""}
+      <div class="detail-tabs-shell">
+      <div class="detail-tabs-heading"><strong>${detailText("detail.tabs_title")}</strong><span>${detailText("detail.tabs_hint")}</span></div>
+      <div class="detail-tabs" role="tablist" aria-label="${detailText("detail.tabs_title")}">
+        ${CONFIG_DETAIL_TABS.map((tab, index) => {
+          return `<button class="detail-tab${index === 0 ? " active" : ""}" type="button" role="tab" aria-selected="${index === 0}" data-detail-tab="${tab}" onclick="setConfigDetailTab('${tab}')" onkeydown="handleConfigDetailTabKey(event)">${configDetailTabIcon(tab)}<span>${detailText(`detail.tab_${tab}`)}</span></button>`;
+        }).join("")}
       </div>
-      ${desc ? `<div class="detail-nota">${desc}</div>` : nota ? `<div class="detail-nota">${nota}</div>` : ""}
-      <div class="detail-spacing">
-        <div class="detail-spacing-header">
-          <span class="detail-tile-label">${tx("distance")}</span>
-          <b class="detail-spacing-val">${spacingValue(p)}</b>
-        </div>
-        ${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}
       </div>
-      <div class="detail-stats">
-        <div class="detail-tile detail-tile--harvest">
-          <div class="detail-tile-icon">⏱</div>
-          <div class="detail-tile-label">${tx("harvest")}</div>
-          <div class="detail-tile-value">${harvestValue(p)}</div>
-          ${p.gg ? `<div class="detail-tile-sub">${tx("detailHarvestSub")}</div>` : ""}
-        </div>
-        <div class="detail-tile detail-tile--yield">
-          <div class="detail-tile-icon">⚖</div>
-          <div class="detail-tile-label">${tx("yieldPlant")}</div>
-          <div class="detail-tile-value">${yieldLabel(p.resa)}</div>
-          <div class="detail-tile-sub">${tx("detailYieldSub")}</div>
-        </div>
-        <div class="detail-tile detail-tile--height">
-          <div class="detail-tile-icon">↕</div>
-          <div class="detail-tile-label">${tx("height")}</div>
-          <div class="detail-tile-value">${heightLabel(p.h || "media")}</div>
-        </div>
-        <div class="detail-tile" style="border-top:3px solid #b7e4c7">
-          <div class="detail-tile-icon">💧</div>
-          <div class="detail-tile-label">${tx("water")}</div>
-          <div class="detail-tile-value">${waterLabel(p.acqua)}</div>
+
+      <div class="detail-tab-panel active" data-detail-panel="overview">
+        <div class="detail-badges"><span class="badge badge--sun">${soleIcon} ${soleLabel}</span><span class="badge badge--water">${acquaIcon} ${waterLabel(p.acqua)}</span>${tipoLabel ? `<span class="badge badge--type">${tipoLabel}</span>` : ""}</div>
+        ${desc ? `<div class="detail-nota">${desc}</div>` : nota ? `<div class="detail-nota">${nota}</div>` : ""}
+        <div class="detail-stats">
+          <div class="detail-tile detail-tile--harvest"><div class="detail-tile-icon">⏱</div><div class="detail-tile-label">${tx("harvest")}</div><div class="detail-tile-value">${harvestValue(p)}</div></div>
+          <div class="detail-tile detail-tile--yield"><div class="detail-tile-icon">⚖</div><div class="detail-tile-label">${tx("yieldPlant")}</div><div class="detail-tile-value">${yieldLabel(p.resa)}</div></div>
+          <div class="detail-tile detail-tile--height"><div class="detail-tile-icon">↕</div><div class="detail-tile-label">${tx("height")}</div><div class="detail-tile-value">${heightLabel(p.h || "media")}</div></div>
+          <div class="detail-tile"><div class="detail-tile-icon">💧</div><div class="detail-tile-label">${tx("water")}</div><div class="detail-tile-value">${waterLabel(p.acqua)}</div></div>
+          <div class="detail-tile detail-tile--quantity"><div class="detail-tile-label">${detailText("detail.quantity_bed")}</div><div class="detail-tile-value">${detailText("detail.plants_count", { count: b.count })}</div></div>
         </div>
       </div>
-      ${(months || allMonths.length) ? `
-      <div class="month-bar">
-        <div class="month-bar-head">
-          <span>${monthLegend.title}</span>
-          <b>${activeMonthsLabel}</b>
-        </div>
-        <div class="month-segments" aria-label="${monthLegend.title}">
-          ${Array.from({ length: 12 }, (_, i) => {
-            const on = effectiveMonths(p).has(i + 1);
-            const cur = i + 1 === state.mese;
-            const title = `${monthName(i + 1)} · ${on ? monthLegend.available : monthLegend.outside}${cur ? ` · ${monthLegend.selected}` : ""}`;
-            return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${title}" aria-label="${title}">
-              <span class="month-seg-abbr">${monthName(i + 1).slice(0, 3)}</span>
-            </div>`;
-          }).join("")}
-        </div>
-        <div class="month-bar-legend" aria-hidden="true">
-          <span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span>
-          <span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span>
-        </div>
-      </div>` : ""}
-      ${(amiche.length || nemiche.length) ? `
-      <div class="detail-companions">
-        ${amiche.length ? `
-        <div class="detail-companions-group">
-          <div class="detail-companions-label">💚 ${tx("friends")}</div>
-          <div class="companion-list">${amiche.map(n => `<span class="companion-chip friend">${n}</span>`).join("")}</div>
-        </div>` : ""}
-        ${nemiche.length ? `
-        <div class="detail-companions-group">
-          <div class="detail-companions-label detail-companions-label--foe">⚠️ ${tx("enemies")}</div>
-          <div class="companion-list">${nemiche.map(n => `<span class="companion-chip foe">${n}</span>`).join("")}</div>
-        </div>` : ""}
-      </div>` : ""}
-      ${sow ? `
-      <details class="detail-sow">
-        <summary class="detail-sow-header">
-          <span>${tx("howToSow")}</span>
-          <span class="detail-sow-icon">+</span>
-        </summary>
-        <div class="detail-sow-body">
-          ${sow.method ? `<div class="detail-sow-row"><b>🌱 ${tx("sowMethod")}</b> — ${sow.method}</div>` : ""}
-          ${sow.depth ? `<div class="detail-sow-row"><b>📏 ${tx("sowDepth")}</b> — ${sow.depth}</div>` : ""}
-          ${sow.thin ? `<div class="detail-sow-row"><b>📐 ${tx("sowThin")}</b> — ${sow.thin}</div>` : ""}
-          ${(sow.tip || nota) ? `<blockquote class="detail-sow-tip">💡&nbsp;${sow.tip || nota}</blockquote>` : ""}
-        </div>
-      </details>` : nota ? `
-      <details class="detail-sow">
-        <summary class="detail-sow-header">
-          <span>${tx("howToSow")}</span>
-          <span class="detail-sow-icon">+</span>
-        </summary>
-        <div class="detail-sow-body">
-          <blockquote class="detail-sow-tip">💡&nbsp;${nota}</blockquote>
-        </div>
-      </details>` : ""}
+
+      <div class="detail-tab-panel" data-detail-panel="cultivation" hidden>
+        <div class="detail-section-heading"><span>${detailText("detail.cultivation_title")}</span><small>${detailText("detail.cultivation_subtitle")}</small></div>
+        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? `<div class="detail-sow-row"><b>${tx("sowMethod")}</b> — ${sow.method}</div>` : ""}${sow.periodo ? `<div class="detail-sow-row"><b>${detailText("detail.sow_period")}</b> — ${sow.periodo}</div>` : ""}${sow.depth ? `<div class="detail-sow-row"><b>${tx("sowDepth")}</b> — ${sow.depth}</div>` : ""}${sow.thin ? `<div class="detail-sow-row"><b>${tx("sowThin")}</b> — ${sow.thin}</div>` : ""}${sow.tip ? `<blockquote class="detail-sow-tip">${sow.tip}</blockquote>` : ""}</div></div>` : ""}
+        <div class="detail-spacing"><div class="detail-spacing-header"><span class="detail-tile-label">${tx("distance")}</span><b class="detail-spacing-val">${spacingValue(p)}</b></div>${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}</div>
+        <div class="detail-tech-grid">${renderConfigTechCards(profile.cultivation)}</div>
+      </div>
+
+      <div class="detail-tab-panel" data-detail-panel="calendar" hidden>
+        <div class="detail-section-heading"><span>${detailText("detail.calendar_title")}</span><small>${detailText("detail.calendar_subtitle")}</small></div>
+        <div class="month-bar"><div class="month-bar-head"><span>${monthLegend.title}</span><b>${activeMonthsLabel}</b></div><div class="month-segments" aria-label="${monthLegend.title}">${Array.from({ length: 12 }, (_, i) => { const on = effectiveMonths(p).has(i + 1); const cur = i + 1 === state.mese; return `<div class="month-seg${on ? " active" : ""}${cur ? " current" : ""}"><span class="month-seg-abbr">${monthName(i + 1).slice(0, 3)}</span></div>`; }).join("")}</div><div class="month-bar-legend"><span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span><span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span></div></div>
+      </div>
+
+      <div class="detail-tab-panel" data-detail-panel="care" hidden>
+        <div class="detail-section-heading"><span>${detailText("detail.care_title")}</span><small>${detailText("detail.care_subtitle")}</small></div>
+        <div class="detail-tech-grid">${renderConfigTechCards(profile.care)}</div>
+        ${renderConfigDiseases(p)}
+        ${renderConfigPests(p)}
+        ${(amiche.length || nemiche.length) ? `<div class="detail-companions">${amiche.length ? `<div class="detail-companions-group"><div class="detail-companions-label">${tx("friends")}</div><div class="companion-list">${amiche.map(n => `<span class="companion-chip friend">${n}</span>`).join("")}</div></div>` : ""}${nemiche.length ? `<div class="detail-companions-group"><div class="detail-companions-label detail-companions-label--foe">${tx("enemies")}</div><div class="companion-list">${nemiche.map(n => `<span class="companion-chip foe">${n}</span>`).join("")}</div></div>` : ""}</div>` : ""}
+      </div>
+
+      <div class="detail-tab-panel" data-detail-panel="harvest" hidden>
+        <div class="detail-section-heading"><span>${detailText("detail.harvest_title")}</span><small>${detailText("detail.harvest_subtitle")}</small></div>
+        <div class="detail-tech-grid">${renderConfigTechCards(profile.harvest)}</div>
+        <div class="detail-nota">${state.lang === "ro" ? `${b.count} plante în strat · producție totală estimată ${yieldLabel(resaTot)}` : `${b.count} piante nell'aiuola · resa totale stimata ${yieldLabel(resaTot)}`}</div>
+      </div>
     </div>
   `;
+  setConfigDetailTab("overview");
 }
 
 function renderWarnings(L) {

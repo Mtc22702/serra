@@ -152,22 +152,22 @@
         <div class="hero-controls" aria-label="Filtri clima">
           <div class="hero-controls-pill">
             <div class="hero-ctrl-block">
-              <span class="hero-controls-hint" data-i18n="hero.controls_hint">Seleziona la tua zona climatica per vedere i semi giusti per te</span>
+              <span class="hero-controls-hint" data-i18n="hero.controls_hint">Com'è il clima fuori dalla tua serra?</span>
               <div class="hero-zone-options">
                 <button class="hero-zone-btn" data-zone="freddo" onclick="setZone('freddo')">
                   <span class="hero-zone-icon" aria-hidden="true">❄️</span>
                   <span class="hero-zone-text" data-i18n="hero.zone_cold_label">Fredda</span>
-                  <small data-i18n="hero.zone_cold_hint">stagione corta</small>
+                  <small data-i18n="hero.zone_cold_hint">inverni rigidi</small>
                 </button>
                 <button class="hero-zone-btn active" data-zone="temperato" onclick="setZone('temperato')">
                   <span class="hero-zone-icon" aria-hidden="true">🌤️</span>
                   <span class="hero-zone-text" data-i18n="hero.zone_temp_label">Temperata</span>
-                  <small data-i18n="hero.zone_temp_hint">equilibrata</small>
+                  <small data-i18n="hero.zone_temp_hint">gelate occasionali</small>
                 </button>
                 <button class="hero-zone-btn" data-zone="caldo" onclick="setZone('caldo')">
                   <span class="hero-zone-icon" aria-hidden="true">☀️</span>
                   <span class="hero-zone-text" data-i18n="hero.zone_warm_label">Calda</span>
-                  <small data-i18n="hero.zone_warm_hint">stagione lunga</small>
+                  <small data-i18n="hero.zone_warm_hint">inverni miti</small>
                 </button>
               </div>
             </div>
@@ -179,7 +179,7 @@
               </button>
             </div>
           </div>
-          <span class="hero-filter-note" id="heroFilterNote"></span>
+          <span class="hero-filter-note" id="heroFilterNote" aria-live="polite"></span>
         </div>
 
         <!-- Accesso al configuratore: percorsi guidati e anteprima. -->
@@ -658,7 +658,7 @@
 
     <!-- Dettaglio pianta: pannello dinamico aperto dal catalogo. -->
     <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
-      <div class="detail-panel" id="detailPanel">
+      <div class="detail-panel" id="detailPanel" role="dialog" aria-modal="true" aria-labelledby="detailName">
         <button
           class="detail-close"
           type="button"
@@ -677,19 +677,62 @@
           <div class="detail-photo-name" id="detailName"></div>
         </div>
         <div class="detail-body">
-          <div class="detail-badges" id="detailBadges"></div>
-          <div class="detail-nota" id="detailNota" hidden></div>
-          <div class="detail-spacing" id="detailSpacing"></div>
-          <div class="detail-stats" id="detailStats"></div>
-          <div class="month-bar" id="detailMonthBar"></div>
-          <div class="detail-companions" id="detailCompanions"></div>
-          <details class="detail-sow" id="detailSow">
-            <summary class="detail-sow-header">
-              <span data-i18n="detail.how_to_sow">Come si semina</span>
-              <span class="detail-sow-icon" aria-hidden="true">+</span>
-            </summary>
-            <div class="detail-sow-body" id="detailSowBody"></div>
-          </details>
+          <div class="detail-tabs-shell">
+          <div class="detail-tabs-heading"><strong data-i18n="detail.tabs_title">Sezioni della scheda</strong><span data-i18n="detail.tabs_hint">Seleziona una voce per cambiare contenuto</span></div>
+          <div class="detail-tabs" role="tablist" aria-label="Sezioni della scheda tecnica">
+            <button class="detail-tab active" type="button" role="tab" aria-selected="true" aria-controls="detailTabOverview" data-detail-tab="overview" onclick="setDetailTab('overview')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span><span data-i18n="detail.tab_overview">Panoramica</span></button>
+            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabCultivation" data-detail-tab="cultivation" onclick="setDetailTab('cultivation')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span><span data-i18n="detail.tab_cultivation">Coltivazione</span></button>
+            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabCalendar" data-detail-tab="calendar" onclick="setDetailTab('calendar')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/></svg></span><span data-i18n="detail.tab_calendar">Calendario</span></button>
+            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabCare" data-detail-tab="care" onclick="setDetailTab('care')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"/></svg></span><span data-i18n="detail.tab_care">Cure</span></button>
+            <button class="detail-tab" type="button" role="tab" aria-selected="false" aria-controls="detailTabHarvest" data-detail-tab="harvest" onclick="setDetailTab('harvest')" onkeydown="handleDetailTabKey(event)"><span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"/></svg></span><span data-i18n="detail.tab_harvest">Raccolta</span></button>
+          </div>
+          </div>
+
+          <div class="detail-tab-panel active" id="detailTabOverview" role="tabpanel" data-detail-panel="overview">
+            <div class="detail-badges" id="detailBadges"></div>
+            <div class="detail-nota" id="detailNota" hidden></div>
+            <div class="detail-stats" id="detailStats"></div>
+          </div>
+
+          <div class="detail-tab-panel" id="detailTabCultivation" role="tabpanel" data-detail-panel="cultivation" hidden>
+            <div class="detail-section-heading"><span data-i18n="detail.cultivation_title">Guida alla coltivazione</span><small data-i18n="detail.cultivation_subtitle">Dalla semina alla pianta adulta</small></div>
+            <div class="detail-sow" id="detailSow"><div class="detail-sow-body" id="detailSowBody"></div></div>
+            <div class="detail-spacing" id="detailSpacing"></div>
+            <div class="detail-tech-grid" id="detailCultivationExtra"></div>
+          </div>
+
+          <div class="detail-tab-panel" id="detailTabCalendar" role="tabpanel" data-detail-panel="calendar" hidden>
+            <div class="detail-section-heading"><span data-i18n="detail.calendar_title">Calendario stagionale</span><small data-i18n="detail.calendar_subtitle">Adattato a zona climatica e riscaldamento</small></div>
+            <div class="month-bar" id="detailMonthBar"></div>
+          </div>
+
+          <div class="detail-tab-panel" id="detailTabCare" role="tabpanel" data-detail-panel="care" hidden>
+            <div class="detail-section-heading"><span data-i18n="detail.care_title">Cure e problemi comuni</span><small data-i18n="detail.care_subtitle">Prevenzione, manutenzione e consociazioni</small></div>
+            <div class="detail-tech-grid" id="detailCareGuide"></div>
+            <section class="detail-diseases" aria-labelledby="detailDiseasesTitle">
+              <div class="detail-diseases-head">
+                <div>
+                  <h3 id="detailDiseasesTitle" data-i18n="detail.diseases_title">Malattie comuni</h3>
+                  <p data-i18n="detail.diseases_subtitle">Riconosci i sintomi e intervieni in modo mirato</p>
+                </div>
+                <span class="detail-diseases-count" id="detailDiseasesCount"></span>
+              </div>
+              <div class="detail-disease-list" id="detailDiseaseList"></div>
+              <p class="detail-treatment-note" data-i18n="detail.treatment_note">Prima di usare un prodotto fitosanitario, verifica che sia autorizzato per la coltura e segui sempre l'etichetta.</p>
+            </section>
+            <section class="detail-diseases detail-pests" aria-labelledby="detailPestsTitle">
+              <div class="detail-diseases-head"><div><h3 id="detailPestsTitle" data-i18n="detail.pests_title">Insetti e parassiti</h3><p data-i18n="detail.pests_subtitle">Riconosci il danno prima di scegliere l'intervento</p></div><span class="detail-diseases-count" id="detailPestsCount"></span></div>
+              <div class="detail-disease-list" id="detailPestList"></div>
+              <p class="detail-treatment-note" data-i18n="detail.pest_note">Controlla anche la pagina inferiore delle foglie. Se non riconosci il parassita, fotografa insetto e danno prima di trattare.</p>
+            </section>
+            <div class="detail-companions" id="detailCompanions"></div>
+          </div>
+
+          <div class="detail-tab-panel" id="detailTabHarvest" role="tabpanel" data-detail-panel="harvest" hidden>
+            <div class="detail-section-heading"><span data-i18n="detail.harvest_title">Raccolta e utilizzo</span><small data-i18n="detail.harvest_subtitle">Quando raccogliere e come conservare</small></div>
+            <div class="detail-tech-grid" id="detailHarvestGuide"></div>
+          </div>
+
           <button
             class="detail-add-btn"
             id="detailAddBtn"

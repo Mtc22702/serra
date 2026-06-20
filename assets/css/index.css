@@ -375,7 +375,7 @@ nav {
 .hero-zone-btn {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: auto auto;
   align-items: center;
   column-gap: 0.3rem;
   row-gap: 0;
@@ -414,7 +414,12 @@ nav {
   line-height: 1.2;
 }
 .hero-zone-btn small {
-  display: none;
+  display: block;
+  grid-column: 1 / -1;
+  font-size: 0.5rem;
+  line-height: 1.15;
+  opacity: 0.66;
+  white-space: nowrap;
 }
 .hero-heated-btn {
   display: inline-flex;
@@ -539,9 +544,15 @@ nav {
 .hero-filter-note {
   flex-basis: 100%;
   text-align: center;
-  font-size: 0.76rem;
-  color: var(--muted);
-  line-height: 1.35;
+  max-width: 720px;
+  padding: 0.48rem 0.75rem;
+  border: 1px solid rgba(27, 67, 50, 0.11);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.48);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--green-dk);
+  line-height: 1.4;
 }
 .hero-scroll-hint {
   position: absolute;
@@ -3408,7 +3419,7 @@ body.detail-open .back-to-top {
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 24px;
   width: 100%;
-  max-width: 610px;
+  max-width: 680px;
   max-height: 88dvh;
   overflow-y: auto;
   position: relative;
@@ -3548,6 +3559,330 @@ body.detail-open .back-to-top {
   flex-direction: column;
   gap: 0.9rem;
 }
+
+/* Navigazione della scheda tecnica. */
+.detail-tabs-shell {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  padding: 0.5rem;
+  border: 1px solid rgba(45, 106, 79, 0.18);
+  border-radius: 17px;
+  background: rgba(255, 253, 248, 0.96);
+  box-shadow: 0 10px 28px rgba(30, 67, 45, 0.13);
+  backdrop-filter: blur(14px);
+}
+.detail-tabs-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.05rem 0.32rem 0.42rem;
+}
+.detail-tabs-heading strong {
+  color: var(--green-dk);
+  font-size: 0.7rem;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+.detail-tabs-heading span {
+  color: var(--muted);
+  font-size: 0.63rem;
+  font-weight: 600;
+}
+.detail-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.28rem;
+  padding: 0.38rem;
+  border: 1px solid rgba(45, 106, 79, 0.12);
+  border-radius: 13px;
+  background: rgba(45, 106, 79, 0.045);
+}
+.detail-tab {
+  --tab-color: var(--green);
+  min-width: 0;
+  min-height: 47px;
+  padding: 0.42rem 0.28rem;
+  border: 1px solid rgba(45, 106, 79, 0.11);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #657568;
+  font: inherit;
+  font-size: 0.62rem;
+  font-weight: 750;
+  line-height: 1.15;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  transition: background 0.16s, color 0.16s, transform 0.16s;
+  position: relative;
+}
+.detail-tab[data-detail-tab="overview"] { --tab-color: #2d6a4f; }
+.detail-tab[data-detail-tab="cultivation"] { --tab-color: #6f943d; }
+.detail-tab[data-detail-tab="calendar"] { --tab-color: #3d73b9; }
+.detail-tab[data-detail-tab="care"] { --tab-color: #ad5870; }
+.detail-tab[data-detail-tab="harvest"] { --tab-color: #c9852f; }
+.detail-tab-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tab-color);
+  background: color-mix(in srgb, var(--tab-color) 14%, white);
+  transition: background 0.16s, color 0.16s, transform 0.16s;
+}
+.detail-tab-icon svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.detail-tab:hover {
+  background: #fff;
+  color: var(--green-dk);
+  border-color: color-mix(in srgb, var(--tab-color) 45%, white);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(45, 106, 79, 0.1);
+}
+.detail-tab.active {
+  color: #fff;
+  background: var(--tab-color);
+  border-color: var(--tab-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 13px rgba(45, 106, 79, 0.24);
+}
+.detail-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 14px;
+  height: 7px;
+  background: var(--tab-color);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform: translateX(-50%);
+}
+.detail-tab.active .detail-tab-icon {
+  color: var(--tab-color);
+  background: #fff;
+  transform: translateY(-1px);
+}
+.detail-tab:focus-visible {
+  outline: 3px solid rgba(176, 207, 91, 0.55);
+  outline-offset: 2px;
+}
+.detail-tab-panel {
+  display: none;
+  flex-direction: column;
+  gap: 0.9rem;
+  animation: detailTabIn 0.18s ease-out;
+}
+.detail-tab-panel.active {
+  display: flex;
+}
+@keyframes detailTabIn {
+  from { opacity: 0; transform: translateY(5px); }
+}
+.detail-section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.16rem;
+  padding: 0.08rem 0.12rem;
+}
+.detail-section-heading > span {
+  font-family: "Fraunces", serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--green-dk);
+}
+.detail-section-heading small {
+  font-size: 0.74rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+.detail-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+.detail-tech-card {
+  min-width: 0;
+  padding: 0.82rem 0.88rem;
+  border: 1px solid rgba(45, 106, 79, 0.13);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 16px rgba(45, 106, 79, 0.055);
+}
+.detail-tech-card--wide {
+  grid-column: 1 / -1;
+}
+.detail-tech-card h4 {
+  margin: 0 0 0.36rem;
+  color: var(--green-dk);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+.detail-tech-card p {
+  margin: 0;
+  color: #455a49;
+  font-size: 0.8rem;
+  line-height: 1.56;
+}
+
+/* Malattie: sintomi e interventi leggibili a colpo d'occhio. */
+.detail-diseases {
+  padding: 0.95rem;
+  border: 1px solid rgba(164, 82, 53, 0.16);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(255, 252, 247, 0.98), rgba(250, 244, 235, 0.9));
+  box-shadow: 0 7px 22px rgba(91, 58, 36, 0.06);
+}
+.detail-diseases-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.detail-diseases-head h3 {
+  margin: 0;
+  font-family: "Fraunces", serif;
+  font-size: 1.08rem;
+  color: #653c2d;
+}
+.detail-diseases-head p {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: #826c61;
+}
+.detail-diseases-count {
+  flex: 0 0 auto;
+  padding: 0.26rem 0.52rem;
+  border-radius: 999px;
+  background: rgba(164, 82, 53, 0.1);
+  color: #82452f;
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+.detail-disease-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.detail-disease-card {
+  overflow: hidden;
+  border: 1px solid rgba(145, 91, 61, 0.14);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.detail-disease-card summary {
+  display: flex;
+  align-items: center;
+  gap: 0.58rem;
+  min-height: 48px;
+  padding: 0.66rem 0.76rem;
+  list-style: none;
+  cursor: pointer;
+  color: #5d3b2d;
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition: background 0.16s, color 0.16s;
+}
+.detail-disease-card summary:hover { background: rgba(198, 123, 83, 0.07); }
+.detail-disease-card summary:focus-visible { outline: 3px solid rgba(198, 123, 83, 0.28); outline-offset: -3px; }
+.detail-disease-card summary::-webkit-details-marker { display: none; }
+.detail-disease-marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c67b53;
+  box-shadow: 0 0 0 4px rgba(198, 123, 83, 0.12);
+  flex: 0 0 auto;
+}
+.detail-disease-toggle {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: #7d5948;
+  background: rgba(198, 123, 83, 0.12);
+  border: 1px solid rgba(198, 123, 83, 0.2);
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 500;
+  box-shadow: 0 3px 9px rgba(100, 65, 45, 0.08);
+  transition: transform 0.16s, background 0.16s;
+}
+.detail-disease-card[open] .detail-disease-toggle { transform: rotate(45deg); }
+.detail-disease-card[open] summary { background: rgba(198, 123, 83, 0.08); }
+.detail-disease-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  padding: 0 0.72rem 0.72rem;
+}
+.detail-disease-info {
+  padding: 0.64rem 0.68rem;
+  border-radius: 10px;
+  background: #faf7f1;
+}
+.detail-disease-info--action {
+  background: #f1f8f2;
+}
+.detail-disease-info b {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: #715343;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.detail-disease-info--action b { color: #2d6a4f; }
+.detail-disease-info p {
+  margin: 0;
+  color: #554b45;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+.detail-treatment-note {
+  margin: 0.72rem 0 0;
+  padding-top: 0.68rem;
+  border-top: 1px solid rgba(145, 91, 61, 0.12);
+  color: #786d66;
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+.detail-pests {
+  border-color: rgba(104, 91, 156, 0.18);
+  background: linear-gradient(145deg, rgba(251, 250, 255, 0.98), rgba(242, 240, 250, 0.92));
+}
+.detail-pests .detail-diseases-head h3 { color: #514779; }
+.detail-pests .detail-diseases-count { background: rgba(104, 91, 156, 0.11); color: #5f5487; }
+.detail-pests .detail-disease-marker { background: #7566ad; box-shadow: 0 0 0 4px rgba(117, 102, 173, 0.12); }
+.detail-pests .detail-disease-toggle { color: #5f5487; background: rgba(117, 102, 173, 0.11); border-color: rgba(117, 102, 173, 0.2); }
+.detail-pests .detail-disease-card summary:hover,
+.detail-pests .detail-disease-card[open] summary { background: rgba(117, 102, 173, 0.07); }
+.detail-pests .detail-disease-info--action { background: #f1f4fb; }
+.detail-pests .detail-disease-info--products {
+  grid-column: 1 / -1;
+  background: #fff8e8;
+  border: 1px solid rgba(201, 133, 47, 0.18);
+}
+.detail-pests .detail-disease-info--products b { color: #8a5a1f; }
 
 /* Quick badges row (sun, water, type) */
 .detail-badges {
@@ -3969,6 +4304,9 @@ body.detail-open .back-to-top {
   flex-direction: column;
   gap: 0.5rem;
 }
+.detail-tab-panel .detail-sow-body {
+  padding: 0.96rem;
+}
 .detail-sow-row {
   font-size: 0.84rem;
   color: #3d5440;
@@ -4015,6 +4353,10 @@ body.detail-open .back-to-top {
     box-shadow 0.16s;
   box-shadow: 0 6px 22px rgba(45, 106, 79, 0.32);
   letter-spacing: 0.01em;
+  position: sticky;
+  bottom: 0.18rem;
+  z-index: 7;
+  outline: 4px solid rgba(244, 246, 236, 0.94);
 }
 .detail-add-btn:hover {
   filter: brightness(1.08);
@@ -4668,6 +5010,7 @@ body.cart-open .back-to-top {
     width: 100%;
     text-align: center;
     font-size: 0.68rem;
+    padding: 0.5rem 0.65rem;
   }
   .hero-scroll-hint {
     display: none;
@@ -5024,6 +5367,35 @@ body.cart-open .back-to-top {
   .detail-body {
     padding: 1rem 0.92rem 1.4rem;
     gap: 0.75rem;
+  }
+  .detail-tabs {
+    gap: 0.16rem;
+    padding: 0.28rem;
+    border-radius: 13px;
+  }
+  .detail-tabs-shell { padding: 0.38rem; }
+  .detail-tabs-heading { align-items: flex-start; flex-direction: column; gap: 0.06rem; padding-bottom: 0.34rem; }
+  .detail-tabs-heading span { font-size: 0.58rem; }
+  .detail-tab {
+    min-height: 44px;
+    padding: 0.34rem 0.12rem;
+    font-size: 0.52rem;
+  }
+  .detail-tab > span:first-child {
+    font-size: 0.78rem;
+  }
+  .detail-tech-grid {
+    grid-template-columns: 1fr;
+    gap: 0.52rem;
+  }
+  .detail-tech-card--wide {
+    grid-column: auto;
+  }
+  .detail-disease-body {
+    grid-template-columns: 1fr;
+  }
+  .detail-diseases {
+    padding: 0.78rem;
   }
   .detail-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
