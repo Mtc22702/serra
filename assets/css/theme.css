@@ -10,6 +10,21 @@
   --theme-shadow: 0 14px 38px rgba(24, 53, 36, 0.12);
 }
 
+/* Il logo del footer riprende esattamente il trattamento dell'header. */
+.footer-logo {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 5px;
+  box-sizing: border-box;
+  object-fit: contain;
+  border: 1px solid rgba(45, 106, 79, .14);
+  border-radius: 13px;
+  background: linear-gradient(145deg, #fff, #edf5e9);
+  box-shadow: 0 8px 18px rgba(27, 67, 50, .1), inset 0 1px 0 rgba(255,255,255,.8);
+  filter: none !important;
+  opacity: 1 !important;
+}
+
 html[data-theme="dark"] {
   color-scheme: dark;
   --bg: #091410;
@@ -639,8 +654,11 @@ html[data-theme="dark"] body :where(.footer-brand-name, .footer-logo-row, .foote
   color: #f2f7f3 !important;
 }
 html[data-theme="dark"] body .footer-logo {
-  filter: brightness(0) invert(1);
-  opacity: .86;
+  background: #23382e !important;
+  border-color: rgba(181, 218, 193, .17) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.07) !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 html[data-theme="dark"] body :where(.footer-nav-title, .footer-legal-title, .footer-tip-kicker) {
   color: #78d596 !important;
@@ -916,4 +934,135 @@ html[data-theme="dark"] body :where(
 ) {
   font-weight: 850 !important;
   letter-spacing: .02em;
+}
+
+/* Header smartphone: il brand ha priorità e i controlli usano ingombri compatti. */
+@media (max-width: 660px) {
+  .site-header-inner {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: .5rem !important;
+    padding-inline: .5rem !important;
+  }
+  .site-header .nav-brand {
+    min-width: 0;
+    overflow: hidden;
+    gap: .42rem !important;
+    padding-right: 0 !important;
+  }
+  .site-header .nav-brand-mark {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 9px !important;
+  }
+  .site-header .nav-brand img {
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .site-header .nav-brand-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .site-header .nav-brand-text {
+    max-width: none !important;
+    font-size: .93rem !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .site-header .nav-brand-copy small { display: none !important; }
+  .site-header .nav-actions {
+    flex: 0 0 auto;
+    gap: .42rem !important;
+  }
+  .site-header .nav-menu-toggle {
+    width: 44px !important;
+    height: 40px !important;
+    min-width: 44px !important;
+    flex-basis: 44px !important;
+    border-radius: 11px !important;
+    background: #2d6a4f !important;
+    border: 1px solid #5da777 !important;
+    box-shadow: 0 6px 16px rgba(27,67,50,.24) !important;
+    margin-right: .3rem !important;
+  }
+  .site-header .nav-menu-toggle span { background: #fff !important; }
+  .site-header .theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    flex-basis: 40px !important;
+    border-radius: 11px !important;
+  }
+  .site-header .theme-toggle-icon { font-size: 19px !important; }
+  .site-header .nav-lang {
+    width: 68px !important;
+    min-width: 68px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    justify-content: center;
+    border-radius: 11px !important;
+  }
+  .site-header .nav-lang select {
+    width: 66px !important;
+    min-width: 66px !important;
+    padding: 0 !important;
+    font-size: .72rem !important;
+  }
+  .site-header .cart-btn {
+    width: 62px !important;
+    min-width: 62px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    border-radius: 11px !important;
+  }
+  .site-header .cart-icon {
+    display: inline-flex !important;
+    font-size: 15px !important;
+  }
+  .site-header .cart-label { display: none !important; }
+  .site-header .cart-count {
+    min-width: 19px !important;
+    height: 19px !important;
+    padding-inline: .25rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .site-header .nav-brand-mark { display: none !important; }
+  .site-header .nav-brand-text { font-size: .88rem !important; }
+}
+
+/* Telefoni molto stretti: seconda riga per i controlli, brand sempre completo. */
+@media (max-width: 340px) {
+  :root { --nav-h: 108px; }
+  .site-header-inner {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 48px 52px !important;
+    align-content: center;
+    gap: 0 !important;
+  }
+  .site-header .nav-brand {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: start;
+    overflow: visible;
+  }
+  .site-header .nav-brand-text {
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .site-header .nav-actions {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100%;
+    justify-content: space-between !important;
+    gap: .5rem !important;
+  }
+  .site-header .nav-menu-toggle { margin-right: 0 !important; }
+}
+
+html[data-theme="dark"] .site-header .nav-menu-toggle {
+  background: #326f47 !important;
+  border-color: #72c58a !important;
 }

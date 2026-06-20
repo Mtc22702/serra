@@ -8,7 +8,7 @@
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-06-20-85";
+      window.SERRA_APP_VERSION = "2026-06-20-93";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -485,9 +485,43 @@
     <section class="conf-section">
       <div class="conf-card">
         <div class="conf-visual" aria-hidden="true">
-          <div class="conf-visual-bed conf-visual-bed--lg"></div>
-          <div class="conf-visual-bed"></div>
-          <div class="conf-visual-bed conf-visual-bed--sm"></div>
+          <svg class="conf-static-svg" viewBox="0 0 170 128" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="confStaticGlass" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#315f48"/><stop offset="1" stop-color="#102d20"/>
+              </linearGradient>
+              <linearGradient id="confStaticSoil" x1="0" y1="0" x2="0" y2="1">
+                <stop stop-color="#725a40"/><stop offset="1" stop-color="#443220"/>
+              </linearGradient>
+              <filter id="confStaticShadow" x="-20%" y="-20%" width="140%" height="150%">
+                <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#07150e" flood-opacity=".48"/>
+              </filter>
+            </defs>
+            <rect x="3" y="3" width="164" height="122" rx="12" fill="url(#confStaticGlass)" stroke="rgba(255,255,255,.42)" stroke-width="1.5"/>
+            <rect x="8" y="8" width="154" height="112" rx="9" fill="rgba(220,238,224,.08)" stroke="rgba(255,255,255,.16)"/>
+            <path d="M85 9V119 M9 62H161" stroke="rgba(226,239,228,.17)" stroke-width="1"/>
+            <g filter="url(#confStaticShadow)" stroke="rgba(239,222,190,.25)" stroke-width="1">
+              <rect x="12" y="12" width="66" height="46" rx="7" fill="url(#confStaticSoil)"/>
+              <rect x="12" y="66" width="66" height="50" rx="7" fill="url(#confStaticSoil)"/>
+              <rect x="92" y="12" width="66" height="36" rx="7" fill="url(#confStaticSoil)"/>
+              <rect x="92" y="56" width="66" height="60" rx="7" fill="url(#confStaticSoil)"/>
+            </g>
+            <g font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="central">
+              <text x="31" y="28" font-size="14">🍅</text><text x="58" y="28" font-size="14">🍅</text>
+              <text x="31" y="46" font-size="14">🍅</text><text x="58" y="46" font-size="14">🍅</text>
+              <text x="29" y="79" font-size="12">🥕</text><text x="59" y="79" font-size="12">🥕</text>
+              <text x="29" y="94" font-size="12">🥕</text><text x="59" y="94" font-size="12">🥕</text>
+              <text x="29" y="104" font-size="12">🥕</text><text x="59" y="104" font-size="12">🥕</text>
+              <text x="106" y="25" font-size="12">🥬</text><text x="125" y="25" font-size="12">🥬</text><text x="144" y="25" font-size="12">🥬</text>
+              <text x="106" y="39" font-size="12">🥬</text><text x="125" y="39" font-size="12">🥬</text><text x="144" y="39" font-size="12">🥬</text>
+              <text x="104" y="68" font-size="10">🌿</text><text x="125" y="68" font-size="10">🌿</text><text x="146" y="68" font-size="10">🌿</text>
+              <text x="104" y="82" font-size="10">🌿</text><text x="125" y="82" font-size="10">🌿</text><text x="146" y="82" font-size="10">🌿</text>
+              <text x="104" y="96" font-size="10">🌿</text><text x="125" y="96" font-size="10">🌿</text><text x="146" y="96" font-size="10">🌿</text>
+              <text x="104" y="105" font-size="10">🌿</text><text x="125" y="105" font-size="10">🌿</text><text x="146" y="105" font-size="10">🌿</text>
+            </g>
+            <path d="M15 10 L83 10 L56 120 L12 120 Z" fill="rgba(255,255,255,.07)"/>
+            <rect x="3" y="3" width="164" height="122" rx="12" fill="none" stroke="rgba(220,241,228,.5)" stroke-width="2"/>
+          </svg>
         </div>
         <div class="conf-text">
           <div class="conf-eyebrow" data-i18n="conf.kicker">
