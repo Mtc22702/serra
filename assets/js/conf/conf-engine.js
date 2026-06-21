@@ -517,6 +517,13 @@ function addPlant(id) {
   const p = BYID[id];
   if (!p) return;
   recordHistory();
+  // Snapshot dello stato valido pre-aggiunta: se la coltura non entra (serra
+  // piena o troppe quantita bloccate) si ripristina esattamente questo stato,
+  // evitando di lasciare il layout in overflow.
+  const before = {
+    beds: cloneBedsSnapshot(),
+    autoPlan: state.autoPlan
+  };
   // Aggiunta manuale sempre a blocco con un conteggio modesto: una pianta a fila
   // occuperebbe un'intera colonna (alta quanto la serra) e, in una serra piena,
   // costringerebbe a rimuovere molte colture. A blocco invece basta restringere
@@ -544,9 +551,18 @@ function addPlant(id) {
   });
   // Se la serra era piena e non c'era spazio, il bilanciamento ha dovuto togliere
   // la coltura appena aggiunta: avvisa l'utente (avviso rosso nel pannello + popup)
-  // invece di farla sparire in silenzio.
-  const noSpace = !state.beds.some((b) => b.plantId === id);
+  // invece di farla sparire in silenzio. Caso aggiuntivo: quando quasi tutte le
+  // colture hanno quantita bloccate a mano, shrinkOverflowToFit non puo ridurle e
+  // si ferma lasciando un overflow; in tal caso la nuova coltura non ci sta
+  // davvero, quindi la rimuoviamo e avvisiamo (niente aiuole oltre il bordo).
+  const noSpace =
+    !state.beds.some((b) => b.plantId === id) || computeLayout().overflow;
   if (noSpace) {
+    // Ripristina esattamente lo stato valido precedente (niente aiuole oltre il
+    // bordo) e avvisa, invece di far sparire la coltura in silenzio o lasciare
+    // overflow quando troppe quantita sono bloccate a mano.
+    restoreBedsSnapshot(before.beds);
+    state.autoPlan = before.autoPlan;
     state.manualPlanNotice = "addNoSpace";
     state.selected = -1;
   }
@@ -1090,15 +1106,19 @@ const FILLER_CROPS = [
 const FILLER_MIN_GAP = 60;
 
 /* Sceglie una coltura tappabuchi: bassa, in stagione, non gia presente, non in
-   conflitto con le colture della colonna da riempire e la cui aiuola minima
-   entra nel vuoto disponibile. Restituisce null se nessuna e' adatta. */
-function pickFillerCrop(columnPlantIds, gap) {
+   conflitto con NESSUNA coltura della serra (l'analisi consociazioni guarda
+   tutte le coppie, non solo la stessa colonna: un filler tipo finocchio sarebbe
+   compatibile con i vicini di colonna ma nemico di carota/fagiolino altrove) e
+   la cui aiuola minima entra nel vuoto. Restituisce null se nessuna e' adatta. */
+function pickFillerCrop(gap) {
   const present = new Set(state.beds.map((b) => b.plantId));
-  const colPlants = columnPlantIds.map((id) => BYID[id]).filter(Boolean);
+  const allPlants = state.beds.map((b) => BYID[b.plantId]).filter(Boolean);
   const seasonalIds = new Set(seminabili().map((p) => p.id));
   const fits = (p) =>
     Math.max(46, visualPlantRadius(p) * 3 + 18) + BED_GAP <= gap + 1;
-  const compatible = (p) => !colPlants.some((cp) => areIncompatible(p, cp));
+  // Compatibilita sull'intero piano: il filler non deve introdurre nuovi conflitti
+  // con nessuna coltura gia presente, in qualunque colonna si trovi.
+  const compatible = (p) => !allPlants.some((cp) => areIncompatible(p, cp));
   // 1) Preferenza: lista curata di tappabuchi rapide, se di stagione.
   for (const id of FILLER_CROPS) {
     const p = BYID[id];
@@ -1150,10 +1170,7 @@ function fillColumnTailsWithFiller() {
       }
     });
     if (shortCol < 0 || maxGap < FILLER_MIN_GAP) break;
-    const colPlantIds = L.beds
-      .filter((b) => b.columnIndex === shortCol)
-      .map((b) => b.plant.id);
-    const filler = pickFillerCrop(colPlantIds, maxGap);
+    const filler = pickFillerCrop(maxGap);
     if (!filler) break;
     state.beds.push({
       plantId: filler.id,
@@ -1327,13 +1344,13 @@ function autoFill(options = {}) {
     const conflicts = state.beds.some((bed) =>
       areIncompatible(p, BYID[bed.plantId])
     );
-    const hasCompatibleAlternative = sortedCandidates.some(
-      (candidate) =>
-        candidate.id !== p.id &&
-        !state.beds.some((bed) => bed.plantId === candidate.id) &&
-        !state.beds.some((bed) => areIncompatible(candidate, BYID[bed.plantId]))
-    );
-    if (conflicts && hasCompatibleAlternative) {
+    // Una coltura in conflitto non viene mai forzata nel piano principale: va in
+    // lista d'attesa. Lo spazio poi si riempie espandendo le colture compatibili
+    // e con le tappabuchi, non con piante che non si amano (es. finocchio nemico
+    // di carota/fagiolino). I passaggi successivi la recuperano solo se non crea
+    // conflitti, o — in serre quasi vuote — con al massimo un conflitto, come
+    // compromesso dichiarato (autoPlanCompromise).
+    if (conflicts) {
       skippedConflicts.push(p);
       continue;
     }
