@@ -2512,58 +2512,6 @@ function pestsForPlant(p) {
     .filter(Boolean);
 }
 
-function pestProductsCatalog() {
-  if (currentLang === "ro")
-    return {
-      aphids:
-        "Săpun potasic sau ulei de neem direct pe colonii și sub frunze; pentru atac puternic, piretrine naturale.",
-      whiteflies:
-        "Ulei de neem ori ulei horticol pe ouă și nimfe, săpun potasic pe stadiile mobile; Beauveria bassiana la umiditate adecvată.",
-      spider_mites:
-        "Ulei de neem sau horticol sub frunze, apoi acaricid specific dacă atacul continuă; biologic, Phytoseiulus persimilis.",
-      flea_beetles:
-        "Ulei de neem/azadiractină pe frunzele tinere ca repelent și inhibitor al hrănirii; spinosad ori piretrine contra adulților. Aplică devreme și seara.",
-      caterpillars:
-        "Bacillus thuringiensis var. kurstaki pe omizi mici; spinosad pe larve mai dificile, evitând florile vizitate de albine.",
-      thrips:
-        "Spinosad în zonele ascunse; alternativ ulei de neem/azadiractină sau săpun potasic cu acoperire completă.",
-      onion_fly:
-        "Nematozi Steinernema feltiae în sol umed contra larvelor; spinosad numai dacă eticheta include cultura Allium și musca țintă.",
-      leafminers:
-        "Spinosad pe larvele tinere; azadiractină/ulei de neem la începutul galeriilor pentru a reduce hrănirea și dezvoltarea.",
-      carrot_fly:
-        "Nematozi Steinernema feltiae în sol contra larvelor; piretrine pe adulți numai dacă eticheta include morcovul.",
-      slugs:
-        "Momeli granulare cu fosfat feric, împrăștiate uniform și reînnoite după ploaie sau udare conform etichetei.",
-      weevils:
-        "Ulei de neem/azadiractină ori piretrine pe adulți; Steinernema kraussei sau Heterorhabditis bacteriophora contra larvelor din sol."
-    };
-  return {
-    aphids:
-      "Sapone molle potassico o olio di neem sulle colonie, bagnando bene la pagina inferiore; per infestazioni forti, piretrine naturali. Ripeti solo secondo etichetta.",
-    whiteflies:
-      "Olio di neem o olio orticolo su uova e neanidi, sapone molle sugli stadi mobili; Beauveria bassiana funziona meglio con umidità adeguata.",
-    spider_mites:
-      "Olio di neem o olio orticolo sulla pagina inferiore, poi un acaricida specifico se l'attacco continua; nel biologico usa Phytoseiulus persimilis.",
-    flea_beetles:
-      "Olio di neem/azadiractina sulle foglie giovani come repellente e antialimentare; spinosad o piretrine per abbattere gli adulti. Tratta presto e la sera.",
-    caterpillars:
-      "Bacillus thuringiensis var. kurstaki quando i bruchi sono piccoli e stanno mangiando; spinosad per larve più difficili, evitando i fiori visitati dalle api.",
-    thrips:
-      "Spinosad sulle parti giovani e nei punti nascosti; in alternativa olio di neem/azadiractina o sapone molle con copertura accurata. Alterna i principi attivi.",
-    onion_fly:
-      "Nematodi Steinernema feltiae nel terreno umido contro le larve; spinosad solo se l'etichetta comprende l'allio e la mosca bersaglio.",
-    leafminers:
-      "Spinosad penetra parzialmente nella foglia ed è adatto alle larve giovani; azadiractina/olio di neem riduce alimentazione e sviluppo se applicata all'inizio delle mine.",
-    carrot_fly:
-      "Nematodi Steinernema feltiae nel suolo contro le larve; piretrine solo sugli adulti e solo se l'etichetta include carota e mosca della carota.",
-    slugs:
-      "Esche granulari a base di fosfato ferrico, sparse uniformemente e rinnovate dopo pioggia o irrigazione secondo etichetta; evita mucchietti vicino alle piante.",
-    weevils:
-      "Olio di neem/azadiractina o piretrine sugli adulti; nematodi Steinernema kraussei o Heterorhabditis bacteriophora nel terreno contro le larve."
-  };
-}
-
 function targetedPestProducts(p) {
   const group = PEST_GROUPS[DISEASE_PLANT_GROUP[p.id]]
     ? DISEASE_PLANT_GROUP[p.id]

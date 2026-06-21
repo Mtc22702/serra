@@ -2449,49 +2449,6 @@ function palmatePath(r) {
 }
 const shade = "rgba(0,0,0,.13)";
 
-/* Miniatura vettoriale del raccolto. È solo decorazione: non partecipa al
-   calcolo di quantità, righe, colonne o distanze d/dr. */
-function harvestVector(plant, size) {
-  const id = plant.id;
-  const s = size;
-  const col = plant.col || {};
-  const finish = (content) => `<g class="harvest-vector" style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
-  const roots = ["carota", "pastinaca", "radice_prezemolo", "daikon", "scorzonera", "ravanello", "rapa", "barbabietola", "rafano"];
-  const long = ["melanzana", "cetriolo", "zucchina", "cucamelon"];
-  const legumes = ["fagiolino", "fagiolo", "pisello", "fava", "soia_edamame", "cece", "lenticchia", "fagiolo_borlotto"];
-  let art;
-  if (long.includes(id)) {
-    const c = id === "melanzana" ? "#684078" : "#4f8b43";
-    const paint = id === "melanzana" ? "url(#harvestPurple)" : "url(#harvestGreen)";
-    art = `<g transform="rotate(-24)"><ellipse rx="${s * .2}" ry="${s * .42}" fill="${paint}" stroke="#315a34" stroke-width="${s * .05}"/><ellipse cx="${-s * .06}" cy="${-s * .1}" rx="${s * .05}" ry="${s * .2}" fill="#fff" opacity=".38"/><path d="M0 ${-s * .37} l${s * .17} ${-s * .1} l${-s * .14} ${s * .21} l${-s * .16} ${-s * .17}Z" fill="#315f31"/></g>`;
-  } else if (id.includes("peper")) {
-    art = `<path d="M0 ${-s * .38} C${s * .34} ${-s * .42} ${s * .38} ${s * .16} ${s * .2} ${s * .4} C${s * .08} ${s * .51} ${-s * .08} ${s * .51} ${-s * .2} ${s * .4} C${-s * .38} ${s * .16} ${-s * .34} ${-s * .42} 0 ${-s * .38}Z" fill="url(#harvestRed)" stroke="#7d352d" stroke-width="${s * .05}"/><path d="M0 ${-s * .34} q${s * .04} ${-s * .2} ${s * .15} ${-s * .18}" fill="none" stroke="#39703b" stroke-width="${s * .09}" stroke-linecap="round"/>`;
-  } else if (roots.includes(id)) {
-    const c = id === "carota" ? "#ed7b2c" : id === "barbabietola" ? "#953c55" : id === "ravanello" ? "#d94c55" : "#eadfbd";
-    const paint = id === "carota" ? "url(#harvestOrange)" : ["barbabietola", "ravanello"].includes(id) ? "url(#harvestRed)" : "url(#harvestCream)";
-    art = `<path d="M0 ${-s * .3} C${s * .3} ${-s * .23} ${s * .23} ${s * .2} 0 ${s * .48} C${-s * .23} ${s * .2} ${-s * .3} ${-s * .23} 0 ${-s * .3}Z" fill="${paint}" stroke="#854c35" stroke-width="${s * .045}"/><path d="M0 ${-s * .27} q${s * .08} ${-s * .2} ${s * .25} ${-s * .22} M0 ${-s * .27} q${-s * .08} ${-s * .2} ${-s * .25} ${-s * .22}" fill="none" stroke="#4b843f" stroke-width="${s * .1}" stroke-linecap="round"/>`;
-  } else if (plant.arch === "bulbo") {
-    const c = id === "cipolla_rossa" ? "#9b5876" : id === "aglio" ? "#eee6d2" : "#e4ca8d";
-    art = `<ellipse cy="${s * .08}" rx="${s * .32}" ry="${s * .36}" fill="${id === "cipolla_rossa" ? "url(#harvestPurple)" : "url(#harvestCream)"}" stroke="#8b744e" stroke-width="${s * .05}"/><path d="M0 ${-s * .22} q${s * .03} ${-s * .18} ${s * .12} ${-s * .25}" fill="none" stroke="#4c8243" stroke-width="${s * .1}" stroke-linecap="round"/>`;
-  } else if (plant.arch === "brassica") {
-    const c = col.head || (id === "cavolfiore" ? "#e6dfbd" : "#659353");
-    art = "";
-    for (let i = 0; i < 9; i++) { const a = i * 2.39996, d = s * .22 * Math.sqrt(i / 9); art += `<circle cx="${Math.cos(a) * d}" cy="${Math.sin(a) * d}" r="${s * .17}" fill="${id === "cavolfiore" ? "url(#harvestCream)" : "url(#harvestGreen)"}" stroke="#476b43" stroke-width="${s * .025}"/>`; }
-  } else if (legumes.includes(id)) {
-    art = `<path d="M${-s * .38} ${s * .2} Q0 ${-s * .42} ${s * .4} ${-s * .08} Q${s * .12} ${s * .42} ${-s * .38} ${s * .2}Z" fill="url(#harvestGreen)" stroke="#3f6e38" stroke-width="${s * .05}"/><circle cx="${-s * .14}" cy="${s * .09}" r="${s * .07}" fill="#c4df8c"/><circle cx="${s * .08}" cy="${-s * .08}" r="${s * .07}" fill="#c4df8c"/>`;
-  } else if (plant.arch === "cucurbita") {
-    const c = id === "zucca" ? "#df7d2f" : id === "anguria" ? "#4e8548" : "#d9b65a";
-    art = `<circle r="${s * .36}" fill="${id === "zucca" ? "url(#harvestOrange)" : id === "anguria" ? "url(#harvestGreen)" : "url(#harvestCream)"}" stroke="#5d6538" stroke-width="${s * .05}"/><path d="M${-s * .15} ${-s * .31} Q0 0 ${-s * .15} ${s * .31} M${s * .15} ${-s * .31} Q0 0 ${s * .15} ${s * .31}" fill="none" stroke="#fff" stroke-width="${s * .035}" opacity=".4"/>`;
-  } else if (id === "fragola") {
-    art = `<path d="M0 ${s * .42} C${s * .36} ${s * .05} ${s * .3} ${-s * .32} 0 ${-s * .34} C${-s * .3} ${-s * .32} ${-s * .36} ${s * .05} 0 ${s * .42}Z" fill="url(#harvestRed)" stroke="#963b33" stroke-width="${s * .045}"/><path d="M0 ${-s * .3} l${s * .23} ${-s * .1} l${-s * .12} ${s * .2} l${-s * .22} ${-s * .2}Z" fill="#3d793a"/>`;
-  } else if (plant.arch === "frutto") {
-    art = `<circle r="${s * .36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * .05}"/><ellipse cx="${-s * .11}" cy="${-s * .12}" rx="${s * .07}" ry="${s * .12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * .31} l${s * .2} ${-s * .1} l${-s * .16} ${s * .2} l${-s * .18} ${-s * .18}Z" fill="#356c35"/>`;
-  } else {
-    art = `<g transform="rotate(-32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g>`;
-  }
-  return finish(art);
-}
-
 function shouldShowHarvestVector(plant) {
   if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
   return new Set([
@@ -4558,56 +4515,6 @@ function configPestCatalog() {
       "Margini intaccati e semi o baccelli perforati.",
       "Rimuovi adulti e semi infestati, pulisci i residui e ruota la coltura."
     ]
-  };
-}
-
-function configPestProducts() {
-  if (state.lang === "ro")
-    return {
-      aphids:
-        "Săpun potasic sau ulei de neem pe colonii și sub frunze; pentru atac puternic, piretrine naturale.",
-      whiteflies:
-        "Ulei de neem ori horticol pe ouă și nimfe, săpun potasic pe stadiile mobile; Beauveria bassiana la umiditate adecvată.",
-      mites:
-        "Ulei de neem sau horticol sub frunze, apoi acaricid specific; biologic, Phytoseiulus persimilis.",
-      flea: "Ulei de neem/azadiractină ca repelent și inhibitor al hrănirii; spinosad ori piretrine contra adulților. Aplică devreme și seara.",
-      caterpillars:
-        "Bacillus thuringiensis var. kurstaki pe omizi mici; spinosad pe larve mai dificile, evitând florile cu albine.",
-      thrips:
-        "Spinosad în zonele ascunse; alternativ ulei de neem/azadiractină sau săpun potasic.",
-      onion_fly:
-        "Steinernema feltiae în sol umed contra larvelor; spinosad numai dacă eticheta include cultura și musca țintă.",
-      leafminers:
-        "Spinosad pe larve tinere; azadiractină/ulei de neem la începutul galeriilor.",
-      carrot_fly:
-        "Steinernema feltiae în sol contra larvelor; piretrine pe adulți numai unde eticheta include morcovul.",
-      slugs:
-        "Momeli granulare cu fosfat feric, împrăștiate uniform și reînnoite după ploaie sau udare.",
-      weevils:
-        "Ulei de neem/azadiractină ori piretrine pe adulți; Steinernema kraussei sau Heterorhabditis bacteriophora în sol."
-    };
-  return {
-    aphids:
-      "Sapone molle potassico o olio di neem sulle colonie e sotto le foglie; per attacchi forti, piretrine naturali.",
-    whiteflies:
-      "Olio di neem o olio orticolo su uova e neanidi, sapone molle sugli stadi mobili; Beauveria bassiana con umidità adeguata.",
-    mites:
-      "Olio di neem o olio orticolo sotto le foglie, poi acaricida specifico se necessario; nel biologico Phytoseiulus persimilis.",
-    flea: "Olio di neem/azadiractina sulle foglie giovani come repellente e antialimentare; spinosad o piretrine contro gli adulti. Tratta presto e la sera.",
-    caterpillars:
-      "Bacillus thuringiensis var. kurstaki sui bruchi piccoli; spinosad sulle larve più difficili, evitando i fiori visitati dalle api.",
-    thrips:
-      "Spinosad nei punti nascosti; in alternativa olio di neem/azadiractina o sapone molle con copertura accurata.",
-    onion_fly:
-      "Nematodi Steinernema feltiae nel terreno umido contro le larve; spinosad solo se previsto per allio e mosca bersaglio.",
-    leafminers:
-      "Spinosad sulle larve giovani; azadiractina/olio di neem all'inizio delle mine per ridurre alimentazione e sviluppo.",
-    carrot_fly:
-      "Nematodi Steinernema feltiae nel suolo contro le larve; piretrine sugli adulti solo dove previste per la carota.",
-    slugs:
-      "Esche granulari al fosfato ferrico, sparse uniformemente e rinnovate dopo pioggia o irrigazione secondo etichetta.",
-    weevils:
-      "Olio di neem/azadiractina o piretrine sugli adulti; Steinernema kraussei o Heterorhabditis bacteriophora contro le larve nel terreno."
   };
 }
 
