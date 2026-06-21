@@ -316,20 +316,20 @@ const TIPO_STYLE = {
   aromatica: "background:rgba(116,198,157,.22);color:#1b5438"
 };
 const PHOTO_MAP = {
-  bietola: "bietola_coste.jpg",
-  cavolo: "cavolo_cappuccio.jpg",
-  cavolonero: "cavolo_nero.jpg",
-  cavolorapa: "cavolo_rapa.jpg",
-  cavoletti: "cavoletti_bruxelles.jpg",
-  coriandolo: "coriandolo.jpeg",
-  fagiolino: "fagiolino_nano.jpg",
-  fagiolo: "fagiolo_rampicante.jpg",
-  indivia: "indivia_scarola.jpg",
-  origano: "origano.jpeg",
-  pakchoi: "pak_choi.jpg"
+  bietola: "bietola_coste.webp",
+  cavolo: "cavolo_cappuccio.webp",
+  cavolonero: "cavolo_nero.webp",
+  cavolorapa: "cavolo_rapa.webp",
+  cavoletti: "cavoletti_bruxelles.webp",
+  coriandolo: "coriandolo.webp",
+  fagiolino: "fagiolino_nano.webp",
+  fagiolo: "fagiolo_rampicante.webp",
+  indivia: "indivia_scarola.webp",
+  origano: "origano.webp",
+  pakchoi: "pak_choi.webp"
 };
 function photoSrc(id) {
-  return `assets/img/photo/${PHOTO_MAP[id] || id + ".jpg"}`;
+  return `assets/img/photo/${PHOTO_MAP[id] || id + ".webp"}`;
 }
 const FRUIT_EMOJI = {
   pomodoro: "🍅",
