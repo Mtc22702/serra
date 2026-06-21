@@ -486,6 +486,8 @@ function applyLanguage() {
   setText("#btnClear .btn-label", "clearGreenhouse");
   setText("#btnUndoLabel", "undoAction");
   setText("#btnRedoLabel", "redoAction");
+  setText("#btnNoviceRestartLabel", "noviceRestart");
+  setText("#btnExpertSeasonalLabel", "expertSeasonal");
   updateClearGreenhouseCopy();
   setText("#panelYield h2", "yieldCost");
   setText("#yieldSub", "yieldSub");

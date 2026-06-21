@@ -1462,6 +1462,29 @@ select:focus {
   grid-template-columns: 1fr;
   gap: 8px;
 }
+/* "Ricomincia": mostrato solo al principiante (rigenera il piano di stagione).
+   Nascosto per gli altri profili che hanno gia il pulsante "Rigenera" o le
+   azioni manuali. */
+.novice-restart-row {
+  display: none;
+  margin-top: 10px;
+}
+body.livello-novizio .novice-restart-row {
+  display: block;
+}
+.novice-restart-row .btn {
+  width: 100%;
+  justify-content: center;
+}
+/* "Genera piano di stagione": azione secondaria mostrata solo all'esperto,
+   accanto ai preset, per un punto di partenza automatico di stagione. */
+.expert-seasonal-btn {
+  display: none;
+}
+body.livello-esperto .expert-seasonal-btn {
+  display: inline-flex;
+  margin-top: 8px;
+}
 /* Riga Annulla/Ripristina: due pulsanti compatti affiancati sotto le azioni. */
 .crops-history-row {
   display: grid;

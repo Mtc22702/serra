@@ -1408,6 +1408,8 @@
         waterMap: "Mappa acqua",
         heightMap: "Altezza piante",
         restoreAutoFill: "Rigenera piano di stagione",
+        noviceRestart: "Ricomincia",
+        expertSeasonal: "Genera piano di stagione",
         arrangeSelected: "Sistema senza riempire",
         arrangeSelectedHint: "Riordina le aiuole e non cambia i numeri.",
         arrangeSelectedTitle:
@@ -1823,6 +1825,8 @@
         waterMap: "Hartă apă",
         heightMap: "Înălțimea plantelor",
         restoreAutoFill: "Regenerează planul de sezon",
+        noviceRestart: "Începe din nou",
+        expertSeasonal: "Generează planul de sezon",
         arrangeSelected: "Aranjează fără umplere",
         arrangeSelectedHint: "Reordonează straturile fără să schimbe numerele.",
         arrangeSelectedTitle:

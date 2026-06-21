@@ -172,6 +172,22 @@ function initEvents() {
     .addEventListener("click", fillSelectedPlants);
   document.getElementById("btnUndo")?.addEventListener("click", undoLastChange);
   document.getElementById("btnRedo")?.addEventListener("click", redoLastChange);
+  // Novizio: "Ricomincia" rigenera il piano di stagione da capo (l'unica via per
+  // il principiante, che non vede il catalogo per riaggiungere a mano).
+  document.getElementById("btnNoviceRestart")?.addEventListener("click", () => {
+    recordHistory();
+    autoFill();
+    scrollToScene();
+  });
+  // Esperto: "Genera piano di stagione" crea un punto di partenza automatico di
+  // stagione (i preset sono combinazioni fisse, questo segue il mese). Resta in
+  // modalità manuale: qualsiasi modifica successiva torna a piano manuale.
+  document
+    .getElementById("btnExpertSeasonal")
+    ?.addEventListener("click", () => {
+      recordHistory();
+      autoFill();
+    });
   // Scorciatoie tastiera: Ctrl/Cmd+Z annulla, Ctrl/Cmd+Shift+Z o Ctrl+Y ripristina.
   // Quando il focus e' su un campo di testo si lascia l'undo nativo del campo.
   document.addEventListener("keydown", (e) => {
