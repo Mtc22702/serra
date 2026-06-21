@@ -1521,9 +1521,19 @@
           serraAsset("assets/js/plants-data.js") +
           '"><\/script>'
       );
-      document.write(
-        '<script src="' + serraAsset("assets/js/script.js") + '"><\/script>'
-      );
+      [
+        "assets/js/conf/conf-data.js",
+        "assets/js/conf/conf-state.js",
+        "assets/js/conf/conf-text.js",
+        "assets/js/conf/conf-draw.js",
+        "assets/js/conf/conf-ui.js",
+        "assets/js/conf/conf-engine.js",
+        "assets/js/conf/conf-app.js"
+      ].forEach(function (src) {
+        document.write(
+          '<script src="' + serraAsset(src) + '"><\/script>'
+        );
+      });
     </script>
     <!-- Torna su: mostra il pulsante dopo lo scroll. -->
     <script>
