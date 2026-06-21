@@ -3055,12 +3055,21 @@ document.getElementById("detailPanel")?.addEventListener(
   "touchmove",
   (e) => {
     const panel = document.getElementById("detailPanel");
+    if (!panel) return;
+    // Lo scroller reale è .detail-scroll su mobile, .detail-tab-panel.active su
+    // desktop: #detailPanel ha overflow:hidden e non scrolla mai, quindi leggere
+    // scrollTop/scrollHeight da lì bloccava OGNI trascinamento (scroll congelato).
+    const scroller =
+      panel.querySelector(".detail-scroll") &&
+      window.matchMedia("(max-width: 660px)").matches
+        ? panel.querySelector(".detail-scroll")
+        : panel.querySelector(".detail-tab-panel.active") || panel;
     const y = e.touches?.[0]?.clientY;
-    if (!panel || y == null || detailTouchY == null) return;
+    if (y == null || detailTouchY == null) return;
     const deltaY = y - detailTouchY;
-    const atTop = panel.scrollTop <= 0;
+    const atTop = scroller.scrollTop <= 0;
     const atBottom =
-      panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1;
+      scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1;
     if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) e.preventDefault();
     detailTouchY = y;
   },
