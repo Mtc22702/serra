@@ -900,6 +900,26 @@
                 <span class="view-select-arrow" aria-hidden="true"></span>
               </div>
               <button
+                class="btn btn-soft btn-icon view-projects-btn"
+                id="btnProjects"
+                type="button"
+                title="I miei progetti"
+                onclick="openProjectsModal()"
+              >
+                <svg
+                  class="btn-ico"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                </svg>
+                <span class="btn-label" id="projectsBtnLabel" data-i18n-conf="projects.button">I miei progetti</span>
+              </button>
+              <button
                 class="btn btn-soft btn-icon view-print-btn"
                 id="btnStampa"
                 type="button"
@@ -1290,6 +1310,24 @@
     </button>
 
     <!-- Carrello: drawer con semi del progetto e checkout simulato. -->
+    <div class="projects-modal" id="projectsModal" role="dialog" aria-modal="true" aria-labelledby="projectsModalTitle" hidden>
+      <div class="projects-backdrop" onclick="closeProjectsModal()"></div>
+      <div class="projects-dialog">
+        <div class="projects-head">
+          <h2 class="projects-title" id="projectsModalTitle" data-i18n-conf="projects.title">I miei progetti</h2>
+          <button class="projects-close" type="button" onclick="closeProjectsModal()" aria-label="Chiudi">✕</button>
+        </div>
+        <p class="projects-intro" data-i18n-conf="projects.intro">Ogni progetto conserva il suo layout, le misure e il mese. Apri, duplica, rinomina o elimina.</p>
+        <ul class="projects-list" id="projectsList"></ul>
+        <div class="projects-foot">
+          <button class="btn btn-success btn-block" type="button" onclick="createProject()">
+            <span aria-hidden="true">＋</span>
+            <span data-i18n-conf="projects.new">Nuovo progetto</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="cart-overlay" id="cartOverlay">
       <div class="cart-backdrop" onclick="closeConfCart()"></div>
       <div class="cart-drawer">
@@ -1524,6 +1562,7 @@
       [
         "assets/js/conf/conf-data.js",
         "assets/js/conf/conf-state.js",
+        "assets/js/conf/conf-projects.js",
         "assets/js/conf/conf-text.js",
         "assets/js/conf/conf-draw.js",
         "assets/js/conf/conf-ui.js",

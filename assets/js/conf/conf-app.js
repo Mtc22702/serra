@@ -369,32 +369,39 @@ function initEvents() {
 
 /* Inizializzazione dello stato: carica localStorage, lingua condivisa,
    dimensioni, mese, profilo e aiuole salvate. */
+// Applica un oggetto di configurazione salvato allo stato corrente.
+// Estratto da initConfig per riuso nello switch tra progetti (conf-projects.js).
+function applyConfigToState(saved) {
+  if (!saved) return;
+  if (saved.lang === "it" || saved.lang === "ro") state.lang = saved.lang;
+  if (["freddo", "temperato", "caldo"].includes(saved.zona)) {
+    state.zona = saved.zona;
+  }
+  state.riscaldata = Boolean(saved.riscaldata);
+  const savedW = parseFloat(saved.larghezza);
+  const savedL = parseFloat(saved.lunghezza);
+  if (Number.isFinite(savedW) && savedW >= 1) state.larghezza = savedW;
+  if (Number.isFinite(savedL) && savedL >= 1) state.lunghezza = savedL;
+  const savedPath = parseFloat(saved.path);
+  if (Number.isFinite(savedPath) && savedPath >= 30) state.path = savedPath;
+  const savedMonth = parseInt(saved.mese);
+  if (Number.isInteger(savedMonth) && savedMonth >= 1 && savedMonth <= 12) {
+    state.mese = savedMonth;
+  }
+  state.autoPlan = saved.autoPlan !== false;
+  state.activePreset = PRESETS[saved.activePreset] ? saved.activePreset : "";
+  if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
+  state.beds = normalizeSavedBeds(saved.beds);
+  autoBalanceLayout(true, false);
+}
+
 function initConfig() {
+  // Inizializza/migra lo store multi-progetto prima di leggere la config.
+  if (typeof ensureProjectsStore === "function") ensureProjectsStore();
   const saved = readSavedConfig();
   const sharedLang = localStorage.getItem("ois.lang");
   const hasSharedLang = sharedLang === "it" || sharedLang === "ro";
-  if (saved) {
-    if (saved.lang === "it" || saved.lang === "ro") state.lang = saved.lang;
-    if (["freddo", "temperato", "caldo"].includes(saved.zona)) {
-      state.zona = saved.zona;
-    }
-    state.riscaldata = Boolean(saved.riscaldata);
-    const savedW = parseFloat(saved.larghezza);
-    const savedL = parseFloat(saved.lunghezza);
-    if (Number.isFinite(savedW) && savedW >= 1) state.larghezza = savedW;
-    if (Number.isFinite(savedL) && savedL >= 1) state.lunghezza = savedL;
-    const savedPath = parseFloat(saved.path);
-    if (Number.isFinite(savedPath) && savedPath >= 30) state.path = savedPath;
-    const savedMonth = parseInt(saved.mese);
-    if (Number.isInteger(savedMonth) && savedMonth >= 1 && savedMonth <= 12) {
-      state.mese = savedMonth;
-    }
-    state.autoPlan = saved.autoPlan !== false;
-    state.activePreset = PRESETS[saved.activePreset] ? saved.activePreset : "";
-    if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
-    state.beds = normalizeSavedBeds(saved.beds);
-    autoBalanceLayout(true, false);
-  }
+  if (saved) applyConfigToState(saved);
   if (hasSharedLang) state.lang = sharedLang;
   applyLanguage();
   syncSizeControls();

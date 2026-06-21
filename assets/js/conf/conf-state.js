@@ -41,32 +41,41 @@ function readSavedConfig() {
   }
 }
 
+// Costruisce l'oggetto di configurazione corrente (stessa forma storica).
+// Estratto da saveConfig per poterlo riusare nel layer multi-progetto.
+function buildConfigPayload(done = true) {
+  return {
+    lang: state.lang,
+    zona: state.zona,
+    riscaldata: state.riscaldata,
+    larghezza: state.larghezza,
+    lunghezza: state.lunghezza,
+    path: state.path,
+    mese: state.mese,
+    autoPlan: state.autoPlan,
+    activePreset: state.activePreset,
+    livello: state.livello,
+    beds: state.beds.map((bed) => ({
+      plantId: bed.plantId,
+      count: bed.count,
+      layout: bed.layout || "blocco",
+      countLocked: Boolean(bed.countLocked)
+    })),
+    done
+  };
+}
+
 function saveConfig(done = true) {
+  const payload = buildConfigPayload(done);
   try {
-    localStorage.setItem(
-      CONFIG_KEY,
-      JSON.stringify({
-        lang: state.lang,
-        zona: state.zona,
-        riscaldata: state.riscaldata,
-        larghezza: state.larghezza,
-        lunghezza: state.lunghezza,
-        path: state.path,
-        mese: state.mese,
-        autoPlan: state.autoPlan,
-        activePreset: state.activePreset,
-        livello: state.livello,
-        beds: state.beds.map((bed) => ({
-          plantId: bed.plantId,
-          count: bed.count,
-          layout: bed.layout || "blocco",
-          countLocked: Boolean(bed.countLocked)
-        })),
-        done
-      })
-    );
+    localStorage.setItem(CONFIG_KEY, JSON.stringify(payload));
   } catch {
     // localStorage puo non essere disponibile in alcuni contesti incorporati.
+  }
+  // Mantiene allineato il progetto attivo del layer multi-progetto
+  // (conf-projects.js, caricato dopo questo file: chiamata a runtime).
+  if (typeof syncActiveProjectConfig === "function") {
+    syncActiveProjectConfig(payload);
   }
 }
 

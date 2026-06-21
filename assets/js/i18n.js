@@ -1232,6 +1232,22 @@
     configurator: {
       it: {
         title: "Orto in Serra · Progetta la tua serra dall'alto",
+        "projects.button": "I miei progetti",
+        "projects.title": "I miei progetti",
+        "projects.intro":
+          "Ogni progetto conserva il suo layout, le misure e il mese. Apri, duplica, rinomina o elimina.",
+        "projects.new": "Nuovo progetto",
+        "projects.default_name": "Progetto {n}",
+        "projects.copy_suffix": "(copia)",
+        "projects.active": "attivo",
+        "projects.varieties": "{n} colture",
+        "projects.rename": "Rinomina",
+        "projects.duplicate": "Duplica",
+        "projects.delete": "Elimina",
+        "projects.rename_prompt": "Nome del progetto:",
+        "projects.delete_confirm":
+          "Eliminare questo progetto? L'azione non è reversibile.",
+        "projects.cannot_delete_last": "Non puoi eliminare l'unico progetto.",
         language: "Lingua",
         selected: "Selezionata",
         openSetup: "Riapri configurazione guidata",
@@ -1586,6 +1602,22 @@
       },
       ro: {
         title: "Grădină în seră · Proiectează sera de sus",
+        "projects.button": "Proiectele mele",
+        "projects.title": "Proiectele mele",
+        "projects.intro":
+          "Fiecare proiect își păstrează aranjamentul, dimensiunile și luna. Deschide, duplică, redenumește sau șterge.",
+        "projects.new": "Proiect nou",
+        "projects.default_name": "Proiect {n}",
+        "projects.copy_suffix": "(copie)",
+        "projects.active": "activ",
+        "projects.varieties": "{n} culturi",
+        "projects.rename": "Redenumește",
+        "projects.duplicate": "Duplică",
+        "projects.delete": "Șterge",
+        "projects.rename_prompt": "Numele proiectului:",
+        "projects.delete_confirm":
+          "Ștergi acest proiect? Acțiunea este ireversibilă.",
+        "projects.cannot_delete_last": "Nu poți șterge singurul proiect.",
         language: "Limbă",
         selected: "Selectată",
         openSetup: "Redeschide configurarea ghidată",
