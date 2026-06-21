@@ -6415,15 +6415,12 @@ function importCartToPlan() {
     (id, index) => BYID[id] && ids.indexOf(id) === index
   );
   if (!uniqueIds.length) return false;
-  let hasFila = false;
   state.beds = uniqueIds.map((id) => {
     const plant = BYID[id];
-    const useFila = canUseFilaLayout(plant) && !hasFila;
-    if (useFila) hasFila = true;
     return {
       plantId: id,
-      count: useFila ? countForFilaPlant(plant) : defaultCount(plant),
-      layout: useFila ? "fila" : "blocco",
+      count: Math.max(1, Math.min(defaultCount(plant), starterCountForAutoPlant(plant, false))),
+      layout: "blocco",
       countLocked: false
     };
   });
@@ -7017,6 +7014,19 @@ function updateConfCartUI() {
   const badge = document.getElementById("cartCount");
   if (badge) badge.textContent = confCart.length;
 
+  const speciesLine = document.getElementById("cartSpeciesLine");
+  if (speciesLine) {
+    if (confCart.length > 0) {
+      speciesLine.textContent =
+        confCart.length === 1
+          ? tx("cart.species_one")
+          : tx("cart.species_many", { count: confCart.length });
+      speciesLine.hidden = false;
+    } else {
+      speciesLine.hidden = true;
+    }
+  }
+
   const empty = document.getElementById("cartEmpty");
   const items = document.getElementById("cartItems");
   const foot = document.getElementById("cartFooter");
@@ -7098,6 +7108,12 @@ function openConfCart() {
 function closeConfCart() {
   document.getElementById("cartOverlay").classList.remove("open");
   document.body.classList.remove("cart-open");
+}
+
+function importCartAndClose() {
+  closeConfCart();
+  // importCartToPlan() applica già il piano e fa lo scroll alla pianificazione.
+  importCartToPlan();
 }
 
 function showConfCartNudge(count) {

@@ -4659,14 +4659,30 @@ body.cart-open .back-to-top {
 }
 .cart-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 1.5rem;
+}
+.cart-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+}
+.cart-species-line {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--green-dk, #2d6a4f);
+  background: rgba(45, 106, 79, 0.09);
+  border-radius: 999px;
+  padding: 0.16rem 0.52rem;
+  letter-spacing: 0.01em;
 }
 .cart-header-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding-top: 0.18rem;
 }
 .cart-clear-btn {
   height: 28px;

@@ -1560,6 +1560,18 @@ function clearCart() {
 }
 function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.length;
+  const speciesLine = document.getElementById("cartSpeciesLine");
+  if (speciesLine) {
+    if (cart.length > 0) {
+      speciesLine.textContent =
+        cart.length === 1
+          ? t("cart.species_one")
+          : tv("cart.species_many", { count: cart.length });
+      speciesLine.hidden = false;
+    } else {
+      speciesLine.hidden = true;
+    }
+  }
   // Sezione configuratore: mostra suggerimento carrello se ci sono semi da importare.
   const confHint = document.getElementById("confCartHint");
   const confHintText = document.getElementById("confCartHintText");

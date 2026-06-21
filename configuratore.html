@@ -1260,12 +1260,15 @@
       <div class="cart-backdrop" onclick="closeConfCart()"></div>
       <div class="cart-drawer">
         <div class="cart-header">
-          <div
-            class="cart-title"
-            id="confCartTitle"
-            data-i18n-conf="cart.title"
-          >
-            Il tuo carrello
+          <div class="cart-title-area">
+            <div
+              class="cart-title"
+              id="confCartTitle"
+              data-i18n-conf="cart.title"
+            >
+              Il tuo carrello
+            </div>
+            <span class="cart-species-line" id="cartSpeciesLine" hidden></span>
           </div>
           <div class="cart-header-actions">
             <button
@@ -1296,6 +1299,18 @@
             Pagamento non ancora online: invia la lista e ti confermiamo
             disponibilità e prezzo finale.
           </div>
+          <button
+            class="cart-conf-link"
+            type="button"
+            onclick="importCartAndClose()"
+          >
+            <span aria-hidden="true">📐</span>
+            <span class="cart-conf-link-inner">
+              <span data-i18n-conf="cart.plan">Pianifica o modifica la disposizione in serra</span>
+              <small class="cart-conf-link-hint" data-i18n-conf="cart.plan_hint">Apri il configuratore con i semi scelti</small>
+            </span>
+            <span aria-hidden="true">→</span>
+          </button>
           <button
             class="cart-checkout-btn"
             onclick="alertConfCheckout()"
