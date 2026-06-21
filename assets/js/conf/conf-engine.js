@@ -571,13 +571,22 @@ function shouldAutoRefillFreedSpace() {
    (le distanze restano garantite da computeLayout/centeredSlots: qui si aggiungono
    solo file/piante che ci stanno davvero, mai piante piu fitte del loro passo). */
 function fillFreedSpacePreservingLocks() {
-  expandAutoFillToSpace({
-    skipLockedCounts: true,
-    respectDiversityLimit: false
+  // Re-flusso completo preservando le quantita bloccate. Con la sola
+  // expandAutoFillToSpace le colonne restano ancorate: se l'unica coltura di una
+  // colonna viene ridotta, lo spazio liberato resta vuoto perche le altre colture
+  // sono ancorate ad altre colonne e non possono spostarsi li. autoBalanceLayout
+  // (come fa la rimozione) ricalcola le colonne, ridistribuisce le colture rimaste
+  // anche nella colonna svuotata e le espande; poi i vuoti residui piu piccoli di
+  // una fila si chiudono con le colture tappabuchi.
+  clearColumnAssignment();
+  autoBalanceLayout(true, true, {
+    preserveLockedCounts: true,
+    expandLockedCounts: false
   });
   // Chiude anche i vuoti residui di fondo colonna con colture tappabuchi, cosi
   // per i profili guidati non resta terra incolta dopo una modifica manuale.
   fillColumnTailsWithFiller();
+  commitColumnAssignment();
 }
 
 /* Rimozione manuale: per i profili guidati riempie lo spazio liberato (niente
@@ -1087,15 +1096,31 @@ function pickFillerCrop(columnPlantIds, gap) {
   const present = new Set(state.beds.map((b) => b.plantId));
   const colPlants = columnPlantIds.map((id) => BYID[id]).filter(Boolean);
   const seasonalIds = new Set(seminabili().map((p) => p.id));
+  const fits = (p) =>
+    Math.max(46, visualPlantRadius(p) * 3 + 18) + BED_GAP <= gap + 1;
+  const compatible = (p) => !colPlants.some((cp) => areIncompatible(p, cp));
+  // 1) Preferenza: lista curata di tappabuchi rapide, se di stagione.
   for (const id of FILLER_CROPS) {
     const p = BYID[id];
     if (!p || present.has(id) || !seasonalIds.has(id)) continue;
-    if (colPlants.some((cp) => areIncompatible(p, cp))) continue;
-    const minH = Math.max(46, visualPlantRadius(p) * 3 + 18) + BED_GAP;
-    if (minH > gap + 1) continue;
+    if (!compatible(p) || !fits(p)) continue;
     return p;
   }
-  return null;
+  // 2) Fallback: qualsiasi coltura di stagione adatta come tappabuchi (bassa,
+  //    compatibile, non gia presente, che entra nel vuoto), a passo piu stretto
+  //    per primo. Serve nei mesi in cui le filler curate (colture fresche) non
+  //    sono seminabili, es. piena estate. Per il novizio si evitano le esotiche.
+  const fallback = seminabili()
+    .filter(
+      (p) =>
+        !present.has(p.id) &&
+        p.h !== "alta" &&
+        compatible(p) &&
+        fits(p) &&
+        (state.livello !== "novizio" || !EXOTIC_PLANTS.has(p.id))
+    )
+    .sort((a, b) => a.d - b.d);
+  return fallback[0] || null;
 }
 
 /* Chiude i vuoti residui di fondo colonna inserendo colture tappabuchi ancorate
