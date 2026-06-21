@@ -107,6 +107,22 @@ function initEvents() {
     saveConfig(true);
     refreshForSeasonChange();
   });
+  document.getElementById("inSole")?.addEventListener("change", (e) => {
+    // L'orientamento cambia solo da che parte vanno le piante alte (anti-ombra):
+    // si ribilancia il layout senza svuotare la serra ne cambiare le quantita.
+    state.sudInBasso = e.target.value === "basso";
+    resetHistory();
+    syncClimateControls();
+    saveConfig(true);
+    if (state.autoPlan || state.livello === "novizio") {
+      autoFill({ compactPaths: false });
+    } else {
+      clearColumnAssignment();
+      autoBalanceLayout(true, false);
+      commitColumnAssignment();
+      render();
+    }
+  });
   document.getElementById("inOverlay").addEventListener("change", (e) => {
     state.overlay = e.target.value;
     syncOverlaySelectLabel();
@@ -134,6 +150,7 @@ function initEvents() {
       applyPath(parseInt(e.target.value) || state.path)
     );
   document.getElementById("btnRipristina").addEventListener("click", () => {
+    recordHistory();
     saveConfig(true);
     setMode("fit", false);
     autoFill();
@@ -142,6 +159,7 @@ function initEvents() {
   document
     .getElementById("btnPresetSeasonal")
     ?.addEventListener("click", () => {
+      recordHistory();
       saveConfig(true);
       setMode("fit", false);
       autoFill();
@@ -152,6 +170,26 @@ function initEvents() {
   document
     .getElementById("btnFillSelected")
     .addEventListener("click", fillSelectedPlants);
+  document.getElementById("btnUndo")?.addEventListener("click", undoLastChange);
+  document.getElementById("btnRedo")?.addEventListener("click", redoLastChange);
+  // Scorciatoie tastiera: Ctrl/Cmd+Z annulla, Ctrl/Cmd+Shift+Z o Ctrl+Y ripristina.
+  // Quando il focus e' su un campo di testo si lascia l'undo nativo del campo.
+  document.addEventListener("keydown", (e) => {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    const tag = (e.target?.tagName || "").toLowerCase();
+    const isField =
+      tag === "input" || tag === "textarea" || tag === "select";
+    const key = e.key.toLowerCase();
+    if (key === "z" && !e.shiftKey) {
+      if (isField) return;
+      e.preventDefault();
+      undoLastChange();
+    } else if ((key === "z" && e.shiftKey) || key === "y") {
+      if (isField) return;
+      e.preventDefault();
+      redoLastChange();
+    }
+  });
   document.getElementById("btnClear").addEventListener("click", () => {
     if (state.livello === "novizio") return;
     const msg =
@@ -159,6 +197,7 @@ function initEvents() {
         ? "Golești sera? Folosește «Umple sera» pentru a o reface."
         : "Svuoti la serra? Usa «Riempi la serra» per riportarla com'era.";
     if (!confirm(msg)) return;
+    recordHistory();
     state.beds = [];
     state.autoPlan = false;
     state.selected = -1;
@@ -378,6 +417,7 @@ function applyConfigToState(saved) {
     state.zona = saved.zona;
   }
   state.riscaldata = Boolean(saved.riscaldata);
+  state.sudInBasso = Boolean(saved.sudInBasso);
   const savedW = parseFloat(saved.larghezza);
   const savedL = parseFloat(saved.lunghezza);
   if (Number.isFinite(savedW) && savedW >= 1) state.larghezza = savedW;
@@ -393,6 +433,8 @@ function applyConfigToState(saved) {
   if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
   state.beds = normalizeSavedBeds(saved.beds);
   autoBalanceLayout(true, false);
+  // Caricare una config/progetto cambia contesto: niente undo verso quello precedente.
+  if (typeof resetHistory === "function") resetHistory();
 }
 
 function initConfig() {

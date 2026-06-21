@@ -171,6 +171,14 @@ function normalizeSavedBeds(beds) {
     });
 }
 
+/* Valore di altezza per l'ordinamento anti-ombra, dipendente dall'orientamento:
+   con il sole in alto (default) le piante basse vanno in cima (valore basso),
+   con il sole in basso si inverte cosi le alte finiscono in cima e non ombreggiano
+   le basse rivolte verso il sole. */
+function heightSortValue(h) {
+  return state.sudInBasso ? 2 - H_RANK[h] : H_RANK[h];
+}
+
 /* Riordino fisico delle aiuole: priorita alle file, poi ombra, acqua,
    distanza e compatibilita tra colture. */
 function sortBedsForLayout() {
@@ -179,7 +187,7 @@ function sortBedsForLayout() {
     const pb = BYID[b.plantId];
     return (
       Number(b.layout === "fila") - Number(a.layout === "fila") ||
-      H_RANK[pa.h] - H_RANK[pb.h] ||
+      heightSortValue(pa.h) - heightSortValue(pb.h) ||
       (pa.acqua === "alta") - (pb.acqua === "alta") ||
       pa.d - pb.d
     );
@@ -204,8 +212,8 @@ function sortBedsForLayout() {
       const score =
         (last && areIncompatible(p, last) ? 1000 : 0) +
         conflictsWithPlaced * 30 -
-        (last && areCompanions(p, last) ? 12 : 0) +
-        H_RANK[p.h] * 4 +
+        (last && areCompanions(p, last) ? 20 : 0) +
+        heightSortValue(p.h) * 4 +
         p.d * 0.01 +
         index * 0.001;
       if (score < bestScore) {
@@ -508,6 +516,7 @@ function addPlant(id) {
   if (state.beds.some((b) => b.plantId === id)) return;
   const p = BYID[id];
   if (!p) return;
+  recordHistory();
   // Aggiunta manuale sempre a blocco con un conteggio modesto: una pianta a fila
   // occuperebbe un'intera colonna (alta quanto la serra) e, in una serra piena,
   // costringerebbe a rimuovere molte colture. A blocco invece basta restringere
@@ -566,6 +575,9 @@ function fillFreedSpacePreservingLocks() {
     skipLockedCounts: true,
     respectDiversityLimit: false
   });
+  // Chiude anche i vuoti residui di fondo colonna con colture tappabuchi, cosi
+  // per i profili guidati non resta terra incolta dopo una modifica manuale.
+  fillColumnTailsWithFiller();
 }
 
 /* Rimozione manuale: per i profili guidati riempie lo spazio liberato (niente
@@ -573,6 +585,7 @@ function fillFreedSpacePreservingLocks() {
 function removePlantById(id) {
   const index = state.beds.findIndex((b) => b.plantId === id);
   if (index < 0) return;
+  recordHistory();
   state.beds.splice(index, 1);
   state.autoPlan = false;
   state.manualPlanNotice = "";
@@ -585,6 +598,9 @@ function removePlantById(id) {
     preserveLockedCounts: true,
     expandLockedCounts: false
   });
+  // Profili guidati: chiudi i vuoti residui con colture tappabuchi (niente terra
+  // incolta). L'esperto mantiene il vuoto al suo controllo manuale.
+  if (refill) fillColumnTailsWithFiller();
   commitColumnAssignment();
   saveConfig(true);
   render();
@@ -593,6 +609,9 @@ function removePlantById(id) {
 /* Cambio stagione/misure: se il piano e automatico rigenera, altrimenti conserva
    la scelta manuale e ribilancia solo il necessario. */
 function refreshForSeasonChange() {
+  // Cambiare mese/clima cambia il contesto: gli snapshot di undo non sarebbero
+  // piu coerenti, quindi la cronologia viene azzerata.
+  resetHistory();
   // Il novizio è sempre automatico: ogni cambio di mese/zona rigenera il piano
   // (così non resta mai bloccato in un piano manuale senza il pulsante "Riempi").
   if (
@@ -618,6 +637,7 @@ function arrangeSelectedPlantsExact() {
     alert(tx("noSelectedPlants"));
     return;
   }
+  recordHistory();
   state.autoPlan = false;
   state.manualPlanNotice = "";
   normalizeSelectedCropInputsForOptimization();
@@ -634,6 +654,7 @@ function fillSelectedPlants() {
     alert(tx("noSelectedPlants"));
     return;
   }
+  recordHistory();
   state.autoPlan = false;
   state.manualPlanNotice = "";
   const manualCounts = new Map(
@@ -652,6 +673,9 @@ function fillSelectedPlants() {
     preserveLockedCounts: true
   });
   restoreManualCountsWhenPossible(manualCounts);
+  // "Riempi spazi vuoti" deve davvero riempire tutto: chiudi anche i vuoti
+  // residui di fondo colonna con colture tappabuchi.
+  fillColumnTailsWithFiller();
   commitColumnAssignment();
   saveConfig(true);
   render();
@@ -685,6 +709,7 @@ function finalizeManualCountChange(fitResult, selectedPlant) {
 function changePlantCount(id, delta) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
   if (index < 0) return;
+  recordHistory();
   const selectedPlant = rememberSelection();
   const before = cloneBedsSnapshot();
   const bed = state.beds[index];
@@ -699,6 +724,7 @@ function changePlantCount(id, delta) {
 function setPlantCount(id, value) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
   if (index < 0) return;
+  recordHistory();
   const nextCount = Math.max(1, Math.round(parseInt(value) || 1));
   const selectedPlant = rememberSelection();
   const before = cloneBedsSnapshot();
@@ -721,6 +747,8 @@ function compactPathForAutoFill() {
 }
 
 function refreshAutoPlanForGeometry(compactPaths = true) {
+  // Cambiare misure/camminamento cambia il contesto: azzera la cronologia undo.
+  resetHistory();
   // Come sopra: per il novizio il cambio misure rigenera sempre il piano.
   if (state.autoPlan || state.livello === "novizio") {
     autoFill({ compactPaths });
@@ -775,6 +803,78 @@ function restoreBedsSnapshot(snapshot) {
     countLocked: Boolean(bed.countLocked),
     col: bed.col
   }));
+}
+
+/* =========================================================================
+   Cronologia annulla/ripristina (undo/redo)
+   -------------------------------------------------------------------------
+   Pila di snapshot del piano colturale. recordHistory() va chiamata PRIMA di
+   una modifica manuale alle aiuole (aggiunta, rimozione, quantita, riempi,
+   sistema, preset, riempi/svuota serra). La cronologia vale all'interno di un
+   contesto stabile: cambiare misure, mese, clima, orientamento o profilo la
+   azzera (resetHistory), perche quegli snapshot non sarebbero piu coerenti.
+   ========================================================================= */
+const HISTORY_LIMIT = 60;
+let undoStack = [];
+let redoStack = [];
+
+function captureHistorySnapshot() {
+  return {
+    beds: cloneBedsSnapshot(),
+    autoPlan: state.autoPlan,
+    activePreset: state.activePreset,
+    selected: state.selected
+  };
+}
+
+function applyHistorySnapshot(snap) {
+  restoreBedsSnapshot(snap.beds);
+  state.autoPlan = snap.autoPlan;
+  state.activePreset = snap.activePreset;
+  state.selected = snap.selected;
+}
+
+function recordHistory() {
+  undoStack.push(captureHistorySnapshot());
+  if (undoStack.length > HISTORY_LIMIT) undoStack.shift();
+  redoStack = [];
+  if (typeof updateUndoRedoButtons === "function") updateUndoRedoButtons();
+}
+
+function resetHistory() {
+  undoStack = [];
+  redoStack = [];
+  if (typeof updateUndoRedoButtons === "function") updateUndoRedoButtons();
+}
+
+function canUndo() {
+  return undoStack.length > 0;
+}
+
+function canRedo() {
+  return redoStack.length > 0;
+}
+
+function undoLastChange() {
+  if (!undoStack.length) return;
+  redoStack.push(captureHistorySnapshot());
+  applyHistorySnapshot(undoStack.pop());
+  commitColumnAssignment();
+  state.manualPlanNotice = "";
+  saveConfig(true);
+  render();
+  if (typeof updateUndoRedoButtons === "function") updateUndoRedoButtons();
+}
+
+function redoLastChange() {
+  if (!redoStack.length) return;
+  undoStack.push(captureHistorySnapshot());
+  applyHistorySnapshot(redoStack.pop());
+  commitColumnAssignment();
+  state.manualPlanNotice = "";
+  saveConfig(true);
+  render();
+  if (typeof updateUndoRedoButtons === "function") updateUndoRedoButtons();
 }
 
 function finalizeAutoFillWithOptimizeBaseline() {
@@ -961,6 +1061,111 @@ function fillVisualPaddingRows(options = {}) {
   });
 }
 
+/* Colture "tappabuchi": basse, a passo stretto e a crescita rapida. Servono a
+   chiudere i vuoti residui in fondo alle colonne, piu corti di una fila della
+   coltura gia presente (caso geometricamente inevitabile con una sola coltura).
+   Ordinate dalla piu fitta/versatile alla meno: la prima compatibile e in
+   stagione che entra nel vuoto vince. */
+const FILLER_CROPS = [
+  "ravanello",
+  "valerianella",
+  "rucola",
+  "cipollotto",
+  "spinaci",
+  "lattuga",
+  "carota",
+  "rapa",
+  "cicoria"
+];
+// Vuoto minimo (px) sotto al quale non conviene inserire un'aiuola filler.
+const FILLER_MIN_GAP = 60;
+
+/* Sceglie una coltura tappabuchi: bassa, in stagione, non gia presente, non in
+   conflitto con le colture della colonna da riempire e la cui aiuola minima
+   entra nel vuoto disponibile. Restituisce null se nessuna e' adatta. */
+function pickFillerCrop(columnPlantIds, gap) {
+  const present = new Set(state.beds.map((b) => b.plantId));
+  const colPlants = columnPlantIds.map((id) => BYID[id]).filter(Boolean);
+  const seasonalIds = new Set(seminabili().map((p) => p.id));
+  for (const id of FILLER_CROPS) {
+    const p = BYID[id];
+    if (!p || present.has(id) || !seasonalIds.has(id)) continue;
+    if (colPlants.some((cp) => areIncompatible(p, cp))) continue;
+    const minH = Math.max(46, visualPlantRadius(p) * 3 + 18) + BED_GAP;
+    if (minH > gap + 1) continue;
+    return p;
+  }
+  return null;
+}
+
+/* Chiude i vuoti residui di fondo colonna inserendo colture tappabuchi ancorate
+   alla colonna piu corta e cresciute fino a riempire lo spazio (mai overflow,
+   distanze sempre rispettate da computeLayout). Richiede che tutte le colonne
+   siano gia occupate, cosi la larghezza delle aiuole non cambia aggiungendone.
+   E' l'ultimo passo dei flussi che vogliono la serra piena: e' l'unico modo per
+   coprire un vuoto piu piccolo di una fila della coltura gia presente. */
+function fillColumnTailsWithFiller() {
+  let guard = 0;
+  while (guard++ < 40) {
+    const L = computeLayout();
+    if (L.overflow) break;
+    const columnCount = L.columnCount;
+    // Se mancano aiuole per riempire tutte le colonne, aggiungerne cambierebbe
+    // la larghezza (usableBedWidth dipende dal numero di colonne attive): in quel
+    // caso lasciamo fare a expandAutoFillToSpace, non al filler.
+    if (state.beds.length < columnCount) break;
+    const target = L.Li - MARGIN;
+    let shortCol = -1;
+    let maxGap = 0;
+    L.columnHeights.forEach((h, i) => {
+      const gap = target - h;
+      if (gap > maxGap) {
+        maxGap = gap;
+        shortCol = i;
+      }
+    });
+    if (shortCol < 0 || maxGap < FILLER_MIN_GAP) break;
+    const colPlantIds = L.beds
+      .filter((b) => b.columnIndex === shortCol)
+      .map((b) => b.plant.id);
+    const filler = pickFillerCrop(colPlantIds, maxGap);
+    if (!filler) break;
+    state.beds.push({
+      plantId: filler.id,
+      count: 1,
+      layout: "blocco",
+      countLocked: false,
+      col: shortCol
+    });
+    if (computeLayout().overflow) {
+      state.beds.pop();
+      break;
+    }
+    const bed = state.beds[state.beds.length - 1];
+    const step = Math.max(1, rowSizeForPlant(filler));
+    // Cresce a file intere finche entra, poi rifinisce una pianta alla volta
+    // l'ultima sotto-fila: cosi il vuoto viene chiuso quasi del tutto.
+    let rowGuard = 0;
+    while (rowGuard++ < 300) {
+      const beforeCount = bed.count;
+      bed.count += step;
+      if (computeLayout().overflow) {
+        bed.count = beforeCount;
+        break;
+      }
+    }
+    let fineGuard = 0;
+    while (fineGuard++ < 200) {
+      const beforeCount = bed.count;
+      bed.count += 1;
+      if (computeLayout().overflow) {
+        bed.count = beforeCount;
+        break;
+      }
+    }
+  }
+}
+
 /* =========================================================================
    SEZIONE 11 - Auto-riempimento stagionale
    -------------------------------------------------------------------------
@@ -1109,6 +1314,27 @@ function autoFill(options = {}) {
     }
     addAutoCandidate(p);
   }
+  // Passo consociativo attivo: arricchisce il piano con le AMICHE delle colture
+  // gia scelte (es. pomodoro→basilico, carota→cipolla) se di stagione, ammesse
+  // dal profilo (presenti nel pool), non gia inserite e compatibili con tutte.
+  // Cosi il piano nasce con buone consociazioni reali invece di riempirsi solo di
+  // altri esemplari della stessa coltura. Limitato a poche aggiunte bonus.
+  const poolIds = new Set(sortedCandidates.map((cp) => cp.id));
+  const companionCap = minVarieties + 2;
+  for (const bed of state.beds.slice()) {
+    if (state.beds.length >= companionCap) break;
+    const base = BYID[bed.plantId];
+    if (!base) continue;
+    for (const fid of base.amiche || []) {
+      if (state.beds.length >= companionCap) break;
+      if (!poolIds.has(fid)) continue;
+      if (state.beds.some((b) => b.plantId === fid)) continue;
+      const fp = BYID[fid];
+      if (!fp) continue;
+      if (state.beds.some((b) => areIncompatible(fp, BYID[b.plantId]))) continue;
+      addAutoCandidate(fp);
+    }
+  }
   // Secondo passaggio: aggiunge piante saltate solo se non creano nuove
   // incompatibilità con le piante già inserite. In questo modo la serra
   // viene riempita da expandAutoFillToSpace (più esemplari delle colture
@@ -1198,6 +1424,10 @@ function autoFill(options = {}) {
   // Qui, senza limite di diversita, facciamo crescere le colture gia presenti per
   // riempire la terra rimasta libera, cosi la serra non resta mai mezza vuota.
   expandAutoFillToSpace({ respectDiversityLimit: false });
+  // Chiude i vuoti residui di fondo colonna (piu corti di una fila della coltura
+  // presente) con colture tappabuchi: e' l'ultimo tassello del "niente terra
+  // incolta" che l'espansione da sola non puo coprire.
+  fillColumnTailsWithFiller();
   if (state.beds.length === 0) state.autoPlanNotice = "autoPlanEmptySeason";
   // Fissa le colonne decise dal piano automatico: le modifiche manuali successive
   // partiranno da questa disposizione senza rimescolarla.
@@ -1214,6 +1444,7 @@ function autoFill(options = {}) {
    ========================================================================= */
 function loadPreset(key) {
   if (!PRESETS[key]) return;
+  recordHistory();
   state.beds = PRESETS[key].map(([id, cnt]) => ({
     plantId: id,
     count: cnt,
@@ -1228,6 +1459,7 @@ function loadPreset(key) {
   // Completa quindi il preset aumentando solo le colture gia previste, senza
   // introdurne di nuove e senza superare lo spazio realmente disponibile.
   expandAutoFillToSpace({ respectDiversityLimit: false });
+  fillColumnTailsWithFiller();
   commitColumnAssignment();
   saveConfig(true);
   render();

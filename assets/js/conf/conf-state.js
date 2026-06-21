@@ -21,7 +21,11 @@ const state = {
   manualPlanNotice: "",
   // Livello/persona dell'utente: "novizio" | "intermedio" | "esperto".
   // Guida quanta UI mostrare e quanto automatizzare il flusso.
-  livello: "intermedio"
+  livello: "intermedio",
+  // Orientamento al sole: false = lato piu soleggiato (sud) in alto nella mappa
+  // (default), true = sud in basso. Determina da che parte vanno le piante alte
+  // per non fare ombra a quelle basse (anti-ombra).
+  sudInBasso: false
 };
 const LIVELLI = new Set(["novizio", "intermedio", "esperto"]);
 let vegFilter = "all";
@@ -55,6 +59,7 @@ function buildConfigPayload(done = true) {
     autoPlan: state.autoPlan,
     activePreset: state.activePreset,
     livello: state.livello,
+    sudInBasso: state.sudInBasso,
     beds: state.beds.map((bed) => ({
       plantId: bed.plantId,
       count: bed.count,
@@ -102,6 +107,8 @@ function syncClimateControls() {
   document.querySelectorAll("#zoneOpts .opt").forEach((opt) => {
     opt.classList.toggle("on", opt.dataset.zone === state.zona);
   });
+  const sun = document.getElementById("inSole");
+  if (sun) sun.value = state.sudInBasso ? "basso" : "alto";
 }
 
 function syncSizeControls() {
@@ -260,6 +267,8 @@ function chooseLivello(liv) {
     return;
   }
   setLivello(liv);
+  // Cambiare profilo riconfigura il flusso: azzera la cronologia undo.
+  if (typeof resetHistory === "function") resetHistory();
   if (liv === "esperto") {
     // L'esperto vuole il controllo: catalogo completo, scelta a mano.
     vegFilter = "all-beds";

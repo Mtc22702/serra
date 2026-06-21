@@ -1462,6 +1462,21 @@ select:focus {
   grid-template-columns: 1fr;
   gap: 8px;
 }
+/* Riga Annulla/Ripristina: due pulsanti compatti affiancati sotto le azioni. */
+.crops-history-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+.crops-history-row .crop-action-btn {
+  min-height: 44px;
+  justify-content: center;
+  gap: 8px;
+}
+.crops-history-row .crop-action-btn .btn-label {
+  font-weight: 700;
+}
 .crop-action-btn {
   display: flex;
   align-items: center;

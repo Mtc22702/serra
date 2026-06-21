@@ -1495,6 +1495,17 @@ function renderPlantDetailPanel() {
   setConfigDetailTab("overview");
 }
 
+/* Abilita/disabilita i pulsanti Annulla/Ripristina in base allo stato della
+   cronologia (definita in conf-engine.js, disponibile a runtime). */
+function updateUndoRedoButtons() {
+  const undoBtn = document.getElementById("btnUndo");
+  const redoBtn = document.getElementById("btnRedo");
+  if (undoBtn)
+    undoBtn.disabled = typeof canUndo === "function" ? !canUndo() : true;
+  if (redoBtn)
+    redoBtn.disabled = typeof canRedo === "function" ? !canRedo() : true;
+}
+
 function renderWarnings(L) {
   const w = document.getElementById("warnings");
   if (!w) return;

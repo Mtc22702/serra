@@ -406,6 +406,9 @@ function applyLanguage() {
   setOptionText("inZona", "caldo", "zoneWarmTitle");
   setOptionText("inRisc", "no", "unheated");
   setOptionText("inRisc", "si", "heatedOption");
+  setText("#orientLabel", "sunSide");
+  setOptionText("inSole", "alto", "sunTop");
+  setOptionText("inSole", "basso", "sunBottom");
   setOptionText("inPreset", "", "presetDefault");
   setOptionText("inPreset", "insalate", "presetInsalate");
   setOptionText("inPreset", "salsa", "presetSalsa");
@@ -481,6 +484,8 @@ function applyLanguage() {
     mobileGoToScene.setAttribute("aria-label", tx("goToGreenhouseAria"));
   setText("#btnRipristina .btn-label", "restoreAutoFill");
   setText("#btnClear .btn-label", "clearGreenhouse");
+  setText("#btnUndoLabel", "undoAction");
+  setText("#btnRedoLabel", "redoAction");
   updateClearGreenhouseCopy();
   setText("#panelYield h2", "yieldCost");
   setText("#yieldSub", "yieldSub");

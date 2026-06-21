@@ -854,11 +854,15 @@ function buildScene() {
     });
   }
 
-  // --- indicatore giorno/notte coerente con il tema ---
-  g += `<g transform="translate(${vbW - PAD - 2} ${PAD + 18})" opacity="0.9">
+  // --- indicatore giorno/notte coerente con il tema; posizionato sul lato
+  //     soleggiato (sud) secondo l'orientamento scelto: in alto di default,
+  //     in basso quando l'utente imposta il sole in basso. ---
+  const sunY = state.sudInBasso ? vbH - PAD - 30 : PAD + 18;
+  const sunLabelY = state.sudInBasso ? -22 : 30;
+  g += `<g transform="translate(${vbW - PAD - 2} ${sunY})" opacity="0.9">
         <circle r="15" fill="${nightMode ? "#10231f" : "#fff"}" stroke="${nightMode ? "#e7d98d" : "#d9a441"}" stroke-width="${nightMode ? "1.5" : "2"}"/>
         <text x="0" y="5" text-anchor="middle" font-size="16">${nightMode ? "🌙" : "☀️"}</text>
-        <text x="0" y="30" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="${nightMode ? "#e9dfaa" : "#7b6a3a"}">${nightMode ? tx("nightLabel") : tx("compassSouth")}</text>
+        <text x="0" y="${sunLabelY}" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="${nightMode ? "#e9dfaa" : "#7b6a3a"}">${nightMode ? tx("nightLabel") : tx("compassSouth")}</text>
       </g>`;
 
   return {
