@@ -831,8 +831,15 @@ if (LIVELLI.has(_bootLivello)) {
   clearBootParams();
   scrollToGuidedIntroForLivello(_bootLivello);
 } else {
+  // shouldImportCart() va incluso: l'ingresso dal kit/carrello della homepage usa
+  // configuratore.html?import=cart SENZA parametro livello, quindi finisce qui.
+  // Senza questa condizione, un utente senza config salvata (es. primo accesso)
+  // non importava il carrello e ricadeva sull'auto-riempimento mensile.
   const _bootIntentApplied =
-    isGuidedBoot() || isFreeProjectBoot() || _bootCfg?.done
+    isGuidedBoot() ||
+    isFreeProjectBoot() ||
+    shouldImportCart() ||
+    _bootCfg?.done
       ? applyBootIntent()
       : false;
 
