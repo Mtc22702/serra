@@ -4866,6 +4866,63 @@ body.cart-open .cart-nudge {
   background: rgba(226, 168, 47, 0.18);
 }
 
+/* ===== Consociazioni potenziate (avvisi amiche/nemiche) ===== */
+.companion-score {
+  align-items: center;
+}
+.companion-score-body {
+  flex: 1;
+}
+.companion-score-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+.companion-score-val {
+  font-weight: 600;
+}
+.companion-score-bar {
+  margin-top: 4px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(31, 58, 38, 0.12);
+  overflow: hidden;
+}
+.companion-score-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--verde-chiaro, #5b9c4a);
+}
+.companion-score--review .companion-score-bar > span {
+  background: #d9893f;
+}
+.companion-score--good .companion-score-bar > span {
+  background: #c7b13a;
+}
+.companion-reason {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+.companion-suggest {
+  font-size: 0.82rem;
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: var(--raggio, 8px);
+  background: rgba(91, 156, 74, 0.12);
+}
+.veg--conflict {
+  box-shadow: inset 3px 0 0 rgba(217, 137, 63, 0.85);
+}
+.veg-conflict {
+  margin-left: 4px;
+  font-size: 0.82em;
+  vertical-align: middle;
+}
+
 @media print {
   html,
   body {

@@ -4,7 +4,7 @@
    Disegna lista colture, pannelli laterali, scheda pianta, avvisi, riepilogo
    economico/stagionale e versione stampabile.
    ========================================================================= */
-function vegCardHTML(p, inb, outOfSeason = false) {
+function vegCardHTML(p, inb, outOfSeason = false, inConflict = false) {
   const diff = DIFFICULTY[p.id] || 2;
   const diffLabel =
     diff === 1
@@ -28,12 +28,15 @@ function vegCardHTML(p, inb, outOfSeason = false) {
     const lockBadge = locked
       ? `<span class="veg-lock-badge">${tx("qtyLocked")}</span>`
       : `<span class="veg-auto-badge">${tx("qtyAuto")}</span>`;
-    return `<div class="veg in ${locked ? "qty-locked" : ""}">
+    const conflictBadge = inConflict
+      ? `<span class="veg-conflict" title="${tx("companion.conflict_badge")}" aria-label="${tx("companion.conflict_badge")}">⚠️</span>`
+      : "";
+    return `<div class="veg in ${locked ? "qty-locked" : ""}${inConflict ? " veg--conflict" : ""}">
     <div class="veg-in-main">
       <span class="ico" role="img" aria-label="${plantText(p, "nome")}">${FRUIT_EMOJI[p.id] || "🌱"}</span>
       <div class="nm">
         <div class="veg-nameline">
-          <span class="veg-name">${plantText(p, "nome")}</span>${offSeasonBadge}
+          <span class="veg-name">${plantText(p, "nome")}</span>${offSeasonBadge}${conflictBadge}
         </div>
         <div class="veg-tags">
           <span class="vtag">${soleIco}</span>
@@ -174,10 +177,18 @@ function renderVegList() {
           <button type="button" data-upgrade-level="intermedio">${tx("noviceCropsUpgrade")}</button>
         </div>`
       : "";
+  const conflictIds = analyzeCompanions().conflictIds;
   vl.innerHTML =
     noviceUpgrade +
     filtered
-      .map((p) => vegCardHTML(p, present.has(p.id), !semSet.has(p.id)))
+      .map((p) =>
+        vegCardHTML(
+          p,
+          present.has(p.id),
+          !semSet.has(p.id),
+          conflictIds.has(p.id)
+        )
+      )
       .join("");
   updateVegListScrollAffordance();
 }
@@ -1488,24 +1499,40 @@ function renderWarnings(L) {
   const w = document.getElementById("warnings");
   if (!w) return;
   let out = "";
-  // incompatibilità
-  const ids = state.beds.map((b) => b.plantId);
-  const seen = new Set(),
-    pairs = [];
-  for (let i = 0; i < state.beds.length; i++)
-    for (let j = i + 1; j < state.beds.length; j++) {
-      const a = BYID[ids[i]],
-        b = BYID[ids[j]];
-      if (a.nemiche.includes(b.id) || b.nemiche.includes(a.id)) {
-        const key = [a.id, b.id].sort().join("|");
-        if (!seen.has(key)) {
-          seen.add(key);
-          pairs.push([plantText(a, "nome"), plantText(b, "nome")]);
-        }
-      }
+  // Analisi consociazioni potenziata (conf-companions.js).
+  const analysis = analyzeCompanions();
+  const presentIds = state.beds.map((b) => b.plantId);
+  // Banner punteggio di compatibilità del piano.
+  if (state.beds.length >= 2) {
+    const ratingLabel = tx("companion.rating_" + analysis.rating);
+    out += `<div class="warn companion-score companion-score--${analysis.rating}">
+      <span class="i">🧭</span>
+      <div class="companion-score-body">
+        <div class="companion-score-top"><b>${tx("companion.score_label")}</b><span class="companion-score-val">${analysis.score}/100 · ${ratingLabel}</span></div>
+        <div class="companion-score-bar"><span style="width:${analysis.score}%"></span></div>
+      </div>
+    </div>`;
+  }
+  // Incompatibilità: titolo + motivazione + suggerimento alternativo.
+  analysis.badPairs.forEach((pair) => {
+    const a = plantText(pair.a, "nome");
+    const b = plantText(pair.b, "nome");
+    const sugg = companionSuggestionFor(pair, presentIds);
+    let suggHtml = "";
+    if (sugg) {
+      const key = sugg.offSeason
+        ? "companion.suggest_offseason"
+        : "companion.suggest";
+      suggHtml = `<div class="companion-suggest">💡 ${tx(key, {
+        friend: plantText(sugg.friend, "nome"),
+        base: plantText(sugg.base, "nome")
+      })}</div>`;
     }
-  pairs.forEach(([a, b]) => {
-    out += `<div class="warn bad"><span class="i">⚠️</span><div>${tx("badCompanion", { a, b })}</div></div>`;
+    out += `<div class="warn bad"><span class="i">⚠️</span><div>
+        <div>${tx("badCompanion", { a, b })}</div>
+        <div class="companion-reason">${tx("companion.bad_reason")}</div>
+        ${suggHtml}
+      </div></div>`;
   });
   if (L.overflow)
     out += `<div class="warn bad"><span class="i">📏</span><div>${tx("overflowWarning")}</div></div>`;
@@ -1519,32 +1546,18 @@ function renderWarnings(L) {
       state.manualPlanNotice === "manualCountRejected";
     out += `<div class="warn ${manualBad ? "bad" : "tip"}"><span class="i">${manualBad ? "⚠️" : "ℹ️"}</span><div>${tx(state.manualPlanNotice)}</div></div>`;
   }
-  // suggerimenti amiche presenti
-  const goodPairs = [];
-  const seen2 = new Set();
-  for (let i = 0; i < state.beds.length; i++)
-    for (let j = i + 1; j < state.beds.length; j++) {
-      const a = BYID[ids[i]],
-        b = BYID[ids[j]];
-      if (a.amiche.includes(b.id) || b.amiche.includes(a.id)) {
-        const key = [a.id, b.id].sort().join("|");
-        if (!seen2.has(key)) {
-          seen2.add(key);
-          goodPairs.push([plantText(a, "nome"), plantText(b, "nome")]);
-        }
-      }
-    }
-  if (goodPairs.length) {
-    const ex = goodPairs
+  // Sinergie presenti: coppie amiche + breve motivazione.
+  if (analysis.goodPairs.length) {
+    const ex = analysis.goodPairs
       .slice(0, 2)
-      .map(([a, b]) => a + " + " + b)
+      .map((g) => plantText(g.a, "nome") + " + " + plantText(g.b, "nome"))
       .join(", ");
-    out += `<div class="warn tip"><span class="i">🤝</span><div>${tx(
-      "goodCompanions",
-      {
-        pairs: `${ex}${goodPairs.length > 2 ? "…" : ""}`
-      }
-    )}</div></div>`;
+    out += `<div class="warn tip"><span class="i">🤝</span><div>
+        <div>${tx("goodCompanions", {
+          pairs: `${ex}${analysis.goodPairs.length > 2 ? "…" : ""}`
+        })}</div>
+        <div class="companion-reason">${tx("companion.good_reason")}</div>
+      </div></div>`;
   }
   w.innerHTML = out;
 }

@@ -1257,6 +1257,18 @@
         "calendar.sow": "Semina",
         "calendar.harvest": "Raccolta",
         "calendar.this_month": "questo mese",
+        "companion.score_label": "Compatibilità del piano",
+        "companion.rating_great": "Ottima",
+        "companion.rating_good": "Buona",
+        "companion.rating_review": "Da rivedere",
+        "companion.bad_reason":
+          "Tendono a ostacolarsi: competono per spazio e nutrienti o attirano gli stessi parassiti.",
+        "companion.good_reason":
+          "Si aiutano a vicenda: migliorano crescita, sapore o tengono lontani i parassiti.",
+        "companion.suggest": "Prova invece {friend} (amica di {base}).",
+        "companion.suggest_offseason":
+          "Valuta {friend} (amica di {base}), da seminare nella sua stagione.",
+        "companion.conflict_badge": "Coltura coinvolta in un conflitto",
         language: "Lingua",
         selected: "Selezionata",
         openSetup: "Riapri configurazione guidata",
@@ -1636,6 +1648,18 @@
         "calendar.sow": "Semănat",
         "calendar.harvest": "Recoltat",
         "calendar.this_month": "luna aceasta",
+        "companion.score_label": "Compatibilitatea planului",
+        "companion.rating_great": "Excelentă",
+        "companion.rating_good": "Bună",
+        "companion.rating_review": "De revizuit",
+        "companion.bad_reason":
+          "Tind să se stânjenească: concurează pentru spațiu și nutrienți sau atrag aceiași dăunători.",
+        "companion.good_reason":
+          "Se ajută reciproc: îmbunătățesc creșterea, gustul sau țin dăunătorii la distanță.",
+        "companion.suggest": "Încearcă în schimb {friend} (prietenă cu {base}).",
+        "companion.suggest_offseason":
+          "Ia în calcul {friend} (prietenă cu {base}), de semănat în sezonul ei.",
+        "companion.conflict_badge": "Cultură implicată într-un conflict",
         language: "Limbă",
         selected: "Selectată",
         openSetup: "Redeschide configurarea ghidată",
