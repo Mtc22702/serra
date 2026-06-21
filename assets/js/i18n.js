@@ -1560,8 +1560,6 @@
         "cart.seeds_per_pack": "{count} semi/busta",
         "cart.per_pack": "busta",
         "cart.total": "Totale stimato",
-        "cart.species_one": "1 specie",
-        "cart.species_many": "{count} specie",
         "cart.export_btn": "🛒 Aggiungi i semi al carrello",
         "cart.nudge_title": "Semi aggiunti al carrello",
         "cart.nudge_meta_one": "1 varietà aggiunta",
@@ -1905,8 +1903,6 @@
         "cart.seeds_per_pack": "{count} sem./pungă",
         "cart.per_pack": "pungă",
         "cart.total": "Total estimat",
-        "cart.species_one": "1 specie",
-        "cart.species_many": "{count} specii",
         "cart.export_btn": "🛒 Adaugă semințele în coș",
         "cart.nudge_title": "Semințe adăugate în coș",
         "cart.nudge_meta_one": "1 soi adăugat",
@@ -1939,5 +1935,20 @@
       }
     }
   };
+  /* Unificazione traduzioni UI: home e configuratore leggono da un UNICO
+     dizionario. I blocchi "index" e "configurator" qui sopra restano solo come
+     sorgente organizzata per area, ma vengono fusi in una sola mappa per lingua:
+     ogni chiave diventa disponibile in tutta l'app, senza più duplicati.
+     In caso di chiave presente in entrambi i blocchi vince "index" (storefront),
+     così il carrello mostra lo stesso testo nelle due pagine. */
+  const _uiSources = [shared.configurator, shared.index];
+  shared.ui = {
+    it: Object.assign({}, ..._uiSources.map((s) => s.it || {})),
+    ro: Object.assign({}, ..._uiSources.map((s) => s.ro || {}))
+  };
+  /* Alias retro-compatibili: qualsiasi riferimento a .index o .configurator
+     risolve ora sullo stesso dizionario unificato. */
+  shared.index = shared.ui;
+  shared.configurator = shared.ui;
   global.SERRA_I18N = Object.assign({}, global.SERRA_I18N || {}, shared);
 })(window);

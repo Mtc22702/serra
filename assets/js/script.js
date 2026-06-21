@@ -7070,7 +7070,7 @@ function updateConfCartUI() {
           <span class="cart-item-meta">${plantText(p, "nota") || ""}</span>
           <span class="cart-item-pack">
             <span>${bustLabel} · ${seedLabel}</span>
-            <b>${formatMoney(pd.price)}/${priceLabel}</b>
+            <b>${formatMoney(pd.price)}${priceLabel}</b>
           </span>
         </span>
         <button class="cart-item-remove" onclick="removeFromConfCart('${id}')" title="${tx("remove")}">✕</button>
