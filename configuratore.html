@@ -920,6 +920,29 @@
                 <span class="btn-label" id="projectsBtnLabel" data-i18n-conf="projects.button">I miei progetti</span>
               </button>
               <button
+                class="btn btn-soft btn-icon view-calendar-btn"
+                id="btnCalendar"
+                type="button"
+                title="Calendario di manutenzione"
+                onclick="openCalendarModal()"
+              >
+                <svg
+                  class="btn-ico"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span class="btn-label" data-i18n-conf="calendar.button">Calendario</span>
+              </button>
+              <button
                 class="btn btn-soft btn-icon view-print-btn"
                 id="btnStampa"
                 type="button"
@@ -1328,6 +1351,21 @@
       </div>
     </div>
 
+    <div class="projects-modal" id="calendarModal" role="dialog" aria-modal="true" aria-labelledby="calendarModalTitle" hidden>
+      <div class="projects-backdrop" onclick="closeCalendarModal()"></div>
+      <div class="projects-dialog projects-dialog--wide">
+        <div class="projects-head">
+          <div>
+            <h2 class="projects-title" id="calendarModalTitle" data-i18n-conf="calendar.title">Calendario di manutenzione</h2>
+            <small class="calendar-subtitle" id="calendarSubtitle"></small>
+          </div>
+          <button class="projects-close" type="button" onclick="closeCalendarModal()" aria-label="Chiudi">✕</button>
+        </div>
+        <p class="projects-intro" data-i18n-conf="calendar.intro">Semina e raccolta stimate dalle colture del progetto, mese per mese.</p>
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+    </div>
+
     <div class="cart-overlay" id="cartOverlay">
       <div class="cart-backdrop" onclick="closeConfCart()"></div>
       <div class="cart-drawer">
@@ -1567,6 +1605,7 @@
         "assets/js/conf/conf-draw.js",
         "assets/js/conf/conf-ui.js",
         "assets/js/conf/conf-engine.js",
+        "assets/js/conf/conf-calendar.js",
         "assets/js/conf/conf-app.js"
       ].forEach(function (src) {
         document.write(

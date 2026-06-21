@@ -1248,6 +1248,15 @@
         "projects.delete_confirm":
           "Eliminare questo progetto? L'azione non è reversibile.",
         "projects.cannot_delete_last": "Non puoi eliminare l'unico progetto.",
+        "calendar.button": "Calendario",
+        "calendar.title": "Calendario di manutenzione",
+        "calendar.intro":
+          "Semina e raccolta stimate dalle colture del progetto, mese per mese.",
+        "calendar.empty":
+          "Aggiungi colture alla serra per vedere il piano di semina e raccolta.",
+        "calendar.sow": "Semina",
+        "calendar.harvest": "Raccolta",
+        "calendar.this_month": "questo mese",
         language: "Lingua",
         selected: "Selezionata",
         openSetup: "Riapri configurazione guidata",
@@ -1618,6 +1627,15 @@
         "projects.delete_confirm":
           "Ștergi acest proiect? Acțiunea este ireversibilă.",
         "projects.cannot_delete_last": "Nu poți șterge singurul proiect.",
+        "calendar.button": "Calendar",
+        "calendar.title": "Calendar de întreținere",
+        "calendar.intro":
+          "Semănat și recoltat estimate din culturile proiectului, lună de lună.",
+        "calendar.empty":
+          "Adaugă culturi în seră pentru a vedea planul de semănat și recoltat.",
+        "calendar.sow": "Semănat",
+        "calendar.harvest": "Recoltat",
+        "calendar.this_month": "luna aceasta",
         language: "Limbă",
         selected: "Selectată",
         openSetup: "Redeschide configurarea ghidată",

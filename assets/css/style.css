@@ -4780,6 +4780,92 @@ body.cart-open .cart-nudge {
   border-top: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
 }
 
+/* ===== Calendario di manutenzione ===== */
+.projects-dialog--wide {
+  width: min(820px, 100%);
+}
+.calendar-subtitle {
+  display: block;
+  color: var(--terra, #6b5440);
+  font-size: 0.82rem;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+  padding: 4px 18px 18px;
+  overflow-y: auto;
+}
+.cal-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--terra, #6b5440);
+  padding: 24px 12px;
+}
+.cal-month {
+  border: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
+  border-radius: var(--raggio, 8px);
+  padding: 8px 10px;
+  background: var(--carta, #fffdf6);
+  min-height: 64px;
+}
+.cal-month.is-now {
+  border-color: rgba(91, 156, 74, 0.6);
+  box-shadow: 0 0 0 2px rgba(91, 156, 74, 0.18);
+}
+.cal-month-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.cal-month-name {
+  font-weight: 600;
+  color: var(--verde-scuro, #1f3a26);
+}
+.cal-now-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--verde, #2f6b3a);
+  background: rgba(91, 156, 74, 0.18);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+.cal-month-empty {
+  margin: 0;
+  color: rgba(107, 84, 64, 0.5);
+}
+.cal-task {
+  margin-bottom: 6px;
+}
+.cal-task-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--terra, #6b5440);
+  margin-bottom: 2px;
+}
+.cal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.cal-chip {
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(31, 58, 38, 0.06);
+  color: var(--verde-scuro, #1f3a26);
+}
+.cal-chip--semina {
+  background: rgba(91, 156, 74, 0.16);
+}
+.cal-chip--raccolta {
+  background: rgba(226, 168, 47, 0.18);
+}
+
 @media print {
   html,
   body {
