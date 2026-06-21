@@ -466,7 +466,15 @@ function initConfig() {
   syncClimateControls();
   if (saved && hasSharedLang && saved.lang !== state.lang)
     saveConfig(Boolean(saved.done));
-  setStartModalVisible(!saved?.done && !isGuidedBoot() && !isFreeProjectBoot());
+  // Non mostrare il modale di avvio quando si entra con un intento esplicito
+  // (percorso guidato, progetto vuoto esperto o import del carrello/kit): in
+  // quei casi il piano viene applicato subito e il modale sarebbe solo d'intralcio.
+  setStartModalVisible(
+    !saved?.done &&
+      !isGuidedBoot() &&
+      !isFreeProjectBoot() &&
+      !shouldImportCart()
+  );
 }
 
 /* =========================================================================
