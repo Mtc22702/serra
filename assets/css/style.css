@@ -1442,7 +1442,6 @@ select:focus {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  padding-bottom: 2px;
   border-bottom: 1px solid rgba(47, 107, 58, 0.1);
   padding-bottom: 10px;
 }
