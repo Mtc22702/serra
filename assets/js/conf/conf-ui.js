@@ -287,7 +287,7 @@ function render() {
     `📅 ${monthName(state.mese)}`;
   document.getElementById("tagArea").textContent =
     `📐 ${state.larghezza}×${state.lunghezza} m`;
-  // badge mese sul pulsante "Riempi la serra"
+  // badge mese sul pulsante "Rigenera piano di stagione"
   const bmt = document.getElementById("btnMonthTag");
   if (bmt) bmt.textContent = monthName(state.mese);
   updatePresetAppliedUI();
@@ -339,7 +339,7 @@ function render() {
     const b = emptyBanner.querySelector(".seb-copy b");
     const s = emptyBanner.querySelector(".seb-copy span");
     if (b) b.textContent = tx("emptyBannerTitle");
-    // Il novizio non ha il pulsante "Riempi la serra" né la card Personalizza
+    // Il novizio non ha il pulsante "Rigenera piano di stagione" né la card Personalizza
     // completa: gli mostriamo un messaggio adatto al suo flusso automatico.
     if (s)
       s.innerHTML = tx(

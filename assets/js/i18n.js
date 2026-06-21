@@ -1407,7 +1407,7 @@
         sunMap: "Mappa sole",
         waterMap: "Mappa acqua",
         heightMap: "Altezza piante",
-        restoreAutoFill: "Riempi la serra",
+        restoreAutoFill: "Rigenera piano di stagione",
         arrangeSelected: "Sistema senza riempire",
         arrangeSelectedHint: "Riordina le aiuole e non cambia i numeri.",
         arrangeSelectedTitle:
@@ -1531,7 +1531,7 @@
         emptyGreenhouse: "Serra vuota",
         emptyBannerTitle: "La serra è vuota",
         emptyBannerCopy:
-          "Premi <strong>Riempi la serra</strong> per iniziare in automatico, oppure scegli le piante una per una dalla card <strong>Personalizza</strong>.",
+          "Premi <strong>Rigenera piano di stagione</strong> per iniziare in automatico, oppure scegli le piante una per una dalla card <strong>Personalizza</strong>.",
         emptyBannerCopyNovice:
           "La serra si riempie da sola: cambia <strong>mese</strong>, <strong>zona</strong> o <strong>misure</strong> e ti prepariamo subito un nuovo orto di stagione.",
         confirmNoviceReset:
@@ -1545,7 +1545,7 @@
         emptyStatus: "vuota",
         scale: "Serra {w}×{l} m · usati {used} m su {l} m · {status}",
         noBeds:
-          "Nessuna pianta ancora — aggiungi con <b>+</b> o usa <em>Riempi la serra</em>.",
+          "Nessuna pianta ancora — aggiungi con <b>+</b> o usa <em>Rigenera piano di stagione</em>.",
         addEstimate: "Aggiungi piante alla serra per vedere la stima di resa.",
         daysShort: "gg",
         about: "circa",
@@ -1822,7 +1822,7 @@
         sunMap: "Hartă soare",
         waterMap: "Hartă apă",
         heightMap: "Înălțimea plantelor",
-        restoreAutoFill: "Umple sera",
+        restoreAutoFill: "Regenerează planul de sezon",
         arrangeSelected: "Aranjează fără umplere",
         arrangeSelectedHint: "Reordonează straturile fără să schimbe numerele.",
         arrangeSelectedTitle:
@@ -1945,7 +1945,7 @@
         emptyGreenhouse: "Seră goală",
         emptyBannerTitle: "Sera este goală",
         emptyBannerCopy:
-          "Apasă <strong>Umple sera</strong> pentru a porni automat, sau alege plantele una câte una din cardul <strong>Personalizează</strong>.",
+          "Apasă <strong>Regenerează planul de sezon</strong> pentru a porni automat, sau alege plantele una câte una din cardul <strong>Personalizează</strong>.",
         emptyBannerCopyNovice:
           "Sera se umple singură: schimbă <strong>luna</strong>, <strong>zona</strong> sau <strong>dimensiunile</strong> și îți pregătim imediat o grădină de sezon.",
         confirmNoviceReset:
@@ -1959,7 +1959,7 @@
         emptyStatus: "goală",
         scale: "Seră {w}×{l} m · folosiți {used} m din {l} m · {status}",
         noBeds:
-          "Nicio plantă încă — adaugă cu <b>+</b> sau folosește <em>Umple sera</em>.",
+          "Nicio plantă încă — adaugă cu <b>+</b> sau folosește <em>Regenerează planul de sezon</em>.",
         addEstimate: "Adaugă plante în seră pentru a vedea estimarea recoltei.",
         daysShort: "zile",
         about: "aprox.",

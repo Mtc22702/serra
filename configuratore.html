@@ -9,7 +9,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versione app e percorso degli asset: imposta il token di cache busting. -->
     <script>
-      window.SERRA_APP_VERSION = "2026-06-21-163";
+      window.SERRA_APP_VERSION = "2026-06-21-164";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -717,7 +717,7 @@
                 <button
                   class="btn btn-primary btn-icon crops-fill-main-btn"
                   id="btnRipristina"
-                  title="Riempi automaticamente la serra con le colture di stagione"
+                  title="Rigenera da capo il piano automatico con le colture di stagione (sostituisce le modifiche manuali)"
                 >
                   <svg
                     class="btn-ico"
@@ -728,11 +728,10 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <path d="M12 22V12" />
-                    <path d="M12 12C9 12 6 9 6 6c3 0 6 3 6 6z" />
-                    <path d="M12 12c3 0 6-3 6-6-3 0-6 3-6 6z" />
+                    <path d="M21.5 2v6h-6" />
+                    <path d="M21.34 15.57a10 10 0 1 1-.57-8.38" />
                   </svg>
-                  <span class="btn-label">Riempi la serra</span>
+                  <span class="btn-label">Rigenera piano di stagione</span>
                   <span
                     class="btn-month-tag"
                     id="btnMonthTag"
@@ -1045,9 +1044,9 @@
           <div class="seb-copy">
             <b>La serra è&nbsp;vuota</b>
             <span
-              >Premi <strong>Riempi la serra</strong> per iniziare subito in
-              automatico, oppure scegli le piante una per una dalla card
-              <strong>Personalizza</strong>.</span
+              >Premi <strong>Rigenera piano di stagione</strong> per iniziare
+              subito in automatico, oppure scegli le piante una per una dalla
+              card <strong>Personalizza</strong>.</span
             >
           </div>
         </div>
@@ -1198,7 +1197,7 @@
                     <button
                       class="crop-action-btn crop-action-btn--primary"
                       id="btnFillSelected"
-                      title="Riempi la serra usando solo le piante già inserite"
+                      title="Riempi gli spazi vuoti usando solo le piante già inserite"
                     >
                       <span class="crop-action-icon" aria-hidden="true">
                         <svg

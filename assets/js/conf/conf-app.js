@@ -194,8 +194,8 @@ function initEvents() {
     if (state.livello === "novizio") return;
     const msg =
       state.lang === "ro"
-        ? "Golești sera? Folosește «Umple sera» pentru a o reface."
-        : "Svuoti la serra? Usa «Riempi la serra» per riportarla com'era.";
+        ? "Golești sera? Folosește «Regenerează planul de sezon» pentru a o reface."
+        : "Svuoti la serra? Usa «Rigenera piano di stagione» per riportarla com'era.";
     if (!confirm(msg)) return;
     recordHistory();
     state.beds = [];
