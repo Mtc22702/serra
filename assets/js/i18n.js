@@ -1587,6 +1587,8 @@
           "Questa quantità non entra nello spazio disponibile: ho mantenuto il valore precedente.",
         manualCountAdjusted:
           "Ho fatto spazio alla quantità scelta riducendo alcune colture automatiche.",
+        manualCountBelowMin:
+          "Ho fatto spazio alla quantità scelta, ma per riuscirci ho ridotto qualche altra coltura sotto la sua quantità consigliata. Valuta se ingrandire la serra.",
         addNoSpace:
           "Non c'è spazio per questa coltura: riduci o rimuovi altre piante, oppure ingrandisci la serra.",
         badCompanion:
@@ -1994,6 +1996,8 @@
           "Această cantitate nu încape în spațiul disponibil: am păstrat valoarea anterioară.",
         manualCountAdjusted:
           "Am făcut loc pentru cantitatea aleasă reducând câteva culturi automate.",
+        manualCountBelowMin:
+          "Am făcut loc pentru cantitatea aleasă, dar pentru asta am redus câteva culturi sub cantitatea recomandată. Ia în calcul mărirea serei.",
         addNoSpace:
           "Nu este loc pentru această cultură: redu sau elimină alte plante ori mărește sera.",
         badCompanion:

@@ -383,9 +383,14 @@ function flexibleCropReductionCandidates(layout, lockedPlantId, options = {}) {
     );
 }
 
+/* Segnala se l'ultima riduzione ha dovuto portare qualche coltura sotto il suo
+   minimo agronomico per far spazio alla quantita bloccata dall'utente. */
+let lastFlexibleReductionBelowMinimum = false;
+
 /* Quando l'utente aumenta una quantita manuale, libera spazio riducendo prima
    le colture automatiche con piu surplus rispetto al loro minimo. */
 function reduceFlexibleCropsForLockedChange(lockedPlantId) {
+  lastFlexibleReductionBelowMinimum = false;
   let guard = 0;
   while (computeLayout().overflow && guard < 700) {
     const layout = computeLayout();
@@ -404,6 +409,9 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
       item.bed.count - Math.min(step, item.surplus)
     );
     if (item.bed.count === before) break;
+    // Se questa coltura e' finita sotto il suo minimo sano, lo annotiamo per
+    // avvisare l'utente in modo trasparente (invece di degradarla in silenzio).
+    if (item.bed.count < item.minCount) lastFlexibleReductionBelowMinimum = true;
     rebalanceManualLayoutOnly();
     guard++;
   }
@@ -428,6 +436,7 @@ function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
       )
     );
   };
+  lastFlexibleReductionBelowMinimum = false;
   rebalanceManualLayoutOnly();
   if (computeLayout().overflow) {
     reduceFlexibleCropsForLockedChange(lockedPlantId);
@@ -440,7 +449,8 @@ function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
     restoreBedsSnapshot(beforeSnapshot);
     return "rejected";
   }
-  return hasFlexibleAdjustments() ? "adjusted" : "accepted";
+  if (!hasFlexibleAdjustments()) return "accepted";
+  return lastFlexibleReductionBelowMinimum ? "adjustedBelowMin" : "adjusted";
 }
 
 /* Bilanciamento centrale del layout: usato da auto-riempimento, aggiunte,
@@ -537,7 +547,29 @@ function addPlant(id) {
   if (noSpace) alert(tx("addNoSpace"));
 }
 
-/* Rimozione manuale: non riempie automaticamente lo spazio liberato. */
+/* Decisione di prodotto sul riempimento dello spazio liberato da una modifica
+   manuale (rimozione di una coltura o riduzione di una quantita): i profili
+   guidati (novizio e intermedio) non devono mai restare con terra incolta, quindi
+   il vuoto viene ripiantato in automatico espandendo le colture flessibili.
+   L'esperto invece mantiene il controllo manuale e riempie con il pulsante
+   "Riempi spazi vuoti" quando lo decide lui. */
+function shouldAutoRefillFreedSpace() {
+  return state.livello !== "esperto";
+}
+
+/* Riempie lo spazio liberato espandendo solo le colture flessibili (non bloccate),
+   senza toccare le quantita impostate a mano e rispettando le distanze botaniche
+   (le distanze restano garantite da computeLayout/centeredSlots: qui si aggiungono
+   solo file/piante che ci stanno davvero, mai piante piu fitte del loro passo). */
+function fillFreedSpacePreservingLocks() {
+  expandAutoFillToSpace({
+    skipLockedCounts: true,
+    respectDiversityLimit: false
+  });
+}
+
+/* Rimozione manuale: per i profili guidati riempie lo spazio liberato (niente
+   terra incolta), per l'esperto lo lascia libero al controllo manuale. */
 function removePlantById(id) {
   const index = state.beds.findIndex((b) => b.plantId === id);
   if (index < 0) return;
@@ -546,9 +578,10 @@ function removePlantById(id) {
   state.manualPlanNotice = "";
   if (state.selected === index) state.selected = -1;
   else if (state.selected > index) state.selected -= 1;
-  // expandToSpace=false: rimuovere una pianta non deve far espandere le piante rimanenti,
-  // simmetricamente a addPlant che usa lo stesso flag.
-  autoBalanceLayout(true, false, {
+  // expandToSpace dipende dal profilo: guidato riempie il vuoto lasciato dalla
+  // coltura rimossa, esperto lo lascia libero (riempimento manuale on demand).
+  const refill = shouldAutoRefillFreedSpace();
+  autoBalanceLayout(true, refill, {
     preserveLockedCounts: true,
     expandLockedCounts: false
   });
@@ -624,6 +657,30 @@ function fillSelectedPlants() {
   render();
 }
 
+/* Conclude una modifica manuale di quantita: per i profili guidati ripiana lo
+   spazio eventualmente liberato (riduzioni), imposta l'avviso corretto e
+   ridisegna. Condiviso da +/- e input numerico per non duplicare la logica. */
+function finalizeManualCountChange(fitResult, selectedPlant) {
+  // Profili guidati: se la modifica ha liberato spazio (tipico di una riduzione)
+  // lo si ripianta subito espandendo le colture flessibili, cosi non resta terra
+  // incolta. L'esperto mantiene il vuoto al suo controllo manuale.
+  if (fitResult !== "rejected" && shouldAutoRefillFreedSpace()) {
+    fillFreedSpacePreservingLocks();
+  }
+  state.manualPlanNotice =
+    fitResult === "rejected"
+      ? "manualCountRejected"
+      : fitResult === "adjustedBelowMin"
+        ? "manualCountBelowMin"
+        : fitResult === "adjusted"
+          ? "manualCountAdjusted"
+          : "";
+  restoreSelection(selectedPlant);
+  commitColumnAssignment();
+  saveConfig(true);
+  render();
+}
+
 /* Controlli quantita (+/-): ogni modifica diventa manuale e viene protetta. */
 function changePlantCount(id, delta) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
@@ -635,16 +692,7 @@ function changePlantCount(id, delta) {
   bed.countLocked = true;
   state.autoPlan = false;
   const fitResult = fitLockedCountChange(id, before);
-  state.manualPlanNotice =
-    fitResult === "rejected"
-      ? "manualCountRejected"
-      : fitResult === "adjusted"
-        ? "manualCountAdjusted"
-        : "";
-  restoreSelection(selectedPlant);
-  commitColumnAssignment();
-  saveConfig(true);
-  render();
+  finalizeManualCountChange(fitResult, selectedPlant);
 }
 
 /* Input numerico e slider quantita: stessa regola dei +/- ma con valore diretto. */
@@ -659,16 +707,7 @@ function setPlantCount(id, value) {
   bed.countLocked = true;
   state.autoPlan = false;
   const fitResult = fitLockedCountChange(id, before);
-  state.manualPlanNotice =
-    fitResult === "rejected"
-      ? "manualCountRejected"
-      : fitResult === "adjusted"
-        ? "manualCountAdjusted"
-        : "";
-  restoreSelection(selectedPlant);
-  commitColumnAssignment();
-  saveConfig(true);
-  render();
+  finalizeManualCountChange(fitResult, selectedPlant);
 }
 
 /* Utility del piano automatico: percorso compatto, punteggio di spazio vuoto
@@ -871,6 +910,55 @@ function expandAutoFillToSpace(options = {}) {
     state.beds[best.index].count = best.count;
     fineGuard++;
   }
+
+  // Phase 3: riempi la terra incolta DENTRO le aiuole. Un'aiuola con poche piante
+  // viene disegnata piu alta del necessario per leggibilita (minVisualBedH): resta
+  // spazio verticale vuoto al suo interno che le fasi 1-2 non toccano, perche
+  // aggiungere file qui non cambia l'altezza della colonna (e quindi nemmeno il
+  // punteggio di vuoto fra colonne). Qui aggiungiamo file intere SOLO se entrano
+  // in quell'altezza gia riservata: la colonna non cresce (niente overflow) e il
+  // passo tra le file resta quello botanico (p.d), perche le posizioni sono sempre
+  // distribuite da centeredSlots al passo corretto.
+  fillVisualPaddingRows({ skipLockedCounts, respectDiversityLimit });
+}
+
+/* Riempie lo spazio vuoto interno alle aiuole disegnate piu alte del necessario
+   (padding di leggibilita), aggiungendo file complete che entrano senza far
+   crescere l'altezza dell'aiuola. Sicura per definizione: non crea overflow,
+   rispetta le distanze e salta le quantita bloccate e le colture a fila. */
+function fillVisualPaddingRows(options = {}) {
+  const skipLockedCounts = options.skipLockedCounts === true;
+  const respectDiversityLimit = options.respectDiversityLimit === true;
+  state.beds.forEach((bed, index) => {
+    if (bed.layout === "fila") return;
+    if (skipLockedCounts && bed.countLocked) return;
+    const plant = BYID[bed.plantId];
+    if (!plant) return;
+    const step = Math.max(1, rowSizeForPlant(plant));
+    let guard = 0;
+    while (guard++ < 100) {
+      if (
+        respectDiversityLimit &&
+        bed.count + step > autoExpansionLimitForPlant(plant)
+      ) {
+        break;
+      }
+      const before = computeLayout();
+      const bedBefore = before.beds.find((b) => b.idx === index);
+      if (!bedBefore || before.overflow) break;
+      const prevCount = bed.count;
+      bed.count += step;
+      const after = computeLayout();
+      const bedAfter = after.beds.find((b) => b.idx === index);
+      // Accetta la fila solo se e' entrata nello spazio gia disegnato: l'altezza
+      // dell'aiuola non e' aumentata e non e' comparso overflow. Altrimenti annulla.
+      if (!after.overflow && bedAfter && bedAfter.h <= bedBefore.h + 0.5) {
+        continue;
+      }
+      bed.count = prevCount;
+      break;
+    }
+  });
 }
 
 /* =========================================================================

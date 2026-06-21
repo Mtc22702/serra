@@ -489,6 +489,14 @@ function computeLayout() {
     col.lastPlant = p;
     col.lastY = y;
   });
+  // Overflow orizzontale: quando il camminamento e' troppo largo per la serra,
+  // usableBedWidth() viene clampato a 40 e le colonne sforano il muro destro.
+  // Senza questo controllo le aiuole verrebbero disegnate oltre il bordo senza
+  // che il motore se ne accorga (l'overflow verticale da solo non lo intercetta).
+  if (columnCount > 0) {
+    const rightEdge = columns[columnCount - 1].x + bedW;
+    if (rightEdge > Wi - MARGIN + 1) overflow = true;
+  }
   const usedH = beds.length
     ? Math.max(...columns.map((col) => col.y - BED_GAP))
     : 0;
