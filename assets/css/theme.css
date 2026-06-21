@@ -170,6 +170,19 @@ html[data-theme="dark"] textarea {
   color: var(--theme-text) !important;
   border-color: var(--theme-line) !important;
 }
+html[data-theme="dark"] .project-export-menu {
+  border-color: rgba(173, 211, 186, 0.2);
+  background: var(--theme-surface);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.42);
+}
+html[data-theme="dark"] .project-export-menu small {
+  color: var(--theme-muted);
+}
+html[data-theme="dark"] .project-export-menu button:hover,
+html[data-theme="dark"] .project-export-menu button:focus-visible,
+html[data-theme="dark"] .project-export-icon {
+  background: rgba(105, 183, 125, 0.14);
+}
 html[data-theme="dark"] .nav-menu-toggle span {
   background: #dcebe1;
 }

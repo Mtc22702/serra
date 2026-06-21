@@ -830,11 +830,12 @@
                 <button
                   class="btn btn-soft btn-icon view-print-btn saph-print-btn"
                   id="btnStampaMobile"
-                  onclick="
-                    renderPrintSummary();
-                    window.print();
-                  "
-                  title="Stampa il progetto"
+                  type="button"
+                  title="Esporta il progetto"
+                  aria-label="Esporta il progetto"
+                  aria-haspopup="menu"
+                  aria-controls="projectExportMenu"
+                  aria-expanded="false"
                 >
                   <svg
                     class="btn-ico"
@@ -901,7 +902,11 @@
               <button
                 class="btn btn-soft btn-icon view-print-btn"
                 id="btnStampa"
-                title="Stampa il progetto corrente"
+                type="button"
+                title="Esporta il progetto corrente"
+                aria-haspopup="menu"
+                aria-controls="projectExportMenu"
+                aria-expanded="false"
               >
                 <svg
                   class="btn-ico"
@@ -918,10 +923,39 @@
                   />
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
-                <span class="btn-label">Stampa</span>
+                <span class="btn-label">Esporta</span>
               </button>
             </div>
           </div>
+        </div>
+        <div
+          class="project-export-menu"
+          id="projectExportMenu"
+          role="menu"
+          aria-label="Esporta il progetto"
+          hidden
+        >
+          <button type="button" role="menuitem" data-export-action="pdf">
+            <span class="project-export-icon" aria-hidden="true">PDF</span>
+            <span>
+              <b id="exportPdfLabel">Scarica PDF</b>
+              <small id="exportPdfHint">Progetto completo in formato A4</small>
+            </span>
+          </button>
+          <button type="button" role="menuitem" data-export-action="png">
+            <span class="project-export-icon" aria-hidden="true">PNG</span>
+            <span>
+              <b id="exportPngLabel">Scarica immagine PNG</b>
+              <small id="exportPngHint">Immagine completa pronta da condividere</small>
+            </span>
+          </button>
+          <button type="button" role="menuitem" data-export-action="print">
+            <span class="project-export-icon" aria-hidden="true">A4</span>
+            <span>
+              <b id="exportPrintLabel">Stampa</b>
+              <small id="exportPrintHint">Apri le opzioni di stampa del browser</small>
+            </span>
+          </button>
         </div>
         <!-- Scheda pianta: dettaglio della coltura selezionata. -->
         <div class="panel panel--plant-detail" id="panelPlantDetail" hidden>

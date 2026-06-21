@@ -2371,9 +2371,22 @@ function applyLanguage() {
   setText("#btnFillSelected .btn-hint", "fillSelectedHint");
   const fillSelectedBtn = document.getElementById("btnFillSelected");
   if (fillSelectedBtn) fillSelectedBtn.title = tx("fillSelectedTitle");
-  setText("#btnStampa .btn-label", "print");
+  setText("#btnStampa .btn-label", "export");
   const printBtn = document.getElementById("btnStampa");
   if (printBtn) printBtn.title = tx("printTitle");
+  const mobilePrintBtn = document.getElementById("btnStampaMobile");
+  if (mobilePrintBtn) {
+    mobilePrintBtn.title = tx("printTitle");
+    mobilePrintBtn.setAttribute("aria-label", tx("printTitle"));
+  }
+  const exportMenu = document.getElementById("projectExportMenu");
+  if (exportMenu) exportMenu.setAttribute("aria-label", tx("exportMenuAria"));
+  setText("#exportPdfLabel", "exportPdf");
+  setText("#exportPdfHint", "exportPdfHint");
+  setText("#exportPrintLabel", "exportPrint");
+  setText("#exportPrintHint", "exportPrintHint");
+  setText("#exportPngLabel", "exportPng");
+  setText("#exportPngHint", "exportPngHint");
   setText(".pdp-header-title", "plantSheetTitle");
   setText("#pdpBackBtn span", "closePlantSheet");
   const pdpBackBtn = document.getElementById("pdpBackBtn");
@@ -5057,6 +5070,229 @@ function renderSummary() {
   renderPrintSummary();
 }
 
+function closeProjectExportMenu({ restoreFocus = false } = {}) {
+  const menu = document.getElementById("projectExportMenu");
+  if (!menu || menu.hidden) return;
+  const triggerId = menu.dataset.trigger;
+  menu.hidden = true;
+  menu.removeAttribute("data-trigger");
+  document
+    .querySelectorAll('[aria-controls="projectExportMenu"]')
+    .forEach((button) => button.setAttribute("aria-expanded", "false"));
+  if (restoreFocus && triggerId) document.getElementById(triggerId)?.focus();
+}
+
+function openProjectExportMenu(trigger) {
+  const menu = document.getElementById("projectExportMenu");
+  if (!menu || !trigger) return;
+  const wasOpen = !menu.hidden && menu.dataset.trigger === trigger.id;
+  closeProjectExportMenu();
+  if (wasOpen) return;
+  menu.hidden = false;
+  menu.dataset.trigger = trigger.id;
+  trigger.setAttribute("aria-expanded", "true");
+  const rect = trigger.getBoundingClientRect();
+  const menuWidth = Math.min(310, window.innerWidth - 24);
+  const left = Math.max(12, Math.min(window.innerWidth - menuWidth - 12, rect.right - menuWidth));
+  const estimatedHeight = 210;
+  const openAbove = rect.bottom + estimatedHeight + 12 > window.innerHeight;
+  menu.style.left = `${left}px`;
+  menu.style.top = `${openAbove ? Math.max(12, rect.top - estimatedHeight - 8) : rect.bottom + 8}px`;
+  menu.querySelector("button")?.focus();
+}
+
+function projectExportFileName(extension) {
+  const month = monthName(state.mese)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+  const base = tx("exportFileName") || "progetto-serra";
+  return `${base}-${state.larghezza}x${state.lunghezza}m-${month}.${extension}`
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9._-]/g, "");
+}
+
+function aggregatedProjectBeds() {
+  const rows = new Map();
+  state.beds.forEach((bed) => {
+    rows.set(bed.plantId, (rows.get(bed.plantId) || 0) + bed.count);
+  });
+  return Array.from(rows, ([plantId, count]) => ({
+    name: plantText(BYID[plantId], "nome"),
+    count
+  }));
+}
+
+async function buildProjectExportCanvas() {
+  const svg = document.querySelector("#scene svg");
+  if (!svg) throw new Error("Greenhouse scene is not available");
+  const clone = svg.cloneNode(true);
+  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  const serialized = new XMLSerializer().serializeToString(clone);
+  const svgBlob = new Blob([serialized], { type: "image/svg+xml;charset=utf-8" });
+  const svgUrl = URL.createObjectURL(svgBlob);
+  try {
+    const image = new Image();
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = reject;
+      image.src = svgUrl;
+    });
+    const viewBox = svg.viewBox.baseVal;
+    const sourceWidth = viewBox.width || svg.clientWidth || 1200;
+    const sourceHeight = viewBox.height || svg.clientHeight || 800;
+    const canvasWidth = 1800;
+    const side = 90;
+    const headerHeight = 190;
+    const mapWidth = canvasWidth - side * 2;
+    const mapHeight = Math.round((mapWidth * sourceHeight) / sourceWidth);
+    const crops = aggregatedProjectBeds();
+    const rowsPerColumn = Math.max(1, Math.ceil(crops.length / 2));
+    const summaryHeight = Math.max(245, 126 + rowsPerColumn * 42);
+    const canvas = document.createElement("canvas");
+    canvas.width = canvasWidth;
+    canvas.height = headerHeight + mapHeight + summaryHeight + 80;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#f7f4e9";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#1f3a26";
+    ctx.font = '800 54px "Outfit", Arial, sans-serif';
+    ctx.fillText(tx("print.title"), side, 82);
+    ctx.fillStyle = "#617064";
+    ctx.font = '500 27px "Outfit", Arial, sans-serif';
+    const zoneKey = state.zona === "freddo" ? "cold" : state.zona === "caldo" ? "warm" : "temperate";
+    const meta = tx("print.greenhouse_info")
+      .replace("{w}", state.larghezza)
+      .replace("{l}", state.lunghezza)
+      .replace("{zone}", tx(zoneKey))
+      .replace("{month}", monthName(state.mese));
+    ctx.fillText(meta, side, 132);
+    ctx.strokeStyle = "#d2dace";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(side, 163);
+    ctx.lineTo(canvasWidth - side, 163);
+    ctx.stroke();
+    ctx.drawImage(image, side, headerHeight, mapWidth, mapHeight);
+
+    const summaryTop = headerHeight + mapHeight + 60;
+    ctx.fillStyle = "#1f3a26";
+    ctx.font = '800 35px "Outfit", Arial, sans-serif';
+    ctx.fillText(tx("inGreenhouse"), side, summaryTop);
+    const totalPlants = crops.reduce((sum, crop) => sum + crop.count, 0);
+    ctx.textAlign = "right";
+    ctx.font = '700 25px "Outfit", Arial, sans-serif';
+    ctx.fillStyle = "#52705a";
+    ctx.fillText(`${tx("print.total")}: ${totalPlants}`, canvasWidth - side, summaryTop);
+    ctx.textAlign = "left";
+    const columnWidth = (canvasWidth - side * 2 - 70) / 2;
+    crops.forEach((crop, index) => {
+      const column = Math.floor(index / rowsPerColumn);
+      const row = index % rowsPerColumn;
+      const x = side + column * (columnWidth + 70);
+      const y = summaryTop + 54 + row * 42;
+      ctx.fillStyle = "#2c4633";
+      ctx.font = '600 25px "Outfit", Arial, sans-serif';
+      ctx.fillText(crop.name, x, y);
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#6b776d";
+      ctx.font = '500 23px "Outfit", Arial, sans-serif';
+      ctx.fillText(String(crop.count), x + columnWidth, y);
+      ctx.textAlign = "left";
+    });
+    return canvas;
+  } finally {
+    URL.revokeObjectURL(svgUrl);
+  }
+}
+
+function downloadProjectBlob(blob, fileName) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function exportProjectPng() {
+  const canvas = await buildProjectExportCanvas();
+  const blob = await new Promise((resolve) =>
+    canvas.toBlob(resolve, "image/png", 1)
+  );
+  if (!blob) throw new Error("PNG generation failed");
+  downloadProjectBlob(blob, projectExportFileName("png"));
+}
+
+function pdfFromProjectCanvas(canvas) {
+  const jpegData = canvas.toDataURL("image/jpeg", 0.92).split(",")[1];
+  const raw = atob(jpegData);
+  const jpegBytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i += 1) jpegBytes[i] = raw.charCodeAt(i);
+
+  const pageWidth = 595.28;
+  const pageHeight = 841.89;
+  const margin = 24;
+  const scale = Math.min(
+    (pageWidth - margin * 2) / canvas.width,
+    (pageHeight - margin * 2) / canvas.height
+  );
+  const imageWidth = canvas.width * scale;
+  const imageHeight = canvas.height * scale;
+  const imageX = (pageWidth - imageWidth) / 2;
+  const imageY = (pageHeight - imageHeight) / 2;
+  const content = `q\n${imageWidth.toFixed(2)} 0 0 ${imageHeight.toFixed(2)} ${imageX.toFixed(2)} ${imageY.toFixed(2)} cm\n/Im0 Do\nQ`;
+
+  const encoder = new TextEncoder();
+  const chunks = [];
+  const offsets = [0];
+  let byteLength = 0;
+  const append = (value) => {
+    const bytes = typeof value === "string" ? encoder.encode(value) : value;
+    chunks.push(bytes);
+    byteLength += bytes.length;
+  };
+  const object = (number, parts) => {
+    offsets[number] = byteLength;
+    append(`${number} 0 obj\n`);
+    parts.forEach(append);
+    append("\nendobj\n");
+  };
+
+  append("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");
+  object(1, ["<< /Type /Catalog /Pages 2 0 R >>"]);
+  object(2, ["<< /Type /Pages /Kids [3 0 R] /Count 1 >>"]);
+  object(3, [
+    `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>`
+  ]);
+  object(4, [
+    `<< /Length ${encoder.encode(content).length} >>\nstream\n`,
+    content,
+    "\nendstream"
+  ]);
+  object(5, [
+    `<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`,
+    jpegBytes,
+    "\nendstream"
+  ]);
+
+  const xrefOffset = byteLength;
+  append("xref\n0 6\n0000000000 65535 f \n");
+  for (let i = 1; i <= 5; i += 1) {
+    append(`${String(offsets[i]).padStart(10, "0")} 00000 n \n`);
+  }
+  append(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`);
+  return new Blob(chunks, { type: "application/pdf" });
+}
+
+async function exportProjectPdf() {
+  const canvas = await buildProjectExportCanvas();
+  const pdf = pdfFromProjectCanvas(canvas);
+  downloadProjectBlob(pdf, projectExportFileName("pdf"));
+}
+
 function renderPrintSummary() {
   const el = document.getElementById("printSummary");
   if (!el) return;
@@ -6616,10 +6852,34 @@ function initEvents() {
 
   // Le impostazioni restano aperte nelle modalità che le usano: sono il primo
   // controllo utile per chi adatta o personalizza la serra.
-  document.getElementById("btnStampa").addEventListener("click", () => {
-    renderPrintSummary();
-    window.print();
+  ["btnStampa", "btnStampaMobile"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      openProjectExportMenu(event.currentTarget);
+    });
   });
+  document
+    .getElementById("projectExportMenu")
+    ?.addEventListener("click", async (event) => {
+      event.stopPropagation();
+      const action = event.target.closest("[data-export-action]")?.dataset.exportAction;
+      if (!action) return;
+      closeProjectExportMenu();
+      if (action === "pdf") {
+        await exportProjectPdf();
+      } else if (action === "print") {
+        renderPrintSummary();
+        window.print();
+      } else if (action === "png") {
+        await exportProjectPng();
+      }
+    });
+  document.addEventListener("click", () => closeProjectExportMenu());
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeProjectExportMenu({ restoreFocus: true });
+  });
+  window.addEventListener("resize", () => closeProjectExportMenu());
+  window.addEventListener("scroll", () => closeProjectExportMenu(), { passive: true });
   document.getElementById("pdpBackBtn")?.addEventListener("click", () => {
     closePlantDetailPanel();
   });
