@@ -1008,6 +1008,85 @@ html[data-theme="dark"]
 html[data-theme="dark"] .cart-footer {
   background: #1e3027 !important;
 }
+
+/* Calendario di manutenzione: superfici e contrasti dedicati al tema scuro. */
+html[data-theme="dark"] #calendarModal .projects-backdrop {
+  background: rgba(3, 10, 7, 0.72);
+}
+
+html[data-theme="dark"] #calendarModal .projects-dialog--wide {
+  background: var(--dark-surface);
+  color: var(--dark-text);
+  border-color: var(--dark-border-strong);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.52),
+    0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] #calendarModal .projects-title,
+html[data-theme="dark"] #calendarModal .cal-month-name {
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"]
+  #calendarModal
+  :where(.calendar-subtitle, .projects-intro, .cal-task-label) {
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] #calendarModal .projects-close {
+  background: var(--dark-raised);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+html[data-theme="dark"] #calendarModal .projects-close:hover {
+  background: var(--dark-soft);
+  border-color: var(--dark-border-strong);
+}
+
+html[data-theme="dark"] #calendarModal .cal-month {
+  background: rgba(38, 60, 49, 0.72);
+  border-color: var(--dark-border);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.035) inset;
+}
+
+html[data-theme="dark"] #calendarModal .cal-month.is-now {
+  background: linear-gradient(145deg, #20392c, #25372f);
+  border-color: rgba(139, 212, 158, 0.66);
+  box-shadow:
+    0 0 0 2px rgba(139, 212, 158, 0.11),
+    0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+html[data-theme="dark"] #calendarModal .cal-now-badge {
+  background: rgba(139, 212, 158, 0.18);
+  color: #c5efd0;
+}
+
+html[data-theme="dark"] #calendarModal .cal-month-empty {
+  color: var(--dark-subtle);
+}
+
+html[data-theme="dark"] #calendarModal .cal-chip {
+  background: var(--dark-soft);
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"] #calendarModal .cal-chip--semina {
+  background: rgba(139, 212, 158, 0.17);
+  color: #d7f2de;
+}
+
+html[data-theme="dark"] #calendarModal .cal-chip--raccolta {
+  background: rgba(235, 197, 109, 0.17);
+  color: #f4dfa9;
+}
+
+html[data-theme="dark"] #calendarModal .calendar-grid {
+  scrollbar-color: var(--dark-soft) transparent;
+}
+
 html[data-theme="dark"] .cart-nudge button,
 html[data-theme="dark"] .back-to-top {
   background: #e7f0e9 !important;
