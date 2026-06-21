@@ -11,6 +11,7 @@
    TIPO:          categoria botanica/uso di ogni pianta
    ============================================================ */
 (function (root) {
+  /* Anagrafica piante: spaziature, grafica, sole, acqua, resa e abbinamenti. */
   const PLANTS = [
     {
       id: "pomodoro",
@@ -2153,6 +2154,7 @@
     }
   ];
 
+  /* Guida alla semina (IT): metodo, profondità, temperatura e tempi di germinazione. */
   const SOWING_GUIDE = {
     pomodoro: {
       method:
@@ -3372,6 +3374,7 @@
     }
   };
 
+  /* Guida alla semina (RO): traduzione parziale della guida italiana. */
   const SOWING_GUIDE_RO = {
     pomodoro: {
       method:
@@ -3998,6 +4001,7 @@
     }
   };
 
+  /* Categoria botanica: associa ogni pianta alla sua famiglia (frutto, foglia, radice, ecc.). */
   const TIPO = {
     pomodoro: "frutto",
     peperone: "frutto",
@@ -4098,6 +4102,7 @@
     cimbru: "aromatica"
   };
 
+  /* Esportazione: espone i dati come modulo CommonJS o come variabili globali. */
   const DATA = { PLANTS, SOWING_GUIDE, SOWING_GUIDE_RO, TIPO };
   if (typeof module !== "undefined" && module.exports) {
     module.exports = DATA;

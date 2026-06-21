@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
+    <!-- Versione app e percorso degli asset: imposta il token di cache busting. -->
     <script>
       window.SERRA_APP_VERSION = "2026-06-20-145";
       window.SERRA_IS_LOCAL_DEV =
@@ -22,12 +23,14 @@
         return path + "?v=" + window.SERRA_ASSET_VERSION;
       };
     </script>
+    <!-- Font: preconnect e caricamento Google Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,600;9..144,0,800;9..144,1,300&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <!-- Icone e manifest: favicon, icona touch e configurazione PWA. -->
     <script>
       document.write(
         '<link rel="icon" href="' +
@@ -48,6 +51,7 @@
       );
     </script>
     <meta name="theme-color" content="#2f6b3a" />
+    <!-- Tema: rileva la preferenza dell'utente prima del primo render. -->
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
@@ -57,6 +61,7 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
+    <!-- Fogli di stile: caricati con versioning per il reset della cache. -->
     <script>
       document.write(
         '<link rel="stylesheet" href="' +
@@ -186,7 +191,6 @@
         </p>
         <span id="heroTagline" hidden></span>
 
-
         <!-- Accesso al configuratore: percorsi guidati e anteprima. -->
         <div class="hero-cfg">
           <div class="hero-cfg-inner">
@@ -228,30 +232,57 @@
                     >Che tipo di coltivatore sei?</span
                   >
                   <div class="pc-persona-cards hero-cfg-levels-grid">
-                    <a class="pc-persona-card pc-persona-card--novizio hero-cfg-level"
-                       href="configuratore.html?livello=novizio&guided=1">
-                      <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"/></span>
+                    <a
+                      class="pc-persona-card pc-persona-card--novizio hero-cfg-level"
+                      href="configuratore.html?livello=novizio&guided=1"
+                    >
+                      <span class="pc-persona-ico"
+                        ><img
+                          src="assets/img/svg/plant_lv1.svg"
+                          alt=""
+                          class="level-plant-ico"
+                      /></span>
                       <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_novizio">Principiante</b>
-                        <small data-i18n="hero.cfg_nov_hint">Orto pronto, guidato passo passo</small>
+                        <small data-i18n="hero.cfg_nov_hint"
+                          >Orto pronto, guidato passo passo</small
+                        >
                       </span>
                       <span class="pc-persona-go" aria-hidden="true">→</span>
                     </a>
-                    <a class="pc-persona-card pc-persona-card--intermedio hero-cfg-level"
-                       href="configuratore.html?livello=intermedio&guided=1">
-                      <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"/></span>
+                    <a
+                      class="pc-persona-card pc-persona-card--intermedio hero-cfg-level"
+                      href="configuratore.html?livello=intermedio&guided=1"
+                    >
+                      <span class="pc-persona-ico"
+                        ><img
+                          src="assets/img/svg/plant_lv2.svg"
+                          alt=""
+                          class="level-plant-ico"
+                      /></span>
                       <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_intermedio">Intermedio</b>
-                        <small data-i18n="hero.cfg_int_hint">Guidato, ma personalizzabile</small>
+                        <small data-i18n="hero.cfg_int_hint"
+                          >Guidato, ma personalizzabile</small
+                        >
                       </span>
                       <span class="pc-persona-go" aria-hidden="true">→</span>
                     </a>
-                    <a class="pc-persona-card pc-persona-card--esperto hero-cfg-level"
-                       href="configuratore.html?livello=esperto&mode=expert&empty=1">
-                      <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"/></span>
+                    <a
+                      class="pc-persona-card pc-persona-card--esperto hero-cfg-level"
+                      href="configuratore.html?livello=esperto&mode=expert&empty=1"
+                    >
+                      <span class="pc-persona-ico"
+                        ><img
+                          src="assets/img/svg/plant_lv3.svg"
+                          alt=""
+                          class="level-plant-ico"
+                      /></span>
                       <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_esperto">Esperto</b>
-                        <small data-i18n="hero.cfg_exp_hint">Catalogo completo, scelta libera</small>
+                        <small data-i18n="hero.cfg_exp_hint"
+                          >Catalogo completo, scelta libera</small
+                        >
                       </span>
                       <span class="pc-persona-go" aria-hidden="true">→</span>
                     </a>
@@ -323,35 +354,77 @@
             <div class="catalog-filter-group-head">
               <span class="catalog-filter-step">1</span>
               <div>
-                <span class="catalog-filter-label" data-i18n="catalog.clima_label">Clima</span>
-                <strong id="catalogClimaHelp" data-i18n="hero.controls_hint">Com'è il clima fuori dalla tua serra?</strong>
+                <span
+                  class="catalog-filter-label"
+                  data-i18n="catalog.clima_label"
+                  >Clima</span
+                >
+                <strong id="catalogClimaHelp" data-i18n="hero.controls_hint"
+                  >Com'è il clima fuori dalla tua serra?</strong
+                >
               </div>
             </div>
             <div class="catalog-clima-bar" aria-label="Filtri clima">
               <div class="catalog-zona-row">
-                <button class="hero-zone-btn catalog-zona-btn" data-zone="freddo" onclick="setZone('freddo')" aria-pressed="false">
+                <button
+                  class="hero-zone-btn catalog-zona-btn"
+                  data-zone="freddo"
+                  onclick="setZone('freddo')"
+                  aria-pressed="false"
+                >
                   <span class="hero-zone-icon" aria-hidden="true">❄️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label">Fredda</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_cold_label"
+                    >Fredda</span
+                  >
                   <small data-i18n="hero.zone_cold_hint">inverni rigidi</small>
                 </button>
-                <button class="hero-zone-btn catalog-zona-btn active" data-zone="temperato" onclick="setZone('temperato')" aria-pressed="true">
+                <button
+                  class="hero-zone-btn catalog-zona-btn active"
+                  data-zone="temperato"
+                  onclick="setZone('temperato')"
+                  aria-pressed="true"
+                >
                   <span class="hero-zone-icon" aria-hidden="true">🌤️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label">Temperata</span>
-                  <small data-i18n="hero.zone_temp_hint">gelate occasionali</small>
+                  <span class="hero-zone-text" data-i18n="hero.zone_temp_label"
+                    >Temperata</span
+                  >
+                  <small data-i18n="hero.zone_temp_hint"
+                    >gelate occasionali</small
+                  >
                 </button>
-                <button class="hero-zone-btn catalog-zona-btn" data-zone="caldo" onclick="setZone('caldo')" aria-pressed="false">
+                <button
+                  class="hero-zone-btn catalog-zona-btn"
+                  data-zone="caldo"
+                  onclick="setZone('caldo')"
+                  aria-pressed="false"
+                >
                   <span class="hero-zone-icon" aria-hidden="true">☀️</span>
-                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label">Calda</span>
+                  <span class="hero-zone-text" data-i18n="hero.zone_warm_label"
+                    >Calda</span
+                  >
                   <small data-i18n="hero.zone_warm_hint">inverni miti</small>
                 </button>
               </div>
               <div class="catalog-clima-divider" aria-hidden="true"></div>
-              <button class="catalog-heated-toggle" id="catalogHeatedBtn" onclick="toggleHeated()" aria-pressed="false">
-                <span class="catalog-heat-track" aria-hidden="true"><span class="catalog-heat-dot"></span></span>
-                <span id="catalogHeatedLabel" data-i18n="hero.heated_off">Riscaldamento spento</span>
+              <button
+                class="catalog-heated-toggle"
+                id="catalogHeatedBtn"
+                onclick="toggleHeated()"
+                aria-pressed="false"
+              >
+                <span class="catalog-heat-track" aria-hidden="true"
+                  ><span class="catalog-heat-dot"></span
+                ></span>
+                <span id="catalogHeatedLabel" data-i18n="hero.heated_off"
+                  >Riscaldamento spento</span
+                >
               </button>
             </div>
-            <span class="catalog-filter-note" id="catalogFilterNote" aria-live="polite"></span>
+            <span
+              class="catalog-filter-note"
+              id="catalogFilterNote"
+              aria-live="polite"
+            ></span>
           </div>
 
           <div class="catalog-filter-row">
@@ -376,14 +449,28 @@
             <!-- Ricerca catalogo e filtri rapidi. -->
             <div class="catalog-filter-group catalog-filter-group--search">
               <div class="catalog-filter-group-head">
-                <span class="catalog-filter-step catalog-filter-step--search">3</span>
+                <span class="catalog-filter-step catalog-filter-step--search"
+                  >3</span
+                >
                 <div>
-                  <span class="catalog-filter-label" data-i18n="catalog.filter_search_label">Ricerca</span>
-                  <strong data-i18n="catalog.filter_search_hint">Affina i risultati</strong>
+                  <span
+                    class="catalog-filter-label"
+                    data-i18n="catalog.filter_search_label"
+                    >Ricerca</span
+                  >
+                  <strong data-i18n="catalog.filter_search_hint"
+                    >Affina i risultati</strong
+                  >
                 </div>
-                <span class="catalog-search-badge" data-i18n="catalog.search_badge">Cerca qui</span>
+                <span
+                  class="catalog-search-badge"
+                  data-i18n="catalog.search_badge"
+                  >Cerca qui</span
+                >
               </div>
-              <p class="catalog-search-note" data-i18n="catalog.search_note">Digita pomodoro, basilico, lattuga… trova subito la pianta.</p>
+              <p class="catalog-search-note" data-i18n="catalog.search_note">
+                Digita pomodoro, basilico, lattuga… trova subito la pianta.
+              </p>
               <div class="cat-bar">
                 <label class="catalog-search catalog-search--pro">
                   <span class="catalog-search-box">
@@ -820,253 +907,257 @@
         </button>
         <div class="detail-scroll">
           <div class="detail-photo-wrap">
-          <img id="detailPhoto" src="" alt="" />
-          <div class="detail-photo-gradient"></div>
-          <div class="detail-hero-meta">
-            <span class="detail-hero-type" id="detailTypeBadge"></span>
-            <span class="detail-hero-diff" id="detailDiff"></span>
-          </div>
-          <div class="detail-photo-name" id="detailName"></div>
+            <img id="detailPhoto" src="" alt="" />
+            <div class="detail-photo-gradient"></div>
+            <div class="detail-hero-meta">
+              <span class="detail-hero-type" id="detailTypeBadge"></span>
+              <span class="detail-hero-diff" id="detailDiff"></span>
+            </div>
+            <div class="detail-photo-name" id="detailName"></div>
           </div>
           <div class="detail-body">
-          <div class="detail-tabs-shell">
-            <div class="detail-tabs-heading">
-              <strong data-i18n="detail.tabs_title">Sezioni della scheda</strong
-              ><span data-i18n="detail.tabs_hint"
-                >Seleziona una voce per cambiare contenuto</span
+            <div class="detail-tabs-shell">
+              <div class="detail-tabs-heading">
+                <strong data-i18n="detail.tabs_title"
+                  >Sezioni della scheda</strong
+                ><span data-i18n="detail.tabs_hint"
+                  >Seleziona una voce per cambiare contenuto</span
+                >
+              </div>
+              <div
+                class="detail-tabs"
+                role="tablist"
+                aria-label="Sezioni della scheda tecnica"
               >
+                <button
+                  class="detail-tab active"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="detailTabOverview"
+                  data-detail-tab="overview"
+                  onclick="setDetailTab('overview')"
+                  onkeydown="handleDetailTabKey(event)"
+                >
+                  <span class="detail-tab-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24">
+                      <path
+                        d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"
+                      /></svg></span
+                  ><span data-i18n="detail.tab_overview">Panoramica</span>
+                </button>
+                <button
+                  class="detail-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="detailTabCultivation"
+                  data-detail-tab="cultivation"
+                  onclick="setDetailTab('cultivation')"
+                  onkeydown="handleDetailTabKey(event)"
+                >
+                  <span class="detail-tab-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24">
+                      <path
+                        d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"
+                      /></svg></span
+                  ><span data-i18n="detail.tab_cultivation">Coltivazione</span>
+                </button>
+                <button
+                  class="detail-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="detailTabCalendar"
+                  data-detail-tab="calendar"
+                  onclick="setDetailTab('calendar')"
+                  onkeydown="handleDetailTabKey(event)"
+                >
+                  <span class="detail-tab-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24">
+                      <rect x="3" y="5" width="18" height="16" rx="2" />
+                      <path
+                        d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"
+                      /></svg></span
+                  ><span data-i18n="detail.tab_calendar">Calendario</span>
+                </button>
+                <button
+                  class="detail-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="detailTabCare"
+                  data-detail-tab="care"
+                  onclick="setDetailTab('care')"
+                  onkeydown="handleDetailTabKey(event)"
+                >
+                  <span class="detail-tab-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24">
+                      <path
+                        d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"
+                      /></svg></span
+                  ><span data-i18n="detail.tab_care">Cure</span>
+                </button>
+                <button
+                  class="detail-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="detailTabHarvest"
+                  data-detail-tab="harvest"
+                  onclick="setDetailTab('harvest')"
+                  onkeydown="handleDetailTabKey(event)"
+                >
+                  <span class="detail-tab-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24">
+                      <path
+                        d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"
+                      /></svg></span
+                  ><span data-i18n="detail.tab_harvest">Raccolta</span>
+                </button>
+              </div>
             </div>
+
             <div
-              class="detail-tabs"
-              role="tablist"
-              aria-label="Sezioni della scheda tecnica"
+              class="detail-tab-panel active"
+              id="detailTabOverview"
+              role="tabpanel"
+              data-detail-panel="overview"
             >
-              <button
-                class="detail-tab active"
-                type="button"
-                role="tab"
-                aria-selected="true"
-                aria-controls="detailTabOverview"
-                data-detail-tab="overview"
-                onclick="setDetailTab('overview')"
-                onkeydown="handleDetailTabKey(event)"
-              >
-                <span class="detail-tab-icon" aria-hidden="true"
-                  ><svg viewBox="0 0 24 24">
-                    <path
-                      d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"
-                    /></svg></span
-                ><span data-i18n="detail.tab_overview">Panoramica</span>
-              </button>
-              <button
-                class="detail-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-controls="detailTabCultivation"
-                data-detail-tab="cultivation"
-                onclick="setDetailTab('cultivation')"
-                onkeydown="handleDetailTabKey(event)"
-              >
-                <span class="detail-tab-icon" aria-hidden="true"
-                  ><svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 22V12M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c4 0 7-3 7-7-4 0-7 3-7 7z"
-                    /></svg></span
-                ><span data-i18n="detail.tab_cultivation">Coltivazione</span>
-              </button>
-              <button
-                class="detail-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-controls="detailTabCalendar"
-                data-detail-tab="calendar"
-                onclick="setDetailTab('calendar')"
-                onkeydown="handleDetailTabKey(event)"
-              >
-                <span class="detail-tab-icon" aria-hidden="true"
-                  ><svg viewBox="0 0 24 24">
-                    <rect x="3" y="5" width="18" height="16" rx="2" />
-                    <path
-                      d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"
-                    /></svg></span
-                ><span data-i18n="detail.tab_calendar">Calendario</span>
-              </button>
-              <button
-                class="detail-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-controls="detailTabCare"
-                data-detail-tab="care"
-                onclick="setDetailTab('care')"
-                onkeydown="handleDetailTabKey(event)"
-              >
-                <span class="detail-tab-icon" aria-hidden="true"
-                  ><svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zM9 12l2 2 4-5"
-                    /></svg></span
-                ><span data-i18n="detail.tab_care">Cure</span>
-              </button>
-              <button
-                class="detail-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-controls="detailTabHarvest"
-                data-detail-tab="harvest"
-                onclick="setDetailTab('harvest')"
-                onkeydown="handleDetailTabKey(event)"
-              >
-                <span class="detail-tab-icon" aria-hidden="true"
-                  ><svg viewBox="0 0 24 24">
-                    <path
-                      d="M4 10h16l-2 10H6zM8 10l4-7 4 7M9 14v2M15 14v2"
-                    /></svg></span
-                ><span data-i18n="detail.tab_harvest">Raccolta</span>
-              </button>
+              <div class="detail-badges" id="detailBadges"></div>
+              <div class="detail-nota" id="detailNota" hidden></div>
+              <div class="detail-stats" id="detailStats"></div>
             </div>
-          </div>
 
-          <div
-            class="detail-tab-panel active"
-            id="detailTabOverview"
-            role="tabpanel"
-            data-detail-panel="overview"
-          >
-            <div class="detail-badges" id="detailBadges"></div>
-            <div class="detail-nota" id="detailNota" hidden></div>
-            <div class="detail-stats" id="detailStats"></div>
-          </div>
-
-          <div
-            class="detail-tab-panel"
-            id="detailTabCultivation"
-            role="tabpanel"
-            data-detail-panel="cultivation"
-            hidden
-          >
-            <div class="detail-section-heading">
-              <span data-i18n="detail.cultivation_title"
-                >Guida alla coltivazione</span
-              ><small data-i18n="detail.cultivation_subtitle"
-                >Dalla semina alla pianta adulta</small
-              >
-            </div>
-            <div class="detail-sow" id="detailSow">
-              <div class="detail-sow-body" id="detailSowBody"></div>
-            </div>
-            <div class="detail-spacing" id="detailSpacing"></div>
-            <div class="detail-tech-grid" id="detailCultivationExtra"></div>
-          </div>
-
-          <div
-            class="detail-tab-panel"
-            id="detailTabCalendar"
-            role="tabpanel"
-            data-detail-panel="calendar"
-            hidden
-          >
-            <div class="detail-section-heading">
-              <span data-i18n="detail.calendar_title"
-                >Calendario stagionale</span
-              ><small data-i18n="detail.calendar_subtitle"
-                >Adattato a zona climatica e riscaldamento</small
-              >
-            </div>
-            <div class="month-bar" id="detailMonthBar"></div>
-          </div>
-
-          <div
-            class="detail-tab-panel"
-            id="detailTabCare"
-            role="tabpanel"
-            data-detail-panel="care"
-            hidden
-          >
-            <div class="detail-section-heading">
-              <span data-i18n="detail.care_title">Cure e problemi comuni</span
-              ><small data-i18n="detail.care_subtitle"
-                >Prevenzione, manutenzione e consociazioni</small
-              >
-            </div>
-            <div class="detail-tech-grid" id="detailCareGuide"></div>
-            <section
-              class="detail-diseases"
-              aria-labelledby="detailDiseasesTitle"
+            <div
+              class="detail-tab-panel"
+              id="detailTabCultivation"
+              role="tabpanel"
+              data-detail-panel="cultivation"
+              hidden
             >
-              <div class="detail-diseases-head">
-                <div>
-                  <h3
-                    id="detailDiseasesTitle"
-                    data-i18n="detail.diseases_title"
-                  >
-                    Malattie comuni
-                  </h3>
-                  <p data-i18n="detail.diseases_subtitle">
-                    Riconosci i sintomi e intervieni in modo mirato
-                  </p>
-                </div>
-                <span
-                  class="detail-diseases-count"
-                  id="detailDiseasesCount"
-                ></span>
+              <div class="detail-section-heading">
+                <span data-i18n="detail.cultivation_title"
+                  >Guida alla coltivazione</span
+                ><small data-i18n="detail.cultivation_subtitle"
+                  >Dalla semina alla pianta adulta</small
+                >
               </div>
-              <div class="detail-disease-list" id="detailDiseaseList"></div>
-              <p
-                class="detail-treatment-note"
-                data-i18n="detail.treatment_note"
-              >
-                Prima di usare un prodotto fitosanitario, verifica che sia
-                autorizzato per la coltura e segui sempre l'etichetta.
-              </p>
-            </section>
-            <section
-              class="detail-diseases detail-pests"
-              aria-labelledby="detailPestsTitle"
-            >
-              <div class="detail-diseases-head">
-                <div>
-                  <h3 id="detailPestsTitle" data-i18n="detail.pests_title">
-                    Insetti e parassiti
-                  </h3>
-                  <p data-i18n="detail.pests_subtitle">
-                    Riconosci il danno prima di scegliere l'intervento
-                  </p>
-                </div>
-                <span
-                  class="detail-diseases-count"
-                  id="detailPestsCount"
-                ></span>
+              <div class="detail-sow" id="detailSow">
+                <div class="detail-sow-body" id="detailSowBody"></div>
               </div>
-              <div class="detail-disease-list" id="detailPestList"></div>
-              <p class="detail-treatment-note" data-i18n="detail.pest_note">
-                Controlla anche la pagina inferiore delle foglie. Se non
-                riconosci il parassita, fotografa insetto e danno prima di
-                trattare.
-              </p>
-            </section>
-            <div class="detail-companions" id="detailCompanions"></div>
-          </div>
-
-          <div
-            class="detail-tab-panel"
-            id="detailTabHarvest"
-            role="tabpanel"
-            data-detail-panel="harvest"
-            hidden
-          >
-            <div class="detail-section-heading">
-              <span data-i18n="detail.harvest_title">Raccolta e utilizzo</span
-              ><small data-i18n="detail.harvest_subtitle"
-                >Quando raccogliere e come conservare</small
-              >
+              <div class="detail-spacing" id="detailSpacing"></div>
+              <div class="detail-tech-grid" id="detailCultivationExtra"></div>
             </div>
-            <div class="detail-tech-grid" id="detailHarvestGuide"></div>
-          </div>
 
+            <div
+              class="detail-tab-panel"
+              id="detailTabCalendar"
+              role="tabpanel"
+              data-detail-panel="calendar"
+              hidden
+            >
+              <div class="detail-section-heading">
+                <span data-i18n="detail.calendar_title"
+                  >Calendario stagionale</span
+                ><small data-i18n="detail.calendar_subtitle"
+                  >Adattato a zona climatica e riscaldamento</small
+                >
+              </div>
+              <div class="month-bar" id="detailMonthBar"></div>
+            </div>
+
+            <div
+              class="detail-tab-panel"
+              id="detailTabCare"
+              role="tabpanel"
+              data-detail-panel="care"
+              hidden
+            >
+              <div class="detail-section-heading">
+                <span data-i18n="detail.care_title">Cure e problemi comuni</span
+                ><small data-i18n="detail.care_subtitle"
+                  >Prevenzione, manutenzione e consociazioni</small
+                >
+              </div>
+              <div class="detail-tech-grid" id="detailCareGuide"></div>
+              <details
+                class="detail-diseases"
+              >
+                <summary class="detail-diseases-head">
+                  <div>
+                    <h3
+                      id="detailDiseasesTitle"
+                      data-i18n="detail.diseases_title"
+                    >
+                      Malattie comuni
+                    </h3>
+                    <p data-i18n="detail.diseases_subtitle">
+                      Riconosci i sintomi e intervieni in modo mirato
+                    </p>
+                  </div>
+                  <span class="detail-diseases-head-actions">
+                    <span
+                      class="detail-diseases-count"
+                      id="detailDiseasesCount"
+                    ></span>
+                    <span class="detail-diseases-chevron" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="detail-disease-list" id="detailDiseaseList"></div>
+                <p
+                  class="detail-treatment-note"
+                  data-i18n="detail.treatment_note"
+                >
+                  Prima di usare un prodotto fitosanitario, verifica che sia
+                  autorizzato per la coltura e segui sempre l'etichetta.
+                </p>
+              </details>
+              <details
+                class="detail-diseases detail-pests"
+              >
+                <summary class="detail-diseases-head">
+                  <div>
+                    <h3 id="detailPestsTitle" data-i18n="detail.pests_title">
+                      Insetti e parassiti
+                    </h3>
+                    <p data-i18n="detail.pests_subtitle">
+                      Riconosci il danno prima di scegliere l'intervento
+                    </p>
+                  </div>
+                  <span class="detail-diseases-head-actions">
+                    <span
+                      class="detail-diseases-count"
+                      id="detailPestsCount"
+                    ></span>
+                    <span class="detail-diseases-chevron" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="detail-disease-list" id="detailPestList"></div>
+                <p class="detail-treatment-note" data-i18n="detail.pest_note">
+                  Controlla anche la pagina inferiore delle foglie. Se non
+                  riconosci il parassita, fotografa insetto e danno prima di
+                  trattare.
+                </p>
+              </details>
+              <div class="detail-companions" id="detailCompanions"></div>
+            </div>
+
+            <div
+              class="detail-tab-panel"
+              id="detailTabHarvest"
+              role="tabpanel"
+              data-detail-panel="harvest"
+              hidden
+            >
+              <div class="detail-section-heading">
+                <span data-i18n="detail.harvest_title">Raccolta e utilizzo</span
+                ><small data-i18n="detail.harvest_subtitle"
+                  >Quando raccogliere e come conservare</small
+                >
+              </div>
+              <div class="detail-tech-grid" id="detailHarvestGuide"></div>
+            </div>
           </div>
         </div>
         <div class="detail-footer">
@@ -1204,7 +1295,14 @@
     </div>
 
     <!-- Pre-config bottom sheet: impostazioni serra prima di entrare nel configuratore (mobile). -->
-    <div class="preconfig-overlay" id="preconfigOverlay" hidden aria-modal="true" role="dialog" aria-labelledby="preconfigTitle">
+    <div
+      class="preconfig-overlay"
+      id="preconfigOverlay"
+      hidden
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="preconfigTitle"
+    >
       <div class="preconfig-backdrop" id="preconfigBackdrop"></div>
       <div class="preconfig-sheet" id="preconfigSheet">
         <div class="preconfig-handle" aria-hidden="true"></div>
@@ -1213,125 +1311,351 @@
         <div class="preconfig-panel-head">
           <div class="preconfig-head-left">
             <span class="preconfig-head-icon" aria-hidden="true">
-              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 9l7-7 7 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
-                <polyline points="7 19 7 12 13 12 13 19"/>
+              <svg
+                viewBox="0 0 20 20"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 9l7-7 7 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
+                <polyline points="7 19 7 12 13 12 13 19" />
               </svg>
             </span>
             <div>
-              <h2 class="preconfig-title" id="preconfigTitle" data-i18n="preconfig.title">La tua serra</h2>
-              <span class="preconfig-head-tag" data-i18n="preconfig.tag">Imposta i parametri</span>
+              <h2
+                class="preconfig-title"
+                id="preconfigTitle"
+                data-i18n="preconfig.title"
+              >
+                La tua serra
+              </h2>
+              <span class="preconfig-head-tag" data-i18n="preconfig.tag"
+                >Imposta i parametri</span
+              >
             </div>
           </div>
-          <button class="preconfig-close" id="preconfigClose" aria-label="Chiudi pannello">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 4l12 12M16 4L4 16"/></svg>
+          <button
+            class="preconfig-close"
+            id="preconfigClose"
+            aria-label="Chiudi pannello"
+          >
+            <svg
+              viewBox="0 0 20 20"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            >
+              <path d="M4 4l12 12M16 4L4 16" />
+            </svg>
           </button>
         </div>
 
         <div class="preconfig-body">
-
           <!-- 1. Misure interne -->
           <div class="preconfig-section-label preconfig-section-label--primary">
             <span data-i18n="preconfig.sizes_label">1. Misure interne</span>
-            <span class="preconfig-priority-badge" data-i18n="preconfig.sizes_badge">Fondamentale</span>
+            <span
+              class="preconfig-priority-badge"
+              data-i18n="preconfig.sizes_badge"
+              >Fondamentale</span
+            >
           </div>
-          <p class="preconfig-sizes-note" data-i18n="preconfig.sizes_note">Le dimensioni determinano quante aiuole e piante puoi coltivare.</p>
-          <div class="preconfig-vfield preconfig-vfield--dims preconfig-vfield--primary">
+          <p class="preconfig-sizes-note" data-i18n="preconfig.sizes_note">
+            Le dimensioni determinano quante aiuole e piante puoi coltivare.
+          </p>
+          <div
+            class="preconfig-vfield preconfig-vfield--dims preconfig-vfield--primary"
+          >
             <div>
-              <label class="preconfig-fld" data-i18n="preconfig.width">Larghezza</label>
+              <label class="preconfig-fld" data-i18n="preconfig.width"
+                >Larghezza</label
+              >
               <div class="preconfig-stepper">
-                <button class="preconfig-step-btn" data-target="pcW" data-step="-0.5" aria-label="−">−</button>
-                <input class="preconfig-step-input" type="number" id="pcW" min="1" max="12" step="0.5" value="3" inputmode="decimal"/>
-                <button class="preconfig-step-btn" data-target="pcW" data-step="0.5" aria-label="+">+</button>
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcW"
+                  data-step="-0.5"
+                  aria-label="−"
+                >
+                  −
+                </button>
+                <input
+                  class="preconfig-step-input"
+                  type="number"
+                  id="pcW"
+                  min="1"
+                  max="12"
+                  step="0.5"
+                  value="3"
+                  inputmode="decimal"
+                />
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcW"
+                  data-step="0.5"
+                  aria-label="+"
+                >
+                  +
+                </button>
               </div>
-              <input type="range" id="pcWSlider" min="1" max="12" step="0.5" value="3" hidden aria-hidden="true"/>
+              <input
+                type="range"
+                id="pcWSlider"
+                min="1"
+                max="12"
+                step="0.5"
+                value="3"
+                hidden
+                aria-hidden="true"
+              />
             </div>
             <div>
-              <label class="preconfig-fld" data-i18n="preconfig.length">Lunghezza</label>
+              <label class="preconfig-fld" data-i18n="preconfig.length"
+                >Lunghezza</label
+              >
               <div class="preconfig-stepper">
-                <button class="preconfig-step-btn" data-target="pcL" data-step="-0.5" aria-label="−">−</button>
-                <input class="preconfig-step-input" type="number" id="pcL" min="1" max="30" step="0.5" value="5" inputmode="decimal"/>
-                <button class="preconfig-step-btn" data-target="pcL" data-step="0.5" aria-label="+">+</button>
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcL"
+                  data-step="-0.5"
+                  aria-label="−"
+                >
+                  −
+                </button>
+                <input
+                  class="preconfig-step-input"
+                  type="number"
+                  id="pcL"
+                  min="1"
+                  max="30"
+                  step="0.5"
+                  value="5"
+                  inputmode="decimal"
+                />
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcL"
+                  data-step="0.5"
+                  aria-label="+"
+                >
+                  +
+                </button>
               </div>
-              <input type="range" id="pcLSlider" min="1" max="30" step="0.5" value="5" hidden aria-hidden="true"/>
+              <input
+                type="range"
+                id="pcLSlider"
+                min="1"
+                max="30"
+                step="0.5"
+                value="5"
+                hidden
+                aria-hidden="true"
+              />
             </div>
           </div>
 
           <!-- Camminamento tra aiuole -->
-          <div class="preconfig-section-label" data-i18n="preconfig.path_label">Camminamento tra aiuole</div>
+          <div class="preconfig-section-label" data-i18n="preconfig.path_label">
+            Camminamento tra aiuole
+          </div>
           <div class="preconfig-path-field">
             <div class="preconfig-path-row">
-              <input type="range" id="pcPath" min="30" max="120" step="5" value="60" class="preconfig-path-slider"/>
+              <input
+                type="range"
+                id="pcPath"
+                min="30"
+                max="120"
+                step="5"
+                value="60"
+                class="preconfig-path-slider"
+              />
               <div class="preconfig-stepper preconfig-stepper--sm">
-                <button class="preconfig-step-btn" data-target="pcPathNum" data-step="-5" aria-label="−">−</button>
-                <input class="preconfig-step-input" type="number" id="pcPathNum" min="30" max="120" step="5" value="60" inputmode="numeric" pattern="[0-9]*"/>
-                <button class="preconfig-step-btn" data-target="pcPathNum" data-step="5" aria-label="+">+</button>
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcPathNum"
+                  data-step="-5"
+                  aria-label="−"
+                >
+                  −
+                </button>
+                <input
+                  class="preconfig-step-input"
+                  type="number"
+                  id="pcPathNum"
+                  min="30"
+                  max="120"
+                  step="5"
+                  value="60"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                />
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcPathNum"
+                  data-step="5"
+                  aria-label="+"
+                >
+                  +
+                </button>
               </div>
               <span class="preconfig-path-unit">cm</span>
             </div>
           </div>
 
           <!-- 2. Clima -->
-          <div class="preconfig-section-label" data-i18n="preconfig.climate_label">2. Clima</div>
+          <div
+            class="preconfig-section-label"
+            data-i18n="preconfig.climate_label"
+          >
+            2. Clima
+          </div>
           <div class="preconfig-vfield preconfig-vfield--climate">
             <div>
-              <label class="preconfig-fld" for="pcZona" data-i18n="preconfig.zona_label">Zona</label>
+              <label
+                class="preconfig-fld"
+                for="pcZona"
+                data-i18n="preconfig.zona_label"
+                >Zona</label
+              >
               <select id="pcZona" class="preconfig-select">
-                <option value="freddo" data-i18n="hero.zone_cold_label">Fredda</option>
-                <option value="temperato" selected data-i18n="hero.zone_temp_label">Temperata</option>
-                <option value="caldo" data-i18n="hero.zone_warm_label">Calda</option>
+                <option value="freddo" data-i18n="hero.zone_cold_label">
+                  Fredda
+                </option>
+                <option
+                  value="temperato"
+                  selected
+                  data-i18n="hero.zone_temp_label"
+                >
+                  Temperata
+                </option>
+                <option value="caldo" data-i18n="hero.zone_warm_label">
+                  Calda
+                </option>
               </select>
             </div>
             <div>
-              <label class="preconfig-fld" for="pcRisc" data-i18n="preconfig.serra_label">Serra</label>
+              <label
+                class="preconfig-fld"
+                for="pcRisc"
+                data-i18n="preconfig.serra_label"
+                >Serra</label
+              >
               <select id="pcRisc" class="preconfig-select">
-                <option value="no" data-i18n="preconfig.serra_cold">Fredda</option>
-                <option value="si" data-i18n="preconfig.serra_heated">Riscaldata</option>
+                <option value="no" data-i18n="preconfig.serra_cold">
+                  Fredda
+                </option>
+                <option value="si" data-i18n="preconfig.serra_heated">
+                  Riscaldata
+                </option>
               </select>
             </div>
           </div>
 
           <!-- Tipo coltivatore: visibile solo se si entra senza livello (nav/footer) -->
           <div id="preconfigPersonaSection">
-            <div class="preconfig-section-label" data-i18n="hero.cfg_levels_title">Che tipo di coltivatore sei?</div>
+            <div
+              class="preconfig-section-label"
+              data-i18n="hero.cfg_levels_title"
+            >
+              Che tipo di coltivatore sei?
+            </div>
             <div class="pc-persona-cards">
-              <button class="pc-persona-card pc-persona-card--novizio" data-livello="novizio" data-url="configuratore.html?livello=novizio&guided=1" aria-pressed="false">
-                <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv1.svg" alt="" class="level-plant-ico"/></span>
+              <button
+                class="pc-persona-card pc-persona-card--novizio"
+                data-livello="novizio"
+                data-url="configuratore.html?livello=novizio&guided=1"
+                aria-pressed="false"
+              >
+                <span class="pc-persona-ico"
+                  ><img
+                    src="assets/img/svg/plant_lv1.svg"
+                    alt=""
+                    class="level-plant-ico"
+                /></span>
                 <span class="pc-persona-body">
                   <b data-i18n="hero.cfg_novizio">Principiante</b>
-                  <small data-i18n="hero.cfg_nov_hint">Orto pronto, guidato passo passo</small>
+                  <small data-i18n="hero.cfg_nov_hint"
+                    >Orto pronto, guidato passo passo</small
+                  >
                 </span>
                 <span class="pc-persona-go" aria-hidden="true">→</span>
               </button>
-              <button class="pc-persona-card pc-persona-card--intermedio" data-livello="intermedio" data-url="configuratore.html?livello=intermedio&guided=1" aria-pressed="false">
-                <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv2.svg" alt="" class="level-plant-ico"/></span>
+              <button
+                class="pc-persona-card pc-persona-card--intermedio"
+                data-livello="intermedio"
+                data-url="configuratore.html?livello=intermedio&guided=1"
+                aria-pressed="false"
+              >
+                <span class="pc-persona-ico"
+                  ><img
+                    src="assets/img/svg/plant_lv2.svg"
+                    alt=""
+                    class="level-plant-ico"
+                /></span>
                 <span class="pc-persona-body">
                   <b data-i18n="hero.cfg_intermedio">Intermedio</b>
-                  <small data-i18n="hero.cfg_int_hint">Guidato, ma personalizzabile</small>
+                  <small data-i18n="hero.cfg_int_hint"
+                    >Guidato, ma personalizzabile</small
+                  >
                 </span>
                 <span class="pc-persona-go" aria-hidden="true">→</span>
               </button>
-              <button class="pc-persona-card pc-persona-card--esperto" data-livello="esperto" data-url="configuratore.html?livello=esperto&mode=expert&empty=1" aria-pressed="false">
-                <span class="pc-persona-ico"><img src="assets/img/svg/plant_lv3.svg" alt="" class="level-plant-ico"/></span>
+              <button
+                class="pc-persona-card pc-persona-card--esperto"
+                data-livello="esperto"
+                data-url="configuratore.html?livello=esperto&mode=expert&empty=1"
+                aria-pressed="false"
+              >
+                <span class="pc-persona-ico"
+                  ><img
+                    src="assets/img/svg/plant_lv3.svg"
+                    alt=""
+                    class="level-plant-ico"
+                /></span>
                 <span class="pc-persona-body">
                   <b data-i18n="hero.cfg_esperto">Esperto</b>
-                  <small data-i18n="hero.cfg_exp_hint">Catalogo completo, scelta libera</small>
+                  <small data-i18n="hero.cfg_exp_hint"
+                    >Catalogo completo, scelta libera</small
+                  >
                 </span>
                 <span class="pc-persona-go" aria-hidden="true">→</span>
               </button>
             </div>
-          </div><!-- /preconfigPersonaSection -->
+          </div>
+          <!-- /preconfigPersonaSection -->
 
           <!-- 3. Mese di semina -->
-          <div class="preconfig-section-label" data-i18n="preconfig.month_label">3. Mese di semina</div>
+          <div
+            class="preconfig-section-label"
+            data-i18n="preconfig.month_label"
+          >
+            3. Mese di semina
+          </div>
           <div class="preconfig-month-wrap">
             <span class="preconfig-month-icon" aria-hidden="true">📅</span>
             <select id="pcMese" class="preconfig-month-select"></select>
             <span class="preconfig-month-arrow" aria-hidden="true">
-              <svg viewBox="0 0 12 8" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+              <svg
+                viewBox="0 0 12 8"
+                width="11"
+                height="11"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 1l5 5 5-5" />
+              </svg>
             </span>
           </div>
-
         </div>
 
         <div class="preconfig-footer">

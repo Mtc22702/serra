@@ -271,8 +271,8 @@ html[data-theme="dark"] .catalog-search-box {
 }
 html[data-theme="dark"] .catalog-search-note {
   color: var(--dark-muted) !important;
-  background: rgba(82,183,136,.06) !important;
-  border-left-color: rgba(82,183,136,.28) !important;
+  background: rgba(82, 183, 136, 0.06) !important;
+  border-left-color: rgba(82, 183, 136, 0.28) !important;
 }
 html[data-theme="dark"] .catalog-search-badge {
   background: #376f49 !important;
@@ -866,8 +866,10 @@ html[data-theme="dark"]
   border-color: var(--dark-border) !important;
 }
 html[data-theme="dark"] .veg-search-box {
-  border-color: rgba(82,183,136,.45) !important;
-  box-shadow: 0 4px 14px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.14) !important;
+  border-color: rgba(82, 183, 136, 0.45) !important;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.14) !important;
 }
 html[data-theme="dark"] .veg-search-label {
   color: var(--dark-text) !important;
@@ -903,7 +905,9 @@ html[data-theme="dark"] .gss-arrow {
 html[data-theme="dark"] .stage-month-pill {
   background: #1d3027 !important;
   border-color: rgba(82, 183, 136, 0.25) !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15) !important;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 html[data-theme="dark"] .smp-label {
   color: var(--dark-text) !important;
@@ -920,7 +924,7 @@ html[data-theme="dark"] .stage-auto-plan-header {
   color: var(--dark-muted) !important;
 }
 html[data-theme="dark"] .saph-line {
-  background: rgba(255,255,255,0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 html[data-theme="dark"]
   :where(input[type="number"], select, .stepper, .crops-month-selector select) {

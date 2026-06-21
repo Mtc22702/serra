@@ -3980,7 +3980,7 @@ if (catalogSearchLink) {
   if (container) observer.observe(container);
 })();
 
-/* ── Pre-config bottom sheet ─────────────────────────────────────────────── */
+/* Pannello di pre-configurazione: raccoglie misure e clima prima di aprire il configuratore. */
 (function () {
   const CONFIG_KEY = "serra.config.v1";
 

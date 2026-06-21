@@ -1,14 +1,18 @@
+/* Gestione tema: modalità chiara/scura con persistenza in localStorage. */
 (function () {
   "use strict";
 
+  /* Riferimenti DOM e media query per il rilevamento del tema di sistema. */
   const root = document.documentElement;
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   const themeMeta = document.querySelector('meta[name="theme-color"]');
 
+  /* Legge il tema attivo dall'attributo data-theme sull'elemento radice. */
   function currentTheme() {
     return root.dataset.theme === "dark" ? "dark" : "light";
   }
 
+  /* Aggiorna pulsanti, aria-label e meta theme-color in base al tema corrente. */
   function syncControls() {
     const dark = currentTheme() === "dark";
     const ro = (root.lang || "it").toLowerCase().startsWith("ro");
@@ -35,6 +39,7 @@
     if (themeMeta) themeMeta.content = dark ? "#0b1814" : "#2f6b3a";
   }
 
+  /* Applica il tema, lo salva opzionalmente e notifica il resto dell'app. */
   function setTheme(theme, persist) {
     root.dataset.theme = theme === "dark" ? "dark" : "light";
     if (persist) localStorage.setItem("serra-theme", root.dataset.theme);
@@ -46,17 +51,20 @@
     );
   }
 
+  /* Evento clic: alterna il tema al tocco di qualsiasi pulsante toggle. */
   document.addEventListener("click", (event) => {
     const button = event.target.closest(".theme-toggle");
     if (!button) return;
     setTheme(currentTheme() === "dark" ? "light" : "dark", true);
   });
 
+  /* Evento sistema: segue il tema OS solo se l'utente non ha scelto manualmente. */
   media.addEventListener?.("change", (event) => {
     if (!localStorage.getItem("serra-theme"))
       setTheme(event.matches ? "dark" : "light", false);
   });
 
+  /* Inizializzazione: sincronizza i controlli e osserva i cambi di lingua. */
   if (document.readyState === "loading")
     document.addEventListener("DOMContentLoaded", syncControls);
   else syncControls();
