@@ -1731,9 +1731,16 @@
           serraAsset("assets/js/plants-data.js") +
           '"><\/script>'
       );
-      document.write(
-        '<script src="' + serraAsset("assets/js/index.js") + '"><\/script>'
-      );
+      [
+        "assets/js/home/home-data.js",
+        "assets/js/home/home-catalog.js",
+        "assets/js/home/home-cart.js",
+        "assets/js/home/home-app.js"
+      ].forEach(function (src) {
+        document.write(
+          '<script src="' + serraAsset(src) + '"><\/script>'
+        );
+      });
     </script>
   </body>
 </html>

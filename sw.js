@@ -1,5 +1,5 @@
 // Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
-const CACHE_VERSION = "2026-06-21-147";
+const CACHE_VERSION = "2026-06-21-153";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -11,10 +11,24 @@ const PRECACHE = [
   "./assets/css/style.css",
   "./assets/css/theme.css",
   "./assets/js/theme.js",
+  "./assets/js/nav.js",
   "./assets/js/i18n.js",
   "./assets/js/plants-data.js",
-  "./assets/js/index.js",
-  "./assets/js/script.js",
+  "./assets/js/home/home-data.js",
+  "./assets/js/home/home-catalog.js",
+  "./assets/js/home/home-cart.js",
+  "./assets/js/home/home-app.js",
+  "./assets/js/conf/conf-data.js",
+  "./assets/js/conf/conf-state.js",
+  "./assets/js/conf/conf-projects.js",
+  "./assets/js/conf/conf-text.js",
+  "./assets/js/conf/conf-draw.js",
+  "./assets/js/conf/conf-ui.js",
+  "./assets/js/conf/conf-companions.js",
+  "./assets/js/conf/conf-shopping.js",
+  "./assets/js/conf/conf-engine.js",
+  "./assets/js/conf/conf-calendar.js",
+  "./assets/js/conf/conf-app.js",
   "./assets/img/icons/logo-180.png",
   "./assets/img/icons/logo-192.png",
   "./assets/img/icons/logo-512.png",
