@@ -4792,6 +4792,7 @@ body.cart-open .cart-nudge {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  align-items: start;
   gap: 10px;
   padding: 4px 18px 18px;
   overflow-y: auto;
