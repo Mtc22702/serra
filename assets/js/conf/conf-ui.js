@@ -1574,6 +1574,7 @@ function renderSummary() {
     if (slotEmpty) slotEmpty.innerHTML = "";
     const yieldBadgeEmpty = document.getElementById("yieldToggleBadge");
     if (yieldBadgeEmpty) yieldBadgeEmpty.textContent = "";
+    renderMaterials();
     renderPrintSummary();
     return;
   }
@@ -1653,6 +1654,7 @@ function renderSummary() {
     slot.appendChild(exportBtn);
   }
 
+  renderMaterials();
   renderPrintSummary();
 }
 
@@ -1957,6 +1959,7 @@ function renderPrintSummary() {
         </table>
         <h4>${labels.shopping}</h4>
         <ul>${shoppingRows}</ul>
+        ${materialsPrintHtml()}
       </section>
     </div>`;
 }
