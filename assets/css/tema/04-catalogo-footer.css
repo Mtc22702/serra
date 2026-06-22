@@ -1,0 +1,175 @@
+/* Sezione: Catalogo e footer.
++ * Tema condiviso per azioni del catalogo, footer scuro e contrasti informativi.
++ */
+@layer base {
+
+/* Catalogo dark: azioni nette e categorie immediatamente riconoscibili. */
+}
+@layer dark-theme {
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn {
+  background: linear-gradient(135deg, #36975a, #267846);
+  color: #fff;
+  border: 1px solid rgba(137, 222, 162, 0.44);
+  box-shadow: 0 7px 18px rgba(4, 20, 11, 0.28);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.22);
+}
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn:hover {
+  background: linear-gradient(135deg, #43ad6b, #2e8c51);
+  border-color: rgba(176, 241, 193, 0.62);
+  box-shadow: 0 10px 24px rgba(12, 50, 27, 0.38);
+}
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn.added {
+  background: #284d36;
+  color: #bfe8ca;
+  border-color: #57966a;
+}
+html[data-theme="dark"] body .catalog-pro-section .top-add-btn.added:hover {
+  background: #7d3535;
+  color: #fff;
+  border-color: #c66b67;
+}
+html[data-theme="dark"] body .catalog-pro-section .compact-add-btn {
+  background: #233d30;
+  color: #a9edbf;
+  border: 2px solid #65cf88;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+html[data-theme="dark"] body .catalog-pro-section .compact-add-btn:hover {
+  background: #338d54;
+  color: #fff;
+  border-color: #8ce3a7;
+}
+html[data-theme="dark"] body .catalog-pro-section .compact-add-btn.added {
+  background: #2c6841;
+  color: #fff;
+  border-color: #8ce3a7;
+}
+}
+
+@layer dark-theme {
+html[data-theme="dark"]
+  body
+  :where(.photo-type-tag, .compact-badge)[data-plant-type] {
+  border: 1px solid currentColor;
+  font-weight: 850;
+  text-shadow: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.24);
+}
+html[data-theme="dark"] body .photo-type-tag[data-plant-type] {
+  backdrop-filter: blur(8px) saturate(0.85);
+  -webkit-backdrop-filter: blur(8px) saturate(0.85);
+}
+html[data-theme="dark"]
+  body
+  :where(.photo-type-tag, .compact-badge)[data-plant-type="frutto"] {
+  background: rgba(82, 38, 31, 0.94);
+  color: #ffc0ad;
+  border-color: #a95f4d;
+}
+html[data-theme="dark"]
+  body
+  :where(.photo-type-tag, .compact-badge)[data-plant-type="foglia"] {
+  background: rgba(28, 70, 45, 0.94);
+  color: #b9edc8;
+  border-color: #57986b;
+}
+html[data-theme="dark"]
+  body
+  :where(.photo-type-tag, .compact-badge)[data-plant-type="radice"] {
+  background: rgba(71, 50, 28, 0.95);
+  color: #f3cf92;
+  border-color: #a17a43;
+}
+html[data-theme="dark"]
+  body
+  :where(.photo-type-tag, .compact-badge)[data-plant-type="legume"] {
+  background: rgba(31, 57, 76, 0.95);
+  color: #bee2f6;
+  border-color: #5786a4;
+}
+html[data-theme="dark"]
+  body
+  :where(.photo-type-tag, .compact-badge)[data-plant-type="aromatica"] {
+  background: rgba(55, 44, 73, 0.95);
+  color: #ddcef6;
+  border-color: #8370a4;
+}
+}
+@layer base {
+
+/* Footer dark: palette indipendente dai token usati per titoli e testi. */
+}
+@layer dark-theme {
+html[data-theme="dark"] body footer.footer-botanico {
+  background: linear-gradient(180deg, #0e2018 0%, #091710 100%);
+  color: #e8f2eb;
+  border-top: 1px solid rgba(133, 211, 157, 0.25);
+}
+html[data-theme="dark"] body .footer-plant-strip {
+  background: #10261b;
+  border-bottom-color: rgba(151, 216, 170, 0.16);
+}
+html[data-theme="dark"] body .footer-plant-icon {
+  opacity: 0.72;
+  filter: saturate(0.9) brightness(0.88)
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+}
+html[data-theme="dark"] body .footer-main {
+  background: transparent;
+  color: #e8f2eb;
+}
+html[data-theme="dark"]
+  body
+  :where(.footer-brand-name, .footer-logo-row, .footer-main strong) {
+  color: #f2f7f3;
+}
+html[data-theme="dark"] body .footer-logo {
+  background: #23382e;
+  border-color: rgba(181, 218, 193, 0.17);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  filter: none;
+  opacity: 1;
+}
+html[data-theme="dark"]
+  body
+  :where(.footer-nav-title, .footer-legal-title, .footer-tip-kicker) {
+  color: #78d596;
+}
+html[data-theme="dark"] body :where(.footer-nav-list a, .footer-legal-list a) {
+  color: #b9c9bf;
+}
+html[data-theme="dark"]
+  body
+  :where(.footer-nav-list a:hover, .footer-legal-list a:hover) {
+  color: #fff;
+}
+html[data-theme="dark"] body :where(.footer-motto, .footer-tip-text) {
+  color: #a9bbb0;
+}
+html[data-theme="dark"] body .footer-tip-inline {
+  border-top-color: rgba(173, 218, 187, 0.14);
+}
+html[data-theme="dark"] body .footer-social a {
+  background: #193126;
+  border-color: rgba(153, 215, 172, 0.22);
+}
+html[data-theme="dark"] body .footer-social a:hover {
+  background: #27503a;
+  border-color: rgba(153, 226, 176, 0.48);
+}
+html[data-theme="dark"] body .footer-social-icon {
+  filter: brightness(0) invert(1);
+  opacity: 0.82;
+}
+html[data-theme="dark"] body .footer-bottom {
+  border-top-color: rgba(173, 218, 187, 0.14);
+  background: rgba(3, 13, 8, 0.22);
+}
+html[data-theme="dark"]
+  body
+  :where(.footer-company-info, .footer-gdpr-copy, .footer-gdpr-links a) {
+  color: #7f9688;
+}
+}

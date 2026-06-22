@@ -1,5 +1,5 @@
 // Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
-const CACHE_VERSION = "2026-06-21-172";
+const CACHE_VERSION = "2026-06-22-173";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -10,6 +10,26 @@ const PRECACHE = [
   "./assets/css/index.css",
   "./assets/css/style.css",
   "./assets/css/theme.css",
+  "./assets/css/index/01-fondazioni-hero.css",
+  "./assets/css/index/02-calendario-catalogo.css",
+  "./assets/css/index/03-dettaglio-carrello.css",
+  "./assets/css/index/04-responsive-header-contatti.css",
+  "./assets/css/index/05-catalogo-avanzato.css",
+  "./assets/css/index/06-hero-configuratore.css",
+  "./assets/css/index/07-preconfigurazione.css",
+  "./assets/css/configuratore/01-fondazioni-intro.css",
+  "./assets/css/configuratore/02-pannelli-controlli.css",
+  "./assets/css/configuratore/03-scena-dettagli.css",
+  "./assets/css/configuratore/04-modali-responsive.css",
+  "./assets/css/configuratore/05-progetti-calendario.css",
+  "./assets/css/configuratore/06-rifiniture-pdp.css",
+  "./assets/css/configuratore/07-livelli-esperienza.css",
+  "./assets/css/tema/01-fondazioni.css",
+  "./assets/css/tema/02-dark-principale.css",
+  "./assets/css/tema/03-modali-calendario.css",
+  "./assets/css/tema/04-catalogo-footer.css",
+  "./assets/css/tema/05-pulsanti-stati.css",
+  "./assets/css/tema/06-header-ritmo.css",
   "./assets/js/theme.js",
   "./assets/js/nav.js",
   "./assets/js/i18n.js",

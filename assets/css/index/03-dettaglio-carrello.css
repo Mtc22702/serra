@@ -1,0 +1,1503 @@
+/* Sezione: Dettaglio e carrello.
++ * Raccolta ordinata delle regole relative a schede tecniche, pannelli informativi e drawer del carrello.
++ */
+@layer base {
+/* Pannello dettaglio: overlay con scheda completa della pianta. */
+.detail-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 8%,
+      rgba(176, 207, 91, 0.14),
+      transparent 34%
+    ),
+    rgba(18, 30, 22, 0.56);
+  z-index: 300;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+.detail-overlay.open {
+  display: flex;
+}
+body.detail-open {
+  overflow: hidden;
+}
+body.detail-open .cart-nudge,
+body.detail-open .back-to-top {
+  display: none !important;
+}
+.detail-panel {
+  --detail-panel-height: min(96.6dvh, calc(100dvh - 2rem));
+  background: linear-gradient(180deg, #fffdf8 0%, #f4f6ec 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 680px;
+  height: var(--detail-panel-height);
+  max-height: var(--detail-panel-height);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  animation: slideUp 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 24px 70px rgba(20, 38, 27, 0.28);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(45, 106, 79, 0.28) transparent;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.detail-panel .detail-photo-wrap,
+.detail-panel .detail-tabs-shell,
+.detail-panel .detail-footer {
+  flex: 0 0 auto;
+}
+
+.detail-panel .detail-scroll {
+  display: contents;
+}
+
+.detail-panel .detail-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-panel .detail-tabs-shell {
+  position: relative;
+}
+
+.detail-panel .detail-tab-panel.active {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-right: 0.18rem;
+}
+
+.detail-panel .detail-footer {
+  padding: 0 1.2rem 1rem;
+  background: linear-gradient(180deg, rgba(244, 246, 236, 0), #f4f6ec 28%);
+}
+
+.detail-panel .detail-footer .detail-add-btn {
+  position: static;
+  margin-top: 0;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+}
+.detail-photo-wrap {
+  width: 80%;
+  height: clamp(168px, 27.2dvh, 240px);
+  margin-inline: auto;
+  overflow: hidden;
+  background: var(--sand);
+  border-radius: 24px 24px 0 0;
+  position: relative;
+}
+.detail-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.detail-photo-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 22, 13, 0.18) 0%, transparent 34%),
+    linear-gradient(0deg, rgba(13, 33, 19, 0.76) 0%, rgba(13, 33, 19, 0.08) 68%);
+}
+/* hero meta badges (tipo + difficoltà) */
+.detail-hero-meta {
+  position: absolute;
+  top: 0.9rem;
+  left: 1.1rem;
+  right: 4.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+.detail-hero-type {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(116, 198, 157, 0.28);
+  color: #c8f0d8;
+  border: 1px solid rgba(200, 240, 216, 0.35);
+  backdrop-filter: blur(8px);
+}
+.detail-hero-diff {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  backdrop-filter: blur(8px);
+}
+.detail-hero-diff.diff-easy {
+  background: rgba(130, 195, 100, 0.28);
+  color: #b8eea0;
+  border: 1px solid rgba(184, 238, 160, 0.3);
+}
+.detail-hero-diff.diff-medium {
+  background: rgba(220, 180, 60, 0.28);
+  color: #f5d98a;
+  border: 1px solid rgba(245, 217, 138, 0.3);
+}
+.detail-hero-diff.diff-hard {
+  background: rgba(210, 80, 50, 0.28);
+  color: #f5b0a0;
+  border: 1px solid rgba(245, 176, 160, 0.3);
+}
+.detail-photo-name {
+  position: absolute;
+  bottom: 1.12rem;
+  left: 1.28rem;
+  right: 4.7rem;
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.72rem, 5vw, 2.28rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.02;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.36);
+}
+.detail-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  color: var(--green-dk);
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(20, 38, 27, 0.2);
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.detail-close:hover {
+  transform: translateY(-1px);
+  background: #fff;
+  box-shadow: 0 14px 30px rgba(20, 38, 27, 0.24);
+}
+.detail-close:focus-visible {
+  outline: 3px solid rgba(176, 207, 91, 0.55);
+  outline-offset: 3px;
+}
+/* Corpo principale della scheda tecnica. */
+.detail-body {
+  padding: 1.1rem 1.2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* Navigazione della scheda tecnica. */
+.detail-tabs-shell {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  padding: 0.5rem;
+  border: 1px solid rgba(45, 106, 79, 0.18);
+  border-radius: 17px;
+  background: rgba(255, 253, 248, 0.96);
+  box-shadow: 0 10px 28px rgba(30, 67, 45, 0.13);
+  backdrop-filter: blur(14px);
+}
+.detail-tabs-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.05rem 0.32rem 0.42rem;
+}
+.detail-tabs-heading strong {
+  color: var(--green-dk);
+  font-size: 0.7rem;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+.detail-tabs-heading span {
+  color: var(--muted);
+  font-size: 0.63rem;
+  font-weight: 600;
+}
+.detail-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.28rem;
+  padding: 0.38rem;
+  border: 1px solid rgba(45, 106, 79, 0.12);
+  border-radius: 13px;
+  background: rgba(45, 106, 79, 0.045);
+}
+.detail-tab {
+  --tab-color: var(--green);
+  min-width: 0;
+  min-height: 47px;
+  padding: 0.42rem 0.28rem;
+  border: 1px solid rgba(45, 106, 79, 0.11);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #657568;
+  font: inherit;
+  font-size: 0.62rem;
+  font-weight: 750;
+  line-height: 1.15;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  transition:
+    background 0.16s,
+    color 0.16s,
+    transform 0.16s;
+  position: relative;
+}
+.detail-tab[data-detail-tab="overview"] {
+  --tab-color: #2d6a4f;
+}
+.detail-tab[data-detail-tab="cultivation"] {
+  --tab-color: #6f943d;
+}
+.detail-tab[data-detail-tab="calendar"] {
+  --tab-color: #3d73b9;
+}
+.detail-tab[data-detail-tab="care"] {
+  --tab-color: #ad5870;
+}
+.detail-tab[data-detail-tab="harvest"] {
+  --tab-color: #c9852f;
+}
+.detail-tab-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tab-color);
+  background: color-mix(in srgb, var(--tab-color) 14%, white);
+  transition:
+    background 0.16s,
+    color 0.16s,
+    transform 0.16s;
+}
+.detail-tab-icon svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.detail-tab:hover {
+  background: #fff;
+  color: var(--green-dk);
+  border-color: color-mix(in srgb, var(--tab-color) 45%, white);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(45, 106, 79, 0.1);
+}
+.detail-tab.active {
+  color: #fff;
+  background: var(--tab-color);
+  border-color: var(--tab-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 13px rgba(45, 106, 79, 0.24);
+}
+.detail-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 14px;
+  height: 7px;
+  background: var(--tab-color);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform: translateX(-50%);
+}
+.detail-tab.active .detail-tab-icon {
+  color: var(--tab-color);
+  background: #fff;
+  transform: translateY(-1px);
+}
+.detail-tab:focus-visible {
+  outline: 3px solid rgba(176, 207, 91, 0.55);
+  outline-offset: 2px;
+}
+.detail-tab-panel {
+  display: none;
+  flex-direction: column;
+  gap: 0.9rem;
+  animation: detailTabIn 0.18s ease-out;
+}
+.detail-tab-panel.active {
+  display: flex;
+}
+@keyframes detailTabIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+.detail-section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.16rem;
+  padding: 0.08rem 0.12rem;
+}
+.detail-section-heading > span {
+  font-family: "Fraunces", serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--green-dk);
+}
+.detail-section-heading small {
+  font-size: 0.74rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+.detail-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+.detail-tech-card {
+  min-width: 0;
+  padding: 0.82rem 0.88rem;
+  border: 1px solid rgba(45, 106, 79, 0.13);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 16px rgba(45, 106, 79, 0.055);
+}
+.detail-tech-card--wide {
+  grid-column: 1 / -1;
+}
+.detail-tech-card h4 {
+  margin: 0 0 0.36rem;
+  color: var(--green-dk);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+.detail-tech-card p {
+  margin: 0;
+  color: #455a49;
+  font-size: 0.8rem;
+  line-height: 1.56;
+}
+
+/* Malattie: sintomi e interventi leggibili a colpo d'occhio. */
+.detail-diseases {
+  padding: 0.95rem;
+  border: 1px solid rgba(164, 82, 53, 0.16);
+  border-radius: 17px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 252, 247, 0.98),
+    rgba(250, 244, 235, 0.9)
+  );
+  box-shadow: 0 7px 22px rgba(91, 58, 36, 0.06);
+}
+.detail-diseases-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.detail-diseases-head h3 {
+  margin: 0;
+  font-family: "Fraunces", serif;
+  font-size: 1.08rem;
+  color: #653c2d;
+}
+.detail-diseases-head p {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: #826c61;
+}
+.detail-diseases-count {
+  flex: 0 0 auto;
+  padding: 0.26rem 0.52rem;
+  border-radius: 999px;
+  background: rgba(164, 82, 53, 0.1);
+  color: #82452f;
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+.detail-disease-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.detail-disease-card {
+  overflow: hidden;
+  border: 1px solid rgba(145, 91, 61, 0.14);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.detail-disease-card summary {
+  display: flex;
+  align-items: center;
+  gap: 0.58rem;
+  min-height: 48px;
+  padding: 0.66rem 0.76rem;
+  list-style: none;
+  cursor: pointer;
+  color: #5d3b2d;
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition:
+    background 0.16s,
+    color 0.16s;
+}
+.detail-disease-card summary:hover {
+  background: rgba(198, 123, 83, 0.07);
+}
+.detail-disease-card summary:focus-visible {
+  outline: 3px solid rgba(198, 123, 83, 0.28);
+  outline-offset: -3px;
+}
+.detail-disease-card summary::-webkit-details-marker {
+  display: none;
+}
+.detail-disease-marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c67b53;
+  box-shadow: 0 0 0 4px rgba(198, 123, 83, 0.12);
+  flex: 0 0 auto;
+}
+.detail-disease-toggle {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: #7d5948;
+  background: rgba(198, 123, 83, 0.12);
+  border: 1px solid rgba(198, 123, 83, 0.2);
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 500;
+  box-shadow: 0 3px 9px rgba(100, 65, 45, 0.08);
+  transition:
+    transform 0.16s,
+    background 0.16s;
+}
+.detail-disease-card[open] .detail-disease-toggle {
+  transform: rotate(45deg);
+}
+.detail-disease-card[open] summary {
+  background: rgba(198, 123, 83, 0.08);
+}
+.detail-disease-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  padding: 0 0.72rem 0.72rem;
+}
+.detail-disease-info {
+  padding: 0.64rem 0.68rem;
+  border-radius: 10px;
+  background: #faf7f1;
+}
+.detail-disease-info--action {
+  background: #f1f8f2;
+}
+.detail-disease-info b {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: #715343;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.detail-disease-info--action b {
+  color: #2d6a4f;
+}
+.detail-disease-info p {
+  margin: 0;
+  color: #554b45;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+.detail-treatment-note {
+  margin: 0.72rem 0 0;
+  padding-top: 0.68rem;
+  border-top: 1px solid rgba(145, 91, 61, 0.12);
+  color: #786d66;
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+.detail-pests {
+  border-color: rgba(104, 91, 156, 0.18);
+  background: linear-gradient(
+    145deg,
+    rgba(251, 250, 255, 0.98),
+    rgba(242, 240, 250, 0.92)
+  );
+}
+.detail-pests .detail-diseases-head h3 {
+  color: #514779;
+}
+.detail-pests .detail-diseases-count {
+  background: rgba(104, 91, 156, 0.11);
+  color: #5f5487;
+}
+.detail-pests .detail-disease-marker {
+  background: #7566ad;
+  box-shadow: 0 0 0 4px rgba(117, 102, 173, 0.12);
+}
+.detail-pests .detail-disease-toggle {
+  color: #5f5487;
+  background: rgba(117, 102, 173, 0.11);
+  border-color: rgba(117, 102, 173, 0.2);
+}
+.detail-pests .detail-disease-card summary:hover,
+.detail-pests .detail-disease-card[open] summary {
+  background: rgba(117, 102, 173, 0.07);
+}
+.detail-pests .detail-disease-info--action {
+  background: #f1f4fb;
+}
+.detail-pests .detail-disease-info--products {
+  grid-column: 1 / -1;
+  background: #fff8e8;
+  border: 1px solid rgba(201, 133, 47, 0.18);
+}
+.detail-pests .detail-disease-info--products b {
+  color: #8a5a1f;
+}
+
+/* Section-level accordion: Malattie comuni / Insetti e parassiti */
+details.detail-diseases > summary.detail-diseases-head {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 0;
+  border-radius: 13px;
+  transition: background 0.16s;
+}
+details.detail-diseases > summary.detail-diseases-head::-webkit-details-marker {
+  display: none;
+}
+details.detail-diseases > summary.detail-diseases-head:hover {
+  background: rgba(198, 123, 83, 0.06);
+}
+details.detail-pests > summary.detail-diseases-head:hover {
+  background: rgba(117, 102, 173, 0.06);
+}
+details.detail-diseases[open] > summary.detail-diseases-head {
+  margin-bottom: 0.75rem;
+}
+.detail-diseases-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  flex: 0 0 auto;
+}
+.detail-diseases-chevron {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(164, 82, 53, 0.1);
+  color: #82452f;
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.22s ease;
+}
+.detail-pests .detail-diseases-chevron {
+  background: rgba(117, 102, 173, 0.1);
+  color: #5f5487;
+}
+details.detail-diseases[open] > summary .detail-diseases-chevron {
+  transform: rotate(180deg);
+}
+details.detail-diseases .detail-disease-list,
+details.detail-diseases .detail-treatment-note {
+  animation: detailSecFadeIn 0.18s ease-out;
+}
+@keyframes detailSecFadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Quick badges row (sun, water, type) */
+.detail-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  min-height: 28px;
+  padding: 0.3rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--green-dk);
+  border: 1px solid rgba(45, 106, 79, 0.14);
+  box-shadow: 0 3px 10px rgba(45, 106, 79, 0.07);
+  white-space: nowrap;
+}
+.badge--sun {
+  background: rgba(244, 225, 145, 0.3);
+  border-color: rgba(244, 162, 97, 0.3);
+  color: #7a4a00;
+}
+.badge--water {
+  background: rgba(82, 183, 136, 0.14);
+  border-color: rgba(45, 106, 79, 0.2);
+  color: #1b4332;
+}
+.badge--type {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Practical note */
+.detail-nota {
+  font-size: 0.88rem;
+  color: #3d5440;
+  line-height: 1.62;
+  background: linear-gradient(
+    135deg,
+    rgba(246, 252, 241, 0.95),
+    rgba(255, 255, 255, 0.88)
+  );
+  border: 1px solid rgba(116, 198, 157, 0.3);
+  border-left: 4px solid #74c69d;
+  padding: 0.82rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.06);
+  margin: 0;
+  position: relative;
+}
+.detail-nota::before {
+  content: "💡";
+  position: absolute;
+  top: 0.72rem;
+  right: 0.8rem;
+  font-size: 1rem;
+  opacity: 0.55;
+}
+
+/* Infografica distanze: spazio consigliato tra le piante. */
+.detail-spacing {
+  background: linear-gradient(145deg, #f0f8f2, #ffffff);
+  border: 1px solid rgba(45, 106, 79, 0.18);
+  border-radius: 16px;
+  padding: 0.88rem 1rem 0.7rem;
+  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.detail-spacing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.detail-spacing-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--green-dk);
+  letter-spacing: -0.01em;
+}
+.detail-spacing-diagram {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+.spacing-svg {
+  width: min(100%, 224px);
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Riquadri statistici: giorni, resa, altezza e prezzo. */
+.detail-tile {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(45, 106, 79, 0.12);
+  border-radius: 14px;
+  padding: 0.7rem 0.8rem;
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.055);
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.14s,
+    box-shadow 0.14s;
+}
+.detail-tile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green-lt), var(--lime));
+  opacity: 0;
+  transition: opacity 0.14s;
+}
+.detail-tile:hover::before {
+  opacity: 1;
+}
+.detail-tile-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-bottom: 0.1rem;
+}
+.detail-tile-label {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7a8d7a;
+}
+.detail-tile-value {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--green-dk);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.detail-tile-sub {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 0.1rem;
+}
+.detail-tile--harvest {
+  border-top: 3px solid #52b788;
+}
+.detail-tile--yield {
+  border-top: 3px solid #74c69d;
+}
+.detail-tile--height {
+  border-top: 3px solid #95ddb4;
+}
+.detail-tile--price {
+  border-top: 3px solid #b7e4c7;
+}
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+/* Barra mensile: calendario di semina e raccolta. */
+.month-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.92rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.96),
+    rgba(250, 246, 238, 0.92)
+  );
+  border: 1px solid rgba(107, 98, 84, 0.16);
+  box-shadow: 0 8px 22px rgba(45, 106, 79, 0.06);
+}
+.month-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+}
+.month-bar-head span {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green-dk);
+}
+.month-bar-head b {
+  max-width: 58%;
+  padding: 0.22rem 0.48rem;
+  border-radius: 999px;
+  background: rgba(82, 183, 136, 0.13);
+  font-size: 0.68rem;
+  line-height: 1.25;
+  color: var(--green-dk);
+  text-align: right;
+  font-weight: 750;
+}
+.month-segments {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 4px;
+}
+.month-seg {
+  position: relative;
+  min-width: 0;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.34rem 0.12rem 0.28rem;
+  border: 1px solid rgba(107, 98, 84, 0.16);
+  border-radius: 8px;
+  background: rgba(221, 211, 190, 0.28);
+  cursor: default;
+  transition:
+    background 0.18s,
+    border-color 0.18s,
+    box-shadow 0.18s,
+    transform 0.14s;
+}
+.month-seg .month-seg-abbr {
+  font-size: 0.56rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: rgba(107, 98, 84, 0.62);
+  letter-spacing: 0;
+  line-height: 1;
+  transition: color 0.18s;
+}
+.month-seg::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  bottom: 5px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(107, 98, 84, 0.22);
+  transition:
+    background 0.18s,
+    transform 0.14s;
+}
+.month-seg::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: transparent;
+  transform: translateX(-50%);
+}
+.month-seg.active .month-seg-abbr {
+  color: var(--green-dk);
+}
+.month-seg.active::after {
+  background: linear-gradient(90deg, var(--green), var(--green-lt));
+  transform: scaleX(1.05);
+}
+.month-seg.active {
+  background: rgba(82, 183, 136, 0.16);
+  border-color: rgba(45, 106, 79, 0.28);
+}
+.month-seg.current {
+  border-color: rgba(231, 111, 81, 0.58);
+  box-shadow:
+    inset 0 0 0 1px rgba(231, 111, 81, 0.38),
+    0 3px 10px rgba(231, 111, 81, 0.12);
+}
+.month-seg.current .month-seg-abbr {
+  color: var(--accent);
+  font-weight: 900;
+}
+.month-seg.current::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(231, 111, 81, 0.14);
+}
+.month-seg.active.current .month-seg-abbr {
+  color: var(--green-dk);
+}
+.month-bar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.7rem;
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.month-bar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+.month-legend-dot {
+  width: 0.68rem;
+  height: 0.68rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+.month-legend-dot--active {
+  background: var(--green-lt);
+}
+.month-legend-dot--current {
+  border: 2px solid var(--accent);
+  background: transparent;
+}
+
+/* Abbinamenti nella scheda: piante compatibili. */
+.detail-companions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(45, 106, 79, 0.12);
+  border-radius: 14px;
+  padding: 0.88rem 0.96rem;
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.05);
+}
+.detail-companions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.detail-companions-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2d6a4f;
+}
+.detail-companions-label--foe {
+  color: #8c2316;
+}
+.companion-list {
+  display: flex;
+  gap: 0.32rem;
+  flex-wrap: wrap;
+}
+.companion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.24rem 0.64rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: transform 0.1s;
+}
+.companion-chip:hover {
+  transform: scale(1.04);
+}
+.companion-chip.friend {
+  background: #e4f5ec;
+  color: #185a38;
+  border: 1px solid #a8d8be;
+}
+.companion-chip.foe {
+  background: #fde9e6;
+  color: #9a2c1f;
+  border: 1px solid #f5b0a4;
+}
+
+/* Sezione semina: tecniche e tempi di coltivazione. */
+.detail-sow {
+  border: 1px solid rgba(45, 106, 79, 0.16);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.05);
+}
+.detail-sow-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.78rem 0.96rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--green-dk);
+  cursor: pointer;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.9);
+  user-select: none;
+  gap: 0.5rem;
+}
+.detail-sow-header::-webkit-details-marker {
+  display: none;
+}
+.detail-sow[open] .detail-sow-icon {
+  transform: rotate(45deg);
+}
+.detail-sow-icon {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--green);
+  transition: transform 0.18s;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.detail-sow-body {
+  padding: 0 0.96rem 0.96rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.detail-tab-panel .detail-sow-body {
+  padding: 0.96rem;
+}
+.detail-sow-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.62rem;
+  font-size: 0.84rem;
+  color: #3d5440;
+  line-height: 1.58;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(245, 252, 247, 0.9);
+  border: 1px solid rgba(45, 106, 79, 0.1);
+}
+.detail-sow-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1.2rem;
+  width: 1.2rem;
+  min-height: 1.45em;
+  line-height: 1.25;
+}
+.detail-sow-row-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.detail-sow-row b {
+  color: var(--green-dk);
+  font-weight: 700;
+}
+.detail-sow-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.62rem;
+  margin: 0;
+  padding: 0.72rem 0.88rem;
+  border-left: 4px solid #d9a441;
+  background: linear-gradient(
+    135deg,
+    rgba(217, 164, 65, 0.1),
+    rgba(255, 248, 224, 0.6)
+  );
+  border-radius: 10px;
+  font-size: 0.84rem;
+  color: #5a4a1a;
+  line-height: 1.58;
+}
+
+/* Pulsante di aggiunta al carrello. */
+.detail-add-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, var(--green), var(--green-dk));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: "Outfit", sans-serif;
+  cursor: pointer;
+  transition:
+    filter 0.16s,
+    transform 0.14s,
+    box-shadow 0.16s;
+  box-shadow: 0 6px 22px rgba(45, 106, 79, 0.32);
+  letter-spacing: 0.01em;
+  position: sticky;
+  bottom: 0.18rem;
+  z-index: 7;
+  outline: 4px solid rgba(244, 246, 236, 0.94);
+}
+.detail-add-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(45, 106, 79, 0.38);
+}
+.detail-add-btn.added {
+  background: linear-gradient(135deg, #b03020, #8c2316);
+  box-shadow: 0 6px 22px rgba(176, 48, 32, 0.32);
+}
+.detail-add-btn.added:hover {
+  filter: brightness(1.08);
+}
+
+/* Carrello: drawer, articoli, stato vuoto e checkout simulato. */
+.cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+.cart-overlay.open {
+  display: block;
+}
+.cart-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+}
+.cart-drawer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(390px, 100vw);
+  background: var(--white);
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.13);
+  animation: slideLeft 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.cart-open {
+  overflow: hidden;
+}
+body.cart-open .cart-nudge,
+body.cart-open .back-to-top {
+  display: none !important;
+}
+@keyframes slideLeft {
+  from {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+}
+.cart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.cart-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+}
+.cart-species-line {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--green-dk, #2d6a4f);
+  background: rgba(45, 106, 79, 0.09);
+  border-radius: 999px;
+  padding: 0.16rem 0.52rem;
+  letter-spacing: 0.01em;
+}
+.cart-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.18rem;
+}
+.cart-clear-btn {
+  height: 28px;
+  padding: 0 0.7rem;
+  border-radius: 6px;
+  border: 1px solid rgba(82, 183, 136, 0.35);
+  background: transparent;
+  color: var(--green-md, #2d6a4f);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.14s,
+    color 0.14s,
+    border-color 0.14s;
+}
+.cart-clear-btn:hover {
+  background: rgba(231, 111, 81, 0.08);
+  border-color: rgba(231, 111, 81, 0.45);
+  color: #c0392b;
+}
+.cart-title {
+  font-family: "Fraunces", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--green-dk);
+}
+.cart-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--sand);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cart-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.93rem;
+}
+.cart-empty-icon {
+  font-size: 3rem;
+}
+.cart-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--sand-lt);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.cart-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.cart-item-copy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+.cart-item-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--green-dk);
+}
+.cart-item-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cart-item-pack {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+  gap: 0.4rem;
+}
+.cart-item-pack b {
+  color: var(--green-dk);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cart-item-remove {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 0.2rem;
+  border-radius: 4px;
+}
+.cart-item-remove:hover {
+  color: #b03020;
+}
+.cart-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.45rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(45, 106, 79, 0.08);
+  color: var(--green-dk);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.cart-total-row b {
+  font-size: 1rem;
+}
+.cart-footer {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.cart-footer-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: left;
+  margin-bottom: 0.9rem;
+  line-height: 1.45;
+}
+.cart-conf-link {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.68rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(45, 106, 79, 0.07);
+  border: 1px solid rgba(45, 106, 79, 0.18);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--green-dk);
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease;
+  line-height: 1.2;
+}
+.cart-conf-link:hover {
+  transform: translateY(-1px);
+  background: rgba(45, 106, 79, 0.12);
+  border-color: rgba(45, 106, 79, 0.28);
+}
+.cart-conf-link-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  flex: 1;
+}
+.cart-conf-link-hint {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  opacity: 0.6;
+}
+.cart-checkout-btn {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Outfit", sans-serif;
+  cursor: pointer;
+  margin-top: 0.65rem;
+  transition: background 0.16s;
+}
+.cart-checkout-btn:hover {
+  background: #cf5c3c;
+}
+.cart-nudge {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  z-index: 360;
+  width: min(520px, calc(100vw - 2rem));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.78rem 0.85rem 0.78rem 1rem;
+  background: var(--green-dk);
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 14px 44px rgba(27, 67, 50, 0.28);
+  transform: translate(-50%, calc(100% + 1.5rem));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease;
+}
+.cart-nudge.visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.cart-nudge-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.02rem;
+  line-height: 1.2;
+}
+.cart-nudge-copy b {
+  font-size: 0.93rem;
+}
+.cart-nudge-copy span {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.78rem;
+}
+.cart-nudge button {
+  flex: 0 0 auto;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--green-dk);
+  padding: 0.52rem 0.85rem;
+  min-height: 38px;
+  font:
+    800 0.82rem "Outfit",
+    sans-serif;
+  cursor: pointer;
+}
+}

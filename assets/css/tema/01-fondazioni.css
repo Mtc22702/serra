@@ -1,0 +1,457 @@
+/* Sezione: Fondazioni del tema.
++ * Tema condiviso per token comuni, superfici principali e controlli del tema.
++ */
+@layer base {
+/* Tema condiviso: modalità chiara/scura per homepage e configuratore. */
+:root {
+  color-scheme: light;
+  --theme-surface: #fffdf8;
+  --theme-surface-2: #f3f6ed;
+  --theme-surface-3: #e8eee2;
+  --theme-line: rgba(31, 67, 50, 0.15);
+  --theme-text: #1f3428;
+  --theme-muted: #667168;
+  --theme-shadow: 0 14px 38px rgba(24, 53, 36, 0.12);
+}
+
+/* Il logo del footer riprende esattamente il trattamento dell'header. */
+.footer-logo {
+  width: 42px;
+  height: 42px;
+  padding: 5px;
+  box-sizing: border-box;
+  object-fit: contain;
+  border: 1px solid rgba(45, 106, 79, 0.14);
+  border-radius: 13px;
+  background: linear-gradient(145deg, #fff, #edf5e9);
+  box-shadow:
+    0 8px 18px rgba(27, 67, 50, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  filter: none;
+  opacity: 1;
+}
+
+}
+@layer dark-theme {
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #091410;
+  --white: #14231d;
+  --sand-lt: #101d18;
+  --sand: #28362c;
+  --text: #edf5ef;
+  --muted: #a9b9ae;
+  --border: #30453a;
+  --green-dk: #d6eadc;
+  --green: #73bf8a;
+  --green-lt: #64c58a;
+  --lime: #76d49a;
+  --crema: #0b1712;
+  --carta: #13221b;
+  --inchiostro: #e9f3ec;
+  --verde-scuro: #d5e9da;
+  --verde: #69b77d;
+  --verde-chiaro: #79c78d;
+  --ghiaia: #34443b;
+  --terra: #b89b82;
+  --terra-scuro: #d0b69e;
+  --bordo: 1px solid rgba(173, 211, 186, 0.15);
+  --ombra: 0 16px 42px rgba(0, 0, 0, 0.34);
+  --theme-surface: #13221b;
+  --theme-surface-2: #182a21;
+  --theme-surface-3: #21362a;
+  --theme-line: rgba(172, 214, 187, 0.16);
+  --theme-text: #edf5ef;
+  --theme-muted: #a9b9ae;
+  --theme-shadow: 0 16px 42px rgba(0, 0, 0, 0.36);
+}
+}
+@layer base {
+
+body,
+.site-header,
+.panel,
+.stage,
+.guided-intro,
+.catalog-pro-shell,
+.catalog-tools,
+.cart-drawer,
+.cookie-banner {
+  transition:
+    background-color 0.24s ease,
+    color 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  padding: 0;
+  border: 1px solid rgba(45, 106, 79, 0.16);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #245a3d;
+  box-shadow:
+    0 5px 15px rgba(31, 67, 50, 0.08),
+    inset 0 1px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(82, 183, 136, 0.48);
+}
+.theme-toggle-icon {
+  position: absolute;
+  font-size: 21px;
+  line-height: 1;
+  transition:
+    opacity 0.18s,
+    transform 0.25s;
+}
+.theme-toggle-sun {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.7);
+}
+.theme-toggle-moon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+}
+@layer dark-theme {
+html[data-theme="dark"] .theme-toggle {
+  background: #1b3026;
+  color: #ffd778;
+  border-color: rgba(255, 215, 120, 0.2);
+  box-shadow:
+    0 7px 20px rgba(0, 0, 0, 0.28),
+    inset 0 1px rgba(255, 255, 255, 0.07);
+}
+html[data-theme="dark"] .theme-toggle-sun {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+html[data-theme="dark"] .theme-toggle-moon {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.7);
+}
+}
+
+@layer dark-theme {
+html[data-theme="dark"] body {
+  background: #091410;
+  color: var(--theme-text);
+}
+html[data-theme="dark"] body::before {
+  opacity: 0.22;
+}
+html[data-theme="dark"] .site-header {
+  background: rgba(10, 23, 18, 0.94);
+  border-bottom-color: var(--theme-line);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+}
+html[data-theme="dark"] .nav-brand,
+html[data-theme="dark"] .nav-brand-text,
+html[data-theme="dark"] .nav-link,
+html[data-theme="dark"] .site-header small {
+  color: var(--theme-text);
+}
+html[data-theme="dark"] .nav-link:hover,
+html[data-theme="dark"] .nav-link--current {
+  background: rgba(105, 183, 125, 0.16);
+  border-color: rgba(105, 183, 125, 0.3);
+  color: #dff3e5;
+}
+html[data-theme="dark"] .nav-lang,
+html[data-theme="dark"] .nav-lang select,
+html[data-theme="dark"] .cart-btn,
+html[data-theme="dark"] select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea {
+  background-color: #17271f;
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .project-export-menu {
+  border-color: rgba(173, 211, 186, 0.2);
+  background: var(--theme-surface);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.42);
+}
+html[data-theme="dark"] .project-export-menu small {
+  color: var(--theme-muted);
+}
+html[data-theme="dark"] .project-export-menu button:hover,
+html[data-theme="dark"] .project-export-menu button:focus-visible,
+html[data-theme="dark"] .project-export-icon {
+  background: rgba(105, 183, 125, 0.14);
+}
+html[data-theme="dark"] .nav-menu-toggle span {
+  background: #dcebe1;
+}
+}
+@layer base {
+
+/* Homepage: contenitori, catalogo e schede tecniche. */
+}
+@layer dark-theme {
+html[data-theme="dark"] .hero-bg-plants {
+  filter: brightness(0.55) saturate(0.76) contrast(1.06);
+}
+html[data-theme="dark"] .hero-immersive {
+  background-color: #0a1712;
+}
+html[data-theme="dark"]
+  :where(
+    .climate-control-panel,
+    .climate-help-popover,
+    .hero-promise,
+    .catalog-pro-shell,
+    .catalog-tools,
+    .catalog-filter-group,
+    .catalog-insight-card,
+    .catalog-search-suggestions,
+    .season-card,
+    .plant-card,
+    .product-card,
+    .veg-card,
+    .companions-panel,
+    .companion-card,
+    .kit-card,
+    .detail-panel,
+    .detail-content,
+    .detail-tabs-shell,
+    .detail-summary-card,
+    .detail-stat,
+    .detail-info-card,
+    .detail-spacing,
+    .detail-tab-panel,
+    .detail-disease-card,
+    .cart-drawer,
+    .cart-item,
+    .cart-summary,
+    .cookie-banner
+  ) {
+  background: var(--theme-surface);
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+  box-shadow: var(--theme-shadow);
+}
+html[data-theme="dark"]
+  :where(
+    .catalog-month-btn,
+    .catalog-chip,
+    .catalog-category-btn,
+    .detail-tab,
+    .detail-sow-row,
+    .detail-cultivation-item,
+    .detail-disease-info,
+    .detail-disease-info--action,
+    .spacing-visual,
+    .pdp-spacing-visual,
+    .cart-qty-control
+  ) {
+  background: var(--theme-surface-2);
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"]
+  :where(
+    .section-heading,
+    .kit-name,
+    .detail-title,
+    .cart-title,
+    h1,
+    h2,
+    h3,
+    strong
+  ) {
+  color: var(--theme-text);
+}
+html[data-theme="dark"]
+  :where(
+    .section-sub,
+    .catalog-hint,
+    .detail-subtitle,
+    .detail-copy,
+    .kit-desc,
+    .cart-footer-note,
+    .panel .sub
+  ) {
+  color: var(--theme-muted);
+}
+html[data-theme="dark"] .stagione-section,
+html[data-theme="dark"] .companions-section,
+html[data-theme="dark"] .kit-section {
+  background-color: #0c1813;
+}
+html[data-theme="dark"] .catalog-search-box {
+  background: var(--theme-surface-2);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .catalog-search-note {
+  color: var(--dark-muted);
+  background: rgba(82, 183, 136, 0.06);
+  border-left-color: rgba(82, 183, 136, 0.28);
+}
+html[data-theme="dark"] .catalog-search-badge {
+  background: #376f49;
+}
+html[data-theme="dark"] .detail-tab.active {
+  color: #fff;
+}
+html[data-theme="dark"] .detail-tab-icon {
+  background: rgba(255, 255, 255, 0.08);
+}
+html[data-theme="dark"] .detail-tab.active .detail-tab-icon {
+  background: rgba(255, 255, 255, 0.88);
+}
+html[data-theme="dark"] .cart-backdrop {
+  background: rgba(0, 7, 4, 0.74);
+}
+}
+@layer base {
+
+/* Configuratore: pannelli laterali, canvas e schede. */
+}
+@layer dark-theme {
+html[data-theme="dark"] .app {
+  background: radial-gradient(
+    circle at 50% 18%,
+    rgba(50, 96, 66, 0.13),
+    transparent 44%
+  );
+}
+html[data-theme="dark"]
+  :where(
+    .guided-intro,
+    .guided-intro-main,
+    .guided-summary,
+    .panel,
+    .stage,
+    .view-toolbar,
+    .scene-wrap,
+    .stage-empty-banner,
+    .bed-detail,
+    .plant-detail,
+    .pdp-section,
+    .pdp-hero-card,
+    .pdp-tabbar,
+    .pdp-spacing-tile,
+    .pdp-info-card,
+    .pdp-accordion,
+    .veg,
+    .seed-list,
+    .yield-summary,
+    .cart-nudge
+  ) {
+  background: var(--theme-surface);
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+  box-shadow: var(--theme-shadow);
+}
+html[data-theme="dark"]
+  :where(
+    .guided-step,
+    .guided-tag,
+    .control,
+    .stepper,
+    .view-select,
+    .view-select select,
+    .view-select-wrap,
+    .view-print-btn,
+    .pdp-tab,
+    .pdp-stat,
+    .pdp-care-item,
+    .pdp-accordion-header,
+    .veg-row,
+    .veg.in,
+    .seed-row,
+    .action-card
+  ) {
+  background: var(--theme-surface-2);
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .view-select-label {
+  background: rgba(139, 212, 158, 0.12);
+  color: var(--dark-green);
+}
+html[data-theme="dark"] .view-select-arrow {
+  border-color: var(--dark-muted);
+}
+html[data-theme="dark"]
+  :where(
+    .panel-title,
+    .stage-title,
+    .pdp-title,
+    .pdp-section-title,
+    .veg-name,
+    .guided-intro h1,
+    .guided-intro h2
+  ) {
+  color: var(--theme-text);
+}
+html[data-theme="dark"]
+  :where(
+    .stage-subtitle,
+    .guided-brand-copy p,
+    .pdp-copy,
+    .pdp-hint,
+    .scale-note,
+    .empty-note
+  ) {
+  color: var(--theme-muted);
+}
+html[data-theme="dark"] .scene-wrap {
+  background: linear-gradient(145deg, #13231c, #0d1813);
+  border-color: rgba(163, 207, 178, 0.16);
+}
+html[data-theme="dark"] .scene svg {
+  box-shadow:
+    0 15px 38px rgba(0, 0, 0, 0.48),
+    inset 0 0 0 1px rgba(190, 225, 201, 0.12);
+}
+html[data-theme="dark"] .pdp-tab.active,
+html[data-theme="dark"] .btn.primary,
+html[data-theme="dark"] .cart-checkout-btn {
+  color: #fff;
+}
+}
+
+@layer dark-theme {
+html[data-theme="dark"] ::selection {
+  background: rgba(105, 183, 125, 0.34);
+  color: #fff;
+}
+}
+@layer base {
+@media (max-width: 720px) {
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    border-radius: 11px;
+  }
+  .theme-toggle-icon {
+    font-size: 19px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle-icon {
+    transition: none;
+  }
+}
+
+/* Dark mode v2: gerarchia più morbida, contrasto leggibile e colori semantici. */
+}
