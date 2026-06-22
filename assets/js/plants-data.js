@@ -1,17 +1,18 @@
-/* ============================================================
-   plants-data.js — dati condivisi del catalogo orto
-   Generato unificando le piante presenti in script.js e index.js
-   per evitare duplicazioni. Modifica SOLO questo file per
-   aggiornare le informazioni delle piante.
+/* ==========================================================================
+   ARCHIVIO CONDIVISO DELLE PIANTE
+   --------------------------------------------------------------------------
+   È la fonte unica dei dati botanici usati dalla home e dal configuratore.
+   Per aggiornare una coltura si interviene qui, evitando copie divergenti.
 
-   PLANTS:        anagrafica completa di ogni pianta (spaziature,
-                   stile grafico, sole/acqua, resa, abbinamenti...)
-   SOWING_GUIDE:  guida dettagliata alla semina (it)
-   SOWING_GUIDE_RO: guida alla semina (ro), parziale
-   TIPO:          categoria botanica/uso di ogni pianta
-   ============================================================ */
+   SEZIONI DEL FILE
+   1. PLANTS — anagrafica, spaziature, esigenze, resa e consociazioni
+   2. SOWING_GUIDE — guida dettagliata alla semina in italiano
+   3. SOWING_GUIDE_RO — guida alla semina tradotta in romeno
+   4. TIPO — categoria botanica o d'uso di ogni pianta
+   5. ESPORTAZIONE — disponibilità dei dati nel browser e in CommonJS
+   ========================================================================== */
 (function (root) {
-  /* Anagrafica piante: spaziature, grafica, sole, acqua, resa e abbinamenti. */
+  /* 1. ANAGRAFICA — spaziature, grafica, sole, acqua, resa e abbinamenti. */
   const PLANTS = [
     {
       id: "pomodoro",
@@ -2154,7 +2155,7 @@
     }
   ];
 
-  /* Guida alla semina (IT): metodo, profondità, temperatura e tempi di germinazione. */
+  /* 2. GUIDA ALLA SEMINA IN ITALIANO — metodo, profondità, temperatura e tempi. */
   const SOWING_GUIDE = {
     pomodoro: {
       method:
@@ -3374,7 +3375,7 @@
     }
   };
 
-  /* Guida alla semina (RO): traduzione parziale della guida italiana. */
+  /* 3. GUIDA ALLA SEMINA IN ROMENO — traduzione della guida italiana disponibile. */
   const SOWING_GUIDE_RO = {
     pomodoro: {
       method:
@@ -4001,7 +4002,7 @@
     }
   };
 
-  /* Categoria botanica: associa ogni pianta alla sua famiglia (frutto, foglia, radice, ecc.). */
+  /* 4. CATEGORIE — associa ogni pianta a frutto, foglia, radice e altre famiglie. */
   const TIPO = {
     pomodoro: "frutto",
     peperone: "frutto",
@@ -4102,7 +4103,7 @@
     cimbru: "aromatica"
   };
 
-  /* Esportazione: espone i dati come modulo CommonJS o come variabili globali. */
+  /* 5. ESPORTAZIONE — espone i dati come modulo CommonJS o variabili globali. */
   const DATA = { PLANTS, SOWING_GUIDE, SOWING_GUIDE_RO, TIPO };
   if (typeof module !== "undefined" && module.exports) {
     module.exports = DATA;

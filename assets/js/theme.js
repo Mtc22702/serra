@@ -1,18 +1,23 @@
-/* Gestione tema: modalità chiara/scura con persistenza in localStorage. */
+/* ==========================================================================
+   TEMA CHIARO E SCURO
+   --------------------------------------------------------------------------
+   Determina il tema attivo, aggiorna i controlli accessibili e salva la scelta
+   dell'utente. Se non esiste una preferenza, segue il tema del sistema operativo.
+   ========================================================================== */
 (function () {
   "use strict";
 
-  /* Riferimenti DOM e media query per il rilevamento del tema di sistema. */
+  /* RIFERIMENTI — pagina, colore del browser e preferenza del sistema. */
   const root = document.documentElement;
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   const themeMeta = document.querySelector('meta[name="theme-color"]');
 
-  /* Legge il tema attivo dall'attributo data-theme sull'elemento radice. */
+  /* LETTURA — ricava il tema applicato all'elemento radice della pagina. */
   function currentTheme() {
     return root.dataset.theme === "dark" ? "dark" : "light";
   }
 
-  /* Aggiorna pulsanti, aria-label e meta theme-color in base al tema corrente. */
+  /* SINCRONIZZAZIONE — aggiorna pulsanti, ARIA e colore dell'interfaccia browser. */
   function syncControls() {
     const dark = currentTheme() === "dark";
     const ro = (root.lang || "it").toLowerCase().startsWith("ro");

@@ -1,20 +1,17 @@
-/* =========================================================
-   JS pagina home: catalogo semi, sezione hero stagionale, carrello e traduzioni.
-   Le funzioni restano globali per i gestori inline presenti nell'HTML.
-   ---------------------------------------------------------
-   MAPPA DEL FILE (in ordine):
-     1. Catalogo colture (PLANTS) e indice per id (BYID)
-     2. Mappa difficoltà colture (DIFFICULTY)
-     3. Dati ausiliari (prezzi, foto, traduzioni piante)
-     4. Stato pagina (filtri catalogo, carrello)
-     5. Helper catalogo (filtri, ordinamento, prezzi, etichette)
-     6. Rendering (hero, calendario, catalogo, abbinamenti, kit, footer)
-     7. Carrello e dettaglio pianta
-     8. Preferenze, persistenza e lingua
-     9. Avvio (boot)
-   ========================================================= */
+/* ==========================================================================
+   HOME — DATI E RISORSE DEL CATALOGO
+   --------------------------------------------------------------------------
+   Collega la home all'archivio condiviso delle piante e raccoglie i metadati
+   necessari alla presentazione: difficoltà, misure, immagini, simboli e testi.
 
-/* Dati piante: catalogo base usato da card, dettaglio e carrello. */
+   SEZIONI DEL FILE
+   1. Catalogo condiviso e livelli di difficoltà
+   2. Metadati tecnici e guide alla semina
+   3. Immagini, simboli e composizioni decorative
+   4. Testi localizzati e stagioni
+   ========================================================================== */
+
+/* 1. CATALOGO CONDIVISO — fonte usata da schede, dettaglio e carrello. */
 const PLANTS = window.PLANTS;
 
 const NOMI_MESI = [
@@ -47,8 +44,8 @@ const ABBR_MESI = [
 ];
 const SOLE_ICON = { pieno: "☀️", mezz: "🌤️" };
 const ACQUA_ICON = { alta: "💧💧💧", media: "💧💧", bassa: "💧" };
-// Difficoltà di coltivazione: 1 = facile, 2 = media, 3 = difficile/esotica.
-// Mappa completa su tutte le colture del catalogo (allineata a script.js).
+/* DIFFICOLTÀ — 1 facile, 2 media, 3 impegnativa o esotica. La mappa copre
+   tutte le colture e permette di filtrare le proposte per esperienza. */
 const DIFFICULTY = {
   // Facili: rapide, tolleranti, ideali per chi inizia.
   lattuga: 1,
@@ -152,7 +149,7 @@ const DIFFICULTY = {
   leurda: 2
 };
 
-/* Metadati piante: altezze, spaziature e guide di semina. */
+/* 2. METADATI TECNICI — altezze, spaziature e guide pratiche alla semina. */
 const PLANT_HEIGHT_CM = {
   pomodoro: "100–200",
   peperone: "50–100",
@@ -328,6 +325,7 @@ const PHOTO_MAP = {
   origano: "origano.webp",
   pakchoi: "pak_choi.webp"
 };
+/* 3. RISORSE VISIVE — risolve foto, illustrazioni, simboli e varietà decorative. */
 function photoSrc(id) {
   return `assets/img/photo/${PHOTO_MAP[id] || id + ".webp"}`;
 }
@@ -631,10 +629,10 @@ const HERO_KICKER = {
   autunno: "🍂 Raccolto d'autunno"
 };
 
+/* 4. STAGIONI — converte il mese selezionato nella relativa stagione climatica. */
 function getStagione(m) {
   if ([12, 1, 2].includes(m)) return "inverno";
   if ([3, 4, 5].includes(m)) return "primavera";
   if ([6, 7, 8].includes(m)) return "estate";
   return "autunno";
 }
-

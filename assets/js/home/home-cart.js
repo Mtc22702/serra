@@ -1,4 +1,18 @@
-/* Carrello: aggiunta/rimozione semi, drawer e notifica rapida. */
+/* ==========================================================================
+   HOME — CARRELLO E SCHEDA DELLA PIANTA
+   --------------------------------------------------------------------------
+   Gestisce le confezioni di semi, il carrello laterale e il dettaglio completo
+   di ogni coltura: tecnica di semina, malattie, parassiti e prodotti mirati.
+
+   SEZIONI DEL FILE
+   1. Operazioni sul carrello e riepilogo dell'ordine
+   2. Apertura, chiusura e navigazione della scheda pianta
+   3. Profilo tecnico e indicazioni di coltivazione
+   4. Malattie, parassiti e trattamenti consigliati
+   5. Rendering finale e gesti del pannello di dettaglio
+   ========================================================================== */
+
+/* 1. CARRELLO — aggiunge, rimuove e raggruppa confezioni singole, coppie e kit. */
 function toggleCart(e, id) {
   e.stopPropagation();
   const added = !inCart(id);
@@ -220,7 +234,7 @@ function alertCheckout() {
   )}&body=${encodeURIComponent(body)}`;
 }
 
-/* Dettaglio pianta: pannello sovrapposto con foto, semina, metriche e compatibilità. */
+/* 2. SCHEDA PIANTA — controlla pannello, scorrimento pagina, tab e tastiera. */
 function lockDetailPageScroll() {
   detailScrollY = window.scrollY || document.documentElement.scrollTop || 0;
   document.body.classList.add("detail-open");
@@ -293,6 +307,7 @@ function handleDetailTabKey(event) {
   setDetailTab(DETAIL_TAB_ORDER[next], true);
 }
 
+/* 3. PROFILO TECNICO — trasforma i dati botanici in indicazioni leggibili. */
 function technicalProfile(p, guide) {
   const type = typeOfPlant(p);
   const name = plantName(p.id);
@@ -536,6 +551,7 @@ const DISEASE_GROUPS = {
 };
 
 const DISEASE_PLANT_GROUP = {};
+/* 4. SALUTE DELLA PIANTA — associa malattie, parassiti e rimedi alle colture. */
 function assignDiseaseGroup(group, ids) {
   ids.forEach((id) => {
     DISEASE_PLANT_GROUP[id] = group;
@@ -1289,6 +1305,7 @@ function renderPlantPests(p) {
     .join("");
 }
 
+/* 5. RENDERING DEL DETTAGLIO — compone la scheda e gestisce carrello e chiusura. */
 function openDetail(id, preserveTab = false) {
   const p = BYID[id];
   if (!p) return;
@@ -1553,4 +1570,3 @@ document.getElementById("detailPanel")?.addEventListener(
   },
   { passive: false }
 );
-

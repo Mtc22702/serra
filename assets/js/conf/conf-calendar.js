@@ -1,8 +1,8 @@
 /* =========================================================================
-   SEZIONE 11b - Calendario di manutenzione
+   SEZIONE 11B — Calendario di manutenzione
    -------------------------------------------------------------------------
-   Genera un piano annuale di attivita' (semina e raccolta) a partire dalle
-   colture presenti nel progetto attivo, usando i dati gia' disponibili:
+   Genera un piano annuale delle attività di semina e raccolta a partire dalle
+   colture presenti nel progetto attivo, usando i dati già disponibili:
      - p.mesi : mesi di semina (1-12)
      - p.gg   : giorni medi alla raccolta
    Nessun dato nuovo richiesto. Vista mensile con evidenza del mese corrente.
@@ -12,13 +12,13 @@ function calendarText(key, vars) {
   return typeof tx === "function" ? tx(key, vars) : key;
 }
 
-// Mesi stimati dalla semina alla raccolta (gg -> mesi, minimo 1).
+/* TEMPI DI RACCOLTA — converte i giorni medi in mesi di calendario. */
 function monthsToHarvest(gg) {
   const days = Number(gg) || 30;
   return Math.max(1, Math.round(days / 30));
 }
 
-// Costruisce 12 bucket mensili con le attivita' del progetto attivo.
+/* PIANO ANNUALE — distribuisce le attività del progetto nei dodici mesi. */
 function buildCalendarMonths() {
   const months = Array.from({ length: 12 }, (_, i) => ({
     month: i + 1,

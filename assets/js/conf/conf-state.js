@@ -1,5 +1,5 @@
 /* =========================================================================
-   SEZIONE 04 - Stato globale, salvataggio e controlli base
+   SEZIONE 04 — Stato globale, salvataggio e controlli di base
    -------------------------------------------------------------------------
    Stato applicativo unico del configuratore, persistenza in localStorage e
    funzioni che tengono allineati input, slider, clima e lingua.
@@ -226,7 +226,7 @@ function setMode(mode, scroll = false) {
 }
 
 /* =========================================================================
-   SEZIONE 05 - Profili utente, modalita e percorso guidato
+   SEZIONE 05 — Profili utente, modalità e percorso guidato
    -------------------------------------------------------------------------
    Gestisce i tre profili visibili all'utente: Principiante, Pratico, Esperto.
    Il valore interno resta "novizio" | "intermedio" | "esperto" per non
@@ -360,4 +360,3 @@ function scrollToScene() {
     window.scrollTo({ top, behavior: "smooth" });
   }, 120);
 }
-

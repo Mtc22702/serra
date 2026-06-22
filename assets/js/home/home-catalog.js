@@ -1,4 +1,18 @@
-/* Stato pagina: filtri correnti, catalogo, carrello e dettaglio aperto. */
+/* ==========================================================================
+   HOME — STATO E RENDERING DEL CATALOGO
+   --------------------------------------------------------------------------
+   Conserva lo stato visibile della pagina, applica le regole stagionali e
+   ridisegna hero, calendario, catalogo, abbinamenti, kit mensile e footer.
+
+   SEZIONI DEL FILE
+   1. Stato della pagina e indici di consultazione
+   2. Filtri, ordinamento ed etichette delle colture
+   3. Hero e calendario stagionale
+   4. Catalogo, abbinamenti e kit del mese
+   5. Footer e aggiornamento generale della pagina
+   ========================================================================== */
+
+/* 1. STATO — scelte climatiche, filtri, carrello e scheda pianta aperta. */
 let state = {
   zona: "temperato",
   riscaldata: false,
@@ -78,7 +92,7 @@ const PACK_DATA = {
   salvia: { seeds: 100, price: 2.8 }
 };
 
-/* Logica catalogo: filtri, testi localizzati, prezzi e micro-dati. */
+/* 2. LOGICA CATALOGO — filtra, ordina e prepara testi, prezzi e indicatori. */
 function effectiveMonths(plant) {
   const set = new Set(plant.mesi);
   if (state.riscaldata || state.zona === "caldo") {
@@ -424,7 +438,7 @@ function applyDynamicStaticText() {
   if (catalogNote) catalogNote.textContent = noteText;
 }
 
-/* Sezione hero: aggiorna mese, frase guida, clima e piante decorative. */
+/* 3. HERO — aggiorna mese, frase guida, clima e piante decorative. */
 function renderHero() {
   const stag = getStagione(state.mese);
   /*
@@ -483,7 +497,7 @@ function renderHero() {
     .join("");
 }
 
-/* Calendario: strip mensile con conteggio delle piante seminabili. */
+/* CALENDARIO — mostra i dodici mesi e il numero di colture seminabili. */
 function renderCalendarStrip() {
   const strip = document.getElementById("monthStrip");
   const help = document.getElementById("monthStripHelp");
@@ -558,7 +572,7 @@ function toggleCfgLevels() {
   }
 }
 
-/* Catalogo: render delle piante in evidenza e lista compatta. */
+/* 4. CATALOGO — disegna piante in evidenza, risultati e lista compatta. */
 function renderEditorialPlants() {
   const seasonal = seminabili();
   const plants = filteredCatalogPlants();
@@ -704,7 +718,7 @@ function renderEditorialPlants() {
     .join("");
 }
 
-/* Abbinamenti: coppie di colture amiche con azioni carrello. */
+/* ABBINAMENTI — propone coppie di colture compatibili e azioni per il carrello. */
 function renderAbbinamenti() {
   const available = new Set(seminabili().map((p) => p.id));
   const pairs = [];
@@ -761,7 +775,7 @@ function renderAbbinamenti() {
     .join("");
 }
 
-/* Kit del mese: composizione stagionale e CTA carrello. */
+/* KIT DEL MESE — crea una selezione stagionale pronta da aggiungere al carrello. */
 function renderKit() {
   const kit = KITS[state.mese];
   if (!kit) return;
@@ -802,7 +816,7 @@ function renderKit() {
     .join("");
 }
 
-/* Footer: consiglio mensile, piante decorative e stagione corrente. */
+/* 5. FOOTER — aggiorna consiglio mensile, decorazioni e stagione corrente. */
 function renderFooter() {
   document.getElementById("footerTip").textContent = TIP_MESE[state.mese];
   const stag = getStagione(state.mese);
@@ -833,7 +847,7 @@ function renderFooter() {
     icons + icons; /* Duplicato per un ciclo continuo senza stacchi. */
 }
 
-/* Render generale: riallinea tutte le sezioni dopo ogni cambio stato. */
+/* AGGIORNAMENTO GENERALE — riallinea tutte le sezioni dopo ogni cambio di stato. */
 function render() {
   renderHero();
   renderCalendarStrip();

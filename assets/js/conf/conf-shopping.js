@@ -1,10 +1,11 @@
 /* =========================================================================
-   SEZIONE 09c - Lista spesa potenziata (materiali e preventivo)
+   SEZIONE 09C — Lista della spesa e preventivo dei materiali
    -------------------------------------------------------------------------
    Estende la lista semi esistente con una stima dei materiali (terriccio,
    concime, sostegni, etichette) calcolata in modo trasparente dai dati gia'
    presenti: misure della serra, numero di piante, altezza/portamento.
-   Quantita' modificabili, voci spuntabili ("ce l'ho gia'") e totale stimato.
+   Le quantità sono modificabili, le voci già possedute si possono escludere
+   e il totale si aggiorna automaticamente.
    Le modifiche manuali e le spunte sono di sessione (non persistite).
    ========================================================================= */
 

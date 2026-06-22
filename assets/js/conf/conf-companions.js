@@ -1,14 +1,14 @@
 /* =========================================================================
-   SEZIONE 09b - Analisi consociazioni (amiche/nemiche) potenziata
+   SEZIONE 09B — Analisi delle consociazioni tra colture
    -------------------------------------------------------------------------
-   Logica pura sopra i dati amiche/nemiche gia' presenti: calcola coppie
+   Usa i dati delle colture amiche e incompatibili già presenti per calcolare
    compatibili/incompatibili, un punteggio di compatibilita' del piano,
    le colture coinvolte in conflitti (per evidenziarle) e suggerisce una
    coltura amica alternativa, seminabile nel mese corrente, per sciogliere
    un conflitto. Nessun dato botanico nuovo: motivazioni generiche e oneste.
    ========================================================================= */
 
-// Analizza le aiuole correnti e restituisce coppie, conflitti e punteggio.
+/* ANALISI — restituisce coppie favorevoli, conflitti e punteggio complessivo. */
 function analyzeCompanions() {
   const beds = state.beds;
   const ids = beds.map((b) => b.plantId);
@@ -47,8 +47,8 @@ function analyzeCompanions() {
   return { badPairs, goodPairs, conflictIds, score, rating };
 }
 
-// Suggerisce un'amica di una delle due colture in conflitto, non gia' presente
-// e (se possibile) seminabile nel mese corrente.
+/* ALTERNATIVA — cerca una coltura amica non presente e, se possibile,
+   seminabile nel mese corrente per risolvere un conflitto. */
 function companionSuggestionFor(pair, presentIds) {
   const present = new Set(presentIds);
   const month = state.mese;

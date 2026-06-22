@@ -1,5 +1,5 @@
 /* =========================================================================
-   SEZIONE 10 - Motore quantita, layout manuale e riempimento spazi
+   SEZIONE 10 — Quantità, disposizione manuale e riempimento degli spazi
    -------------------------------------------------------------------------
    Qui vivono le regole fisiche: quante piante entrano in un'aiuola, quando
    usare layout a fila, come preservare le quantita manuali e come riempire
@@ -831,7 +831,7 @@ function restoreBedsSnapshot(snapshot) {
 }
 
 /* =========================================================================
-   Cronologia annulla/ripristina (undo/redo)
+   CRONOLOGIA — Annulla e ripristina le modifiche al piano
    -------------------------------------------------------------------------
    Pila di snapshot del piano colturale. recordHistory() va chiamata PRIMA di
    una modifica manuale alle aiuole (aggiunta, rimozione, quantita, riempi,
@@ -1209,7 +1209,7 @@ function fillColumnTailsWithFiller() {
 }
 
 /* =========================================================================
-   SEZIONE 11 - Auto-riempimento stagionale
+   SEZIONE 11 — Riempimento automatico stagionale
    -------------------------------------------------------------------------
    La scelta è consapevole del profilo utente (state.livello) e usa come
    unica fonte di verità la mappa DIFFICULTY (1=facile, 2=media, 3=difficile/
@@ -1479,7 +1479,7 @@ function autoFill(options = {}) {
   render();
 }
 /* =========================================================================
-   SEZIONE 12 - Preset, import/export e intenti di avvio
+   SEZIONE 12 — Configurazioni pronte, importazione ed esportazione
    -------------------------------------------------------------------------
    Carica layout pronti, esporta le colture nel carrello condiviso e interpreta
    parametri URL provenienti dalla homepage o da percorsi guidati.
@@ -1618,4 +1618,3 @@ function applyBootIntent() {
   clearBootParams();
   return true;
 }
-

@@ -1,4 +1,10 @@
-// Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
+/* ==========================================================================
+   SERVICE WORKER — cache, aggiornamenti e funzionamento offline
+   --------------------------------------------------------------------------
+   Precarica le risorse essenziali dell'app, elimina le cache superate e
+   sceglie la strategia di rete più adatta per pagine, script e immagini.
+   CACHE_VERSION è l'unico valore da aggiornare quando si pubblica una release.
+   ========================================================================== */
 const CACHE_VERSION = "2026-06-22-173";
 const CACHE = `serra-${CACHE_VERSION}`;
 
@@ -116,13 +122,13 @@ const PRECACHE = [
   "./assets/img/svg/zucchina.svg"
 ];
 
-// Pre-carica tutto al primo avvio; skipWaiting attiva subito il nuovo SW
+/* INSTALLAZIONE — precarica l'app e rende disponibile la nuova versione. */
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
   self.skipWaiting();
 });
 
-// Cancella tutte le cache delle versioni precedenti
+/* ATTIVAZIONE — elimina le cache precedenti e prende il controllo delle pagine. */
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches
@@ -136,10 +142,9 @@ self.addEventListener("activate", (e) => {
   self.clients.claim();
 });
 
-// Permette alla pagina di interrogare la versione attiva e di forzare l'attivazione
-// di un SW in attesa. Serve a riconoscere (e sbloccare) un Service Worker vecchio
-// che continua a servire JS obsoleto da cache: la pagina confronta questa versione
-// con window.SERRA_APP_VERSION e, se non combaciano, aggiorna e ricarica.
+/* MESSAGGI DALLA PAGINA — comunica la versione attiva e, quando richiesto,
+   attiva subito un Service Worker in attesa. Questo evita che una vecchia cache
+   continui a fornire JavaScript non aggiornato dopo una nuova pubblicazione. */
 self.addEventListener("message", (e) => {
   if (!e.data) return;
   if (e.data.type === "GET_VERSION") {
@@ -149,6 +154,8 @@ self.addEventListener("message", (e) => {
   }
 });
 
+/* RICHIESTE — usa la rete per il codice aggiornabile e la cache per le risorse
+   statiche; in assenza di connessione restituisce la migliore copia disponibile. */
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
 

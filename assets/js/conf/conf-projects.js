@@ -1,8 +1,8 @@
 /* =========================================================================
-   SEZIONE 04b - Progetti multipli (salvataggio, switch, CRUD, modale)
+   SEZIONE 04B — Gestione dei progetti salvati
    -------------------------------------------------------------------------
-   Layer sopra serra.config.v1: piu progetti salvati, ognuno con il proprio
-   layout. CONFIG_KEY resta la "config di lavoro" del progetto attivo, cosi'
+   Aggiunge a serra.config.v1 più progetti, ciascuno con il proprio layout.
+   CONFIG_KEY resta la configurazione di lavoro del progetto attivo, così
    il boot e le ~35 chiamate a saveConfig/readSavedConfig restano invariati.
    Lo store completo vive in localStorage["serra.projects.v1"].
    ========================================================================= */
@@ -204,7 +204,8 @@ function deleteProject(id) {
   else renderProjectsModal();
 }
 
-/* ----------------------------- Modale UI ------------------------------- */
+/* PANNELLO PROGETTI — apre la finestra e rende disponibili creazione,
+   duplicazione, rinomina, selezione ed eliminazione dei progetti salvati. */
 
 function openProjectsModal() {
   ensureProjectsStore();

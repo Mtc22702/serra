@@ -1,7 +1,13 @@
-/* Traduzioni condivise: testi interfaccia e nomi piante per home/configuratore. */
+/* ==========================================================================
+   TRADUZIONI CONDIVISE
+   --------------------------------------------------------------------------
+   Raccoglie in un unico punto mesi, testi dell'interfaccia e nomi delle piante
+   usati dalla home e dal configuratore. I contenuti sono organizzati per lingua
+   così entrambe le pagine mostrano sempre la stessa terminologia.
+   ========================================================================== */
 (function (global) {
   const shared = {
-    /* Nomi mese: usati da calendario, hero e selettori. */
+    /* MESI — etichette usate da calendario, hero e selettori. */
     months: {
       it: [
         "Gennaio",

@@ -1,4 +1,19 @@
-/* Controlli interfaccia: clima, mese e filtri catalogo. */
+/* ==========================================================================
+   HOME — CONTROLLI, PREFERENZE E INTERAZIONI
+   --------------------------------------------------------------------------
+   Gestisce i controlli del catalogo, il salvataggio delle preferenze, la lingua,
+   gli aiuti durante lo scorrimento, l'animazione della serra e il pannello che
+   prepara misure e clima prima di aprire il configuratore.
+
+   SEZIONI DEL FILE
+   1. Clima, mese, ricerca e filtri del catalogo
+   2. Preferenze locali e cambio lingua
+   3. Cookie, scorrimento e scorciatoie di navigazione
+   4. Animazione dimostrativa della serra
+   5. Pannello di pre-configurazione
+   ========================================================================== */
+
+/* 1. CATALOGO — aggiorna clima, periodo, ricerca, filtri e ordinamento. */
 function setZone(z) {
   state.zona = z;
   render();
@@ -228,7 +243,7 @@ function showFullCatalog() {
   render();
 }
 
-/* Persistenza: preferenze utente salvate in localStorage. */
+/* 2. PREFERENZE — salva e ripristina le scelte dell'utente in localStorage. */
 function savePrefs() {
   localStorage.setItem("ois.cart", JSON.stringify(cart));
   localStorage.setItem(
@@ -251,7 +266,7 @@ function loadPrefs() {
   } catch (_) {}
 }
 
-/* Lingua: cambio IT/RO, testi statici e nomi piante localizzati. */
+/* LINGUA — applica italiano o romeno a testi statici e nomi delle piante. */
 const NOMI_MESI_RO = [
   "Ianuarie",
   "Februarie",
@@ -315,7 +330,7 @@ const TIP_MESE_RO = {
   12: "Planifică rotația culturilor: nu pune aceeași familie în același loc."
 };
 
-/* Copie IT: base di ripristino quando si torna alla lingua italiana. */
+/* TESTI ITALIANI ORIGINALI — base di ripristino dopo il passaggio al romeno. */
 const NOMI_MESI_IT = [...NOMI_MESI];
 const ABBR_MESI_IT = [...ABBR_MESI];
 const STAGIONE_QUOTE_IT = { ...STAGIONE_QUOTE };
@@ -396,7 +411,7 @@ window.addEventListener("storage", (event) => {
   applyLang(nextLang);
 });
 
-/* Banner cookie: preferenza essenziale/completa salvata localmente. */
+/* 3. COOKIE E NAVIGAZIONE — consenso locale e aiuti durante lo scorrimento. */
 function initCookieBanner() {
   if (localStorage.getItem("ois.cookie")) return;
   setTimeout(() => {
@@ -413,7 +428,7 @@ function rejectCookies() {
   document.getElementById("cookieBanner").classList.remove("visible");
 }
 
-/* Torna su: mostra il pulsante dopo lo scroll. */
+/* TORNA SU — mostra il pulsante quando la pagina è stata fatta scorrere. */
 window.addEventListener(
   "scroll",
   function () {
@@ -561,7 +576,7 @@ if (catalogSearchLink) {
   });
 }
 
-/* Animazione serra: mappa SVG con aiuole + glyphs + pannello colture laterale. */
+/* 4. ANIMAZIONE SERRA — costruisce la mappa SVG e anima aiuole e colture. */
 (function initGreenhouseAnim() {
   const svg = document.getElementById("hcgSvg");
   const peek = document.getElementById("hcgPeek");
@@ -902,7 +917,8 @@ if (catalogSearchLink) {
   if (container) observer.observe(container);
 })();
 
-/* Pannello di pre-configurazione: raccoglie misure e clima prima di aprire il configuratore. */
+/* 5. PRE-CONFIGURAZIONE — raccoglie profilo, misure e clima prima di aprire
+   il configuratore, quindi salva i valori scelti e compone l'URL di ingresso. */
 (function () {
   const CONFIG_KEY = "serra.config.v1";
 
