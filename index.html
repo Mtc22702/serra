@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="it">
   <head>
+    <!-- =========================================================
+         1. CONFIGURAZIONE DEL DOCUMENTO
+         Metadati, versionamento, font, icone, tema e fogli di stile.
+         ========================================================= -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -76,7 +80,10 @@
     </script>
   </head>
   <body>
-    <!-- Header: navigazione principale, lingua e carrello. -->
+    <!-- =========================================================
+         2. HEADER E NAVIGAZIONE PRINCIPALE
+         Brand, collegamenti, menu mobile, tema, lingua e carrello.
+         ========================================================= -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -168,7 +175,10 @@
       </div>
     </header>
 
-    <!-- Hero: selezione clima e accesso rapido ai percorsi principali. -->
+    <!-- =========================================================
+         3. HERO E ACCESSO AL CONFIGURATORE
+         Presentazione stagionale, messaggio principale e percorsi guidati.
+         ========================================================= -->
     <section class="hero-immersive" id="hero">
       <div class="hero-bg-plants" id="heroBgPlants"></div>
       <div class="hero-content">
@@ -327,7 +337,10 @@
       </div>
     </section>
 
-    <!-- Catalogo: ricerca, filtri e lista semi. -->
+    <!-- =========================================================
+         4. CATALOGO STAGIONALE
+         Ricerca, filtri climatici, categorie e lista dei semi disponibili.
+         ========================================================= -->
     <section class="stagione-section catalog-pro-section" id="stagione">
       <div class="catalog-pro-shell">
         <!-- Intestazione catalogo. -->
@@ -620,6 +633,10 @@
       </div>
     </section>
 
+    <!-- =========================================================
+         5. CONTENUTI DI SUPPORTO ALLA COLTIVAZIONE
+         Abbinamenti compatibili, kit mensile e contatti aziendali.
+         ========================================================= -->
     <!-- Abbinamenti: coppie compatibili per il mese selezionato. -->
     <section class="abbinamenti-section" id="abbinamenti">
       <div class="abbinamenti-inner">
@@ -775,7 +792,10 @@
       </div>
     </section>
 
-    <!-- Footer: brand, link utili, supporto e note legali. -->
+    <!-- =========================================================
+         6. FOOTER
+         Brand, collegamenti utili, assistenza e informazioni legali.
+         ========================================================= -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
         <div class="footer-plant-row" id="footerPlantRow"></div>
@@ -887,6 +907,10 @@
       </div>
     </footer>
 
+    <!-- =========================================================
+         7. PANNELLI E OVERLAY OPERATIVI
+         Scheda della pianta e carrello, mostrati sopra la pagina principale.
+         ========================================================= -->
     <!-- Dettaglio pianta: pannello dinamico aperto dal catalogo. -->
     <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
       <div
@@ -1230,6 +1254,10 @@
       </div>
     </div>
 
+    <!-- =========================================================
+         8. CONTROLLI FLOTTANTI E CONSENSO
+         Ritorno in alto, notifiche contestuali e preferenze cookie.
+         ========================================================= -->
     <!-- Torna su: pulsante flottante di risalita pagina. -->
     <button
       class="back-to-top"
@@ -1296,7 +1324,11 @@
       </div>
     </div>
 
-    <!-- Pre-config bottom sheet: impostazioni serra prima di entrare nel configuratore (mobile). -->
+    <!-- =========================================================
+         9. PRE-CONFIGURAZIONE DELLA SERRA
+         Pannello preliminare per misure, clima, profilo e mese di semina.
+         ========================================================= -->
+    <!-- Pre-configurazione: impostazioni iniziali prima di aprire il configuratore. -->
     <div
       class="preconfig-overlay"
       id="preconfigOverlay"
@@ -1309,7 +1341,7 @@
       <div class="preconfig-sheet" id="preconfigSheet">
         <div class="preconfig-handle" aria-hidden="true"></div>
 
-        <!-- Header panel — uguale alla card La tua serra -->
+        <!-- Intestazione del pannello, coerente con la card "La tua serra". -->
         <div class="preconfig-panel-head">
           <div class="preconfig-head-left">
             <span class="preconfig-head-icon" aria-hidden="true">
@@ -1360,7 +1392,7 @@
         </div>
 
         <div class="preconfig-body">
-          <!-- 1. Misure interne -->
+          <!-- Passaggio 1: misure interne della serra. -->
           <div class="preconfig-section-label preconfig-section-label--primary">
             <span data-i18n="preconfig.sizes_label">1. Misure interne</span>
             <span
@@ -1463,7 +1495,7 @@
             </div>
           </div>
 
-          <!-- Camminamento tra aiuole -->
+          <!-- Configurazione del camminamento tra le aiuole. -->
           <div class="preconfig-section-label" data-i18n="preconfig.path_label">
             Camminamento tra aiuole
           </div>
@@ -1511,7 +1543,7 @@
             </div>
           </div>
 
-          <!-- 2. Clima -->
+          <!-- Passaggio 2: zona climatica e riscaldamento. -->
           <div
             class="preconfig-section-label"
             data-i18n="preconfig.climate_label"
@@ -1560,7 +1592,7 @@
             </div>
           </div>
 
-          <!-- Tipo coltivatore: visibile solo se si entra senza livello (nav/footer) -->
+          <!-- Profilo coltivatore: mostrato quando il livello non è già definito. -->
           <div id="preconfigPersonaSection">
             <div
               class="preconfig-section-label"
@@ -1631,9 +1663,9 @@
               </button>
             </div>
           </div>
-          <!-- /preconfigPersonaSection -->
+          <!-- Fine della selezione del profilo coltivatore. -->
 
-          <!-- 3. Mese di semina -->
+          <!-- Passaggio 3: mese di semina iniziale. -->
           <div
             class="preconfig-section-label"
             data-i18n="preconfig.month_label"
@@ -1670,6 +1702,10 @@
       </div>
     </div>
 
+    <!-- =========================================================
+         10. SCRIPT E SERVIZI DELLA PAGINA
+         Cache applicativa, navigazione, traduzioni e logica della homepage.
+         ========================================================= -->
     <!-- Service worker: cache attiva in produzione, reset automatico in locale. -->
     <script>
       if ("serviceWorker" in navigator) {

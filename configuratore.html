@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="it">
   <head>
+    <!-- =========================================================
+         1. CONFIGURAZIONE DEL DOCUMENTO
+         Metadati, versionamento, font, icone, tema e fogli di stile.
+         ========================================================= -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -81,7 +85,10 @@
     </script>
   </head>
   <body>
-    <!-- Header: navigazione principale, lingua e carrello. -->
+    <!-- =========================================================
+         2. HEADER E NAVIGAZIONE PRINCIPALE
+         Brand, collegamenti, menu mobile, tema, lingua e carrello.
+         ========================================================= -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -182,6 +189,10 @@
       </div>
     </header>
 
+    <!-- =========================================================
+         3. AREA DI LAVORO DEL CONFIGURATORE
+         Percorso guidato, impostazioni, scena della serra e lista dei semi.
+         ========================================================= -->
     <div class="app">
       <!-- Stato tecnico: controlli condivisi con la logica della pagina. -->
       <div hidden aria-hidden="true">
@@ -1410,6 +1421,10 @@
       </div>
     </div>
 
+    <!-- =========================================================
+         4. CONTROLLI FLOTTANTI E MODALI OPERATIVI
+         Ritorno in alto, progetti salvati, calendario e carrello.
+         ========================================================= -->
     <!-- Torna su: pulsante flottante di risalita pagina. -->
     <button
       class="back-to-top"
@@ -1421,7 +1436,7 @@
       ↑
     </button>
 
-    <!-- Carrello: drawer con semi del progetto e checkout simulato. -->
+    <!-- Progetti salvati: apertura, duplicazione, rinomina ed eliminazione. -->
     <div class="projects-modal" id="projectsModal" role="dialog" aria-modal="true" aria-labelledby="projectsModalTitle" hidden>
       <div class="projects-backdrop" onclick="closeProjectsModal()"></div>
       <div class="projects-dialog">
@@ -1440,6 +1455,7 @@
       </div>
     </div>
 
+    <!-- Calendario: manutenzione mensile delle colture inserite nel progetto. -->
     <div class="projects-modal" id="calendarModal" role="dialog" aria-modal="true" aria-labelledby="calendarModalTitle" hidden>
       <div class="projects-backdrop" onclick="closeCalendarModal()"></div>
       <div class="projects-dialog projects-dialog--wide">
@@ -1455,6 +1471,7 @@
       </div>
     </div>
 
+    <!-- Carrello: semi del progetto e invio della richiesta di acquisto. -->
     <div class="cart-overlay" id="cartOverlay">
       <div class="cart-backdrop" onclick="closeConfCart()"></div>
       <div class="cart-drawer">
@@ -1538,7 +1555,10 @@
       </button>
     </div>
 
-    <!-- Footer: brand, link utili, supporto e note legali. -->
+    <!-- =========================================================
+         5. FOOTER
+         Brand, collegamenti utili, assistenza e informazioni legali.
+         ========================================================= -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
         <div class="footer-plant-row" id="footerPlantRow"></div>
@@ -1670,7 +1690,11 @@
       </div>
     </footer>
 
-    <!-- Script pagina: menu, traduzioni e logica configuratore. -->
+    <!-- =========================================================
+         6. SCRIPT E SERVIZI DELLA PAGINA
+         Navigazione, traduzioni, logica del configuratore e cache applicativa.
+         ========================================================= -->
+    <!-- Script pagina: menu, traduzioni e logica del configuratore. -->
     <script>
       document.write(
         '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
