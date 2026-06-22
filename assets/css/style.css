@@ -4896,6 +4896,12 @@ body.cart-open .cart-nudge {
   min-height: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Le righe devono dimensionarsi al contenuto della card piu' alta. Senza questo,
+     in vista responsive (griglia con altezza definita e scroll) le righe "auto"
+     venivano compresse per riempire l'altezza disponibile: le card piu' alte
+     sbordavano e si sovrapponevano a quelle della riga successiva. */
+  grid-auto-rows: max-content;
+  align-content: start;
   align-items: start;
   gap: 12px;
   padding: 4px 24px 24px;
