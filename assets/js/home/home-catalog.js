@@ -427,7 +427,12 @@ function applyDynamicStaticText() {
 /* Sezione hero: aggiorna mese, frase guida, clima e piante decorative. */
 function renderHero() {
   const stag = getStagione(state.mese);
-  document.getElementById("hero").style.background = HERO_BG[stag];
+  /*
+   * Il gradiente stagionale alimenta la variabile usata dal tema chiaro.
+   * Evitiamo un `background` inline, che avrebbe precedenza sul gradiente
+   * dedicato alla dark mode definito in theme.css.
+   */
+  document.getElementById("hero").style.setProperty("--hero-bg", HERO_BG[stag]);
   document.getElementById("heroKicker").textContent = HERO_KICKER[stag];
   document.getElementById("heroMonth").textContent = NOMI_MESI[state.mese - 1];
   document.getElementById("heroTagline").textContent =
@@ -839,4 +844,3 @@ function render() {
   updateCartUI();
   savePrefs();
 }
-

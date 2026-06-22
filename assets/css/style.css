@@ -1,3 +1,4 @@
+@layer base {
 /* =========================================================
    Configuratore CSS: layout serra, pannelli, schede piante e mobile.
    I commenti separano le aree senza cambiare selettori o comportamento.
@@ -587,10 +588,10 @@ button {
   transform: translateX(2px);
 }
 
-.btn-sm-compact {
-  padding: 7px 11px !important;
-  font-size: 12.5px !important;
-  min-height: 36px !important;
+.btn.btn-sm-compact {
+  padding: 7px 11px;
+  font-size: 12.5px;
+  min-height: 36px;
   white-space: nowrap;
 }
 .header-actions {
@@ -1088,15 +1089,15 @@ select:focus {
   color: var(--verde-scuro);
 }
 
-.crops-fill-main-btn {
+.btn.crops-fill-main-btn {
   width: 100%;
   justify-content: center;
   min-height: 46px;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  border-radius: 10px !important;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
   margin-bottom: 8px;
-  gap: 8px !important;
+  gap: 8px;
 }
 .crops-fill-main-btn .btn-ico {
   width: 18px;
@@ -1839,8 +1840,8 @@ body.livello-esperto .expert-seasonal-btn {
 #pathField > .row.field {
   display: grid;
   grid-template-columns: minmax(68px, 1fr) auto auto;
-  align-items: center !important;
-  gap: 6px !important;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 0;
   padding: 7px 8px;
   border: 1px solid rgba(91, 83, 66, 0.14);
@@ -2610,7 +2611,7 @@ html[data-theme="dark"] #pathField > .fld {
   cursor: pointer;
 }
 .bedhit:hover .bed-border {
-  stroke: var(--oro) !important;
+  stroke: var(--oro);
 }
 .scale-note {
   font-size: 12px;
@@ -5587,7 +5588,7 @@ body.cart-open .cart-nudge {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 4px 0 8px !important;
+  padding: 4px 0 8px;
   gap: 10px;
 }
 .panel--plant-detail .detail-spacing {
@@ -7474,4 +7475,6 @@ body.livello-esperto .guided-intro-esperto {
   .persona-card.is-active::before {
     width: 7px;
   }
+}
+
 }

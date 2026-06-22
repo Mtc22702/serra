@@ -1,3 +1,7 @@
+/* Ordine layer: base prima, dark-theme dopo → dark-theme sovrascrive base senza !important */
+@layer base, dark-theme;
+
+@layer base {
 /* =========================================================
    Index CSS: homepage, catalogo semi, carrello e layout condiviso.
    Commenti brevi separano le aree per rendere il file manutenibile.
@@ -123,16 +127,16 @@ nav {
   pointer-events: auto;
   cursor: pointer;
 }
-.nav-link--cta {
+.nav-link.nav-link--cta {
   background: var(--green-lt);
-  color: #fff !important;
+  color: #fff;
   border-color: var(--green-lt);
   font-weight: 600;
 }
-.nav-link--cta:hover {
+.nav-link.nav-link--cta:hover {
   background: var(--green);
   border-color: var(--green);
-  color: #fff !important;
+  color: #fff;
 }
 .cart-btn {
   display: flex;
@@ -1179,7 +1183,7 @@ nav {
 }
 
 .percorso-kicker--earth {
-  color: rgba(255, 255, 255, 0.75) !important;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Titolo della card. */
@@ -7698,14 +7702,14 @@ body.cart-open .back-to-top {
   line-height: 1;
 }
 .catalog-search--pro input {
-  border: 0 !important;
-  outline: none !important;
-  box-shadow: none !important;
-  padding-left: 0 !important;
-  background: transparent !important;
-  font-size: 0.95rem !important;
-  font-weight: 600 !important;
-  color: var(--green-dk) !important;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  padding-left: 0;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--green-dk);
 }
 .catalog-search--pro input::placeholder {
   color: #7a9a88;
@@ -8729,7 +8733,7 @@ body.cart-open .back-to-top {
   transform: translateY(2px);
 }
 #cfgOpenBtn[aria-expanded="true"] .hero-cfg-cta-arrow {
-  transform: rotate(180deg) !important;
+  transform: rotate(180deg);
 }
 
 #cfgLevels[hidden] {
@@ -8867,13 +8871,13 @@ body.cart-open .back-to-top {
 
 /* Catalogo: CTA di importazione con hint di flusso. */
 .catalog-import-btn {
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 0.12rem !important;
-  border-radius: 14px !important;
-  padding: 0.6rem 1.1rem !important;
-  line-height: 1.2 !important;
-  justify-content: center !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  border-radius: 14px;
+  padding: 0.6rem 1.1rem;
+  line-height: 1.2;
+  justify-content: center;
 }
 .catalog-import-btn-inner {
   display: flex;
@@ -9797,11 +9801,11 @@ html[data-theme="dark"] .preconfig-sizes-note {
   border-left-color: rgba(82, 183, 136, 0.3);
 }
 html[data-theme="dark"] .preconfig-vfield--primary {
-  border-color: rgba(82, 183, 136, 0.3) !important;
+  border-color: rgba(82, 183, 136, 0.3);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 4px 16px rgba(0, 0, 0, 0.2),
-    0 0 0 2px rgba(82, 183, 136, 0.08) !important;
+    0 0 0 2px rgba(82, 183, 136, 0.08);
 }
 html[data-theme="dark"] .preconfig-vfield--dims {
   background-color: #162a1e;
@@ -9839,9 +9843,9 @@ html[data-theme="dark"] .preconfig-path-field {
   border-color: rgba(197, 187, 163, 0.24);
 }
 html[data-theme="dark"] .preconfig-select {
-  background-color: rgba(22, 48, 37, 0.9) !important;
-  border-color: rgba(164, 198, 170, 0.2) !important;
-  color: #d0ecd0 !important;
+  background-color: rgba(22, 48, 37, 0.9);
+  border-color: rgba(164, 198, 170, 0.2);
+  color: #d0ecd0;
 }
 html[data-theme="dark"] .preconfig-fld {
   color: #a0c0a0;
@@ -9898,4 +9902,6 @@ html[data-theme="dark"] .preconfig-summary {
 }
 html[data-theme="dark"] .preconfig-handle {
   background: rgba(255, 255, 255, 0.14);
+}
+
 }
