@@ -1,5 +1,5 @@
 // Unico punto di versionamento dell'app. Cambialo quando pubblichi una release.
-const CACHE_VERSION = "2026-06-21-169";
+const CACHE_VERSION = "2026-06-21-171";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -114,6 +114,19 @@ self.addEventListener("activate", (e) => {
       )
   );
   self.clients.claim();
+});
+
+// Permette alla pagina di interrogare la versione attiva e di forzare l'attivazione
+// di un SW in attesa. Serve a riconoscere (e sbloccare) un Service Worker vecchio
+// che continua a servire JS obsoleto da cache: la pagina confronta questa versione
+// con window.SERRA_APP_VERSION e, se non combaciano, aggiorna e ricarica.
+self.addEventListener("message", (e) => {
+  if (!e.data) return;
+  if (e.data.type === "GET_VERSION") {
+    e.source?.postMessage({ type: "VERSION", version: CACHE_VERSION });
+  } else if (e.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("fetch", (e) => {
