@@ -347,6 +347,7 @@ html[data-theme="dark"]
     .stepper,
     .view-select,
     .view-select select,
+    .view-select-wrap,
     .view-print-btn,
     .pdp-tab,
     .pdp-stat,
@@ -360,6 +361,13 @@ html[data-theme="dark"]
   background: var(--theme-surface-2) !important;
   color: var(--theme-text) !important;
   border-color: var(--theme-line) !important;
+}
+html[data-theme="dark"] .view-select-label {
+  background: rgba(139, 212, 158, 0.12) !important;
+  color: var(--dark-green) !important;
+}
+html[data-theme="dark"] .view-select-arrow {
+  border-color: var(--dark-muted) !important;
 }
 html[data-theme="dark"]
   :where(
