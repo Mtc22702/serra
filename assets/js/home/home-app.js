@@ -549,13 +549,19 @@ document
   }
 })();
 
-if (window.location.hash === "#stagione") {
+const initialSectionHash = window.location.hash;
+const initialSectionTargets = {
+  "#stagione":
+    document.querySelector("#stagione .stagione-kicker") ||
+    document.getElementById("stagione"),
+  "#abbinamenti": document.getElementById("abbinamenti"),
+  "#kit": document.getElementById("kit"),
+  "#contatti": document.getElementById("contatti")
+};
+const initialSectionTarget = initialSectionTargets[initialSectionHash];
+if (initialSectionTarget) {
   window.setTimeout(() => {
-    scrollElementBelowNav(
-      document.querySelector("#stagione .stagione-kicker") ||
-        document.getElementById("stagione"),
-      "auto"
-    );
+    scrollElementBelowNav(initialSectionTarget, "auto");
   }, 80);
 }
 

@@ -958,6 +958,13 @@
 }
 
 /* Contatti: informazioni dirette e mappa statica. */
+#stagione,
+#abbinamenti,
+#kit,
+#contatti {
+  scroll-margin-top: calc(var(--nav-h) + 28px);
+}
+
 .contatti-section {
   padding: 3rem 2rem 3.2rem;
   background: linear-gradient(
