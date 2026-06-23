@@ -133,6 +133,97 @@ html[data-theme="dark"] #calendarModal .calendar-grid {
 }
 
 @layer dark-theme {
+html[data-theme="dark"] #calendarModal :where(.calendar-view-tabs, .cal-expand) {
+  background: var(--dark-soft);
+}
+
+html[data-theme="dark"] #calendarModal .calendar-view-tab {
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] #calendarModal .calendar-view-tab.is-active {
+  background: var(--dark-raised);
+  color: var(--dark-text);
+  box-shadow: 0 2px 9px rgba(0, 0, 0, 0.24);
+}
+
+html[data-theme="dark"] #calendarModal :where(.calendar-search, .calendar-category-wrap) {
+  background: rgba(30, 48, 39, 0.84);
+  border-color: var(--dark-border);
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] #calendarModal :where(.calendar-search input, .calendar-category-wrap select) {
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"] #calendarModal .calendar-month-btn {
+  background: rgba(38, 60, 49, 0.62);
+  border-color: var(--dark-border);
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] #calendarModal .calendar-month-btn:is(:hover, :focus-visible) {
+  background: var(--dark-soft);
+  border-color: var(--dark-border-strong);
+}
+
+html[data-theme="dark"] #calendarModal .calendar-month-btn.is-selected {
+  background: #376f48;
+  border-color: #8bd49e;
+  color: #fff;
+}
+
+html[data-theme="dark"] #calendarModal .calendar-summary {
+  background: rgba(139, 212, 158, 0.11);
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"] #calendarModal :where(.calendar-summary span, .calendar-summary small, .cal-results-head) {
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] #calendarModal .cal-results-head strong {
+  color: #bce7c7;
+}
+
+html[data-theme="dark"] #calendarModal .cal-plant-card {
+  background: rgba(38, 60, 49, 0.64);
+  border-color: var(--dark-border);
+}
+
+html[data-theme="dark"] #calendarModal .cal-plant-card[open] {
+  background: rgba(42, 66, 54, 0.92);
+  border-color: rgba(139, 212, 158, 0.48);
+}
+
+html[data-theme="dark"] #calendarModal :where(.cal-plant-main b, .cal-plant-detail dd, .cal-empty-state b) {
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"] #calendarModal :where(.cal-plant-main small, .cal-plant-detail dt, .cal-plant-detail p, .cal-empty-state) {
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] #calendarModal .cal-plant-detail {
+  border-color: var(--dark-border);
+}
+
+html[data-theme="dark"] #calendarModal .cal-plant-detail dl > div {
+  background: rgba(12, 28, 20, 0.28);
+}
+
+html[data-theme="dark"] #calendarModal .cal-activity {
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"] #calendarModal .cal-activity--sow { background: rgba(139, 212, 158, 0.16); }
+html[data-theme="dark"] #calendarModal .cal-activity--transplant { background: rgba(112, 181, 221, 0.17); }
+html[data-theme="dark"] #calendarModal .cal-activity--care { background: rgba(184, 146, 222, 0.17); }
+html[data-theme="dark"] #calendarModal .cal-activity--harvest { background: rgba(235, 197, 109, 0.18); }
+}
+
+@layer dark-theme {
 html[data-theme="dark"] .cart-nudge button,
 html[data-theme="dark"] .back-to-top {
   background: #e7f0e9;
