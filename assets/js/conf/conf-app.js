@@ -254,8 +254,7 @@ function initEvents() {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const panel = btn.closest(".panel");
-      panel.classList.toggle("is-collapsed");
-      updatePanelToggle(btn);
+      setPanelCollapsed(panel, !panel.classList.contains("is-collapsed"));
     });
   });
 
@@ -312,25 +311,7 @@ function initEvents() {
     .getElementById("btnEditCropsFromYield")
     ?.addEventListener("click", () => {
       setMode("expert", false);
-      const crops = document.getElementById("panelCustomize");
-      if (crops) {
-        window.requestAnimationFrame(() => {
-          const navH = parseInt(
-            getComputedStyle(document.documentElement).getPropertyValue(
-              "--nav-h"
-            ) || "66",
-            10
-          );
-          const top =
-            crops.getBoundingClientRect().top + window.scrollY - navH - 12;
-          window.scrollTo({ top, behavior: "smooth" });
-          crops.classList.add("is-focus-pulse");
-          window.setTimeout(
-            () => crops.classList.remove("is-focus-pulse"),
-            1600
-          );
-        });
-      }
+      openCustomizePanelAndFocus();
     });
   // delega su lista seminabili
   document.getElementById("vegList").addEventListener("click", (e) => {
@@ -884,7 +865,6 @@ collapseSettingsPanelAfterAutoPlan();
 if (state.livello === "novizio" && !isResponsiveConfiguratorLayout()) {
   const _novPanel = document.getElementById("panelSettings");
   if (_novPanel) {
-    _novPanel.classList.remove("is-collapsed");
-    updateAllPanelToggles();
+    setPanelCollapsed(_novPanel, false);
   }
 }

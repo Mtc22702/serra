@@ -207,13 +207,7 @@ function setMode(mode, scroll = false) {
     );
   });
   const yieldPanel = document.getElementById("panelYield");
-  if (yieldPanel) {
-    if (!yieldPanel.classList.contains("is-collapsed")) {
-      yieldPanel.classList.add("is-collapsed");
-    }
-    const toggle = yieldPanel.querySelector(".panel-toggle");
-    if (toggle) updatePanelToggle(toggle);
-  }
+  if (yieldPanel) setPanelCollapsed(yieldPanel, true);
   const fillBtn = document.querySelector(".crops-fill-main-btn");
   if (fillBtn) fillBtn.hidden = next === "expert";
 
@@ -243,6 +237,7 @@ function setLivello(liv, { mapMode = true } = {}) {
   document.body.classList.toggle("livello-intermedio", next === "intermedio");
   document.body.classList.toggle("livello-esperto", next === "esperto");
   updateVegSearchUI();
+  syncCustomizePanelForLivello();
   document.querySelectorAll(".persona-card").forEach((card) => {
     const on = card.dataset.livello === next;
     card.classList.toggle("is-active", on);
@@ -275,7 +270,7 @@ function chooseLivello(liv) {
     state.autoPlan = false;
     syncVegFilterTabs();
     render();
-    focusManualPlanningPath();
+    openCustomizePanelAndFocus();
   } else if (liv === "intermedio") {
     // Punto di partenza pronto, ma libero di personalizzare e andare off-season.
     vegFilter = "all";
@@ -283,7 +278,7 @@ function chooseLivello(liv) {
     if (!state.beds.length) autoFill();
     else render();
     syncVegFilterTabs();
-    focusManualPlanningPath();
+    openCustomizePanelAndFocus();
   } else {
     // Novizio: serra pronta, solo colture di stagione, percorso lineare al carrello.
     vegFilter = "in";
@@ -292,6 +287,7 @@ function chooseLivello(liv) {
     autoFill();
     syncVegFilterTabs();
     if (isResponsiveConfiguratorLayout()) collapseSettingsPanelAfterAutoPlan();
+    setCustomizePanelCollapsed(true);
     scrollToScene();
   }
   saveConfig(true);

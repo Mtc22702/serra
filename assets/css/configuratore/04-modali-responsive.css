@@ -243,6 +243,104 @@
   .stage {
     width: 100%;
   }
+  #panelCustomize .veg-list {
+    max-height: clamp(430px, 58vh, 620px);
+    gap: 9px;
+    padding: 8px;
+  }
+  .veg-list-scroll-wrap {
+    margin-inline: 0;
+  }
+  .veg.in {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 136px 40px;
+    grid-template-areas: "main qty remove";
+    align-items: center;
+    column-gap: 18px;
+    row-gap: 10px;
+    min-height: 92px;
+    height: auto;
+    padding: 12px;
+    overflow: hidden;
+  }
+  .veg-in-main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    padding-right: 0;
+  }
+  .veg.in > .remove-from-seed {
+    grid-area: remove;
+    position: static;
+    align-self: center;
+    justify-self: end;
+    margin: 0;
+  }
+  .veg.in .ico {
+    width: 38px;
+    height: 38px;
+  }
+  .veg.in .nm {
+    min-width: 0;
+  }
+  .veg.in .veg-nameline {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 4px 6px;
+    margin-bottom: 2px;
+  }
+  .veg.in .veg-name {
+    max-width: 100%;
+    min-width: 0;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+  .veg.in .veg-tags {
+    margin-top: 2px;
+  }
+  .veg-qty-panel {
+    grid-area: qty;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: 5px;
+    width: 136px;
+    min-width: 0;
+    margin-top: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .veg-qty-topline {
+    min-width: 0;
+    margin-bottom: 0;
+    justify-content: center;
+    text-align: center;
+  }
+  #panelCustomize .veg.in .veg-qty-ctl {
+    grid-template-columns: 40px 56px 40px;
+    width: 136px;
+    min-height: 42px;
+    border-radius: 13px;
+    box-shadow:
+      0 4px 12px rgba(31, 58, 38, 0.09),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+  #panelCustomize .veg.in .veg-step,
+  #panelCustomize .veg.in .veg-qty-input {
+    height: 42px;
+  }
+  #panelCustomize .veg.in .veg-step {
+    width: 40px;
+    font-size: 21px;
+  }
+  #panelCustomize .veg.in .veg-qty-input {
+    width: 56px;
+    font-size: 15.5px;
+  }
 }
 
 /* Responsive tablet: layout intermedio tra desktop e mobile. */
@@ -748,36 +846,22 @@
     justify-content: space-between;
   }
 
-  /* veg.in mobile: info pianta a sinistra, controlli quantita al centro,
-     pulsante rimozione come 3ª colonna separata per evitare click accidentali. */
+  /* veg.in mobile: ritocchi dimensionali; la struttura unica sta nel breakpoint 1100px. */
   .veg.in {
     background: rgba(47, 107, 58, 0.08);
     border-color: rgba(47, 107, 58, 0.28);
     box-shadow: inset 3px 0 0 rgba(47, 107, 58, 0.45);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    grid-auto-rows: auto;
-    gap: 8px 10px;
-    min-height: 78px;
-    height: auto;
-    padding: 8px 9px;
-    overflow: visible;
-    align-items: center;
+    padding: 10px 11px;
+    min-height: 94px;
+    grid-template-columns: minmax(0, 1fr) 132px 34px;
+    column-gap: 18px;
+    row-gap: 8px;
   }
   .veg-in-main {
     grid-template-columns: 32px minmax(0, 1fr);
-    padding-right: 0;
     gap: 7px;
-    min-width: 0;
-    grid-row: 1;
-    grid-column: 1;
   }
   .veg.in > .remove-from-seed {
-    position: static;
-    top: auto;
-    right: auto;
-    grid-column: 3;
-    grid-row: 1;
     align-self: center;
   }
   .veg.in .ico {
@@ -807,56 +891,55 @@
     margin-top: 2px;
   }
   .veg-qty-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
+    width: 132px;
     gap: 4px;
-    grid-row: 1;
-    grid-column: 2;
-    width: auto;
-    min-width: 0;
-    margin-top: 0;
-    padding: 0;
-    border-radius: 0;
-    position: static;
-    z-index: 0;
-    box-sizing: border-box;
   }
   .veg-qty-topline {
-    margin-bottom: 0;
+    gap: 5px;
     min-height: 18px;
   }
   .veg-qty-topline > span:first-child {
-    display: none;
+    display: inline;
   }
-  .veg-qty-ctl {
-    grid-template-columns: 34px 48px 34px;
-    width: auto;
-    min-height: 36px;
-    border-radius: 11px;
-  }
-  .veg-step,
-  .veg-qty-input {
-    height: 36px;
-  }
-  .veg-step {
-    width: 34px;
-    font-size: 18px;
-  }
-  .veg-qty-input {
+  .veg-lock-badge,
+  .veg-auto-badge {
+    justify-content: center;
     min-width: 0;
-    width: 48px;
+    max-width: 76px;
+    min-height: 17px;
+    padding: 1px 7px;
+    font-size: 9px;
+    line-height: 1;
+  }
+  #panelCustomize .veg.in .veg-qty-ctl {
+    grid-template-columns: 39px 54px 39px;
+    width: 132px;
+    min-height: 40px;
+  }
+  #panelCustomize .veg.in .veg-step,
+  #panelCustomize .veg.in .veg-qty-input {
+    height: 40px;
+  }
+  #panelCustomize .veg.in .veg-step {
+    width: 39px;
+    font-size: 20px;
+  }
+  #panelCustomize .veg.in .veg-qty-input {
+    min-width: 0;
+    width: 54px;
     font-size: 15px;
   }
   .veg-qty-slider {
     display: none;
   }
   .veg.in .add {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     font-size: 15px;
     flex: none;
+  }
+  .veg.in > .remove-from-seed {
+    border-radius: 11px;
   }
   .novice-crops-note {
     grid-template-columns: 1fr;
@@ -920,7 +1003,7 @@
     margin-bottom: 6px;
   }
   #panelCustomize .veg-list {
-    max-height: min(320px, 42vh);
+    max-height: clamp(430px, 56vh, 560px);
   }
   .crops-customize-footer {
     gap: 10px;

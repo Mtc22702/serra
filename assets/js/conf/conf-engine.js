@@ -1564,22 +1564,7 @@ function importCartToPlan() {
 }
 
 function focusManualPlanningPath() {
-  window.setTimeout(() => {
-    const crops = document.getElementById("panelCustomize");
-    if (crops) {
-      const navH = parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          "--nav-h"
-        ) || "66",
-        10
-      );
-      const top =
-        crops.getBoundingClientRect().top + window.scrollY - navH - 12;
-      window.scrollTo({ top, behavior: "smooth" });
-      crops.classList.add("is-focus-pulse");
-      window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
-    }
-  }, 120);
+  window.setTimeout(() => openCustomizePanelAndFocus(), 120);
 }
 
 function applyBootIntent() {

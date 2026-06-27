@@ -689,18 +689,19 @@ select:focus {
 .novice-crops-note button {
   min-height: 34px;
   padding: 0 11px;
-  border: 1px solid rgba(47, 107, 58, 0.25);
+  border: 1px solid rgba(217, 164, 65, 0.38);
   border-radius: 9px;
-  background: var(--verde);
-  color: #fff;
+  background: rgba(255, 250, 236, 0.95);
+  color: var(--verde-scuro);
   font-size: 12px;
   font-weight: 850;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 5px 12px rgba(47, 107, 58, 0.18);
+  box-shadow: 0 3px 9px rgba(31, 58, 38, 0.08);
 }
 .novice-crops-note button:hover {
-  background: var(--verde-scuro);
+  border-color: rgba(47, 107, 58, 0.32);
+  background: rgba(47, 107, 58, 0.1);
 }
 
 /* Azioni colture: ottimizza o svuota il progetto corrente. */
@@ -751,6 +752,14 @@ body.livello-novizio .novice-restart-row {
 .novice-restart-row .btn {
   width: 100%;
   justify-content: center;
+}
+.novice-restart-btn {
+  border: 1px solid rgba(47, 107, 58, 0.18);
+  color: var(--verde-scuro);
+  box-shadow: none;
+}
+.novice-restart-btn:hover {
+  background: rgba(47, 107, 58, 0.16);
 }
 /* "Genera piano di stagione": azione secondaria mostrata solo all'esperto,
    accanto ai preset, per un punto di partenza automatico di stagione. */
@@ -1447,12 +1456,13 @@ html[data-theme="dark"] #pathField > .fld {
   grid-template-columns: 32px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
-  padding-right: 40px;
+  padding-right: 48px;
 }
 .veg.in > .remove-from-seed {
   position: absolute;
   top: 8px;
   right: 8px;
+  z-index: 2;
 }
 .veg.in .ico {
   width: 32px;
@@ -1466,9 +1476,9 @@ html[data-theme="dark"] #pathField > .fld {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
   margin-top: 7px;
-  padding: 0;
+  padding: 0 40px 0 0;
   border: 0;
   background: transparent;
 }

@@ -335,6 +335,7 @@ function render() {
 
   // mostra/nasconde il banner "serra vuota"
   const emptyBanner = document.getElementById("stageEmptyBanner");
+  document.body.classList.toggle("serra-empty", state.beds.length === 0);
   if (emptyBanner) {
     const b = emptyBanner.querySelector(".seb-copy b");
     const s = emptyBanner.querySelector(".seb-copy span");
@@ -476,9 +477,45 @@ function scrollGreenhouseImageIntoView(behavior = "auto") {
 function collapseSettingsPanelAfterAutoPlan() {
   const panel = document.getElementById("panelSettings");
   if (!panel || !isResponsiveConfiguratorLayout()) return;
-  panel.classList.add("is-collapsed");
-  updateAllPanelToggles();
+  setPanelCollapsed(panel, true);
   requestAnimationFrame(() => scrollGreenhouseImageIntoView("smooth"));
+}
+
+function setPanelCollapsed(panelOrId, collapsed) {
+  const panel =
+    typeof panelOrId === "string"
+      ? document.getElementById(panelOrId)
+      : panelOrId;
+  if (!panel) return;
+  panel.classList.toggle("is-collapsed", Boolean(collapsed));
+  const toggle = panel.querySelector(".panel-toggle");
+  if (toggle) updatePanelToggle(toggle);
+}
+
+function setCustomizePanelCollapsed(collapsed) {
+  setPanelCollapsed("panelCustomize", collapsed);
+  updateVegListScrollAffordance();
+}
+
+function syncCustomizePanelForLivello() {
+  setCustomizePanelCollapsed(state.livello === "novizio");
+}
+
+function openCustomizePanelAndFocus() {
+  const crops = document.getElementById("panelCustomize");
+  if (!crops) return;
+  setCustomizePanelCollapsed(false);
+  window.requestAnimationFrame(() => {
+    const navH = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue("--nav-h") ||
+        "66",
+      10
+    );
+    const top = crops.getBoundingClientRect().top + window.scrollY - navH - 12;
+    window.scrollTo({ top, behavior: "smooth" });
+    crops.classList.add("is-focus-pulse");
+    window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
+  });
 }
 
 /* All'ingresso dalla homepage con una persona già scelta (mobile/tablet),
@@ -502,8 +539,7 @@ function scrollToGuidedIntroForLivello(liv) {
 function openSettingsPanelAndFocusDimensions() {
   const panel = document.getElementById("panelSettings");
   if (!panel) return;
-  panel.classList.remove("is-collapsed");
-  updateAllPanelToggles();
+  setPanelCollapsed(panel, false);
   requestAnimationFrame(() => {
     scrollElementBelowHeader(panel, "smooth");
     const inW = document.getElementById("inW");
@@ -1319,8 +1355,7 @@ function openPlantDetailPanel() {
   if (!panel) return;
   renderPlantDetailPanel();
   panel.hidden = false;
-  if (settings) settings.classList.add("is-collapsed");
-  updateAllPanelToggles();
+  if (settings) setPanelCollapsed(settings, true);
   requestAnimationFrame(() => scrollPlantDetailPanelIntoView("smooth"));
 }
 
@@ -1330,8 +1365,7 @@ function closePlantDetailPanel() {
   const keepGreenhouseRow =
     isResponsiveConfiguratorLayout() && panel && !panel.hidden;
   if (panel) panel.hidden = true;
-  if (settings) settings.classList.remove("is-collapsed");
-  updateAllPanelToggles();
+  if (settings) setPanelCollapsed(settings, false);
   state.selected = -1;
   render();
   if (keepGreenhouseRow) {
@@ -1974,4 +2008,3 @@ function renderPrintSummary() {
       </section>
     </div>`;
 }
-

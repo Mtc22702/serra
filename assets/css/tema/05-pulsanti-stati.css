@@ -4,6 +4,103 @@
 @layer base {
 
 /* Sistema pulsanti dark condiviso da Home e Configuratore. */
+:root {
+  --button-primary: #2f6b3a;
+  --button-primary-hover: #357944;
+  --button-primary-border: rgba(47, 107, 58, 0.42);
+  --button-primary-shadow: rgba(47, 107, 58, 0.24);
+  --button-secondary-bg: rgba(47, 107, 58, 0.1);
+  --button-secondary-bg-hover: rgba(47, 107, 58, 0.17);
+  --button-secondary-text: #245733;
+  --button-secondary-border: rgba(47, 107, 58, 0.18);
+  --button-danger-bg: #fff3f1;
+  --button-danger-bg-hover: #ffe8e4;
+  --button-danger-text: #9f2f24;
+  --button-danger-border: rgba(176, 48, 32, 0.32);
+}
+
+.detail-add-btn,
+.conf-cart-export-btn,
+.cart-checkout-btn,
+.kit-cta-btn,
+.catalog-import-btn,
+.empty-cta,
+.guided-nov-cta,
+body.serra-empty .crops-fill-main-btn {
+  background: linear-gradient(
+    135deg,
+    var(--button-primary-hover),
+    var(--button-primary)
+  );
+  color: #fff;
+  border-color: var(--button-primary-border);
+  box-shadow: 0 8px 22px var(--button-primary-shadow);
+}
+
+.detail-add-btn:hover,
+.conf-cart-export-btn:hover,
+.cart-checkout-btn:hover,
+.kit-cta-btn:hover,
+.catalog-import-btn:hover,
+.empty-cta:hover,
+.guided-nov-cta:hover,
+body.serra-empty .crops-fill-main-btn:hover {
+  background: linear-gradient(135deg, #3f8a50, var(--button-primary-hover));
+  color: #fff;
+  border-color: rgba(47, 107, 58, 0.52);
+}
+
+.btn-soft,
+.view-print-btn,
+.yield-edit-crops-btn,
+.pdp-back-btn,
+.novice-crops-note button,
+.novice-restart-btn,
+body:not(.serra-empty) .crops-fill-main-btn {
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  border: 1px solid var(--button-secondary-border);
+  box-shadow: none;
+}
+
+.btn-soft:hover,
+.view-print-btn:hover,
+.yield-edit-crops-btn:hover,
+.pdp-back-btn:hover,
+.novice-crops-note button:hover,
+.novice-restart-btn:hover,
+body:not(.serra-empty) .crops-fill-main-btn:hover {
+  background: var(--button-secondary-bg-hover);
+  color: var(--button-secondary-text);
+  border-color: rgba(47, 107, 58, 0.28);
+}
+
+.btn-danger,
+.btn-ghost,
+.cart-clear-btn,
+.cart-item-remove,
+.crop-action-btn--danger,
+.crops-clear-btn,
+.del,
+.veg.in .add {
+  background: var(--button-danger-bg);
+  color: var(--button-danger-text);
+  border-color: var(--button-danger-border);
+  box-shadow: none;
+}
+
+.btn-danger:hover,
+.btn-ghost:hover,
+.cart-clear-btn:hover,
+.cart-item-remove:hover,
+.crop-action-btn--danger:hover,
+.crops-clear-btn:hover,
+.del:hover,
+.veg.in .add:hover {
+  background: var(--button-danger-bg-hover);
+  color: #8c2316;
+  border-color: rgba(176, 48, 32, 0.48);
+}
 }
 @layer dark-theme {
 html[data-theme="dark"] {
@@ -37,9 +134,8 @@ html[data-theme="dark"]
     .btn-primary,
     .btn-success,
     .conf-cart-export-btn,
-    .crops-fill-main-btn,
+    body.serra-empty .crops-fill-main-btn,
     .crop-action-btn--primary,
-    .novice-crops-note button,
     .catalog-import-btn,
     .guided-nov-cta,
     .empty-cta,
@@ -68,9 +164,8 @@ html[data-theme="dark"]
     .btn-primary,
     .btn-success,
     .conf-cart-export-btn,
-    .crops-fill-main-btn,
+    body.serra-empty .crops-fill-main-btn,
     .crop-action-btn--primary,
-    .novice-crops-note button,
     .catalog-import-btn,
     .guided-nov-cta,
     .empty-cta,
@@ -104,6 +199,8 @@ html[data-theme="dark"]
     .pdp-back-btn,
     .back-home-btn,
     .cart-nudge button,
+    .novice-crops-note button,
+    body:not(.serra-empty) .crops-fill-main-btn,
     .percorso-cta-alt,
     .percorso-path--free,
     .crop-action-btn--secondary
@@ -126,6 +223,8 @@ html[data-theme="dark"]
     .pdp-back-btn,
     .back-home-btn,
     .cart-nudge button,
+    .novice-crops-note button,
+    body:not(.serra-empty) .crops-fill-main-btn,
     .percorso-cta-alt,
     .percorso-path--free,
     .crop-action-btn--secondary
@@ -146,9 +245,9 @@ html[data-theme="dark"]
     .btn-danger,
     .btn-ghost,
     .cart-clear-btn,
+    .cart-item-remove,
     .crop-action-btn--danger,
     .crops-clear-btn,
-    .catalog-reset-btn,
     .del,
     .veg.in .add
   ) {
@@ -163,9 +262,9 @@ html[data-theme="dark"]
     .btn-danger,
     .btn-ghost,
     .cart-clear-btn,
+    .cart-item-remove,
     .crop-action-btn--danger,
     .crops-clear-btn,
-    .catalog-reset-btn,
     .del,
     .veg.in .add
   ):hover {
