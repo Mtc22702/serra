@@ -5,7 +5,7 @@
    sceglie la strategia di rete più adatta per pagine, script e immagini.
    CACHE_VERSION è l'unico valore da aggiornare quando si pubblica una release.
    ========================================================================== */
-const CACHE_VERSION = "2026-06-28-177";
+const CACHE_VERSION = "2026-06-28-178";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [

@@ -854,9 +854,7 @@
         "preconfig.serra_cold": "Fredda",
         "preconfig.serra_heated": "Riscaldata",
         "preconfig.month_label": "3. Mese di semina",
-        "preconfig.cta": "Vai al configuratore",
-        "pwa.update_text": "Una nuova versione di Orto in Serra è pronta!",
-        "pwa.update_btn": "Aggiorna"
+        "preconfig.cta": "Vai al configuratore"
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -2135,9 +2133,7 @@
         "preconfig.serra_cold": "Rece",
         "preconfig.serra_heated": "Încălzită",
         "preconfig.month_label": "3. Luna de semănat",
-        "preconfig.cta": "Mergi la configurator",
-        "pwa.update_text": "O nouă versiune Orto in Serra este gata!",
-        "pwa.update_btn": "Actualizează"
+        "preconfig.cta": "Mergi la configurator"
       }
     }
   };

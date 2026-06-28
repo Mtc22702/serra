@@ -13,7 +13,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Versione app e percorso degli asset: imposta il token di cache busting. -->
     <script>
-      window.SERRA_APP_VERSION = "2026-06-28-177";
+      window.SERRA_APP_VERSION = "2026-06-28-178";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -1309,15 +1309,6 @@
       </div>
     </div>
 
-    <!-- Banner di aggiornamento PWA. -->
-    <div id="pwaUpdateBanner" class="pwa-update-banner" hidden>
-      <div class="pwa-update-banner-inner">
-        <span class="pwa-update-icon">🚀</span>
-        <span class="pwa-update-text" data-i18n="pwa.update_text">Una nuova versione di Orto in Serra è pronta!</span>
-        <button id="pwaUpdateBtn" class="pwa-update-btn" type="button" data-i18n="pwa.update_btn">Aggiorna</button>
-      </div>
-    </div>
-
     <!-- =========================================================
          9. PRE-CONFIGURAZIONE DELLA SERRA
          Pannello preliminare per misure, clima, profilo e mese di semina.
@@ -1746,21 +1737,10 @@
             location.reload();
           });
 
-          const showUpdateBanner = (worker) => {
-            const banner = document.getElementById("pwaUpdateBanner");
-            const btn = document.getElementById("pwaUpdateBtn");
-            if (!banner || !btn) return;
-            banner.hidden = false;
-            if (typeof t === "function") {
-              const textEl = banner.querySelector(".pwa-update-text");
-              if (textEl) textEl.textContent = t("pwa.update_text");
-              btn.textContent = t("pwa.update_btn");
-            }
-            btn.onclick = () => {
-              sessionStorage.removeItem("serra.sw-reloaded");
-              worker.postMessage({ type: "SKIP_WAITING" });
-              banner.hidden = true;
-            };
+          const activateUpdate = (worker) => {
+            if (!worker) return;
+            sessionStorage.removeItem("serra.sw-reloaded");
+            worker.postMessage({ type: "SKIP_WAITING" });
           };
 
           navigator.serviceWorker
@@ -1773,8 +1753,7 @@
               channel.port1.onmessage = (event) => {
                 if (!event.data || event.data.type !== "VERSION") return;
                 if (event.data.version === window.SERRA_APP_VERSION) return;
-                const stale = registration.waiting || registration.installing;
-                if (stale) showUpdateBanner(stale);
+                activateUpdate(registration.waiting || registration.installing);
               };
               controller.postMessage({ type: "GET_VERSION" }, [channel.port2]);
 
@@ -1783,7 +1762,7 @@
                 if (!newWorker) return;
                 newWorker.addEventListener("statechange", () => {
                   if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-                    showUpdateBanner(newWorker);
+                    activateUpdate(newWorker);
                   }
                 });
               });
