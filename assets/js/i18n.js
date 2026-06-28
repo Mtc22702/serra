@@ -621,12 +621,12 @@
         "catalog.category_label": "Categorie",
         "catalog.category_hint": "Scegli una famiglia di colture",
         "catalog.sort_label": "Ordina per",
-        "catalog.sort_season": "Consigliati",
-        "catalog.sort_name": "Nome A-Z",
-        "catalog.sort_fast": "Raccolta più veloce",
-        "catalog.sort_yield": "Resa più alta",
-        "catalog.sort_distance": "Più compatti",
-        "catalog.sort_price": "Prezzo più basso",
+        "catalog.sort_season": "Ordina: Consigliati",
+        "catalog.sort_name": "Ordina: Nome A-Z",
+        "catalog.sort_fast": "Ordina: Raccolta più veloce",
+        "catalog.sort_yield": "Ordina: Resa più alta",
+        "catalog.sort_distance": "Ordina: Più compatti",
+        "catalog.sort_price": "Ordina: Prezzo più basso",
         "catalog.insight_seasonal": "adatti ora",
         "catalog.insight_fast": "rapidi",
         "catalog.insight_compact": "compatti",
@@ -854,7 +854,9 @@
         "preconfig.serra_cold": "Fredda",
         "preconfig.serra_heated": "Riscaldata",
         "preconfig.month_label": "3. Mese di semina",
-        "preconfig.cta": "Vai al configuratore"
+        "preconfig.cta": "Vai al configuratore",
+        "pwa.update_text": "Una nuova versione di Orto in Serra è pronta!",
+        "pwa.update_btn": "Aggiorna"
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -1013,12 +1015,12 @@
         "catalog.category_label": "Categorii",
         "catalog.category_hint": "Alege o familie de culturi",
         "catalog.sort_label": "Sortează după",
-        "catalog.sort_season": "Recomandate",
-        "catalog.sort_name": "Nume A-Z",
-        "catalog.sort_fast": "Recoltare rapidă",
-        "catalog.sort_yield": "Producție mai mare",
-        "catalog.sort_distance": "Mai compacte",
-        "catalog.sort_price": "Preț mai mic",
+        "catalog.sort_season": "Sortează: Recomandate",
+        "catalog.sort_name": "Sortează: Nume A-Z",
+        "catalog.sort_fast": "Sortează: Recoltare rapidă",
+        "catalog.sort_yield": "Sortează: Producție mai mare",
+        "catalog.sort_distance": "Sortează: Mai compacte",
+        "catalog.sort_price": "Sortează: Preț mai mic",
         "catalog.insight_seasonal": "potrivite acum",
         "catalog.insight_fast": "rapide",
         "catalog.insight_compact": "compacte",
@@ -2133,7 +2135,9 @@
         "preconfig.serra_cold": "Rece",
         "preconfig.serra_heated": "Încălzită",
         "preconfig.month_label": "3. Luna de semănat",
-        "preconfig.cta": "Mergi la configurator"
+        "preconfig.cta": "Mergi la configurator",
+        "pwa.update_text": "O nouă versiune Orto in Serra este gata!",
+        "pwa.update_btn": "Actualizează"
       }
     }
   };

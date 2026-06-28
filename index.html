@@ -78,6 +78,8 @@
           '" />'
       );
     </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   </head>
   <body>
     <!-- =========================================================
@@ -474,11 +476,6 @@
                     >Affina i risultati</strong
                   >
                 </div>
-                <span
-                  class="catalog-search-badge"
-                  data-i18n="catalog.search_badge"
-                  >Cerca qui</span
-                >
               </div>
               <p class="catalog-search-note" data-i18n="catalog.search_note">
                 Digita pomodoro, basilico, lattuga… trova subito la pianta.
@@ -520,31 +517,6 @@
                   ></ul>
                 </label>
 
-                <select
-                  id="catalogSort"
-                  class="cat-sort-select"
-                  onchange="setCatalogSort(this.value)"
-                  aria-label="Ordina per"
-                >
-                  <option value="season" data-i18n="catalog.sort_season">
-                    Consigliati
-                  </option>
-                  <option value="name" data-i18n="catalog.sort_name">
-                    Nome A-Z
-                  </option>
-                  <option value="fast" data-i18n="catalog.sort_fast">
-                    Raccolta più veloce
-                  </option>
-                  <option value="yield" data-i18n="catalog.sort_yield">
-                    Resa più alta
-                  </option>
-                  <option value="distance" data-i18n="catalog.sort_distance">
-                    Più compatti
-                  </option>
-                  <option value="price" data-i18n="catalog.sort_price">
-                    Prezzo più basso
-                  </option>
-                </select>
 
                 <!-- Stato tecnico: select sincronizzata con le chip categoria. -->
                 <select
@@ -574,19 +546,7 @@
                   >
                     <span class="chip-ico" aria-hidden="true">📅</span>
                     <span class="chip-lbl" data-i18n="catalog.season_only"
-                      >Adatti adesso</span
-                    >
-                    <span class="chip-count" aria-hidden="true">—</span>
-                  </button>
-                  <button
-                    class="catalog-chip"
-                    id="catalogAllToggle"
-                    type="button"
-                    onclick="toggleCatalogFull()"
-                    aria-pressed="false"
-                  >
-                    <span class="chip-lbl" data-i18n="catalog.filter_all_plants"
-                      >Tutto il catalogo</span
+                      >Solo adatti adesso</span
                     >
                     <span class="chip-count" aria-hidden="true">—</span>
                   </button>
@@ -599,19 +559,9 @@
                   >
                     <span class="chip-ico" aria-hidden="true">⭐</span>
                     <span class="chip-lbl" data-i18n="catalog.easy_only"
-                      >Facili</span
+                      >Facili per iniziare</span
                     >
                     <span class="chip-count" aria-hidden="true">—</span>
-                  </button>
-                  <button
-                    class="catalog-reset-btn"
-                    id="catalogReset"
-                    type="button"
-                    onclick="showFullCatalog()"
-                    data-i18n="catalog.reset"
-                    hidden
-                  >
-                    ✕ Azzera
                   </button>
                 </div>
               </div>
@@ -621,12 +571,58 @@
 
         <div class="catalog-status" id="catalogStatus" hidden></div>
         <div class="catalog-hint catalog-hint--pro" id="catalogHint">
-          <span class="catalog-hint-icon">💡</span>
-          <span data-i18n="catalog.hint_before">Tocca per i dettagli · </span>
-          <b class="catalog-hint-plus">+</b>
-          <span data-i18n="catalog.hint_after">
-            per aggiungere al carrello</span
-          >
+          <div class="catalog-hint-text">
+            <span class="catalog-hint-icon">💡</span>
+            <span data-i18n="catalog.hint_before">Tocca per i dettagli · </span>
+            <b class="catalog-hint-plus">+</b>
+            <span data-i18n="catalog.hint_after">
+              per aggiungere al carrello</span
+            >
+          </div>
+          <div class="catalog-hint-controls">
+            <select
+              id="catalogSort"
+              class="cat-sort-select"
+              onchange="setCatalogSort(this.value)"
+              aria-label="Ordina per"
+            >
+              <option value="season" data-i18n="catalog.sort_season">
+                Ordina: Consigliati
+              </option>
+              <option value="name" data-i18n="catalog.sort_name">
+                Ordina: Nome A-Z
+              </option>
+              <option value="fast" data-i18n="catalog.sort_fast">
+                Ordina: Raccolta più veloce
+              </option>
+              <option value="yield" data-i18n="catalog.sort_yield">
+                Ordina: Resa più alta
+              </option>
+              <option value="distance" data-i18n="catalog.sort_distance">
+                Ordina: Più compatti
+              </option>
+              <option value="price" data-i18n="catalog.sort_price">
+                Ordina: Prezzo più basso
+              </option>
+            </select>
+            <div class="catalog-layout-toggle" role="group" aria-label="Visualizzazione catalogo">
+              <button type="button" class="layout-toggle-btn layout-toggle-btn--grid active" id="layoutBtnGrid" onclick="setCatalogLayout('grid')" aria-pressed="true" title="Vista griglia">
+                <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="5" height="5" rx="1"></rect>
+                  <rect x="11" y="2" width="5" height="5" rx="1"></rect>
+                  <rect x="2" y="11" width="5" height="5" rx="1"></rect>
+                  <rect x="11" y="11" width="5" height="5" rx="1"></rect>
+                </svg>
+              </button>
+              <button type="button" class="layout-toggle-btn layout-toggle-btn--compact" id="layoutBtnCompact" onclick="setCatalogLayout('compact')" aria-pressed="false" title="Vista compatta">
+                <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="2" y1="4" x2="16" y2="4"></line>
+                  <line x1="2" y1="9" x2="16" y2="9"></line>
+                  <line x1="2" y1="14" x2="16" y2="14"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
         <div id="editorialPlants"></div>
         <div class="plant-compact-list compact-plants" id="compactPlants"></div>
@@ -776,18 +772,7 @@
               </div>
             </div>
           </div>
-          <div class="contatti-map-placeholder">
-            <div class="map-placeholder-inner">
-              <span class="map-pin">📍</span>
-              <div>
-                <div class="map-address">Via delle Serre 42</div>
-                <div class="map-city">50023 Impruneta (FI) — Toscana</div>
-                <span class="contatti-map-note" data-i18n="contatti.map_note"
-                  >Mappa interattiva prossimamente</span
-                >
-              </div>
-            </div>
-          </div>
+          <div id="map" class="contatti-map"></div>
         </div>
       </div>
     </section>
@@ -1324,6 +1309,15 @@
       </div>
     </div>
 
+    <!-- Banner di aggiornamento PWA. -->
+    <div id="pwaUpdateBanner" class="pwa-update-banner" hidden>
+      <div class="pwa-update-banner-inner">
+        <span class="pwa-update-icon">🚀</span>
+        <span class="pwa-update-text" data-i18n="pwa.update_text">Una nuova versione di Orto in Serra è pronta!</span>
+        <button id="pwaUpdateBtn" class="pwa-update-btn" type="button" data-i18n="pwa.update_btn">Aggiorna</button>
+      </div>
+    </div>
+
     <!-- =========================================================
          9. PRE-CONFIGURAZIONE DELLA SERRA
          Pannello preliminare per misure, clima, profilo e mese di semina.
@@ -1744,10 +1738,6 @@
             })
             .catch(() => {});
         } else {
-          // Ricarica una sola volta quando un SW AGGIORNATO prende il controllo
-          // (non al primo install, dove non c'era un controller precedente): cosi'
-          // gli asset freschi entrano in uso subito, senza restare bloccati su una
-          // cache vecchia (guardia in sessionStorage per evitare loop di reload).
           const hadControllerAtBoot = Boolean(navigator.serviceWorker.controller);
           navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (!hadControllerAtBoot) return;
@@ -1756,24 +1746,47 @@
             location.reload();
           });
 
+          const showUpdateBanner = (worker) => {
+            const banner = document.getElementById("pwaUpdateBanner");
+            const btn = document.getElementById("pwaUpdateBtn");
+            if (!banner || !btn) return;
+            banner.hidden = false;
+            if (typeof t === "function") {
+              const textEl = banner.querySelector(".pwa-update-text");
+              if (textEl) textEl.textContent = t("pwa.update_text");
+              btn.textContent = t("pwa.update_btn");
+            }
+            btn.onclick = () => {
+              sessionStorage.removeItem("serra.sw-reloaded");
+              worker.postMessage({ type: "SKIP_WAITING" });
+              banner.hidden = true;
+            };
+          };
+
           navigator.serviceWorker
             .register(serraAsset("./sw.js"), { updateViaCache: "none" })
             .then((registration) => {
               registration.update();
-              // Se il SW che controlla la pagina e' piu' vecchio del sorgente,
-              // significa che stiamo eseguendo JS obsoleto da cache: forziamo
-              // l'aggiornamento (skipWaiting sul worker in attesa).
               const controller = navigator.serviceWorker.controller;
               if (!controller) return;
               const channel = new MessageChannel();
               channel.port1.onmessage = (event) => {
                 if (!event.data || event.data.type !== "VERSION") return;
                 if (event.data.version === window.SERRA_APP_VERSION) return;
-                sessionStorage.removeItem("serra.sw-reloaded");
                 const stale = registration.waiting || registration.installing;
-                if (stale) stale.postMessage({ type: "SKIP_WAITING" });
+                if (stale) showUpdateBanner(stale);
               };
               controller.postMessage({ type: "GET_VERSION" }, [channel.port2]);
+
+              registration.addEventListener("updatefound", () => {
+                const newWorker = registration.installing;
+                if (!newWorker) return;
+                newWorker.addEventListener("statechange", () => {
+                  if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                    showUpdateBanner(newWorker);
+                  }
+                });
+              });
             })
             .catch(() => {});
         }
@@ -1791,9 +1804,7 @@
         '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
       );
       document.write(
-        '<script src="' +
-          serraAsset("assets/js/plants-data.js") +
-          '"><\/script>'
+        '<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>'
       );
       [
         "assets/js/home/home-data.js",

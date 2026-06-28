@@ -43,7 +43,14 @@
     closeMenu();
   });
 
-  window.addEventListener("resize", () => {
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+  window.addEventListener("resize", debounce(() => {
     if (window.innerWidth > 900) closeMenu();
-  });
+  }, 150));
 })();

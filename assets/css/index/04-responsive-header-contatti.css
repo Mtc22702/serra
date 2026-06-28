@@ -1060,6 +1060,17 @@
   position: relative;
   overflow: hidden;
 }
+.contatti-map {
+  margin-top: 0;
+  border-radius: 16px;
+  border: 1.5px solid rgba(116, 198, 157, 0.35);
+  min-height: 380px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(31, 67, 50, 0.08);
+  z-index: 1;
+}
 .contatti-map-placeholder::before {
   content: "";
   position: absolute;
@@ -1691,6 +1702,11 @@
     opacity: 1;
     transform: translateY(0);
   }
+  html[data-theme="dark"] .site-header .nav-links {
+    background: #13221b;
+    border-color: rgba(172, 214, 187, 0.16);
+    box-shadow: 0 22px 52px rgba(0, 0, 0, 0.5);
+  }
 
   .site-header .nav-link,
   .site-header .nav-link:not(.cart-btn) {
@@ -1913,6 +1929,10 @@
     height: auto;
     padding: 1.2rem;
     text-align: center;
+  }
+  .contatti-map {
+    min-height: 250px;
+    height: 250px;
   }
 
   .detail-overlay {

@@ -23,7 +23,8 @@ let catalog = {
   type: "",
   seasonOnly: false,
   easyOnly: false,
-  sort: "season"
+  sort: "season",
+  layout: localStorage.getItem("serra.catalog.layout") || "grid"
 };
 let cart = [];
 let currentDetail = null;
@@ -644,78 +645,124 @@ function renderEditorialPlants() {
     return;
   }
 
-  const featured = plants.slice(0, 3);
-  const rest = plants.slice(3);
+  const btnGrid = document.getElementById("layoutBtnGrid");
+  const btnCompact = document.getElementById("layoutBtnCompact");
+  if (btnGrid && btnCompact) {
+    if (catalog.layout === "compact") {
+      btnGrid.classList.remove("active");
+      btnGrid.setAttribute("aria-pressed", "false");
+      btnCompact.classList.add("active");
+      btnCompact.setAttribute("aria-pressed", "true");
+    } else {
+      btnGrid.classList.add("active");
+      btnGrid.setAttribute("aria-pressed", "true");
+      btnCompact.classList.remove("active");
+      btnCompact.setAttribute("aria-pressed", "false");
+    }
+  }
+
   const seasonSet = new Set(seasonal.map((p) => p.id));
   const offSeasonBadge = `<span class="off-season-badge">${t("catalog.off_season")}</span>`;
 
-  /* In evidenza: 3 card uguali nella griglia catalogo. */
-  const editHTML = `<div class="plant-catalog-top">
-    ${featured
+  if (catalog.layout === "compact") {
+    document.getElementById("editorialPlants").innerHTML = "";
+    document.getElementById("compactPlants").classList.add("compact-list-view");
+    document.getElementById("compactPlants").innerHTML = plants
       .map((p) => {
         const tipo = typeOfPlant(p);
         const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
         const inC = inCart(p.id);
-        return `<div class="plant-card-top${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
-        <div class="top-photo">
-          <img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" />
-          <span class="photo-type-tag" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
-          <span class="photo-cart-check">✓</span>
-        </div>
-        <div class="top-body">
-          <div class="top-nameline">
-            <div class="top-name">${plantName(p.id)}</div>
-            ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
-          </div>
-          <div class="top-facts-row">
-            <span class="top-fact">⏱&nbsp;${daysLabel(p)}</span>
-            <span class="top-fact">↔&nbsp;${spacingLabel(p)}</span>
-            <span class="top-fact">⚖&nbsp;${yieldLabel(p)}</span>
-          </div>
-          <div class="top-buy-row">
-            <span class="top-price">
-              <b>${money(packPrice(p.id))}</b>
-              <small>${seedsPerPack(p.id)} ${t("catalog.seeds")}</small>
-            </span>
-            <button class="top-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')">
-              ${cartActionLabel(inC)}
-            </button>
-          </div>
-        </div>
-      </div>`;
+        const emoji = fruitEmoji(p.id);
+        return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+          <span class="super-compact-emoji" role="img" aria-label="${plantName(p.id)}">${emoji}</span>
+          <span class="super-compact-name">${plantName(p.id)}</span>
+          <span class="super-compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
+          ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
+          <span class="super-compact-fact">⏱&nbsp;${daysLabel(p)}</span>
+          <span class="super-compact-price">${money(packPrice(p.id))}</span>
+          <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
+        </div>`;
       })
-      .join("")}
-  </div>`;
-  document.getElementById("editorialPlants").innerHTML = editHTML;
+      .join("");
+  } else {
+    document.getElementById("compactPlants").classList.remove("compact-list-view");
+    const featured = plants.slice(0, 3);
+    const rest = plants.slice(3);
 
-  /* Lista densa per le piante rimanenti. */
-  document.getElementById("compactPlants").innerHTML = rest
-    .map((p) => {
-      const tipo = typeOfPlant(p);
-      const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
-      const inC = inCart(p.id);
-      return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
-        <div class="compact-thumb"><img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" /></div>
-        <div class="compact-info">
-          <div class="compact-name-row">
-            <span class="compact-name">${plantName(p.id)}</span>
-            <span class="compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
-            ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
+    /* In evidenza: 3 card uguali nella griglia catalogo. */
+    const editHTML = `<div class="plant-catalog-top">
+      ${featured
+        .map((p) => {
+          const tipo = typeOfPlant(p);
+          const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
+          const inC = inCart(p.id);
+          return `<div class="plant-card-top${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+          <div class="top-photo">
+            <img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" />
+            <span class="photo-type-tag" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
+            <span class="photo-cart-check">✓</span>
           </div>
-          <p class="compact-note">${plantNote(p)}</p>
-          <div class="compact-facts-row compact-facts-row--pro">
-            <span>⏱&nbsp;${daysLabel(p)}</span>
-            <span>↔&nbsp;${spacingLabel(p)}</span>
-            <span>⚖&nbsp;${yieldLabel(p)}</span>
+          <div class="top-body">
+            <div class="top-nameline">
+              <div class="top-name">${plantName(p.id)}</div>
+              ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
+            </div>
+            <div class="top-facts-row">
+              <span class="top-fact">⏱&nbsp;${daysLabel(p)}</span>
+              <span class="top-fact">↔&nbsp;${spacingLabel(p)}</span>
+              <span class="top-fact">⚖&nbsp;${yieldLabel(p)}</span>
+            </div>
+            <div class="top-buy-row">
+              <span class="top-price">
+                <b>${money(packPrice(p.id))}</b>
+                <small>${seedsPerPack(p.id)} ${t("catalog.seeds")}</small>
+              </span>
+              <button class="top-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')">
+                ${cartActionLabel(inC)}
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="compact-buy">
-          <span class="compact-price">${money(packPrice(p.id))}</span>
-          <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
-        </div>
-      </div>`;
-    })
-    .join("");
+        </div>`;
+        })
+        .join("")}
+    </div>`;
+    document.getElementById("editorialPlants").innerHTML = editHTML;
+
+    /* Lista densa per le piante rimanenti. */
+    document.getElementById("compactPlants").innerHTML = rest
+      .map((p) => {
+        const tipo = typeOfPlant(p);
+        const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
+        const inC = inCart(p.id);
+        return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+          <div class="compact-thumb"><img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" /></div>
+          <div class="compact-info">
+            <div class="compact-name-row">
+              <span class="compact-name">${plantName(p.id)}</span>
+              <span class="compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
+              ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
+            </div>
+            <p class="compact-note">${plantNote(p)}</p>
+            <div class="compact-facts-row compact-facts-row--pro">
+              <span>⏱&nbsp;${daysLabel(p)}</span>
+              <span>↔&nbsp;${spacingLabel(p)}</span>
+              <span>⚖&nbsp;${yieldLabel(p)}</span>
+            </div>
+          </div>
+          <div class="compact-buy">
+            <span class="compact-price">${money(packPrice(p.id))}</span>
+            <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
+          </div>
+        </div>`;
+      })
+      .join("");
+  }
+}
+
+function setCatalogLayout(layout) {
+  catalog.layout = layout;
+  localStorage.setItem("serra.catalog.layout", layout);
+  renderEditorialPlants();
 }
 
 /* ABBINAMENTI — propone coppie di colture compatibili e azioni per il carrello. */

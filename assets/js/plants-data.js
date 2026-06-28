@@ -11,7 +11,7 @@
    4. TIPO — categoria botanica o d'uso di ogni pianta
    5. ESPORTAZIONE — disponibilità dei dati nel browser e in CommonJS
    ========================================================================== */
-(function (root) {
+const DATA_EXPORT = (function (root) {
   /* 1. ANAGRAFICA — spaziature, grafica, sole, acqua, resa e abbinamenti. */
   const PLANTS = [
     {
@@ -4114,4 +4114,5 @@
     root.SOWING_GUIDE_RO = SOWING_GUIDE_RO;
     root.TIPO = TIPO;
   }
+  return DATA;
 })(typeof window !== "undefined" ? window : globalThis);

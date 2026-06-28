@@ -202,14 +202,43 @@ function showCartNudge(id, added = true) {
     nudge.classList.remove("visible");
   }, 3800);
 }
+let scrollLockCount = 0;
+let bodyScrollY = 0;
+
+function lockBodyScroll() {
+  if (scrollLockCount === 0) {
+    bodyScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${bodyScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  }
+  scrollLockCount++;
+}
+
+function unlockBodyScroll() {
+  scrollLockCount = Math.max(0, scrollLockCount - 1);
+  if (scrollLockCount === 0) {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo({ top: bodyScrollY, behavior: "instant" });
+  }
+}
+
 function openCart() {
   document.getElementById("cartNudge")?.classList.remove("visible");
+  lockBodyScroll();
   document.body.classList.add("cart-open");
   document.getElementById("cartOverlay").classList.add("open");
 }
 function closeCart() {
   document.getElementById("cartOverlay").classList.remove("open");
   document.body.classList.remove("cart-open");
+  unlockBodyScroll();
 }
 function alertCheckout() {
   if (!cart.length) {
@@ -236,22 +265,12 @@ function alertCheckout() {
 
 /* 2. SCHEDA PIANTA — controlla pannello, scorrimento pagina, tab e tastiera. */
 function lockDetailPageScroll() {
-  detailScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  lockBodyScroll();
   document.body.classList.add("detail-open");
-  document.body.style.position = "fixed";
-  document.body.style.top = `-${detailScrollY}px`;
-  document.body.style.left = "0";
-  document.body.style.right = "0";
-  document.body.style.width = "100%";
 }
 function unlockDetailPageScroll() {
   document.body.classList.remove("detail-open");
-  document.body.style.position = "";
-  document.body.style.top = "";
-  document.body.style.left = "";
-  document.body.style.right = "";
-  document.body.style.width = "";
-  window.scrollTo({ top: detailScrollY, behavior: "instant" });
+  unlockBodyScroll();
 }
 
 const DETAIL_TAB_ORDER = [

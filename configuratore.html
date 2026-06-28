@@ -1715,8 +1715,16 @@
           © 2025 Orto in Serra ·
           <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span>
         </div>
-      </div>
     </footer>
+
+    <!-- Banner di aggiornamento PWA. -->
+    <div id="pwaUpdateBanner" class="pwa-update-banner" hidden>
+      <div class="pwa-update-banner-inner">
+        <span class="pwa-update-icon">🚀</span>
+        <span class="pwa-update-text" data-i18n="pwa.update_text">Una nuova versione di Orto in Serra è pronta!</span>
+        <button id="pwaUpdateBtn" class="pwa-update-btn" type="button" data-i18n="pwa.update_btn">Aggiorna</button>
+      </div>
+    </div>
 
     <!-- =========================================================
          6. SCRIPT E SERVIZI DELLA PAGINA
@@ -1734,9 +1742,7 @@
         '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
       );
       document.write(
-        '<script src="' +
-          serraAsset("assets/js/plants-data.js") +
-          '"><\/script>'
+        '<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>'
       );
       [
         "assets/js/conf/conf-data.js",
@@ -1805,10 +1811,6 @@
             })
             .catch(() => {});
         } else {
-          // Ricarica una sola volta quando un SW AGGIORNATO prende il controllo
-          // (non al primo install, dove non c'era un controller precedente): cosi'
-          // gli asset freschi entrano in uso subito, senza restare bloccati su una
-          // cache vecchia (guardia in sessionStorage per evitare loop di reload).
           const hadControllerAtBoot = Boolean(navigator.serviceWorker.controller);
           navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (!hadControllerAtBoot) return;
@@ -1817,24 +1819,47 @@
             location.reload();
           });
 
+          const showUpdateBanner = (worker) => {
+            const banner = document.getElementById("pwaUpdateBanner");
+            const btn = document.getElementById("pwaUpdateBtn");
+            if (!banner || !btn) return;
+            banner.hidden = false;
+            if (typeof t === "function") {
+              const textEl = banner.querySelector(".pwa-update-text");
+              if (textEl) textEl.textContent = t("pwa.update_text");
+              btn.textContent = t("pwa.update_btn");
+            }
+            btn.onclick = () => {
+              sessionStorage.removeItem("serra.sw-reloaded");
+              worker.postMessage({ type: "SKIP_WAITING" });
+              banner.hidden = true;
+            };
+          };
+
           navigator.serviceWorker
             .register(serraAsset("./sw.js"), { updateViaCache: "none" })
             .then((registration) => {
               registration.update();
-              // Se il SW che controlla la pagina e' piu' vecchio del sorgente,
-              // significa che stiamo eseguendo JS obsoleto da cache: forziamo
-              // l'aggiornamento (skipWaiting sul worker in attesa).
               const controller = navigator.serviceWorker.controller;
               if (!controller) return;
               const channel = new MessageChannel();
               channel.port1.onmessage = (event) => {
                 if (!event.data || event.data.type !== "VERSION") return;
                 if (event.data.version === window.SERRA_APP_VERSION) return;
-                sessionStorage.removeItem("serra.sw-reloaded");
                 const stale = registration.waiting || registration.installing;
-                if (stale) stale.postMessage({ type: "SKIP_WAITING" });
+                if (stale) showUpdateBanner(stale);
               };
               controller.postMessage({ type: "GET_VERSION" }, [channel.port2]);
+
+              registration.addEventListener("updatefound", () => {
+                const newWorker = registration.installing;
+                if (!newWorker) return;
+                newWorker.addEventListener("statechange", () => {
+                  if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                    showUpdateBanner(newWorker);
+                  }
+                });
+              });
             })
             .catch(() => {});
         }

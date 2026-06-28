@@ -306,11 +306,11 @@ const SOWING_GUIDE_RO = window.SOWING_GUIDE_RO;
 
 const TIPO = window.TIPO;
 const TIPO_STYLE = {
-  frutto: "background:rgba(231,111,81,.18);color:#a03820",
-  foglia: "background:rgba(45,106,79,.16);color:#1b4332",
-  radice: "background:rgba(107,66,38,.16);color:#5c3618",
-  legume: "background:rgba(82,183,136,.2);color:#1b4332",
-  aromatica: "background:rgba(116,198,157,.22);color:#1b5438"
+  frutto: "background:var(--badge-frutto-bg, rgba(231,111,81,.18));color:var(--badge-frutto-color, #a03820)",
+  foglia: "background:var(--badge-foglia-bg, rgba(45,106,79,.16));color:var(--badge-foglia-color, #1b4332)",
+  radice: "background:var(--badge-radice-bg, rgba(107,66,38,.16));color:var(--badge-radice-color, #5c3618)",
+  legume: "background:var(--badge-legume-bg, rgba(82,183,136,.2));color:var(--badge-legume-color, #1b4332)",
+  aromatica: "background:var(--badge-aromatica-bg, rgba(116,198,157,.22));color:var(--badge-aromatica-color, #1b5438)"
 };
 const PHOTO_MAP = {
   bietola: "bietola_coste.webp",

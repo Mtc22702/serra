@@ -369,7 +369,14 @@ function initEvents() {
     ?.addEventListener("scroll", updateVegListScrollAffordance, {
       passive: true
     });
-  window.addEventListener("resize", updateVegListScrollAffordance);
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+  window.addEventListener("resize", debounce(updateVegListScrollAffordance, 150));
 
   // modale avvio
   document.querySelectorAll("#zoneOpts .opt").forEach((o) =>
@@ -672,15 +679,11 @@ function removeFromConfCart(id) {
   confCart = confCart.filter((i) => i.id !== id);
   saveConfCart();
   updateConfCartUI();
-  const existingBtn = document.getElementById("confCartExportBtn");
-  if (existingBtn) existingBtn.remove();
 }
 function clearConfCart() {
   confCart = [];
   saveConfCart();
   updateConfCartUI();
-  const existingBtn = document.getElementById("confCartExportBtn");
-  if (existingBtn) existingBtn.remove();
 }
 
 function openConfCart() {

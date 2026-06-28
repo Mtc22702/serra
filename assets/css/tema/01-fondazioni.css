@@ -64,6 +64,18 @@ html[data-theme="dark"] {
   --theme-text: #edf5ef;
   --theme-muted: #a9b9ae;
   --theme-shadow: 0 16px 42px rgba(0, 0, 0, 0.36);
+
+  /* Badge colors overrides in dark mode */
+  --badge-frutto-bg: rgba(231, 111, 81, 0.28);
+  --badge-frutto-color: #ffaa96;
+  --badge-foglia-bg: rgba(82, 183, 136, 0.24);
+  --badge-foglia-color: #88dca0;
+  --badge-radice-bg: rgba(184, 155, 130, 0.26);
+  --badge-radice-color: #dcbfa5;
+  --badge-legume-bg: rgba(82, 183, 136, 0.26);
+  --badge-legume-color: #88dca0;
+  --badge-aromatica-bg: rgba(116, 198, 157, 0.28);
+  --badge-aromatica-color: #92e5b4;
 }
 }
 @layer base {
@@ -299,9 +311,9 @@ html[data-theme="dark"] .catalog-search-box {
   border-color: var(--theme-line);
 }
 html[data-theme="dark"] .catalog-search-note {
-  color: var(--dark-muted);
-  background: rgba(82, 183, 136, 0.06);
-  border-left-color: rgba(82, 183, 136, 0.28);
+  color: var(--theme-muted);
+  background: transparent;
+  border: none;
 }
 html[data-theme="dark"] .catalog-search-badge {
   background: #376f49;
@@ -454,4 +466,88 @@ html[data-theme="dark"] ::selection {
 }
 
 /* Dark mode v2: gerarchia più morbida, contrasto leggibile e colori semantici. */
+
+/* PWA Update Banner */
+.pwa-update-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  max-width: 420px;
+  width: calc(100% - 48px);
+  background: rgba(27, 67, 50, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(82, 183, 136, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.24);
+  animation: slideUpPwa 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.pwa-update-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+}
+
+.pwa-update-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.pwa-update-text {
+  flex: 1;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #edf5ef;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.pwa-update-btn {
+  background: #74c69d;
+  color: #1b4332;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.16s ease, transform 0.16s ease;
+  white-space: nowrap;
+}
+
+.pwa-update-btn:hover {
+  background: #52b788;
+  transform: translateY(-1px);
+}
+
+@keyframes slideUpPwa {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .pwa-update-banner {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+  }
+  .pwa-update-banner-inner {
+    padding: 16px;
+  }
+}
 }
