@@ -48,9 +48,11 @@
   flex-direction: column;
   align-items: stretch;
   gap: 0.8rem;
+  min-width: 0;
 }
 .cat-bar .catalog-search--pro {
   width: 100%;
+  min-width: 0;
   position: relative;
 }
 
@@ -214,20 +216,42 @@
 }
 @media (max-width: 480px) {
 
-  /* Scope pills affiancate e compatte su mobile */
+  .catalog-search--pro .catalog-search-box {
+    gap: 0.45rem;
+    min-height: 50px;
+    padding: 0 0.72rem;
+  }
+  .catalog-search-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+  }
+  .catalog-search--pro .catalog-search-box input {
+    font-size: 1rem;
+    padding-left: 0.12rem;
+  }
+  .catalog-search--pro .catalog-search-box input::placeholder {
+    font-size: 1rem;
+  }
+  /* Scope pills leggibili anche con traduzioni lunghe. */
   .catalog-scope--advanced {
-    flex-wrap: nowrap !important;
+    flex-wrap: wrap !important;
     width: 100%;
+    min-width: 0;
   }
   .catalog-scope--advanced .catalog-chip {
-    flex: 1;
+    flex: 1 1 min(100%, 12rem);
+    min-width: 0;
     justify-content: center;
-    padding: 0.35rem 0.4rem;
+    padding: 0.38rem 0.45rem;
     min-height: 38px;
     font-size: 0.72rem;
   }
   .catalog-scope--advanced .chip-lbl {
     font-size: 0.72rem;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .catalog-tools--advanced {
     padding: 0.66rem;
@@ -514,6 +538,9 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   min-height: 58px;
   padding: 0 1.1rem;
   border: 2px solid rgba(45, 106, 79, 0.35);
@@ -607,6 +634,7 @@
 .catalog-search--pro .catalog-search-box input {
   flex: 1;
   width: 100%;
+  min-width: 0;
   height: 100%;
   border: 0;
   outline: none;
