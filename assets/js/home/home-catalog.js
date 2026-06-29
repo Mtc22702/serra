@@ -684,13 +684,26 @@ function renderEditorialPlants() {
         const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
         const inC = inCart(p.id);
         const emoji = fruitEmoji(p.id);
+        const waterIcon = ACQUA_ICON[p.acqua] || "💧";
+        const sunIcon = p.sole === "pieno" ? "☀️" : "🌤️";
         return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
-          <span class="super-compact-emoji" role="img" aria-label="${plantName(p.id)}">${emoji}</span>
-          <span class="super-compact-name">${plantName(p.id)}</span>
-          <span class="super-compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
-          ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
-          <span class="super-compact-fact">⏱&nbsp;${daysLabel(p)}</span>
-          <span class="super-compact-price">${money(packPrice(p.id))}</span>
+          <span class="super-compact-thumb" aria-hidden="true">
+            <img src="${photoSrc(p.id)}" alt="" loading="lazy" onerror="this.parentElement.dataset.fallback='1';this.style.display='none'" />
+            <span class="super-compact-thumb-emoji">${emoji}</span>
+          </span>
+          <span class="super-compact-body">
+            <span class="super-compact-top">
+              <span class="super-compact-name">${plantName(p.id)}</span>
+              <span class="super-compact-price">${money(packPrice(p.id))}</span>
+            </span>
+            <span class="super-compact-bottom">
+              <span class="super-compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
+              <span class="super-compact-fact">⏱&nbsp;${daysLabel(p)}</span>
+              <span class="super-compact-yield">⚖&nbsp;${yieldLabel(p)}</span>
+              <span class="super-compact-meta" aria-hidden="true">${waterIcon}&thinsp;${sunIcon}</span>
+              ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
+            </span>
+          </span>
           <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
         </div>`;
       })

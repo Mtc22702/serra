@@ -1408,95 +1408,168 @@
   .plant-card-super-compact {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
+    gap: 11px;
+    padding: 10px 13px;
     background: var(--white);
-    border: 1.5px solid rgba(45, 106, 79, 0.12);
+    border: 1.5px solid rgba(45, 106, 79, 0.11);
     border-radius: 14px;
     cursor: pointer;
-    transition: all 0.16s ease;
-    box-shadow: 0 4px 10px rgba(27, 67, 50, 0.02);
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s,
+      transform 0.15s;
+    box-shadow: 0 2px 8px rgba(27, 67, 50, 0.04);
   }
 
   .plant-card-super-compact:hover {
-    transform: translateY(-1.5px);
-    border-color: rgba(116, 198, 157, 0.42);
-    box-shadow: 0 8px 18px rgba(27, 67, 50, 0.07);
+    transform: translateY(-1px);
+    border-color: rgba(116, 198, 157, 0.5);
+    box-shadow: 0 6px 16px rgba(27, 67, 50, 0.08);
   }
 
   .plant-card-super-compact.in-cart {
-    background: rgba(82, 183, 136, 0.07);
-    border-color: var(--green);
+    background: rgba(82, 183, 136, 0.06);
+    border-color: rgba(45, 106, 79, 0.35);
   }
 
-  .super-compact-emoji {
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    display: flex;
+  /* Thumbnail fotografico */
+  .super-compact-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    align-self: center;
+    background: rgba(45, 106, 79, 0.07);
+    position: relative;
+  }
+
+  .super-compact-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    border-radius: 10px;
+  }
+
+  /* Fallback emoji quando la foto non esiste */
+  .super-compact-thumb-emoji {
+    display: none;
+    position: absolute;
+    inset: 0;
+    font-size: 22px;
     align-items: center;
     justify-content: center;
-    background: rgba(45, 106, 79, 0.06);
-    border-radius: 8px;
-    flex-shrink: 0;
   }
 
-  .plant-card-super-compact.in-cart .super-compact-emoji {
-    background: rgba(82, 183, 136, 0.16);
+  .super-compact-thumb[data-fallback="1"] img {
+    display: none;
+  }
+
+  .super-compact-thumb[data-fallback="1"] .super-compact-thumb-emoji {
+    display: flex;
+  }
+
+  .plant-card-super-compact.in-cart .super-compact-thumb {
+    box-shadow: 0 0 0 2px var(--green);
+  }
+
+  /* Corpo a due righe */
+  .super-compact-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* Riga 1: nome + prezzo */
+  .super-compact-top {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
   }
 
   .super-compact-name {
     flex: 1;
+    min-width: 0;
     font-family: "Fraunces", serif;
-    font-size: 0.95rem;
+    font-size: 0.94rem;
     font-weight: 700;
     color: var(--green-dk);
-    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .super-compact-badge {
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 6px;
-    flex-shrink: 0;
-  }
-
-  .super-compact-fact {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--muted);
-    flex-shrink: 0;
+    line-height: 1.25;
   }
 
   .super-compact-price {
+    flex-shrink: 0;
     font-family: "Outfit", sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 700;
     color: var(--green);
-    min-width: 50px;
-    text-align: right;
-    flex-shrink: 0;
+    line-height: 1.25;
   }
 
+  /* Riga 2: badge + statistiche */
+  .super-compact-bottom {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
+  .super-compact-badge {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 1px 6px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+
+  .super-compact-bottom .super-compact-fact,
+  .super-compact-bottom .super-compact-yield,
+  .super-compact-bottom .super-compact-meta {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    flex-shrink: 0;
+    white-space: nowrap;
+    line-height: 1.5;
+  }
+
+  .super-compact-bottom .super-compact-fact::before,
+  .super-compact-bottom .super-compact-yield::before,
+  .super-compact-bottom .super-compact-meta::before {
+    content: "·";
+    margin-right: 5px;
+    opacity: 0.35;
+  }
+
+  /* Pulsante aggiungi */
   .super-compact-add-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border: none;
-    background: rgba(45, 106, 79, 0.08);
+    background: rgba(45, 106, 79, 0.09);
     color: var(--green-dk);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 800;
-    border-radius: 8px;
+    border-radius: 9px;
     cursor: pointer;
-    transition: all 0.16s ease;
+    transition: background 0.14s, color 0.14s;
     flex-shrink: 0;
+    align-self: center;
+    touch-action: manipulation;
   }
 
   .super-compact-add-btn:hover {
@@ -1509,25 +1582,22 @@
     color: #fff;
   }
 
-  /* Regole responsive */
-  @media (max-width: 540px) {
+  .super-compact-add-btn.added:hover {
+    background: #b03020;
+  }
+
+  /* Responsive mobile — la struttura a 2 righe si mantiene naturalmente */
+  @media (max-width: 400px) {
     .plant-card-super-compact {
-      flex-wrap: wrap;
-      gap: 8px 12px;
-      padding: 8px 12px;
+      padding: 8px 11px;
+      gap: 9px;
+    }
+    .super-compact-thumb {
+      width: 38px;
+      height: 38px;
     }
     .super-compact-name {
-      width: 60%;
-      flex: none;
-    }
-    .super-compact-badge {
-      margin-left: auto;
-    }
-    .super-compact-fact {
-      width: auto;
-    }
-    .super-compact-price {
-      margin-left: auto;
+      font-size: 0.88rem;
     }
   }
 }

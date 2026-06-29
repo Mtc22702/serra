@@ -494,3 +494,62 @@
     scrollbar-color: #456152 #101813;
   }
 }
+
+@layer dark-theme {
+  html[data-theme="dark"] body .detail-panel .detail-footer {
+    background: linear-gradient(180deg, rgba(23, 36, 30, 0), #17241e 28%);
+  }
+
+  html[data-theme="dark"]
+    body
+    :where(
+      .panel--plant-detail .detail-tabs-shell,
+      .panel--plant-detail .detail-tech-card,
+      .panel--plant-detail .detail-spacing,
+      .panel--plant-detail .detail-companions,
+      .panel--plant-detail .detail-sow,
+      .panel--plant-detail .detail-sow-header
+    ) {
+    background: var(--dark-raised);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+  }
+
+  html[data-theme="dark"]
+    body
+    :where(
+      .panel--plant-detail .detail-tab
+    ) {
+    background: #263a30;
+    color: var(--dark-muted);
+    border-color: var(--dark-border);
+  }
+
+  html[data-theme="dark"]
+    body
+    :where(.panel--plant-detail .detail-tab:hover) {
+    background: #30483b;
+    color: var(--dark-text);
+  }
+
+  html[data-theme="dark"]
+    body
+    :where(.panel--plant-detail .detail-tab.active) {
+    color: #fff;
+  }
+
+  html[data-theme="dark"]
+    body
+    :where(
+      .panel--plant-detail .detail-tech-card h4,
+      .panel--plant-detail .detail-tech-card p
+    ) {
+    color: var(--dark-text);
+  }
+
+  html[data-theme="dark"]
+    body
+    :where(.panel--plant-detail .detail-tech-card p) {
+    color: var(--dark-muted);
+  }
+}

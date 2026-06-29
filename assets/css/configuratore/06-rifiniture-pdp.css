@@ -413,6 +413,9 @@
     scrollbar-width: thin;
     padding-right: 3px;
   }
+  .panel--plant-detail .detail-tab-panel.active > * {
+    flex-shrink: 0;
+  }
   /* Animazioni */
   @keyframes pdpTabIn {
     from {
