@@ -167,7 +167,9 @@ function duplicateProject(id) {
     name: (src.name + " " + projectsText("projects.copy_suffix")).slice(0, 60),
     createdAt: now,
     updatedAt: now,
-    config: src.config ? JSON.parse(JSON.stringify(src.config)) : defaultProjectConfig()
+    config: src.config
+      ? JSON.parse(JSON.stringify(src.config))
+      : defaultProjectConfig()
   });
   writeProjectsStore(store);
   renderProjectsModal();
@@ -250,9 +252,12 @@ function renderProjectsModal() {
               ? ` <span class="projects-badge">${projectsText("projects.active")}</span>`
               : ""
           }</span>
-          <small class="projects-item-meta">${projectsText("projects.varieties", {
-            n: count
-          })} · ${fmtDate(p.updatedAt)}</small>
+          <small class="projects-item-meta">${projectsText(
+            "projects.varieties",
+            {
+              n: count
+            }
+          )} · ${fmtDate(p.updatedAt)}</small>
         </button>
         <span class="projects-item-actions">
           <button type="button" class="projects-act" title="${projectsText(

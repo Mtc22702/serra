@@ -3264,7 +3264,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "10–20 giorni"
     },
     broccolo_romanesco: {
-      method: "Semina in alveolo a febbraio-marzo o luglio-agosto per raccolta autunnale.",
+      method:
+        "Semina in alveolo a febbraio-marzo o luglio-agosto per raccolta autunnale.",
       depth: "1 cm",
       thin: "Trapianta a 50 cm sulla fila e 60 cm tra file.",
       tip: "Testa a spirale unica; raccogli quando la testa è compatta e verde-gialla.",
@@ -3275,7 +3276,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "7–10 giorni"
     },
     friggitello: {
-      method: "Semina in alveolo a febbraio, trapianto dopo le gelate primaverili.",
+      method:
+        "Semina in alveolo a febbraio, trapianto dopo le gelate primaverili.",
       depth: "0.5-1 cm",
       thin: "Trapianta a 40 cm sulla fila e 50 cm tra file.",
       tip: "Raccogli verde per friggere o lascia ingiallire per gusto più dolce.",
@@ -3286,7 +3288,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "10–15 giorni"
     },
     agretti: {
-      method: "Semina diretta in file a febbraio-aprile. Semi a breve germinabilità: usa semi freschi.",
+      method:
+        "Semina diretta in file a febbraio-aprile. Semi a breve germinabilità: usa semi freschi.",
       depth: "1-2 cm",
       thin: "Dirada a 10-15 cm sulla fila.",
       tip: "Usa semi freschissimi (max 1 anno): la germinabilità cala rapidamente.",
@@ -3308,7 +3311,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "7–14 giorni"
     },
     catalogna: {
-      method: "Semina diretta o in alveolo da luglio ad agosto per raccolta autunnale-invernale.",
+      method:
+        "Semina diretta o in alveolo da luglio ad agosto per raccolta autunnale-invernale.",
       depth: "0.5-1 cm",
       thin: "Dirada o trapianta a 25 cm sulla fila e 35 cm tra file.",
       tip: "Raccogli le puntarelle centrali prima che vadano a fiore; usa le foglie esterne come cicoria.",
@@ -3319,7 +3323,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "7–12 giorni"
     },
     acetosa: {
-      method: "Semina in alveolo o divisione di cespo. Perenne: un impianto dura anni.",
+      method:
+        "Semina in alveolo o divisione di cespo. Perenne: un impianto dura anni.",
       depth: "0.5 cm",
       thin: "Trapianta a 30 cm sulla fila e 40 cm tra file.",
       tip: "Raccoglie foglie giovani in primavera. Taglia le infiorescenze per prolungare la produzione.",
@@ -3330,7 +3335,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "10–14 giorni"
     },
     leurda: {
-      method: "Si propaga per divisione di bulbi in autunno o da semi (lenti a germinare).",
+      method:
+        "Si propaga per divisione di bulbi in autunno o da semi (lenti a germinare).",
       depth: "3-5 cm per i bulbi",
       thin: "Pianta bulbi a 15-20 cm di distanza.",
       tip: "Raccogli le foglie in primavera prima della fioritura; fortissimo aroma agliaceo.",
@@ -3341,7 +3347,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "20–30 giorni (semi lenti)"
     },
     melissa: {
-      method: "Semina in superficie o divisione di cespo (si propaga facilmente).",
+      method:
+        "Semina in superficie o divisione di cespo (si propaga facilmente).",
       depth: "0-0.5 cm (semi superficiali)",
       thin: "Trapianta o dirada a 40 cm.",
       tip: "Perenne vigorosa: meglio in vaso o area controllata. Taglia spesso per foglie tenere.",
@@ -3352,7 +3359,8 @@ const DATA_EXPORT = (function (root) {
       giorniGerm: "14–21 giorni"
     },
     cerfoglio: {
-      method: "Semina diretta in file, non ama il trapianto. Semina scalare ogni 3 settimane.",
+      method:
+        "Semina diretta in file, non ama il trapianto. Semina scalare ogni 3 settimane.",
       depth: "0.5-1 cm",
       thin: "Dirada a 10-15 cm sulla fila.",
       tip: "Non esporre al caldo diretto: va a seme rapidamente. Preferisce mezza ombra in estate.",
@@ -3941,7 +3949,8 @@ const DATA_EXPORT = (function (root) {
       tip: "Aromatică asiatică parfumată; arată bine și în ghiveci, în seră."
     },
     broccolo_romanesco: {
-      method: "Seamănă în ghiveci feb-mar sau iul-aug pentru recoltă de toamnă.",
+      method:
+        "Seamănă în ghiveci feb-mar sau iul-aug pentru recoltă de toamnă.",
       depth: "1 cm",
       thin: "Transplantează la 50 cm pe rând și 60 cm între rânduri.",
       tip: "Capul spiralat unic; recoltează când este compact și galben-verde."
@@ -3953,7 +3962,8 @@ const DATA_EXPORT = (function (root) {
       tip: "Recoltează verde pentru prăjit sau lasă să îngălbenească pentru gust mai dulce."
     },
     agretti: {
-      method: "Seamănă direct în rânduri feb-apr. Semințe cu germinabilitate scurtă: folosește semințe proaspete.",
+      method:
+        "Seamănă direct în rânduri feb-apr. Semințe cu germinabilitate scurtă: folosește semințe proaspete.",
       depth: "1-2 cm",
       thin: "Rărește la 10-15 cm pe rând.",
       tip: "Folosește semințe proaspete (max 1 an): germinabilitatea scade rapid."
@@ -3965,19 +3975,22 @@ const DATA_EXPORT = (function (root) {
       tip: "Recoltează florile albastre pentru salate; frunzele tinere în supe."
     },
     catalogna: {
-      method: "Seamănă direct sau în alveolă iulie-august pentru recoltă de toamnă-iarnă.",
+      method:
+        "Seamănă direct sau în alveolă iulie-august pentru recoltă de toamnă-iarnă.",
       depth: "0.5-1 cm",
       thin: "Rărește sau transplantează la 25 cm pe rând și 35 cm între rânduri.",
       tip: "Recoltează puntarellele centrale înainte să înflorească; folosește frunzele externe ca cicoare."
     },
     acetosa: {
-      method: "Seamănă în alveolă sau împarte tufele. Perenă: o plantare durează ani.",
+      method:
+        "Seamănă în alveolă sau împarte tufele. Perenă: o plantare durează ani.",
       depth: "0.5 cm",
       thin: "Transplantează la 30 cm pe rând și 40 cm între rânduri.",
       tip: "Culege frunzele tinere primăvara. Taie inflorescențele pentru a prelungi producția."
     },
     leurda: {
-      method: "Se înmulțește prin divizarea bulbilor toamna sau din semințe (germinare lentă).",
+      method:
+        "Se înmulțește prin divizarea bulbilor toamna sau din semințe (germinare lentă).",
       depth: "3-5 cm pentru bulbi",
       thin: "Plantează bulbii la 15-20 cm distanță.",
       tip: "Culege frunzele primăvara înainte de înflorire; aromă puternică de usturoi."
@@ -3989,7 +4002,8 @@ const DATA_EXPORT = (function (root) {
       tip: "Perenă viguroasă: mai bine în ghiveci. Taie des pentru frunze fragede."
     },
     cerfoglio: {
-      method: "Seamănă direct în rânduri, nu suportă transplantul. Seamănă eșalonat la 3 săpt.",
+      method:
+        "Seamănă direct în rânduri, nu suportă transplantul. Seamănă eșalonat la 3 săpt.",
       depth: "0.5-1 cm",
       thin: "Rărește la 10-15 cm pe rând.",
       tip: "Nu expune la căldură directă: bolțează rapid. Preferă semi-umbra vara."

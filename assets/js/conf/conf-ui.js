@@ -758,16 +758,7 @@ function configDiseaseGroup(id) {
     ])
   )
     return "solanaceae";
-  if (
-    has([
-      "zucchina",
-      "zucca",
-      "cetriolo",
-      "melone",
-      "anguria",
-      "cucamelon"
-    ])
-  )
+  if (has(["zucchina", "zucca", "cetriolo", "melone", "anguria", "cucamelon"]))
     return "cucurbits";
   if (
     has([
@@ -1726,7 +1717,10 @@ function openProjectExportMenu(trigger) {
   trigger.setAttribute("aria-expanded", "true");
   const rect = trigger.getBoundingClientRect();
   const menuWidth = Math.min(310, window.innerWidth - 24);
-  const left = Math.max(12, Math.min(window.innerWidth - menuWidth - 12, rect.right - menuWidth));
+  const left = Math.max(
+    12,
+    Math.min(window.innerWidth - menuWidth - 12, rect.right - menuWidth)
+  );
   const estimatedHeight = 210;
   const openAbove = rect.bottom + estimatedHeight + 12 > window.innerHeight;
   menu.style.left = `${left}px`;
@@ -1762,7 +1756,9 @@ async function buildProjectExportCanvas() {
   const clone = svg.cloneNode(true);
   clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   const serialized = new XMLSerializer().serializeToString(clone);
-  const svgBlob = new Blob([serialized], { type: "image/svg+xml;charset=utf-8" });
+  const svgBlob = new Blob([serialized], {
+    type: "image/svg+xml;charset=utf-8"
+  });
   const svgUrl = URL.createObjectURL(svgBlob);
   try {
     const image = new Image();
@@ -1793,7 +1789,12 @@ async function buildProjectExportCanvas() {
     ctx.fillText(tx("print.title"), side, 82);
     ctx.fillStyle = "#617064";
     ctx.font = '500 27px "Outfit", Arial, sans-serif';
-    const zoneKey = state.zona === "freddo" ? "cold" : state.zona === "caldo" ? "warm" : "temperate";
+    const zoneKey =
+      state.zona === "freddo"
+        ? "cold"
+        : state.zona === "caldo"
+          ? "warm"
+          : "temperate";
     const meta = tx("print.greenhouse_info")
       .replace("{w}", state.larghezza)
       .replace("{l}", state.lunghezza)
@@ -1816,7 +1817,11 @@ async function buildProjectExportCanvas() {
     ctx.textAlign = "right";
     ctx.font = '700 25px "Outfit", Arial, sans-serif';
     ctx.fillStyle = "#52705a";
-    ctx.fillText(`${tx("print.total")}: ${totalPlants}`, canvasWidth - side, summaryTop);
+    ctx.fillText(
+      `${tx("print.total")}: ${totalPlants}`,
+      canvasWidth - side,
+      summaryTop
+    );
     ctx.textAlign = "left";
     const columnWidth = (canvasWidth - side * 2 - 70) / 2;
     crops.forEach((crop, index) => {

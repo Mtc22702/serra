@@ -503,4 +503,3 @@ function applyLanguage() {
   updateAllPanelToggles();
   fillMonths();
 }
-

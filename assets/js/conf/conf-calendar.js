@@ -100,7 +100,9 @@ function calendarPlantSchedule(plant) {
       if (calendarCanTransplant(plant)) {
         transplant.add(calendarMonth(sowMonth + 1));
       }
-      offsets.forEach((offset) => harvest.add(calendarMonth(sowMonth + offset)));
+      offsets.forEach((offset) =>
+        harvest.add(calendarMonth(sowMonth + offset))
+      );
       const lastOffset = Math.max(...offsets, 1);
       for (let offset = 1; offset < lastOffset; offset += 1) {
         care.add(calendarMonth(sowMonth + offset));
@@ -199,7 +201,8 @@ function calendarRenderTabs() {
   });
   const projectTab = document.getElementById("calendarViewProject");
   const allTab = document.getElementById("calendarViewAll");
-  if (projectTab) projectTab.textContent = calendarText("calendar.view_project");
+  if (projectTab)
+    projectTab.textContent = calendarText("calendar.view_project");
   if (allTab) allTab.textContent = calendarText("calendar.view_all");
 }
 
@@ -239,8 +242,16 @@ function calendarRenderSummary() {
   ).length;
   const zone =
     state.lang === "ro"
-      ? { freddo: "zonă rece", temperato: "zonă temperată", caldo: "zonă caldă" }
-      : { freddo: "zona fredda", temperato: "zona temperata", caldo: "zona calda" };
+      ? {
+          freddo: "zonă rece",
+          temperato: "zonă temperată",
+          caldo: "zonă caldă"
+        }
+      : {
+          freddo: "zona fredda",
+          temperato: "zona temperata",
+          caldo: "zona calda"
+        };
   summary.innerHTML = `<div>
       <b>${escapeHtmlProjects(monthName(month))}</b>
       <span>${calendarText("calendar.summary", {
@@ -363,7 +374,11 @@ function renderCalendarModal(options = {}) {
     requestAnimationFrame(() => {
       document
         .querySelector(`[data-calendar-month="${calendarUi.month}"]`)
-        ?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        ?.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest"
+        });
     });
   }
 }

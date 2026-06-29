@@ -419,7 +419,8 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
     if (item.bed.count === before) break;
     // Se questa coltura e' finita sotto il suo minimo sano, lo annotiamo per
     // avvisare l'utente in modo trasparente (invece di degradarla in silenzio).
-    if (item.bed.count < item.minCount) lastFlexibleReductionBelowMinimum = true;
+    if (item.bed.count < item.minCount)
+      lastFlexibleReductionBelowMinimum = true;
     rebalanceManualLayoutOnly();
     guard++;
   }
@@ -1373,7 +1374,8 @@ function autoFill(options = {}) {
       if (state.beds.some((b) => b.plantId === fid)) continue;
       const fp = BYID[fid];
       if (!fp) continue;
-      if (state.beds.some((b) => areIncompatible(fp, BYID[b.plantId]))) continue;
+      if (state.beds.some((b) => areIncompatible(fp, BYID[b.plantId])))
+        continue;
       addAutoCandidate(fp);
     }
   }
@@ -1547,7 +1549,10 @@ function importCartToPlan() {
     const plant = BYID[id];
     return {
       plantId: id,
-      count: Math.max(1, Math.min(defaultCount(plant), starterCountForAutoPlant(plant, false))),
+      count: Math.max(
+        1,
+        Math.min(defaultCount(plant), starterCountForAutoPlant(plant, false))
+      ),
       layout: "blocco",
       countLocked: false
     };

@@ -24,8 +24,7 @@ const shoppingChecked = {};
 
 // Area stimata a aiuole (m²): ~60% della serra, il resto camminamenti.
 function bedAreaM2() {
-  const area =
-    (Number(state.larghezza) || 0) * (Number(state.lunghezza) || 0);
+  const area = (Number(state.larghezza) || 0) * (Number(state.lunghezza) || 0);
   return Math.max(0, area * 0.6);
 }
 
@@ -168,9 +167,7 @@ function renderMaterials() {
   const { lines, total } = materialsWithTotals();
   const rows = lines
     .map((l) => {
-      const noteHtml = l.note
-        ? `<span class="mat-note">${l.note}</span>`
-        : "";
+      const noteHtml = l.note ? `<span class="mat-note">${l.note}</span>` : "";
       return `<li class="mat-row${l.checked ? " is-checked" : ""}">
         <label class="mat-check">
           <input type="checkbox" data-mat-check="${l.id}" ${

@@ -2,658 +2,658 @@
 + * Raccolta ordinata delle regole relative a card promozionale, anteprima serra e selezione del livello.
 + */
 @layer base {
-/* =========================================================
+  /* =========================================================
    Hero configuratore: layout testo, anteprima serra e CTA.
    ========================================================= */
-/* Hero configuratore: contenuto integrato nella card principale. */
-.hero-cfg-inner {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
-  align-items: center;
-  gap: 2.2rem;
-  padding: 2.1rem 2.3rem;
-  border-radius: 26px;
-  text-align: left;
-  color: #fff;
-  background:
-    radial-gradient(
-      120% 140% at 85% 10%,
-      rgba(116, 198, 157, 0.28) 0%,
-      transparent 55%
-    ),
-    linear-gradient(135deg, #163a29 0%, #235640 58%, #2d6a4f 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    0 30px 70px rgba(13, 34, 24, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  animation: heroCfgIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-@keyframes heroCfgIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-}
-
-/* Colonna testo del blocco configuratore. */
-.hero-cfg-text {
-  min-width: 0;
-}
-.hero-cfg-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.28rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(116, 198, 157, 0.18);
-  border: 1px solid rgba(173, 221, 190, 0.42);
-  color: #d7f2e2;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.hero-cfg-badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #74c69d;
-  box-shadow: 0 0 0 0 rgba(116, 198, 157, 0.7);
-  animation: heroCfgPulse 2s infinite;
-}
-@keyframes heroCfgPulse {
-  70% {
-    box-shadow: 0 0 0 8px rgba(116, 198, 157, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(116, 198, 157, 0);
-  }
-}
-.hero-cfg-title {
-  margin: 0.7rem 0 0;
-  font-family: "Fraunces", serif;
-  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
-  font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.01em;
-  color: #fff;
-  text-wrap: balance;
-}
-.hero-cfg-desc {
-  margin: 0.7rem 0 0;
-  font-size: 1rem;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.82);
-  max-width: 46ch;
-}
-.hero-cfg-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: 1.3rem;
-}
-.hero-cfg-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.9rem 1.6rem;
-  border-radius: 13px;
-  background: linear-gradient(135deg, #8fe0b4 0%, #52b788 100%);
-  color: #0f2a1c;
-  font-family: "Outfit", sans-serif;
-  font-size: 1.04rem;
-  font-weight: 800;
-  text-decoration: none;
-  box-shadow: 0 12px 28px rgba(116, 198, 157, 0.38);
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    filter 0.16s ease;
-}
-.hero-cfg-cta:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.05);
-  box-shadow: 0 18px 38px rgba(116, 198, 157, 0.5);
-}
-.hero-cfg-cta-ico {
-  font-size: 1.18rem;
-}
-.hero-cfg-cta-arrow {
-  font-weight: 700;
-  transition: transform 0.16s ease;
-}
-.hero-cfg-cta:hover .hero-cfg-cta-arrow {
-  transform: translateX(3px);
-}
-
-.hero-cfg-catalog-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.78rem 1.25rem;
-  border-radius: 13px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
-  color: #fff;
-  font-family: "Outfit", sans-serif;
-  font-size: 0.94rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition:
-    background 0.14s ease,
-    border-color 0.14s ease,
-    transform 0.14s ease;
-}
-.hero-cfg-catalog-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: #fff;
-  transform: translateY(-2px);
-}
-.hero-cfg-catalog-arrow {
-  transition: transform 0.16s ease;
-}
-.hero-cfg-catalog-link:hover .hero-cfg-catalog-arrow {
-  transform: translateX(3px);
-}
-
-.hero-cfg-personas {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.3rem;
-  padding-top: 1.05rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-.hero-cfg-personas-label {
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.58);
-  margin-right: 0.15rem;
-}
-.hero-cfg-persona {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.38rem;
-  padding: 0.42rem 0.85rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #fff;
-  font-size: 0.84rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    background 0.14s ease,
-    border-color 0.14s ease,
-    transform 0.1s ease;
-}
-.hero-cfg-persona:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.46);
-  transform: translateY(-1px);
-}
-
-/* Colonna illustrazione: anteprima della serra dall'alto. */
-.hero-cfg-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hcg {
-  position: relative;
-  width: 100%;
-  max-width: 360px;
-}
-.hcg-glass {
-  position: relative;
-  aspect-ratio: 5 / 3.6;
-  border-radius: 20px;
-  overflow: hidden;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.05) 0 1px,
-      transparent 1px 22px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.04) 0 1px,
-      transparent 1px 22px
-    ),
-    linear-gradient(
-      155deg,
-      rgba(30, 65, 45, 0.9) 0%,
-      rgba(20, 50, 35, 0.97) 100%
-    );
-  border: 1.5px solid rgba(255, 255, 255, 0.36);
-  box-shadow:
-    0 24px 52px rgba(0, 0, 0, 0.42),
-    0 0 0 1px rgba(255, 255, 255, 0.07),
-    inset 0 2px 14px rgba(255, 255, 255, 0.1);
-  transform: rotate(-2.5deg);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hcg-glare {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    transparent 42%
-  );
-  pointer-events: none;
-  z-index: 10;
-}
-.hcg-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-/* Pannello colture che si intravede da destra */
-.hcg-peek {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 44%;
-  display: flex;
-  align-items: stretch;
-  transform: translateX(105%);
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 5;
-}
-.hcg-peek.hcg-peek--in {
-  transform: translateX(0);
-}
-.hcg-peek-fade-left {
-  flex: 0 0 28px;
-  background: linear-gradient(to right, transparent, rgba(20, 48, 34, 0.94));
-}
-.hcg-peek-inner {
-  flex: 1;
-  background: rgba(15, 38, 26, 0.96);
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  padding: 6px 0;
-  overflow: hidden;
-}
-/* Card singola nel pannello */
-.hcg-card {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
-  opacity: 0;
-  transform: translateX(10px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.35s ease;
-}
-.hcg-card.hcg-card--in {
-  opacity: 1;
-  transform: translateX(0);
-}
-.hcg-card-ico {
-  font-size: 14px;
-  line-height: 1;
-  flex: 0 0 20px;
-}
-.hcg-card-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.hcg-card-name {
-  font-size: 9px;
-  font-weight: 700;
-  color: #d4f0e0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: "Outfit", sans-serif;
-}
-.hcg-card-meta {
-  font-size: 7.5px;
-  color: rgba(180, 220, 195, 0.65);
-  font-family: "Outfit", sans-serif;
-}
-.hcg-card-qty {
-  font-size: 8px;
-  font-weight: 700;
-  color: #74c69d;
-  font-family: "Outfit", sans-serif;
-  flex: 0 0 auto;
-}
-.hcg-caption {
-  position: absolute;
-  left: 50%;
-  bottom: -14px;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(15, 42, 28, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #d7f2e2;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* Adattamenti responsive del blocco hero configuratore. */
-@media (max-width: 900px) {
+  /* Hero configuratore: contenuto integrato nella card principale. */
   .hero-cfg-inner {
-    grid-template-columns: 1fr;
-    gap: 1.6rem;
-    padding: 1.7rem 1.6rem;
-    text-align: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+    align-items: center;
+    gap: 2.2rem;
+    padding: 2.1rem 2.3rem;
+    border-radius: 26px;
+    text-align: left;
+    color: #fff;
+    background:
+      radial-gradient(
+        120% 140% at 85% 10%,
+        rgba(116, 198, 157, 0.28) 0%,
+        transparent 55%
+      ),
+      linear-gradient(135deg, #163a29 0%, #235640 58%, #2d6a4f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 30px 70px rgba(13, 34, 24, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    animation: heroCfgIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes heroCfgIn {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  /* Colonna testo del blocco configuratore. */
+  .hero-cfg-text {
+    min-width: 0;
+  }
+  .hero-cfg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.28rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(116, 198, 157, 0.18);
+    border: 1px solid rgba(173, 221, 190, 0.42);
+    color: #d7f2e2;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .hero-cfg-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #74c69d;
+    box-shadow: 0 0 0 0 rgba(116, 198, 157, 0.7);
+    animation: heroCfgPulse 2s infinite;
+  }
+  @keyframes heroCfgPulse {
+    70% {
+      box-shadow: 0 0 0 8px rgba(116, 198, 157, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(116, 198, 157, 0);
+    }
+  }
+  .hero-cfg-title {
+    margin: 0.7rem 0 0;
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-wrap: balance;
   }
   .hero-cfg-desc {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0.7rem 0 0;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 46ch;
   }
   .hero-cfg-actions {
-    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.3rem;
   }
-  .hero-cfg-visual {
-    order: -1;
+  .hero-cfg-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.9rem 1.6rem;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #8fe0b4 0%, #52b788 100%);
+    color: #0f2a1c;
+    font-family: "Outfit", sans-serif;
+    font-size: 1.04rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(116, 198, 157, 0.38);
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.16s ease,
+      filter 0.16s ease;
   }
-  .hcg {
-    max-width: 300px;
+  .hero-cfg-cta:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 18px 38px rgba(116, 198, 157, 0.5);
   }
-}
-@media (max-width: 520px) {
-  .hero-cfg-inner {
-    padding: 1.5rem 1.2rem;
-    border-radius: 22px;
+  .hero-cfg-cta-ico {
+    font-size: 1.18rem;
   }
-  .hero-cfg-cta,
+  .hero-cfg-cta-arrow {
+    font-weight: 700;
+    transition: transform 0.16s ease;
+  }
+  .hero-cfg-cta:hover .hero-cfg-cta-arrow {
+    transform: translateX(3px);
+  }
+
   .hero-cfg-catalog-link {
-    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.78rem 1.25rem;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    font-family: "Outfit", sans-serif;
+    font-size: 0.94rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      background 0.14s ease,
+      border-color 0.14s ease,
+      transform 0.14s ease;
+  }
+  .hero-cfg-catalog-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    transform: translateY(-2px);
+  }
+  .hero-cfg-catalog-arrow {
+    transition: transform 0.16s ease;
+  }
+  .hero-cfg-catalog-link:hover .hero-cfg-catalog-arrow {
+    transform: translateX(3px);
+  }
+
+  .hero-cfg-personas {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.3rem;
+    padding-top: 1.05rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  .hero-cfg-personas-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.58);
+    margin-right: 0.15rem;
+  }
+  .hero-cfg-persona {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0.42rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background 0.14s ease,
+      border-color 0.14s ease,
+      transform 0.1s ease;
+  }
+  .hero-cfg-persona:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.46);
+    transform: translateY(-1px);
+  }
+
+  /* Colonna illustrazione: anteprima della serra dall'alto. */
+  .hero-cfg-visual {
+    display: flex;
+    align-items: center;
     justify-content: center;
   }
   .hcg {
-    max-width: 250px;
+    position: relative;
+    width: 100%;
+    max-width: 360px;
   }
-}
-
-/* CTA a tendina: selezione del livello al clic sul pulsante principale. */
-#cfgOpenBtn .hero-cfg-cta-arrow {
-  font-size: 0.9rem;
-  transition: transform 0.22s ease;
-}
-.hero-cfg-cta:hover .hero-cfg-cta-arrow {
-  transform: translateY(2px);
-}
-#cfgOpenBtn[aria-expanded="true"] .hero-cfg-cta-arrow {
-  transform: rotate(180deg);
-}
-
-#cfgLevels[hidden] {
-  display: none;
-}
-.hero-cfg-levels {
-  margin-top: 1rem;
-  padding: 1rem 1.05rem;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  animation: cfgLevelsIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-@keyframes cfgLevelsIn {
-  from {
+  .hcg-glass {
+    position: relative;
+    aspect-ratio: 5 / 3.6;
+    border-radius: 20px;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 0 1px,
+        transparent 1px 22px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.04) 0 1px,
+        transparent 1px 22px
+      ),
+      linear-gradient(
+        155deg,
+        rgba(30, 65, 45, 0.9) 0%,
+        rgba(20, 50, 35, 0.97) 100%
+      );
+    border: 1.5px solid rgba(255, 255, 255, 0.36);
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.07),
+      inset 0 2px 14px rgba(255, 255, 255, 0.1);
+    transform: rotate(-2.5deg);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hcg-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      transparent 42%
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+  .hcg-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* Pannello colture che si intravede da destra */
+  .hcg-peek {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 44%;
+    display: flex;
+    align-items: stretch;
+    transform: translateX(105%);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 5;
+  }
+  .hcg-peek.hcg-peek--in {
+    transform: translateX(0);
+  }
+  .hcg-peek-fade-left {
+    flex: 0 0 28px;
+    background: linear-gradient(to right, transparent, rgba(20, 48, 34, 0.94));
+  }
+  .hcg-peek-inner {
+    flex: 1;
+    background: rgba(15, 38, 26, 0.96);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 6px 0;
+    overflow: hidden;
+  }
+  /* Card singola nel pannello */
+  .hcg-card {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateX(10px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.35s ease;
   }
-}
-.hero-cfg-levels-title {
-  display: block;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
-  margin-bottom: 0.7rem;
-}
-.hero-cfg-levels-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.hero-cfg-level {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.7rem 0.8rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #fff;
-  text-decoration: none;
-  text-align: left;
-  transition:
-    background 0.14s ease,
-    border-color 0.14s ease,
-    transform 0.12s ease;
-}
-.hero-cfg-level:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateX(3px);
-}
-.hero-cfg-level:focus-visible {
-  outline: 2px solid #8fe0b4;
-  outline-offset: 2px;
-}
-.hero-cfg-level-ico {
-  flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 1.2rem;
-}
-.hero-cfg-level-ico .level-plant-ico {
-  width: 26px;
-  height: 26px;
-}
-.hero-cfg-level-body {
-  flex: 1;
-  min-width: 0;
-}
-.hero-cfg-level-body b {
-  display: block;
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.15;
-}
-.hero-cfg-level-body small {
-  display: block;
-  font-size: 0.78rem;
-  line-height: 1.25;
-  color: rgba(255, 255, 255, 0.72);
-  margin-top: 2px;
-}
-.hero-cfg-level-arrow {
-  flex: 0 0 auto;
-  font-weight: 700;
-  opacity: 0.55;
-  transition:
-    transform 0.14s ease,
-    opacity 0.14s ease;
-}
-.hero-cfg-level:hover .hero-cfg-level-arrow {
-  opacity: 1;
-  transform: translateX(2px);
-}
-@media (max-width: 900px) {
-  .hero-cfg-levels-title {
-    text-align: center;
+  .hcg-card.hcg-card--in {
+    opacity: 1;
+    transform: translateX(0);
   }
-}
+  .hcg-card-ico {
+    font-size: 14px;
+    line-height: 1;
+    flex: 0 0 20px;
+  }
+  .hcg-card-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .hcg-card-name {
+    font-size: 9px;
+    font-weight: 700;
+    color: #d4f0e0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Outfit", sans-serif;
+  }
+  .hcg-card-meta {
+    font-size: 7.5px;
+    color: rgba(180, 220, 195, 0.65);
+    font-family: "Outfit", sans-serif;
+  }
+  .hcg-card-qty {
+    font-size: 8px;
+    font-weight: 700;
+    color: #74c69d;
+    font-family: "Outfit", sans-serif;
+    flex: 0 0 auto;
+  }
+  .hcg-caption {
+    position: absolute;
+    left: 50%;
+    bottom: -14px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(15, 42, 28, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #d7f2e2;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
 
-/* =========================================================
+  /* Adattamenti responsive del blocco hero configuratore. */
+  @media (max-width: 900px) {
+    .hero-cfg-inner {
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+      padding: 1.7rem 1.6rem;
+      text-align: center;
+    }
+    .hero-cfg-desc {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-cfg-actions {
+      justify-content: center;
+    }
+    .hero-cfg-visual {
+      order: -1;
+    }
+    .hcg {
+      max-width: 300px;
+    }
+  }
+  @media (max-width: 520px) {
+    .hero-cfg-inner {
+      padding: 1.5rem 1.2rem;
+      border-radius: 22px;
+    }
+    .hero-cfg-cta,
+    .hero-cfg-catalog-link {
+      width: 100%;
+      justify-content: center;
+    }
+    .hcg {
+      max-width: 250px;
+    }
+  }
+
+  /* CTA a tendina: selezione del livello al clic sul pulsante principale. */
+  #cfgOpenBtn .hero-cfg-cta-arrow {
+    font-size: 0.9rem;
+    transition: transform 0.22s ease;
+  }
+  .hero-cfg-cta:hover .hero-cfg-cta-arrow {
+    transform: translateY(2px);
+  }
+  #cfgOpenBtn[aria-expanded="true"] .hero-cfg-cta-arrow {
+    transform: rotate(180deg);
+  }
+
+  #cfgLevels[hidden] {
+    display: none;
+  }
+  .hero-cfg-levels {
+    margin-top: 1rem;
+    padding: 1rem 1.05rem;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: cfgLevelsIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes cfgLevelsIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+  .hero-cfg-levels-title {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+    margin-bottom: 0.7rem;
+  }
+  .hero-cfg-levels-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .hero-cfg-level {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    text-decoration: none;
+    text-align: left;
+    transition:
+      background 0.14s ease,
+      border-color 0.14s ease,
+      transform 0.12s ease;
+  }
+  .hero-cfg-level:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(3px);
+  }
+  .hero-cfg-level:focus-visible {
+    outline: 2px solid #8fe0b4;
+    outline-offset: 2px;
+  }
+  .hero-cfg-level-ico {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 1.2rem;
+  }
+  .hero-cfg-level-ico .level-plant-ico {
+    width: 26px;
+    height: 26px;
+  }
+  .hero-cfg-level-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .hero-cfg-level-body b {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .hero-cfg-level-body small {
+    display: block;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    color: rgba(255, 255, 255, 0.72);
+    margin-top: 2px;
+  }
+  .hero-cfg-level-arrow {
+    flex: 0 0 auto;
+    font-weight: 700;
+    opacity: 0.55;
+    transition:
+      transform 0.14s ease,
+      opacity 0.14s ease;
+  }
+  .hero-cfg-level:hover .hero-cfg-level-arrow {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+  @media (max-width: 900px) {
+    .hero-cfg-levels-title {
+      text-align: center;
+    }
+  }
+
+  /* =========================================================
    Rifiniture UX: percorsi, importazione e CTA operative.
    ========================================================= */
 
-/* Hero configuratore: azioni impilate e scelta livello contestuale. */
-.hero-cfg-actions {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.6rem;
-}
-.hero-cfg-actions > .hero-cfg-levels {
-  width: 100%;
-  margin-top: 0;
-}
-@media (max-width: 900px) {
+  /* Hero configuratore: azioni impilate e scelta livello contestuale. */
   .hero-cfg-actions {
-    align-items: center;
-  }
-}
-@media (max-width: 520px) {
-  .hero-cfg-actions > .hero-cfg-catalog-link {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* Catalogo: CTA di importazione con hint di flusso. */
-.catalog-import-btn {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.12rem;
-  border-radius: 14px;
-  padding: 0.6rem 1.1rem;
-  line-height: 1.2;
-  justify-content: center;
-}
-.catalog-import-btn-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-}
-.catalog-import-hint {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 400;
-  opacity: 0.58;
-  letter-spacing: 0;
-}
-
-/* Configuratore: blocco importazione con label esplicativa. */
-.conf-import-block {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.25rem;
-}
-.conf-import-block-label {
-  font-size: 0.73rem;
-  color: rgba(255, 255, 255, 0.52);
-  font-style: italic;
-  padding-left: 0.15rem;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-@media (max-width: 660px) {
-  .conf-actions {
-    align-items: stretch;
-  }
-  .conf-import-block {
-    flex: 1;
-    align-items: stretch;
-  }
-  .conf-import-block .conf-btn {
-    justify-content: center;
-  }
-}
-
-/* Rifinitura finale del percorso post-catalogo. */
-@media (max-width: 900px) {
-  .flow-section-head {
+    flex-direction: column;
     align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .hero-cfg-actions > .hero-cfg-levels {
+    width: 100%;
+    margin-top: 0;
+  }
+  @media (max-width: 900px) {
+    .hero-cfg-actions {
+      align-items: center;
+    }
+  }
+  @media (max-width: 520px) {
+    .hero-cfg-actions > .hero-cfg-catalog-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Catalogo: CTA di importazione con hint di flusso. */
+  .catalog-import-btn {
     flex-direction: column;
-    gap: 0.75rem;
-  }
-  .flow-head-note {
-    white-space: normal;
-  }
-  .abbinamenti-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .kit-card,
-  .conf-card {
-    grid-template-columns: 1fr;
-  }
-  .conf-actions {
-    min-width: 0;
-  }
-}
-@media (max-width: 620px) {
-  .abbinamenti-section,
-  .kit-section,
-  .conf-section {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  .abbinamenti-grid {
-    grid-template-columns: 1fr;
-  }
-  .abbinamento-card,
-  .kit-card,
-  .conf-card {
+    align-items: flex-start;
+    gap: 0.12rem;
     border-radius: 14px;
+    padding: 0.6rem 1.1rem;
+    line-height: 1.2;
+    justify-content: center;
   }
-  .kit-actions,
-  .conf-actions {
+  .catalog-import-btn-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+  .catalog-import-hint {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 400;
+    opacity: 0.58;
+    letter-spacing: 0;
+  }
+
+  /* Configuratore: blocco importazione con label esplicativa. */
+  .conf-import-block {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 0.25rem;
   }
-  .kit-plan-link,
-  .kit-cta-btn,
-  .conf-btn {
-    width: 100%;
+  .conf-import-block-label {
+    font-size: 0.73rem;
+    color: rgba(255, 255, 255, 0.52);
+    font-style: italic;
+    padding-left: 0.15rem;
+    line-height: 1.2;
+    white-space: nowrap;
   }
-  .conf-visual {
-    min-height: 94px;
+  @media (max-width: 660px) {
+    .conf-actions {
+      align-items: stretch;
+    }
+    .conf-import-block {
+      flex: 1;
+      align-items: stretch;
+    }
+    .conf-import-block .conf-btn {
+      justify-content: center;
+    }
   }
-  .conf-static-svg {
-    min-height: 82px;
-  }
-}
 
-@media (max-width: 860px) {
-  .contatti-grid {
-    grid-template-columns: 1fr;
+  /* Rifinitura finale del percorso post-catalogo. */
+  @media (max-width: 900px) {
+    .flow-section-head {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .flow-head-note {
+      white-space: normal;
+    }
+    .abbinamenti-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .kit-card,
+    .conf-card {
+      grid-template-columns: 1fr;
+    }
+    .conf-actions {
+      min-width: 0;
+    }
   }
-  .contatti-map-placeholder {
-    min-height: 220px;
+  @media (max-width: 620px) {
+    .abbinamenti-section,
+    .kit-section,
+    .conf-section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .abbinamenti-grid {
+      grid-template-columns: 1fr;
+    }
+    .abbinamento-card,
+    .kit-card,
+    .conf-card {
+      border-radius: 14px;
+    }
+    .kit-actions,
+    .conf-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .kit-plan-link,
+    .kit-cta-btn,
+    .conf-btn {
+      width: 100%;
+    }
+    .conf-visual {
+      min-height: 94px;
+    }
+    .conf-static-svg {
+      min-height: 82px;
+    }
   }
-}
-@media (max-width: 560px) {
-  .contatti-info-list {
-    grid-template-columns: 1fr;
+
+  @media (max-width: 860px) {
+    .contatti-grid {
+      grid-template-columns: 1fr;
+    }
+    .contatti-map-placeholder {
+      min-height: 220px;
+    }
   }
-  .contatti-item {
-    padding: 0.82rem;
+  @media (max-width: 560px) {
+    .contatti-info-list {
+      grid-template-columns: 1fr;
+    }
+    .contatti-item {
+      padding: 0.82rem;
+    }
   }
-}
 }

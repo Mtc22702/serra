@@ -615,7 +615,8 @@
         "catalog.filter_search_label": "Ricerca",
         "catalog.filter_search_hint": "Affina i risultati",
         "catalog.search_badge": "Cerca qui",
-        "catalog.search_note": "Digita pomodoro, basilico, lattuga… trova subito la pianta.",
+        "catalog.search_note":
+          "Digita pomodoro, basilico, lattuga… trova subito la pianta.",
         "catalog.type_label": "Tipo",
         "catalog.type_all": "Tutti",
         "catalog.category_label": "Categorie",
@@ -844,7 +845,8 @@
         "preconfig.tag": "Imposta i parametri",
         "preconfig.sizes_label": "1. Misure interne",
         "preconfig.sizes_badge": "Fondamentale",
-        "preconfig.sizes_note": "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
+        "preconfig.sizes_note":
+          "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
         "preconfig.width": "Larghezza",
         "preconfig.length": "Lunghezza",
         "preconfig.path_label": "Camminamento tra aiuole",
@@ -1007,7 +1009,8 @@
         "catalog.filter_search_label": "Căutare",
         "catalog.filter_search_hint": "Rafinează rezultatele",
         "catalog.search_badge": "Caută aici",
-        "catalog.search_note": "Tastează roșii, busuioc, salată… găsești imediat planta.",
+        "catalog.search_note":
+          "Tastează roșii, busuioc, salată… găsești imediat planta.",
         "catalog.type_label": "Tip",
         "catalog.type_all": "Toate",
         "catalog.category_label": "Categorii",
@@ -1301,7 +1304,8 @@
           "Valuta {friend} (amica di {base}), da seminare nella sua stagione.",
         "companion.conflict_badge": "Coltura coinvolta in un conflitto",
         "shop.materials_title": "Materiali e preventivo",
-        "shop.materials_hint": "Stima dai dati del progetto · modifica le quantità",
+        "shop.materials_hint":
+          "Stima dai dati del progetto · modifica le quantità",
         "shop.preventivo_total": "Totale stimato",
         "shop.unit_bags": "{count} sacchi",
         "shop.unit_kg": "{count} kg",
@@ -1739,12 +1743,14 @@
           "Tind să se stânjenească: concurează pentru spațiu și nutrienți sau atrag aceiași dăunători.",
         "companion.good_reason":
           "Se ajută reciproc: îmbunătățesc creșterea, gustul sau țin dăunătorii la distanță.",
-        "companion.suggest": "Încearcă în schimb {friend} (prietenă cu {base}).",
+        "companion.suggest":
+          "Încearcă în schimb {friend} (prietenă cu {base}).",
         "companion.suggest_offseason":
           "Ia în calcul {friend} (prietenă cu {base}), de semănat în sezonul ei.",
         "companion.conflict_badge": "Cultură implicată într-un conflict",
         "shop.materials_title": "Materiale și deviz",
-        "shop.materials_hint": "Estimare din datele proiectului · modifică cantitățile",
+        "shop.materials_hint":
+          "Estimare din datele proiectului · modifică cantitățile",
         "shop.preventivo_total": "Total estimat",
         "shop.unit_bags": "{count} saci",
         "shop.unit_kg": "{count} kg",
@@ -2123,7 +2129,8 @@
         "preconfig.tag": "Setează parametrii",
         "preconfig.sizes_label": "1. Dimensiuni interne",
         "preconfig.sizes_badge": "Esențial",
-        "preconfig.sizes_note": "Dimensiunile determină câte straturi și plante poți cultiva.",
+        "preconfig.sizes_note":
+          "Dimensiunile determină câte straturi și plante poți cultiva.",
         "preconfig.width": "Lățime",
         "preconfig.length": "Lungime",
         "preconfig.path_label": "Cărare între straturi",

@@ -78,8 +78,15 @@
           '" />'
       );
     </script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
   </head>
   <body>
     <!-- =========================================================
@@ -517,7 +524,6 @@
                   ></ul>
                 </label>
 
-
                 <!-- Stato tecnico: select sincronizzata con le chip categoria. -->
                 <select
                   id="catalogType"
@@ -605,17 +611,55 @@
                 Ordina: Prezzo più basso
               </option>
             </select>
-            <div class="catalog-layout-toggle" role="group" aria-label="Visualizzazione catalogo">
-              <button type="button" class="layout-toggle-btn layout-toggle-btn--grid active" id="layoutBtnGrid" onclick="setCatalogLayout('grid')" aria-pressed="true" title="Vista griglia">
-                <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <div
+              class="catalog-layout-toggle"
+              role="group"
+              aria-label="Visualizzazione catalogo"
+            >
+              <button
+                type="button"
+                class="layout-toggle-btn layout-toggle-btn--grid active"
+                id="layoutBtnGrid"
+                onclick="setCatalogLayout('grid')"
+                aria-pressed="true"
+                title="Vista griglia"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <rect x="2" y="2" width="5" height="5" rx="1"></rect>
                   <rect x="11" y="2" width="5" height="5" rx="1"></rect>
                   <rect x="2" y="11" width="5" height="5" rx="1"></rect>
                   <rect x="11" y="11" width="5" height="5" rx="1"></rect>
                 </svg>
               </button>
-              <button type="button" class="layout-toggle-btn layout-toggle-btn--compact" id="layoutBtnCompact" onclick="setCatalogLayout('compact')" aria-pressed="false" title="Vista compatta">
-                <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <button
+                type="button"
+                class="layout-toggle-btn layout-toggle-btn--compact"
+                id="layoutBtnCompact"
+                onclick="setCatalogLayout('compact')"
+                aria-pressed="false"
+                title="Vista compatta"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <line x1="2" y1="4" x2="16" y2="4"></line>
                   <line x1="2" y1="9" x2="16" y2="9"></line>
                   <line x1="2" y1="14" x2="16" y2="14"></line>
@@ -1089,9 +1133,7 @@
                 >
               </div>
               <div class="detail-tech-grid" id="detailCareGuide"></div>
-              <details
-                class="detail-diseases"
-              >
+              <details class="detail-diseases">
                 <summary class="detail-diseases-head">
                   <div>
                     <h3
@@ -1109,7 +1151,9 @@
                       class="detail-diseases-count"
                       id="detailDiseasesCount"
                     ></span>
-                    <span class="detail-diseases-chevron" aria-hidden="true">▾</span>
+                    <span class="detail-diseases-chevron" aria-hidden="true"
+                      >▾</span
+                    >
                   </span>
                 </summary>
                 <div class="detail-disease-list" id="detailDiseaseList"></div>
@@ -1121,9 +1165,7 @@
                   autorizzato per la coltura e segui sempre l'etichetta.
                 </p>
               </details>
-              <details
-                class="detail-diseases detail-pests"
-              >
+              <details class="detail-diseases detail-pests">
                 <summary class="detail-diseases-head">
                   <div>
                     <h3 id="detailPestsTitle" data-i18n="detail.pests_title">
@@ -1138,7 +1180,9 @@
                       class="detail-diseases-count"
                       id="detailPestsCount"
                     ></span>
-                    <span class="detail-diseases-chevron" aria-hidden="true">▾</span>
+                    <span class="detail-diseases-chevron" aria-hidden="true"
+                      >▾</span
+                    >
                   </span>
                 </summary>
                 <div class="detail-disease-list" id="detailPestList"></div>
@@ -1729,7 +1773,9 @@
             })
             .catch(() => {});
         } else {
-          const hadControllerAtBoot = Boolean(navigator.serviceWorker.controller);
+          const hadControllerAtBoot = Boolean(
+            navigator.serviceWorker.controller
+          );
           navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (!hadControllerAtBoot) return;
             if (sessionStorage.getItem("serra.sw-reloaded")) return;
@@ -1761,7 +1807,10 @@
                 const newWorker = registration.installing;
                 if (!newWorker) return;
                 newWorker.addEventListener("statechange", () => {
-                  if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                  if (
+                    newWorker.state === "installed" &&
+                    navigator.serviceWorker.controller
+                  ) {
                     activateUpdate(newWorker);
                   }
                 });
@@ -1783,7 +1832,9 @@
         '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
       );
       document.write(
-        '<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>'
+        '<script src="' +
+          serraAsset("assets/js/plants-data.js") +
+          '"><\/script>'
       );
       [
         "assets/js/home/home-data.js",
@@ -1791,9 +1842,7 @@
         "assets/js/home/home-cart.js",
         "assets/js/home/home-app.js"
       ].forEach(function (src) {
-        document.write(
-          '<script src="' + serraAsset(src) + '"><\/script>'
-        );
+        document.write('<script src="' + serraAsset(src) + '"><\/script>');
       });
     </script>
   </body>

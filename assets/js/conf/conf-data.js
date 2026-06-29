@@ -571,16 +571,26 @@ const PLANT_DESC = {
     cavolo_navone: "Radice grande e rustica; utile per autunno e inverno.",
     broccolo_rapa: "Raccogli cime e foglie prima della piena fioritura.",
     shiso: "Aromatica asiatica profumata; bella anche in vaso in serra.",
-    broccolo_romanesco: "Varietà di broccolo con caratteristica testa conico-spiralata. Saborita e ornamentale.",
-    friggitello: "Peperone dolce allungato tipico del centro-sud Italia. Ottimo fritto o in padella.",
-    agretti: "Ortaggio primaverile a steli sottili carnosi. Si consuma lessato con olio d'oliva e limone.",
-    borragine: "Foglie e fiori azzurri commestibili. Attira impollinatori; ottima vicino a pomodori e cetrioli.",
-    catalogna: "Cicoria romana: le puntarelle centrali si gustano crude con acciughe e aglio.",
-    acetosa: "Foglie acidule dalle note di limone, ottime nelle zuppe. Perenne: torna ogni anno.",
-    leurda: "Aglio selvatico dai sapori delicati; foglie usate in pesto, zuppe e frittate primaverili.",
-    melissa: "Perenne profumata al limone. Tienila in zona controllata: si diffonde rapidamente.",
-    cerfoglio: "Aromatica primaverile dal sapore delicato tra prezzemolo e anice. Va usata solo fresca.",
-    cimbru: "Santoreggia estiva dall'aroma intenso simile al timo. Fondamentale in Romania per fagioli e sottaceti."
+    broccolo_romanesco:
+      "Varietà di broccolo con caratteristica testa conico-spiralata. Saborita e ornamentale.",
+    friggitello:
+      "Peperone dolce allungato tipico del centro-sud Italia. Ottimo fritto o in padella.",
+    agretti:
+      "Ortaggio primaverile a steli sottili carnosi. Si consuma lessato con olio d'oliva e limone.",
+    borragine:
+      "Foglie e fiori azzurri commestibili. Attira impollinatori; ottima vicino a pomodori e cetrioli.",
+    catalogna:
+      "Cicoria romana: le puntarelle centrali si gustano crude con acciughe e aglio.",
+    acetosa:
+      "Foglie acidule dalle note di limone, ottime nelle zuppe. Perenne: torna ogni anno.",
+    leurda:
+      "Aglio selvatico dai sapori delicati; foglie usate in pesto, zuppe e frittate primaverili.",
+    melissa:
+      "Perenne profumata al limone. Tienila in zona controllata: si diffonde rapidamente.",
+    cerfoglio:
+      "Aromatica primaverile dal sapore delicato tra prezzemolo e anice. Va usata solo fresca.",
+    cimbru:
+      "Santoreggia estiva dall'aroma intenso simile al timo. Fondamentale in Romania per fagioli e sottaceti."
   },
   ro: {
     pomodoro:
@@ -1280,19 +1290,22 @@ const SOWING_GUIDE = {
     tip: "Aromatica asiatica profumata; bella anche in vaso in serra."
   },
   broccolo_romanesco: {
-    method: "Semina in alveolo a febbraio-marzo o luglio-agosto per raccolta autunnale.",
+    method:
+      "Semina in alveolo a febbraio-marzo o luglio-agosto per raccolta autunnale.",
     depth: "1 cm",
     thin: "Trapianta a 50 cm sulla fila e 60 cm tra file.",
     tip: "Testa a spirale unica; raccogli quando la testa è compatta e verde-gialla."
   },
   friggitello: {
-    method: "Semina in alveolo a febbraio, trapianto dopo le gelate primaverili.",
+    method:
+      "Semina in alveolo a febbraio, trapianto dopo le gelate primaverili.",
     depth: "0.5-1 cm",
     thin: "Trapianta a 40 cm sulla fila e 50 cm tra file.",
     tip: "Raccogli verde per friggere o lascia ingiallire per gusto più dolce."
   },
   agretti: {
-    method: "Semina diretta in file a febbraio-aprile. Semi a breve germinabilità: usa semi freschi.",
+    method:
+      "Semina diretta in file a febbraio-aprile. Semi a breve germinabilità: usa semi freschi.",
     depth: "1-2 cm",
     thin: "Dirada a 10-15 cm sulla fila.",
     tip: "Usa semi freschissimi (max 1 anno): la germinabilità cala rapidamente."
@@ -1304,31 +1317,36 @@ const SOWING_GUIDE = {
     tip: "Raccogli i fiori azzurri per insalate; foglie giovani in zuppe e frittate."
   },
   catalogna: {
-    method: "Semina diretta o in alveolo da luglio ad agosto per raccolta autunnale-invernale.",
+    method:
+      "Semina diretta o in alveolo da luglio ad agosto per raccolta autunnale-invernale.",
     depth: "0.5-1 cm",
     thin: "Dirada o trapianta a 25 cm sulla fila e 35 cm tra file.",
     tip: "Raccogli le puntarelle centrali prima che vadano a fiore."
   },
   acetosa: {
-    method: "Semina in alveolo o divisione di cespo. Perenne: un impianto dura anni.",
+    method:
+      "Semina in alveolo o divisione di cespo. Perenne: un impianto dura anni.",
     depth: "0.5 cm",
     thin: "Trapianta a 30 cm sulla fila e 40 cm tra file.",
     tip: "Raccoglie foglie giovani in primavera. Taglia le infiorescenze per prolungare la produzione."
   },
   leurda: {
-    method: "Si propaga per divisione di bulbi in autunno o da semi (lenti a germinare).",
+    method:
+      "Si propaga per divisione di bulbi in autunno o da semi (lenti a germinare).",
     depth: "3-5 cm per i bulbi",
     thin: "Pianta bulbi a 15-20 cm di distanza.",
     tip: "Raccogli le foglie in primavera prima della fioritura; fortissimo aroma agliaceo."
   },
   melissa: {
-    method: "Semina in superficie o divisione di cespo (si propaga facilmente).",
+    method:
+      "Semina in superficie o divisione di cespo (si propaga facilmente).",
     depth: "0-0.5 cm (semi superficiali)",
     thin: "Trapianta o dirada a 40 cm.",
     tip: "Perenne vigorosa: meglio in vaso o area controllata. Taglia spesso per foglie tenere."
   },
   cerfoglio: {
-    method: "Semina diretta in file, non ama il trapianto. Semina scalare ogni 3 settimane.",
+    method:
+      "Semina diretta in file, non ama il trapianto. Semina scalare ogni 3 settimane.",
     depth: "0.5-1 cm",
     thin: "Dirada a 10-15 cm sulla fila.",
     tip: "Non esporre al caldo diretto: va a seme rapidamente. Preferisce mezza ombra in estate."
@@ -1569,4 +1587,3 @@ const PRESETS = {
     ["zucchina", 2]
   ]
 };
-

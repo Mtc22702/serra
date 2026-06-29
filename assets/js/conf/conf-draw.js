@@ -543,7 +543,10 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
   const greenhouseScale = Math.min(sceneWidth, sceneHeight) * 0.016;
   const maxByWidth = (width - 28) / Math.max(text.length * 0.56, 1);
   const maxByHeight = height * 0.14;
-  return Math.max(5.76, Math.min(11.4, greenhouseScale * 1.2, maxByWidth * 1.2, maxByHeight * 1.2));
+  return Math.max(
+    5.76,
+    Math.min(11.4, greenhouseScale * 1.2, maxByWidth * 1.2, maxByHeight * 1.2)
+  );
 }
 
 function buildScene() {
@@ -1020,4 +1023,3 @@ function overlayShape(bed, bx, by) {
   s += `<rect x="${bx + 1.5}" y="${by + 1.5}" width="${Math.max(0, bed.w - 3)}" height="${Math.max(0, bed.h - 3)}" rx="3" fill="none" stroke="${style.stroke}" stroke-width="2" stroke-opacity=".78" pointer-events="none"/>`;
   return s;
 }
-

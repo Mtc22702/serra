@@ -6,7 +6,9 @@
    ========================================================================= */
 function fillMonths() {
   const months = MONTHS[state.lang] || MONTHS.it;
-  const monthHtml = months.map((m, i) => `<option value="${i + 1}">${m}</option>`).join("");
+  const monthHtml = months
+    .map((m, i) => `<option value="${i + 1}">${m}</option>`)
+    .join("");
   const sel = document.getElementById("inMese");
   sel.innerHTML = monthHtml;
   sel.value = state.mese;
@@ -83,7 +85,9 @@ function initEvents() {
     const selStage = document.getElementById("inMeseStage");
     if (selStage) selStage.value = e.target.value;
     const pillLabel = document.getElementById("stageMonthPillLabel");
-    if (pillLabel) pillLabel.textContent = (MONTHS[state.lang] || MONTHS.it)[state.mese - 1] || "";
+    if (pillLabel)
+      pillLabel.textContent =
+        (MONTHS[state.lang] || MONTHS.it)[state.mese - 1] || "";
     saveConfig(true);
     refreshForSeasonChange();
   });
@@ -91,7 +95,9 @@ function initEvents() {
     state.mese = parseInt(e.target.value);
     document.getElementById("inMese").value = e.target.value;
     const pillLabel = document.getElementById("stageMonthPillLabel");
-    if (pillLabel) pillLabel.textContent = (MONTHS[state.lang] || MONTHS.it)[state.mese - 1] || "";
+    if (pillLabel)
+      pillLabel.textContent =
+        (MONTHS[state.lang] || MONTHS.it)[state.mese - 1] || "";
     saveConfig(true);
     refreshForSeasonChange();
   });
@@ -193,8 +199,7 @@ function initEvents() {
   document.addEventListener("keydown", (e) => {
     if (!(e.ctrlKey || e.metaKey)) return;
     const tag = (e.target?.tagName || "").toLowerCase();
-    const isField =
-      tag === "input" || tag === "textarea" || tag === "select";
+    const isField = tag === "input" || tag === "textarea" || tag === "select";
     const key = e.key.toLowerCase();
     if (key === "z" && !e.shiftKey) {
       if (isField) return;
@@ -280,7 +285,8 @@ function initEvents() {
     .getElementById("projectExportMenu")
     ?.addEventListener("click", async (event) => {
       event.stopPropagation();
-      const action = event.target.closest("[data-export-action]")?.dataset.exportAction;
+      const action = event.target.closest("[data-export-action]")?.dataset
+        .exportAction;
       if (!action) return;
       closeProjectExportMenu();
       if (action === "pdf") {
@@ -297,7 +303,9 @@ function initEvents() {
     if (event.key === "Escape") closeProjectExportMenu({ restoreFocus: true });
   });
   window.addEventListener("resize", () => closeProjectExportMenu());
-  window.addEventListener("scroll", () => closeProjectExportMenu(), { passive: true });
+  window.addEventListener("scroll", () => closeProjectExportMenu(), {
+    passive: true
+  });
   document.getElementById("pdpBackBtn")?.addEventListener("click", () => {
     closePlantDetailPanel();
   });
@@ -376,7 +384,10 @@ function initEvents() {
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
   }
-  window.addEventListener("resize", debounce(updateVegListScrollAffordance, 150));
+  window.addEventListener(
+    "resize",
+    debounce(updateVegListScrollAffordance, 150)
+  );
 
   // modale avvio
   document.querySelectorAll("#zoneOpts .opt").forEach((o) =>
