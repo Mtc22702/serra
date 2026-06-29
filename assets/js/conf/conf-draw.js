@@ -1,3 +1,15 @@
+// Dimensioni tile dei pattern SVG di sfondo
+const PAT = {
+  soil:      { w: 46, h: 46 },
+  gravel:    { w: 34, h: 34 },
+  grass:     { w: 40, h: 40 },
+  woodGrain: { w: 72, h: 18 },
+  dirtPath:  { w: 36, h: 36 },
+  waterRipple: { w: 24, h: 12 },
+  sunRays:   { w: 26, h: 26 },
+  heightLines: { w: 18, h: 18 }
+};
+
 // Casuale deterministico
 function rngFrom(seed) {
   let a = seed >>> 0;
@@ -537,28 +549,28 @@ function buildScene() {
     <radialGradient id="harvestOrange" cx="30%" cy="22%" r="80%"><stop offset="0" stop-color="#ffd06c"/><stop offset=".32" stop-color="#ed8a35"/><stop offset=".74" stop-color="#bd5528"/><stop offset="1" stop-color="#74301f"/></radialGradient>
     <radialGradient id="harvestPurple" cx="28%" cy="22%" r="82%"><stop offset="0" stop-color="#c292c9"/><stop offset=".3" stop-color="#754b83"/><stop offset=".72" stop-color="#4c2d61"/><stop offset="1" stop-color="#281b3d"/></radialGradient>
     <radialGradient id="harvestCream" cx="30%" cy="22%" r="82%"><stop offset="0" stop-color="#fffdf1"/><stop offset=".36" stop-color="#eadfb9"/><stop offset=".76" stop-color="#b8a36f"/><stop offset="1" stop-color="#74633f"/></radialGradient>
-    <pattern id="soil" width="46" height="46" patternUnits="userSpaceOnUse">
-      <rect width="46" height="46" fill="#5e4632"/>
-      <rect width="46" height="46" fill="url(#soilGrad)"/>
+    <pattern id="soil" width="${PAT.soil.w}" height="${PAT.soil.h}" patternUnits="userSpaceOnUse">
+      <rect width="${PAT.soil.w}" height="${PAT.soil.h}" fill="#5e4632"/>
+      <rect width="${PAT.soil.w}" height="${PAT.soil.h}" fill="url(#soilGrad)"/>
       ${soilSpecks()}
     </pattern>
     <radialGradient id="soilGrad" cx="40%" cy="35%" r="80%">
       <stop offset="0%" stop-color="#6f553d"/><stop offset="100%" stop-color="#4a3829"/>
     </radialGradient>
-    <pattern id="gravel" width="34" height="34" patternUnits="userSpaceOnUse">
-      <rect width="34" height="34" fill="#d8d0bd"/>
-      <rect width="34" height="34" fill="url(#gravelLight)" opacity=".72"/>
+    <pattern id="gravel" width="${PAT.gravel.w}" height="${PAT.gravel.h}" patternUnits="userSpaceOnUse">
+      <rect width="${PAT.gravel.w}" height="${PAT.gravel.h}" fill="#d8d0bd"/>
+      <rect width="${PAT.gravel.w}" height="${PAT.gravel.h}" fill="url(#gravelLight)" opacity=".72"/>
       ${gravelSpecks()}
     </pattern>
     <linearGradient id="gravelLight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1ebdb"/><stop offset=".52" stop-color="#d5cab4"/><stop offset="1" stop-color="#b7aa91"/></linearGradient>
-    <pattern id="grass" width="40" height="40" patternUnits="userSpaceOnUse">
-      <rect width="40" height="40" fill="${nightMode ? "#243b2c" : "#9fb083"}"/>${grassSpecks()}
+    <pattern id="grass" width="${PAT.grass.w}" height="${PAT.grass.h}" patternUnits="userSpaceOnUse">
+      <rect width="${PAT.grass.w}" height="${PAT.grass.h}" fill="${nightMode ? "#243b2c" : "#9fb083"}"/>${grassSpecks()}
     </pattern>
     <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#b47b45"/><stop offset="35%" stop-color="#936039"/><stop offset="72%" stop-color="#714628"/><stop offset="100%" stop-color="#4d2e1b"/>
     </linearGradient>
-    <pattern id="woodGrain" width="72" height="18" patternUnits="userSpaceOnUse">
-      <rect width="72" height="18" fill="url(#wood)"/>
+    <pattern id="woodGrain" width="${PAT.woodGrain.w}" height="${PAT.woodGrain.h}" patternUnits="userSpaceOnUse">
+      <rect width="${PAT.woodGrain.w}" height="${PAT.woodGrain.h}" fill="url(#wood)"/>
       <path d="M0 4 C14 1 23 8 38 4 S59 1 72 5 M0 12 C18 8 29 16 47 11 S62 9 72 13" fill="none" stroke="rgba(55,29,14,.3)" stroke-width="1"/>
       <path d="M8 7 C18 4 25 10 34 7" fill="none" stroke="rgba(255,220,166,.18)" stroke-width=".8"/>
     </pattern>
@@ -583,8 +595,8 @@ function buildScene() {
     <filter id="soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#102b1a" flood-opacity=".34"/></filter>
     <filter id="bedLift" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#241408" flood-opacity=".38"/></filter>
     <filter id="lampBloom" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="4.5"/></filter>
-    <pattern id="dirtPath" width="36" height="36" patternUnits="userSpaceOnUse">
-      <rect width="36" height="36" fill="#c4a55e"/>
+    <pattern id="dirtPath" width="${PAT.dirtPath.w}" height="${PAT.dirtPath.h}" patternUnits="userSpaceOnUse">
+      <rect width="${PAT.dirtPath.w}" height="${PAT.dirtPath.h}" fill="#c4a55e"/>
       ${dirtPathSpecks()}
     </pattern>
     <clipPath id="interiorClip"><rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" rx="6"/></clipPath>
@@ -612,13 +624,13 @@ function buildScene() {
     <linearGradient id="mapHeightLow" x1="0" y1="1" x2="0" y2="0">
       <stop offset="0%" stop-color="#ecf6b5" stop-opacity=".72"/><stop offset="100%" stop-color="#a9d870" stop-opacity=".68"/>
     </linearGradient>
-    <pattern id="mapWaterRipple" width="24" height="12" patternUnits="userSpaceOnUse">
+    <pattern id="mapWaterRipple" width="${PAT.waterRipple.w}" height="${PAT.waterRipple.h}" patternUnits="userSpaceOnUse">
       <path d="M0 7 Q6 2 12 7 T24 7" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1.2"/>
     </pattern>
-    <pattern id="mapSunRays" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+    <pattern id="mapSunRays" width="${PAT.sunRays.w}" height="${PAT.sunRays.h}" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
       <path d="M0 13 H26" stroke="rgba(255,255,255,.36)" stroke-width="1.4"/>
     </pattern>
-    <pattern id="mapHeightLines" width="18" height="18" patternUnits="userSpaceOnUse">
+    <pattern id="mapHeightLines" width="${PAT.heightLines.w}" height="${PAT.heightLines.h}" patternUnits="userSpaceOnUse">
       <path d="M2 15 L9 5 L16 15" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.1"/>
     </pattern>
   </defs>`;
@@ -876,11 +888,11 @@ function dirtPathSpecks() {
   for (let i = 0; i < 28; i++) {
     const light = r() > 0.5;
     const col = light ? `rgba(220,185,110,.45)` : `rgba(90,58,18,.38)`;
-    s += `<circle cx="${r() * 36}" cy="${r() * 36}" r="${0.4 + r() * 1.8}" fill="${col}"/>`;
+    s += `<circle cx="${r() * PAT.dirtPath.w}" cy="${r() * PAT.dirtPath.h}" r="${0.4 + r() * 1.8}" fill="${col}"/>`;
   }
   for (let i = 0; i < 8; i++) {
-    const x = r() * 34,
-      y = r() * 34;
+    const x = r() * PAT.dirtPath.w,
+      y = r() * PAT.dirtPath.h;
     const len = 2 + r() * 5;
     const angle = r() * 180;
     const rad = (angle * Math.PI) / 180;
@@ -893,7 +905,7 @@ function soilSpecks() {
   let s = "";
   const r = rngFrom(12345);
   for (let i = 0; i < 16; i++) {
-    s += `<circle cx="${r() * 46}" cy="${r() * 46}" r="${1 + r() * 2.4}" fill="rgba(${r() > 0.5 ? "40,28,18" : "120,96,68"},.5)"/>`;
+    s += `<circle cx="${r() * PAT.soil.w}" cy="${r() * PAT.soil.h}" r="${1 + r() * 2.4}" fill="rgba(${r() > 0.5 ? "40,28,18" : "120,96,68"},.5)"/>`;
   }
   return s;
 }
@@ -903,8 +915,8 @@ function gravelSpecks() {
   const r = rngFrom(777);
   for (let i = 0; i < 18; i++) {
     const g = 170 + Math.floor(r() * 60);
-    const x = r() * 34;
-    const y = r() * 34;
+    const x = r() * PAT.gravel.w;
+    const y = r() * PAT.gravel.h;
     const rx = 1.4 + r() * 2.4;
     const ry = 0.8 + r() * 1.5;
     const angle = -28 + r() * 56;
@@ -918,8 +930,8 @@ function grassSpecks() {
   let s = "";
   const r = rngFrom(303);
   for (let i = 0; i < 20; i++) {
-    const x = r() * 40,
-      y = r() * 40;
+    const x = r() * PAT.grass.w,
+      y = r() * PAT.grass.h;
     s += `<line x1="${x}" y1="${y}" x2="${x + (r() - 0.5) * 3}" y2="${y - 2 - r() * 3}" stroke="rgba(${(70 + r() * 40) | 0},${(110 + r() * 40) | 0},60,.6)" stroke-width="1"/>`;
   }
   return s;

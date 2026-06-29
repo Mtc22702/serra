@@ -143,7 +143,6 @@ const EXOTIC_PLANTS = new Set([
 const CAT_ORDER = [
   {
     key: "frutti",
-    label: "Frutti & ortaggi",
     ids: [
       "pomodoro",
       "peperone",
@@ -164,7 +163,6 @@ const CAT_ORDER = [
   },
   {
     key: "foglie",
-    label: "Insalate & foglie",
     ids: [
       "lattuga",
       "rucola",
@@ -194,7 +192,6 @@ const CAT_ORDER = [
   },
   {
     key: "radici",
-    label: "Radici & bulbi",
     ids: [
       "carota",
       "ravanello",
@@ -221,7 +218,6 @@ const CAT_ORDER = [
   },
   {
     key: "aromatiche",
-    label: "Aromatiche",
     ids: [
       "basilico",
       "prezzemolo",
@@ -247,7 +243,6 @@ const CAT_ORDER = [
   },
   {
     key: "legumi",
-    label: "Legumi",
     ids: [
       "fagiolino",
       "fagiolo",
@@ -261,7 +256,6 @@ const CAT_ORDER = [
   },
   {
     key: "cavoli",
-    label: "Cavoli & brassiche",
     ids: [
       "cavolo",
       "verza",

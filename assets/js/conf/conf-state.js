@@ -355,20 +355,19 @@ function updateVegSearchUI() {
   if (!visible) vegSearchQuery = "";
   if (input) {
     input.value = vegSearchQuery;
-    input.placeholder =
-      state.lang === "ro" ? "Cauta o planta..." : "Cerca una pianta...";
+    input.placeholder = tx("vegSearchPlaceholder");
   }
   const label = document.querySelector('label[for="vegSearchInput"]');
   if (label) {
-    label.textContent = state.lang === "ro" ? "Cauta cultura" : "Cerca coltura";
+    label.textContent = tx("vegSearchLabel");
     document.documentElement.style.setProperty(
       "--veg-search-badge",
-      state.lang === "ro" ? '"Cauta aici"' : '"Cerca qui"'
+      tx("vegSearchBadge")
     );
   }
   if (clear) {
     clear.hidden = !vegSearchQuery;
-    clear.title = state.lang === "ro" ? "Sterge cautarea" : "Cancella ricerca";
+    clear.title = tx("vegSearchClear");
     clear.setAttribute("aria-label", clear.title);
   }
 }

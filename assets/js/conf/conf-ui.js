@@ -146,7 +146,7 @@ function renderVegList() {
   if (!filtered.length) {
     const msg =
       searchNeedle && state.livello !== "novizio"
-        ? `<div class="empty-note">${state.lang === "ro" ? "Nicio cultura gasita." : "Nessuna coltura trovata."}</div>`
+        ? `<div class="empty-note">${tx("vegSearchEmpty")}</div>`
         : vegFilter === "in" || vegFilter === "all-beds"
           ? `<div class="empty-note">${tx("vegNoMore")}</div>`
           : `<div class="empty-note">${tx("noCrops", { month: monthName(state.mese) })}</div>`;

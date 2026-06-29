@@ -274,7 +274,7 @@ function updatePanelToggle(btn) {
   const isYield = btn.classList.contains("panel-toggle--yield");
   let labelText;
   if (isYield && isCollapsed) {
-    labelText = state.lang === "ro" ? "Lista semințe" : "Lista semi";
+    labelText = tx("seedListCollapsed");
   } else {
     const openKey = btn.dataset.openKey || "openPanel";
     labelText = isCollapsed ? tx(openKey) : tx("closePanel");
