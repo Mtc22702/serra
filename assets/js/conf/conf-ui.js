@@ -508,11 +508,12 @@ function scrollElementBelowHeader(target, behavior = "smooth") {
 
 // Verifica se il layout è in modalità mobile
 function isResponsiveConfiguratorLayout() {
-  return window.matchMedia("(max-width: 1080px)").matches;
+  return window.matchMedia("(max-width: 1100px)").matches;
 }
 
 // Porta in vista il pannello dettaglio pianta
 function scrollPlantDetailPanelIntoView(behavior = "smooth") {
+  if (!isResponsiveConfiguratorLayout()) return;
   scrollElementBelowHeader(
     document.getElementById("panelPlantDetail"),
     behavior
@@ -572,6 +573,11 @@ function openCustomizePanelAndFocus() {
   const crops = document.getElementById("panelCustomize");
   if (!crops) return;
   setCustomizePanelCollapsed(false);
+  if (!isResponsiveConfiguratorLayout()) {
+    crops.classList.add("is-focus-pulse");
+    window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
+    return;
+  }
   scheduleElementBelowHeader(crops, "smooth", {
     after: () => {
       crops.classList.add("is-focus-pulse");
@@ -596,18 +602,23 @@ function openSettingsPanelAndFocusDimensions() {
   const panel = document.getElementById("panelSettings");
   if (!panel) return;
   setPanelCollapsed(panel, false);
-  scheduleElementBelowHeader(panel, "smooth", {
-    after: () => {
-      const inW = document.getElementById("inW");
-      if (inW) {
-        inW.focus({ preventScroll: true });
-        panel.classList.add("guided-highlight");
-        window.setTimeout(
-          () => panel.classList.remove("guided-highlight"),
-          1600
-        );
-      }
+  const focusAndHighlight = () => {
+    const inW = document.getElementById("inW");
+    if (inW) {
+      inW.focus({ preventScroll: true });
+      panel.classList.add("guided-highlight");
+      window.setTimeout(
+        () => panel.classList.remove("guided-highlight"),
+        1600
+      );
     }
+  };
+  if (!isResponsiveConfiguratorLayout()) {
+    focusAndHighlight();
+    return;
+  }
+  scheduleElementBelowHeader(panel, "smooth", {
+    after: focusAndHighlight
   });
 }
 

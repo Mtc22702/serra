@@ -488,29 +488,20 @@ function scrollElementBelowNav(target, behavior = "smooth") {
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
-const heroCatalogLink = document.querySelector(".hero-cfg-catalog-link");
-if (heroCatalogLink) {
-  heroCatalogLink.addEventListener("click", (e) => {
-    const target =
-      document.querySelector("#stagione .stagione-kicker") ||
-      document.getElementById("stagione");
-    if (!target) return;
-    e.preventDefault();
-    history.replaceState(null, "", "#stagione");
-    scrollElementBelowNav(target);
-  });
-}
-
+// Scorrimento morbido generico per tutti i link di navigazione della homepage
 document
-  .querySelectorAll('a[href="#stagione"], a[href="index.html#stagione"]')
+  .querySelectorAll('a[href^="#"]:not([href="#"]):not([href="#catalogSearch"]), a[href^="index.html#"]:not([href="index.html#"])')
   .forEach((link) => {
     link.addEventListener("click", (e) => {
-      const target =
-        document.querySelector("#stagione .stagione-kicker") ||
-        document.getElementById("stagione");
-      if (!target || !document.getElementById("stagione")) return;
+      const href = link.getAttribute("href");
+      const hash = href.includes("#") ? href.slice(href.indexOf("#")) : "";
+      if (!hash) return;
+      let target = document.getElementById(hash.slice(1));
+      if (!target) return;
+      const kicker = target.querySelector(".section-kicker, .stagione-kicker");
+      if (kicker) target = kicker;
       e.preventDefault();
-      history.replaceState(null, "", "#stagione");
+      history.replaceState(null, "", hash);
       scrollElementBelowNav(target);
     });
   });
