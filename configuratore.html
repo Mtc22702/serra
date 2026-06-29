@@ -1,17 +1,14 @@
 <!doctype html>
 <html lang="it">
   <head>
-    <!-- =========================================================
-         1. CONFIGURAZIONE DEL DOCUMENTO
-         Metadati, versionamento, font, icone, tema e fogli di stile.
-         ========================================================= -->
+    <!-- Intestazione del documento -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
-    <!-- Versione app e percorso degli asset: imposta il token di cache busting. -->
+    <!-- Versioning e asset path -->
     <script>
       window.SERRA_APP_VERSION = "2026-06-28-178";
       window.SERRA_IS_LOCAL_DEV =
@@ -27,10 +24,10 @@
         return path + "?v=" + window.SERRA_ASSET_VERSION;
       };
     </script>
-    <!-- Font: preconnect e caricamento Google Fonts. -->
+    <!-- Caricamento dei font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Icone e manifest: favicon, icona touch e configurazione PWA. -->
+    <!-- Icone e manifest -->
     <script>
       document.write(
         '<link rel="icon" href="' +
@@ -51,7 +48,7 @@
       );
     </script>
     <meta name="theme-color" content="#2f6b3a" />
-    <!-- Tema: rileva la preferenza dell'utente prima del primo render. -->
+    <!-- Rilevamento tema iniziale -->
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
@@ -65,7 +62,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Outfit:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Fogli di stile: caricati con versioning per il reset della cache. -->
+    <!-- Fogli di stile -->
     <script>
       document.write(
         '<link rel="stylesheet" href="' +
@@ -85,10 +82,7 @@
     </script>
   </head>
   <body>
-    <!-- =========================================================
-         2. HEADER E NAVIGAZIONE PRINCIPALE
-         Brand, collegamenti, menu mobile, tema, lingua e carrello.
-         ========================================================= -->
+    <!-- Header e navigazione -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -189,12 +183,9 @@
       </div>
     </header>
 
-    <!-- =========================================================
-         3. AREA DI LAVORO DEL CONFIGURATORE
-         Percorso guidato, impostazioni, scena della serra e lista dei semi.
-         ========================================================= -->
+    <!-- Area di lavoro del configuratore -->
     <div class="app">
-      <!-- Stato tecnico: controlli condivisi con la logica della pagina. -->
+      <!-- Controlli nascosti condivisi -->
       <div hidden aria-hidden="true">
         <span id="mainLangLabel">Lingua</span>
         <select id="inLang">
@@ -203,9 +194,8 @@
         </select>
       </div>
 
-      <!-- Intro guidata: scelta del percorso e riepilogo della serra. -->
+      <!-- Intro guidata -->
       <div class="guided-intro" id="guidedIntro">
-        <!-- Riepilogo iniziale: brand, clima, mese e dimensioni. -->
         <div class="guided-intro-head">
           <div class="guided-brand-row">
             <span class="guided-brand-mark" aria-hidden="true">
@@ -228,9 +218,8 @@
           </div>
         </div>
 
-        <!-- Percorsi utente: livelli e passi consigliati. -->
+        <!-- Scelta percorso utente -->
         <div class="guided-intro-right">
-          <!-- Scelta esperienza: principiante, intermedio o esperto. -->
           <div class="persona-pick">
             <div class="persona-pick-head">
               <b class="persona-pick-label" id="personaPickLabel"
@@ -333,7 +322,7 @@
             </div>
           </div>
 
-          <!-- Percorso principiante: preparazione guidata della serra. -->
+          <!-- Percorso principiante -->
           <div class="guided-intro-main guided-intro-novizio">
             <details class="guided-steps-details">
               <summary class="guided-steps-summary">
@@ -390,7 +379,7 @@
             </details>
           </div>
 
-          <!-- Percorso intermedio: personalizzazione assistita. -->
+          <!-- Percorso intermedio -->
           <div class="guided-intro-main guided-intro-intermedio">
             <details class="guided-steps-details">
               <summary class="guided-steps-summary">
@@ -447,7 +436,7 @@
             </details>
           </div>
 
-          <!-- Percorso esperto: composizione manuale della serra. -->
+          <!-- Percorso esperto -->
           <div class="guided-intro-main guided-intro-esperto">
             <details class="guided-steps-details">
               <summary class="guided-steps-summary">
@@ -506,7 +495,7 @@
         </div>
       </div>
 
-      <!-- Impostazioni serra: misure, clima, mese e preset. -->
+      <!-- Impostazioni serra -->
       <div class="col-left">
         <div class="mode-section is-active" data-mode-section="fit">
           <div class="panel panel--settings" id="panelSettings">
@@ -840,7 +829,7 @@
         </div>
       </div>
 
-      <!-- Vista progetto: mappa dall'alto, overlay e stampa. -->
+      <!-- Vista dall'alto della serra -->
       <div class="stage">
         <div class="stage-head">
           <div class="stage-title-row">
@@ -1027,7 +1016,7 @@
             </span>
           </button>
         </div>
-        <!-- Scheda pianta: dettaglio della coltura selezionata. -->
+        <!-- Scheda pianta -->
         <div class="panel panel--plant-detail" id="panelPlantDetail" hidden>
           <div class="pad">
             <div class="pdp-header">
@@ -1059,7 +1048,7 @@
         </div>
         <div class="scene-wrap"><div class="scene" id="scene"></div></div>
 
-        <!-- Stato vuoto: suggerimento mostrato senza colture. -->
+        <!-- Banner serra vuota -->
         <div class="stage-empty-banner" id="stageEmptyBanner" hidden>
           <span class="seb-icon" aria-hidden="true">🌿</span>
           <div class="seb-copy">
@@ -1077,7 +1066,7 @@
         <div class="print-summary" id="printSummary"></div>
       </div>
 
-      <!-- Colture e carrello: selezione piante, azioni e semi. -->
+      <!-- Colture e lista semi -->
       <div class="col-right">
         <div class="mode-section" data-mode-section="expert">
           <div class="panel panel--customize" id="panelCustomize">
@@ -1395,7 +1384,7 @@
               <ul class="shop" id="shop"></ul>
               <div class="materials" id="materials"></div>
             </div>
-            <!-- Azioni lista semi: acquisto e modifica colture. -->
+            <!-- Azioni lista semi -->
             <div class="yield-footer">
               <div class="cart-btn-slot" id="cartBtnSlot"></div>
               <button
@@ -1430,11 +1419,8 @@
       </div>
     </div>
 
-    <!-- =========================================================
-         4. CONTROLLI FLOTTANTI E MODALI OPERATIVI
-         Ritorno in alto, progetti salvati, calendario e carrello.
-         ========================================================= -->
-    <!-- Torna su: pulsante flottante di risalita pagina. -->
+    <!-- Controlli flottanti e modali -->
+    <!-- Torna su -->
     <button
       class="back-to-top"
       id="backToTop"
@@ -1445,7 +1431,7 @@
       ↑
     </button>
 
-    <!-- Progetti salvati: apertura, duplicazione, rinomina ed eliminazione. -->
+    <!-- Modale progetti salvati -->
     <div class="projects-modal" id="projectsModal" role="dialog" aria-modal="true" aria-labelledby="projectsModalTitle" hidden>
       <div class="projects-backdrop" onclick="closeProjectsModal()"></div>
       <div class="projects-dialog">
@@ -1464,7 +1450,7 @@
       </div>
     </div>
 
-    <!-- Calendario: manutenzione mensile delle colture inserite nel progetto. -->
+    <!-- Modale calendario -->
     <div class="projects-modal" id="calendarModal" role="dialog" aria-modal="true" aria-labelledby="calendarModalTitle" hidden>
       <div class="projects-backdrop" onclick="closeCalendarModal()"></div>
       <div class="projects-dialog projects-dialog--wide">
@@ -1499,7 +1485,7 @@
       </div>
     </div>
 
-    <!-- Carrello: semi del progetto e invio della richiesta di acquisto. -->
+    <!-- Carrello -->
     <div class="cart-overlay" id="cartOverlay">
       <div class="cart-backdrop" onclick="closeConfCart()"></div>
       <div class="cart-drawer">
@@ -1567,7 +1553,7 @@
       </div>
     </div>
 
-    <!-- Notifica carrello: conferma rapida dopo aggiunta semi. -->
+    <!-- Notifica carrello -->
     <div class="cart-nudge" id="cartNudge" aria-live="polite">
       <div class="cart-nudge-copy">
         <b id="cartNudgeTitle"></b>
@@ -1583,10 +1569,7 @@
       </button>
     </div>
 
-    <!-- =========================================================
-         5. FOOTER
-         Brand, collegamenti utili, assistenza e informazioni legali.
-         ========================================================= -->
+    <!-- Footer -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
         <div class="footer-plant-row" id="footerPlantRow"></div>
@@ -1717,11 +1700,7 @@
         </div>
     </footer>
 
-    <!-- =========================================================
-         6. SCRIPT E SERVIZI DELLA PAGINA
-         Navigazione, traduzioni, logica del configuratore e cache applicativa.
-         ========================================================= -->
-    <!-- Script pagina: menu, traduzioni e logica del configuratore. -->
+    <!-- Script della pagina -->
     <script>
       document.write(
         '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
@@ -1753,7 +1732,7 @@
         );
       });
     </script>
-    <!-- Torna su: mostra il pulsante dopo lo scroll. -->
+    <!-- Scroll listener torna su -->
     <script>
       window.addEventListener(
         "scroll",
@@ -1764,7 +1743,7 @@
         { passive: true }
       );
     </script>
-    <!-- Service worker: cache attiva in produzione, reset automatico in locale. -->
+    <!-- Service worker -->
     <script>
       if ("serviceWorker" in navigator) {
         const isLocalDev =

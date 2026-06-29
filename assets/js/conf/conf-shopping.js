@@ -1,15 +1,4 @@
-/* =========================================================================
-   SEZIONE 09C — Lista della spesa e preventivo dei materiali
-   -------------------------------------------------------------------------
-   Estende la lista semi esistente con una stima dei materiali (terriccio,
-   concime, sostegni, etichette) calcolata in modo trasparente dai dati gia'
-   presenti: misure della serra, numero di piante, altezza/portamento.
-   Le quantità sono modificabili, le voci già possedute si possono escludere
-   e il totale si aggiorna automaticamente.
-   Le modifiche manuali e le spunte sono di sessione (non persistite).
-   ========================================================================= */
-
-// Prezzi indicativi dei materiali (in euro). Non vincolanti: solo una stima.
+// Prezzi e calcoli
 const MATERIAL_PRICES = {
   soilBagLiters: 50,
   soilBagPrice: 6.5,
@@ -18,30 +7,30 @@ const MATERIAL_PRICES = {
   label: 0.15
 };
 
-// Override di sessione: quantita' modificate e voci spuntate dall'utente.
 const shoppingQtyOverride = {};
 const shoppingChecked = {};
 
-// Area stimata a aiuole (m²): ~60% della serra, il resto camminamenti.
+// Calcola l'area utile delle aiuole in metri quadri
 function bedAreaM2() {
   const area = (Number(state.larghezza) || 0) * (Number(state.lunghezza) || 0);
   return Math.max(0, area * 0.6);
 }
 
+// Verifica se la pianta richiede sostegno
 function isSupportPlant(p) {
   return p.h === "alta" || ["rampicante", "cucurbita"].includes(p.arch);
 }
 
+// Formatta un numero come stringa euro
 function euro(v) {
   return "€ " + (Math.round(v * 100) / 100).toFixed(2).replace(".", ",");
 }
 
-// Calcola le righe materiali (quantita' suggerite, prima degli override).
+// Calcolo materiali
 function computeMaterialLines() {
   const lines = [];
   if (!state.beds.length) return lines;
 
-  // --- Semi: aggregato dalla lista bustine gia' calcolata ---
   let seedPacks = 0;
   let seedCost = 0;
   state.beds.forEach((b) => {
@@ -63,7 +52,6 @@ function computeMaterialLines() {
 
   const areaBeds = bedAreaM2();
 
-  // --- Terriccio: ~200 L/m² (profondita' aiuola ~20 cm) ---
   const soilLiters = Math.round(areaBeds * 200);
   if (soilLiters > 0) {
     const bags = Math.max(
@@ -81,7 +69,6 @@ function computeMaterialLines() {
     });
   }
 
-  // --- Concime: ~150 g/m² ---
   const fertKg = Math.max(1, Math.ceil(areaBeds * 0.15));
   if (areaBeds > 0) {
     lines.push({
@@ -94,7 +81,6 @@ function computeMaterialLines() {
     });
   }
 
-  // --- Sostegni: piante alte o rampicanti ---
   let supports = 0;
   state.beds.forEach((b) => {
     const p = BYID[b.plantId];
@@ -111,7 +97,6 @@ function computeMaterialLines() {
     });
   }
 
-  // --- Etichette: una per coltura ---
   lines.push({
     id: "etichette",
     cat: "accessories",
@@ -124,7 +109,7 @@ function computeMaterialLines() {
   return lines;
 }
 
-// Applica gli override di sessione e calcola subtotali e totale.
+// Calcola le righe materiali con quantità e totali
 function materialsWithTotals() {
   const lines = computeMaterialLines().map((line) => {
     const qty =
@@ -139,6 +124,7 @@ function materialsWithTotals() {
   return { lines, total };
 }
 
+// Restituisce l'etichetta tradotta dell'unità di misura
 function shoppingUnitLabel(unit, qty) {
   const key =
     unit === "bags"
@@ -153,10 +139,12 @@ function shoppingUnitLabel(unit, qty) {
   return tx(key, { count: qty });
 }
 
+// Restituisce l'etichetta tradotta della categoria materiale
 function shoppingCatLabel(cat) {
   return tx("shop.cat_" + cat);
 }
 
+// Rendering lista spesa
 function renderMaterials() {
   const el = document.getElementById("materials");
   if (!el) return;
@@ -218,7 +206,7 @@ function renderMaterials() {
   });
 }
 
-// Tabella materiali per la stampa/PDF (vuota se non ci sono colture).
+// Genera l'HTML della lista materiali per la stampa
 function materialsPrintHtml() {
   if (!state.beds.length) return "";
   const { lines, total } = materialsWithTotals();

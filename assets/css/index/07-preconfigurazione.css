@@ -1,10 +1,4 @@
-/* Sezione: Pre-configurazione.
-+ * Raccolta ordinata delle regole relative a modale iniziale, campi guidati, controlli e tema scuro locale.
-+ */
 @layer base {
-  /* Pannello di pre-configurazione: modale su desktop, bottom sheet su mobile. */
-
-  /* Overlay — desktop: centrato; mobile: bottom sheet */
   .preconfig-overlay {
     position: fixed;
     inset: 0;
@@ -30,7 +24,6 @@
     opacity: 1;
   }
 
-  /* Sheet — modal centrato su desktop/tablet */
   .preconfig-sheet {
     position: relative;
     z-index: 1;
@@ -59,12 +52,12 @@
     transform: scale(1) translateY(0);
     opacity: 1;
   }
-  /* Handle nascosto su desktop, visibile su mobile */
+
   .preconfig-handle {
     display: none;
   }
 
-  /* Mobile: bottom sheet */
+  /* Responsive mobile */
   @media (max-width: 660px) {
     .preconfig-overlay {
       align-items: flex-end;
@@ -96,7 +89,7 @@
     }
   }
 
-  /* Desktop: no scroll — compatta spaziature per far stare tutto in vista */
+  /* Regole responsive */
   @media (min-width: 661px) {
     .preconfig-sheet {
       max-height: 96svh;
@@ -128,7 +121,6 @@
     }
   }
 
-  /* Panel head — stile identico a La tua serra */
   .preconfig-panel-head {
     display: flex;
     align-items: center;
@@ -192,7 +184,6 @@
     background: rgba(47, 107, 58, 0.1);
   }
 
-  /* Body */
   .preconfig-body {
     padding: 6px 14px 2px;
     display: flex;
@@ -200,7 +191,6 @@
     gap: 2px;
   }
 
-  /* Section label — stile identico al configuratore */
   .preconfig-section-label {
     font-size: 10px;
     font-weight: 700;
@@ -219,7 +209,6 @@
     background: rgba(47, 107, 58, 0.12);
   }
 
-  /* Label primaria: dimensioni */
   .preconfig-section-label--primary {
     font-size: 11px;
     color: #1b3a24;
@@ -253,7 +242,6 @@
     border-left: 3px solid rgba(47, 107, 58, 0.3);
   }
 
-  /* Card misure evidenziata */
   .preconfig-vfield--primary {
     border-color: rgba(47, 107, 58, 0.28);
     box-shadow:
@@ -323,7 +311,6 @@
     animation: dimsAttention 2s ease-in-out forwards;
   }
 
-  /* Visual field card — stile settings-visual-field */
   .preconfig-vfield {
     position: relative;
     overflow: hidden;
@@ -374,7 +361,6 @@
       112px 76px;
   }
 
-  /* Label identico a .fld del configuratore */
   .preconfig-fld {
     display: block;
     font-size: 11px;
@@ -386,7 +372,6 @@
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
   }
 
-  /* Stepper identico al configuratore */
   .preconfig-stepper {
     display: flex;
     align-items: stretch;
@@ -446,7 +431,6 @@
     font-size: 13px;
   }
 
-  /* Slider misure sotto lo stepper (identico a dim-slider del configuratore) */
   .preconfig-dim-slider {
     width: 100%;
     margin-top: 6px;
@@ -455,7 +439,6 @@
     display: block;
   }
 
-  /* Select clima — stile identico al configuratore */
   .preconfig-select {
     width: 100%;
     padding: 8px 28px 8px 9px;
@@ -479,7 +462,6 @@
     border-color: #2f6b3a;
   }
 
-  /* Card persona: stile condiviso con le card del configuratore. */
   :root {
     --pc-nov: #4f9a3f;
     --pc-int: #c9962f;
@@ -612,6 +594,7 @@
     transform: translateX(0);
   }
 
+  /* Animazioni */
   @keyframes preconfigShake {
     0%,
     100% {
@@ -628,7 +611,6 @@
     animation: preconfigShake 0.38s ease;
   }
 
-  /* CTA disabilitato — grigio chiaro, testo attenuato */
   .preconfig-cta--disabled {
     background: rgba(47, 107, 58, 0.14);
     color: rgba(47, 107, 58, 0.4);
@@ -638,7 +620,6 @@
     border: 1.5px dashed rgba(47, 107, 58, 0.25);
   }
 
-  /* pathField stile */
   .preconfig-path-field {
     position: relative;
     isolation: isolate;
@@ -657,7 +638,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.65),
       0 5px 14px rgba(73, 63, 45, 0.08);
   }
-  /* Path controls */
+
   .preconfig-path-row {
     display: grid;
     grid-template-columns: minmax(60px, 1fr) auto auto;
@@ -676,7 +657,6 @@
     cursor: pointer;
   }
 
-  /* Month */
   .preconfig-month-wrap {
     position: relative;
     display: flex;
@@ -719,7 +699,6 @@
     align-items: center;
   }
 
-  /* Footer */
   .preconfig-footer {
     padding: 8px 14px calc(36px + env(safe-area-inset-bottom, 0px));
     display: flex;
@@ -764,7 +743,6 @@
     font-size: 1.1rem;
   }
 
-  /* Tema scuro per il pannello di pre-configurazione. */
   html[data-theme="dark"] .preconfig-sheet {
     background: linear-gradient(155deg, #1a2d1e, #162518);
     border-color: rgba(82, 183, 136, 0.22);

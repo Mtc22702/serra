@@ -1,9 +1,5 @@
-/* =========================================================================
-   SEZIONE 09 - Rendering UI, dettaglio pianta, riepiloghi e stampa
-   -------------------------------------------------------------------------
-   Disegna lista colture, pannelli laterali, scheda pianta, avvisi, riepilogo
-   economico/stagionale e versione stampabile.
-   ========================================================================= */
+// Rendering lista colture
+// Genera la card HTML di una coltura nella lista
 function vegCardHTML(p, inb, outOfSeason = false, inConflict = false) {
   const diff = DIFFICULTY[p.id] || 2;
   const diffLabel =
@@ -75,6 +71,7 @@ function vegCardHTML(p, inb, outOfSeason = false, inConflict = false) {
   </div>`;
 }
 
+// Aggiorna la lista colture con filtri e ricerca
 function renderVegList() {
   updateVegSearchUI();
   if (state.livello === "novizio" && vegFilter !== "in") {
@@ -193,6 +190,7 @@ function renderVegList() {
   updateVegListScrollAffordance();
 }
 
+// Mostra o nasconde il suggerimento di scorrimento lista
 function updateVegListScrollAffordance() {
   const list = document.getElementById("vegList");
   const wrap = document.getElementById("vegListScrollWrap");
@@ -209,6 +207,7 @@ function updateVegListScrollAffordance() {
   });
 }
 
+// Abilita o disabilita i pulsanti azione colture
 function updateCropActionControls() {
   const hasCrops = state.beds.length > 0;
   const noviceLocked = state.livello === "novizio";
@@ -225,6 +224,7 @@ function updateCropActionControls() {
   updateClearGreenhouseCopy();
 }
 
+// Aggiorna il testo del pulsante svuota serra
 function updateClearGreenhouseCopy() {
   const clearBtn = document.getElementById("btnClear");
   if (!clearBtn) return;
@@ -239,6 +239,7 @@ function updateClearGreenhouseCopy() {
     : tx("clearGreenhouseTitle");
 }
 
+// Restituisce la stagione per un dato mese
 function getStagione(m) {
   if ([12, 1, 2].includes(m)) return "inverno";
   if ([3, 4, 5].includes(m)) return "primavera";
@@ -246,6 +247,7 @@ function getStagione(m) {
   return "autunno";
 }
 
+// Aggiorna il tag stagione e le icone del footer
 function renderFooter() {
   const stag = getStagione(state.mese);
   const sharedDict =
@@ -273,8 +275,9 @@ function renderFooter() {
   }
 }
 
+// Render principale
+// Ridisegna l'intera interfaccia del configuratore
 function render() {
-  // tag intestazione
   const zoneNames = {
     freddo: tx("cold"),
     temperato: tx("temperate"),
@@ -287,15 +290,14 @@ function render() {
     `📅 ${monthName(state.mese)}`;
   document.getElementById("tagArea").textContent =
     `📐 ${state.larghezza}×${state.lunghezza} m`;
-  // badge mese sul pulsante "Rigenera piano di stagione"
+
   const bmt = document.getElementById("btnMonthTag");
   if (bmt) bmt.textContent = monthName(state.mese);
   updatePresetAppliedUI();
-  // lista seminabili
+
   renderVegList();
   updateCropActionControls();
 
-  // scena
   const built = buildScene();
   document.getElementById("scene").innerHTML = built.svg;
   const L = built.layout;
@@ -312,7 +314,6 @@ function render() {
     status
   });
 
-  // legenda della sovrapposizione
   const lg = document.getElementById("legend");
   if (state.overlay === "sole")
     lg.innerHTML = legend([
@@ -333,15 +334,13 @@ function render() {
     ]);
   else lg.innerHTML = "";
 
-  // mostra/nasconde il banner "serra vuota"
   const emptyBanner = document.getElementById("stageEmptyBanner");
   document.body.classList.toggle("serra-empty", state.beds.length === 0);
   if (emptyBanner) {
     const b = emptyBanner.querySelector(".seb-copy b");
     const s = emptyBanner.querySelector(".seb-copy span");
     if (b) b.textContent = tx("emptyBannerTitle");
-    // Il novizio non ha il pulsante "Rigenera piano di stagione" né la card Personalizza
-    // completa: gli mostriamo un messaggio adatto al suo flusso automatico.
+
     if (s)
       s.innerHTML = tx(
         state.livello === "novizio"
@@ -356,7 +355,6 @@ function render() {
   renderSummary();
   renderFooter();
 
-  // clic sulle aiuole
   document.querySelectorAll(".bedhit").forEach((el) => {
     el.addEventListener("click", () => {
       const idx = parseInt(el.dataset.bed);
@@ -371,12 +369,14 @@ function render() {
     });
   });
 }
+// Genera l'HTML della legenda overlay
 function legend(items) {
   return items
     .map(([c, t]) => `<span><i style="background:${c}"></i>${t}</span>`)
     .join("");
 }
 
+// Genera la lista chip delle aiuole
 function renderBeds() {
   const bl = document.getElementById("bedsList");
   if (!bl) return;
@@ -437,6 +437,7 @@ function renderBeds() {
   );
 }
 
+// Calcola l'offset dello scroll per l'header fisso
 function headerScrollOffset() {
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue("--nav-h")
@@ -445,6 +446,7 @@ function headerScrollOffset() {
   return navHeight + 12;
 }
 
+// Scrolla un elemento sotto l'header con offset corretto
 function scrollElementBelowHeader(target, behavior = "smooth") {
   if (!target) return;
   const top =
@@ -455,10 +457,12 @@ function scrollElementBelowHeader(target, behavior = "smooth") {
   });
 }
 
+// Verifica se il layout è in modalità mobile
 function isResponsiveConfiguratorLayout() {
   return window.matchMedia("(max-width: 1080px)").matches;
 }
 
+// Porta in vista il pannello dettaglio pianta
 function scrollPlantDetailPanelIntoView(behavior = "smooth") {
   scrollElementBelowHeader(
     document.getElementById("panelPlantDetail"),
@@ -466,6 +470,7 @@ function scrollPlantDetailPanelIntoView(behavior = "smooth") {
   );
 }
 
+// Porta in vista l'immagine SVG della serra
 function scrollGreenhouseImageIntoView(behavior = "auto") {
   const target =
     document.querySelector(".stage .scene-wrap") ||
@@ -474,6 +479,7 @@ function scrollGreenhouseImageIntoView(behavior = "auto") {
   scrollElementBelowHeader(target, behavior);
 }
 
+// Chiude il pannello impostazioni dopo l'autocompletamento
 function collapseSettingsPanelAfterAutoPlan() {
   const panel = document.getElementById("panelSettings");
   if (!panel || !isResponsiveConfiguratorLayout()) return;
@@ -481,6 +487,7 @@ function collapseSettingsPanelAfterAutoPlan() {
   requestAnimationFrame(() => scrollGreenhouseImageIntoView("smooth"));
 }
 
+// Imposta lo stato aperto/chiuso di un pannello
 function setPanelCollapsed(panelOrId, collapsed) {
   const panel =
     typeof panelOrId === "string"
@@ -492,15 +499,18 @@ function setPanelCollapsed(panelOrId, collapsed) {
   if (toggle) updatePanelToggle(toggle);
 }
 
+// Apre o chiude il pannello personalizzazione colture
 function setCustomizePanelCollapsed(collapsed) {
   setPanelCollapsed("panelCustomize", collapsed);
   updateVegListScrollAffordance();
 }
 
+// Adatta il pannello personalizzazione al livello utente
 function syncCustomizePanelForLivello() {
   setCustomizePanelCollapsed(state.livello === "novizio");
 }
 
+// Apre il pannello colture e scrolla con evidenziazione
 function openCustomizePanelAndFocus() {
   const crops = document.getElementById("panelCustomize");
   if (!crops) return;
@@ -518,9 +528,7 @@ function openCustomizePanelAndFocus() {
   });
 }
 
-/* All'ingresso dalla homepage con una persona già scelta (mobile/tablet),
-   porta lo scroll all'inizio del blocco "Come funziona" specifico per quel
-   livello, invece di lasciare il testo tagliato dall'header. */
+// Scrolla all'intro guidata del livello selezionato
 function scrollToGuidedIntroForLivello(liv) {
   if (!isResponsiveConfiguratorLayout()) return;
   const selectors = {
@@ -536,6 +544,7 @@ function scrollToGuidedIntroForLivello(liv) {
   }, 200);
 }
 
+// Apre il pannello impostazioni e mette a fuoco le dimensioni
 function openSettingsPanelAndFocusDimensions() {
   const panel = document.getElementById("panelSettings");
   if (!panel) return;
@@ -559,6 +568,7 @@ const CONFIG_DETAIL_TABS = [
   "harvest"
 ];
 
+// Recupera una stringa dalla i18n della home
 function detailText(key, vars = {}) {
   const dict = window.SERRA_I18N?.index || {};
   let value = dict[state.lang]?.[key] || dict.it?.[key] || key;
@@ -568,6 +578,7 @@ function detailText(key, vars = {}) {
   return value;
 }
 
+// Attiva una tab nel pannello dettaglio pianta
 function setConfigDetailTab(tab, moveFocus = false) {
   if (!CONFIG_DETAIL_TABS.includes(tab)) tab = "overview";
   document
@@ -589,6 +600,7 @@ function setConfigDetailTab(tab, moveFocus = false) {
     });
 }
 
+// Gestisce la navigazione da tastiera tra le tab dettaglio
 function handleConfigDetailTabKey(event) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
@@ -606,6 +618,7 @@ function handleConfigDetailTabKey(event) {
   setConfigDetailTab(CONFIG_DETAIL_TABS[next], true);
 }
 
+// Genera il SVG dell'icona per una tab dettaglio
 function configDetailTabIcon(tab) {
   const paths = {
     overview:
@@ -620,6 +633,7 @@ function configDetailTabIcon(tab) {
   return `<span class="detail-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24">${paths[tab]}</svg></span>`;
 }
 
+// Costruisce il profilo tecnico per le schede coltivazione e cura
 function configDetailProfile(p, sow) {
   const ro = state.lang === "ro";
   const type = TIPO[p.id] || "foglia";
@@ -720,6 +734,7 @@ function configDetailProfile(p, sow) {
   };
 }
 
+// Genera le card HTML delle schede tecniche
 function renderConfigTechCards(items) {
   return items
     .map(
@@ -744,6 +759,7 @@ const CONFIG_DISEASE_GROUPS = {
   other: ["powdery", "botrytis", "root_rot"]
 };
 
+// Determina il gruppo malattie della pianta per ID
 function configDiseaseGroup(id) {
   const has = (ids) => ids.includes(id);
   if (
@@ -833,6 +849,7 @@ function configDiseaseGroup(id) {
   return "other";
 }
 
+// Restituisce il catalogo malattie nella lingua corrente
 function configDiseaseCatalog() {
   const ro = state.lang === "ro";
   const base = {
@@ -993,6 +1010,7 @@ function configDiseaseCatalog() {
   return translated;
 }
 
+// Filtra le malattie rilevanti per la pianta
 function configDiseasesForPlant(p) {
   const catalog = configDiseaseCatalog();
   return CONFIG_DISEASE_GROUPS[configDiseaseGroup(p.id)]
@@ -1000,6 +1018,7 @@ function configDiseasesForPlant(p) {
     .filter(Boolean);
 }
 
+// Genera il blocco HTML delle malattie nella scheda pianta
 function renderConfigDiseases(p) {
   const diseases = configDiseasesForPlant(p);
   return `<details class="detail-diseases">
@@ -1024,6 +1043,7 @@ const CONFIG_PEST_GROUPS = {
   other: ["aphids", "slugs", "thrips"]
 };
 
+// Restituisce il catalogo parassiti nella lingua corrente
 function configPestCatalog() {
   if (state.lang === "ro")
     return {
@@ -1142,6 +1162,7 @@ function configPestCatalog() {
   };
 }
 
+// Restituisce i prodotti specifici per i parassiti della pianta
 function configTargetedPestProducts(p) {
   const ro = state.lang === "ro";
   const group = configDiseaseGroup(p.id);
@@ -1324,6 +1345,7 @@ function configTargetedPestProducts(p) {
   };
 }
 
+// Genera il blocco HTML dei parassiti nella scheda pianta
 function renderConfigPests(p) {
   const catalog = configPestCatalog();
   const products = configTargetedPestProducts(p);
@@ -1340,6 +1362,8 @@ function renderConfigPests(p) {
     )}</div><p class="detail-treatment-note">${detailText("detail.pest_note")}</p></details>`;
 }
 
+// Apertura pannelli
+// Apre il pannello dettaglio della pianta selezionata
 function openPlantDetailPanel() {
   const panel = document.getElementById("panelPlantDetail");
   const settings = document.getElementById("panelSettings");
@@ -1350,6 +1374,7 @@ function openPlantDetailPanel() {
   requestAnimationFrame(() => scrollPlantDetailPanelIntoView("smooth"));
 }
 
+// Chiude il pannello dettaglio e ripristina la selezione
 function closePlantDetailPanel() {
   const panel = document.getElementById("panelPlantDetail");
   const settings = document.getElementById("panelSettings");
@@ -1364,6 +1389,8 @@ function closePlantDetailPanel() {
   }
 }
 
+// Scheda pianta
+// Genera l'HTML completo della scheda dettaglio pianta
 function renderPlantDetailPanel() {
   const container = document.getElementById("pdpContent");
   if (!container) return;
@@ -1400,10 +1427,8 @@ function renderPlantDetailPanel() {
         ? "diff-medium"
         : "diff-hard";
 
-  // abbinamenti
   const nemiche = p.nemiche ? p.nemiche.map(plantNameById).filter(Boolean) : [];
 
-  // segmenti della barra mesi
   const allMonths = [...effectiveMonths(p)].sort((a, b) => a - b);
   const activeMonthsLabel = allMonths
     .map((m) => monthName(m).slice(0, 3))
@@ -1429,7 +1454,6 @@ function renderPlantDetailPanel() {
     return `<div class="pdp-month-seg${on ? " active" : ""}${cur ? " current" : ""}" title="${title}" aria-label="${title}"></div>`;
   }).join("");
 
-  // tipo
   const tipoEntry = CAT_ORDER.find((c) => c.ids.includes(p.id));
   const tipoLabel = tipoEntry ? tx(`vegCat_${tipoEntry.key}`) : "";
 
@@ -1520,8 +1544,8 @@ function renderPlantDetailPanel() {
   setConfigDetailTab("overview");
 }
 
-/* Abilita/disabilita i pulsanti Annulla/Ripristina in base allo stato della
-   cronologia (definita in conf-engine.js, disponibile a runtime). */
+// Pulsanti annulla/ripristina
+// Aggiorna lo stato abilitato dei pulsanti undo/redo
 function updateUndoRedoButtons() {
   const undoBtn = document.getElementById("btnUndo");
   const redoBtn = document.getElementById("btnRedo");
@@ -1531,14 +1555,16 @@ function updateUndoRedoButtons() {
     redoBtn.disabled = typeof canRedo === "function" ? !canRedo() : true;
 }
 
+// Avvisi e riepilogo
+// Aggiorna il pannello avvisi consociazioni e overflow
 function renderWarnings(L) {
   const w = document.getElementById("warnings");
   if (!w) return;
   let out = "";
-  // Analisi consociazioni potenziata (conf-companions.js).
+
   const analysis = analyzeCompanions();
   const presentIds = state.beds.map((b) => b.plantId);
-  // Banner punteggio di compatibilità del piano.
+
   if (state.beds.length >= 2) {
     const ratingLabel = tx("companion.rating_" + analysis.rating);
     out += `<div class="warn companion-score companion-score--${analysis.rating}">
@@ -1549,7 +1575,7 @@ function renderWarnings(L) {
       </div>
     </div>`;
   }
-  // Incompatibilità: titolo + motivazione + suggerimento alternativo.
+
   analysis.badPairs.forEach((pair) => {
     const a = plantText(pair.a, "nome");
     const b = plantText(pair.b, "nome");
@@ -1575,14 +1601,12 @@ function renderWarnings(L) {
   if (state.autoPlanNotice)
     out += `<div class="warn tip"><span class="i">ℹ️</span><div>${tx(state.autoPlanNotice)}</div></div>`;
   if (state.manualPlanNotice) {
-    // I fallimenti veri (coltura non aggiunta / quantità rifiutata) sono in rosso e
-    // ben visibili; gli avvisi solo informativi restano come suggerimento tenue.
     const manualBad =
       state.manualPlanNotice === "addNoSpace" ||
       state.manualPlanNotice === "manualCountRejected";
     out += `<div class="warn ${manualBad ? "bad" : "tip"}"><span class="i">${manualBad ? "⚠️" : "ℹ️"}</span><div>${tx(state.manualPlanNotice)}</div></div>`;
   }
-  // Sinergie presenti: coppie amiche + breve motivazione.
+
   if (analysis.goodPairs.length) {
     const ex = analysis.goodPairs
       .slice(0, 2)
@@ -1598,6 +1622,7 @@ function renderWarnings(L) {
   w.innerHTML = out;
 }
 
+// Aggiorna il riepilogo resa e il pulsante esporta carrello
 function renderSummary() {
   const s = document.getElementById("summary"),
     shop = document.getElementById("shop");
@@ -1694,6 +1719,7 @@ function renderSummary() {
   renderPrintSummary();
 }
 
+// Chiude il menu dropdown di esportazione progetto
 function closeProjectExportMenu({ restoreFocus = false } = {}) {
   const menu = document.getElementById("projectExportMenu");
   if (!menu || menu.hidden) return;
@@ -1706,6 +1732,7 @@ function closeProjectExportMenu({ restoreFocus = false } = {}) {
   if (restoreFocus && triggerId) document.getElementById(triggerId)?.focus();
 }
 
+// Apre il menu dropdown di esportazione progetto
 function openProjectExportMenu(trigger) {
   const menu = document.getElementById("projectExportMenu");
   if (!menu || !trigger) return;
@@ -1728,6 +1755,7 @@ function openProjectExportMenu(trigger) {
   menu.querySelector("button")?.focus();
 }
 
+// Genera il nome file per l'esportazione del progetto
 function projectExportFileName(extension) {
   const month = monthName(state.mese)
     .normalize("NFD")
@@ -1739,6 +1767,7 @@ function projectExportFileName(extension) {
     .replace(/[^a-zA-Z0-9._-]/g, "");
 }
 
+// Aggrega le aiuole del progetto per nome e conteggio
 function aggregatedProjectBeds() {
   const rows = new Map();
   state.beds.forEach((bed) => {
@@ -1750,6 +1779,7 @@ function aggregatedProjectBeds() {
   }));
 }
 
+// Genera il canvas con scena e riepilogo per l'export immagine
 async function buildProjectExportCanvas() {
   const svg = document.querySelector("#scene svg");
   if (!svg) throw new Error("Greenhouse scene is not available");
@@ -1844,6 +1874,7 @@ async function buildProjectExportCanvas() {
   }
 }
 
+// Avvia il download di un blob come file
 function downloadProjectBlob(blob, fileName) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -1855,6 +1886,7 @@ function downloadProjectBlob(blob, fileName) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+// Esporta il progetto come immagine PNG
 async function exportProjectPng() {
   const canvas = await buildProjectExportCanvas();
   const blob = await new Promise((resolve) =>
@@ -1864,6 +1896,7 @@ async function exportProjectPng() {
   downloadProjectBlob(blob, projectExportFileName("png"));
 }
 
+// Genera un PDF dal canvas del progetto
 function pdfFromProjectCanvas(canvas) {
   const jpegData = canvas.toDataURL("image/jpeg", 0.92).split(",")[1];
   const raw = atob(jpegData);
@@ -1925,12 +1958,14 @@ function pdfFromProjectCanvas(canvas) {
   return new Blob(chunks, { type: "application/pdf" });
 }
 
+// Esporta il progetto come file PDF
 async function exportProjectPdf() {
   const canvas = await buildProjectExportCanvas();
   const pdf = pdfFromProjectCanvas(canvas);
   downloadProjectBlob(pdf, projectExportFileName("pdf"));
 }
 
+// Genera il riepilogo per la stampa
 function renderPrintSummary() {
   const el = document.getElementById("printSummary");
   if (!el) return;

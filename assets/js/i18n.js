@@ -1,13 +1,6 @@
-/* ==========================================================================
-   TRADUZIONI CONDIVISE
-   --------------------------------------------------------------------------
-   Raccoglie in un unico punto mesi, testi dell'interfaccia e nomi delle piante
-   usati dalla home e dal configuratore. I contenuti sono organizzati per lingua
-   così entrambe le pagine mostrano sempre la stessa terminologia.
-   ========================================================================== */
+// Dizionario traduzioni
 (function (global) {
   const shared = {
-    /* MESI — etichette usate da calendario, hero e selettori. */
     months: {
       it: [
         "Gennaio",
@@ -68,7 +61,7 @@
         "Dec"
       ]
     },
-    /* Piante: localizzazione dei campi botanici mostrati nelle card. */
+
     plants: {
       ro: {
         pomodoro: {
@@ -461,7 +454,7 @@
         }
       }
     },
-    /* Home: navigazione, catalogo, carrello, contatti e cookie. */
+
     index: {
       it: {
         "page.title": "Orto in Serra · Coltiva con intelligenza",
@@ -1237,7 +1230,7 @@
         "detail.sow_water": "Udare"
       }
     },
-    /* Configuratore: pannelli, controlli, carrello e messaggi tecnici. */
+
     configurator: {
       it: {
         title: "Orto in Serra · Progetta la tua serra dall'alto",
@@ -1640,7 +1633,7 @@
         clearGreenhouse: "Svuota serra",
         undoAction: "Annulla",
         redoAction: "Ripristina",
-        /* Categorie piante nella tendina Personalizza */
+
         vegCat_frutti: "Frutti & ortaggi",
         vegCat_foglie: "Insalate & foglie",
         vegCat_radici: "Radici & bulbi",
@@ -1648,14 +1641,14 @@
         vegCat_legumi: "Legumi",
         vegCat_cavoli: "Cavoli & brassiche",
         vegCatAltro: "Altro",
-        /* Difficoltà */
+
         diffEasy: "★&nbsp;Facile",
         diffMedium: "★★&nbsp;Medio",
         diffHard: "★★★&nbsp;Difficile",
-        /* Badge e messaggi lista piante */
+
         vegInGreenhouse: "✓&nbsp;in serra",
         vegNoMore: "Nessuna pianta in serra per questo mese.",
-        /* Filtri tab */
+
         filterAll: "🌿&nbsp;Seminabili ora",
         filterAllBeds: "📋&nbsp;Piano completo",
         filterEasy: "⭐&nbsp;Facili",
@@ -2083,7 +2076,7 @@
         clearGreenhouse: "Golește sera",
         undoAction: "Anulează",
         redoAction: "Refă",
-        /* Categorie piante nella sezione Personalizza */
+
         vegCat_frutti: "Fructe & legume",
         vegCat_foglie: "Salate & frunze",
         vegCat_radici: "Rădăcini & bulbi",
@@ -2091,14 +2084,14 @@
         vegCat_legumi: "Leguminoase",
         vegCat_cavoli: "Verze & brasicacee",
         vegCatAltro: "Altele",
-        /* Difficoltà */
+
         diffEasy: "★&nbsp;Ușor",
         diffMedium: "★★&nbsp;Mediu",
         diffHard: "★★★&nbsp;Dificil",
-        /* Badge e messaggi della lista piante */
+
         vegInGreenhouse: "✓&nbsp;în seră",
         vegNoMore: "Nicio plantă în seră pentru această lună.",
-        /* Filtri tab */
+
         filterAll: "🌿&nbsp;De semănat acum",
         filterAllBeds: "📋&nbsp;Plan complet",
         filterEasy: "⭐&nbsp;Ușoare",
@@ -2144,19 +2137,12 @@
       }
     }
   };
-  /* Unificazione traduzioni UI: home e configuratore leggono da un UNICO
-     dizionario. I blocchi "index" e "configurator" qui sopra restano solo come
-     sorgente organizzata per area, ma vengono fusi in una sola mappa per lingua:
-     ogni chiave diventa disponibile in tutta l'app, senza più duplicati.
-     In caso di chiave presente in entrambi i blocchi vince "index" (storefront),
-     così il carrello mostra lo stesso testo nelle due pagine. */
+
   const _uiSources = [shared.configurator, shared.index];
   shared.ui = {
     it: Object.assign({}, ..._uiSources.map((s) => s.it || {})),
     ro: Object.assign({}, ..._uiSources.map((s) => s.ro || {}))
   };
-  /* Alias retro-compatibili: qualsiasi riferimento a .index o .configurator
-     risolve ora sullo stesso dizionario unificato. */
   shared.index = shared.ui;
   shared.configurator = shared.ui;
   global.SERRA_I18N = Object.assign({}, global.SERRA_I18N || {}, shared);

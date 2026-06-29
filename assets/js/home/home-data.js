@@ -1,17 +1,4 @@
-/* ==========================================================================
-   HOME — DATI E RISORSE DEL CATALOGO
-   --------------------------------------------------------------------------
-   Collega la home all'archivio condiviso delle piante e raccoglie i metadati
-   necessari alla presentazione: difficoltà, misure, immagini, simboli e testi.
-
-   SEZIONI DEL FILE
-   1. Catalogo condiviso e livelli di difficoltà
-   2. Metadati tecnici e guide alla semina
-   3. Immagini, simboli e composizioni decorative
-   4. Testi localizzati e stagioni
-   ========================================================================== */
-
-/* 1. CATALOGO CONDIVISO — fonte usata da schede, dettaglio e carrello. */
+// Catalogo condiviso
 const PLANTS = window.PLANTS;
 
 const NOMI_MESI = [
@@ -44,10 +31,9 @@ const ABBR_MESI = [
 ];
 const SOLE_ICON = { pieno: "☀️", mezz: "🌤️" };
 const ACQUA_ICON = { alta: "💧💧💧", media: "💧💧", bassa: "💧" };
-/* DIFFICOLTÀ — 1 facile, 2 media, 3 impegnativa o esotica. La mappa copre
-   tutte le colture e permette di filtrare le proposte per esperienza. */
+
 const DIFFICULTY = {
-  // Facili: rapide, tolleranti, ideali per chi inizia.
+
   lattuga: 1,
   rucola: 1,
   ravanello: 1,
@@ -82,7 +68,7 @@ const DIFFICULTY = {
   melissa: 1,
   cerfoglio: 1,
   cimbru: 1,
-  // Medie: richiedono un po' di attenzione o tempi più lunghi.
+
   pomodoro: 2,
   peperone: 2,
   cetriolo: 2,
@@ -113,7 +99,7 @@ const DIFFICULTY = {
   leustean: 2,
   dragoncello: 2,
   camomilla: 2,
-  // Difficili o esotiche: lente, delicate, perenni o poco comuni.
+
   peperoncino: 3,
   melanzana: 3,
   zucca: 3,
@@ -149,7 +135,7 @@ const DIFFICULTY = {
   leurda: 2
 };
 
-/* 2. METADATI TECNICI — altezze, spaziature e guide pratiche alla semina. */
+// Metadati tecnici
 const PLANT_HEIGHT_CM = {
   pomodoro: "100–200",
   peperone: "50–100",
@@ -325,7 +311,8 @@ const PHOTO_MAP = {
   origano: "origano.webp",
   pakchoi: "pak_choi.webp"
 };
-/* 3. RISORSE VISIVE — risolve foto, illustrazioni, simboli e varietà decorative. */
+
+// Risorse visive
 function photoSrc(id) {
   return `assets/img/photo/${PHOTO_MAP[id] || id + ".webp"}`;
 }
@@ -428,12 +415,15 @@ const FRUIT_EMOJI = {
   cerfoglio: "🌿",
   cimbru: "🌿"
 };
+// Restituisce il percorso SVG della pianta
 function plantSvgSrc(id) {
   return `assets/img/svg/${id}.svg`;
 }
+// Restituisce l'emoji della pianta
 function fruitEmoji(id) {
   return FRUIT_EMOJI[id] || "🌱";
 }
+// Genera la visuale mista della pianta
 function mixedPlantVisual(p, className, index, previousEmoji = "") {
   const emoji = fruitEmoji(p.id);
   const useSvg = index % 3 === 1 || emoji === previousEmoji;
@@ -442,6 +432,7 @@ function mixedPlantVisual(p, className, index, previousEmoji = "") {
   }
   return `<span class="${className} ${className}--emoji" role="img" aria-label="${plantName(p.id)}">${emoji}</span>`;
 }
+// Seleziona piante visivamente diverse
 function diversePlants(plants, count) {
   const firstPass = [];
   const usedEmoji = new Set();
@@ -457,6 +448,7 @@ function diversePlants(plants, count) {
   });
   return firstPass.slice(0, count);
 }
+// Ordina evitando ripetizioni visive
 function nonRepeatingPlantOrder(plants) {
   const groups = new Map();
   plants.forEach((p) => {
@@ -482,6 +474,7 @@ function nonRepeatingPlantOrder(plants) {
   return ordered;
 }
 
+// Kit mensili
 const KITS = {
   1: {
     titolo: "Kit Invernale",
@@ -582,6 +575,7 @@ const KITS = {
   }
 };
 
+// Testi stagionali
 const STAGIONE_QUOTE = {
   1: "Pianifica con cura, la terra aspetta paziente.",
   2: "Febbraio inganna: dentro la serra la vita riprende.",
@@ -629,7 +623,7 @@ const HERO_KICKER = {
   autunno: "🍂 Raccolto d'autunno"
 };
 
-/* 4. STAGIONI — converte il mese selezionato nella relativa stagione climatica. */
+// Stagioni
 function getStagione(m) {
   if ([12, 1, 2].includes(m)) return "inverno";
   if ([3, 4, 5].includes(m)) return "primavera";

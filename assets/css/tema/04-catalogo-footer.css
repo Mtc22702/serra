@@ -1,8 +1,5 @@
-/* Sezione: Catalogo e footer.
-+ * Tema condiviso per azioni del catalogo, footer scuro e contrasti informativi.
-+ */
+/* Catalogo e footer */
 @layer base {
-  /* Catalogo dark: azioni nette e categorie immediatamente riconoscibili. */
 }
 @layer dark-theme {
   html[data-theme="dark"] body .catalog-pro-section .top-add-btn {
@@ -95,7 +92,6 @@
   }
 }
 @layer base {
-  /* Footer dark: palette indipendente dai token usati per titoli e testi. */
 }
 @layer dark-theme {
   html[data-theme="dark"] body footer.footer-botanico {

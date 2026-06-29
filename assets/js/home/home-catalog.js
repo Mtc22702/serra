@@ -1,18 +1,4 @@
-/* ==========================================================================
-   HOME — STATO E RENDERING DEL CATALOGO
-   --------------------------------------------------------------------------
-   Conserva lo stato visibile della pagina, applica le regole stagionali e
-   ridisegna hero, calendario, catalogo, abbinamenti, kit mensile e footer.
-
-   SEZIONI DEL FILE
-   1. Stato della pagina e indici di consultazione
-   2. Filtri, ordinamento ed etichette delle colture
-   3. Hero e calendario stagionale
-   4. Catalogo, abbinamenti e kit del mese
-   5. Footer e aggiornamento generale della pagina
-   ========================================================================== */
-
-/* 1. STATO — scelte climatiche, filtri, carrello e scheda pianta aperta. */
+// Stato della pagina
 let state = {
   zona: "temperato",
   riscaldata: false,
@@ -93,7 +79,7 @@ const PACK_DATA = {
   salvia: { seeds: 100, price: 2.8 }
 };
 
-/* 2. LOGICA CATALOGO — filtra, ordina e prepara testi, prezzi e indicatori. */
+// Logica catalogo
 function effectiveMonths(plant) {
   const set = new Set(plant.mesi);
   if (state.riscaldata || state.zona === "caldo") {
@@ -109,21 +95,26 @@ function effectiveMonths(plant) {
   }
   return set;
 }
+// Filtra le piante seminabili nel mese corrente
 function seminabili() {
   return PLANTS.filter((p) => effectiveMonths(p).has(state.mese));
 }
+// Recupera il tipo della pianta
 function typeOfPlant(p) {
   return TIPO[p.id] || "foglia";
 }
+// Recupera la distanza di coltivazione
 function plantDistanceValue(p) {
   const spacing = PLANT_SPACING[p.id] || {};
   return Number(spacing.d || spacing.dr || 999);
 }
+// Calcola il punteggio di ordinamento catalogo
 function catalogSortScore(p) {
   const seasonal = effectiveMonths(p).has(state.mese) ? 0 : 1;
   const easy = EASY_IDS.has(p.id) ? 0 : 1;
   return seasonal * 10000 + easy * 1000 + (p.gg || 365);
 }
+// Ordina le piante del catalogo
 function sortCatalogPlants(plants) {
   const list = [...plants];
   const byName = (a, b) =>
@@ -149,12 +140,14 @@ function sortCatalogPlants(plants) {
     (a, b) => catalogSortScore(a) - catalogSortScore(b) || byName(a, b)
   );
 }
+// Conta le piante per tipo
 function catalogTypeCounts(base) {
   return ["frutto", "foglia", "radice", "legume", "aromatica"].map((type) => ({
     type,
     count: base.filter((p) => typeOfPlant(p) === type).length
   }));
 }
+// Normalizza il testo di ricerca
 function normalizeSearch(value) {
   return String(value || "")
     .trim()
@@ -162,6 +155,7 @@ function normalizeSearch(value) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 }
+// Filtra le piante del catalogo
 function filteredCatalogPlants() {
   const term = normalizeSearch(catalog.search);
   const base = catalog.seasonOnly ? seminabili() : PLANTS;
@@ -177,16 +171,19 @@ function filteredCatalogPlants() {
   });
   return sortCatalogPlants(filtered);
 }
+// Restituisce il nome localizzato della pianta
 function plantName(id) {
   return PLANT_RO[id]?.nome && currentLang === "ro"
     ? PLANT_RO[id].nome
     : BYID[id]?.nome || id;
 }
+// Restituisce la nota localizzata della pianta
 function plantNote(p) {
   return PLANT_RO[p.id]?.nota && currentLang === "ro"
     ? PLANT_RO[p.id].nota
     : p.nota;
 }
+// Restituisce la guida di semina localizzata
 function localizedSowingGuide(plant) {
   if (currentLang !== "ro") return SOWING_GUIDE[plant.id];
   if (SOWING_GUIDE_RO[plant.id]) return SOWING_GUIDE_RO[plant.id];
@@ -294,14 +291,17 @@ function localizedSowingGuide(plant) {
 
   return { method, depth, thin, tip };
 }
+// Restituisce il titolo del kit
 function kitTitle(month) {
   return currentLang === "ro"
     ? t(`kit.title_${month}`) || KITS[month].titolo
     : KITS[month].titolo;
 }
+// Restituisce l'etichetta del tipo
 function typeLabel(type) {
   return t(`type.${type}`);
 }
+// Traduce una chiave con variabili
 function tv(key, vars = {}) {
   let value = t(key);
   Object.entries(vars).forEach(([name, replacement]) => {
@@ -309,39 +309,49 @@ function tv(key, vars = {}) {
   });
   return value;
 }
+// Restituisce il prezzo della bustina
 function packPrice(id) {
   return PACK_DATA[id]?.price ?? 2.5;
 }
+// Restituisce i semi per bustina
 function seedsPerPack(id) {
   return PACK_DATA[id]?.seeds ?? 100;
 }
+// Verifica se la pianta è nel carrello
 function inCart(id) {
   return cart.some((i) => i.id === id);
 }
+// Formatta il valore in euro
 function money(value) {
   return new Intl.NumberFormat(currentLang === "ro" ? "ro-RO" : "it-IT", {
     style: "currency",
     currency: "EUR"
   }).format(value);
 }
+// Restituisce l'etichetta della zona
 function zoneLabel(zone) {
   return t(`zone.${zone}`);
 }
+// Restituisce l'etichetta della serra
 function greenhouseLabel() {
   return state.riscaldata ? t("greenhouse.heated") : t("greenhouse.cold");
 }
+// Restituisce l'etichetta azione carrello
 function cartActionLabel(inCart) {
   return inCart ? t("cart.in_cart") : t("cart.add");
 }
+// Restituisce l'etichetta carrello dettaglio
 function detailCartLabel(inCart) {
   return inCart ? t("cart.remove_from_cart") : t("cart.add_to_cart");
 }
+// Restituisce l'etichetta dei giorni
 function daysLabel(plant, full = false) {
   if (plant.gg === 0) return t("plant.perennial");
   return full
     ? t("plant.days_harvest").replace("{days}", plant.gg)
     : `${plant.gg} ${t("plant.days_short")}`;
 }
+// Restituisce l'etichetta delle distanze
 function spacingLabel(plant) {
   const spacing = PLANT_SPACING[plant.id];
   if (!spacing) return "—";
@@ -349,14 +359,17 @@ function spacingLabel(plant) {
     ? `${spacing.d}×${spacing.dr} cm`
     : `${spacing.d} cm`;
 }
+// Restituisce l'etichetta della resa
 function yieldLabel(plant) {
   return plant.resa >= 1
     ? `${plant.resa} kg`
     : `${Math.round(plant.resa * 1000)} g`;
 }
+// Restituisce l'etichetta esposizione
 function sunLabel(plant) {
   return plant.sole === "pieno" ? t("plant.full_sun") : t("plant.half_shade");
 }
+// Genera l'infografica delle distanze
 function spacingInfographic(p) {
   const sp = PLANT_SPACING[p.id] || {};
   const d = sp.d;
@@ -408,6 +421,7 @@ function spacingInfographic(p) {
   <text x="206" y="72" font-size="10" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">${dr} cm</text>
 </svg>`;
 }
+// Applica dynamic static text
 function applyDynamicStaticText() {
   const heatedBtn = document.getElementById("heroHeatedBtn");
   const heatedLabel = document.getElementById("heroHeatedLabel");
@@ -439,14 +453,10 @@ function applyDynamicStaticText() {
   if (catalogNote) catalogNote.textContent = noteText;
 }
 
-/* 3. HERO — aggiorna mese, frase guida, clima e piante decorative. */
+// Rendering hero
 function renderHero() {
   const stag = getStagione(state.mese);
-  /*
-   * Il gradiente stagionale alimenta la variabile usata dal tema chiaro.
-   * Evitiamo un `background` inline, che avrebbe precedenza sul gradiente
-   * dedicato alla dark mode definito in theme.css.
-   */
+
   document.getElementById("hero").style.setProperty("--hero-bg", HERO_BG[stag]);
   document.getElementById("heroKicker").textContent = HERO_KICKER[stag];
   document.getElementById("heroMonth").textContent = NOMI_MESI[state.mese - 1];
@@ -465,7 +475,7 @@ function renderHero() {
     ?.classList.toggle("active", state.riscaldata);
   applyDynamicStaticText();
 
-  /* Piante fluttuanti decorative. */
+
   const plants = diversePlants(seminabili(), 8);
   const positions = [
     { top: "8%", right: "3%", size: 160, opacity: 0.2, dur: 7, delay: 0 },
@@ -498,7 +508,7 @@ function renderHero() {
     .join("");
 }
 
-/* CALENDARIO — mostra i dodici mesi e il numero di colture seminabili. */
+// Renderizza calendar strip
 function renderCalendarStrip() {
   const strip = document.getElementById("monthStrip");
   const help = document.getElementById("monthStripHelp");
@@ -530,6 +540,7 @@ function renderCalendarStrip() {
   centerActiveMonth(strip);
 }
 
+// Centra il mese attivo
 function centerActiveMonth(strip) {
   const activeMonth = strip?.querySelector(".month-tile.active");
   if (!activeMonth) return;
@@ -544,7 +555,7 @@ function centerActiveMonth(strip) {
   });
 }
 
-/* Hero: apre/chiude la scelta del livello dentro "Apri il configuratore". */
+// Alterna cfg levels
 function toggleCfgLevels() {
   const panel = document.getElementById("cfgLevels");
   const btn = document.getElementById("cfgOpenBtn");
@@ -555,7 +566,7 @@ function toggleCfgLevels() {
     btn.setAttribute("aria-expanded", "true");
     const first = panel.querySelector(".hero-cfg-level");
     if (first) first.focus({ preventScroll: true });
-    // Scroll all'inizio della card configuratore
+
     requestAnimationFrame(() => {
       const navH =
         parseFloat(
@@ -573,7 +584,7 @@ function toggleCfgLevels() {
   }
 }
 
-/* 4. CATALOGO — disegna piante in evidenza, risultati e lista compatta. */
+// Rendering catalogo
 function renderEditorialPlants() {
   const seasonal = seminabili();
   const plants = filteredCatalogPlants();
@@ -689,7 +700,7 @@ function renderEditorialPlants() {
     const featured = plants.slice(0, 3);
     const rest = plants.slice(3);
 
-    /* In evidenza: 3 card uguali nella griglia catalogo. */
+
     const editHTML = `<div class="plant-catalog-top">
       ${featured
         .map((p) => {
@@ -728,7 +739,7 @@ function renderEditorialPlants() {
     </div>`;
     document.getElementById("editorialPlants").innerHTML = editHTML;
 
-    /* Lista densa per le piante rimanenti. */
+
     document.getElementById("compactPlants").innerHTML = rest
       .map((p) => {
         const tipo = typeOfPlant(p);
@@ -759,13 +770,14 @@ function renderEditorialPlants() {
   }
 }
 
+// Imposta catalog layout
 function setCatalogLayout(layout) {
   catalog.layout = layout;
   localStorage.setItem("serra.catalog.layout", layout);
   renderEditorialPlants();
 }
 
-/* ABBINAMENTI — propone coppie di colture compatibili e azioni per il carrello. */
+// Abbinamenti
 function renderAbbinamenti() {
   const available = new Set(seminabili().map((p) => p.id));
   const pairs = [];
@@ -822,7 +834,7 @@ function renderAbbinamenti() {
     .join("");
 }
 
-/* KIT DEL MESE — crea una selezione stagionale pronta da aggiungere al carrello. */
+// Kit del mese
 function renderKit() {
   const kit = KITS[state.mese];
   if (!kit) return;
@@ -863,7 +875,7 @@ function renderKit() {
     .join("");
 }
 
-/* 5. FOOTER — aggiorna consiglio mensile, decorazioni e stagione corrente. */
+// Footer
 function renderFooter() {
   document.getElementById("footerTip").textContent = TIP_MESE[state.mese];
   const stag = getStagione(state.mese);
@@ -876,7 +888,7 @@ function renderFooter() {
   const footerSeasonTag = document.getElementById("footerSeasonTag");
   if (footerSeasonTag) footerSeasonTag.innerHTML = stagLabel;
 
-  /* Striscia infinita di piante. */
+
   let previousEmoji = "";
   const icons = nonRepeatingPlantOrder(PLANTS)
     .map((p, i) => {
@@ -891,10 +903,10 @@ function renderFooter() {
     })
     .join("");
   document.getElementById("footerPlantRow").innerHTML =
-    icons + icons; /* Duplicato per un ciclo continuo senza stacchi. */
+    icons + icons;
 }
 
-/* AGGIORNAMENTO GENERALE — riallinea tutte le sezioni dopo ogni cambio di stato. */
+// Aggiornamento generale
 function render() {
   renderHero();
   renderCalendarStrip();

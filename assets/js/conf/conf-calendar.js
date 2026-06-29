@@ -1,15 +1,4 @@
-/* =========================================================================
-   CALENDARIO DI COLTIVAZIONE
-   -------------------------------------------------------------------------
-   Offre due letture dello stesso archivio botanico:
-     - progetto: solo le varieta realmente inserite nella serra;
-     - catalogo: tutte le colture compatibili con clima e riscaldamento.
-
-   Le attivita sono stime dichiarate, ricavate dai mesi di semina e dai giorni
-   medi alla raccolta. Le aromatiche perenni (gg = 0) non vengono piu trattate
-   come colture da 30 giorni: cura e raccolta sono indicate come continue.
-   ========================================================================= */
-
+// Stato calendario
 const calendarUi = {
   view: "project",
   month: null,
@@ -19,14 +8,17 @@ const calendarUi = {
 
 const CALENDAR_ACTIVITY_ORDER = ["harvest", "sow", "transplant", "care"];
 
+// Recupera una stringa tradotta per il calendario
 function calendarText(key, vars) {
   return typeof tx === "function" ? tx(key, vars) : key;
 }
 
+// Normalizza un indice di mese in range 1-12
 function calendarMonth(value) {
   return ((Number(value) - 1 + 12) % 12) + 1;
 }
 
+// Deduplica la lista piante per ID
 function calendarUniquePlants(plants) {
   const seen = new Set();
   return plants.filter((plant) => {
@@ -36,27 +28,32 @@ function calendarUniquePlants(plants) {
   });
 }
 
+// Restituisce le piante presenti nel progetto corrente
 function calendarProjectPlants() {
   return calendarUniquePlants(
     state.beds.map((bed) => BYID[bed.plantId]).filter(Boolean)
   );
 }
 
+// Seleziona il pool di piante in base alla vista attiva
 function calendarSourcePlants(view = calendarUi.view) {
   return view === "all" ? PLANTS : calendarProjectPlants();
 }
 
+// Restituisce la chiave di categoria della pianta
 function calendarCategoryKey(plant) {
   const entry = CAT_ORDER.find((category) => category.ids.includes(plant.id));
   return entry?.key || "foglie";
 }
 
+// Traduce la chiave di categoria in etichetta
 function calendarCategoryLabel(key) {
   return key === "all"
     ? calendarText("calendar.all_categories")
     : calendarText(`vegCat_${key}`);
 }
 
+// Elenca i mesi di semina effettivi della pianta
 function calendarSowMonths(plant) {
   if (typeof effectiveMonths === "function") {
     return [...effectiveMonths(plant)].sort((a, b) => a - b);
@@ -64,10 +61,12 @@ function calendarSowMonths(plant) {
   return [...new Set(plant.mesi || [])].sort((a, b) => a - b);
 }
 
+// Verifica se la pianta è perenne
 function calendarIsPerennial(plant) {
   return Number(plant.gg) === 0;
 }
 
+// Verifica se la pianta ammette il trapianto
 function calendarCanTransplant(plant) {
   if (calendarIsPerennial(plant)) return false;
   const type = TIPO[plant.id] || plant.tipo || "foglia";
@@ -75,14 +74,14 @@ function calendarCanTransplant(plant) {
   return Number(plant.gg) >= 50 && Number(plant.d) >= 20;
 }
 
-/* Intervallo prudente: mese centrale stimato + mese successivo. Evita la
-   falsa precisione della vecchia singola casella mensile. */
+// Calcola gli offset mensili di raccolta dalla semina
 function calendarHarvestOffsets(plant) {
   if (calendarIsPerennial(plant)) return [];
   const central = Math.max(1, Math.round((Number(plant.gg) || 30) / 30));
   return [central, central + 1];
 }
 
+// Calcolo attività
 function calendarPlantSchedule(plant) {
   const sow = new Set(calendarSowMonths(plant));
   const transplant = new Set();
@@ -113,6 +112,7 @@ function calendarPlantSchedule(plant) {
   return { sow, transplant, care, harvest };
 }
 
+// Elenca le attività previste per una pianta in un mese
 function calendarActivitiesForMonth(plant, month) {
   const schedule = calendarPlantSchedule(plant);
   return CALENDAR_ACTIVITY_ORDER.filter((activity) =>
@@ -120,6 +120,7 @@ function calendarActivitiesForMonth(plant, month) {
   );
 }
 
+// Restituisce icona ed etichetta di un'attività
 function calendarActivityMeta(activity) {
   return {
     sow: { icon: "🌱", label: calendarText("calendar.sow") },
@@ -132,12 +133,14 @@ function calendarActivityMeta(activity) {
   }[activity];
 }
 
+// Genera la stringa dei mesi abbreviati
 function calendarMonthList(months) {
   const values = [...months].sort((a, b) => a - b);
   if (!values.length) return calendarText("calendar.continuous");
   return values.map((month) => monthName(month).slice(0, 3)).join(", ");
 }
 
+// Verifica se la pianta soddisfa i filtri attivi
 function calendarMatchesFilters(plant) {
   const query = calendarUi.search.trim().toLocaleLowerCase(state.lang || "it");
   const name = String(plantText(plant, "nome") || "").toLocaleLowerCase(
@@ -150,6 +153,7 @@ function calendarMatchesFilters(plant) {
   return matchesSearch && matchesCategory;
 }
 
+// Filtra e ordina le piante con attività nel mese
 function calendarFilteredEntries(plants, month) {
   return plants
     .filter(calendarMatchesFilters)
@@ -171,6 +175,7 @@ function calendarFilteredEntries(plants, month) {
     });
 }
 
+// Rendering calendario
 function calendarRenderCategories() {
   const select = document.getElementById("calendarCategory");
   if (!select) return;
@@ -192,6 +197,7 @@ function calendarRenderCategories() {
   calendarUi.category = select.value;
 }
 
+// Renderizza calendar render tabs
 function calendarRenderTabs() {
   document.querySelectorAll("[data-calendar-view]").forEach((button) => {
     const active = button.dataset.calendarView === calendarUi.view;
@@ -206,6 +212,7 @@ function calendarRenderTabs() {
   if (allTab) allTab.textContent = calendarText("calendar.view_all");
 }
 
+// Renderizza calendar render month strip
 function calendarRenderMonthStrip() {
   const strip = document.getElementById("calendarMonthStrip");
   if (!strip) return;
@@ -229,6 +236,7 @@ function calendarRenderMonthStrip() {
   }).join("");
 }
 
+// Renderizza calendar render summary
 function calendarRenderSummary() {
   const summary = document.getElementById("calendarSummary");
   if (!summary) return;
@@ -264,6 +272,7 @@ function calendarRenderSummary() {
     )}</small>`;
 }
 
+// Genera i badge HTML delle attività
 function calendarActivityBadges(activities) {
   return activities
     .map((activity) => {
@@ -275,6 +284,7 @@ function calendarActivityBadges(activities) {
     .join("");
 }
 
+// Genera la card HTML di una pianta nel calendario
 function calendarPlantCard(entry) {
   const { plant, activities } = entry;
   const schedule = calendarPlantSchedule(plant);
@@ -313,6 +323,7 @@ function calendarPlantCard(entry) {
   </details>`;
 }
 
+// Renderizza calendar render content
 function calendarRenderContent() {
   const grid = document.getElementById("calendarGrid");
   if (!grid) return;
@@ -343,6 +354,7 @@ function calendarRenderContent() {
   })}</strong></div>${entries.map(calendarPlantCard).join("")}`;
 }
 
+// Aggiorna tutti i componenti della modale calendario
 function renderCalendarModal(options = {}) {
   calendarUi.month = calendarUi.month || state.mese;
   const title = document.getElementById("calendarModalTitle");
@@ -383,27 +395,32 @@ function renderCalendarModal(options = {}) {
   }
 }
 
+// Cambia la vista del calendario (progetto / tutto)
 function setCalendarView(view) {
   if (view !== "project" && view !== "all") return;
   calendarUi.view = view;
   renderCalendarModal();
 }
 
+// Seleziona il mese attivo nel calendario
 function setCalendarMonth(month) {
   calendarUi.month = calendarMonth(month);
   renderCalendarModal({ scrollMonth: true });
 }
 
+// Aggiorna il filtro di ricerca nel calendario
 function setCalendarSearch(value) {
   calendarUi.search = String(value || "");
   calendarRenderContent();
 }
 
+// Aggiorna il filtro di categoria nel calendario
 function setCalendarCategory(value) {
   calendarUi.category = value || "all";
   calendarRenderContent();
 }
 
+// Apertura e chiusura
 function openCalendarModal() {
   calendarUi.month = state.mese;
   renderCalendarModal({ scrollMonth: true });
@@ -414,6 +431,7 @@ function openCalendarModal() {
   }
 }
 
+// Chiude calendar modal
 function closeCalendarModal() {
   const modal = document.getElementById("calendarModal");
   if (modal) {

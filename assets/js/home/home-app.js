@@ -1,31 +1,19 @@
-/* ==========================================================================
-   HOME — CONTROLLI, PREFERENZE E INTERAZIONI
-   --------------------------------------------------------------------------
-   Gestisce i controlli del catalogo, il salvataggio delle preferenze, la lingua,
-   gli aiuti durante lo scorrimento, l'animazione della serra e il pannello che
-   prepara misure e clima prima di aprire il configuratore.
-
-   SEZIONI DEL FILE
-   1. Clima, mese, ricerca e filtri del catalogo
-   2. Preferenze locali e cambio lingua
-   3. Cookie, scorrimento e scorciatoie di navigazione
-   4. Animazione dimostrativa della serra
-   5. Pannello di pre-configurazione
-   ========================================================================== */
-
-/* 1. CATALOGO — aggiorna clima, periodo, ricerca, filtri e ordinamento. */
+// Controlli catalogo
 function setZone(z) {
   state.zona = z;
   render();
 }
+// Alterna la serra riscaldata
 function toggleHeated() {
   state.riscaldata = !state.riscaldata;
   render();
 }
+// Imposta il mese attivo
 function setMese(m) {
   state.mese = m;
   render();
 }
+// Allinea i controlli del catalogo
 function syncCatalogControls() {
   const search = document.getElementById("catalogSearch");
   const type = document.getElementById("catalogType");
@@ -67,11 +55,13 @@ function syncCatalogControls() {
   const resetBtn = document.getElementById("catalogReset");
   if (resetBtn) resetBtn.hidden = !anyExtra;
 }
+// Imposta catalog search
 function setCatalogSearch(value) {
   catalog.search = value;
   render();
   updateCatalogSearchSuggestions();
 }
+// Nasconde catalog search suggestions
 function hideCatalogSearchSuggestions() {
   const list = document.getElementById("catalogSearchSuggestions");
   const input = document.getElementById("catalogSearch");
@@ -81,6 +71,7 @@ function hideCatalogSearchSuggestions() {
   }
   if (input) input.setAttribute("aria-expanded", "false");
 }
+// Seleziona catalog search suggestion
 function selectCatalogSearchSuggestion(name) {
   catalog.search = name;
   const input = document.getElementById("catalogSearch");
@@ -88,6 +79,7 @@ function selectCatalogSearchSuggestion(name) {
   render();
   hideCatalogSearchSuggestions();
 }
+// Aggiorna catalog search suggestions
 function updateCatalogSearchSuggestions() {
   const list = document.getElementById("catalogSearchSuggestions");
   const input = document.getElementById("catalogSearch");
@@ -120,6 +112,7 @@ function updateCatalogSearchSuggestions() {
   list.hidden = false;
   input.setAttribute("aria-expanded", "true");
 }
+// Esegue l'escape HTML
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -142,6 +135,7 @@ function escapeHtml(value) {
     e.preventDefault();
   });
 })();
+// Pulisce catalog search
 function clearCatalogSearch() {
   catalog.search = "";
   const input = document.getElementById("catalogSearch");
@@ -151,6 +145,7 @@ function clearCatalogSearch() {
   }
   render();
 }
+// Rimuove catalog filter
 function removeCatalogFilter(kind) {
   if (kind === "scope") catalog.seasonOnly = true;
   else if (kind === "search") {
@@ -162,30 +157,37 @@ function removeCatalogFilter(kind) {
   else if (kind === "sort") catalog.sort = "season";
   render();
 }
+// Imposta catalog type
 function setCatalogType(value) {
   catalog.type = value;
   render();
 }
+// Alterna catalog season only
 function toggleCatalogSeasonOnly() {
   catalog.seasonOnly = !catalog.seasonOnly;
   render();
 }
+// Alterna catalog full
 function toggleCatalogFull() {
   catalog.seasonOnly = false;
   render();
 }
+// Alterna catalog easy only
 function toggleCatalogEasyOnly() {
   catalog.easyOnly = !catalog.easyOnly;
   render();
 }
+// Imposta catalog sort
 function setCatalogSort(value) {
   catalog.sort = value || "season";
   render();
 }
+// Imposta catalog category
 function setCatalogCategory(type) {
   catalog.type = type || "";
   render();
 }
+// Renderizza catalog category rail
 function renderCatalogCategoryRail(base) {
   const rail = document.getElementById("catalogCategoryRail");
   if (!rail) return;
@@ -218,6 +220,7 @@ function renderCatalogCategoryRail(base) {
     )
     .join("");
 }
+// Renderizza catalog insights
 function renderCatalogInsights(plants, base) {
   const box = document.getElementById("catalogInsights");
   if (!box) return;
@@ -234,6 +237,7 @@ function renderCatalogInsights(plants, base) {
     <span><b>${compactCount}</b> ${t("catalog.insight_compact")}</span>
     <span><b>${cartCount}</b> ${t("catalog.insight_cart")}</span>`;
 }
+// Mostra full catalog
 function showFullCatalog() {
   catalog.search = "";
   catalog.type = "";
@@ -243,7 +247,7 @@ function showFullCatalog() {
   render();
 }
 
-/* 2. PREFERENZE — salva e ripristina le scelte dell'utente in localStorage. */
+// Preferenze utente
 function savePrefs() {
   localStorage.setItem("ois.cart", JSON.stringify(cart));
   localStorage.setItem(
@@ -255,6 +259,7 @@ function savePrefs() {
     })
   );
 }
+// Carica prefs
 function loadPrefs() {
   try {
     const p = JSON.parse(localStorage.getItem("ois.prefs") || "{}");
@@ -266,7 +271,7 @@ function loadPrefs() {
   } catch (_) {}
 }
 
-/* LINGUA — applica italiano o romeno a testi statici e nomi delle piante. */
+// Testi localizzati
 const NOMI_MESI_RO = [
   "Ianuarie",
   "Februarie",
@@ -330,7 +335,6 @@ const TIP_MESE_RO = {
   12: "Planifică rotația culturilor: nu pune aceeași familie în același loc."
 };
 
-/* TESTI ITALIANI ORIGINALI — base di ripristino dopo il passaggio al romeno. */
 const NOMI_MESI_IT = [...NOMI_MESI];
 const ABBR_MESI_IT = [...ABBR_MESI];
 const STAGIONE_QUOTE_IT = { ...STAGIONE_QUOTE };
@@ -342,14 +346,17 @@ const T = window.SERRA_I18N?.index || { it: {}, ro: {} };
 
 let currentLang = "it";
 
+// Normalizza lang
 function normalizeLang(lang) {
   return lang === "ro" || lang === "it" ? lang : "it";
 }
 
+// Gestisce t
 function t(key) {
   return (T[currentLang] || {})[key] || T.it[key] || key;
 }
 
+// Applicazione lingua
 function applyLang(lang) {
   lang = normalizeLang(lang);
   currentLang = lang;
@@ -400,6 +407,7 @@ function applyLang(lang) {
   }
 }
 
+// Imposta lang
 function setLang(lang) {
   applyLang(normalizeLang(lang));
 }
@@ -411,7 +419,7 @@ window.addEventListener("storage", (event) => {
   applyLang(nextLang);
 });
 
-/* 3. COOKIE E NAVIGAZIONE — consenso locale e aiuti durante lo scorrimento. */
+// Cookie e navigazione
 function initCookieBanner() {
   if (localStorage.getItem("ois.cookie")) return;
   setTimeout(() => {
@@ -419,16 +427,17 @@ function initCookieBanner() {
     if (b) b.classList.add("visible");
   }, 1400);
 }
+// Accetta i cookie
 function acceptCookies() {
   localStorage.setItem("ois.cookie", "accepted");
   document.getElementById("cookieBanner").classList.remove("visible");
 }
+// Rifiuta i cookie
 function rejectCookies() {
   localStorage.setItem("ois.cookie", "essential");
   document.getElementById("cookieBanner").classList.remove("visible");
 }
 
-/* TORNA SU — mostra il pulsante quando la pagina è stata fatta scorrere. */
 window.addEventListener(
   "scroll",
   function () {
@@ -467,8 +476,7 @@ if (_initLang !== "it") {
 }
 initCookieBanner();
 
-/* Scroll con offset per l'header fisso: porta `target` appena sotto la nav
-   invece di farlo finire nascosto dietro di essa. */
+// Scroll con offset
 function scrollElementBelowNav(target, behavior = "smooth") {
   if (!target) return;
   const navH = parseInt(
@@ -480,8 +488,6 @@ function scrollElementBelowNav(target, behavior = "smooth") {
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
-/* "...oppure sfoglia il catalogo semi": porta all'inizio della card "Cosa
-   piantare adesso" invece che a metà sezione. */
 const heroCatalogLink = document.querySelector(".hero-cfg-catalog-link");
 if (heroCatalogLink) {
   heroCatalogLink.addEventListener("click", (e) => {
@@ -495,8 +501,6 @@ if (heroCatalogLink) {
   });
 }
 
-/* Link menu "Catalogo completo": usa lo stesso offset, così il titolo
-   "Cosa piantare" non finisce sotto l'header fisso su mobile. */
 document
   .querySelectorAll('a[href="#stagione"], a[href="index.html#stagione"]')
   .forEach((link) => {
@@ -511,13 +515,12 @@ document
     });
   });
 
-/* Campo ricerca: focus + animazione attenzione quando entra nel viewport.
-   Su desktop: focus reale. Su mobile: solo animazione visiva (evita tastiera). */
 (function () {
   const searchLabel = document.querySelector(".catalog-search--pro");
   const searchInput = document.getElementById("catalogSearch");
   if (!searchLabel || !searchInput) return;
 
+  // Richiama l'attenzione sulla ricerca
   function triggerSearchAttention(focus) {
     searchLabel.classList.add("catalog-search--attention");
     searchLabel.addEventListener("animationend", function handler() {
@@ -529,10 +532,10 @@ document
     }
   }
 
-  /* IntersectionObserver: si attiva solo quando l'input è ben visibile */
+
   var searchObserver = new IntersectionObserver(function(entries) {
     if (entries[0].isIntersecting) {
-      /* Piccolo delay per non interrompere lo scroll momentum */
+
       setTimeout(function() { triggerSearchAttention(true); }, 300);
       searchObserver.disconnect();
     }
@@ -540,7 +543,7 @@ document
 
   searchObserver.observe(searchLabel);
 
-  /* CTA "oppure sfoglia il catalogo semi": focus immediato dopo lo scroll */
+
   var catalogLink = document.querySelector(".hero-cfg-catalog-link");
   if (catalogLink) {
     catalogLink.addEventListener("click", function() {
@@ -565,8 +568,6 @@ if (initialSectionTarget) {
   }, 80);
 }
 
-/* "Cerca una coltura": porta all'inizio della card di ricerca e mette subito
-   il focus sul campo, pronto per scrivere. */
 const catalogSearchLink = document.querySelector(
   '.catalog-pro-primary-action[href="#catalogSearch"]'
 );
@@ -582,14 +583,14 @@ if (catalogSearchLink) {
   });
 }
 
-/* 4. ANIMAZIONE SERRA — costruisce la mappa SVG e anima aiuole e colture. */
+// Animazione serra
 (function initGreenhouseAnim() {
   const svg = document.getElementById("hcgSvg");
   const peek = document.getElementById("hcgPeek");
   const inner = document.getElementById("hcgPeekInner");
   if (!svg || !peek || !inner) return;
 
-  /* ── Piante: dati reali da plants-data.js ───────────────────────────── */
+
   const EMOJI_MAP = {
     pomodoro: "🍅",
     carota: "🥕",
@@ -607,16 +608,17 @@ if (catalogSearchLink) {
     qty: QTY_MAP[id]
   })).filter((p) => p.id);
 
-  /* ── Layout: 2 colonne, aiuole di altezza variabile ─────────────────── */
-  // Colonna 1 (x=5, w=92): Pomodoro + Carota  |  Colonna 2 (x=105, w=110): Lattuga + Basilico
+
+
   const BEDS = [
-    { p: PLANTS[0], x: 5, y: 5, w: 92, h: 68, cols: 2, rows: 2, r: 11 }, // Pomodoro 4 piante
-    { p: PLANTS[1], x: 5, y: 81, w: 92, h: 74, cols: 2, rows: 3, r: 9 }, // Carota 6 piante
-    { p: PLANTS[2], x: 105, y: 5, w: 110, h: 50, cols: 3, rows: 2, r: 8 }, // Lattuga 6 piante
-    { p: PLANTS[3], x: 105, y: 63, w: 110, h: 92, cols: 3, rows: 4, r: 7 } // Basilico 12 piante
+    { p: PLANTS[0], x: 5, y: 5, w: 92, h: 68, cols: 2, rows: 2, r: 11 },
+    { p: PLANTS[1], x: 5, y: 81, w: 92, h: 74, cols: 2, rows: 3, r: 9 },
+    { p: PLANTS[2], x: 105, y: 5, w: 110, h: 50, cols: 3, rows: 2, r: 8 },
+    { p: PLANTS[3], x: 105, y: 63, w: 110, h: 92, cols: 3, rows: 4, r: 7 }
   ];
 
-  /* ── Posizioni piante in un'aiuola ──────────────────────────────────── */
+
+  // Calcola le posizioni delle piante nell'aiuola
   function bedPlantPositions(bed) {
     const pts = [];
     for (let row = 0; row < bed.rows; row++) {
@@ -630,7 +632,8 @@ if (catalogSearchLink) {
     return pts;
   }
 
-  /* ── Glyph reale (portato da script.js) ────────────────────────────── */
+
+  // Genera numeri casuali deterministici
   function makeRng(seed) {
     let s = seed;
     return () => {
@@ -651,6 +654,7 @@ if (catalogSearchLink) {
     "cerfoglio",
     "cimbru"
   ]);
+  // Disegna l'icona di raccolta
   function harvestVector(plant, size) {
     const s = size, c = plant.col || {};
     const finish = (content) => `<g style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
@@ -658,6 +662,7 @@ if (catalogSearchLink) {
     if (plant.id === "pomodoro") return finish(`<circle r="${s * .36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * .05}"/><ellipse cx="${-s * .11}" cy="${-s * .12}" rx="${s * .07}" ry="${s * .12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * .31} l${s * .2} ${-s * .1} l${-s * .16} ${s * .2} l${-s * .18} ${-s * .18}Z" fill="#356c35"/>`);
     return finish(`<g transform="rotate(-32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g>`);
   }
+  // Verifica se mostrare l'icona di raccolta
   function shouldShowHarvestVector(plant) {
     if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
     return new Set([
@@ -666,12 +671,15 @@ if (catalogSearchLink) {
       "finocchio"
     ]).has(plant.id);
   }
+  // Genera la forma foglia semplice
   function _leafPath(len, wid) {
     return `M0 0 C ${wid} ${-len * 0.16},${wid * 0.55} ${-len * 0.85},0 ${-len} C ${-wid * 0.55} ${-len * 0.85},${-wid} ${-len * 0.16},0 0 Z`;
   }
+  // Genera la forma foglia lobata
   function _lobedLeafPath(len, wid) {
     return `M0 0 Q ${wid * 0.4} ${-len * 0.1} ${wid * 0.5} ${-len * 0.25} Q ${wid * 0.15} ${-len * 0.3} ${wid * 0.55} ${-len * 0.45} Q ${wid * 0.1} ${-len * 0.5} ${wid * 0.45} ${-len * 0.7} Q ${wid * 0.05} ${-len * 0.75} 0 ${-len} Q ${-wid * 0.05} ${-len * 0.75} ${-wid * 0.45} ${-len * 0.7} Q ${-wid * 0.1} ${-len * 0.5} ${-wid * 0.55} ${-len * 0.45} Q ${-wid * 0.15} ${-len * 0.3} ${-wid * 0.5} ${-len * 0.25} Q ${-wid * 0.4} ${-len * 0.1} 0 0 Z`;
   }
+  // Genera la forma foglia palmata
   function _palmatePath(r) {
     let d = "M0 0 ";
     for (let k = -2; k <= 2; k++) {
@@ -682,6 +690,7 @@ if (catalogSearchLink) {
     }
     return d + "Z";
   }
+  // Disegna il glifo vegetale
   function glyph(plant, r, rng) {
     if (_laterPlantSvgIds.has(plant?.id)) {
       const size = r * 2;
@@ -789,7 +798,8 @@ if (catalogSearchLink) {
     return `<g>${s}</g>`;
   }
 
-  /* ── Costruisce la mappa (aiuole statiche, piante aggiunte dopo) ─────── */
+
+  // Costruisce la mappa dimostrativa
   function buildMap() {
     let defs = `<defs>
       <radialGradient id="harvestRed" cx="30%" cy="24%" r="78%"><stop offset="0" stop-color="#ff9a82"/><stop offset=".28" stop-color="#e84e3d"/><stop offset=".72" stop-color="#b52e2b"/><stop offset="1" stop-color="#651f25"/></radialGradient>
@@ -804,7 +814,7 @@ if (catalogSearchLink) {
     });
     defs += `</defs>`;
     let s = "";
-    // piccolo corridoio tra le due colonne
+
     s += `<rect x="100" y="5" width="5" height="150" rx="2" fill="rgba(210,200,180,0.18)"/>`;
     BEDS.forEach((b, i) => {
       s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="7"
@@ -813,7 +823,8 @@ if (catalogSearchLink) {
     svg.innerHTML = defs + s;
   }
 
-  /* ── Aggiunge una piantina animata ──────────────────────────────────── */
+
+  // Aggiunge una pianta alla mappa
   function addPlant(cx, cy, plant, r, seed) {
     const rng = makeRng(seed);
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -836,7 +847,8 @@ if (catalogSearchLink) {
     );
   }
 
-  /* ── Pannello colture laterale ──────────────────────────────────────── */
+
+  // Costruisce il pannello riepilogo
   function buildPanel() {
     inner.innerHTML = PLANTS.map(
       (p) =>
@@ -851,16 +863,19 @@ if (catalogSearchLink) {
     ).join("");
   }
 
-  /* ── Ciclo animazione ───────────────────────────────────────────────── */
+
   let timers = [];
+  // Registra un timer animazione
   function t(fn, ms) {
     timers.push(setTimeout(fn, ms));
   }
+  // Pulisce i timer animazione
   function clearTimers() {
     timers.forEach(clearTimeout);
     timers = [];
   }
 
+  // Avvia il ciclo animato
   function runCycle() {
     clearTimers();
     buildMap();
@@ -869,21 +884,21 @@ if (catalogSearchLink) {
       .querySelectorAll(".hcg-card")
       .forEach((c) => c.classList.remove("hcg-card--in"));
 
-    // piante in sequenza: aiuola per aiuola
+
     let delay = 180;
     BEDS.forEach((bed, bi) => {
       const pts = bedPlantPositions(bed);
-      // basilico (ultimo) appare più veloce per il numero alto
+
       const step = bed.p.name === "Basilico" ? 140 : 260;
       pts.forEach((pt, pi) => {
         const d = delay;
         t(() => addPlant(pt.cx, pt.cy, bed.p, bed.r, bi * 100 + pi), d);
         delay += step;
       });
-      delay += 100; // piccola pausa tra aiuole
+      delay += 100;
     });
 
-    // pannello scivola dentro
+
     const panelIn = delay + 300;
     t(() => {
       peek.classList.add("hcg-peek--in");
@@ -894,7 +909,7 @@ if (catalogSearchLink) {
         );
     }, panelIn);
 
-    // pausa → reset → loop
+
     t(
       () => {
         peek.classList.remove("hcg-peek--in");
@@ -923,15 +938,16 @@ if (catalogSearchLink) {
   if (container) observer.observe(container);
 })();
 
-/* 5. PRE-CONFIGURAZIONE — raccoglie profilo, misure e clima prima di aprire
-   il configuratore, quindi salva i valori scelti e compone l'URL di ingresso. */
+// Pre-configurazione
 (function () {
   const CONFIG_KEY = "serra.config.v1";
 
+  // Legge la configurazione salvata
   function readSavedCfg() {
     try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || "null"); } catch { return null; }
   }
 
+  // Salva la pre-configurazione
   function savePreconfigToStorage() {
     const w = Math.min(12, Math.max(1, parseFloat(document.getElementById("pcW")?.value) || 3));
     const l = Math.min(30, Math.max(1, parseFloat(document.getElementById("pcL")?.value) || 5));
@@ -948,18 +964,21 @@ if (catalogSearchLink) {
     return { w, l, path, zona, riscaldata, mese };
   }
 
+  // Allinea lo slider della pre-configurazione
   function syncPcSlider(inputId, sliderId) {
     const input = document.getElementById(inputId);
     const slider = document.getElementById(sliderId);
     if (input && slider) slider.value = input.value;
   }
 
+  // Allinea l'input dallo slider
   function syncPcInputFromSlider(sliderId, inputId) {
     const slider = document.getElementById(sliderId);
     const input = document.getElementById(inputId);
     if (slider && input) input.value = slider.value;
   }
 
+  // Allinea il camminamento pre-configurato
   function syncPcPath(source) {
     const slider = document.getElementById("pcPath");
     const num = document.getElementById("pcPathNum");
@@ -971,6 +990,7 @@ if (catalogSearchLink) {
     updatePreconfigSummary();
   }
 
+  // Aggiorna il riepilogo pre-configurazione
   function updatePreconfigSummary() {
     const el = document.getElementById("preconfigSummary");
     if (!el) return;
@@ -989,12 +1009,14 @@ if (catalogSearchLink) {
     el.textContent = `${w}×${l} m · cam. ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
   }
 
+  // Allinea il selettore serra riscaldata
   function syncPcRiscSelect(heated) {
     const sel = document.getElementById("pcRisc");
     if (sel) sel.value = heated ? "si" : "no";
   }
 
-  // stub non più usato — tenuto per compatibilità
+
+  // Imposta la serra riscaldata
   function setPcHeated(active) { syncPcRiscSelect(active); }
 
   var PC_MONTHS = {
@@ -1004,6 +1026,7 @@ if (catalogSearchLink) {
          "Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"]
   };
 
+  // Popola i mesi della pre-configurazione
   function populatePcMonths() {
     const sel = document.getElementById("pcMese");
     if (!sel) return;
@@ -1020,7 +1043,7 @@ if (catalogSearchLink) {
     if (currentVal) sel.value = currentVal;
   }
 
-  /* Traduzioni preconfig integrate nell'IIFE — nessuna dipendenza esterna */
+
   var PC_TR = {
     it: {
       "preconfig.title":          "La tua serra",
@@ -1078,11 +1101,13 @@ if (catalogSearchLink) {
     }
   };
 
+  // Traduce una chiave della pre-configurazione
   function pcT(key) {
     var lang = document.documentElement.lang === "ro" ? "ro" : "it";
     return (PC_TR[lang] && PC_TR[lang][key]) || (PC_TR.it && PC_TR.it[key]) || key;
   }
 
+  // Applica la lingua alla pre-configurazione
   function applyPreconfigLang() {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
@@ -1097,6 +1122,7 @@ if (catalogSearchLink) {
     populatePcMonths();
   }
 
+  // Aggiorna la CTA pre-configurazione
   function updatePreconfigCta() {
     const active = document.querySelector("#preconfigPersonaSection .pc-persona-card.is-active");
     const cta = document.getElementById("preconfigCta");
@@ -1112,6 +1138,7 @@ if (catalogSearchLink) {
     }
   }
 
+  // Apre la scheda pre-configurazione
   function openPreconfigSheet(targetUrl) {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
@@ -1142,7 +1169,7 @@ if (catalogSearchLink) {
     if (pcMese) pcMese.value = mese;
     updatePreconfigSummary();
 
-    /* Persona: mostra/nascondi sezione in base alla presenza del livello nell'URL */
+
     const urlParams = new URL(targetUrl, location.href).searchParams;
     const livello = urlParams.get("livello");
     const personaSection = document.getElementById("preconfigPersonaSection");
@@ -1156,7 +1183,7 @@ if (catalogSearchLink) {
       btn.setAttribute("aria-pressed", String(isActive));
     });
 
-    /* Se il livello è già noto, il CTA punta direttamente all'URL */
+
     const cta = document.getElementById("preconfigCta");
     if (cta && hasLivello) {
       cta.href = targetUrl;
@@ -1170,12 +1197,12 @@ if (catalogSearchLink) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         overlay.classList.add("is-open");
-        /* Animazione attenzione sui campi misure dopo l'apertura */
+
         setTimeout(function() {
           const dimsCard = overlay.querySelector(".preconfig-vfield--primary");
           if (!dimsCard) return;
           dimsCard.classList.remove("dims-attention");
-          void dimsCard.offsetWidth; /* forza reflow per riavviare l'animazione */
+          void dimsCard.offsetWidth;
           dimsCard.classList.add("dims-attention");
           dimsCard.addEventListener("animationend", function() {
             dimsCard.classList.remove("dims-attention");
@@ -1186,6 +1213,7 @@ if (catalogSearchLink) {
     document.body.style.overflow = "hidden";
   }
 
+  // Chiude la scheda pre-configurazione
   function closePreconfigSheet() {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
@@ -1198,7 +1226,7 @@ if (catalogSearchLink) {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    /* Intercetta tutti i link al configuratore: 3 livelli hero + nav + footer */
+
     document.querySelectorAll(".hero-cfg-level, .nav-link--configuratore").forEach(link => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
@@ -1206,15 +1234,15 @@ if (catalogSearchLink) {
       });
     });
 
-    /* Chiudi: backdrop e X */
+
     document.getElementById("preconfigBackdrop")?.addEventListener("click", closePreconfigSheet);
     document.getElementById("preconfigClose")?.addEventListener("click", closePreconfigSheet);
 
-    /* Zona e Serra select */
+
     document.getElementById("pcZona")?.addEventListener("change", updatePreconfigSummary);
     document.getElementById("pcRisc")?.addEventListener("change", updatePreconfigSummary);
 
-    /* Persona selector (dentro il modal) */
+
     document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(btn => {
       btn.addEventListener("click", function () {
         document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(b => {
@@ -1227,7 +1255,7 @@ if (catalogSearchLink) {
       });
     });
 
-    /* Stepper +/- */
+
     document.querySelectorAll(".preconfig-step-btn").forEach(btn => {
       btn.addEventListener("click", function () {
         const input = document.getElementById(this.dataset.target);
@@ -1241,7 +1269,7 @@ if (catalogSearchLink) {
       });
     });
 
-    /* Slider misure — sincronizzati con stepper */
+
     document.getElementById("pcWSlider")?.addEventListener("input", () => {
       syncPcInputFromSlider("pcWSlider", "pcW"); updatePreconfigSummary();
     });
@@ -1251,34 +1279,34 @@ if (catalogSearchLink) {
     document.getElementById("pcW")?.addEventListener("input", () => syncPcSlider("pcW", "pcWSlider"));
     document.getElementById("pcL")?.addEventListener("input", () => syncPcSlider("pcL", "pcLSlider"));
 
-    /* Slider e stepper camminamento */
+
     document.getElementById("pcPath")?.addEventListener("input", () => syncPcPath("slider"));
     document.getElementById("pcPathNum")?.addEventListener("change", () => syncPcPath("num"));
 
-    /* Summary su cambio altri input */
+
     ["pcW", "pcL", "pcMese"].forEach(id => {
       document.getElementById(id)?.addEventListener("change", updatePreconfigSummary);
     });
 
-    /* CTA: salva e naviga (click bloccato da pointer-events:none se disabled) */
+
     document.getElementById("preconfigCta")?.addEventListener("click", function () {
       savePreconfigToStorage();
     });
 
-    /* Chiudi con Escape */
+
     document.addEventListener("keydown", e => {
       if (e.key === "Escape" && !document.getElementById("preconfigOverlay")?.hasAttribute("hidden")) {
         closePreconfigSheet();
       }
     });
 
-    /* Aggiorna traduzioni modal al cambio lingua */
+
     new MutationObserver(() => {
       applyPreconfigLang();
       updatePreconfigSummary();
     }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
-    /* Inizializzazione Mappa Leaflet interattiva */
+
     if (document.getElementById("map") && typeof L !== "undefined") {
       try {
         const map = L.map("map", { scrollWheelZoom: false }).setView([43.6853, 11.2547], 15);

@@ -1,16 +1,10 @@
-/* ==========================================================================
-   NAVIGAZIONE MOBILE CONDIVISA
-   --------------------------------------------------------------------------
-   Apre e chiude il menu, mantiene corretti gli attributi ARIA e lo richiude
-   quando l'utente sceglie un link, preme Escape o torna alla vista desktop.
-   ========================================================================== */
+// Navigazione mobile
 (() => {
   const header = document.querySelector(".site-header");
   const toggle = document.querySelector(".nav-menu-toggle");
   const menu = document.getElementById("mainNav");
   if (!header || !toggle || !menu) return;
 
-  /* APERTURA E CHIUSURA — sincronizza aspetto, stato e testo accessibile. */
   const closeMenu = () => {
     document.body.classList.remove("nav-menu-open");
     toggle.setAttribute("aria-expanded", "false");
@@ -23,7 +17,6 @@
     toggle.setAttribute("aria-label", "Chiudi menu");
   };
 
-  /* EVENTI DI USCITA — link, Escape, clic esterno e ritorno al desktop. */
   toggle.addEventListener("click", () => {
     if (document.body.classList.contains("nav-menu-open")) closeMenu();
     else openMenu();
@@ -43,6 +36,7 @@
     closeMenu();
   });
 
+  // Gestisce debounce
   function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -50,6 +44,7 @@
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
   }
+
   window.addEventListener(
     "resize",
     debounce(() => {

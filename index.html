@@ -1,17 +1,14 @@
 <!doctype html>
 <html lang="it">
   <head>
-    <!-- =========================================================
-         1. CONFIGURAZIONE DEL DOCUMENTO
-         Metadati, versionamento, font, icone, tema e fogli di stile.
-         ========================================================= -->
+    <!-- Intestazione del documento -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
-    <!-- Versione app e percorso degli asset: imposta il token di cache busting. -->
+    <!-- Script di configurazione e versioning -->
     <script>
       window.SERRA_APP_VERSION = "2026-06-28-178";
       window.SERRA_IS_LOCAL_DEV =
@@ -27,14 +24,14 @@
         return path + "?v=" + window.SERRA_ASSET_VERSION;
       };
     </script>
-    <!-- Font: preconnect e caricamento Google Fonts. -->
+    <!-- Caricamento dei font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,600;9..144,0,800;9..144,1,300&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Icone e manifest: favicon, icona touch e configurazione PWA. -->
+    <!-- Icone e manifest PWA -->
     <script>
       document.write(
         '<link rel="icon" href="' +
@@ -55,7 +52,7 @@
       );
     </script>
     <meta name="theme-color" content="#2f6b3a" />
-    <!-- Tema: rileva la preferenza dell'utente prima del primo render. -->
+    <!-- Gestione del tema (chiaro/scuro) -->
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
@@ -65,7 +62,7 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
-    <!-- Fogli di stile: caricati con versioning per il reset della cache. -->
+    <!-- Fogli di stile principali -->
     <script>
       document.write(
         '<link rel="stylesheet" href="' +
@@ -89,10 +86,7 @@
     ></script>
   </head>
   <body>
-    <!-- =========================================================
-         2. HEADER E NAVIGAZIONE PRINCIPALE
-         Brand, collegamenti, menu mobile, tema, lingua e carrello.
-         ========================================================= -->
+    <!-- Header del sito e navigazione -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -184,22 +178,17 @@
       </div>
     </header>
 
-    <!-- =========================================================
-         3. HERO E ACCESSO AL CONFIGURATORE
-         Presentazione stagionale, messaggio principale e percorsi guidati.
-         ========================================================= -->
+    <!-- Sezione Hero -->
     <section class="hero-immersive" id="hero">
       <div class="hero-bg-plants" id="heroBgPlants"></div>
       <div class="hero-content">
-        <!-- Stato stagione: mese e contesto corrente. -->
+        <!-- Contenuto testuale della sezione Hero -->
         <div class="hero-season-kicker">
           <span class="hero-kicker-pulse" aria-hidden="true"></span>
           <span id="heroKicker">🌱&nbsp;Stagione attiva</span>
           <span class="hero-kicker-sep" aria-hidden="true">·</span>
           <span id="heroMonth" class="hero-kicker-month">Giugno</span>
         </div>
-
-        <!-- Messaggio principale della home. -->
         <h1 class="hero-headline" data-i18n="hero.headline">
           Semi freschi per la tua serra.
         </h1>
@@ -208,8 +197,7 @@
           con metodo.
         </p>
         <span id="heroTagline" hidden></span>
-
-        <!-- Accesso al configuratore: percorsi guidati e anteprima. -->
+        <!-- Accesso al configuratore -->
         <div class="hero-cfg">
           <div class="hero-cfg-inner">
             <div class="hero-cfg-text">
@@ -346,13 +334,10 @@
       </div>
     </section>
 
-    <!-- =========================================================
-         4. CATALOGO STAGIONALE
-         Ricerca, filtri climatici, categorie e lista dei semi disponibili.
-         ========================================================= -->
+    <!-- Sezione Catalogo -->
     <section class="stagione-section catalog-pro-section" id="stagione">
       <div class="catalog-pro-shell">
-        <!-- Intestazione catalogo. -->
+        <!-- Intestazione della sezione catalogo -->
         <header class="cat-head">
           <div
             class="section-kicker stagione-kicker"
@@ -366,7 +351,7 @@
           <div class="stagione-meta" id="stagioneMeta"></div>
         </header>
 
-        <!-- Strumenti catalogo: mese, tipo, ricerca e ordinamento. -->
+        <!-- Strumenti di filtro del catalogo -->
         <div
           class="catalog-tools catalog-tools--pro catalog-tools--advanced"
           aria-label="Filtri catalogo semi"
@@ -463,11 +448,9 @@
                   >
                 </div>
               </div>
-              <!-- Tipi coltura: generati dalla logica catalogo. -->
               <div class="catalog-category-rail" id="catalogCategoryRail"></div>
             </div>
 
-            <!-- Ricerca catalogo e filtri rapidi. -->
             <div class="catalog-filter-group catalog-filter-group--search">
               <div class="catalog-filter-group-head">
                 <span class="catalog-filter-step catalog-filter-step--search"
@@ -524,7 +507,6 @@
                   ></ul>
                 </label>
 
-                <!-- Stato tecnico: select sincronizzata con le chip categoria. -->
                 <select
                   id="catalogType"
                   onchange="setCatalogType(this.value)"
@@ -673,11 +655,7 @@
       </div>
     </section>
 
-    <!-- =========================================================
-         5. CONTENUTI DI SUPPORTO ALLA COLTIVAZIONE
-         Abbinamenti compatibili, kit mensile e contatti aziendali.
-         ========================================================= -->
-    <!-- Abbinamenti: coppie compatibili per il mese selezionato. -->
+    <!-- Sezione Abbinamenti -->
     <section class="abbinamenti-section" id="abbinamenti">
       <div class="abbinamenti-inner">
         <div class="flow-section-head">
@@ -704,7 +682,7 @@
       </div>
     </section>
 
-    <!-- Kit del mese: gruppo pronto di semi compatibili. -->
+    <!-- Sezione Kit del Mese -->
     <section class="kit-section" id="kit">
       <div class="kit-card">
         <div class="kit-info">
@@ -746,7 +724,7 @@
       </div>
     </section>
 
-    <!-- Contatti: recapiti diretti e mappa statica. -->
+    <!-- Sezione Contatti -->
     <section class="contatti-section" id="contatti">
       <div class="contatti-inner">
         <div class="section-kicker" data-i18n="contatti.kicker">Parlaci</div>
@@ -821,10 +799,7 @@
       </div>
     </section>
 
-    <!-- =========================================================
-         6. FOOTER
-         Brand, collegamenti utili, assistenza e informazioni legali.
-         ========================================================= -->
+    <!-- Footer del sito -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
         <div class="footer-plant-row" id="footerPlantRow"></div>
@@ -936,11 +911,7 @@
       </div>
     </footer>
 
-    <!-- =========================================================
-         7. PANNELLI E OVERLAY OPERATIVI
-         Scheda della pianta e carrello, mostrati sopra la pagina principale.
-         ========================================================= -->
-    <!-- Dettaglio pianta: pannello dinamico aperto dal catalogo. -->
+    <!-- Pannello Dettaglio Pianta -->
     <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
       <div
         class="detail-panel"
@@ -1222,7 +1193,7 @@
       </div>
     </div>
 
-    <!-- Carrello: drawer con semi selezionati e checkout simulato. -->
+    <!-- Pannello Carrello -->
     <div class="cart-overlay" id="cartOverlay">
       <div class="cart-backdrop" onclick="closeCart()"></div>
       <div class="cart-drawer">
@@ -1283,11 +1254,7 @@
       </div>
     </div>
 
-    <!-- =========================================================
-         8. CONTROLLI FLOTTANTI E CONSENSO
-         Ritorno in alto, notifiche contestuali e preferenze cookie.
-         ========================================================= -->
-    <!-- Torna su: pulsante flottante di risalita pagina. -->
+    <!-- Controlli flottanti e banner -->
     <button
       class="back-to-top"
       id="backToTop"
@@ -1297,7 +1264,7 @@
       ↑
     </button>
 
-    <!-- Notifica carrello: conferma rapida dopo aggiunta semi. -->
+    <!-- Notifica aggiunta al carrello -->
     <div class="cart-nudge" id="cartNudge" aria-live="polite">
       <div class="cart-nudge-copy">
         <b id="cartNudgeTitle">Aggiunto al carrello</b>
@@ -1308,7 +1275,7 @@
       </button>
     </div>
 
-    <!-- Cookie banner: consenso essenziale o completo. -->
+    <!-- Banner per il consenso dei cookie -->
     <div
       class="cookie-banner"
       id="cookieBanner"
@@ -1353,11 +1320,7 @@
       </div>
     </div>
 
-    <!-- =========================================================
-         9. PRE-CONFIGURAZIONE DELLA SERRA
-         Pannello preliminare per misure, clima, profilo e mese di semina.
-         ========================================================= -->
-    <!-- Pre-configurazione: impostazioni iniziali prima di aprire il configuratore. -->
+    <!-- Pannello di pre-configurazione -->
     <div
       class="preconfig-overlay"
       id="preconfigOverlay"
@@ -1369,8 +1332,6 @@
       <div class="preconfig-backdrop" id="preconfigBackdrop"></div>
       <div class="preconfig-sheet" id="preconfigSheet">
         <div class="preconfig-handle" aria-hidden="true"></div>
-
-        <!-- Intestazione del pannello, coerente con la card "La tua serra". -->
         <div class="preconfig-panel-head">
           <div class="preconfig-head-left">
             <span class="preconfig-head-icon" aria-hidden="true">
@@ -1421,7 +1382,6 @@
         </div>
 
         <div class="preconfig-body">
-          <!-- Passaggio 1: misure interne della serra. -->
           <div class="preconfig-section-label preconfig-section-label--primary">
             <span data-i18n="preconfig.sizes_label">1. Misure interne</span>
             <span
@@ -1571,8 +1531,6 @@
               <span class="preconfig-path-unit">cm</span>
             </div>
           </div>
-
-          <!-- Passaggio 2: zona climatica e riscaldamento. -->
           <div
             class="preconfig-section-label"
             data-i18n="preconfig.climate_label"
@@ -1621,7 +1579,6 @@
             </div>
           </div>
 
-          <!-- Profilo coltivatore: mostrato quando il livello non è già definito. -->
           <div id="preconfigPersonaSection">
             <div
               class="preconfig-section-label"
@@ -1692,9 +1649,6 @@
               </button>
             </div>
           </div>
-          <!-- Fine della selezione del profilo coltivatore. -->
-
-          <!-- Passaggio 3: mese di semina iniziale. -->
           <div
             class="preconfig-section-label"
             data-i18n="preconfig.month_label"
@@ -1731,11 +1685,8 @@
       </div>
     </div>
 
-    <!-- =========================================================
-         10. SCRIPT E SERVIZI DELLA PAGINA
-         Cache applicativa, navigazione, traduzioni e logica della homepage.
-         ========================================================= -->
-    <!-- Service worker: cache attiva in produzione, reset automatico in locale. -->
+    <!-- Script di fine pagina -->
+    <!-- Gestione del Service Worker -->
     <script>
       if ("serviceWorker" in navigator) {
         const isLocalDev =
@@ -1820,7 +1771,7 @@
         }
       }
     </script>
-    <!-- Script pagina: menu, traduzioni e logica ecommerce. -->
+    <!-- Caricamento degli script dell'applicazione -->
     <script>
       document.write(
         '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'

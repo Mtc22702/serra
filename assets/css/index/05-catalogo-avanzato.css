@@ -1,11 +1,5 @@
-/* Sezione: Catalogo avanzato.
-+ * Raccolta ordinata delle regole relative a ricerca, filtri professionali, prezzi e stati vuoti.
-+ */
+/* Catalogo avanzato */
 @layer base {
-  /* =========================================================
-   Catalogo professionale: UI/UX per acquisto diretto semi.
-   Mantiene gli stessi ID JS, ma rende la stagione section un catalogo completo.
-   ========================================================= */
   .catalog-pro-section {
     max-width: none;
     padding: clamp(2.2rem, 4vw, 4rem) 1rem clamp(3rem, 5vw, 5rem);
@@ -30,7 +24,7 @@
     width: min(100%, 1220px);
     margin: 0 auto;
   }
-  /* Intestazione della sezione catalogo. */
+
   .cat-head {
     margin-bottom: 1.5rem;
   }
@@ -175,7 +169,6 @@
     font-size: 1.05rem;
   }
   @media (max-width: 900px) {
-    /* Sticky bar occupa troppo spazio verticale su tablet */
     .catalog-tools--pro {
       position: static;
     }
@@ -186,6 +179,7 @@
       grid-template-columns: 1fr;
     }
   }
+  /* Regole responsive */
   @media (max-width: 760px) {
     .catalog-filter-group {
       padding: 0.66rem;
@@ -198,6 +192,7 @@
       margin-top: 0.08rem;
     }
   }
+  /* Regole responsive */
   @media (max-width: 680px) {
     .catalog-pro-section {
       padding-left: 0.75rem;
@@ -217,6 +212,7 @@
       margin-bottom: 1.1rem;
     }
   }
+  /* Responsive mobile */
   @media (max-width: 480px) {
     .catalog-search--pro .catalog-search-box {
       gap: 0.45rem;
@@ -235,7 +231,7 @@
     .catalog-search--pro .catalog-search-box input::placeholder {
       font-size: 1rem;
     }
-    /* Scope pills leggibili anche con traduzioni lunghe. */
+
     .catalog-scope--advanced {
       flex-wrap: wrap !important;
       width: 100%;
@@ -277,7 +273,6 @@
     }
   }
 
-  /* Catalogo professionale avanzato: filtri, categorie e ordinamenti. */
   .catalog-tools--advanced {
     display: flex;
     flex-direction: column;
@@ -494,8 +489,7 @@
     font-size: 0.9rem;
     line-height: 1.16;
   }
-  /* Ricerca catalogo: campo testuale e suggerimenti. */
-  /* Badge e nota sezione ricerca */
+
   .catalog-search-badge {
     display: inline-flex;
     align-items: center;
@@ -511,6 +505,7 @@
     flex-shrink: 0;
     animation: searchBadgePulse 2.4s ease-in-out 1s 3;
   }
+  /* Animazioni */
   @keyframes searchBadgePulse {
     0%,
     100% {
@@ -535,7 +530,6 @@
     font-style: italic;
   }
 
-  /* Search box base */
   .catalog-search--pro .catalog-search-box {
     display: flex;
     align-items: center;
@@ -564,7 +558,7 @@
     transform: translateY(-1px);
   }
 
-  /* Animazione attenzione al focus da scroll/CTA */
+  /* Animazioni */
   @keyframes searchAttention {
     0% {
       box-shadow:
@@ -667,6 +661,7 @@
     padding-bottom: 0.1rem;
     scrollbar-width: thin;
   }
+  /* Responsive mobile */
   @media (max-width: 600px) {
     .footer-plant-strip {
       display: none;
@@ -744,7 +739,7 @@
     flex-wrap: wrap;
     gap: 0.38rem;
     align-items: center;
-    /* Ambito catalogo: annulla la griglia base. */
+
     grid-template-columns: unset;
     background: none;
     border: none;
@@ -929,6 +924,7 @@
       grid-template-columns: 1fr;
     }
   }
+  /* Regole responsive */
   @media (max-width: 760px) {
     .catalog-filter-group {
       padding: 0.66rem;
@@ -941,6 +937,7 @@
       margin-top: 0.08rem;
     }
   }
+  /* Responsive mobile */
   @media (max-width: 480px) {
     .catalog-tools--advanced {
       padding: 0.66rem;
@@ -1018,12 +1015,6 @@
     }
   }
 
-  /* =========================================================
-   Catalogo avanzato: prezzi, ricerca, filtri attivi e stati vuoti.
-   Blocco in coda con regole mirate.
-   ========================================================= */
-
-  /* Prezzo: card in evidenza. */
   .top-buy-row {
     display: flex;
     align-items: center;
@@ -1058,7 +1049,6 @@
     text-overflow: ellipsis;
   }
 
-  /* Prezzo nelle card compatte. */
   .compact-buy {
     display: flex;
     flex-direction: column;
@@ -1073,7 +1063,6 @@
     white-space: nowrap;
   }
 
-  /* Campo di ricerca con pulsante di cancellazione rapida. */
   .catalog-search-box {
     position: relative;
   }
@@ -1109,7 +1098,6 @@
     display: none;
   }
 
-  /* Suggerimenti di ricerca in tempo reale. */
   .catalog-search--pro {
     position: relative;
   }
@@ -1156,7 +1144,6 @@
     color: var(--green-dk);
   }
 
-  /* Filtri attivi: chip rimovibili con etichetta. */
   .catalog-status:not([hidden]) {
     display: flex;
     align-items: center;
@@ -1229,7 +1216,6 @@
     color: #b5462e;
   }
 
-  /* Stato vuoto con azione guidata. */
   .empty-cta {
     margin-top: 1.1rem;
     padding: 0.62rem 1.2rem;
@@ -1252,7 +1238,6 @@
     box-shadow: 0 8px 20px rgba(27, 67, 50, 0.22);
   }
 
-  /* Rifiniture e dettagli grafici del catalogo. */
   .catalog-pro-primary-action {
     background: linear-gradient(135deg, var(--green) 0%, var(--green-lt) 100%);
     border: none;
@@ -1281,6 +1266,7 @@
     box-shadow: 0 4px 14px rgba(45, 106, 79, 0.22);
   }
 
+  /* Regole responsive */
   @media (max-width: 640px) {
     .top-buy-row {
       flex-direction: column;
@@ -1296,7 +1282,6 @@
     }
   }
 
-  /* Catalog Hint & Controls layout adjustment */
   .catalog-hint {
     display: flex;
     justify-content: space-between;
@@ -1344,7 +1329,6 @@
     box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.18);
   }
 
-  /* Layout switch controls */
   .catalog-layout-toggle {
     display: flex;
     gap: 2px;
@@ -1382,6 +1366,7 @@
     box-shadow: 0 2px 6px rgba(27, 67, 50, 0.08);
   }
 
+  /* Regole responsive */
   @media (max-width: 640px) {
     .catalog-hint {
       flex-direction: column;
@@ -1414,7 +1399,6 @@
     }
   }
 
-  /* Super compact catalog list view */
   .compact-list-view {
     display: grid;
     grid-template-columns: 1fr !important;
@@ -1525,6 +1509,7 @@
     color: #fff;
   }
 
+  /* Regole responsive */
   @media (max-width: 540px) {
     .plant-card-super-compact {
       flex-wrap: wrap;
@@ -1547,7 +1532,6 @@
   }
 }
 
-/* Light Search Box in Dark Mode to emphasize its importance */
 html[data-theme="dark"] .catalog-search--pro .catalog-search-box {
   background: #f4f9f6;
   border-color: var(--green, #2d6a4f);
@@ -1585,7 +1569,6 @@ html[data-theme="dark"]
   color: #fff;
 }
 
-/* Light/Red styled Reset button in Dark Mode */
 html[data-theme="dark"] .catalog-scope--advanced .catalog-reset-btn {
   background: rgba(231, 111, 81, 0.12) !important;
   border-color: rgba(231, 111, 81, 0.3) !important;
@@ -1597,7 +1580,6 @@ html[data-theme="dark"] .catalog-scope--advanced .catalog-reset-btn:hover {
   color: #ff9b85 !important;
 }
 
-/* Dark Mode Select Arrow and Sort Icon color override */
 html[data-theme="dark"] .catalog-hint-controls .cat-sort-select {
   background-color: rgba(172, 214, 187, 0.08) !important;
   color: var(--theme-text) !important;
@@ -1610,13 +1592,11 @@ html[data-theme="dark"] .catalog-hint-controls .cat-sort-select {
     right 0.6rem center !important;
 }
 
-/* Dark Mode step circles (1, 2, 3) color correction */
 html[data-theme="dark"] .catalog-filter-step {
   background: #52b788 !important;
   color: #0b1a13 !important;
 }
 
-/* Dark Mode chip-count bubbles for active/inactive states */
 html[data-theme="dark"] .catalog-scope--advanced .catalog-chip .chip-count {
   background: rgba(255, 255, 255, 0.12) !important;
   color: #edf5ef !important;

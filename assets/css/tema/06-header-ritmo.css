@@ -1,8 +1,5 @@
-/* Sezione: Header e ritmo responsive.
-+ * Tema condiviso per navigazione mobile, spaziature fra icone e testi e viewport stretti.
-+ */
+/* Header e ritmo responsive */
 @layer base {
-  /* Header smartphone: il brand ha priorità e i controlli usano ingombri compatti. */
   @media (max-width: 660px) {
     .site-header-inner {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -106,6 +103,7 @@
     }
   }
 
+  /* Regole responsive */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
       display: none;
@@ -115,7 +113,7 @@
     }
   }
 
-  /* Telefoni molto stretti: seconda riga per i controlli, brand sempre completo. */
+  /* Regole responsive */
   @media (max-width: 340px) {
     :root {
       --nav-h: 108px;
@@ -155,7 +153,6 @@
   }
 }
 @layer base {
-  /* Ritmo condiviso fra icone, immagini e testo. */
   :root {
     --icon-text-gap: 0.52rem;
     --icon-text-gap-compact: 0.38rem;
@@ -215,12 +212,10 @@
     column-gap: var(--icon-text-gap-compact) !important;
   }
 
-  /* Tab e riquadri con icona sopra al testo. */
   :where(.detail-tab, .pdp-tab, .detail-tile, .pdp-tile) {
     row-gap: 0.34rem !important;
   }
 
-  /* Emoji incluse nello stesso nodo di testo: spazio appena più leggibile. */
   :where(
     .nav-link,
     .footer-nav-list a,
@@ -234,6 +229,7 @@
     word-spacing: 0.12em;
   }
 
+  /* Responsive mobile */
   @media (max-width: 660px) {
     :root {
       --icon-text-gap: 0.46rem;

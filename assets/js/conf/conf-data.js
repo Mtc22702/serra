@@ -1,42 +1,11 @@
-/* =========================================================================
-   SEZIONE 00 - Panoramica del configuratore
-   -------------------------------------------------------------------------
-   JS configuratore: progettazione serra, layout aiuole, vista SVG e carrello.
-   HTML/CSS/JS puro, nessuna libreria.
-   Vista dall'alto in scala reale: aiuole rialzate in terra + camminamenti
-   in ghiaia, struttura serra (vetri e telaio) sovrapposta.
-   -------------------------------------------------------------------------
-   MAPPA DEL FILE (in ordine):
-     1.  Costanti, mesi e dizionari globali
-     2.  Catalogo colture, difficoltà, icone e testi botanici
-     3.  Foto e preset pronti
-     4.  Stato globale, salvataggio e sincronizzazione controlli
-     5.  Profili utente, modalità e percorso guidato
-     6.  Traduzioni, etichette e helper testuali
-     7.  Disegno SVG delle piante
-     8.  Geometria della serra e costruzione scena
-     9.  Rendering UI, dettaglio pianta, riepiloghi e stampa
-     10. Motore quantità, layout manuale e riempimento spazi
-     11. Auto-riempimento stagionale
-     12. Preset, import/export e intenti di avvio
-     13. Eventi UI e inizializzazione configuratore
-     14. Carrello configuratore
-     15. Avvio finale e sincronizzazione lingua
-   ========================================================================= */
-
-/* =========================================================================
-   SEZIONE 01 - Costanti, mesi e dizionari globali
-   -------------------------------------------------------------------------
-   Misure reali espresse in centimetri, limiti di rendering e riferimenti ai
-   dizionari i18n caricati da assets/js/i18n.js.
-   ========================================================================= */
-const WALL = 7; // ingombro del sottile telaio perimetrale della serra
-const MARGIN = 18; // ghiaia tra muro e prima aiuola
-const PATH = 34; // camminamento tra le aiuole
-const BED_GAP = 6; // separazione sottile tra colture consecutive nella stessa aiuola lunga
-const BEDPAD = 9; // terra di bordo dentro ogni aiuola
-const MAX_GLYPH = 1400; // tetto piantine disegnate (prestazioni)
-const MIN_VISUAL_GLYPH_R = 8; // rende leggibili colture molto fitte (carote, ravanelli)
+// Costanti e dizionari
+const WALL = 7;
+const MARGIN = 18;
+const PATH = 34;
+const BED_GAP = 6;
+const BEDPAD = 9;
+const MAX_GLYPH = 1400;
+const MIN_VISUAL_GLYPH_R = 8;
 
 const MESI = [
   "Gennaio",
@@ -56,25 +25,12 @@ const MONTHS = window.SERRA_I18N?.months || { it: MESI, ro: MESI };
 const I18N = window.SERRA_I18N?.configurator || { it: {}, ro: {} };
 const SITE_I18N = window.SERRA_I18N?.index || { it: {}, ro: {} };
 
-/* =========================================================================
-   SEZIONE 02 - Catalogo colture, difficoltà e icone
-   -------------------------------------------------------------------------
-   Il catalogo principale arriva da plants-data.js. Qui costruiamo indici,
-   difficoltà, ordine categorie, emoji e contenuti descrittivi collegati.
-
-   arch = stile grafico della piantina
-   d = distanza sulla fila (cm) · dr = distanza tra file (cm, se omesso = d) · h = altezza (bassa/media/alta)
-   sole/acqua · giorni alla raccolta · mesi semina in serra (base, zona temperata)
-   amiche/nemiche (abbinamenti) · resa kg/pianta · nota principianti · col = palette foglie
-   ========================================================================= */
+// Catalogo colture
 const PLANTS = window.PLANTS;
 const BYID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 
-// Difficoltà di coltivazione: 1 = facile, 2 = media, 3 = difficile/esotica.
-// Mappa completa su tutte le colture del catalogo: è la fonte unica usata
-// sia dalle schede pianta sia dall'auto-riempimento.
+// Livelli di difficoltà
 const DIFFICULTY = {
-  // Facili: rapide, tolleranti, ideali per chi inizia.
   lattuga: 1,
   rucola: 1,
   ravanello: 1,
@@ -109,7 +65,7 @@ const DIFFICULTY = {
   melissa: 1,
   cerfoglio: 1,
   cimbru: 1,
-  // Medie: richiedono un po' di attenzione o tempi più lunghi.
+
   pomodoro: 2,
   peperone: 2,
   cetriolo: 2,
@@ -140,7 +96,7 @@ const DIFFICULTY = {
   leustean: 2,
   dragoncello: 2,
   camomilla: 2,
-  // Difficili o esotiche: lente, delicate, perenni o poco comuni.
+
   peperoncino: 3,
   melanzana: 3,
   zucca: 3,
@@ -176,8 +132,6 @@ const DIFFICULTY = {
   leurda: 2
 };
 
-// Colture difficili perche poco comuni o esotiche: il principiante non le
-// riceve nemmeno nel fallback delle stagioni con poche alternative.
 const EXOTIC_PLANTS = new Set([
   "mais_dolce",
   "tomatillo",
@@ -322,6 +276,7 @@ const CAT_ORDER = [
   }
 ];
 
+// Emoji e visualizzazioni
 const FRUIT_EMOJI = {
   pomodoro: "🍅",
   peperone: "🫑",
@@ -423,7 +378,7 @@ const FRUIT_EMOJI = {
 };
 const PLANT_RO = window.SERRA_I18N?.plants?.ro || {};
 
-/* Testi descrittivi italiani usati nelle schede pianta e nei pannelli. */
+// Descrizioni piante
 const PLANT_DESC = {
   it: {
     pomodoro:
@@ -738,6 +693,7 @@ const PLANT_DESC = {
   }
 };
 
+// Guide alla semina
 const SOWING_GUIDE = {
   pomodoro: {
     method:
@@ -1359,14 +1315,7 @@ const SOWING_GUIDE = {
   }
 };
 
-/* =========================================================================
-   SEZIONE 03 - Foto colture e preset pronti
-   -------------------------------------------------------------------------
-   Immagini locali per il dettaglio pianta e configurazioni di partenza che
-   l'utente puo caricare dal selettore dei layout.
-   ========================================================================= */
-
-/* Foto colture: immagini locali usate nel dettaglio pianta. */
+// Foto e preset
 const PLANT_PHOTOS = {
   pomodoro: "assets/img/photo/pomodoro.webp",
   peperone: "assets/img/photo/peperone.webp",
@@ -1467,7 +1416,7 @@ const PLANT_PHOTOS = {
   cimbru: "assets/img/photo/cimbru.webp"
 };
 
-/* Preimpostazioni orti: configurazioni pronte caricate dal selettore. */
+// Preset pronti
 const PRESETS = {
   insalate: [
     ["lattuga", 12],

@@ -1,11 +1,5 @@
-/* Sezione: Hero configuratore.
-+ * Raccolta ordinata delle regole relative a card promozionale, anteprima serra e selezione del livello.
-+ */
+/* Hero configuratore */
 @layer base {
-  /* =========================================================
-   Hero configuratore: layout testo, anteprima serra e CTA.
-   ========================================================= */
-  /* Hero configuratore: contenuto integrato nella card principale. */
   .hero-cfg-inner {
     position: relative;
     display: grid;
@@ -30,6 +24,7 @@
     overflow: hidden;
     animation: heroCfgIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+  /* Animazioni */
   @keyframes heroCfgIn {
     from {
       opacity: 0;
@@ -37,7 +32,6 @@
     }
   }
 
-  /* Colonna testo del blocco configuratore. */
   .hero-cfg-text {
     min-width: 0;
   }
@@ -199,7 +193,6 @@
     transform: translateY(-1px);
   }
 
-  /* Colonna illustrazione: anteprima della serra dall'alto. */
   .hero-cfg-visual {
     display: flex;
     align-items: center;
@@ -257,7 +250,7 @@
     width: 100%;
     height: 100%;
   }
-  /* Pannello colture che si intravede da destra */
+
   .hcg-peek {
     position: absolute;
     top: 0;
@@ -287,7 +280,7 @@
     padding: 6px 0;
     overflow: hidden;
   }
-  /* Card singola nel pannello */
+
   .hcg-card {
     display: flex;
     align-items: center;
@@ -353,7 +346,7 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   }
 
-  /* Adattamenti responsive del blocco hero configuratore. */
+  /* Responsive tablet */
   @media (max-width: 900px) {
     .hero-cfg-inner {
       grid-template-columns: 1fr;
@@ -375,6 +368,7 @@
       max-width: 300px;
     }
   }
+  /* Responsive mobile */
   @media (max-width: 520px) {
     .hero-cfg-inner {
       padding: 1.5rem 1.2rem;
@@ -390,7 +384,6 @@
     }
   }
 
-  /* CTA a tendina: selezione del livello al clic sul pulsante principale. */
   #cfgOpenBtn .hero-cfg-cta-arrow {
     font-size: 0.9rem;
     transition: transform 0.22s ease;
@@ -414,6 +407,7 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     animation: cfgLevelsIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+  /* Animazioni */
   @keyframes cfgLevelsIn {
     from {
       opacity: 0;
@@ -509,11 +503,6 @@
     }
   }
 
-  /* =========================================================
-   Rifiniture UX: percorsi, importazione e CTA operative.
-   ========================================================= */
-
-  /* Hero configuratore: azioni impilate e scelta livello contestuale. */
   .hero-cfg-actions {
     flex-direction: column;
     align-items: flex-start;
@@ -523,6 +512,7 @@
     width: 100%;
     margin-top: 0;
   }
+  /* Responsive tablet */
   @media (max-width: 900px) {
     .hero-cfg-actions {
       align-items: center;
@@ -535,7 +525,6 @@
     }
   }
 
-  /* Catalogo: CTA di importazione con hint di flusso. */
   .catalog-import-btn {
     flex-direction: column;
     align-items: flex-start;
@@ -558,7 +547,6 @@
     letter-spacing: 0;
   }
 
-  /* Configuratore: blocco importazione con label esplicativa. */
   .conf-import-block {
     display: flex;
     flex-direction: column;
@@ -573,6 +561,7 @@
     line-height: 1.2;
     white-space: nowrap;
   }
+  /* Responsive mobile */
   @media (max-width: 660px) {
     .conf-actions {
       align-items: stretch;
@@ -586,7 +575,7 @@
     }
   }
 
-  /* Rifinitura finale del percorso post-catalogo. */
+  /* Responsive tablet */
   @media (max-width: 900px) {
     .flow-section-head {
       align-items: flex-start;
@@ -607,6 +596,7 @@
       min-width: 0;
     }
   }
+  /* Regole responsive */
   @media (max-width: 620px) {
     .abbinamenti-section,
     .kit-section,
@@ -640,6 +630,7 @@
     }
   }
 
+  /* Regole responsive */
   @media (max-width: 860px) {
     .contatti-grid {
       grid-template-columns: 1fr;

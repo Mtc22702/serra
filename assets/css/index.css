@@ -1,4 +1,4 @@
-/* Manifesto CSS della homepage: importa i moduli nell’ordine necessario alla cascata. */
+/* Moduli CSS della pagina principale */
 @layer base, dark-theme;
 
 @import url("./index/01-fondazioni-hero.css");

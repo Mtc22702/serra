@@ -1,18 +1,6 @@
-/* ==========================================================================
-   ARCHIVIO CONDIVISO DELLE PIANTE
-   --------------------------------------------------------------------------
-   È la fonte unica dei dati botanici usati dalla home e dal configuratore.
-   Per aggiornare una coltura si interviene qui, evitando copie divergenti.
-
-   SEZIONI DEL FILE
-   1. PLANTS — anagrafica, spaziature, esigenze, resa e consociazioni
-   2. SOWING_GUIDE — guida dettagliata alla semina in italiano
-   3. SOWING_GUIDE_RO — guida alla semina tradotta in romeno
-   4. TIPO — categoria botanica o d'uso di ogni pianta
-   5. ESPORTAZIONE — disponibilità dei dati nel browser e in CommonJS
-   ========================================================================== */
+// Archivio condiviso delle piante
 const DATA_EXPORT = (function (root) {
-  /* 1. ANAGRAFICA — spaziature, grafica, sole, acqua, resa e abbinamenti. */
+  // Anagrafica colture
   const PLANTS = [
     {
       id: "pomodoro",
@@ -2155,7 +2143,7 @@ const DATA_EXPORT = (function (root) {
     }
   ];
 
-  /* 2. GUIDA ALLA SEMINA IN ITALIANO — metodo, profondità, temperatura e tempi. */
+  // Guide alla semina
   const SOWING_GUIDE = {
     pomodoro: {
       method:
@@ -3383,7 +3371,7 @@ const DATA_EXPORT = (function (root) {
     }
   };
 
-  /* 3. GUIDA ALLA SEMINA IN ROMENO — traduzione della guida italiana disponibile. */
+  // Guide alla semina in romeno
   const SOWING_GUIDE_RO = {
     pomodoro: {
       method:
@@ -4016,7 +4004,7 @@ const DATA_EXPORT = (function (root) {
     }
   };
 
-  /* 4. CATEGORIE — associa ogni pianta a frutto, foglia, radice e altre famiglie. */
+  // Categorie botaniche
   const TIPO = {
     pomodoro: "frutto",
     peperone: "frutto",
@@ -4117,8 +4105,8 @@ const DATA_EXPORT = (function (root) {
     cimbru: "aromatica"
   };
 
-  /* 5. ESPORTAZIONE — espone i dati come modulo CommonJS o variabili globali. */
   const DATA = { PLANTS, SOWING_GUIDE, SOWING_GUIDE_RO, TIPO };
+  // Esportazione
   if (typeof module !== "undefined" && module.exports) {
     module.exports = DATA;
   }

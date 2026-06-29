@@ -1,6 +1,4 @@
-/* Sezione: Dark mode principale.
-+ * Tema condiviso per gerarchia cromatica di homepage, hero, catalogo e configuratore.
-+ */
+/* Tema scuro principale */
 @layer dark-theme {
   html[data-theme="dark"] {
     --dark-page: #121f19;
@@ -45,9 +43,6 @@
   }
 }
 @layer base {
-  /* Testi: primari, descrittivi e didascalie. */
-}
-@layer dark-theme {
   html[data-theme="dark"]
     :where(
       .hero-headline,
@@ -128,9 +123,6 @@
   }
 }
 @layer base {
-  /* Hero e scelta percorso: superfici leggibili senza perdere l'atmosfera. */
-}
-@layer dark-theme {
   html[data-theme="dark"] .hero-immersive {
     background: linear-gradient(160deg, #182b22 0%, #14231d 48%, #111a16 100%);
   }
@@ -201,9 +193,6 @@
   }
 }
 @layer base {
-  /* Catalogo, abbinamenti, kit e contatti. */
-}
-@layer dark-theme {
   html[data-theme="dark"]
     :where(
       .stagione-section,
@@ -309,9 +298,6 @@
   }
 }
 @layer base {
-  /* Schede tecniche homepage: ogni livello resta distinto. */
-}
-@layer dark-theme {
   html[data-theme="dark"] .detail-panel,
   html[data-theme="dark"] .stage > .panel--plant-detail {
     background: linear-gradient(180deg, #1d2e26, #17241e);
@@ -424,9 +410,6 @@
   }
 }
 @layer base {
-  /* Configuratore: pagina e pannelli con tre livelli di profondità. */
-}
-@layer dark-theme {
   html[data-theme="dark"] .app {
     background: radial-gradient(
       circle at 50% 14%,

@@ -1,20 +1,12 @@
-/* Sezione: Livelli di esperienza.
-+ * Raccolta ordinata delle regole relative a intro evoluta, varianti novizio/intermedio/esperto e adattamenti.
-+ */
+/* Livelli di esperienza */
 @layer base {
-  /* =========================================================
-   Profili utente: selettore livello e comportamento per persona.
-   Blocco in coda con regole mirate.
-   ========================================================= */
-
   :root {
-    --persona-nov: #4f9a3f; /* germoglio */
-    --persona-int: #c9962f; /* oro maturo */
-    --persona-exp: #c0552f; /* terracotta */
+    --persona-nov: #4f9a3f;
+    --persona-int: #c9962f;
+    --persona-exp: #c0552f;
     --raggio-lg: 14px;
   }
 
-  /* Intro: più respiro e un accento deciso in alto. */
   .guided-intro {
     padding: 14px 18px;
     border-top-width: 4px;
@@ -31,7 +23,6 @@
     letter-spacing: -0.01em;
   }
 
-  /* Selettore livello esperienza. */
   .persona-pick {
     display: flex;
     flex-direction: column;
@@ -63,7 +54,6 @@
     gap: 10px;
   }
 
-  /* Card livello: base neutra, accento colorato a sinistra. */
   .persona-card {
     --accent: var(--verde);
     position: relative;
@@ -117,7 +107,6 @@
     outline-offset: 2px;
   }
 
-  /* Card attiva: tinta dell'accento + bordo pieno. */
   .persona-card.is-active {
     border-color: var(--accent);
     background: color-mix(in srgb, var(--accent) 12%, #fff);
@@ -198,21 +187,13 @@
     transform: translateX(0);
   }
 
-  /* Variazioni stilistiche per livello. */
-  /* Novizio: percorso lineare. Nasconde controlli avanzati e i passi tecnici,
-   lascia il flusso "serra pronta → carrello". */
   body.livello-novizio #presetBar,
-body.livello-novizio .veg-filters,
-/* Il novizio riempie la serra automaticamente a ogni cambio di mese/zona/misure:
-   il pulsante "Riempi la serra" sarebbe ridondante, quindi lo nascondiamo. */
-body.livello-novizio .crops-fill-main-btn,
-/* Azioni manuali avanzate (sistema/riempi spazi/svuota): non servono al novizio,
-   che lavora solo in automatico. */
-body.livello-novizio .crops-customize-footer {
+  body.livello-novizio .veg-filters,
+  body.livello-novizio .crops-fill-main-btn,
+  body.livello-novizio .crops-customize-footer {
     display: none !important;
   }
-  /* Ognuno dei tre blocchi passi-guidati è mostrato solo per il livello
-   corrispondente: stesso stile, testi diversi per persona. */
+
   body.livello-novizio .guided-intro-novizio,
   body.livello-intermedio .guided-intro-intermedio,
   body.livello-esperto .guided-intro-esperto {
@@ -243,11 +224,10 @@ body.livello-novizio .crops-customize-footer {
     box-shadow: 0 6px 16px rgba(47, 107, 58, 0.32);
   }
 
-  /* Evidenzia brevemente il pannello "La tua serra" quando il novizio
-   arriva dalla CTA del percorso guidato. */
   .panel.guided-highlight {
     animation: guidedHighlightPulse 1.6s ease;
   }
+  /* Animazioni */
   @keyframes guidedHighlightPulse {
     0%,
     100% {
@@ -259,7 +239,7 @@ body.livello-novizio .crops-customize-footer {
     }
   }
 
-  /* Selettore livello: adattamento responsive. */
+  /* Regole responsive */
   @media (max-width: 1080px) {
     .persona-cards {
       grid-template-columns: 1fr;
@@ -269,6 +249,7 @@ body.livello-novizio .crops-customize-footer {
       transform: none;
     }
   }
+  /* Regole responsive */
   @media (max-width: 640px) {
     .guided-intro {
       padding: 12px 13px;

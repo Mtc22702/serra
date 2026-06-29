@@ -1,10 +1,4 @@
-/* ==========================================================================
-   SERVICE WORKER — cache, aggiornamenti e funzionamento offline
-   --------------------------------------------------------------------------
-   Precarica le risorse essenziali dell'app, elimina le cache superate e
-   sceglie la strategia di rete più adatta per pagine, script e immagini.
-   CACHE_VERSION è l'unico valore da aggiornare quando si pubblica una release.
-   ========================================================================== */
+/* Configurazione e risorse in cache */
 const CACHE_VERSION = "2026-06-28-178";
 const CACHE = `serra-${CACHE_VERSION}`;
 
@@ -122,13 +116,13 @@ const PRECACHE = [
   "./assets/img/svg/zucchina.svg"
 ];
 
-/* INSTALLAZIONE — precarica l'app e rende disponibile la nuova versione. */
+/* Installazione del Service Worker */
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
   self.skipWaiting();
 });
 
-/* ATTIVAZIONE — elimina le cache precedenti e prende il controllo delle pagine. */
+/* Attivazione e pulizia cache */
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches
@@ -142,9 +136,7 @@ self.addEventListener("activate", (e) => {
   self.clients.claim();
 });
 
-/* MESSAGGI DALLA PAGINA — comunica la versione attiva e, quando richiesto,
-   attiva subito un Service Worker in attesa. Questo evita che una vecchia cache
-   continui a fornire JavaScript non aggiornato dopo una nuova pubblicazione. */
+/* Messaggi dalla pagina */
 self.addEventListener("message", (e) => {
   if (!e.data) return;
   if (e.data.type === "GET_VERSION") {
@@ -154,8 +146,7 @@ self.addEventListener("message", (e) => {
   }
 });
 
-/* RICHIESTE — usa la rete per il codice aggiornabile e la cache per le risorse
-   statiche; in assenza di connessione restituisce la migliore copia disponibile. */
+/* Gestione delle richieste di rete */
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
 
@@ -170,7 +161,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // HTML, CSS e JS: network-first per mostrare subito una release aggiornata.
+  // Navigazione: strategia network-first
   if (e.request.mode === "navigate") {
     e.respondWith(
       fetch(e.request)
@@ -192,10 +183,8 @@ self.addEventListener("fetch", (e) => {
     destination === "script" ||
     destination === "manifest";
 
+  // Script e stili: reload per bypassare la cache HTTP
   if (needsFreshCopy) {
-    // cache: 'reload' bypassa la HTTP-cache del browser, garantendo che il
-    // browser scarichi sempre il file aggiornato dal server (non una versione
-    // stale tenuta in cache HTTP anche dopo il cambio di CACHE_VERSION).
     e.respondWith(
       fetch(e.request, { cache: "reload" })
         .then((response) => {
@@ -208,7 +197,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // Immagini e font: cache-first, perché cambiano raramente.
+  // Immagini e font: strategia cache-first
   e.respondWith(
     caches.match(e.request).then(
       (cached) =>

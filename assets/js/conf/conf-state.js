@@ -1,9 +1,4 @@
-/* =========================================================================
-   SEZIONE 04 — Stato globale, salvataggio e controlli di base
-   -------------------------------------------------------------------------
-   Stato applicativo unico del configuratore, persistenza in localStorage e
-   funzioni che tengono allineati input, slider, clima e lingua.
-   ========================================================================= */
+// Stato globale
 const state = {
   lang: "it",
   zona: "temperato",
@@ -19,12 +14,9 @@ const state = {
   selected: -1,
   autoPlanNotice: "",
   manualPlanNotice: "",
-  // Livello/persona dell'utente: "novizio" | "intermedio" | "esperto".
-  // Guida quanta UI mostrare e quanto automatizzare il flusso.
+
   livello: "intermedio",
-  // Orientamento al sole: false = lato piu soleggiato (sud) in alto nella mappa
-  // (default), true = sud in basso. Determina da che parte vanno le piante alte
-  // per non fare ombra a quelle basse (anti-ombra).
+
   sudInBasso: false
 };
 const LIVELLI = new Set(["novizio", "intermedio", "esperto"]);
@@ -33,10 +25,13 @@ let vegSearchQuery = "";
 const CONFIG_KEY = "serra.config.v1";
 const BOOT_PARAMS = new URLSearchParams(window.location.search);
 
+// Funzioni di stato
+// Normalizza il codice lingua accettato
 function normalizeLang(lang) {
   return lang === "ro" || lang === "it" ? lang : "it";
 }
 
+// Legge la configurazione salvata nel localStorage
 function readSavedConfig() {
   try {
     return JSON.parse(localStorage.getItem(CONFIG_KEY) || "null");
@@ -45,8 +40,7 @@ function readSavedConfig() {
   }
 }
 
-// Costruisce l'oggetto di configurazione corrente (stessa forma storica).
-// Estratto da saveConfig per poterlo riusare nel layer multi-progetto.
+// Costruisce l'oggetto da salvare nel localStorage
 function buildConfigPayload(done = true) {
   return {
     lang: state.lang,
@@ -70,20 +64,20 @@ function buildConfigPayload(done = true) {
   };
 }
 
+// Persiste lo stato corrente nel localStorage
 function saveConfig(done = true) {
   const payload = buildConfigPayload(done);
   try {
     localStorage.setItem(CONFIG_KEY, JSON.stringify(payload));
-  } catch {
-    // localStorage puo non essere disponibile in alcuni contesti incorporati.
-  }
-  // Mantiene allineato il progetto attivo del layer multi-progetto
-  // (conf-projects.js, caricato dopo questo file: chiamata a runtime).
+  } catch {}
+
   if (typeof syncActiveProjectConfig === "function") {
     syncActiveProjectConfig(payload);
   }
 }
 
+// Sincronizzazione controlli
+// Allinea i selettori lingua al valore corrente
 function syncLanguageControls() {
   const main = document.getElementById("inLang");
   const modal = document.getElementById("startLang");
@@ -93,6 +87,7 @@ function syncLanguageControls() {
   if (nav) nav.value = state.lang;
 }
 
+// Allinea i controlli clima al valore dello stato
 function syncClimateControls() {
   const zone = document.getElementById("inZona");
   const heated = document.getElementById("inRisc");
@@ -111,6 +106,7 @@ function syncClimateControls() {
   if (sun) sun.value = state.sudInBasso ? "basso" : "alto";
 }
 
+// Allinea gli input di dimensione al valore dello stato
 function syncSizeControls() {
   const mainW = document.getElementById("inW");
   const mainL = document.getElementById("inL");
@@ -131,20 +127,24 @@ function syncSizeControls() {
   if (pathNum) pathNum.value = state.path;
 }
 
+// Mostra o nasconde la modale di configurazione iniziale
 function setStartModalVisible(visible) {
   const modal = document.getElementById("startModal");
   if (modal) modal.style.display = visible ? "flex" : "none";
 }
 
+// Legge il preset richiesto dai parametri URL
 function requestedBootPreset() {
   const preset = BOOT_PARAMS.get("preset") || "";
   return PRESETS[preset] ? preset : "";
 }
 
+// Verifica se il boot prevede importazione carrello
 function shouldImportCart() {
   return BOOT_PARAMS.get("import") === "cart";
 }
 
+// Verifica se il boot è in modalità guidata
 function isGuidedBoot() {
   return (
     BOOT_PARAMS.get("guided") === "1" ||
@@ -152,6 +152,7 @@ function isGuidedBoot() {
   );
 }
 
+// Verifica se il boot è per un progetto vuoto libero
 function isFreeProjectBoot() {
   return (
     BOOT_PARAMS.get("mode") === "expert" &&
@@ -159,6 +160,7 @@ function isFreeProjectBoot() {
   );
 }
 
+// Rimuove i parametri di boot dall'URL
 function clearBootParams() {
   if (!window.history?.replaceState) return;
   window.history.replaceState(
@@ -168,6 +170,7 @@ function clearBootParams() {
   );
 }
 
+// Aggiorna la pillola mese/zona nell'intro guidata
 function updateGuidedIntroDynamic() {
   const months = MONTHS[state.lang] || MONTHS.it;
   const monthName = months[state.mese - 1] || "";
@@ -180,6 +183,7 @@ function updateGuidedIntroDynamic() {
     pill.textContent = `📅 ${monthName} · ${tx("tagZone")} ${zoneLabel}`;
 }
 
+// Modalità configuratore
 function setMode(mode, scroll = false) {
   const allowed = new Set(["fit", "expert"]);
   const next = allowed.has(mode) ? mode : "fit";
@@ -219,17 +223,8 @@ function setMode(mode, scroll = false) {
   }
 }
 
-/* =========================================================================
-   SEZIONE 05 — Profili utente, modalità e percorso guidato
-   -------------------------------------------------------------------------
-   Gestisce i tre profili visibili all'utente: Principiante, Pratico, Esperto.
-   Il valore interno resta "novizio" | "intermedio" | "esperto" per non
-   rompere salvataggi, URL e logiche gia esistenti.
-
-   "novizio" e "intermedio" usano la modalità guidata (fit); "esperto" la
-   modalità manuale (expert). La differenza tra novizio e intermedio è quanta
-   UI avanzata viene mostrata (gestita via classi sul body in CSS).
-   ========================================================================= */
+// Profili utente
+// Applica il livello utente alle classi CSS e ai pannelli
 function setLivello(liv, { mapMode = true } = {}) {
   const next = LIVELLI.has(liv) ? liv : "intermedio";
   state.livello = next;
@@ -246,12 +241,10 @@ function setLivello(liv, { mapMode = true } = {}) {
   if (mapMode) setMode(next === "esperto" ? "expert" : "fit", false);
 }
 
-/* Scelta esplicita da parte dell'utente: imposta il livello e applica il
-   comportamento adatto alla persona, poi salva. */
+// Cambia il livello utente con conferma se necessario
 function chooseLivello(liv) {
   const prev = state.livello;
-  // Passare a Principiante rigenera l'orto in automatico: se c'è un piano costruito
-  // a mano (non automatico) chiedi conferma per non cancellarlo per sbaglio.
+
   if (
     liv === "novizio" &&
     prev !== "novizio" &&
@@ -262,17 +255,15 @@ function chooseLivello(liv) {
     return;
   }
   setLivello(liv);
-  // Cambiare profilo riconfigura il flusso: azzera la cronologia undo.
+
   if (typeof resetHistory === "function") resetHistory();
   if (liv === "esperto") {
-    // L'esperto vuole il controllo: catalogo completo, scelta a mano.
     vegFilter = "all-beds";
     state.autoPlan = false;
     syncVegFilterTabs();
     render();
     openCustomizePanelAndFocus();
   } else if (liv === "intermedio") {
-    // Punto di partenza pronto, ma libero di personalizzare e andare off-season.
     vegFilter = "all";
     state.autoPlan = true;
     if (!state.beds.length) autoFill();
@@ -280,7 +271,6 @@ function chooseLivello(liv) {
     syncVegFilterTabs();
     openCustomizePanelAndFocus();
   } else {
-    // Novizio: serra pronta, solo colture di stagione, percorso lineare al carrello.
     vegFilter = "in";
     state.autoPlan = true;
     resetNoviceAdvancedOptions();
@@ -294,19 +284,21 @@ function chooseLivello(liv) {
   if (prev !== liv) updateGuidedIntroDynamic();
 }
 
-/* Allinea i tab del filtro colture allo stato vegFilter corrente. */
+// Allinea le tab filtro colture al filtro attivo
 function syncVegFilterTabs() {
   document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.filter === vegFilter);
   });
 }
 
+// Azzera le opzioni avanzate non disponibili al novizio
 function resetNoviceAdvancedOptions() {
   state.overlay = "";
   syncSizeControls();
   syncOverlaySelectLabel();
 }
 
+// Normalizza il testo per la ricerca (lowercase, senza accenti)
 function normalizeVegSearchText(value) {
   return String(value || "")
     .toLowerCase()
@@ -315,6 +307,7 @@ function normalizeVegSearchText(value) {
     .trim();
 }
 
+// Aggiorna visibilità e testo del campo ricerca colture
 function updateVegSearchUI() {
   const wrap = document.getElementById("vegSearchWrap");
   const input = document.getElementById("vegSearchInput");
@@ -342,7 +335,7 @@ function updateVegSearchUI() {
   }
 }
 
-/* Porta l'utente alla vista della serra (usato per il percorso novizio). */
+// Scrolla fino alla scena della serra
 function scrollToScene() {
   window.setTimeout(() => {
     const stage = document.querySelector(".stage");

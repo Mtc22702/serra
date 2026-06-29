@@ -1,8 +1,5 @@
-/* Sezione: Modali e responsive.
-+ * Raccolta ordinata delle regole relative a finestre operative, layout tablet/mobile e accessi rapidi.
-+ */
+/* Modali e responsive */
 @layer base {
-  /* Modale avvio: onboarding iniziale del configuratore. */
   .modal-bg {
     position: fixed;
     inset: 0;
@@ -188,11 +185,11 @@
     padding-top: 12px;
   }
 
-  /* Accesso rapido alla serra: visibile solo nel layout a colonna singola. */
   .mobile-go-to-scene {
     display: none;
   }
 
+  /* Responsive tablet */
   @media (max-width: 1100px) {
     .mobile-go-to-scene {
       display: inline-flex;
@@ -343,25 +340,26 @@
     }
   }
 
-  /* Responsive tablet: layout intermedio tra desktop e mobile. */
+  /* Responsive tablet */
   @media (min-width: 641px) and (max-width: 1100px) {
     .scene {
       max-width: 560px;
       margin: 0 auto;
     }
-    /* Tablet: dettaglio pianta disposto in verticale. */
+
     .stage .panel--plant-detail #pdpContent {
       gap: 10px;
     }
     .stage .panel--plant-detail .pdp-hero-wrap {
       min-height: unset;
     }
-    /* Guided intro: compact per tablet */
+
     .guided-intro {
       grid-template-columns: minmax(180px, 220px) 1fr;
     }
   }
 
+  /* Regole responsive */
   @media (max-width: 640px) {
     .btn-month-tag {
       display: none;
@@ -387,7 +385,7 @@
       gap: 12px;
       max-width: 100%;
     }
-    /* mobile: colonna singola */
+
     .guided-intro {
       grid-template-columns: 1fr;
       padding: 13px 14px;
@@ -743,7 +741,7 @@
     .opt.on::after {
       display: none;
     }
-    /* Azioni scena: disposizione verticale su schermi intermedi. */
+
     .stage-actions {
       flex-direction: column;
       align-items: stretch;
@@ -767,7 +765,7 @@
       flex-direction: column;
       padding: 14px;
     }
-    /* regole per schermi piccoli */
+
     .row.field > div {
       min-width: 100%;
     }
@@ -794,7 +792,7 @@
     .panel-toggle-label {
       display: none;
     }
-    /* site-header compatto */
+
     .site-header {
       padding-inline: 0.6rem;
     }
@@ -846,7 +844,6 @@
       justify-content: space-between;
     }
 
-    /* veg.in mobile: ritocchi dimensionali; la struttura unica sta nel breakpoint 1100px. */
     .veg.in {
       background: rgba(47, 107, 58, 0.08);
       border-color: rgba(47, 107, 58, 0.28);
@@ -954,7 +951,6 @@
       margin-top: 10px;
     }
 
-    /* ── Colture nella serra: layout compatto mobile ── */
     #panelCustomize .panel-title-row {
       margin-bottom: 6px;
     }
@@ -1036,26 +1032,26 @@
       font-size: 11px;
     }
 
-    /* Stage auto-plan row: visibile su mobile dentro stage-title-row */
     .stage-auto-plan-row {
       display: flex;
-      order: 1; /* dopo il titolo, prima della toolbar */
+      order: 1;
     }
-    /* Bottone stampa mobile: visibile nell'header del piano automatico */
+
     .saph-print-btn {
       display: inline-flex;
     }
-    /* Nasconde il bottone stampa originale su mobile */
+
     #btnStampa {
       display: none;
     }
-    /* Nasconde sezione originale dal pannello laterale su mobile */
+
     .crops-month-selector.auto-plan-control,
     #autoPlanSectionLabel {
       display: none !important;
     }
   }
-  /* Intro guidata: evidenziazione del campo misure. */
+
+  /* Animazioni */
   @keyframes guided-pulse {
     0% {
       box-shadow: 0 0 0 0px rgba(47, 107, 58, 0.65);
@@ -1075,7 +1071,6 @@
     animation: guided-pulse 0.72s ease-out 3;
   }
 
-  /* Pannello piante: filtri segmentati ───────────────────────────────── */
   .veg-filters {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1287,7 +1282,6 @@
     display: none !important;
   }
 
-  /* Intestazioni categorie: separatori nella lista colture. */
   .veg-cat-header {
     display: flex;
     align-items: center;
@@ -1312,7 +1306,6 @@
     background: rgba(31, 58, 38, 0.1);
   }
 
-  /* Nome coltura: riga con difficoltà e metadati. */
   .veg-nameline {
     display: flex;
     align-items: center;
@@ -1350,7 +1343,6 @@
     color: #8a3322;
   }
 
-  /* Tag row below the plant name */
   .veg-tags {
     display: flex;
     align-items: center;

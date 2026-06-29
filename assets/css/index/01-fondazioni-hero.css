@@ -1,13 +1,6 @@
-/* Sezione: Fondazioni e hero.
-+ * Raccolta ordinata delle regole relative a reset, token, navigazione iniziale e area hero.
-+ */
+/* Fondazioni e sezione Hero */
 @layer base {
-  /* =========================================================
-   Index CSS: homepage, catalogo semi, carrello e layout condiviso.
-   Commenti brevi separano le aree per rendere il file manutenibile.
-   ========================================================= */
-
-  /* Base globale: reset, variabili, tipografia e stati focus. */
+  /* Reset e variabili globali */
   *,
   *::before,
   *::after {
@@ -66,7 +59,7 @@
     outline-offset: 3px;
   }
 
-  /* Navigazione storica: regole base mantenute per compatibilità. */
+  /* Navigazione principale */
   nav {
     position: fixed;
     top: 0;
@@ -176,7 +169,7 @@
     transform: scale(1.45);
   }
 
-  /* Hero immersivo: sfondo, mese corrente, filtri clima e CTA iniziali. */
+  /* Sezione Hero */
   .hero-immersive {
     position: relative;
     min-height: 100vh;
@@ -259,7 +252,7 @@
     gap: 1.1rem;
   }
 
-  /* Titolo e sottotitolo principali dell'hero. */
+  /* Testi Hero */
   .hero-headline {
     font-family: "Fraunces", serif;
     font-size: clamp(2.4rem, 5vw, 4rem);
@@ -278,7 +271,7 @@
     max-width: 480px;
   }
 
-  /* Mese nella pillola kicker */
+  /* Kicker di stagione */
   .hero-kicker-sep {
     opacity: 0.45;
     margin: 0 0.1rem;
@@ -288,7 +281,7 @@
     color: var(--green-dk);
   }
 
-  /* Card configuratore: blocco promozionale nell'hero. */
+  /* Contenuto Hero */
   .hero-cfg {
     width: 100%;
     max-width: 1060px;
@@ -325,6 +318,7 @@
     flex-shrink: 0;
     animation: kickerPulse 2.4s ease-in-out infinite;
   }
+  /* Animazioni */
   @keyframes kickerPulse {
     0%,
     100% {
@@ -487,7 +481,7 @@
     gap: 0.65rem;
     flex-wrap: wrap;
   }
-  /* Controlli hero: selezione zona climatica e serra riscaldata. */
+  /* Controlli climatici Hero */
   .hero-controls-pill {
     display: flex;
     align-items: center;
@@ -612,7 +606,7 @@
     }
   }
 
-  /* Percorsi hero: card per configuratore e catalogo semi. */
+  /* Card percorso Hero */
   .percorso-heading {
     max-width: 660px;
     margin: 0 auto 2rem;
@@ -1049,7 +1043,7 @@
     font-size: 0.73rem;
   }
 
-  /* Blocchi di percorso: due card CTA per configuratore e catalogo semi. */
+  /* Layout a due card */
   .percorso-board--two {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1057,7 +1051,7 @@
     align-items: stretch;
   }
 
-  /* Stile base della card percorso. */
+  /* Card percorso */
   .percorso-cta {
     position: relative;
     overflow: hidden;
@@ -1073,7 +1067,7 @@
       box-shadow 0.3s ease;
   }
 
-  /* Linea decorativa in cima alla card. */
+  /* Linea decorativa card */
   .percorso-cta::before {
     content: "";
     position: absolute;
@@ -1125,7 +1119,7 @@
       inset 0 0 40px rgba(160, 98, 56, 0.22);
   }
 
-  /* Emoji decorativa di sfondo. */
+  /* Decorazione di sfondo */
   .percorso-cta-deco {
     position: absolute;
     bottom: -1.2rem;
@@ -1146,7 +1140,7 @@
     opacity: 0.16;
   }
 
-  /* Riga superiore: badge e icona. */
+  /* Intestazione card */
   .percorso-cta-top {
     display: flex;
     align-items: center;
@@ -1182,7 +1176,7 @@
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   }
 
-  /* Kicker: etichetta sopra il titolo. */
+  /* Kicker card */
   .percorso-cta .percorso-kicker {
     font-size: 0.7rem;
     font-weight: 800;
@@ -1196,7 +1190,7 @@
     color: rgba(255, 255, 255, 0.75);
   }
 
-  /* Titolo della card. */
+  /* Titolo card */
   .percorso-cta-title {
     font-family: "Fraunces", serif;
     font-size: clamp(1.75rem, 3.4vw, 2.8rem);
@@ -1212,7 +1206,7 @@
     color: #fff;
   }
 
-  /* Descrizione della card. */
+  /* Descrizione card */
   .percorso-cta-desc {
     font-size: 0.97rem;
     line-height: 1.65;
@@ -1221,7 +1215,7 @@
     flex: 1;
   }
 
-  /* Blocco azioni della card. */
+  /* Azioni card */
   .percorso-cta-actions {
     display: flex;
     flex-direction: column;
@@ -1229,7 +1223,7 @@
     margin-top: 2rem;
   }
 
-  /* Pulsante principale della card. */
+  /* Pulsante principale */
   .percorso-cta-btn {
     display: flex;
     align-items: center;
@@ -1272,7 +1266,7 @@
     background: #fff0e0;
   }
 
-  /* Cerchio con freccia decorativa. */
+  /* Freccia decorativa */
   .percorso-cta-btn-arrow {
     display: inline-flex;
     align-items: center;
@@ -1299,7 +1293,7 @@
     transform: translateX(5px);
   }
 
-  /* Pulsante secondario per la modalità a progetto libero. */
+  /* Pulsante secondario */
   .percorso-cta-alt {
     display: flex;
     align-items: center;
@@ -1327,7 +1321,7 @@
     color: #fff;
   }
 
-  /* Struttura interna orizzontale della card. */
+  /* Struttura interna card */
   .percorso-cta-inner {
     position: relative;
     z-index: 1;
@@ -1349,7 +1343,7 @@
     margin-bottom: 0.55rem;
   }
 
-  /* CTA percorso: titolo e descrizione nel layout compatto. */
+  /* CTA compatta */
   .percorso-cta-inner .percorso-cta-title {
     font-size: clamp(1.15rem, 2vw, 1.55rem);
     margin-bottom: 0.38rem;
@@ -1361,7 +1355,7 @@
     opacity: 0.88;
   }
 
-  /* Prima card: blocco con i due percorsi del configuratore. */
+  /* Percorsi configuratore */
   .percorso-cta-paths {
     flex: none;
     display: flex;
@@ -1409,7 +1403,7 @@
     transform: translateX(4px);
   }
 
-  /* Percorso intermedio: tinta calda per distinguerlo dagli altri due. */
+  /* Percorso intermedio */
   .percorso-path--mid {
     background: rgba(255, 250, 235, 0.95);
     color: var(--green-dk);
@@ -1462,7 +1456,7 @@
     transform: translateX(4px);
   }
 
-  /* Seconda card: accesso diretto al catalogo semi. */
+  /* Card Catalogo Semi */
   .percorso-cta-catalog {
     flex: none;
     display: flex;
@@ -1502,7 +1496,7 @@
     transform: translateY(-2px);
   }
 
-  /* Variante hero: card integrata nell'area iniziale della pagina. */
+  /* Hero: adattamenti card percorso */
   .hero-path .percorso-board--two {
     max-width: 1080px;
     margin: 0 auto;
@@ -1584,7 +1578,7 @@
     font-size: 0.8rem;
   }
 
-  /* Adattamenti mobile per le card percorso. */
+  /* Responsive mobile */
   @media (max-width: 680px) {
     .percorso-board--two {
       grid-template-columns: 1fr;
@@ -1644,7 +1638,7 @@
     }
   }
 
-  /* Tablet: adattamenti tra 601 e 900px. */
+  /* Responsive tablet */
   @media (min-width: 601px) and (max-width: 900px) {
     .hero-immersive {
       justify-content: center;
@@ -1674,6 +1668,7 @@
     }
   }
 
+  /* Responsive desktop */
   @media (min-width: 901px) {
     .hero-content {
       padding: 0.9rem 2rem 2rem;
@@ -1864,7 +1859,7 @@
     }
   }
 
-  /* CTA percorso: card con priorità visiva alle azioni. */
+  /* CTA percorso */
   .hero-path .percorso-board {
     gap: 1rem;
   }
@@ -2051,7 +2046,7 @@
     filter: brightness(1.5);
   }
 
-  /* Spaziature e superfici attenuate per le CTA del percorso hero. */
+  /* Rifiniture percorso Hero */
   .hero-path {
     margin-top: 1.45rem;
   }

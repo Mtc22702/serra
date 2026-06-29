@@ -1,8 +1,5 @@
-/* Sezione: Fondazioni del tema.
-+ * Tema condiviso per token comuni, superfici principali e controlli del tema.
-+ */
+/* Fondazioni del tema */
 @layer base {
-  /* Tema condiviso: modalità chiara/scura per homepage e configuratore. */
   :root {
     color-scheme: light;
     --theme-surface: #fffdf8;
@@ -14,7 +11,6 @@
     --theme-shadow: 0 14px 38px rgba(24, 53, 36, 0.12);
   }
 
-  /* Il logo del footer riprende esattamente il trattamento dell'header. */
   .footer-logo {
     width: 42px;
     height: 42px;
@@ -64,7 +60,6 @@
     --theme-muted: #a9b9ae;
     --theme-shadow: 0 16px 42px rgba(0, 0, 0, 0.36);
 
-    /* Badge colors overrides in dark mode */
     --badge-frutto-bg: rgba(231, 111, 81, 0.28);
     --badge-frutto-color: #ffaa96;
     --badge-foglia-bg: rgba(82, 183, 136, 0.24);
@@ -210,9 +205,6 @@
   }
 }
 @layer base {
-  /* Homepage: contenitori, catalogo e schede tecniche. */
-}
-@layer dark-theme {
   html[data-theme="dark"] .hero-bg-plants {
     filter: brightness(0.55) saturate(0.76) contrast(1.06);
   }
@@ -329,9 +321,6 @@
   }
 }
 @layer base {
-  /* Configuratore: pannelli laterali, canvas e schede. */
-}
-@layer dark-theme {
   html[data-theme="dark"] .app {
     background: radial-gradient(
       circle at 50% 18%,
@@ -443,6 +432,7 @@
   }
 }
 @layer base {
+  /* Regole responsive */
   @media (max-width: 720px) {
     .theme-toggle {
       width: 38px;
@@ -454,12 +444,11 @@
       font-size: 19px;
     }
   }
+  /* Regole responsive */
   @media (prefers-reduced-motion: reduce) {
     .theme-toggle,
     .theme-toggle-icon {
       transition: none;
     }
   }
-
-  /* Dark mode v2: gerarchia più morbida, contrasto leggibile e colori semantici. */
 }

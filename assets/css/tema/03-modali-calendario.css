@@ -1,8 +1,5 @@
-/* Sezione: Modali e calendario.
-+ * Tema condiviso per carrello, modali, manutenzione e correzioni delle superfici annidate.
-+ */
+/* Modali e calendario */
 @layer base {
-  /* Carrello, modali e banner. */
 }
 @layer dark-theme {
   html[data-theme="dark"]
@@ -23,7 +20,6 @@
   }
 }
 @layer base {
-  /* Calendario di manutenzione: superfici e contrasti dedicati al tema scuro. */
 }
 @layer dark-theme {
   html[data-theme="dark"] #calendarModal .projects-backdrop {
@@ -256,7 +252,6 @@
   }
 }
 @layer base {
-  /* Diagrammi delle distanze: niente rettangoli bianchi dentro le schede. */
 }
 @layer dark-theme {
   html[data-theme="dark"] .spacing-svg {
@@ -276,8 +271,6 @@
   }
   @layer base {
   }
-
-  /* Audit finale delle superfici annidate che avevano ancora fondi chiari. */
 }
 @layer dark-theme {
   html[data-theme="dark"]

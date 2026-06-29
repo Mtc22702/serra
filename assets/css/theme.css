@@ -1,4 +1,4 @@
-/* Manifesto del tema condiviso: importa fondazioni, dark mode e regole responsive. */
+/* Moduli CSS del tema globale */
 @layer base, dark-theme;
 @import url("./tema/01-fondazioni.css");
 @import url("./tema/02-dark-principale.css");

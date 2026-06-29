@@ -1,9 +1,4 @@
-/* =========================================================================
-   SEZIONE 13 - Eventi UI e inizializzazione configuratore
-   -------------------------------------------------------------------------
-   Collega form, pulsanti, tab, filtri, controlli quantita, pannelli e azioni
-   sulla scena. La funzione initConfig subito dopo recupera lo stato salvato.
-   ========================================================================= */
+// Inizializzazione mesi
 function fillMonths() {
   const months = MONTHS[state.lang] || MONTHS.it;
   const monthHtml = months
@@ -21,6 +16,7 @@ function fillMonths() {
   if (pillLabel) pillLabel.textContent = months[state.mese - 1] || "";
 }
 
+// Event listeners
 function initEvents() {
   document.querySelectorAll(".mode-tab").forEach((tab) => {
     tab.addEventListener("click", () => setMode(tab.dataset.mode, false));
@@ -114,8 +110,6 @@ function initEvents() {
     refreshForSeasonChange();
   });
   document.getElementById("inSole")?.addEventListener("change", (e) => {
-    // L'orientamento cambia solo da che parte vanno le piante alte (anti-ombra):
-    // si ribilancia il layout senza svuotare la serra ne cambiare le quantita.
     state.sudInBasso = e.target.value === "basso";
     resetHistory();
     syncClimateControls();
@@ -141,6 +135,7 @@ function initEvents() {
       e.target.value = "";
     }
   });
+  // Applica path
   function applyPath(val) {
     const v = Math.max(30, Math.min(120, Math.round(val / 5) * 5));
     state.path = v;
@@ -178,24 +173,20 @@ function initEvents() {
     .addEventListener("click", fillSelectedPlants);
   document.getElementById("btnUndo")?.addEventListener("click", undoLastChange);
   document.getElementById("btnRedo")?.addEventListener("click", redoLastChange);
-  // Novizio: "Ricomincia" rigenera il piano di stagione da capo (l'unica via per
-  // il principiante, che non vede il catalogo per riaggiungere a mano).
+
   document.getElementById("btnNoviceRestart")?.addEventListener("click", () => {
     recordHistory();
     autoFill();
     scrollToScene();
   });
-  // Esperto: "Genera piano di stagione" crea un punto di partenza automatico di
-  // stagione (i preset sono combinazioni fisse, questo segue il mese). Resta in
-  // modalità manuale: qualsiasi modifica successiva torna a piano manuale.
+
   document
     .getElementById("btnExpertSeasonal")
     ?.addEventListener("click", () => {
       recordHistory();
       autoFill();
     });
-  // Scorciatoie tastiera: Ctrl/Cmd+Z annulla, Ctrl/Cmd+Shift+Z o Ctrl+Y ripristina.
-  // Quando il focus e' su un campo di testo si lascia l'undo nativo del campo.
+
   document.addEventListener("keydown", (e) => {
     if (!(e.ctrlKey || e.metaKey)) return;
     const tag = (e.target?.tagName || "").toLowerCase();
@@ -225,7 +216,7 @@ function initEvents() {
     saveConfig(true);
     render();
   });
-  // Controlli +/-
+
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".step-btn");
     if (!btn) return;
@@ -245,7 +236,6 @@ function initEvents() {
     input.dispatchEvent(new Event("change", { bubbles: true }));
   });
 
-  // CTA del percorso novizio: apre/evidenzia il pannello "La tua serra"
   const guidedNovCta = document.getElementById("guidedNovCta");
   if (guidedNovCta) {
     guidedNovCta.addEventListener("click", () => {
@@ -253,7 +243,6 @@ function initEvents() {
     });
   }
 
-  // Pulsante accordion del pannello
   document.querySelectorAll(".panel-toggle").forEach((btn) => {
     updatePanelToggle(btn);
     btn.addEventListener("click", (e) => {
@@ -263,7 +252,6 @@ function initEvents() {
     });
   });
 
-  // Clic sull'intestazione del pannello (riga intera cliccabile)
   document.querySelectorAll(".panel-title-row, .panel-head").forEach((row) => {
     row.addEventListener("click", (e) => {
       if (e.target.closest("button, select, input, label, .stepper")) return;
@@ -273,8 +261,6 @@ function initEvents() {
     });
   });
 
-  // Le impostazioni restano aperte nelle modalità che le usano: sono il primo
-  // controllo utile per chi adatta o personalizza la serra.
   ["btnStampa", "btnStampaMobile"].forEach((id) => {
     document.getElementById(id)?.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -321,7 +307,7 @@ function initEvents() {
       setMode("expert", false);
       openCustomizePanelAndFocus();
     });
-  // delega su lista seminabili
+
   document.getElementById("vegList").addEventListener("click", (e) => {
     const upgradeBtn = e.target.closest("[data-upgrade-level]");
     if (upgradeBtn) {
@@ -351,7 +337,6 @@ function initEvents() {
     setPlantCount(input.dataset.vegCountInput, input.value);
   });
 
-  // filtri piante
   document.querySelectorAll(".veg-filter-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
       vegFilter = tab.dataset.filter;
@@ -377,6 +362,7 @@ function initEvents() {
     ?.addEventListener("scroll", updateVegListScrollAffordance, {
       passive: true
     });
+  // Gestisce debounce
   function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -389,7 +375,6 @@ function initEvents() {
     debounce(updateVegListScrollAffordance, 150)
   );
 
-  // modale avvio
   document.querySelectorAll("#zoneOpts .opt").forEach((o) =>
     o.addEventListener("click", () => {
       document
@@ -421,10 +406,7 @@ function initEvents() {
   });
 }
 
-/* Inizializzazione dello stato: carica localStorage, lingua condivisa,
-   dimensioni, mese, profilo e aiuole salvate. */
-// Applica un oggetto di configurazione salvato allo stato corrente.
-// Estratto da initConfig per riuso nello switch tra progetti (conf-projects.js).
+// Inizializzazione stato
 function applyConfigToState(saved) {
   if (!saved) return;
   if (saved.lang === "it" || saved.lang === "ro") state.lang = saved.lang;
@@ -448,12 +430,12 @@ function applyConfigToState(saved) {
   if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
   state.beds = normalizeSavedBeds(saved.beds);
   autoBalanceLayout(true, false);
-  // Caricare una config/progetto cambia contesto: niente undo verso quello precedente.
+
   if (typeof resetHistory === "function") resetHistory();
 }
 
+// Avvio configuratore
 function initConfig() {
-  // Inizializza/migra lo store multi-progetto prima di leggere la config.
   if (typeof ensureProjectsStore === "function") ensureProjectsStore();
   const saved = readSavedConfig();
   const sharedLang = localStorage.getItem("ois.lang");
@@ -465,9 +447,7 @@ function initConfig() {
   syncClimateControls();
   if (saved && hasSharedLang && saved.lang !== state.lang)
     saveConfig(Boolean(saved.done));
-  // Non mostrare il modale di avvio quando si entra con un intento esplicito
-  // (percorso guidato, progetto vuoto esperto o import del carrello/kit): in
-  // quei casi il piano viene applicato subito e il modale sarebbe solo d'intralcio.
+
   setStartModalVisible(
     !saved?.done &&
       !isGuidedBoot() &&
@@ -476,12 +456,7 @@ function initConfig() {
   );
 }
 
-/* =========================================================================
-   SEZIONE 14 - Carrello configuratore
-   -------------------------------------------------------------------------
-   Usa localStorage["ois.cart"] condiviso con la homepage. Calcola bustine,
-   prezzi, badge, overlay carrello e messaggi di checkout.
-   ========================================================================= */
+// Dati semi e carrello
 const PACK_DATA = {
   pomodoro: { seeds: 20, price: 3.5 },
   peperone: { seeds: 15, price: 3.2 },
@@ -530,13 +505,13 @@ const PACK_DATA = {
   timo: { seeds: 200, price: 2.8 },
   origano: { seeds: 300, price: 2.8 },
   salvia: { seeds: 100, price: 2.8 },
-  // Legumi
+
   fava: { seeds: 20, price: 3.0 },
   cece: { seeds: 30, price: 3.0 },
   lenticchia: { seeds: 50, price: 2.8 },
   soia_edamame: { seeds: 30, price: 3.2 },
   fagiolo_borlotto: { seeds: 25, price: 3.0 },
-  // Radici e bulbi
+
   patata: { seeds: 10, price: 4.5 },
   patata_dolce: { seeds: 5, price: 5.0 },
   pastinaca: { seeds: 200, price: 2.5 },
@@ -549,7 +524,7 @@ const PACK_DATA = {
   scorzonera: { seeds: 100, price: 2.8 },
   topinambur: { seeds: 10, price: 4.0 },
   cavolo_navone: { seeds: 200, price: 2.5 },
-  // Foglie e insalate
+
   loboda: { seeds: 100, price: 2.5 },
   stevia_dolce: { seeds: 100, price: 3.2 },
   asparago: { seeds: 20, price: 3.5 },
@@ -562,12 +537,12 @@ const PACK_DATA = {
   cavolo_cinese: { seeds: 200, price: 2.6 },
   cavolo_rosso: { seeds: 100, price: 2.8 },
   broccolo_rapa: { seeds: 200, price: 2.5 },
-  // Frutti esotici
+
   mais_dolce: { seeds: 30, price: 3.5 },
   tomatillo: { seeds: 20, price: 3.5 },
   physalis: { seeds: 20, price: 3.5 },
   cucamelon: { seeds: 15, price: 4.0 },
-  // Aromatiche e fiori
+
   erba_cipollina: { seeds: 200, price: 2.8 },
   leustean: { seeds: 100, price: 3.0 },
   dragoncello: { seeds: 100, price: 3.0 },
@@ -586,6 +561,7 @@ const PACK_DATA = {
   cerfoglio: { seeds: 500, price: 2.6 },
   cimbru: { seeds: 1000, price: 2.4 }
 };
+// Formatta un valore in valuta locale
 function formatMoney(value) {
   return new Intl.NumberFormat(state.lang === "ro" ? "ro-RO" : "it-IT", {
     style: "currency",
@@ -595,6 +571,7 @@ function formatMoney(value) {
 
 let confCart = [];
 
+// Gestione carrello
 function loadConfCart() {
   try {
     const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
@@ -607,12 +584,14 @@ function loadConfCart() {
   updateConfCartUI();
 }
 
+// Persiste il carrello nel localStorage
 function saveConfCart() {
   try {
     localStorage.setItem("ois.cart", JSON.stringify(confCart));
   } catch (_) {}
 }
 
+// Aggiorna la visualizzazione del carrello
 function updateConfCartUI() {
   const badge = document.getElementById("cartCount");
   if (badge) badge.textContent = confCart.length;
@@ -686,17 +665,20 @@ function updateConfCartUI() {
     </div>`;
 }
 
+// Rimuove una voce dal carrello
 function removeFromConfCart(id) {
   confCart = confCart.filter((i) => i.id !== id);
   saveConfCart();
   updateConfCartUI();
 }
+// Svuota l'intero carrello
 function clearConfCart() {
   confCart = [];
   saveConfCart();
   updateConfCartUI();
 }
 
+// Apre il pannello carrello
 function openConfCart() {
   loadConfCart();
   document.getElementById("cartNudge")?.classList.remove("visible");
@@ -704,17 +686,20 @@ function openConfCart() {
   document.getElementById("cartOverlay").classList.add("open");
 }
 
+// Chiude il pannello carrello
 function closeConfCart() {
   document.getElementById("cartOverlay").classList.remove("open");
   document.body.classList.remove("cart-open");
 }
 
+// Importa il carrello nel piano e chiude
 function importCartAndClose() {
   closeConfCart();
-  // importCartToPlan() applica già il piano e fa lo scroll alla pianificazione.
+
   importCartToPlan();
 }
 
+// Mostra il banner temporaneo del carrello
 function showConfCartNudge(count) {
   const nudge = document.getElementById("cartNudge");
   const title = document.getElementById("cartNudgeTitle");
@@ -733,6 +718,7 @@ function showConfCartNudge(count) {
   );
 }
 
+// Mostra il riepilogo ordine all'utente
 function alertConfCheckout() {
   const lines = confCart
     .map(({ id, bustine }) => {
@@ -754,14 +740,8 @@ function alertConfCheckout() {
   alert(tx("cart.checkout_msg", { lines, total }));
 }
 
-/* =========================================================================
-   SEZIONE 15 - Avvio finale e sincronizzazione lingua
-   -------------------------------------------------------------------------
-   Sincronizza la lingua tra tab/pagine, esegue init, interpreta i parametri
-   URL finali e produce il primo render del configuratore.
-   ========================================================================= */
-
-/* Lingua nav: sincronizza selettore header e localStorage condiviso. */
+// Sincronizzazione lingua
+// Imposta la lingua e aggiorna il selettore
 function confSetLang(val) {
   const inLang = document.getElementById("inLang");
   if (inLang) {
@@ -780,20 +760,16 @@ window.addEventListener("storage", (event) => {
   render();
 });
 
-// Il cambio tema aggiorna subito la serra: giorno in light mode, notte in dark mode.
 window.addEventListener("serra:themechange", () => render());
 
 initConfig();
 initEvents();
 loadConfCart();
 const _bootCfg = readSavedConfig();
-// Livello/persona richiesto dalla homepage (es. ?livello=novizio).
+
 const _bootLivello = BOOT_PARAMS.get("livello");
 
 if (LIVELLI.has(_bootLivello)) {
-  // Ingresso dalla homepage con persona già scelta: applica esattamente lo
-  // stesso comportamento del pulsante livello dentro il configuratore, ma prima
-  // rispetta intenti espliciti come preset=principiante o empty=1.
   state.livello = _bootLivello;
   const _hasExplicitBootIntent =
     isFreeProjectBoot() || shouldImportCart() || Boolean(requestedBootPreset());
@@ -823,9 +799,7 @@ if (LIVELLI.has(_bootLivello)) {
     setMode("fit", false);
     resetNoviceAdvancedOptions();
     syncVegFilterTabs();
-    // Ingresso guidato del novizio: usa l'auto-riempimento STAGIONALE (coerente col
-    // mese), non un preset fisso che potrebbe essere fuori stagione. Come per
-    // l'intermedio, con guided=1 si rigenera sempre il piano di stagione.
+
     if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
     else render();
     scrollToScene();
@@ -834,10 +808,6 @@ if (LIVELLI.has(_bootLivello)) {
   clearBootParams();
   scrollToGuidedIntroForLivello(_bootLivello);
 } else {
-  // shouldImportCart() va incluso: l'ingresso dal kit/carrello della homepage usa
-  // configuratore.html?import=cart SENZA parametro livello, quindi finisce qui.
-  // Senza questa condizione, un utente senza config salvata (es. primo accesso)
-  // non importava il carrello e ricadeva sull'auto-riempimento mensile.
   const _bootIntentApplied =
     isGuidedBoot() ||
     isFreeProjectBoot() ||
@@ -847,9 +817,7 @@ if (LIVELLI.has(_bootLivello)) {
       : false;
 
   if (_bootIntentApplied && isGuidedBoot()) {
-    // Arrivo dalla homepage "Crea il mio orto guidato": intento iniziale già applicato.
   } else if (!_bootIntentApplied && !_bootCfg) {
-    // Prima visita: riempimento automatico.
     autoFill();
   } else if (
     !_bootIntentApplied &&
@@ -857,7 +825,6 @@ if (LIVELLI.has(_bootLivello)) {
     state.autoPlan &&
     state.beds.length === 0
   ) {
-    // Utente di ritorno con piano automatico ma serra vuota, per esempio dopo cambio mese.
     autoFill();
   } else if (!_bootIntentApplied) {
     render();
@@ -867,15 +834,15 @@ if (LIVELLI.has(_bootLivello)) {
     clearBootParams();
   }
   setMode(state.autoPlan ? "fit" : "expert", false);
-  // Sincronizza classi body e card attiva senza forzare la modalità (già decisa).
+
   setLivello(state.livello, { mapMode: false });
 }
 syncVegFilterTabs();
-/* Chiusura boot: aggiorna i testi dinamici del percorso guidato. */
+
 updateGuidedIntroDynamic();
-/* Di default il pannello "La tua serra" è chiuso in tutte le modalità su mobile/tablet. */
+
 collapseSettingsPanelAfterAutoPlan();
-/* Su desktop, il principiante trova il pannello aperto per orientarsi subito. */
+
 if (state.livello === "novizio" && !isResponsiveConfiguratorLayout()) {
   const _novPanel = document.getElementById("panelSettings");
   if (_novPanel) {

@@ -1,18 +1,4 @@
-/* ==========================================================================
-   HOME — CARRELLO E SCHEDA DELLA PIANTA
-   --------------------------------------------------------------------------
-   Gestisce le confezioni di semi, il carrello laterale e il dettaglio completo
-   di ogni coltura: tecnica di semina, malattie, parassiti e prodotti mirati.
-
-   SEZIONI DEL FILE
-   1. Operazioni sul carrello e riepilogo dell'ordine
-   2. Apertura, chiusura e navigazione della scheda pianta
-   3. Profilo tecnico e indicazioni di coltivazione
-   4. Malattie, parassiti e trattamenti consigliati
-   5. Rendering finale e gesti del pannello di dettaglio
-   ========================================================================== */
-
-/* 1. CARRELLO — aggiunge, rimuove e raggruppa confezioni singole, coppie e kit. */
+// Operazioni carrello
 function toggleCart(e, id) {
   e.stopPropagation();
   const added = !inCart(id);
@@ -28,6 +14,7 @@ function toggleCart(e, id) {
   c.classList.add("bump");
   setTimeout(() => c.classList.remove("bump"), 250);
 }
+// Aggiunge pair to cart
 function addPairToCart(e, aId, bId) {
   e.stopPropagation();
   [aId, bId].forEach((id) => {
@@ -42,6 +29,7 @@ function addPairToCart(e, aId, bId) {
   c.classList.add("bump");
   setTimeout(() => c.classList.remove("bump"), 250);
 }
+// Aggiunge kit to cart
 function addKitToCart() {
   const kit = KITS[state.mese];
   if (!kit) return;
@@ -58,6 +46,7 @@ function addKitToCart() {
   if (availableIds.length) showCartNudge(availableIds[0], true);
   openCart();
 }
+// Aggiunge kit and plan
 function addKitAndPlan() {
   const kit = KITS[state.mese];
   if (!kit) return;
@@ -75,6 +64,7 @@ function addKitAndPlan() {
     window.location.href = "configuratore.html?import=cart";
   }
 }
+// Rimuove from cart
 function removeFromCart(id) {
   cart = cart.filter((i) => i.id !== id);
   updateCartUI();
@@ -83,6 +73,7 @@ function removeFromCart(id) {
   savePrefs();
   showCartNudge(id, false);
 }
+// Pulisce cart
 function clearCart() {
   cart = [];
   updateCartUI();
@@ -90,6 +81,7 @@ function clearCart() {
   renderAbbinamenti();
   savePrefs();
 }
+// Aggiorna cart ui
 function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.length;
   const speciesLine = document.getElementById("cartSpeciesLine");
@@ -104,7 +96,7 @@ function updateCartUI() {
       speciesLine.hidden = true;
     }
   }
-  // Sezione configuratore: mostra suggerimento carrello se ci sono semi da importare.
+
   const confHint = document.getElementById("confCartHint");
   const confHintText = document.getElementById("confCartHintText");
   const confImportBtn = document.getElementById("confImportBtn");
@@ -185,6 +177,7 @@ function updateCartUI() {
     }
   }
 }
+// Mostra cart nudge
 function showCartNudge(id, added = true) {
   const nudge = document.getElementById("cartNudge");
   const title = document.getElementById("cartNudgeTitle");
@@ -205,6 +198,7 @@ function showCartNudge(id, added = true) {
 let scrollLockCount = 0;
 let bodyScrollY = 0;
 
+// Blocca lo scroll della pagina
 function lockBodyScroll() {
   if (scrollLockCount === 0) {
     bodyScrollY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -217,6 +211,7 @@ function lockBodyScroll() {
   scrollLockCount++;
 }
 
+// Ripristina lo scroll della pagina
 function unlockBodyScroll() {
   scrollLockCount = Math.max(0, scrollLockCount - 1);
   if (scrollLockCount === 0) {
@@ -229,17 +224,20 @@ function unlockBodyScroll() {
   }
 }
 
+// Apertura e chiusura
 function openCart() {
   document.getElementById("cartNudge")?.classList.remove("visible");
   lockBodyScroll();
   document.body.classList.add("cart-open");
   document.getElementById("cartOverlay").classList.add("open");
 }
+// Chiude il carrello
 function closeCart() {
   document.getElementById("cartOverlay").classList.remove("open");
   document.body.classList.remove("cart-open");
   unlockBodyScroll();
 }
+// Prepara la richiesta checkout
 function alertCheckout() {
   if (!cart.length) {
     openCart();
@@ -263,11 +261,12 @@ function alertCheckout() {
   )}&body=${encodeURIComponent(body)}`;
 }
 
-/* 2. SCHEDA PIANTA — controlla pannello, scorrimento pagina, tab e tastiera. */
+// Blocca lo scroll durante il dettaglio
 function lockDetailPageScroll() {
   lockBodyScroll();
   document.body.classList.add("detail-open");
 }
+// Ripristina lo scroll dopo il dettaglio
 function unlockDetailPageScroll() {
   document.body.classList.remove("detail-open");
   unlockBodyScroll();
@@ -281,6 +280,7 @@ const DETAIL_TAB_ORDER = [
   "harvest"
 ];
 
+// Imposta la tab dettaglio
 function setDetailTab(tab, moveFocus = false) {
   if (!DETAIL_TAB_ORDER.includes(tab)) tab = "overview";
   document.querySelectorAll("[data-detail-tab]").forEach((button) => {
@@ -310,6 +310,7 @@ function setDetailTab(tab, moveFocus = false) {
   }
 }
 
+// Gestisce la tastiera nelle tab dettaglio
 function handleDetailTabKey(event) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
@@ -326,7 +327,7 @@ function handleDetailTabKey(event) {
   setDetailTab(DETAIL_TAB_ORDER[next], true);
 }
 
-/* 3. PROFILO TECNICO — trasforma i dati botanici in indicazioni leggibili. */
+// Profilo tecnico
 function technicalProfile(p, guide) {
   const type = typeOfPlant(p);
   const name = plantName(p.id);
@@ -538,6 +539,7 @@ function technicalProfile(p, guide) {
   };
 }
 
+// Renderizza technical cards
 function renderTechnicalCards(items) {
   return items
     .map(
@@ -570,7 +572,8 @@ const DISEASE_GROUPS = {
 };
 
 const DISEASE_PLANT_GROUP = {};
-/* 4. SALUTE DELLA PIANTA — associa malattie, parassiti e rimedi alle colture. */
+
+// Assegna il gruppo malattie alla pianta
 function assignDiseaseGroup(group, ids) {
   ids.forEach((id) => {
     DISEASE_PLANT_GROUP[id] = group;
@@ -691,6 +694,7 @@ assignDiseaseGroup("sweet_potato", ["patata_dolce"]);
 assignDiseaseGroup("watercress", ["crescione"]);
 assignDiseaseGroup("topinambur", ["topinambur"]);
 
+// Restituisce il catalogo malattie
 function diseaseCatalog() {
   const ro = currentLang === "ro";
   const it = {
@@ -880,6 +884,7 @@ function diseaseCatalog() {
   };
 }
 
+// Malattie e parassiti
 function diseasesForPlant(p) {
   const group =
     DISEASE_PLANT_GROUP[p.id] ||
@@ -897,6 +902,7 @@ function diseasesForPlant(p) {
     .map(([name, symptoms, action]) => ({ name, symptoms, action }));
 }
 
+// Renderizza plant diseases
 function renderPlantDiseases(p) {
   const diseases = diseasesForPlant(p);
   const count = document.getElementById("detailDiseasesCount");
@@ -933,6 +939,7 @@ const PEST_GROUPS = {
   other: ["aphids", "slugs", "thrips"]
 };
 
+// Restituisce il catalogo parassiti
 function pestCatalog() {
   if (currentLang === "ro")
     return {
@@ -1051,6 +1058,7 @@ function pestCatalog() {
   };
 }
 
+// Restituisce i parassiti per pianta
 function pestsForPlant(p) {
   const diseaseGroup = DISEASE_PLANT_GROUP[p.id] || "other";
   const group = PEST_GROUPS[diseaseGroup] ? diseaseGroup : "other";
@@ -1065,6 +1073,7 @@ function pestsForPlant(p) {
     .filter(Boolean);
 }
 
+// Suggerisce prodotti per parassiti
 function targetedPestProducts(p) {
   const group = PEST_GROUPS[DISEASE_PLANT_GROUP[p.id]]
     ? DISEASE_PLANT_GROUP[p.id]
@@ -1308,6 +1317,7 @@ function targetedPestProducts(p) {
   };
 }
 
+// Renderizza plant pests
 function renderPlantPests(p) {
   const pests = pestsForPlant(p);
   const products = targetedPestProducts(p);
@@ -1324,7 +1334,7 @@ function renderPlantPests(p) {
     .join("");
 }
 
-/* 5. RENDERING DEL DETTAGLIO — compone la scheda e gestisce carrello e chiusura. */
+// Scheda pianta
 function openDetail(id, preserveTab = false) {
   const p = BYID[id];
   if (!p) return;
@@ -1337,12 +1347,12 @@ function openDetail(id, preserveTab = false) {
   const guide = localizedSowingGuide(p);
   const profile = technicalProfile(p, guide);
 
-  // Foto principale.
+
   document.getElementById("detailPhoto").src = photoSrc(id);
   document.getElementById("detailPhoto").alt = plantName(id);
   document.getElementById("detailName").textContent = plantName(id);
 
-  // Tipo e difficoltà nella sezione hero: usa le chiavi traduzione corrette.
+
   const tipo = TIPO[p.id] || "foglia";
   const diffLevel = DIFFICULTY[p.id] || 2;
   const diffLabel =
@@ -1362,19 +1372,19 @@ function openDetail(id, preserveTab = false) {
   diffEl.textContent = diffLabel;
   diffEl.className = `detail-hero-diff ${diffClass}`;
 
-  // Badge rapidi: sole e acqua nella parte alta del contenuto.
+
   document.getElementById("detailBadges").innerHTML =
     `<span class="badge badge--sun">${SOLE_ICON[p.sole]} ${sunLabel(p)}</span>
      <span class="badge badge--water">${ACQUA_ICON[p.acqua]} ${t("plant.water")} ${t(`water.${p.acqua}`)}</span>
      <span class="badge badge--type" style="${TIPO_STYLE[tipo] || ""}">${typeLabel(tipo)}</span>`;
 
-  // Nota pratica.
+
   const nota = plantNote(p);
   const notaEl = document.getElementById("detailNota");
   notaEl.textContent = profile.description;
   notaEl.hidden = !profile.description;
 
-  // Infografica distanze.
+
   const sp = PLANT_SPACING[p.id] || {};
   const svgDiagram = spacingInfographic(p);
   const spacingValStr = spacingLabel(p);
@@ -1389,7 +1399,7 @@ function openDetail(id, preserveTab = false) {
          <b class="detail-spacing-val">—</b>
        </div>`;
 
-  // Tessere statistiche 2x2: raccolta, resa, altezza in cm, prezzo/bustina.
+
   const hcm = PLANT_HEIGHT_CM[p.id] ? ` · ${PLANT_HEIGHT_CM[p.id]} cm` : "";
   const price = packPrice(id);
   const spp = seedsPerPack(id);
@@ -1426,7 +1436,7 @@ function openDetail(id, preserveTab = false) {
   document.getElementById("detailHarvestGuide").innerHTML =
     renderTechnicalCards(profile.harvest);
 
-  // Barra mesi con abbreviazioni.
+
   const activeMonths = Array.from(effectiveMonths(p))
     .sort((a, b) => a - b)
     .map((m) => ABBR_MESI[m - 1])
@@ -1455,7 +1465,7 @@ function openDetail(id, preserveTab = false) {
        <span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span>
      </div>`;
 
-  // Abbinamenti: piante amiche e nemiche.
+
   let comp = "";
   if (p.amiche.length)
     comp += `<div class="detail-companions-group">
@@ -1481,7 +1491,7 @@ function openDetail(id, preserveTab = false) {
   compEl.innerHTML = comp;
   compEl.hidden = !comp;
 
-  // Guida alla semina.
+
   const sowEl = document.getElementById("detailSow");
   const sowBodyEl = document.getElementById("detailSowBody");
   const sowRow = (icon, label, value) =>
@@ -1512,7 +1522,7 @@ function openDetail(id, preserveTab = false) {
   sowBodyEl.innerHTML = sowHtml;
   sowEl.hidden = !sowHtml;
 
-  // Pulsante carrello.
+
   const inC = inCart(id);
   const btn = document.getElementById("detailAddBtn");
   btn.textContent = detailCartLabel(inC);
@@ -1524,6 +1534,7 @@ function openDetail(id, preserveTab = false) {
   setDetailTab(preserveTab ? previousTab : "overview");
   if (!wasOpen) lockDetailPageScroll();
 }
+// Aggiunge il dettaglio al carrello
 function detailAddToCart() {
   if (!currentDetail) return;
   const added = !inCart(currentDetail);
@@ -1541,6 +1552,7 @@ function detailAddToCart() {
     btn.classList.toggle("added", added);
   }
 }
+// Chiude detail
 function closeDetail(e) {
   if (e && e.target !== document.getElementById("detailOverlay")) return;
   document.getElementById("detailOverlay").classList.remove("open");
@@ -1570,9 +1582,9 @@ document.getElementById("detailPanel")?.addEventListener(
   (e) => {
     const panel = document.getElementById("detailPanel");
     if (!panel) return;
-    // Lo scroller reale è .detail-scroll su mobile, .detail-tab-panel.active su
-    // desktop: #detailPanel ha overflow:hidden e non scrolla mai, quindi leggere
-    // scrollTop/scrollHeight da lì bloccava OGNI trascinamento (scroll congelato).
+
+
+
     const scroller =
       panel.querySelector(".detail-scroll") &&
       window.matchMedia("(max-width: 660px)").matches

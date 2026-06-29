@@ -1,8 +1,5 @@
-/* Sezione: Pannelli e controlli.
-+ * Raccolta ordinata delle regole relative a campi, stepper, azioni colture e filtri della configurazione.
-+ */
+/* Pannelli e controlli */
 @layer base {
-  /* Pannelli: contenitori laterali, titoli, campi e pulsanti. */
   .panel {
     background: var(--carta);
     border: var(--bordo);
@@ -240,7 +237,7 @@
     outline: 2px solid var(--verde-chiaro);
     outline-offset: 1px;
   }
-  /* Stepper: controlli numerici più/meno. */
+
   .stepper {
     display: flex;
     align-items: stretch;
@@ -296,7 +293,7 @@
     font-size: 13px;
     min-width: 46px;
   }
-  /* Accordion pannelli: apertura e chiusura dei riepiloghi. */
+
   .panel-title-row {
     display: flex;
     align-items: center;
@@ -318,7 +315,7 @@
   .panel-title-row h2 {
     margin: 0;
   }
-  /* Selettore mese: controllo sempre visibile per il piano automatico. */
+
   .crops-month-selector {
     display: flex;
     align-items: center;
@@ -353,7 +350,6 @@
     outline-offset: 2px;
   }
 
-  /* Contatore piante: riepilogo colture disponibili nel mese. */
   .crops-count {
     font-size: 12px;
     color: #6b776b;
@@ -704,7 +700,6 @@
     background: rgba(47, 107, 58, 0.1);
   }
 
-  /* Azioni colture: ottimizza o svuota il progetto corrente. */
   .crops-customize-footer {
     display: grid;
     gap: 12px;
@@ -739,9 +734,7 @@
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  /* "Ricomincia": mostrato solo al principiante (rigenera il piano di stagione).
-   Nascosto per gli altri profili che hanno gia il pulsante "Rigenera" o le
-   azioni manuali. */
+
   .novice-restart-row {
     display: none;
     margin-top: 10px;
@@ -761,8 +754,7 @@
   .novice-restart-btn:hover {
     background: rgba(47, 107, 58, 0.16);
   }
-  /* "Genera piano di stagione": azione secondaria mostrata solo all'esperto,
-   accanto ai preset, per un punto di partenza automatico di stagione. */
+
   .expert-seasonal-btn {
     display: none;
   }
@@ -770,7 +762,7 @@
     display: inline-flex;
     margin-top: 8px;
   }
-  /* Riga Annulla/Ripristina: due pulsanti compatti affiancati sotto le azioni. */
+
   .crops-history-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1332,7 +1324,6 @@
     text-align: center;
   }
 
-  /* Lista ortaggi: card selezionabili nel pannello colture. */
   .veg-list {
     display: flex;
     flex-direction: column;
@@ -1401,7 +1392,7 @@
     color: #8a948a;
     display: block;
   }
-  /* Badge "✓ nella serra" */
+
   .veg-in-badge {
     display: inline-flex;
     align-items: center;
@@ -1416,7 +1407,7 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  /* Badge "fuori stagione" nella vista Tutte */
+
   .veg-offseason {
     display: inline-flex;
     align-items: center;
@@ -1430,7 +1421,7 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  /* Pianta già nella serra: sfondo verde tenue */
+
   .veg.in {
     display: block;
     position: relative;

@@ -1,3 +1,4 @@
+// Export ESM dati colture condivisi
 import "./plants-data.js";
 
 export const PLANTS = window.PLANTS;

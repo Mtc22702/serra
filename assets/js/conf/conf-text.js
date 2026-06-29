@@ -1,10 +1,5 @@
-/* =========================================================================
-   SEZIONE 06 - Traduzioni, etichette e helper testuali
-   -------------------------------------------------------------------------
-   Funzioni leggere per recuperare testi localizzati, nomi pianta, etichette
-   agronomiche e microcopy dell'interfaccia.
-   ========================================================================= */
-
+// Funzioni di traduzione
+// Traduce una chiave con sostituzione variabili
 function tx(key, vars = {}) {
   const dict = I18N[state.lang] || I18N.it;
   let value = dict[key] || I18N.it[key] || key;
@@ -14,6 +9,7 @@ function tx(key, vars = {}) {
   return value;
 }
 
+// Restituisce il testo localizzato di un campo pianta
 function plantText(plant, field = "nome") {
   if (state.lang === "ro" && PLANT_RO[plant.id]?.[field]) {
     return PLANT_RO[plant.id][field];
@@ -21,34 +17,41 @@ function plantText(plant, field = "nome") {
   return plant[field];
 }
 
+// Restituisce il nome localizzato della pianta per ID
 function plantNameById(id) {
   return BYID[id] ? plantText(BYID[id], "nome") : null;
 }
 
+// Traduce il livello idrico in etichetta
 function waterLabel(value) {
   if (value === "alta") return tx("waterHigh");
   if (value === "bassa") return tx("waterLow");
   return tx("waterMedium");
 }
 
+// Traduce l'altezza in etichetta
 function heightLabel(value) {
   if (value === "alta") return tx("heightHigh");
   if (value === "bassa") return tx("heightLow");
   return tx("heightMedium");
 }
 
+// Formatta la resa in grammi o chilogrammi
 function yieldLabel(value) {
   return value < 1
     ? `${(value * 1000).toFixed(0)} g`
     : `${value.toFixed(1)} kg`;
 }
 
+// Restituisce la stringa delle distanze di semina
 function spacingValue(plant) {
   return plant.dr && plant.dr !== plant.d
     ? `${plant.d}×${plant.dr} cm`
     : `${plant.d} cm`;
 }
 
+// Infografiche e diagrammi
+// Genera il diagramma SVG delle distanze tra piante
 function spacingInfographicSvg(p) {
   const d = p.d;
   const dr = p.dr || p.d;
@@ -98,11 +101,13 @@ function spacingInfographicSvg(p) {
 </svg>`;
 }
 
+// Restituisce la stringa del ciclo di raccolta
 function harvestValue(plant) {
   if (!plant.gg) return tx("perennial");
   return `${tx("about")} ${plant.gg} ${tx("daysShort")}`;
 }
 
+// Restituisce la guida di semina nella lingua corrente
 function localizedSowingGuide(plant) {
   const sow = SOWING_GUIDE[plant.id];
   if (!sow || state.lang !== "ro") return sow;
@@ -183,8 +188,7 @@ function localizedSowingGuide(plant) {
   return { method, depth, thin, tip: `${name}: ${tip}` };
 }
 
-// Sceglie targetCount indici distribuiti su una griglia 2D.
-// Usa un percorso a serpentina per ottenere un motivo a mattoni, non a colonne.
+// Distribuisce gli indici emoji lungo le aiuole a serpente
 function emojiSpreadIndexes(itemCount, cols, targetCount) {
   if (!targetCount) return new Set();
   if (itemCount <= targetCount)
@@ -208,10 +212,13 @@ function emojiSpreadIndexes(itemCount, cols, targetCount) {
   return result;
 }
 
+// Restituisce il nome del mese per l'indice dato
 function monthName(index) {
   return (MONTHS[state.lang] || MONTHS.it)[index - 1];
 }
 
+// Aggiornamento UI
+// Aggiorna la barra del preset applicato
 function updatePresetAppliedUI() {
   const box = document.getElementById("presetApplied");
   if (!box) return;
@@ -236,16 +243,19 @@ function updatePresetAppliedUI() {
   }
 }
 
+// Imposta il testo tradotto in un elemento DOM
 function setText(selector, key) {
   const el = document.querySelector(selector);
   if (el) el.textContent = tx(key);
 }
 
+// Imposta il testo tradotto in un'opzione select
 function setOptionText(selectId, value, key) {
   const opt = document.querySelector(`#${selectId} option[value="${value}"]`);
   if (opt) opt.textContent = tx(key);
 }
 
+// Sincronizza il label della select vista mappa
 function syncOverlaySelectLabel() {
   const select = document.getElementById("inOverlay");
   const label = document.getElementById("viewModeValue");
@@ -255,6 +265,7 @@ function syncOverlaySelectLabel() {
     select.options[select.selectedIndex]?.textContent || tx("viewNatural");
 }
 
+// Aggiorna label e icona del pulsante di apertura pannello
 function updatePanelToggle(btn) {
   const panel = btn.closest(".panel");
   const isCollapsed = panel?.classList.contains("is-collapsed");
@@ -277,10 +288,12 @@ function updatePanelToggle(btn) {
   );
 }
 
+// Aggiorna tutti i pulsanti pannello in pagina
 function updateAllPanelToggles() {
   document.querySelectorAll(".panel-toggle").forEach(updatePanelToggle);
 }
 
+// Applicazione lingua
 function applyLanguage() {
   document.documentElement.lang = state.lang;
   document.title = tx("title");
@@ -342,7 +355,7 @@ function applyLanguage() {
   if (introExpSteps[1]) introExpSteps[1].innerHTML = tx("guidedExpStep2");
   if (introExpSteps[2]) introExpSteps[2].innerHTML = tx("guidedExpStep3");
   setText("#vegScrollHint span:first-child", "vegScrollHint");
-  /* Traduci le tab filtro piante */
+
   const filterIconMap = { all: "🌿", in: "✓", "all-beds": "⌕" };
   const filterLblMap = {
     all: { it: "Seminabili ora", ro: "De semănat acum" },

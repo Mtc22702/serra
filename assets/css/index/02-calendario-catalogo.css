@@ -1,8 +1,5 @@
-/* Sezione: Calendario e catalogo.
-+ * Raccolta ordinata delle regole relative a mesi, card stagionali, abbinamenti, kit e footer botanico.
-+ */
+/* Calendario e catalogo */
 @layer base {
-  /* Filtro mese: strip mensile con conteggio delle piante adatte. */
   .month-strip {
     display: flex;
     gap: 0.42rem;
@@ -95,7 +92,6 @@
     display: none;
   }
 
-  /* Catalogo stagionale: card piante, ricerca e filtri. */
   .stagione-section {
     padding: 2rem 2rem 3rem;
     max-width: 1140px;
@@ -283,7 +279,7 @@
     border: 1px solid rgba(45, 106, 79, 0.08);
     pointer-events: none;
   }
-  /* Pulsante di reset catalogo: stile link discreto. */
+
   .catalog-reset-btn {
     display: inline-flex;
     align-items: center;
@@ -375,7 +371,7 @@
     vertical-align: middle;
     margin: 0 2px;
   }
-  /* Prime tre card catalogo: stesso peso visivo. */
+
   .plant-catalog-top {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -490,7 +486,7 @@
     background: #b03020;
     border-color: #b03020;
   }
-  /* Badge sovrapposti alla foto: tipo e difficoltà. */
+
   .photo-type-tag {
     position: absolute;
     top: 0.5rem;
@@ -526,7 +522,6 @@
     display: flex;
   }
 
-  /* Lista compatta delle piante rimanenti. */
   .plant-compact-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -642,7 +637,6 @@
     margin-bottom: 0.8rem;
   }
 
-  /* Abbinamenti: griglia compatibilità tra piante. */
   .abbinamenti-section {
     background:
       linear-gradient(
@@ -815,7 +809,6 @@
     padding: 2rem 0;
   }
 
-  /* Kit del mese: card promozionale con semi compatibili. */
   .kit-section {
     padding: 3rem 2rem 2.4rem;
     max-width: 1140px;
@@ -995,7 +988,6 @@
     font-weight: 500;
   }
 
-  /* CTA configuratore: sezione di passaggio verso la progettazione. */
   .conf-section {
     padding: 0.4rem 2rem 3rem;
     max-width: 1140px;
@@ -1151,7 +1143,6 @@
     color: rgba(255, 255, 255, 0.58);
     transform: none;
   }
-  /* chip funzionalità */
   .conf-features {
     display: flex;
     flex-wrap: wrap;
@@ -1166,7 +1157,6 @@
     border-radius: 999px;
     padding: 0.18rem 0.55rem;
   }
-  /* hint carrello */
   .conf-cart-hint {
     display: flex;
     align-items: center;
@@ -1180,7 +1170,6 @@
     display: none !important;
   }
 
-  /* Footer botanico: brand, link, consiglio del mese e legale. */
   footer.footer-botanico {
     background: var(--green-dk);
     margin-top: 0;
@@ -1204,6 +1193,7 @@
     overflow-x: clip;
     contain: layout paint;
   }
+  /* Animazioni */
   @keyframes plantsScroll {
     0% {
       transform: translateX(0);
@@ -1272,7 +1262,7 @@
     line-height: 1.5;
     margin-bottom: 0.5rem;
   }
-  /* Tip del mese integrato nel brand col */
+
   .footer-tip-inline {
     margin-top: 0.9rem;
     padding-top: 0.85rem;

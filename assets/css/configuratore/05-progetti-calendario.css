@@ -1,8 +1,5 @@
-/* Sezione: Progetti e calendario.
-+ * Raccolta ordinata delle regole relative a salvataggi multipli, manutenzione, consociazioni e stampa.
-+ */
+/* Progetti e calendario */
 @layer base {
-  /* ===== Modale "I miei progetti" (multi-progetto) ===== */
   .projects-modal {
     position: fixed;
     inset: 0;
@@ -140,7 +137,6 @@
     border-top: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
   }
 
-  /* ===== Calendario di manutenzione ===== */
   .calendar-open {
     overflow: hidden;
   }
@@ -593,6 +589,7 @@
     cursor: pointer;
   }
 
+  /* Regole responsive */
   @media (max-width: 680px) {
     #calendarModal {
       align-items: flex-end;
@@ -698,7 +695,6 @@
     }
   }
 
-  /* ===== Consociazioni potenziate (avvisi amiche/nemiche) ===== */
   .companion-score {
     align-items: center;
   }
@@ -755,7 +751,6 @@
     vertical-align: middle;
   }
 
-  /* ===== Lista spesa potenziata (materiali e preventivo) ===== */
   .materials {
     margin-top: 12px;
     border-top: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
@@ -839,6 +834,7 @@
     opacity: 0.85;
   }
 
+  /* Regole responsive */
   @media print {
     html,
     body {

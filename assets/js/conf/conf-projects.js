@@ -1,13 +1,7 @@
-/* =========================================================================
-   SEZIONE 04B — Gestione dei progetti salvati
-   -------------------------------------------------------------------------
-   Aggiunge a serra.config.v1 più progetti, ciascuno con il proprio layout.
-   CONFIG_KEY resta la configurazione di lavoro del progetto attivo, così
-   il boot e le ~35 chiamate a saveConfig/readSavedConfig restano invariati.
-   Lo store completo vive in localStorage["serra.projects.v1"].
-   ========================================================================= */
+// Store progetti
 const PROJECTS_KEY = "serra.projects.v1";
 
+// Legge lo store progetti dal localStorage
 function readProjectsStore() {
   try {
     return JSON.parse(localStorage.getItem(PROJECTS_KEY) || "null");
@@ -16,27 +10,29 @@ function readProjectsStore() {
   }
 }
 
+// Persiste lo store progetti nel localStorage
 function writeProjectsStore(store) {
   try {
     localStorage.setItem(PROJECTS_KEY, JSON.stringify(store));
-  } catch {
-    // localStorage puo non essere disponibile in alcuni contesti incorporati.
-  }
+  } catch {}
 }
 
+// Genera un ID univoco per un nuovo progetto
 function genProjectId() {
   return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 }
 
+// Recupera una stringa tradotta per i progetti
 function projectsText(key, vars) {
-  // tx() esiste (conf-text.js); fallback prudente se non disponibile.
   return typeof tx === "function" ? tx(key, vars) : key;
 }
 
+// Genera il nome predefinito per il progetto numero n
 function projectsDefaultName(n) {
   return projectsText("projects.default_name", { n });
 }
 
+// Esegue l'escape dei caratteri HTML speciali
 function escapeHtmlProjects(s) {
   return String(s).replace(
     /[&<>"']/g,
@@ -51,8 +47,7 @@ function escapeHtmlProjects(s) {
   );
 }
 
-// Config di un progetto vuoto: serra di default, nessuna coltura, auto-plan off
-// cosi' parte davvero vuota e l'utente la pianifica.
+// Restituisce la configurazione di default per un nuovo progetto
 function defaultProjectConfig() {
   return {
     lang: state.lang,
@@ -70,7 +65,7 @@ function defaultProjectConfig() {
   };
 }
 
-// Crea lo store la prima volta: migra la config esistente come "Progetto 1".
+// Gestione store
 function ensureProjectsStore() {
   let store = readProjectsStore();
   if (store && Array.isArray(store.projects) && store.projects.length) {
@@ -80,7 +75,7 @@ function ensureProjectsStore() {
     }
     return store;
   }
-  const existing = readSavedConfig(); // CONFIG_KEY attuale (puo essere null)
+  const existing = readSavedConfig();
   const id = genProjectId();
   const now = Date.now();
   store = {
@@ -99,6 +94,7 @@ function ensureProjectsStore() {
   return store;
 }
 
+// Restituisce il progetto attivo dallo store
 function getActiveProject(store) {
   store = store || ensureProjectsStore();
   return (
@@ -106,8 +102,7 @@ function getActiveProject(store) {
   );
 }
 
-// Chiamata da saveConfig (conf-state.js): allinea il progetto attivo alla
-// config di lavoro corrente, senza toccare il resto della lista.
+// Sincronizza la configurazione del progetto attivo
 function syncActiveProjectConfig(payload) {
   const store = readProjectsStore();
   if (!store || !Array.isArray(store.projects)) return;
@@ -118,7 +113,8 @@ function syncActiveProjectConfig(payload) {
   writeProjectsStore(store);
 }
 
-// Carica un progetto come config di lavoro corrente e aggiorna tutta la UI.
+// Operazioni progetto
+// Attiva il progetto selezionato e ricarica la configurazione
 function switchToProject(id) {
   const store = ensureProjectsStore();
   const target = store.projects.find((p) => p.id === id);
@@ -128,9 +124,7 @@ function switchToProject(id) {
   const cfg = target.config || defaultProjectConfig();
   try {
     localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
-  } catch {
-    /* no-op */
-  }
+  } catch {}
   applyConfigToState(cfg);
   applyLanguage();
   syncSizeControls();
@@ -139,8 +133,9 @@ function switchToProject(id) {
   renderProjectsModal();
 }
 
+// Crea un nuovo progetto vuoto e lo attiva
 function createProject() {
-  saveConfig(true); // fissa lo stato del progetto attivo prima di cambiarlo
+  saveConfig(true);
   const store = ensureProjectsStore();
   const id = genProjectId();
   const now = Date.now();
@@ -156,6 +151,7 @@ function createProject() {
   switchToProject(id);
 }
 
+// Crea una copia del progetto specificato
 function duplicateProject(id) {
   saveConfig(true);
   const store = ensureProjectsStore();
@@ -175,6 +171,7 @@ function duplicateProject(id) {
   renderProjectsModal();
 }
 
+// Rinomina il progetto tramite prompt utente
 function renameProject(id) {
   const store = ensureProjectsStore();
   const p = store.projects.find((x) => x.id === id);
@@ -189,6 +186,7 @@ function renameProject(id) {
   renderProjectsModal();
 }
 
+// Elimina il progetto dopo conferma utente
 function deleteProject(id) {
   const store = ensureProjectsStore();
   if (store.projects.length <= 1) {
@@ -206,9 +204,8 @@ function deleteProject(id) {
   else renderProjectsModal();
 }
 
-/* PANNELLO PROGETTI — apre la finestra e rende disponibili creazione,
-   duplicazione, rinomina, selezione ed eliminazione dei progetti salvati. */
-
+// Modale progetti
+// Apre la modale di gestione progetti
 function openProjectsModal() {
   ensureProjectsStore();
   renderProjectsModal();
@@ -219,6 +216,7 @@ function openProjectsModal() {
   }
 }
 
+// Chiude la modale di gestione progetti
 function closeProjectsModal() {
   const m = document.getElementById("projectsModal");
   if (m) {
@@ -227,6 +225,7 @@ function closeProjectsModal() {
   }
 }
 
+// Genera l'HTML della lista progetti nella modale
 function renderProjectsModal() {
   const list = document.getElementById("projectsList");
   if (!list) return;

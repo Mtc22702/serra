@@ -1,4 +1,4 @@
-/* Manifesto CSS del configuratore: importa i moduli nell’ordine necessario alla cascata. */
+/* Moduli CSS del configuratore */
 @import url("./configuratore/01-fondazioni-intro.css");
 @import url("./configuratore/02-pannelli-controlli.css");
 @import url("./configuratore/03-scena-dettagli.css");
