@@ -1424,7 +1424,7 @@ function applyBootIntent() {
     saveConfig(true);
     render();
     setMode("expert", false);
-    focusManualPlanningPath();
+    if (!LIVELLI.has(BOOT_PARAMS.get("livello"))) focusManualPlanningPath();
     clearBootParams();
     return true;
   }

@@ -353,7 +353,7 @@ function initEvents() {
     const input = document.getElementById("vegSearchInput");
     if (input) {
       input.value = "";
-      input.focus();
+      input.focus({ preventScroll: true });
     }
     renderVegList();
   });
@@ -768,6 +768,7 @@ loadConfCart();
 const _bootCfg = readSavedConfig();
 
 const _bootLivello = BOOT_PARAMS.get("livello");
+const _shouldFocusGuidedIntroOnBoot = LIVELLI.has(_bootLivello);
 
 if (LIVELLI.has(_bootLivello)) {
   state.livello = _bootLivello;
@@ -782,7 +783,7 @@ if (LIVELLI.has(_bootLivello)) {
     setMode("expert", false);
     syncVegFilterTabs();
     render();
-    focusManualPlanningPath();
+    if (!_shouldFocusGuidedIntroOnBoot) focusManualPlanningPath();
   } else if (_bootLivello === "intermedio") {
     vegFilter = "all";
     state.autoPlan = true;
@@ -791,7 +792,7 @@ if (LIVELLI.has(_bootLivello)) {
     syncVegFilterTabs();
     if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
     else render();
-    focusManualPlanningPath();
+    if (!_shouldFocusGuidedIntroOnBoot) focusManualPlanningPath();
   } else {
     vegFilter = "in";
     state.autoPlan = true;
@@ -802,7 +803,7 @@ if (LIVELLI.has(_bootLivello)) {
 
     if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
     else render();
-    scrollToScene();
+    if (!_shouldFocusGuidedIntroOnBoot) scrollToScene();
   }
   saveConfig(true);
   clearBootParams();
@@ -841,7 +842,9 @@ syncVegFilterTabs();
 
 updateGuidedIntroDynamic();
 
-collapseSettingsPanelAfterAutoPlan();
+collapseSettingsPanelAfterAutoPlan({
+  scroll: !_shouldFocusGuidedIntroOnBoot
+});
 
 if (state.livello === "novizio" && !isResponsiveConfiguratorLayout()) {
   const _novPanel = document.getElementById("panelSettings");

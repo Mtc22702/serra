@@ -216,10 +216,15 @@ function setMode(mode, scroll = false) {
   if (fillBtn) fillBtn.hidden = next === "expert";
 
   if (scroll) {
-    document.getElementById("guidedIntro")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    const guidedIntro = document.getElementById("guidedIntro");
+    if (typeof scrollElementBelowHeader === "function") {
+      scrollElementBelowHeader(guidedIntro, "smooth");
+    } else {
+      guidedIntro?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
   }
 }
 
@@ -337,6 +342,11 @@ function updateVegSearchUI() {
 
 // Scrolla fino alla scena della serra
 function scrollToScene() {
+  const resolveStage = () => document.querySelector(".stage");
+  if (typeof scheduleElementBelowHeader === "function") {
+    scheduleElementBelowHeader(resolveStage, "smooth", { delay: 120 });
+    return;
+  }
   window.setTimeout(() => {
     const stage = document.querySelector(".stage");
     if (!stage) return;

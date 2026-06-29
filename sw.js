@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-06-28-178";
+const CACHE_VERSION = "2026-06-28-180";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [

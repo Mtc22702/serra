@@ -288,7 +288,7 @@ function setDetailTab(tab, moveFocus = false) {
     button.classList.toggle("active", active);
     button.setAttribute("aria-selected", String(active));
     button.tabIndex = active ? 0 : -1;
-    if (active && moveFocus) button.focus();
+    if (active && moveFocus) button.focus({ preventScroll: true });
   });
   document.querySelectorAll("[data-detail-panel]").forEach((panel) => {
     const active = panel.dataset.detailPanel === tab;

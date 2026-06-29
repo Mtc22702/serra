@@ -446,8 +446,25 @@ function headerScrollOffset() {
   return navHeight + 12;
 }
 
-// Scrolla un elemento sotto l'header con offset corretto
-function scrollElementBelowHeader(target, behavior = "smooth") {
+let pendingPageScrollTimer = 0;
+let pendingPageScrollFrame = 0;
+let pendingPageScrollToken = 0;
+
+// Annulla eventuali scroll pagina programmati ma non ancora eseguiti
+function cancelPendingPageScroll() {
+  pendingPageScrollToken++;
+  if (pendingPageScrollTimer) {
+    window.clearTimeout(pendingPageScrollTimer);
+    pendingPageScrollTimer = 0;
+  }
+  if (pendingPageScrollFrame) {
+    window.cancelAnimationFrame(pendingPageScrollFrame);
+    pendingPageScrollFrame = 0;
+  }
+}
+
+// Esegue lo scroll sotto l'header usando la posizione più aggiornata
+function scrollElementBelowHeaderNow(target, behavior = "smooth") {
   if (!target) return;
   const top =
     target.getBoundingClientRect().top + window.scrollY - headerScrollOffset();
@@ -455,6 +472,38 @@ function scrollElementBelowHeader(target, behavior = "smooth") {
     top: Math.max(0, top),
     behavior
   });
+}
+
+// Programma un solo scroll pagina alla volta, evitando scroll concorrenti
+function scheduleElementBelowHeader(
+  targetOrResolver,
+  behavior = "smooth",
+  options = {}
+) {
+  const delay = Math.max(0, options.delay || 0);
+  cancelPendingPageScroll();
+  const token = ++pendingPageScrollToken;
+  const run = () => {
+    pendingPageScrollTimer = 0;
+    pendingPageScrollFrame = window.requestAnimationFrame(() => {
+      pendingPageScrollFrame = 0;
+      if (token !== pendingPageScrollToken) return;
+      const target =
+        typeof targetOrResolver === "function"
+          ? targetOrResolver()
+          : targetOrResolver;
+      scrollElementBelowHeaderNow(target, behavior);
+      if (target && typeof options.after === "function") options.after(target);
+    });
+  };
+  if (delay) pendingPageScrollTimer = window.setTimeout(run, delay);
+  else run();
+}
+
+// Scrolla un elemento sotto l'header con offset corretto
+function scrollElementBelowHeader(target, behavior = "smooth") {
+  cancelPendingPageScroll();
+  scrollElementBelowHeaderNow(target, behavior);
 }
 
 // Verifica se il layout è in modalità mobile
@@ -480,11 +529,19 @@ function scrollGreenhouseImageIntoView(behavior = "auto") {
 }
 
 // Chiude il pannello impostazioni dopo l'autocompletamento
-function collapseSettingsPanelAfterAutoPlan() {
+function collapseSettingsPanelAfterAutoPlan(options = {}) {
+  const { scroll = true } = options;
   const panel = document.getElementById("panelSettings");
   if (!panel || !isResponsiveConfiguratorLayout()) return;
   setPanelCollapsed(panel, true);
-  requestAnimationFrame(() => scrollGreenhouseImageIntoView("smooth"));
+  if (!scroll) return;
+  scheduleElementBelowHeader(
+    () =>
+      document.querySelector(".stage .scene-wrap") ||
+      document.getElementById("scene") ||
+      document.querySelector(".stage"),
+    "smooth"
+  );
 }
 
 // Imposta lo stato aperto/chiuso di un pannello
@@ -515,16 +572,11 @@ function openCustomizePanelAndFocus() {
   const crops = document.getElementById("panelCustomize");
   if (!crops) return;
   setCustomizePanelCollapsed(false);
-  window.requestAnimationFrame(() => {
-    const navH = parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue("--nav-h") ||
-        "66",
-      10
-    );
-    const top = crops.getBoundingClientRect().top + window.scrollY - navH - 12;
-    window.scrollTo({ top, behavior: "smooth" });
-    crops.classList.add("is-focus-pulse");
-    window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
+  scheduleElementBelowHeader(crops, "smooth", {
+    after: () => {
+      crops.classList.add("is-focus-pulse");
+      window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
+    }
   });
 }
 
@@ -538,10 +590,9 @@ function scrollToGuidedIntroForLivello(liv) {
   };
   const sel = selectors[liv];
   if (!sel) return;
-  window.setTimeout(() => {
-    const target = document.querySelector(sel);
-    if (target) scrollElementBelowHeader(target, "smooth");
-  }, 200);
+  scheduleElementBelowHeader(() => document.querySelector(sel), "smooth", {
+    delay: 200
+  });
 }
 
 // Apre il pannello impostazioni e mette a fuoco le dimensioni
@@ -549,13 +600,17 @@ function openSettingsPanelAndFocusDimensions() {
   const panel = document.getElementById("panelSettings");
   if (!panel) return;
   setPanelCollapsed(panel, false);
-  requestAnimationFrame(() => {
-    scrollElementBelowHeader(panel, "smooth");
-    const inW = document.getElementById("inW");
-    if (inW) {
-      inW.focus({ preventScroll: true });
-      panel.classList.add("guided-highlight");
-      window.setTimeout(() => panel.classList.remove("guided-highlight"), 1600);
+  scheduleElementBelowHeader(panel, "smooth", {
+    after: () => {
+      const inW = document.getElementById("inW");
+      if (inW) {
+        inW.focus({ preventScroll: true });
+        panel.classList.add("guided-highlight");
+        window.setTimeout(
+          () => panel.classList.remove("guided-highlight"),
+          1600
+        );
+      }
     }
   });
 }
@@ -588,7 +643,7 @@ function setConfigDetailTab(tab, moveFocus = false) {
       button.classList.toggle("active", active);
       button.setAttribute("aria-selected", String(active));
       button.tabIndex = active ? 0 : -1;
-      if (active && moveFocus) button.focus();
+      if (active && moveFocus) button.focus({ preventScroll: true });
     });
   document
     .querySelectorAll("#pdpContent [data-detail-panel]")
@@ -1729,7 +1784,8 @@ function closeProjectExportMenu({ restoreFocus = false } = {}) {
   document
     .querySelectorAll('[aria-controls="projectExportMenu"]')
     .forEach((button) => button.setAttribute("aria-expanded", "false"));
-  if (restoreFocus && triggerId) document.getElementById(triggerId)?.focus();
+  if (restoreFocus && triggerId)
+    document.getElementById(triggerId)?.focus({ preventScroll: true });
 }
 
 // Apre il menu dropdown di esportazione progetto
@@ -1752,7 +1808,7 @@ function openProjectExportMenu(trigger) {
   const openAbove = rect.bottom + estimatedHeight + 12 > window.innerHeight;
   menu.style.left = `${left}px`;
   menu.style.top = `${openAbove ? Math.max(12, rect.top - estimatedHeight - 8) : rect.bottom + 8}px`;
-  menu.querySelector("button")?.focus();
+  menu.querySelector("button")?.focus({ preventScroll: true });
 }
 
 // Genera il nome file per l'esportazione del progetto
