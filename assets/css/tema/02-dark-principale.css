@@ -228,7 +228,6 @@
       .catalog-reset-btn,
       .catalog-insights span,
       .catalog-hint--pro,
-      .catalog-search--pro .catalog-search-box,
       .kit-meta-row span,
       .kit-plan-link
     ) {
@@ -295,6 +294,187 @@
   html[data-theme="dark"] .plant-card-compact.in-cart,
   html[data-theme="dark"] .abbinamento-card.in-cart {
     background: #203a2b;
+  }
+  html[data-theme="dark"] .catalog-pro-section {
+    background:
+      radial-gradient(
+        circle at 8% 0%,
+        rgba(82, 183, 136, 0.13),
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 92% 8%,
+        rgba(231, 111, 81, 0.1),
+        transparent 32%
+      ),
+      linear-gradient(180deg, #121f19 0%, #0f1b16 100%);
+  }
+  html[data-theme="dark"] .catalog-tools,
+  html[data-theme="dark"] .catalog-tools--advanced {
+    background: rgba(29, 48, 39, 0.94);
+    border-color: var(--dark-border);
+    box-shadow:
+      0 16px 38px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  html[data-theme="dark"] .catalog-filter-row {
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .catalog-status,
+  html[data-theme="dark"] .catalog-filter-note,
+  html[data-theme="dark"] .flow-head-note,
+  html[data-theme="dark"] .kit-compat-note {
+    background: rgba(38, 60, 49, 0.82);
+    border-color: var(--dark-border);
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .catalog-status-count {
+    background: rgba(111, 207, 151, 0.12);
+    color: #b9ebc8;
+  }
+  html[data-theme="dark"] .plant-card-top,
+  html[data-theme="dark"] .catalog-pro-section .plant-card-top {
+    background: #1d3027;
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+  }
+  html[data-theme="dark"] .plant-card-top:hover,
+  html[data-theme="dark"] .catalog-pro-section .plant-card-top:hover,
+  html[data-theme="dark"] .plant-card-compact:hover,
+  html[data-theme="dark"] .catalog-pro-section .plant-card-compact:hover {
+    background: #263c31;
+    border-color: var(--dark-border-strong);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  }
+  html[data-theme="dark"] .plant-card-top.in-cart,
+  html[data-theme="dark"] .catalog-pro-section .plant-card-top.in-cart,
+  html[data-theme="dark"] .catalog-pro-section .plant-card-compact.in-cart {
+    background: #203a2b;
+    border-color: rgba(111, 207, 151, 0.38);
+  }
+  html[data-theme="dark"] .top-name,
+  html[data-theme="dark"] .compact-name,
+  html[data-theme="dark"] .catalog-pro-section .compact-name,
+  html[data-theme="dark"] .abbin-names,
+  html[data-theme="dark"] .kit-meta-row b,
+  html[data-theme="dark"] .contatti-label,
+  html[data-theme="dark"] .contatti-value,
+  html[data-theme="dark"] .map-address {
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .catalog-card-note,
+  html[data-theme="dark"] .compact-note,
+  html[data-theme="dark"] .abbin-reason,
+  html[data-theme="dark"] .map-city,
+  html[data-theme="dark"] .contatti-value small {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .top-fact,
+  html[data-theme="dark"] .catalog-pro-section .top-fact,
+  html[data-theme="dark"] .compact-facts-row--pro span {
+    background: rgba(111, 207, 151, 0.1);
+    border-color: rgba(111, 207, 151, 0.14);
+    color: #d6e7da;
+  }
+  html[data-theme="dark"] .compact-thumb,
+  html[data-theme="dark"] .top-photo,
+  html[data-theme="dark"] .abbin-photo {
+    background: #17271f;
+  }
+  html[data-theme="dark"] .abbinamenti-section {
+    background:
+      linear-gradient(180deg, #101d17 0%, #17271f 100%),
+      linear-gradient(
+        90deg,
+        rgba(82, 183, 136, 0.08),
+        transparent 44%,
+        rgba(231, 111, 81, 0.06)
+      );
+    border-color: var(--dark-border);
+  }
+  html[data-theme="dark"] .abbin-card-topline {
+    color: #a8e6bd;
+  }
+  html[data-theme="dark"] .abbin-card-topline span:last-child {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .abbin-add-btn {
+    background: #263c31;
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .abbin-add-btn:hover,
+  html[data-theme="dark"] .abbin-add-btn.added {
+    background: #376f49;
+    border-color: #376f49;
+    color: #fff;
+  }
+  html[data-theme="dark"] .kit-card {
+    background:
+      linear-gradient(135deg, rgba(29, 48, 39, 0.98), rgba(23, 39, 31, 0.98)),
+      radial-gradient(
+        circle at 88% 8%,
+        rgba(231, 111, 81, 0.11),
+        transparent 34%
+      );
+    border-color: var(--dark-border);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+  }
+  html[data-theme="dark"] .kit-meta-row span,
+  html[data-theme="dark"] .kit-plan-link {
+    background: rgba(38, 60, 49, 0.86);
+    border-color: var(--dark-border);
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .map-placeholder-inner {
+    background: rgba(29, 48, 39, 0.82);
+    border-color: var(--dark-border);
+  }
+  html[data-theme="dark"] .back-to-top {
+    background: #1d3027;
+    color: #b9ebc8;
+    border-color: rgba(111, 207, 151, 0.62);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.28),
+      0 0 0 5px rgba(111, 207, 151, 0.1);
+  }
+  html[data-theme="dark"] .back-to-top:hover {
+    background: #376f49;
+    color: #fff;
+    border-color: #6fcf97;
+  }
+  html[data-theme="dark"] .catalog-search--pro .catalog-search-box {
+    background: #f4f9f6;
+    border-color: rgba(45, 106, 79, 0.55);
+    color: #0b2518;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.34),
+      0 1px 3px rgba(27, 67, 50, 0.08);
+  }
+  html[data-theme="dark"] .catalog-search--pro .catalog-search-box input {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: #0b2518 !important;
+    box-shadow: none;
+  }
+  html[data-theme="dark"]
+    .catalog-search--pro
+    .catalog-search-box
+    input::placeholder {
+    color: #617a6c;
+  }
+  html[data-theme="dark"] .catalog-search--pro .catalog-search-icon {
+    background: rgba(45, 106, 79, 0.1);
+    color: #2d6a4f;
+  }
+  html[data-theme="dark"] .catalog-search--pro .catalog-search-clear {
+    background: rgba(45, 106, 79, 0.15);
+    color: #0b2518;
+  }
+  html[data-theme="dark"] .catalog-search--pro .catalog-search-clear:hover {
+    background: #a03820;
+    color: #fff;
   }
 }
 @layer base {
