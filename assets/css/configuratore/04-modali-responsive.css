@@ -1045,7 +1045,8 @@
       display: none;
     }
 
-    .crops-month-selector.auto-plan-control,
+    /* Sul mobile il mese si vede via stageAutoPlanRow, non nel pannello */
+    .panel--settings .crops-month-selector,
     #autoPlanSectionLabel {
       display: none !important;
     }

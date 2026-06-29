@@ -533,9 +533,12 @@ function scrollGreenhouseImageIntoView(behavior = "auto") {
 function collapseSettingsPanelAfterAutoPlan(options = {}) {
   const { scroll = true } = options;
   const panel = document.getElementById("panelSettings");
-  if (!panel || !isResponsiveConfiguratorLayout()) return;
+  // Esperto non usa autoPlan: non collassare e non scrollare
+  if (!panel || !state.autoPlan) return;
   setPanelCollapsed(panel, true);
-  if (!scroll) return;
+  // Mobile: rispetta l'opzione scroll; Desktop: scrolla sempre allo stage
+  const shouldScroll = isResponsiveConfiguratorLayout() ? scroll : true;
+  if (!shouldScroll) return;
   scheduleElementBelowHeader(
     () =>
       document.querySelector(".stage .scene-wrap") ||
@@ -1432,7 +1435,7 @@ function openPlantDetailPanel() {
   if (!panel) return;
   renderPlantDetailPanel();
   panel.hidden = false;
-  if (settings) setPanelCollapsed(settings, true);
+  if (settings && isResponsiveConfiguratorLayout()) setPanelCollapsed(settings, true);
   requestAnimationFrame(() => scrollPlantDetailPanelIntoView("smooth"));
 }
 
@@ -1443,7 +1446,7 @@ function closePlantDetailPanel() {
   const keepGreenhouseRow =
     isResponsiveConfiguratorLayout() && panel && !panel.hidden;
   if (panel) panel.hidden = true;
-  if (settings) setPanelCollapsed(settings, false);
+  if (settings && isResponsiveConfiguratorLayout()) setPanelCollapsed(settings, false);
   state.selected = -1;
   render();
   if (keepGreenhouseRow) {

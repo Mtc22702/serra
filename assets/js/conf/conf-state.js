@@ -297,7 +297,15 @@ function chooseLivello(liv) {
     state.autoPlan = false;
     syncVegFilterTabs();
     render();
+    setPanelCollapsed("panelSettings", false);
     openCustomizePanelAndFocus();
+    if (!isResponsiveConfiguratorLayout()) {
+      scheduleElementBelowHeader(
+        () => document.querySelector(".stage .scene-wrap") || document.querySelector(".stage"),
+        "smooth",
+        { delay: 150 }
+      );
+    }
   } else if (liv === "intermedio") {
     vegFilter = "all";
     state.autoPlan = true;
@@ -305,14 +313,20 @@ function chooseLivello(liv) {
     else render();
     syncVegFilterTabs();
     openCustomizePanelAndFocus();
+    if (!isResponsiveConfiguratorLayout()) {
+      scheduleElementBelowHeader(
+        () => document.querySelector(".stage .scene-wrap") || document.querySelector(".stage"),
+        "smooth",
+        { delay: 150 }
+      );
+    }
   } else {
     vegFilter = "in";
     state.autoPlan = true;
     resetNoviceAdvancedOptions();
     autoFill();
     syncVegFilterTabs();
-    if (isResponsiveConfiguratorLayout())
-      collapseSettingsPanelAfterAutoPlan({ scroll: false });
+    collapseSettingsPanelAfterAutoPlan({ scroll: false });
     setCustomizePanelCollapsed(true);
     scrollToGuidedIntroForLivello("novizio");
   }

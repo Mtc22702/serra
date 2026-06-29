@@ -115,7 +115,7 @@
   }
 
   .stage-auto-plan-row {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 8px;
   }
@@ -1115,5 +1115,19 @@
     font-size: 12.5px;
     line-height: 1.55;
     color: #8a9e8a;
+  }
+
+  /* ── Stage header desktop ────────────────────────────────────────── */
+  @media (min-width: 1101px) {
+    /* Rimuovo titolo e pill mese: solo la toolbar rimane visibile */
+    .stage-title-row {
+      display: none;
+    }
+
+    /* Toolbar: unico elemento rimasto, allineata a destra */
+    .view-toolbar {
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+    }
   }
 }

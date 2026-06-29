@@ -848,9 +848,16 @@ collapseSettingsPanelAfterAutoPlan({
   scroll: !_shouldFocusGuidedIntroOnBoot
 });
 
-if (state.livello === "novizio" && !isResponsiveConfiguratorLayout()) {
-  const _novPanel = document.getElementById("panelSettings");
-  if (_novPanel) {
-    setPanelCollapsed(_novPanel, false);
-  }
+// Desktop: scroll allo stage per esperto (collapseSettingsPanelAfterAutoPlan
+// non scorre quando autoPlan=false). Su mobile ci pensa scrollToGuidedIntroForLivello.
+if (!isResponsiveConfiguratorLayout() && !state.autoPlan) {
+  scheduleElementBelowHeader(
+    () =>
+      document.querySelector(".stage .scene-wrap") ||
+      document.getElementById("scene") ||
+      document.querySelector(".stage"),
+    "smooth",
+    { delay: 200 }
+  );
 }
+
