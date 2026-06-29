@@ -1432,6 +1432,7 @@
         helper:
           "Usa <b>Auto riempi</b> quando vuoi partire da zero. Dopo ogni modifica il layout si sistema automaticamente.",
         sowAt: "Semina",
+        stageMonthKicker: "Semina in",
         stageTitle: "Vista dall'alto",
         stageSub: "Clicca un'aiuola per i dettagli di coltivazione.",
         viewMode: "Vista",
@@ -1882,6 +1883,7 @@
         helper:
           "Folosește <b>Umple automat</b> când pornești de la zero. După fiecare modificare, planul se aranjează automat.",
         sowAt: "Semănare",
+        stageMonthKicker: "Seamănă în",
         stageTitle: "Vedere de sus",
         stageSub: "Apasă pe un strat pentru detalii de cultivare.",
         viewMode: "Vedere",
