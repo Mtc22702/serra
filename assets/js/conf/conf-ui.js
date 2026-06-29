@@ -583,16 +583,12 @@ function openCustomizePanelAndFocus() {
 // Scrolla all'intro guidata del livello selezionato
 function scrollToGuidedIntroForLivello(liv) {
   if (!isResponsiveConfiguratorLayout()) return;
-  const selectors = {
-    novizio: ".guided-intro-novizio",
-    intermedio: ".guided-intro-intermedio",
-    esperto: ".guided-intro-esperto"
-  };
-  const sel = selectors[liv];
-  if (!sel) return;
-  scheduleElementBelowHeader(() => document.querySelector(sel), "smooth", {
-    delay: 200
-  });
+  if (!LIVELLI?.has?.(liv)) return;
+  scheduleElementBelowHeader(
+    () => document.getElementById("guidedIntro"),
+    "smooth",
+    { delay: 200 }
+  );
 }
 
 // Apre il pannello impostazioni e mette a fuoco le dimensioni

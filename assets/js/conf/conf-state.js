@@ -183,6 +183,35 @@ function updateGuidedIntroDynamic() {
     pill.textContent = `📅 ${monthName} · ${tx("tagZone")} ${zoneLabel}`;
 }
 
+// Aggiorna il riepilogo compatto del selettore profilo
+function syncPersonaPickerSummary() {
+  const active = document.querySelector(".persona-card.is-active");
+  const name = document.getElementById("personaCurrentName");
+  const desc = document.getElementById("personaCurrentDesc");
+  if (!active || !name || !desc) return;
+  const activeTitle = active.querySelector(".persona-card-body b");
+  const activeLevel = active.querySelector(".persona-level-label");
+  const activeDesc = active.querySelector(".persona-card-body small");
+  const levelText = (activeLevel?.textContent || "")
+    .replace(/[()]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const titleText = (activeTitle?.textContent || "")
+    .replace(/\s+/g, " ")
+    .trim();
+  name.textContent = levelText || titleText;
+  desc.textContent = (activeDesc?.textContent || "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Allinea il selettore profilo: chiuso di default su ogni viewport
+function syncPersonaPickerDisclosure() {
+  const picker = document.getElementById("personaPickDetails");
+  if (!picker) return;
+  picker.open = false;
+}
+
 // Modalità configuratore
 function setMode(mode, scroll = false) {
   const allowed = new Set(["fit", "expert"]);
@@ -243,6 +272,7 @@ function setLivello(liv, { mapMode = true } = {}) {
     card.classList.toggle("is-active", on);
     card.setAttribute("aria-selected", String(on));
   });
+  syncPersonaPickerSummary();
   if (mapMode) setMode(next === "esperto" ? "expert" : "fit", false);
 }
 
@@ -281,12 +311,15 @@ function chooseLivello(liv) {
     resetNoviceAdvancedOptions();
     autoFill();
     syncVegFilterTabs();
-    if (isResponsiveConfiguratorLayout()) collapseSettingsPanelAfterAutoPlan();
+    if (isResponsiveConfiguratorLayout())
+      collapseSettingsPanelAfterAutoPlan({ scroll: false });
     setCustomizePanelCollapsed(true);
-    scrollToScene();
+    scrollToGuidedIntroForLivello("novizio");
   }
   saveConfig(true);
   if (prev !== liv) updateGuidedIntroDynamic();
+  const picker = document.getElementById("personaPickDetails");
+  if (picker) picker.open = false;
 }
 
 // Allinea le tab filtro colture al filtro attivo

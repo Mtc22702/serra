@@ -577,4 +577,205 @@
     background: #203a2a;
     color: #bde0c6;
   }
+
+  html[data-theme="dark"] .guided-intro {
+    background: linear-gradient(155deg, #1d3027 0%, #17271f 100%);
+    border-color: var(--dark-border);
+    border-top-color: #6fcf97;
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .guided-intro-head {
+    border-color: var(--dark-border);
+  }
+  html[data-theme="dark"] .guided-brand-mark,
+  html[data-theme="dark"] .guided-tags .tag,
+  html[data-theme="dark"] .guided-summary {
+    background: rgba(38, 60, 49, 0.86);
+    border-color: var(--dark-border);
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .guided-brand-copy h1,
+  html[data-theme="dark"] .guided-summary b,
+  html[data-theme="dark"] .crops-count b,
+  html[data-theme="dark"] .crop-actions-copy b,
+  html[data-theme="dark"] .persona-pick-label,
+  html[data-theme="dark"] .persona-pick-current b,
+  html[data-theme="dark"] .persona-card-body b,
+  html[data-theme="dark"] .veg-name {
+    color: var(--dark-text);
+  }
+
+  html[data-theme="dark"] .persona-pick {
+    background: linear-gradient(135deg, #20362b, #1a2d24);
+    border-color: var(--dark-border-strong);
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  html[data-theme="dark"] .persona-pick[open] {
+    border-color: rgba(111, 207, 151, 0.42);
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  html[data-theme="dark"] .persona-pick-head:hover {
+    background: rgba(111, 207, 151, 0.07);
+  }
+  html[data-theme="dark"] .persona-pick-hint,
+  html[data-theme="dark"] .persona-pick-current small {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .persona-pick-action,
+  html[data-theme="dark"] .persona-pick-chevron {
+    background: rgba(111, 207, 151, 0.12);
+    color: #a8e6bd;
+  }
+  html[data-theme="dark"] .persona-card {
+    background: #263c31;
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+  }
+  html[data-theme="dark"] .persona-card:hover {
+    background: #2b4638;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+  }
+  html[data-theme="dark"] .persona-card.is-active {
+    background: color-mix(in srgb, var(--accent) 30%, #1e3329);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  html[data-theme="dark"] .persona-card-ico {
+    background: color-mix(in srgb, var(--accent) 25%, #263c31);
+  }
+  html[data-theme="dark"] .persona-level-label,
+  html[data-theme="dark"] .persona-card-go {
+    color: color-mix(in srgb, var(--accent) 82%, #f0f4ef);
+  }
+
+  html[data-theme="dark"] #panelCustomize {
+    background: linear-gradient(180deg, #1d3027 0%, #17271f 100%);
+    border-color: rgba(235, 197, 109, 0.36);
+    border-top-color: var(--dark-gold);
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .customize-title-badge {
+    background: rgba(235, 197, 109, 0.12);
+    border-color: rgba(235, 197, 109, 0.28);
+    color: #f2d58a;
+  }
+  html[data-theme="dark"] .customize-sub,
+  html[data-theme="dark"] #panelCustomize .veg-list,
+  html[data-theme="dark"] .crops-customize-footer {
+    background: rgba(38, 60, 49, 0.84);
+    border-color: var(--dark-border);
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .crops-customize-footer {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  html[data-theme="dark"] .crop-actions-copy {
+    border-bottom-color: var(--dark-border);
+  }
+  html[data-theme="dark"] .crops-count,
+  html[data-theme="dark"] .veg-meta,
+  html[data-theme="dark"] .veg-qty-topline,
+  html[data-theme="dark"] .crop-actions-copy span,
+  html[data-theme="dark"] .crop-action-text .btn-hint {
+    color: var(--dark-muted);
+  }
+
+  html[data-theme="dark"] .veg,
+  html[data-theme="dark"] .veg.in {
+    background: #263c31;
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .veg:hover {
+    background: #2c4739;
+    border-color: var(--dark-border-strong);
+  }
+  html[data-theme="dark"] .veg.in {
+    background: linear-gradient(145deg, #263c31, #1f342a);
+    box-shadow:
+      inset 3px 0 0 rgba(111, 207, 151, 0.48),
+      0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+  html[data-theme="dark"] .veg.in.qty-locked {
+    border-color: rgba(235, 197, 109, 0.34);
+    box-shadow:
+      inset 3px 0 0 rgba(235, 197, 109, 0.82),
+      0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+  html[data-theme="dark"] .veg .ico {
+    background: rgba(255, 255, 255, 0.07);
+  }
+  html[data-theme="dark"] .veg-qty-ctl,
+  html[data-theme="dark"] .veg-qty-input {
+    background: #17271f;
+    color: var(--dark-text);
+    border-color: var(--dark-border-strong);
+  }
+  html[data-theme="dark"] .veg-step {
+    background: transparent;
+    color: #a8e6bd;
+  }
+  html[data-theme="dark"] .veg-step:hover {
+    background: rgba(111, 207, 151, 0.12);
+  }
+  html[data-theme="dark"] .veg-auto-badge {
+    background: rgba(111, 207, 151, 0.12);
+    border-color: rgba(111, 207, 151, 0.22);
+    color: #b9ebc8;
+  }
+  html[data-theme="dark"] .veg-lock-badge {
+    background: rgba(235, 197, 109, 0.13);
+    border-color: rgba(235, 197, 109, 0.28);
+    color: #f1d892;
+  }
+  html[data-theme="dark"] .veg.in .add,
+  html[data-theme="dark"] .veg.in > .remove-from-seed {
+    background: rgba(202, 87, 76, 0.18);
+    border-color: rgba(242, 187, 180, 0.22);
+    color: #f2bbb4;
+  }
+  html[data-theme="dark"] .veg.in .add:hover,
+  html[data-theme="dark"] .veg.in > .remove-from-seed:hover {
+    background: rgba(202, 87, 76, 0.28);
+  }
+  html[data-theme="dark"] .veg-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  html[data-theme="dark"] .veg-list::-webkit-scrollbar-thumb {
+    border-color: #263c31;
+    background: rgba(111, 207, 151, 0.46);
+  }
+
+  html[data-theme="dark"] .novice-crops-note {
+    background: linear-gradient(145deg, #332d21, #223729);
+    border-color: rgba(235, 197, 109, 0.28);
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] .novice-crops-note b {
+    color: #f0d997;
+  }
+  html[data-theme="dark"] .novice-crops-note span {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] .novice-crops-note button {
+    background: rgba(111, 207, 151, 0.12);
+    border-color: rgba(111, 207, 151, 0.28);
+    color: #d8f2dd;
+  }
+  html[data-theme="dark"] .novice-crops-note button:hover {
+    background: rgba(111, 207, 151, 0.2);
+  }
+
+  html[data-theme="dark"] .crop-action-btn.is-level-locked:disabled {
+    background: linear-gradient(145deg, #2e3028, #242820);
+    border-color: rgba(235, 197, 109, 0.2);
+    color: #d2c59f;
+  }
+  html[data-theme="dark"] .crop-action-btn.is-level-locked .btn-hint {
+    color: #bdae82;
+  }
 }

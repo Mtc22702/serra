@@ -321,9 +321,9 @@ function applyLanguage() {
     isGuidedBoot() ? "guidedModalTitle" : "modalTitle"
   );
   setText(".modal .hero p", isGuidedBoot() ? "guidedModalCopy" : "modalCopy");
-  setText("#guidedIntroTitle", "guidedIntroTitle");
   setText("#personaPickLabel", "personaPickLabel");
   setText("#personaPickHint", "personaPickHint");
+  setText("#personaPickAction", "personaPickAction");
   setText("#personaNovTitle", "personaNovTitle");
   setText("#personaNovLevel", "personaNovLevel");
   setText("#personaNovDesc", "personaNovDesc");
@@ -333,27 +333,8 @@ function applyLanguage() {
   setText("#personaExpTitle", "personaExpTitle");
   setText("#personaExpLevel", "personaExpLevel");
   setText("#personaExpDesc", "personaExpDesc");
-  const introSteps = document.querySelectorAll(
-    "#guidedIntroSteps li > span:not(.guided-step-num):not(.guided-step-ico)"
-  );
-  if (introSteps[0]) introSteps[0].innerHTML = tx("howTo1");
-  if (introSteps[1]) introSteps[1].innerHTML = tx("howTo2");
-  if (introSteps[2]) introSteps[2].innerHTML = tx("howTo3");
-  setText("#guidedIntroNovTitle", "guidedIntroNovTitle");
-  setText("#guidedNovCtaLabel", "guidedNovCta");
-  const introNovSteps = document.querySelectorAll(
-    "#guidedIntroNovSteps li > span:not(.guided-step-num):not(.guided-step-ico)"
-  );
-  if (introNovSteps[0]) introNovSteps[0].innerHTML = tx("guidedNovStep1");
-  if (introNovSteps[1]) introNovSteps[1].innerHTML = tx("guidedNovStep2");
-  if (introNovSteps[2]) introNovSteps[2].innerHTML = tx("guidedNovStep3");
-  setText("#guidedIntroExpTitle", "guidedIntroExpTitle");
-  const introExpSteps = document.querySelectorAll(
-    "#guidedIntroExpSteps li > span:not(.guided-step-num):not(.guided-step-ico)"
-  );
-  if (introExpSteps[0]) introExpSteps[0].innerHTML = tx("guidedExpStep1");
-  if (introExpSteps[1]) introExpSteps[1].innerHTML = tx("guidedExpStep2");
-  if (introExpSteps[2]) introExpSteps[2].innerHTML = tx("guidedExpStep3");
+  if (typeof syncPersonaPickerSummary === "function")
+    syncPersonaPickerSummary();
   setText("#vegScrollHint span:first-child", "vegScrollHint");
 
   const filterIconMap = { all: "🌿", in: "✓", "all-beds": "⌕" };

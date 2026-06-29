@@ -1331,10 +1331,13 @@
         guidedModalTitle: "Partiamo da un orto facile",
         guidedModalCopy:
           "Inserisci misure e clima: preparo un primo progetto da principiante con colture semplici, distanze corrette e quantità modificabili.",
-        guidedIntroTitle: "Personalizza il tuo orto",
+        guidedIntroTitle: "Cosa fare ora",
+        guidedIntroHint: "Istruzioni · controlla, personalizza, verifica",
         guidedIntroCopy:
           "Imposta i dati reali. Riempi automaticamente oppure scegli le colture. Clicca una pianta nella mappa per aprire la scheda con quantità, resa e consigli.",
-        guidedIntroNovTitle: "Prepara la tua serra",
+        guidedIntroNovTitle: "Cosa fare ora",
+        guidedIntroNovHint:
+          "Istruzioni · segui questi 3 passaggi in ordine",
         guidedNovStep1:
           "Controlla <strong>larghezza e lunghezza</strong> della tua serra qui sotto",
         guidedNovStep2:
@@ -1342,7 +1345,8 @@
         guidedNovStep3:
           "Seleziona il <strong>mese attuale</strong> per colture giuste",
         guidedNovCta: "Verifica le dimensioni della serra",
-        guidedIntroExpTitle: "Componi la serra a mano",
+        guidedIntroExpTitle: "Cosa fare ora",
+        guidedIntroExpHint: "Istruzioni · imposta, scegli, disponi",
         guidedExpStep1:
           "Imposta <strong>misure, clima e mese</strong> per il catalogo completo",
         guidedExpStep2:
@@ -1459,9 +1463,10 @@
         modeFitHint: "Imposta misure e clima — la serra si riempie da sola",
         modeExpertTitle: "Scegli le colture",
         modeExpertHint: "Aggiungi o rimuovi le piante una a una",
-        personaPickLabel: "Da dove vuoi partire?",
+        personaPickLabel: "Percorso scelto",
         personaPickHint:
-          "Scegli il percorso più adatto a te — puoi cambiarlo quando vuoi.",
+          "Apri per cambiare livello di guida e controllo.",
+        personaPickAction: "Cambia",
         personaNovTitle: "Sono alle prime armi",
         personaNovLevel: "(Principiante)",
         personaNovDesc:
@@ -1775,10 +1780,14 @@
         guidedModalTitle: "Pornim de la o grădină ușoară",
         guidedModalCopy:
           "Introdu dimensiunile și clima: pregătesc un prim proiect pentru începători, cu culturi simple, distanțe corecte și cantități editabile.",
-        guidedIntroTitle: "Personalizează-ți grădina",
+        guidedIntroTitle: "Ce faci acum",
+        guidedIntroHint:
+          "Instrucțiuni · verifică, personalizează, controlează",
         guidedIntroCopy:
           "Setează datele reale. Umple automat sau alege culturile. Apasă pe o plantă din hartă pentru fișa cu cantități, recoltă și sfaturi.",
-        guidedIntroNovTitle: "Pregătește-ți sera",
+        guidedIntroNovTitle: "Ce faci acum",
+        guidedIntroNovHint:
+          "Instrucțiuni · urmează acești 3 pași în ordine",
         guidedNovStep1:
           "Verifică <strong>lățimea și lungimea</strong> serei tale mai jos",
         guidedNovStep2:
@@ -1786,7 +1795,8 @@
         guidedNovStep3:
           "Selectează <strong>luna curentă</strong> pentru culturi potrivite",
         guidedNovCta: "Verifică dimensiunile serei",
-        guidedIntroExpTitle: "Compune sera manual",
+        guidedIntroExpTitle: "Ce faci acum",
+        guidedIntroExpHint: "Instrucțiuni · setează, alege, aranjează",
         guidedExpStep1:
           "Setează <strong>dimensiunile, clima și luna</strong> pentru catalogul complet",
         guidedExpStep2:
@@ -1903,9 +1913,10 @@
         modeFitHint: "Setează dimensiunile și clima — sera se umple automat",
         modeExpertTitle: "Alege culturile",
         modeExpertHint: "Adaugă sau elimină plantele una câte una",
-        personaPickLabel: "De unde vrei să începi?",
+        personaPickLabel: "Traseu ales",
         personaPickHint:
-          "Alege parcursul potrivit pentru tine — îl poți schimba oricând.",
+          "Deschide ca să schimbi nivelul de ghidaj și control.",
+        personaPickAction: "Schimbă",
         personaNovTitle: "Sunt la început",
         personaNovLevel: "(Începător)",
         personaNovDesc:

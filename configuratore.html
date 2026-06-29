@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-06-28-180";
+      window.SERRA_APP_VERSION = "2026-06-28-188";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -220,16 +220,27 @@
 
         <!-- Scelta percorso utente -->
         <div class="guided-intro-right">
-          <div class="persona-pick">
-            <div class="persona-pick-head">
-              <b class="persona-pick-label" id="personaPickLabel"
-                >Da dove vuoi partire?</b
+          <details class="persona-pick" id="personaPickDetails">
+            <summary class="persona-pick-head">
+              <span class="persona-pick-copy">
+                <b class="persona-pick-label" id="personaPickLabel"
+                  >Percorso scelto</b
+                >
+                <span class="persona-pick-hint" id="personaPickHint"
+                  >Apri per cambiare livello di guida e controllo.</span
+                >
+              </span>
+              <span class="persona-pick-current" aria-live="polite">
+                <b id="personaCurrentName">Intermedio</b>
+                <small id="personaCurrentDesc"
+                  >Guidato, ma personalizzabile</small
+                >
+              </span>
+              <span class="persona-pick-action" id="personaPickAction"
+                >Cambia</span
               >
-              <span class="persona-pick-hint" id="personaPickHint"
-                >Scegli il percorso più adatto a te — puoi cambiarlo quando
-                vuoi.</span
-              >
-            </div>
+              <span class="persona-pick-chevron" aria-hidden="true">⌄</span>
+            </summary>
             <div
               class="persona-cards"
               role="tablist"
@@ -320,178 +331,7 @@
                 <span class="persona-card-go" aria-hidden="true">→</span>
               </button>
             </div>
-          </div>
-
-          <!-- Percorso principiante -->
-          <div class="guided-intro-main guided-intro-novizio">
-            <details class="guided-steps-details">
-              <summary class="guided-steps-summary">
-                <span class="gss-icon" aria-hidden="true">📋</span>
-                <span class="gss-body">
-                  <b class="guided-steps-label" id="guidedIntroNovTitle"
-                    >Prepara la tua serra</b
-                  >
-                  <span class="gss-hint"
-                    >Guida rapida · 3 passi per iniziare</span
-                  >
-                </span>
-                <span class="gss-arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 12 8"
-                    width="11"
-                    height="11"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M1 1l5 5 5-5" />
-                  </svg>
-                </span>
-              </summary>
-              <ol class="guided-steps" id="guidedIntroNovSteps">
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">1</span>
-                  <span class="guided-step-ico" aria-hidden="true">📏</span>
-                  <span
-                    >Controlla <strong>larghezza e lunghezza</strong> della tua
-                    serra qui sotto</span
-                  >
-                </li>
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">2</span>
-                  <span class="guided-step-ico" aria-hidden="true">🌡️</span>
-                  <span
-                    >Indica se la serra è <strong>riscaldata</strong> e scegli
-                    il tuo clima</span
-                  >
-                </li>
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">3</span>
-                  <span class="guided-step-ico" aria-hidden="true">📅</span>
-                  <span
-                    >Seleziona il <strong>mese attuale</strong> per colture
-                    giuste</span
-                  >
-                </li>
-              </ol>
-            </details>
-          </div>
-
-          <!-- Percorso intermedio -->
-          <div class="guided-intro-main guided-intro-intermedio">
-            <details class="guided-steps-details">
-              <summary class="guided-steps-summary">
-                <span class="gss-icon" aria-hidden="true">📋</span>
-                <span class="gss-body">
-                  <b class="guided-steps-label" id="guidedIntroTitle"
-                    >Personalizza il tuo orto</b
-                  >
-                  <span class="gss-hint"
-                    >Come usare il configuratore · 3 passi</span
-                  >
-                </span>
-                <span class="gss-arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 12 8"
-                    width="11"
-                    height="11"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M1 1l5 5 5-5" />
-                  </svg>
-                </span>
-              </summary>
-              <ol class="guided-steps" id="guidedIntroSteps">
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">1</span>
-                  <span class="guided-step-ico" aria-hidden="true">📐</span>
-                  <span
-                    >Controlla <strong>misure e clima</strong>: la serra è già
-                    pronta per te</span
-                  >
-                </li>
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">2</span>
-                  <span class="guided-step-ico" aria-hidden="true">🌱</span>
-                  <span
-                    >Personalizza le <strong>colture</strong>, anche
-                    <em>fuori stagione</em></span
-                  >
-                </li>
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">3</span>
-                  <span class="guided-step-ico" aria-hidden="true">🔍</span>
-                  <span
-                    >Clicca un'aiuola per vedere la
-                    <strong>scheda della pianta</strong></span
-                  >
-                </li>
-              </ol>
-            </details>
-          </div>
-
-          <!-- Percorso esperto -->
-          <div class="guided-intro-main guided-intro-esperto">
-            <details class="guided-steps-details">
-              <summary class="guided-steps-summary">
-                <span class="gss-icon" aria-hidden="true">📋</span>
-                <span class="gss-body">
-                  <b class="guided-steps-label" id="guidedIntroExpTitle"
-                    >Componi la serra a mano</b
-                  >
-                  <span class="gss-hint"
-                    >Modalità esperto · 3 passi per il controllo totale</span
-                  >
-                </span>
-                <span class="gss-arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 12 8"
-                    width="11"
-                    height="11"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M1 1l5 5 5-5" />
-                  </svg>
-                </span>
-              </summary>
-              <ol class="guided-steps" id="guidedIntroExpSteps">
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">1</span>
-                  <span class="guided-step-ico" aria-hidden="true">📐</span>
-                  <span
-                    >Imposta <strong>misure, clima e mese</strong> per il
-                    catalogo completo</span
-                  >
-                </li>
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">2</span>
-                  <span class="guided-step-ico" aria-hidden="true">🌾</span>
-                  <span
-                    >Sfoglia <strong>tutto il catalogo</strong> e aggiungi le
-                    colture che vuoi, anche fuori stagione</span
-                  >
-                </li>
-                <li>
-                  <span class="guided-step-num" aria-hidden="true">3</span>
-                  <span class="guided-step-ico" aria-hidden="true">🧩</span>
-                  <span
-                    >Disponi le <strong>aiuole</strong> e regola quantità e
-                    layout a mano</span
-                  >
-                </li>
-              </ol>
-            </details>
-          </div>
+          </details>
         </div>
       </div>
 

@@ -18,6 +18,8 @@ function fillMonths() {
 
 // Event listeners
 function initEvents() {
+  syncPersonaPickerDisclosure();
+
   document.querySelectorAll(".mode-tab").forEach((tab) => {
     tab.addEventListener("click", () => setMode(tab.dataset.mode, false));
   });
