@@ -265,7 +265,7 @@ function loadPrefs() {
     const p = JSON.parse(localStorage.getItem("ois.prefs") || "{}");
     if (p.zona) state.zona = p.zona;
     if (p.riscaldata !== undefined) state.riscaldata = p.riscaldata;
-    if (p.mese) state.mese = p.mese;
+    // Il mese corrente viene ignorato in fase di caricamento per rimanere allineato con la data reale
     const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
     cart = raw.map((i) => (typeof i === "string" ? { id: i, bustine: 1 } : i));
   } catch (_) {}
@@ -1140,7 +1140,8 @@ if (catalogSearchLink) {
     const l = saved?.lunghezza ?? 5;
     const zona = saved?.zona ?? "temperato";
     const riscaldata = Boolean(saved?.riscaldata);
-    const mese = saved?.mese ?? (new Date().getMonth() + 1);
+    // Mostra sempre di default il mese corrente reale all'apertura della modale di preconfigurazione
+    const mese = new Date().getMonth() + 1;
 
     const path = saved?.path ?? 60;
     const pcW = document.getElementById("pcW");
