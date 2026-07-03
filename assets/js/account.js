@@ -4,9 +4,529 @@
   let allUsers = [];
   let allOrders = [];
   let allPlants = [];
+  let currentLang = "it";
+  let lastDbActive = null;
+
+  const ACCOUNT_I18N = {
+    it: {
+      "page.title": "Orto in Serra · Area Riservata",
+      "nav.home": "🏠 Home",
+      "nav.catalog": "🌿 Catalogo completo",
+      "nav.abbinamenti": "🤝 Abbinamenti",
+      "nav.configuratore": "📐 Configuratore",
+      "nav.account": "👤 Area Personale",
+      "nav.brand_sub": "Coltiva con un piano",
+      "nav.carrello": "Carrello",
+      
+      // Auth Section
+      "auth.title_login": "Accedi",
+      "auth.title_register": "Registrati",
+      "auth.email": "Indirizzo Email",
+      "auth.password": "Password",
+      "auth.login_btn": "Accedi all'Area Riservata",
+      "auth.name": "Nome e Cognome",
+      "auth.phone": "Numero di Telefono",
+      "auth.address": "Indirizzo di Spedizione",
+      "auth.city": "Città",
+      "auth.cap": "CAP",
+      "auth.register_btn": "Crea Account",
+      "auth.test_users": "Utenti di test pronti:",
+      "auth.test_customer": "Cliente:",
+      "auth.test_admin": "Amministratore:",
+      
+      // User Dashboard
+      "dash.title": "Dati di Spedizione",
+      "dash.orders_title": "I miei ordini di semi",
+      "dash.save_btn": "Salva modifiche",
+      "dash.logout": "Esci",
+      "dash.empty_orders": "Non hai ancora effettuato ordini. Visita la <a href=\"index.html#stagione\">Home</a> o il <a href=\"configuratore.html\">Configuratore</a> per inserire semi nel carrello!",
+      "dash.order_id": "ID Ordine",
+      "dash.order_date": "Data",
+      "dash.order_items": "Prodotti",
+      "dash.order_total": "Totale",
+      "dash.order_status": "Stato",
+      "dash.order_actions": "Azioni",
+      "dash.print_btn": "🖨️ Stampa",
+      "dash.notif_dismiss": "Segna come lette",
+      "dash.notif_loading": "Caricamento avvisi...",
+      "dash.profile_saved": "Modifiche salvate con successo!",
+      
+      // Admin Dashboard Tabs
+      "admin.tab_plants": "Gestione Catalogo Piante",
+      "admin.tab_orders": "Ordini Ricevuti",
+      "admin.tab_users": "Gestione Utenti",
+      "admin.tab_backup": "Manutenzione Database",
+      
+      "admin.panel_title": "Pannello Amministratore",
+      "admin.panel_sub": "Gestione Prodotti, Ordini e Listino prezzi",
+      "admin.catalog_list_title": "Elenco Colture in Catalogo",
+      "admin.search_placeholder": "Cerca coltura...",
+      "admin.add_plant_btn": "✚ Nuova Pianta",
+      "admin.visual": "Visual",
+      "admin.table_id": "ID",
+      "admin.table_name": "Nome",
+      "admin.table_cat": "Categoria",
+      "admin.table_price": "Prezzo Pacchetto",
+      "admin.table_qty": "Semi/Conf",
+      "admin.table_gg": "Giorni Matur.",
+      "admin.table_actions": "Azioni",
+      
+      "admin.stats_title": "Amministrazione Database Locale",
+      "admin.reset_title": "Ripristina default",
+      "admin.reset_desc": "Cancella tutte le modifiche apportate al catalogo delle piante e reimposta l'elenco predefinito iniziale dell'applicazione.",
+      "admin.reset_catalog": "Ripristina piante di fabbrica",
+      "admin.export_title": "Esporta backup database",
+      "admin.export_desc": "Scarica un file JSON contenente lo stato completo del tuo catalogo piante locale.",
+      "admin.export_db": "Esporta JSON",
+      "admin.server_status": "Stato del Server Locale",
+      "admin.stats_reset": "Statistiche Database & Reset",
+      "admin.clear_orders": "Azzera Ordini",
+      "admin.clear_users": "Azzera Clienti",
+      "admin.charts_title": "Grafici e Report Vendite",
+      "admin.charts_desc": "Analisi dell'andamento dei ricavi e delle colture più richieste dai clienti.",
+      "admin.chart_rev_title": "Ricavi per Categoria di Coltura (€)",
+      "admin.chart_top_title": "Top 5 Varietà di Semi Ordinati (Bustine Totali)",
+      "admin.stats_plants": "Piante in catalogo",
+      "admin.stats_clients": "Clienti registrati",
+      "admin.stats_orders": "Ordini totali ricevuti",
+      "admin.no_sales": "Nessun dato di vendita disponibile.",
+      "admin.logged_in": "Loggato",
+      "admin.delete": "Elimina",
+      "admin.edit": "Modifica",
+      "admin.seeds": "semi",
+      "admin.days": "giorni",
+      
+      "admin.orders_title": "Storico Ordini di tutti i Clienti",
+      "admin.orders_client": "Cliente",
+      
+      "admin.users_title": "Elenco Clienti Registrati",
+      "admin.users_name": "Nome",
+      "admin.users_email": "Email",
+      "admin.users_phone": "Telefono",
+      "admin.users_address": "Indirizzo Spedizione",
+      "admin.users_role": "Ruolo",
+      
+      // Edit Plant Modal
+      "modal.plant_id": "ID Pianta (univoco, minuscolo)",
+      "modal.plant_name": "Nome Visualizzato",
+      "modal.category": "Categoria",
+      "modal.emoji": "Emoji di backup (es: 🍅)",
+      "modal.photo": "Foto Reale (Nome file o URL)",
+      "modal.price": "Prezzo Busta (€)",
+      "modal.seeds": "Semi per busta",
+      "modal.maturity": "Giorni di crescita",
+      "modal.spacing": "Distanza di semina (cm)",
+      "modal.months": "Mesi di semina in serra (seleziona più mesi tenendo premuto Ctrl/Cmd)",
+      "modal.amiche": "Piante Amiche (Consociazioni compatibili - Ctrl/Cmd)",
+      "modal.nemiche": "Piante Nemiche (Consociazioni incompatibili - Ctrl/Cmd)",
+      "modal.cancel": "Annulla",
+      "modal.save": "Salva nel catalogo",
+      "modal.edit_title": "Modifica Coltura",
+      "modal.new_title": "Aggiungi nuova pianta",
+      
+      // Footer
+      "footer.motto": "\"Pianta con cura, raccogli con gioia.\"",
+      "footer.tip_title": "Consiglio del mese",
+      "footer.tip_text": "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
+      "footer.explore": "Esplora",
+      "footer.legal": "Legale",
+      "footer.support": "Supporto",
+      "footer.rights": "© 2026 Orto in Serra · Tutti i diritti riservati",
+      "footer.privacy": "Privacy Policy",
+      "footer.cookie": "Cookie Policy",
+      "footer.terms": "Termini di Servizio",
+      
+      // Kit & other keys
+      "nav.kit": "📦 Kit del mese",
+      "nav.contatti": "✉️ Contatti",
+
+      "db.online": "<strong>Connesso al database locale del Mac (Node.js)</strong>. Le modifiche al catalogo saranno salvate direttamente sul disco.",
+      "db.online_details": "🟢 <strong>Server attivo su http://localhost:3000</strong>.<br>Il catalogo viene letto e scritto direttamente nel file <code>db/plants.json</code> del tuo computer.",
+      "db.offline": "<strong>Modalità GitHub Pages (Offline Database)</strong>. Il catalogo piante viene letto dal repository, le scritture verranno salvate in locale su questo dispositivo.",
+      "db.offline_details": "🟡 <strong>Server locale non raggiungibile o protetto (Modalità statica)</strong>.<br>L'app è ospitata online. Le modifiche effettuate sono temporanee sul browser corrente tramite <code>localStorage</code>.",
+
+      "status.processing": "In elaborazione",
+      "status.shipped": "Spedito",
+      "status.completed": "Completato",
+      "status.cancelled": "Annullato",
+      "category.leaf": "Foglia",
+      "category.fruit": "Frutto",
+      "category.root": "Radice",
+      "category.aromatic": "Aromatica/Fiore",
+      "category.legume": "Legume",
+
+      "confirm.delete_order": "Sei sicuro di voler eliminare definitivamente l'ordine '{id}' dal database?",
+      "confirm.clear_orders": "Attenzione! Stai per eliminare TUTTI gli ordini presenti nel database. Questa azione non è reversibile. Procedere?",
+      "confirm.clear_users": "Attenzione! Stai per eliminare tutti i clienti registrati. Rimarrà attivo solo l'account amministratore di default. Procedere?",
+      "confirm.delete_user": "Sei sicuro di voler eliminare definitivamente l'utente con email '{email}'?\nI suoi ordini rimarranno associati al suo indirizzo come Cliente Occasionale.",
+      "confirm.delete_plant": "Sei sicuro di voler eliminare la pianta '{id}' dal catalogo?",
+      "confirm.reset_catalog": "Attenzione! Ripristinando il catalogo di fabbrica, eliminerai tutte le piante inserite o modificate. Procedere?",
+      "alert.orders_cleared": "Storico ordini svuotato con successo.",
+      "alert.users_cleared": "Database clienti ripristinato.",
+      "alert.plant_exists": "Una pianta con questo ID esiste già!",
+      "alert.catalog_reset": "Catalogo ripristinato. La pagina verrà ricaricata.",
+      "alert.order_not_found": "Ordine non trovato!",
+      "prompt.tracking": "Inserisci il codice di tracciamento della spedizione (opzionale):",
+      "notification.tracking": " (Codice tracking: {code})",
+      "notification.order_status": "Il tuo ordine <strong>{id}</strong> è ora nello stato <strong>{status}</strong>!{tracking}",
+      "auth.login_error": "Email o Password non corrette.",
+      "auth.email_exists": "Questo indirizzo Email è già registrato.",
+      "auth.register_error": "Errore durante la registrazione. Riprova.",
+      "customer.guest": "Cliente Occasionale",
+
+      "invoice.subtitle": "Soluzioni Botaniche Professionali",
+      "invoice.title": "RICEVUTA D'ORDINE",
+      "invoice.number": "Numero",
+      "invoice.date": "Data",
+      "invoice.status": "Stato",
+      "invoice.sender": "Mittente",
+      "invoice.recipient": "Destinatario Spedizione",
+      "invoice.address": "Indirizzo",
+      "invoice.product": "Descrizione Prodotto (Semi)",
+      "invoice.code": "Codice",
+      "invoice.qty": "Quantità (Bustine)",
+      "invoice.unit_price": "Prezzo Unitario",
+      "invoice.subtotal": "Subtotale",
+      "invoice.taxable": "Imponibile",
+      "invoice.vat": "IVA (22%)",
+      "invoice.total": "Totale Ricevuta",
+      "invoice.thanks": "Grazie per aver acquistato da Orto in Serra! Per qualsiasi domanda scrivi a assistenza@ortoinserra.it",
+      "invoice.legal": "Documento valido come ricevuta d'acquisto telematica. IVA assolta all'origine."
+    },
+    ro: {
+      "page.title": "Orto in Serra · Zonă Rezervată",
+      "nav.home": "🏠 Acasă",
+      "nav.catalog": "🌿 Catalog complet",
+      "nav.abbinamenti": "🤝 Asocieri",
+      "nav.configuratore": "📐 Configurator",
+      "nav.account": "👤 Contul Meu",
+      "nav.brand_sub": "Cultivă cu un plan",
+      "nav.carrello": "Coș",
+      
+      // Auth Section
+      "auth.title_login": "Autentificare",
+      "auth.title_register": "Înregistrare",
+      "auth.email": "Adresă Email",
+      "auth.password": "Parolă",
+      "auth.login_btn": "Conectează-te la Zona Rezervată",
+      "auth.name": "Nume și Prenume",
+      "auth.phone": "Număr de Telefon",
+      "auth.address": "Adresă de Livrare",
+      "auth.city": "Oraș",
+      "auth.cap": "Cod Poștal",
+      "auth.register_btn": "Creează Cont",
+      "auth.test_users": "Utilizatori de test:",
+      "auth.test_customer": "Client:",
+      "auth.test_admin": "Administrator:",
+      
+      // User Dashboard
+      "dash.title": "Date de Livrare",
+      "dash.orders_title": "Comenzile mele de semințe",
+      "dash.save_btn": "Salvează modificările",
+      "dash.logout": "Deconectare",
+      "dash.empty_orders": "Nu ai efectuat nicio comandă încă. Vizitează <a href=\"index.html#stagione\">Pagina Principală</a> sau <a href=\"configuratore.html\">Configuratorul</a> pentru a adăuga semințe în coș!",
+      "dash.order_id": "ID Comandă",
+      "dash.order_date": "Dată",
+      "dash.order_items": "Produse",
+      "dash.order_total": "Total",
+      "dash.order_status": "Stare",
+      "dash.order_actions": "Acțiuni",
+      "dash.print_btn": "Tipărește",
+      "dash.notif_dismiss": "Marchează ca citite",
+      "dash.notif_loading": "Se încarcă alertele...",
+      "dash.profile_saved": "Modificările au fost salvate cu succes!",
+      
+      // Admin Dashboard Tabs
+      "admin.tab_plants": "Gestionare Catalog de Plante",
+      "admin.tab_orders": "Comenzi Primite",
+      "admin.tab_users": "Gestionare Utilizatori",
+      "admin.tab_backup": "Mentenanță Bază de Date",
+      
+      "admin.panel_title": "Panou Administrator",
+      "admin.panel_sub": "Administrare Produse, Comenzi și Listă de Prețuri",
+      "admin.catalog_list_title": "Listă Culturi în Catalog",
+      "admin.search_placeholder": "Caută cultură...",
+      "admin.add_plant_btn": "✚ Plantă Nouă",
+      "admin.visual": "Imagine",
+      "admin.table_id": "ID",
+      "admin.table_name": "Nume",
+      "admin.table_cat": "Categorie",
+      "admin.table_price": "Preț Pachet",
+      "admin.table_qty": "Semințe/Conf",
+      "admin.table_gg": "Zile Matur.",
+      "admin.table_actions": "Acțiuni",
+      
+      "admin.stats_title": "Administrare Bază de Date Locală",
+      "admin.reset_title": "Restabilire setări implicite",
+      "admin.reset_desc": "Șterge toate modificările aduse catalogului de plante și restabilește lista implicită inițială a aplicației.",
+      "admin.reset_catalog": "Restabilește plantele implicite",
+      "admin.export_title": "Exportă backup bază de date",
+      "admin.export_desc": "Descarcă un fișier JSON care conține starea completă a catalogului tău local de plante.",
+      "admin.export_db": "Exportă JSON",
+      "admin.server_status": "Stare Server Local",
+      "admin.stats_reset": "Statistici și Resetare Bază de Date",
+      "admin.clear_orders": "Șterge Comenzile",
+      "admin.clear_users": "Șterge Clienții",
+      "admin.charts_title": "Grafice și Rapoarte Vânzări",
+      "admin.charts_desc": "Analiza evoluției veniturilor și a celor mai solicitate culturi de către clienți.",
+      "admin.chart_rev_title": "Venituri pe Categorie de Cultură (€)",
+      "admin.chart_top_title": "Top 5 Soiuri de Semințe Ordonate (Total Plicuri)",
+      "admin.stats_plants": "Plante în catalog",
+      "admin.stats_clients": "Clienți înregistrați",
+      "admin.stats_orders": "Comenzi totale primite",
+      "admin.no_sales": "Nu există date de vânzări disponibile.",
+      "admin.logged_in": "Conectat",
+      "admin.delete": "Șterge",
+      "admin.edit": "Modifică",
+      "admin.seeds": "semințe",
+      "admin.days": "zile",
+      
+      "admin.orders_title": "Istoricul Comenzilor Tuturor Clienților",
+      "admin.orders_client": "Client",
+      
+      // Admin Users Tab
+      "admin.users_title": "Listă Clienți Înregistrați",
+      "admin.users_name": "Nume",
+      "admin.users_email": "Email",
+      "admin.users_phone": "Telefon",
+      "admin.users_address": "Adresă Livrare",
+      "admin.users_role": "Rol",
+      
+      // Edit Plant Modal
+      "modal.plant_id": "ID Plantă (unic, minuscule)",
+      "modal.plant_name": "Nume Afișat",
+      "modal.category": "Categorie",
+      "modal.emoji": "Emoji de rezervă (ex: 🍅)",
+      "modal.photo": "Fotografie Reală (Nume fișier sau URL)",
+      "modal.price": "Preț Plic (€)",
+      "modal.seeds": "Semințe pe plic",
+      "modal.maturity": "Zile de creștere",
+      "modal.spacing": "Distanță de semănare (cm)",
+      "modal.months": "Luni de semănare în seră (selectează mai multe luni ținând apăsat Ctrl/Cmd)",
+      "modal.amiche": "Plante Prietene (Asocieri compatibile - Ctrl/Cmd)",
+      "modal.nemiche": "Plante Dușmane (Asocieri incompatibile - Ctrl/Cmd)",
+      "modal.cancel": "Anulează",
+      "modal.save": "Salvează în catalog",
+      "modal.edit_title": "Modifică cultura",
+      "modal.new_title": "Adaugă plantă nouă",
+      
+      // Footer
+      "footer.motto": "\"Plantează cu grijă, culege cu bucurie.\"",
+      "footer.tip_title": "Sfatul lunii",
+      "footer.tip_text": "Udă la bază, niciodată pe frunze: previi făinarea.",
+      "footer.explore": "Explorare",
+      "footer.legal": "Legal",
+      "footer.support": "Asistență",
+      "footer.rights": "© 2026 Orto in Serra · Toate drepturile rezervate",
+      "footer.privacy": "Politica de confidențialitate",
+      "footer.cookie": "Politica privind cookie-urile",
+      "footer.terms": "Termeni de utilizare",
+      
+      // Kit & other keys
+      "nav.kit": "📦 Kitul lunii",
+      "nav.contatti": "✉️ Contact",
+
+      "db.online": "<strong>Conectat la baza de date locală de pe Mac (Node.js)</strong>. Modificările catalogului vor fi salvate direct pe disc.",
+      "db.online_details": "🟢 <strong>Server activ pe http://localhost:3000</strong>.<br>Catalogul este citit și scris direct în fișierul <code>db/plants.json</code> de pe computer.",
+      "db.offline": "<strong>Mod GitHub Pages (Bază de date offline)</strong>. Catalogul de plante este citit din repository, iar modificările vor fi salvate local pe acest dispozitiv.",
+      "db.offline_details": "🟡 <strong>Serverul local nu este accesibil sau este protejat (Mod static)</strong>.<br>Aplicația este găzduită online. Modificările făcute sunt temporare în browserul curent prin <code>localStorage</code>.",
+
+      "status.processing": "În procesare",
+      "status.shipped": "Expediat",
+      "status.completed": "Finalizat",
+      "status.cancelled": "Anulat",
+      "category.leaf": "Frunze",
+      "category.fruit": "Fruct",
+      "category.root": "Rădăcină",
+      "category.aromatic": "Aromatice/Flori",
+      "category.legume": "Leguminoase",
+
+      "confirm.delete_order": "Sigur vrei să ștergi definitiv comanda '{id}' din baza de date?",
+      "confirm.clear_orders": "Atenție! Urmează să ștergi TOATE comenzile din baza de date. Această acțiune nu este reversibilă. Continui?",
+      "confirm.clear_users": "Atenție! Urmează să ștergi toți clienții înregistrați. Va rămâne activ doar contul implicit de administrator. Continui?",
+      "confirm.delete_user": "Sigur vrei să ștergi definitiv utilizatorul cu emailul '{email}'?\nComenzile lui vor rămâne asociate adresei ca Client Ocazional.",
+      "confirm.delete_plant": "Sigur vrei să ștergi planta '{id}' din catalog?",
+      "confirm.reset_catalog": "Atenție! Prin resetarea catalogului implicit, vei șterge toate plantele adăugate sau modificate. Continui?",
+      "alert.orders_cleared": "Istoricul comenzilor a fost golit cu succes.",
+      "alert.users_cleared": "Baza de date cu clienți a fost resetată.",
+      "alert.plant_exists": "Există deja o plantă cu acest ID!",
+      "alert.catalog_reset": "Catalogul a fost resetat. Pagina se va reîncărca.",
+      "alert.order_not_found": "Comanda nu a fost găsită!",
+      "prompt.tracking": "Introdu codul de urmărire al expedierii (opțional):",
+      "notification.tracking": " (Cod tracking: {code})",
+      "notification.order_status": "Comanda ta <strong>{id}</strong> este acum în starea <strong>{status}</strong>!{tracking}",
+      "auth.login_error": "Emailul sau parola nu sunt corecte.",
+      "auth.email_exists": "Această adresă de email este deja înregistrată.",
+      "auth.register_error": "Eroare la înregistrare. Încearcă din nou.",
+      "customer.guest": "Client Ocazional",
+
+      "invoice.subtitle": "Soluții Botanice Profesionale",
+      "invoice.title": "CHITANȚĂ COMANDĂ",
+      "invoice.number": "Număr",
+      "invoice.date": "Dată",
+      "invoice.status": "Stare",
+      "invoice.sender": "Expeditor",
+      "invoice.recipient": "Destinatar Livrare",
+      "invoice.address": "Adresă",
+      "invoice.product": "Descriere Produs (Semințe)",
+      "invoice.code": "Cod",
+      "invoice.qty": "Cantitate (Plicuri)",
+      "invoice.unit_price": "Preț Unitar",
+      "invoice.subtotal": "Subtotal",
+      "invoice.taxable": "Bază impozabilă",
+      "invoice.vat": "TVA (22%)",
+      "invoice.total": "Total Chitanță",
+      "invoice.thanks": "Îți mulțumim că ai cumpărat de la Orto in Serra! Pentru orice întrebare scrie la assistenza@ortoinserra.it",
+      "invoice.legal": "Document valabil ca chitanță de cumpărare online. TVA achitat la origine."
+    }
+  };
+
+  function tAcc(key, vars = {}) {
+    const dict = ACCOUNT_I18N[currentLang] || ACCOUNT_I18N.it;
+    let val = dict[key] || ACCOUNT_I18N.it[key] || key;
+    Object.entries(vars).forEach(([k, replacement]) => {
+      val = val.replaceAll(`{${k}}`, replacement);
+    });
+    return val;
+  }
+
+  function locale() {
+    return currentLang === "ro" ? "ro-RO" : "it-IT";
+  }
+
+  function formatDate(value) {
+    return new Date(value).toLocaleDateString(locale(), {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  const STATUS_KEY = {
+    "In elaborazione": "status.processing",
+    Spedito: "status.shipped",
+    Completato: "status.completed",
+    Annullato: "status.cancelled"
+  };
+
+  const CATEGORY_KEY = {
+    foglia: "category.leaf",
+    frutto: "category.fruit",
+    radice: "category.root",
+    aromatica: "category.aromatic",
+    legume: "category.legume"
+  };
+
+  function statusLabel(status) {
+    return tAcc(STATUS_KEY[status] || status);
+  }
+
+  function categoryLabel(category) {
+    return tAcc(CATEGORY_KEY[category] || category || "category.leaf");
+  }
+
+  function plantLabel(plantOrItem) {
+    if (!plantOrItem) return "";
+    if (currentLang === "ro") {
+      const roName = window.SERRA_I18N?.plants?.ro?.[plantOrItem.id]?.nome;
+      if (roName) return roName;
+    }
+    return plantOrItem.nome || plantOrItem.id || "";
+  }
+
+  function renderDatabaseStatus(active) {
+    const indicator = document.getElementById("dbStatusIndicator");
+    const statusText = document.getElementById("dbStatusText");
+    const adminServerDetails = document.getElementById("adminServerDetails");
+
+    if (active) {
+      if (indicator) indicator.className = "db-status-bar online";
+      if (statusText) statusText.innerHTML = tAcc("db.online");
+      if (adminServerDetails) adminServerDetails.innerHTML = tAcc("db.online_details");
+    } else {
+      if (indicator) indicator.className = "db-status-bar offline";
+      if (statusText) statusText.innerHTML = tAcc("db.offline");
+      if (adminServerDetails) adminServerDetails.innerHTML = tAcc("db.offline_details");
+    }
+  }
+
+  function getCartCount() {
+    try {
+      const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
+      return Array.isArray(raw) ? raw.length : 0;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  function updateAccountCartCount() {
+    const badge = document.getElementById("cartCount");
+    if (badge) badge.textContent = String(getCartCount());
+  }
+
+  window.openCart = function () {
+    window.location.href = "index.html?from=configuratore";
+  };
+
+  window.setLang = function (lang) {
+    currentLang = lang === "ro" || lang === "it" ? lang : "it";
+    localStorage.setItem("ois.lang", currentLang);
+    applyAccountLanguage();
+  };
+
+  function applyAccountLanguage() {
+    document.documentElement.lang = currentLang;
+    document.title = tAcc("page.title");
+    
+    const sel = document.getElementById("langSelect");
+    if (sel) sel.value = currentLang;
+    
+    document.querySelectorAll("[data-i18n-acc]").forEach(el => {
+      const key = el.getAttribute("data-i18n-acc");
+      const val = tAcc(key);
+      if (val.includes("<") || val.includes("&")) {
+        el.innerHTML = val;
+      } else {
+        el.textContent = val;
+      }
+    });
+
+    document.querySelectorAll("[data-i18n-acc-placeholder]").forEach(el => {
+      const key = el.getAttribute("data-i18n-acc-placeholder");
+      el.setAttribute("placeholder", tAcc(key));
+    });
+
+    updateAccountSelectLabels();
+    updateAccountCartCount();
+
+    if (lastDbActive !== null) renderDatabaseStatus(lastDbActive);
+
+    // Aggiorna le viste dinamiche se l'utente è loggato
+    if (currentUser) {
+      if (currentUser.role === "admin") {
+        renderAdminDashboard();
+      } else {
+        renderUserDashboard();
+      }
+    }
+  }
+
+  window.addEventListener("storage", (event) => {
+    if (event.key !== "ois.lang") return;
+    const nextLang = event.newValue === "ro" || event.newValue === "it" ? event.newValue : "it";
+    if (nextLang === currentLang) return;
+    currentLang = nextLang;
+    applyAccountLanguage();
+  });
 
   // --- INIZIALIZZAZIONE ---
   async function initAccount() {
+    // Inizializza la lingua prima di qualunque testo renderizzato via JS
+    const savedLang = localStorage.getItem("ois.lang");
+    currentLang = savedLang === "ro" || savedLang === "it" ? savedLang : "it";
+
     // 1. Rileva connessione al Database Locale
     await checkDatabaseStatus();
     
@@ -19,7 +539,8 @@
     // 3. Controlla se c'è un utente loggato
     currentUser = window.SerraAPI.getCurrentUser();
     
-    // 4. Mostra la sezione corretta dell'interfaccia
+    // 4. Applica lingua ed aggiorna la vista
+    applyAccountLanguage();
     renderView();
 
     // 5. Registra eventi per la foto reale nel modale
@@ -42,24 +563,25 @@
 
   // Mostra lo stato di connessione al server locale o al fallback di GitHub Pages
   async function checkDatabaseStatus() {
-    const indicator = document.getElementById("dbStatusIndicator");
-    const statusText = document.getElementById("dbStatusText");
-    const adminServerDetails = document.getElementById("adminServerDetails");
-    
-    const active = await window.SerraAPI.isServerActive();
-    
-    if (active) {
-      if (indicator) indicator.className = "db-status-bar online";
-      if (statusText) statusText.innerHTML = "<strong>Connesso al database locale del Mac (Node.js)</strong>. Le modifiche al catalogo saranno salvate direttamente sul disco.";
-      if (adminServerDetails) {
-        adminServerDetails.innerHTML = "🟢 <strong>Server attivo su http://localhost:3000</strong>.<br>Il catalogo viene letto e scritto direttamente nel file <code>db/plants.json</code> del tuo computer.";
-      }
-    } else {
-      if (indicator) indicator.className = "db-status-bar offline";
-      if (statusText) statusText.innerHTML = "<strong>Modalità GitHub Pages (Offline Database)</strong>. Il catalogo piante viene letto dal repository, le scritture verranno salvate in locale su questo dispositivo.";
-      if (adminServerDetails) {
-        adminServerDetails.innerHTML = "🟡 <strong>Server locale non raggiungibile o protetto (Modalità statica)</strong>.<br>L'app è ospitata online. Le modifiche effettuate sono temporanee sul browser corrente tramite <code>localStorage</code>.";
-      }
+    lastDbActive = await window.SerraAPI.isServerActive();
+    renderDatabaseStatus(lastDbActive);
+  }
+
+  function updateAccountSelectLabels() {
+    const categorySelect = document.getElementById("editPlantCategory");
+    if (categorySelect) {
+      Array.from(categorySelect.options).forEach((opt) => {
+        opt.textContent = categoryLabel(opt.value);
+      });
+    }
+
+    const monthSelect = document.getElementById("editPlantMonths");
+    const months = window.SERRA_I18N?.months?.[currentLang] || window.SERRA_I18N?.months?.it;
+    if (monthSelect && months) {
+      Array.from(monthSelect.options).forEach((opt) => {
+        const monthIndex = parseInt(opt.value, 10) - 1;
+        opt.textContent = months[monthIndex] || opt.textContent;
+      });
     }
   }
 
@@ -148,19 +670,20 @@
 
     myOrders.forEach(order => {
       const tr = document.createElement("tr");
-      const dateStr = new Date(order.date).toLocaleDateString("it-IT", {
-        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
+      const dateStr = formatDate(order.date);
       const statusClass = order.status.toLowerCase().replace(" ", "-");
       
       let itemsListHtml = '<div class="order-items-flex">';
       // Ordina la lista dei prodotti alfabeticamente
-      const sortedItems = [...order.items].sort((a, b) => a.nome.localeCompare(b.nome));
+      const sortedItems = [...order.items].sort((a, b) =>
+        plantLabel(a).localeCompare(plantLabel(b), locale())
+      );
       sortedItems.forEach(it => {
+        const itemName = plantLabel(it);
         itemsListHtml += `
-          <span class="order-item-pill" title="${it.nome}">
+          <span class="order-item-pill" title="${itemName}">
             <img src="${getPhotoSrc(it.id)}" class="order-item-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
-            <span class="order-item-name">${it.nome}</span>
+            <span class="order-item-name">${itemName}</span>
             <span class="order-item-qty">×${it.bustine}</span>
           </span>
         `;
@@ -172,13 +695,13 @@
         : "";
 
       tr.innerHTML = `
-        <td><strong>${order.id}</strong></td>
-        <td>${dateStr}</td>
-        <td>${itemsListHtml}</td>
-        <td>€ ${parseFloat(order.total).toFixed(2)}</td>
-        <td><span class="status-badge ${statusClass}">${order.status}</span>${trackingHtml}</td>
-        <td>
-          <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')" title="Stampa Ricevuta">🖨️ Stampa</button>
+        <td data-label="${tAcc("dash.order_id")}"><strong>${order.id}</strong></td>
+        <td data-label="${tAcc("dash.order_date")}">${dateStr}</td>
+        <td data-label="${tAcc("dash.order_items")}">${itemsListHtml}</td>
+        <td data-label="${tAcc("dash.order_total")}">€ ${parseFloat(order.total).toFixed(2)}</td>
+        <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(order.status)}</span>${trackingHtml}</td>
+        <td data-label="${tAcc("dash.order_actions")}">
+          <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')" title="${tAcc("dash.print_btn")}">${tAcc("dash.print_btn")}</button>
         </td>
       `;
       listContainer.appendChild(tr);
@@ -200,7 +723,7 @@
 
     const query = filterText.toLowerCase().trim();
     const filtered = allPlants.filter(p => 
-      p.nome.toLowerCase().includes(query) || 
+      plantLabel(p).toLocaleLowerCase(currentLang).includes(query) ||
       p.id.toLowerCase().includes(query) ||
       (p.arch || "").toLowerCase().includes(query)
     );
@@ -209,22 +732,22 @@
       const tr = document.createElement("tr");
       // Cerca il prezzo e i semi del pacchetto per quella pianta (fallback se non definito)
       const spacing = p.d || p.dr || 50;
-      const categoryLabel = p.arch ? p.arch.toUpperCase() : "FOGLIA";
+      const catLabel = categoryLabel(p.arch || "foglia");
       const packPrice = p.prezzo || (window.PACK_DATA && window.PACK_DATA[p.id] ? window.PACK_DATA[p.id].price : 2.5);
       const packSeeds = p.semi || (window.PACK_DATA && window.PACK_DATA[p.id] ? window.PACK_DATA[p.id].seeds : 100);
 
       tr.innerHTML = `
-        <td><img src="${getPhotoSrc(p.id)}" class="admin-plant-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" /></td>
-        <td><code>${p.id}</code></td>
-        <td><strong>${p.nome}</strong></td>
-        <td><span class="badge-category">${categoryLabel}</span></td>
-        <td>€ ${parseFloat(packPrice).toFixed(2)}</td>
-        <td>${packSeeds} semi</td>
-        <td>${p.gg || 90} giorni</td>
-        <td>
+        <td data-label="${tAcc("admin.visual")}"><img src="${getPhotoSrc(p.id)}" class="admin-plant-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" /></td>
+        <td data-label="${tAcc("admin.table_id")}"><code>${p.id}</code></td>
+        <td data-label="${tAcc("admin.table_name")}"><strong>${plantLabel(p)}</strong></td>
+        <td data-label="${tAcc("admin.table_cat")}"><span class="badge-category">${catLabel}</span></td>
+        <td data-label="${tAcc("admin.table_price")}">€ ${parseFloat(packPrice).toFixed(2)}</td>
+        <td data-label="${tAcc("admin.table_qty")}">${packSeeds} ${tAcc("admin.seeds")}</td>
+        <td data-label="${tAcc("admin.table_gg")}">${p.gg || 90} ${tAcc("admin.days")}</td>
+        <td data-label="${tAcc("admin.table_actions")}">
           <div class="admin-table-actions">
-            <button class="btn btn-outline btn-small" onclick="openPlantModal('edit', '${p.id}')">Modifica</button>
-            <button class="btn btn-danger btn-small" onclick="handleDeletePlant('${p.id}')">Elimina</button>
+            <button class="btn btn-outline btn-small" onclick="openPlantModal('edit', '${p.id}')">${tAcc("admin.edit")}</button>
+            <button class="btn btn-danger btn-small" onclick="handleDeletePlant('${p.id}')">${tAcc("admin.delete")}</button>
           </div>
         </td>
       `;
@@ -247,19 +770,20 @@
 
     sorted.forEach(order => {
       const tr = document.createElement("tr");
-      const dateStr = new Date(order.date).toLocaleDateString("it-IT", {
-        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
+      const dateStr = formatDate(order.date);
       const statusClass = order.status.toLowerCase().replace(" ", "-");
       
       let itemsListHtml = '<div class="order-items-flex">';
       // Ordina la lista dei prodotti alfabeticamente
-      const sortedItems = [...order.items].sort((a, b) => a.nome.localeCompare(b.nome));
+      const sortedItems = [...order.items].sort((a, b) =>
+        plantLabel(a).localeCompare(plantLabel(b), locale())
+      );
       sortedItems.forEach(it => {
+        const itemName = plantLabel(it);
         itemsListHtml += `
-          <span class="order-item-pill" title="${it.nome}">
+          <span class="order-item-pill" title="${itemName}">
             <img src="${getPhotoSrc(it.id)}" class="order-item-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
-            <span class="order-item-name">${it.nome}</span>
+            <span class="order-item-name">${itemName}</span>
             <span class="order-item-qty">×${it.bustine}</span>
           </span>
         `;
@@ -270,7 +794,7 @@
       let selectHtml = `<select onchange="handleToggleOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-color, rgba(0,0,0,0.1)); background: var(--bg-input, #fff); color: var(--text-color, #333); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer;">`;
       statusOptions.forEach(opt => {
         const selected = order.status === opt ? "selected" : "";
-        selectHtml += `<option value="${opt}" ${selected}>${opt}</option>`;
+        selectHtml += `<option value="${opt}" ${selected}>${statusLabel(opt)}</option>`;
       });
       selectHtml += `</select>`;
 
@@ -279,20 +803,20 @@
         : "";
 
       tr.innerHTML = `
-        <td><strong>${order.id}</strong></td>
-        <td>
+        <td data-label="${tAcc("dash.order_id")}"><strong>${order.id}</strong></td>
+        <td data-label="${tAcc("admin.orders_client")}">
           <strong>${getUserNameByEmail(order.email)}</strong><br>
           <small>${order.email}</small>
         </td>
-        <td>${dateStr}</td>
-        <td>${itemsListHtml}</td>
-        <td>€ ${parseFloat(order.total).toFixed(2)}</td>
-        <td><span class="status-badge ${statusClass}">${order.status}</span>${trackingHtml}</td>
-        <td>
-          <div style="display: flex; align-items: center; gap: 6px;">
+        <td data-label="${tAcc("dash.order_date")}">${dateStr}</td>
+        <td data-label="${tAcc("dash.order_items")}">${itemsListHtml}</td>
+        <td data-label="${tAcc("dash.order_total")}">€ ${parseFloat(order.total).toFixed(2)}</td>
+        <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(order.status)}</span>${trackingHtml}</td>
+        <td data-label="${tAcc("dash.order_actions")}">
+          <div class="admin-order-actions">
             ${selectHtml}
-            <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">🖨️ Stampa</button>
-            <button class="btn btn-danger btn-small" onclick="handleDeleteOrder('${order.id}')" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">Elimina</button>
+            <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("dash.print_btn")}</button>
+            <button class="btn btn-danger btn-small" onclick="handleDeleteOrder('${order.id}')" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("admin.delete")}</button>
           </div>
         </td>
       `;
@@ -301,7 +825,7 @@
   }
 
   window.handleDeleteOrder = async function (orderId) {
-    if (confirm(`Sei sicuro di voler eliminare definitivamente l'ordine '${orderId}' dal database?`)) {
+    if (confirm(tAcc("confirm.delete_order", { id: orderId }))) {
       allOrders = allOrders.filter(o => o.id !== orderId);
       await window.SerraAPI.saveOrders(allOrders);
       renderAdminOrdersList();
@@ -327,9 +851,9 @@
     if (!statsText) return;
     const clientsCount = allUsers.filter(u => u.role !== 'admin').length;
     statsText.innerHTML = `
-      • <strong>Piante in catalogo:</strong> ${allPlants.length}<br>
-      • <strong>Clienti registrati:</strong> ${clientsCount}<br>
-      • <strong>Ordini totali ricevuti:</strong> ${allOrders.length}
+      • <strong>${tAcc("admin.stats_plants")}:</strong> ${allPlants.length}<br>
+      • <strong>${tAcc("admin.stats_clients")}:</strong> ${clientsCount}<br>
+      • <strong>${tAcc("admin.stats_orders")}:</strong> ${allOrders.length}
     `;
     
     renderAdminCharts();
@@ -364,10 +888,10 @@
     });
     
     const catLabels = {
-      foglia: "Foglia",
-      frutto: "Frutto",
-      radice: "Radice",
-      aromatica: "Aromatica/Fiore"
+      foglia: categoryLabel("foglia"),
+      frutto: categoryLabel("frutto"),
+      radice: categoryLabel("radice"),
+      aromatica: categoryLabel("aromatica")
     };
     
     const catColors = {
@@ -409,7 +933,8 @@
     allOrders.forEach(order => {
       if (order.status === "Annullato") return;
       order.items.forEach(it => {
-        cropCounts[it.nome] = (cropCounts[it.nome] || 0) + it.bustine;
+        const itemName = plantLabel(it);
+        cropCounts[itemName] = (cropCounts[itemName] || 0) + it.bustine;
       });
     });
     
@@ -419,7 +944,7 @@
       .map(([name, qty]) => ({ label: name, value: qty }));
       
     if (topCrops.length === 0) {
-      topContainer.innerHTML = `<p style="font-size:0.9rem;color:#718096;text-align:center;margin-top:50px;">Nessun dato di vendita disponibile.</p>`;
+      topContainer.innerHTML = `<p style="font-size:0.9rem;color:#718096;text-align:center;margin-top:50px;">${tAcc("admin.no_sales")}</p>`;
       return;
     }
     
@@ -438,7 +963,7 @@
         <!-- Value Bar -->
         <rect x="110" y="${y}" width="${barWidth}" height="16" rx="4" fill="#2f6b3a" class="chart-bar-rect" />
         <!-- Value Text -->
-        <text x="${115 + barWidth}" y="${y + 12}" class="chart-value">${d.value} bust.</text>
+        <text x="${115 + barWidth}" y="${y + 12}" class="chart-value">${d.value} ${currentLang === "ro" ? "plic." : "bust."}</text>
       `;
     });
     topSvg += `</svg>`;
@@ -446,22 +971,22 @@
   }
 
   window.handleClearOrders = async function () {
-    if (confirm("Attenzione! Stai per eliminare TUTTI gli ordini presenti nel database. Questa azione non è reversibile. Procedere?")) {
+    if (confirm(tAcc("confirm.clear_orders"))) {
       allOrders = [];
       await window.SerraAPI.saveOrders([]);
       renderAdminOrdersList();
       updateAdminStats();
-      alert("Storico ordini svuotato con successo.");
+      alert(tAcc("alert.orders_cleared"));
     }
   };
 
   window.handleClearUsers = async function () {
-    if (confirm("Attenzione! Stai per eliminare tutti i clienti registrati. Rimarrà attivo solo l'account amministratore di default. Procedere?")) {
+    if (confirm(tAcc("confirm.clear_users"))) {
       const adminOnly = allUsers.filter(u => u.role === 'admin');
       allUsers = adminOnly;
       await window.SerraAPI.saveUsers(adminOnly);
       updateAdminStats();
-      alert("Database clienti ripristinato.");
+      alert(tAcc("alert.users_cleared"));
     }
   };
 
@@ -475,26 +1000,26 @@
       
       const isSelf = user.email === currentUser.email;
       const deleteBtnHtml = isSelf
-        ? `<span class="text-muted" style="font-size: 0.85rem; font-style: italic;">Loggato</span>`
-        : `<button class="btn btn-danger btn-small" onclick="handleDeleteUser('${user.email}')" style="padding: 6px 12px;">Elimina</button>`;
+        ? `<span class="text-muted" style="font-size: 0.85rem; font-style: italic;">${tAcc("admin.logged_in")}</span>`
+        : `<button class="btn btn-danger btn-small" onclick="handleDeleteUser('${user.email}')" style="padding: 6px 12px;">${tAcc("admin.delete")}</button>`;
 
-      const roleLabel = user.role === 'admin' ? 'Amministratore' : 'Cliente';
+      const roleLabel = user.role === 'admin' ? tAcc("auth.test_admin").replace(":", "") : tAcc("auth.test_customer").replace(":", "");
       const roleClass = user.role === 'admin' ? 'admin' : 'user';
 
       tr.innerHTML = `
-        <td><strong>${user.nome}</strong></td>
-        <td><code>${user.email}</code></td>
-        <td>${user.telefono || '-'}</td>
-        <td>${user.indirizzo ? `${user.indirizzo}, ${user.cap} ${user.citta}` : '-'}</td>
-        <td><span class="status-badge ${roleClass}">${roleLabel}</span></td>
-        <td>${deleteBtnHtml}</td>
+        <td data-label="${tAcc("admin.users_name")}"><strong>${user.nome}</strong></td>
+        <td data-label="${tAcc("admin.users_email")}"><code>${user.email}</code></td>
+        <td data-label="${tAcc("admin.users_phone")}">${user.telefono || '-'}</td>
+        <td data-label="${tAcc("admin.users_address")}">${user.indirizzo ? `${user.indirizzo}, ${user.cap} ${user.citta}` : '-'}</td>
+        <td data-label="${tAcc("admin.users_role")}"><span class="status-badge ${roleClass}">${roleLabel}</span></td>
+        <td data-label="${tAcc("admin.table_actions")}">${deleteBtnHtml}</td>
       `;
       listContainer.appendChild(tr);
     });
   }
 
   window.handleDeleteUser = async function (email) {
-    if (confirm(`Sei sicuro di voler eliminare definitivamente l'utente con email '${email}'?\nI suoi ordini rimarranno associati al suo indirizzo come Cliente Occasionale.`)) {
+    if (confirm(tAcc("confirm.delete_user", { email }))) {
       allUsers = allUsers.filter(u => u.email !== email);
       await window.SerraAPI.saveUsers(allUsers);
       renderAdminUsersList();
@@ -504,7 +1029,7 @@
 
   function getUserNameByEmail(email) {
     const u = allUsers.find(user => user.email === email);
-    return u ? u.nome : "Cliente Occasionale";
+    return u ? u.nome : tAcc("customer.guest");
   }
 
   // --- AZIONI LOGIN / REGISTRAZIONE ---
@@ -531,7 +1056,7 @@
       localStorage.setItem("serra.current_user", JSON.stringify(user));
       renderView();
     } else {
-      errorEl.textContent = "Email o Password non corrette.";
+      errorEl.textContent = tAcc("auth.login_error");
       errorEl.hidden = false;
     }
   };
@@ -551,7 +1076,7 @@
 
     // Controlla se l'email esiste già
     if (allUsers.some(u => u.email === email)) {
-      errorEl.textContent = "Questo indirizzo Email è già registrato.";
+      errorEl.textContent = tAcc("auth.email_exists");
       errorEl.hidden = false;
       return;
     }
@@ -577,7 +1102,7 @@
       localStorage.setItem("serra.current_user", JSON.stringify(newUser));
       renderView();
     } else {
-      errorEl.textContent = "Errore durante la registrazione. Riprova.";
+      errorEl.textContent = tAcc("auth.register_error");
       errorEl.hidden = false;
     }
   };
@@ -606,6 +1131,7 @@
       if (success) {
         currentUser = allUsers[index];
         localStorage.setItem("serra.current_user", JSON.stringify(currentUser));
+        successEl.textContent = tAcc("dash.profile_saved");
         successEl.hidden = false;
         setTimeout(() => successEl.hidden = true, 3000);
         renderView();
@@ -639,10 +1165,10 @@
       
       let trackingMsg = "";
       if (nextStatus === "Spedito") {
-        const trackingCode = prompt("Inserisci il codice di tracciamento della spedizione (opzionale):");
+        const trackingCode = prompt(tAcc("prompt.tracking"));
         if (trackingCode !== null && trackingCode.trim() !== "") {
           order.tracking = trackingCode.trim();
-          trackingMsg = ` (Codice tracking: ${order.tracking})`;
+          trackingMsg = tAcc("notification.tracking", { code: order.tracking });
         }
       }
       
@@ -654,7 +1180,11 @@
         if (!customer.notifications) customer.notifications = [];
         customer.notifications.push({
           id: Date.now(),
-          message: `Il tuo ordine <strong>${order.id}</strong> è ora nello stato <strong>${nextStatus}</strong>!${trackingMsg}`,
+          message: tAcc("notification.order_status", {
+            id: order.id,
+            status: statusLabel(nextStatus),
+            tracking: trackingMsg
+          }),
           read: false,
           date: new Date().toISOString()
         });
@@ -684,8 +1214,8 @@
       selectNemiche.innerHTML = "";
       allPlants.forEach(pOpt => {
         if (pOpt.id !== plantId) {
-          selectAmiche.appendChild(new Option(`${pOpt.nome} (${pOpt.id})`, pOpt.id));
-          selectNemiche.appendChild(new Option(`${pOpt.nome} (${pOpt.id})`, pOpt.id));
+          selectAmiche.appendChild(new Option(`${plantLabel(pOpt)} (${pOpt.id})`, pOpt.id));
+          selectNemiche.appendChild(new Option(`${plantLabel(pOpt)} (${pOpt.id})`, pOpt.id));
         }
       });
     }
@@ -694,7 +1224,7 @@
     document.getElementById("editPlantId").disabled = action === 'edit';
 
     if (action === 'edit' && plantId) {
-      title.textContent = "Modifica Coltura";
+      title.textContent = tAcc("modal.edit_title");
       const p = allPlants.find(x => x.id === plantId);
       if (p) {
         document.getElementById("editPlantId").value = p.id;
@@ -733,7 +1263,7 @@
         }
       }
     } else {
-      title.textContent = "Aggiungi nuova pianta";
+      title.textContent = tAcc("modal.new_title");
       document.getElementById("editPlantId").disabled = false;
       document.getElementById("editPlantFoto").value = "";
       updateModalPhotoPreview("", "");
@@ -770,7 +1300,7 @@
     if (action === 'new') {
       // Controlla se ID esiste già
       if (allPlants.some(p => p.id === id)) {
-        alert("Una pianta con questo ID esiste già!");
+        alert(tAcc("alert.plant_exists"));
         return;
       }
       const newPlant = {
@@ -820,7 +1350,7 @@
   };
 
   window.handleDeletePlant = async function (plantId) {
-    if (confirm(`Sei sicuro di voler eliminare la pianta '${plantId}' dal catalogo?`)) {
+    if (confirm(tAcc("confirm.delete_plant", { id: plantId }))) {
       allPlants = allPlants.filter(p => p.id !== plantId);
       await window.SerraAPI.savePlants(allPlants);
       renderAdminPlantsList();
@@ -829,7 +1359,7 @@
 
   // --- OPERAZIONI BACKUP (ADMIN) ---
   window.resetCatalogToDefault = async function () {
-    if (confirm("Attenzione! Ripristinando il catalogo di fabbrica, eliminerai tutte le piante inserite o modificate. Procedere?")) {
+    if (confirm(tAcc("confirm.reset_catalog"))) {
       // Invia array vuoto o resetta tramite rimozione
       localStorage.removeItem("serra.custom_plants");
       
@@ -847,7 +1377,7 @@
         await window.SerraAPI.savePlants([]);
       }
       
-      alert("Catalogo ripristinato. La pagina verrà ricaricata.");
+      alert(tAcc("alert.catalog_reset"));
       window.location.reload();
     }
   };
@@ -926,21 +1456,19 @@
   window.printInvoice = function (orderId) {
     const order = allOrders.find(o => o.id === orderId);
     if (!order) {
-      alert("Ordine non trovato!");
+      alert(tAcc("alert.order_not_found"));
       return;
     }
     
     // Cerca l'utente per recuperare i dettagli di spedizione
     const user = allUsers.find(u => u.email === order.email) || {
-      nome: "Cliente Occasionale",
+      nome: tAcc("customer.guest"),
       email: order.email,
       phone: "-",
       indirizzo: "-"
     };
     
-    const dateStr = new Date(order.date).toLocaleDateString("it-IT", {
-      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    });
+    const dateStr = formatDate(order.date);
     
     let tableRowsHtml = "";
     order.items.forEach(it => {
@@ -948,7 +1476,7 @@
       const rowSubtotal = parseFloat(itemPrice * it.bustine).toFixed(2);
       tableRowsHtml += `
         <tr>
-          <td><strong>${it.nome}</strong><br><small>Codice: ${it.id}</small></td>
+          <td><strong>${plantLabel(it)}</strong><br><small>${tAcc("invoice.code")}: ${it.id}</small></td>
           <td class="text-right">${it.bustine}</td>
           <td class="text-right">€ ${parseFloat(itemPrice).toFixed(2)}</td>
           <td class="text-right">€ ${rowSubtotal}</td>
@@ -963,19 +1491,19 @@
       <div class="invoice-header">
         <div>
           <h1 class="invoice-title">Orto in Serra</h1>
-          <p style="margin: 4px 0; color: #777;">Soluzioni Botaniche Professionali</p>
+          <p style="margin: 4px 0; color: #777;">${tAcc("invoice.subtitle")}</p>
         </div>
         <div class="invoice-meta">
-          <strong>RICEVUTA D'ORDINE</strong><br>
-          Numero: <strong>${order.id}</strong><br>
-          Data: ${dateStr}<br>
-          Stato: <strong>${order.status.toUpperCase()}</strong>
+          <strong>${tAcc("invoice.title")}</strong><br>
+          ${tAcc("invoice.number")}: <strong>${order.id}</strong><br>
+          ${tAcc("invoice.date")}: ${dateStr}<br>
+          ${tAcc("invoice.status")}: <strong>${statusLabel(order.status).toUpperCase()}</strong>
         </div>
       </div>
       
       <div class="invoice-details">
         <div class="invoice-block">
-          <h4>Mittente</h4>
+          <h4>${tAcc("invoice.sender")}</h4>
           <p><strong>Orto in Serra S.r.l.</strong></p>
           <p>Via delle Serre, 42</p>
           <p>50023 Impruneta (FI)</p>
@@ -983,21 +1511,21 @@
           <p>Email: info@ortoinserra.it</p>
         </div>
         <div class="invoice-block">
-          <h4>Destinatario Spedizione</h4>
+          <h4>${tAcc("invoice.recipient")}</h4>
           <p><strong>${user.nome}</strong></p>
           <p>Email: ${user.email}</p>
           <p>Tel: ${user.phone || "-"}</p>
-          <p>Indirizzo: ${user.indirizzo || "-"}</p>
+          <p>${tAcc("invoice.address")}: ${user.indirizzo || "-"}</p>
         </div>
       </div>
       
       <table class="invoice-table">
         <thead>
           <tr>
-            <th>Descrizione Prodotto (Semi)</th>
-            <th class="text-right">Quantità (Bustine)</th>
-            <th class="text-right">Prezzo Unitario</th>
-            <th class="text-right">Subtotale</th>
+            <th>${tAcc("invoice.product")}</th>
+            <th class="text-right">${tAcc("invoice.qty")}</th>
+            <th class="text-right">${tAcc("invoice.unit_price")}</th>
+            <th class="text-right">${tAcc("invoice.subtotal")}</th>
           </tr>
         </thead>
         <tbody>
@@ -1008,23 +1536,23 @@
       <div class="invoice-summary">
         <div class="invoice-summary-box">
           <div class="invoice-summary-row">
-            <span>Imponibile:</span>
+            <span>${tAcc("invoice.taxable")}:</span>
             <span>€ ${parseFloat(order.total / 1.22).toFixed(2)}</span>
           </div>
           <div class="invoice-summary-row">
-            <span>IVA (22%):</span>
+            <span>${tAcc("invoice.vat")}:</span>
             <span>€ ${parseFloat(order.total - (order.total / 1.22)).toFixed(2)}</span>
           </div>
           <div class="invoice-summary-row total">
-            <span>Totale Ricevuta:</span>
+            <span>${tAcc("invoice.total")}:</span>
             <span>€ ${parseFloat(order.total).toFixed(2)}</span>
           </div>
         </div>
       </div>
       
       <div class="invoice-footer">
-        <p>Grazie per aver acquistato da Orto in Serra! Per qualsiasi domanda scrivi a assistenza@ortoinserra.it</p>
-        <p><small>Documento valido come ricevuta d'acquisto telematica. IVA assolta all'origine.</small></p>
+        <p>${tAcc("invoice.thanks")}</p>
+        <p><small>${tAcc("invoice.legal")}</small></p>
       </div>
     `;
     
