@@ -130,6 +130,9 @@
             data-i18n-conf="nav.contatti"
             >✉️ Contatti</a
           >
+          <a href="account.html" class="nav-link nav-link--account" id="navAccountBtn"
+            >👤 Area Personale</a
+          >
         </nav>
         <div class="nav-actions">
           <button
@@ -1484,6 +1487,11 @@
                 ><span data-i18n-conf="nav.contatti">✉️ Contatti</span></a
               >
             </li>
+            <li>
+              <a href="account.html"
+                ><span>👤 Area Personale</span></a
+              >
+            </li>
           </ul>
         </div>
         <div class="footer-nav-col">
@@ -1554,23 +1562,51 @@
       document.write(
         '<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>'
       );
-      [
-        "assets/js/conf/conf-data.js",
-        "assets/js/conf/conf-state.js",
-        "assets/js/conf/conf-projects.js",
-        "assets/js/conf/conf-text.js",
-        "assets/js/conf/conf-draw.js",
-        "assets/js/conf/conf-ui.js",
-        "assets/js/conf/conf-companions.js",
-        "assets/js/conf/conf-shopping.js",
-        "assets/js/conf/conf-engine.js",
-        "assets/js/conf/conf-calendar.js",
-        "assets/js/conf/conf-app.js"
-      ].forEach(function (src) {
-        document.write(
-          '<script src="' + serraAsset(src) + '"><\/script>'
-        );
-      });
+      document.write(
+        '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
+      );
+    </script>
+    <script>
+      (async () => {
+        try {
+          const customPlants = await window.SerraAPI.getPlants();
+          if (customPlants) {
+            window.PLANTS = customPlants;
+            customPlants.forEach(p => {
+              if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
+            });
+          }
+        } catch (e) {
+          console.error("Errore nel caricamento del catalogo piante:", e);
+        }
+
+        const confScripts = [
+          "assets/js/conf/conf-data.js",
+          "assets/js/conf/conf-state.js",
+          "assets/js/conf/conf-projects.js",
+          "assets/js/conf/conf-text.js",
+          "assets/js/conf/conf-draw.js",
+          "assets/js/conf/conf-ui.js",
+          "assets/js/conf/conf-companions.js",
+          "assets/js/conf/conf-shopping.js",
+          "assets/js/conf/conf-engine.js",
+          "assets/js/conf/conf-calendar.js",
+          "assets/js/conf/conf-app.js"
+        ].map(src => serraAsset(src));
+
+        function loadNextScript(index) {
+          if (index >= confScripts.length) return;
+          const s = document.createElement("script");
+          s.src = confScripts[index];
+          s.onload = () => loadNextScript(index + 1);
+          s.onerror = (e) => {
+            console.error("Errore nel caricamento di " + confScripts[index], e);
+            loadNextScript(index + 1);
+          };
+          document.body.appendChild(s);
+        }
+        loadNextScript(0);
+      })();
     </script>
     <!-- Scroll listener torna su -->
     <script>

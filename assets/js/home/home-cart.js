@@ -243,22 +243,44 @@ function alertCheckout() {
     openCart();
     return;
   }
-  const lines = cart
-    .map(({ id, bustine }) => {
-      const bustLine =
-        bustine === 1
-          ? t("cart.pack")
-          : tv("cart.pack_many", { count: bustine });
-      return `- ${plantName(id)}: ${bustLine} × ${money(packPrice(id))} = ${money(bustine * packPrice(id))}`;
-    })
-    .join("\n");
-  const total = money(
-    cart.reduce((sum, { id, bustine }) => sum + packPrice(id) * bustine, 0)
-  );
-  const body = `${t("cart.alert")}\n\n${lines}\n\n${t("cart.estimate")}: ${total}`;
-  window.location.href = `mailto:info@ortoinserra.it?subject=${encodeURIComponent(
-    t("cart.mail_subject")
-  )}&body=${encodeURIComponent(body)}`;
+  
+  // Controlla se l'utente è autenticato
+  const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
+  if (!user) {
+    alert("Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area Personale.");
+    window.location.href = "account.html";
+    return;
+  }
+
+  const orderItems = cart.map(({ id, bustine }) => ({
+    id,
+    nome: plantName(id),
+    bustine,
+    prezzo: packPrice(id)
+  }));
+  const totalVal = cart.reduce((sum, { id, bustine }) => sum + packPrice(id) * bustine, 0);
+
+  window.SerraAPI.getOrders().then(orders => {
+    const newOrder = {
+      id: "ORD-" + Math.floor(10000 + Math.random() * 90000),
+      email: user.email,
+      date: new Date().toISOString(),
+      items: orderItems,
+      total: totalVal,
+      status: "In elaborazione"
+    };
+    orders.push(newOrder);
+    window.SerraAPI.saveOrders(orders).then(() => {
+      // Svuota il carrello dopo l'acquisto
+      cart = [];
+      savePrefs();
+      updateCartUI();
+      closeCart();
+      
+      alert(`Ordine ${newOrder.id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.`);
+      window.location.href = "account.html";
+    });
+  });
 }
 
 // Blocca lo scroll durante il dettaglio

@@ -684,7 +684,7 @@
         "cart.plan_hint": "Apri il configuratore con i semi scelti",
         "cart.species_one": "1 specie",
         "cart.species_many": "{count} specie",
-        "cart.checkout": "Invia richiesta semi",
+        "cart.checkout": "Completa acquisto",
         "cart.alert":
           "Vorrei ricevere disponibilità e prezzo finale per questi semi:",
         "cart.add": "+ Aggiungi",
@@ -1078,7 +1078,7 @@
         "cart.plan_hint": "Deschide configuratorul cu semințele alese",
         "cart.species_one": "1 specie",
         "cart.species_many": "{count} specii",
-        "cart.checkout": "Trimite cererea",
+        "cart.checkout": "Finalizează achiziția",
         "cart.alert":
           "Aș dori disponibilitatea și prețul final pentru aceste semințe:",
         "cart.add": "+ Adaugă",

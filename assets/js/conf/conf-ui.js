@@ -1466,7 +1466,20 @@ function renderPlantDetailPanel() {
   const b = state.beds[state.selected];
   const p = BYID[b.plantId];
   const resaTot = b.count * p.resa;
-  const photoSrc = PLANT_PHOTOS[p.id] || `assets/img/svg/${p.id}.svg`;
+  let photoSrc = `assets/img/svg/${p.id}.svg`;
+  if (p.foto) {
+    if (p.foto.startsWith("http://") || p.foto.startsWith("https://") || p.foto.startsWith("data:")) {
+      photoSrc = p.foto;
+    } else if (p.foto.includes("/")) {
+      photoSrc = p.foto;
+    } else {
+      photoSrc = `assets/img/photo/${p.foto}`;
+    }
+  } else if (PLANT_PHOTOS[p.id]) {
+    photoSrc = PLANT_PHOTOS[p.id];
+  } else {
+    photoSrc = `assets/img/photo/${p.id}.webp`;
+  }
   const desc = (PLANT_DESC[state.lang] || PLANT_DESC.it)[p.id] || "";
   const months = [...effectiveMonths(p)]
     .sort((a, b) => a - b)

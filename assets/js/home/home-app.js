@@ -1217,7 +1217,7 @@ if (catalogSearchLink) {
     overlay.addEventListener("transitionend", onEnd, { once: true });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function initHomeApp() {
 
     document.querySelectorAll(".hero-cfg-level, .nav-link--configuratore").forEach(link => {
       link.addEventListener("click", function (e) {
@@ -1312,5 +1312,11 @@ if (catalogSearchLink) {
         console.error("Errore nel caricamento della mappa Leaflet:", err);
       }
     }
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHomeApp);
+  } else {
+    initHomeApp();
+  }
 })();

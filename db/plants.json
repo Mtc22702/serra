@@ -1,0 +1,3077 @@
+[
+  {
+    "id": "pomodoro",
+    "nome": "Pomodoro",
+    "arch": "frutto",
+    "d": 50,
+    "dr": 80,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "basilico",
+      "cipolla",
+      "carota",
+      "prezzemolo",
+      "lattuga",
+      "sedano",
+      "borragine"
+    ],
+    "nemiche": [
+      "cavolo",
+      "verza",
+      "broccolo",
+      "cavolfiore",
+      "cavolonero",
+      "cavolorapa",
+      "broccolo_romanesco",
+      "finocchio",
+      "cetriolo",
+      "cavoletti"
+    ],
+    "resa": 3,
+    "nota": "Vuole sostegno e pieno sole. Togli le femminelle.",
+    "col": {
+      "l1": "#3f7a3a",
+      "l2": "#2f5e2c",
+      "fr": "#e2452f"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "peperone",
+    "nome": "Peperone",
+    "arch": "frutto",
+    "d": 40,
+    "dr": 60,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "basilico",
+      "pomodoro"
+    ],
+    "nemiche": [
+      "fagiolino",
+      "fagiolo",
+      "broccolo_romanesco"
+    ],
+    "resa": 1,
+    "nota": "Ama il caldo. Concima quando inizia a fruttificare.",
+    "col": {
+      "l1": "#3c7d3a",
+      "l2": "#2c5e2b",
+      "fr": "#37a13a"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "peperoncino",
+    "nome": "Peperoncino",
+    "arch": "frutto",
+    "d": 35,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 95,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "basilico"
+    ],
+    "nemiche": [],
+    "resa": 0.5,
+    "nota": "Rustico e generoso. Sopporta bene la siccità.",
+    "col": {
+      "l1": "#3c7d3a",
+      "l2": "#2c5e2b",
+      "fr": "#d22f22"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "melanzana",
+    "nome": "Melanzana",
+    "arch": "frutto",
+    "d": 50,
+    "dr": 80,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "fagiolino"
+    ],
+    "nemiche": [],
+    "resa": 1.5,
+    "nota": "Vuole molto caldo e annaffiature regolari.",
+    "col": {
+      "l1": "#46743f",
+      "l2": "#345633",
+      "fr": "#5b2a7a"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "zucchina",
+    "nome": "Zucchina",
+    "arch": "cucurbita",
+    "d": 80,
+    "dr": 100,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "alta",
+    "gg": 50,
+    "mesi": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "fagiolino",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 2.5,
+    "nota": "Cresce in fretta e occupa tanto spazio. Raccogli spesso.",
+    "col": {
+      "l1": "#3f7e3f",
+      "l2": "#2e5e2e",
+      "fl": "#f3c43b"
+    },
+    "tipo": "frutto",
+    "notaBreve": "Cresce in fretta. Raccogli spesso."
+  },
+  {
+    "id": "zucca",
+    "nome": "Zucca",
+    "arch": "cucurbita",
+    "d": 100,
+    "dr": 130,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 120,
+    "mesi": [
+      4,
+      5
+    ],
+    "amiche": [
+      "fagiolo"
+    ],
+    "nemiche": [],
+    "resa": 4,
+    "nota": "Si allarga molto: lasciale spazio o falla arrampicare.",
+    "col": {
+      "l1": "#477e3a",
+      "l2": "#345a2c",
+      "fl": "#f0b93a"
+    },
+    "tipo": "frutto",
+    "notaBreve": "Si allarga molto: lascia spazio o falla arrampicare."
+  },
+  {
+    "id": "cetriolo",
+    "nome": "Cetriolo",
+    "arch": "rampicante",
+    "d": 40,
+    "dr": 100,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "alta",
+    "gg": 60,
+    "mesi": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "fagiolino",
+      "lattuga",
+      "aneto"
+    ],
+    "nemiche": [
+      "salvia",
+      "pomodoro",
+      "finocchio"
+    ],
+    "resa": 2,
+    "nota": "Falla arrampicare su una rete: frutti più puliti e dritti.",
+    "col": {
+      "l1": "#3f863f",
+      "l2": "#2c5f2c"
+    },
+    "tipo": "frutto",
+    "notaBreve": "Falla arrampicare su una rete: frutti più puliti."
+  },
+  {
+    "id": "melone",
+    "nome": "Melone",
+    "arch": "cucurbita",
+    "d": 90,
+    "dr": 120,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 110,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [],
+    "nemiche": [],
+    "resa": 2,
+    "nota": "Vuole tanto sole e poca acqua a fine maturazione.",
+    "col": {
+      "l1": "#4c8240",
+      "l2": "#385f2f",
+      "fl": "#f3d23b"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "anguria",
+    "nome": "Anguria",
+    "arch": "cucurbita",
+    "d": 120,
+    "dr": 150,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 120,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [],
+    "nemiche": [],
+    "resa": 6,
+    "nota": "Enorme footprint: una pianta riempie mezza serra piccola.",
+    "col": {
+      "l1": "#3f7a3a",
+      "l2": "#2c5a29",
+      "fl": "#f1cf3b"
+    },
+    "tipo": "frutto",
+    "notaBreve": "Enorme: una pianta riempie mezza serra piccola."
+  },
+  {
+    "id": "lattuga",
+    "nome": "Lattuga",
+    "arch": "rosetta",
+    "d": 25,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 55,
+    "mesi": [
+      1,
+      2,
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "ravanello",
+      "fragola",
+      "cetriolo",
+      "cipolla"
+    ],
+    "nemiche": [],
+    "resa": 0.35,
+    "nota": "Facilissima e veloce. Semina poche piante per volta.",
+    "col": {
+      "l1": "#8cc85d",
+      "l2": "#6fae45"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "radicchio",
+    "nome": "Radicchio",
+    "arch": "rosetta",
+    "d": 30,
+    "dr": 35,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 80,
+    "mesi": [
+      6,
+      7,
+      8
+    ],
+    "amiche": [
+      "finocchio"
+    ],
+    "nemiche": [],
+    "resa": 0.3,
+    "nota": "Il freddo lo rende rosso e dolce.",
+    "col": {
+      "l1": "#9c4f6a",
+      "l2": "#6f3550",
+      "fr": "#b85a78"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "rucola",
+    "nome": "Rucola",
+    "arch": "frastagliata",
+    "d": 15,
+    "dr": 20,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 35,
+    "mesi": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "lattuga"
+    ],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "Pronta in poche settimane. Si ritaglia e ricresce.",
+    "col": {
+      "l1": "#5fa23a",
+      "l2": "#477e2b"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "spinaci",
+    "nome": "Spinaci",
+    "arch": "rosetta",
+    "d": 20,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 45,
+    "mesi": [
+      1,
+      2,
+      3,
+      9,
+      10,
+      11
+    ],
+    "amiche": [
+      "fragola",
+      "cavolo"
+    ],
+    "nemiche": [
+      "finocchio"
+    ],
+    "resa": 0.15,
+    "nota": "Ama il fresco; in estate va in fiore subito.",
+    "col": {
+      "l1": "#2f6f2f",
+      "l2": "#234f24"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "bietola",
+    "nome": "Bietola da coste",
+    "arch": "rosetta",
+    "d": 30,
+    "dr": 40,
+    "h": "media",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "amiche": [
+      "cavolo",
+      "cipolla"
+    ],
+    "nemiche": [],
+    "resa": 0.5,
+    "nota": "Generosa: si raccolgono le foglie esterne a mano a mano.",
+    "col": {
+      "l1": "#3a7e3a",
+      "l2": "#2a5d2a",
+      "fr": "#d8d4c0"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Generosa: raccogli le foglie esterne a mano a mano."
+  },
+  {
+    "id": "cavolo",
+    "nome": "Cavolo cappuccio",
+    "arch": "brassica",
+    "d": 50,
+    "dr": 70,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      2,
+      3,
+      6,
+      7
+    ],
+    "amiche": [
+      "sedano",
+      "aneto",
+      "cipolla",
+      "bietola"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 1.2,
+    "nota": "Vuole spazio e terreno ricco. Attento ai bruchi.",
+    "col": {
+      "l1": "#7fa37e",
+      "l2": "#5f8060",
+      "head": "#bcd6a0"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Vuole spazio e terreno ricco."
+  },
+  {
+    "id": "verza",
+    "nome": "Verza",
+    "arch": "brassica",
+    "d": 50,
+    "dr": 70,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      2,
+      3,
+      6,
+      7
+    ],
+    "amiche": [
+      "sedano",
+      "aneto",
+      "cipolla"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 1.2,
+    "nota": "Resiste al gelo; più buona dopo le prime brinate.",
+    "col": {
+      "l1": "#5f8a5f",
+      "l2": "#456545",
+      "head": "#9cc07e"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "broccolo",
+    "nome": "Broccolo",
+    "arch": "brassica",
+    "d": 50,
+    "dr": 70,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 85,
+    "mesi": [
+      2,
+      3,
+      6,
+      7
+    ],
+    "amiche": [
+      "sedano",
+      "cipolla"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 0.6,
+    "nota": "Dopo la testa centrale dà tanti getti laterali.",
+    "col": {
+      "l1": "#6f9466",
+      "l2": "#4f704a",
+      "head": "#3c6e3a"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "cavolfiore",
+    "nome": "Cavolfiore",
+    "arch": "brassica",
+    "d": 50,
+    "dr": 70,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 95,
+    "mesi": [
+      2,
+      3,
+      6,
+      7
+    ],
+    "amiche": [
+      "sedano",
+      "aneto"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 0.8,
+    "nota": "Piega le foglie sulla testa per tenerla bianca.",
+    "col": {
+      "l1": "#7fa178",
+      "l2": "#5d7d58",
+      "head": "#eef0d8"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "cavolonero",
+    "nome": "Cavolo nero",
+    "arch": "brassica",
+    "d": 45,
+    "dr": 60,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 80,
+    "mesi": [
+      2,
+      3,
+      6,
+      7
+    ],
+    "amiche": [
+      "cipolla",
+      "bietola"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 0.5,
+    "nota": "Rustico toscano: si raccoglie a foglie per mesi.",
+    "col": {
+      "l1": "#2b4f33",
+      "l2": "#1d3a26",
+      "head": "#34563a"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "cavolorapa",
+    "nome": "Cavolo rapa",
+    "arch": "brassica",
+    "d": 30,
+    "dr": 40,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      2,
+      3,
+      8,
+      9
+    ],
+    "amiche": [
+      "cipolla",
+      "bietola"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 0.3,
+    "nota": "Si mangia il fusto ingrossato: raccogli da giovane.",
+    "col": {
+      "l1": "#7fa37e",
+      "l2": "#5f8060",
+      "head": "#b6cda0"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "carota",
+    "nome": "Carota",
+    "arch": "piumosa",
+    "d": 8,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "amiche": [
+      "cipolla",
+      "porro",
+      "lattuga",
+      "ravanello",
+      "pomodoro"
+    ],
+    "nemiche": [
+      "aneto",
+      "finocchio"
+    ],
+    "resa": 0.1,
+    "nota": "Semina fitta e dirada. Terreno sciolto, senza sassi.",
+    "col": {
+      "l1": "#5fae4a",
+      "l2": "#458035"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "finocchio",
+    "nome": "Finocchio",
+    "arch": "piumosa",
+    "d": 25,
+    "dr": 35,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      6,
+      7,
+      8
+    ],
+    "amiche": [],
+    "nemiche": [
+      "pomodoro",
+      "fagiolino",
+      "fagiolo",
+      "pisello",
+      "cetriolo",
+      "spinaci",
+      "carota",
+      "tomatillo",
+      "physalis",
+      "cucamelon"
+    ],
+    "resa": 0.3,
+    "nota": "È \"antipatico\" a molte piante: tienilo in disparte.",
+    "col": {
+      "l1": "#6db04a",
+      "l2": "#4f8235",
+      "fr": "#dfe6c0"
+    },
+    "tipo": "aromatica",
+    "notaBreve": "Tienilo in disparte: non va d'accordo con molti."
+  },
+  {
+    "id": "prezzemolo",
+    "nome": "Prezzemolo",
+    "arch": "cespuglio",
+    "d": 20,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 75,
+    "mesi": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "amiche": [
+      "pomodoro"
+    ],
+    "nemiche": [],
+    "resa": 0.05,
+    "nota": "Lento a partire; poi taglia di continuo per tutto l'anno.",
+    "col": {
+      "l1": "#3f8a3f",
+      "l2": "#2e6630"
+    },
+    "tipo": "aromatica",
+    "notaBreve": "Lento a partire; poi taglia di continuo per mesi."
+  },
+  {
+    "id": "basilico",
+    "nome": "Basilico",
+    "arch": "cespuglio",
+    "d": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "pomodoro",
+      "peperone",
+      "peperoncino"
+    ],
+    "nemiche": [],
+    "resa": 0.05,
+    "nota": "Cima i fiori per avere foglie sempre tenere.",
+    "col": {
+      "l1": "#46a046",
+      "l2": "#347e34"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "coriandolo",
+    "nome": "Coriandolo",
+    "arch": "cespuglio",
+    "d": 15,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 50,
+    "mesi": [
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "amiche": [],
+    "nemiche": [],
+    "resa": 0.03,
+    "nota": "Va a fiore col caldo: semina scalare ogni 2 settimane.",
+    "col": {
+      "l1": "#5aa24a",
+      "l2": "#427e35"
+    },
+    "tipo": "aromatica",
+    "notaBreve": "Va a fiore col caldo: semina ogni 2 settimane."
+  },
+  {
+    "id": "aneto",
+    "nome": "Aneto",
+    "arch": "piumosa",
+    "d": 25,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 70,
+    "mesi": [
+      3,
+      4,
+      5,
+      8
+    ],
+    "amiche": [
+      "cavolo",
+      "cetriolo"
+    ],
+    "nemiche": [
+      "carota"
+    ],
+    "resa": 0.05,
+    "nota": "Aiuta i cavoli e attira insetti utili.",
+    "col": {
+      "l1": "#6aa84a",
+      "l2": "#4d7e36"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "cipolla",
+    "nome": "Cipolla",
+    "arch": "bulbo",
+    "d": 12,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 120,
+    "mesi": [
+      1,
+      2,
+      3,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "lattuga",
+      "barbabietola",
+      "pomodoro",
+      "fragola"
+    ],
+    "nemiche": [
+      "fagiolino",
+      "fagiolo",
+      "pisello",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
+    ],
+    "resa": 0.15,
+    "nota": "Poca acqua a fine ciclo. Tiene lontani molti parassiti.",
+    "col": {
+      "l1": "#6f9e7a",
+      "l2": "#527e5d"
+    },
+    "tipo": "radice",
+    "notaBreve": "Poca acqua a fine ciclo. Tiene lontani i parassiti."
+  },
+  {
+    "id": "aglio",
+    "nome": "Aglio",
+    "arch": "bulbo",
+    "d": 12,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 240,
+    "mesi": [
+      10,
+      11,
+      12,
+      1
+    ],
+    "amiche": [
+      "carota",
+      "fragola",
+      "pomodoro"
+    ],
+    "nemiche": [
+      "fagiolino",
+      "fagiolo",
+      "pisello",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
+    ],
+    "resa": 0.05,
+    "nota": "Si pianta a spicchi in autunno, si raccoglie in estate.",
+    "col": {
+      "l1": "#7aa884",
+      "l2": "#5c8866"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "porro",
+    "nome": "Porro",
+    "arch": "bulbo",
+    "d": 15,
+    "dr": 30,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 150,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "carota"
+    ],
+    "nemiche": [
+      "fagiolino",
+      "fagiolo",
+      "pisello"
+    ],
+    "resa": 0.2,
+    "nota": "Rincalza la terra attorno per avere il fusto bianco lungo.",
+    "col": {
+      "l1": "#6f9e84",
+      "l2": "#507a62"
+    },
+    "tipo": "radice",
+    "notaBreve": "Rincalza la terra per avere il fusto bianco lungo."
+  },
+  {
+    "id": "scalogno",
+    "nome": "Scalogno",
+    "arch": "bulbo",
+    "d": 12,
+    "dr": 20,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 100,
+    "mesi": [
+      1,
+      2,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "fragola"
+    ],
+    "nemiche": [
+      "fagiolino",
+      "fagiolo",
+      "pisello"
+    ],
+    "resa": 0.1,
+    "nota": "Come la cipolla ma più delicato; ottimo per principianti.",
+    "col": {
+      "l1": "#74a37e",
+      "l2": "#557d60"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "fagiolino",
+    "nome": "Fagiolino nano",
+    "arch": "rampicante",
+    "d": 20,
+    "dr": 40,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 65,
+    "mesi": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "lattuga",
+      "zucchina",
+      "cimbru"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio",
+      "porro",
+      "scalogno",
+      "leurda",
+      "peperone",
+      "finocchio"
+    ],
+    "resa": 0.15,
+    "nota": "Non serve sostegno. Migliora il terreno con l'azoto.",
+    "col": {
+      "l1": "#4f9a3f",
+      "l2": "#3a7530"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "fagiolo",
+    "nome": "Fagiolo rampicante",
+    "arch": "rampicante",
+    "d": 25,
+    "dr": 50,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 75,
+    "mesi": [
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "zucchina",
+      "cimbru"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio",
+      "porro",
+      "scalogno",
+      "leurda",
+      "peperone",
+      "finocchio"
+    ],
+    "resa": 0.25,
+    "nota": "Vuole canne o rete: sale anche 2 metri.",
+    "col": {
+      "l1": "#4a943a",
+      "l2": "#36702c"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "pisello",
+    "nome": "Pisello",
+    "arch": "rampicante",
+    "d": 15,
+    "dr": 30,
+    "h": "media",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 80,
+    "mesi": [
+      10,
+      11,
+      1,
+      2
+    ],
+    "amiche": [
+      "carota",
+      "lattuga"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio",
+      "porro",
+      "scalogno",
+      "finocchio"
+    ],
+    "resa": 0.1,
+    "nota": "Ama il fresco: si semina in autunno o fine inverno.",
+    "col": {
+      "l1": "#5fa84a",
+      "l2": "#458035"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "fragola",
+    "nome": "Fragola",
+    "arch": "fragola",
+    "d": 30,
+    "dr": 40,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      3,
+      4,
+      8,
+      9
+    ],
+    "amiche": [
+      "lattuga",
+      "spinaci",
+      "cipolla",
+      "aglio"
+    ],
+    "nemiche": [
+      "cavolo",
+      "verza",
+      "broccolo",
+      "cavolfiore",
+      "cavolonero",
+      "cavolorapa",
+      "pakchoi",
+      "cavoletti"
+    ],
+    "resa": 0.25,
+    "nota": "Perenne: produce per più anni e fa stoloni.",
+    "col": {
+      "l1": "#3f8a3f",
+      "l2": "#2e6630",
+      "fr": "#e23b3b",
+      "fl": "#fff"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "sedano",
+    "nome": "Sedano",
+    "arch": "rosetta",
+    "d": 30,
+    "dr": 40,
+    "h": "media",
+    "sole": "mezz",
+    "acqua": "alta",
+    "gg": 120,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "cavolo",
+      "pomodoro"
+    ],
+    "nemiche": [],
+    "resa": 0.5,
+    "nota": "Vuole tanta acqua e terreno ricco.",
+    "col": {
+      "l1": "#6aa84a",
+      "l2": "#4d7e36",
+      "fr": "#cfe0a8"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "ravanello",
+    "nome": "Ravanello",
+    "arch": "rosetta",
+    "d": 8,
+    "dr": 15,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 28,
+    "mesi": [
+      1,
+      2,
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "lattuga",
+      "carota",
+      "cetriolo"
+    ],
+    "nemiche": [],
+    "resa": 0.03,
+    "nota": "Il più veloce: pronto in 3-4 settimane. Ideale coi bimbi.",
+    "col": {
+      "l1": "#6fab46",
+      "l2": "#507f33",
+      "fr": "#d23a4a"
+    },
+    "tipo": "radice",
+    "notaBreve": "Il più veloce: pronto in 3–4 settimane."
+  },
+  {
+    "id": "barbabietola",
+    "nome": "Barbabietola",
+    "arch": "rosetta",
+    "d": 12,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 80,
+    "mesi": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "amiche": [
+      "cipolla",
+      "lattuga"
+    ],
+    "nemiche": [],
+    "resa": 0.2,
+    "nota": "Si mangiano radice e foglie. Dirada le piantine.",
+    "col": {
+      "l1": "#6b4f6e",
+      "l2": "#4d3850",
+      "fr": "#8a3a6a"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "cicoria",
+    "nome": "Cicoria",
+    "arch": "frastagliata",
+    "d": 25,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 70,
+    "mesi": [
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "lattuga"
+    ],
+    "nemiche": [],
+    "resa": 0.25,
+    "nota": "Rustica e saporita. Raccogli le foglie esterne o il cespo giovane.",
+    "col": {
+      "l1": "#4f8f3a",
+      "l2": "#2f6f2f"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Rustica e saporita. Raccogli le foglie esterne."
+  },
+  {
+    "id": "indivia",
+    "nome": "Indivia / Scarola",
+    "arch": "rosetta",
+    "d": 30,
+    "dr": 40,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 75,
+    "mesi": [
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ],
+    "amiche": [
+      "lattuga",
+      "ravanello",
+      "finocchio"
+    ],
+    "nemiche": [],
+    "resa": 0.35,
+    "nota": "Ama il fresco. Lega il cespo se vuoi foglie interne più chiare.",
+    "col": {
+      "l1": "#9bc86b",
+      "l2": "#6fa84a",
+      "fr": "#f1e9b5"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Ama il fresco. Lega il cespo per foglie più chiare."
+  },
+  {
+    "id": "pakchoi",
+    "nome": "Pak choi",
+    "arch": "rosetta",
+    "d": 25,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 45,
+    "mesi": [
+      2,
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [
+      "fragola"
+    ],
+    "resa": 0.25,
+    "nota": "Cresce veloce in clima fresco. Raccogli da baby leaf o a piccolo cespo.",
+    "col": {
+      "l1": "#72b34f",
+      "l2": "#3f823a",
+      "fr": "#eef0d8"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Cresce veloce in clima fresco."
+  },
+  {
+    "id": "cavoletti",
+    "nome": "Cavoletti di Bruxelles",
+    "arch": "brassica",
+    "d": 60,
+    "dr": 80,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 120,
+    "mesi": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "sedano",
+      "cipolla",
+      "timo"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "fragola"
+    ],
+    "resa": 0.7,
+    "nota": "Vuole tempo e fresco: cima la punta quando i cavoletti iniziano a formarsi.",
+    "col": {
+      "l1": "#6f9466",
+      "l2": "#4f704a",
+      "head": "#7fb36a"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Vuole tempo e fresco: cima la punta a metà ciclo."
+  },
+  {
+    "id": "rapa",
+    "nome": "Rapa",
+    "arch": "rosetta",
+    "d": 12,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 55,
+    "mesi": [
+      2,
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "pisello",
+      "lattuga"
+    ],
+    "nemiche": [],
+    "resa": 0.15,
+    "nota": "Fresca e rapida: dirada presto per far ingrossare la radice.",
+    "col": {
+      "l1": "#6fab46",
+      "l2": "#507f33",
+      "fr": "#f2f0df"
+    },
+    "tipo": "radice",
+    "notaBreve": "Fresca e rapida: dirada presto per ingrossare la radice."
+  },
+  {
+    "id": "valerianella",
+    "nome": "Valerianella",
+    "arch": "rosetta",
+    "d": 10,
+    "dr": 15,
+    "h": "bassa",
+    "sole": "mezz",
+    "acqua": "media",
+    "gg": 50,
+    "mesi": [
+      1,
+      2,
+      9,
+      10,
+      11
+    ],
+    "amiche": [
+      "lattuga",
+      "ravanello",
+      "cipolla"
+    ],
+    "nemiche": [],
+    "resa": 0.08,
+    "nota": "Perfetta per la serra fredda: forma piccoli ciuffi teneri in autunno e inverno.",
+    "col": {
+      "l1": "#6fb24f",
+      "l2": "#4b8a38"
+    },
+    "tipo": "foglia",
+    "notaBreve": "Perfetta per la serra fredda: ciuffi teneri in inverno."
+  },
+  {
+    "id": "rosmarino",
+    "nome": "Rosmarino",
+    "arch": "erbafine",
+    "d": 60,
+    "dr": 80,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 0,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "Perenne e rustico: pochissima acqua, vive anni.",
+    "col": {
+      "l1": "#3f6e4a",
+      "l2": "#2c5037"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "timo",
+    "nome": "Timo",
+    "arch": "erbafine",
+    "d": 30,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 0,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "cavolo"
+    ],
+    "nemiche": [],
+    "resa": 0.05,
+    "nota": "Tappezzante e profumato; ama il secco.",
+    "col": {
+      "l1": "#5a7e4a",
+      "l2": "#446035"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "origano",
+    "nome": "Origano",
+    "arch": "erbafine",
+    "d": 30,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 0,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [],
+    "nemiche": [],
+    "resa": 0.05,
+    "nota": "Perenne: si secca benissimo per l'inverno.",
+    "col": {
+      "l1": "#5e8a4f",
+      "l2": "#476838"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "salvia",
+    "nome": "Salvia",
+    "arch": "cespuglio",
+    "d": 40,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 0,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "cavolo"
+    ],
+    "nemiche": [
+      "cetriolo"
+    ],
+    "resa": 0.05,
+    "nota": "Cespuglio perenne dalle foglie vellutate.",
+    "col": {
+      "l1": "#7e9a78",
+      "l2": "#5e7a5a"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "pastinaca",
+    "nome": "Pastinaca",
+    "arch": "piumosa",
+    "d": 35,
+    "dr": 45,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 120,
+    "mesi": [
+      3,
+      4,
+      8,
+      9
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 1,
+    "nota": "Dolce dopo il freddo; semina diretta e terreno profondo.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "radice_prezemolo",
+    "nome": "Prezzemolo da radice",
+    "arch": "piumosa",
+    "d": 30,
+    "dr": 40,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      3,
+      4,
+      8
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 0.7,
+    "nota": "Coltura tradizionale rumena: radice bianca aromatica per zuppe e ciorbe.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "sedano_rapa",
+    "nome": "Sedano rapa",
+    "arch": "piumosa",
+    "d": 35,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "alta",
+    "gg": 120,
+    "mesi": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 1.2,
+    "nota": "Radice globosa e profumata; vuole acqua costante e suolo ricco.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "rafano",
+    "nome": "Rafano",
+    "arch": "rosetta",
+    "d": 45,
+    "dr": 60,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 180,
+    "mesi": [
+      3,
+      4,
+      9,
+      10
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 0.8,
+    "nota": "Radice piccante molto usata in Romania; contenila perché è vigorosa.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "patata",
+    "nome": "Patata",
+    "arch": "cespuglio",
+    "d": 35,
+    "dr": 60,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 1.8,
+    "nota": "In serra anticipa il raccolto; rincalza quando gli steli crescono.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "patata_dolce",
+    "nome": "Patata dolce",
+    "arch": "rampicante",
+    "d": 45,
+    "dr": 90,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 120,
+    "mesi": [
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 1.5,
+    "nota": "Ama caldo stabile e suolo leggero; ideale in serra lunga.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "cipolla_rossa",
+    "nome": "Cipolla rossa",
+    "arch": "bulbo",
+    "d": 15,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 120,
+    "mesi": [
+      2,
+      3,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 0.25,
+    "nota": "Bulbo dolce e colorato; ottima per raccolti scalari.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "cipollotto",
+    "nome": "Cipollotto",
+    "arch": "bulbo",
+    "d": 8,
+    "dr": 20,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 0.08,
+    "nota": "Pronto rapidamente; raccogli giovane prima che ingrossi troppo.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "erba_cipollina",
+    "nome": "Erba cipollina",
+    "arch": "erbafine",
+    "d": 20,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 75,
+    "mesi": [
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.05,
+    "nota": "Aromatica perenne; taglia spesso per foglie tenere.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "loboda",
+    "nome": "Loboda",
+    "arch": "rosetta",
+    "d": 25,
+    "dr": 35,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 45,
+    "mesi": [
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.25,
+    "nota": "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "stevia_dolce",
+    "nome": "Stevia rumena",
+    "arch": "rosetta",
+    "d": 30,
+    "dr": 40,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 50,
+    "mesi": [
+      3,
+      4,
+      8,
+      9
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.3,
+    "nota": "Acetosa per minestre primaverili; raccogli foglie giovani.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "leustean",
+    "nome": "Levistico",
+    "arch": "cespuglio",
+    "d": 45,
+    "dr": 70,
+    "h": "alta",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      3,
+      4,
+      5,
+      9
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.15,
+    "nota": "Il profumo classico delle ciorbe rumene; perenne e vigoroso.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "dragoncello",
+    "nome": "Dragoncello",
+    "arch": "erbafine",
+    "d": 30,
+    "dr": 45,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 90,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.08,
+    "nota": "Aromatica fine per aceti e conserve; evita ristagni.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "menta",
+    "nome": "Menta",
+    "arch": "erbafine",
+    "d": 30,
+    "dr": 50,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "alta",
+    "gg": 60,
+    "mesi": [
+      3,
+      4,
+      5,
+      8
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "Molto vigorosa: meglio in vaso o area controllata.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "maggiorana",
+    "nome": "Maggiorana",
+    "arch": "erbafine",
+    "d": 25,
+    "dr": 35,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 75,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.05,
+    "nota": "Aromatica delicata; ama caldo, luce e terreno drenato.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "camomilla",
+    "nome": "Camomilla",
+    "arch": "erbafine",
+    "d": 25,
+    "dr": 35,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 70,
+    "mesi": [
+      3,
+      4,
+      9
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.04,
+    "nota": "Fiori per tisane; attira insetti utili e profuma la serra.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "mais_dolce",
+    "nome": "Mais dolce",
+    "arch": "frutto",
+    "d": 30,
+    "dr": 70,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "basilico",
+      "cipolla",
+      "prezzemolo"
+    ],
+    "nemiche": [],
+    "resa": 1,
+    "nota": "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
+    "col": {
+      "l1": "#3f7a3a",
+      "l2": "#2f5e2c",
+      "fr": "#e07a2f"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "tomatillo",
+    "nome": "Tomatillo",
+    "arch": "frutto",
+    "d": 50,
+    "dr": 80,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 95,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "basilico",
+      "cipolla",
+      "prezzemolo"
+    ],
+    "nemiche": [
+      "finocchio"
+    ],
+    "resa": 1.5,
+    "nota": "Serve almeno due piante per fruttificare bene; ottimo per salse.",
+    "col": {
+      "l1": "#3f7a3a",
+      "l2": "#2f5e2c",
+      "fr": "#e07a2f"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "physalis",
+    "nome": "Alchechengi",
+    "arch": "frutto",
+    "d": 45,
+    "dr": 70,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "basilico",
+      "cipolla",
+      "prezzemolo"
+    ],
+    "nemiche": [
+      "finocchio"
+    ],
+    "resa": 0.5,
+    "nota": "Frutti dolci in lanterna; in serra matura meglio.",
+    "col": {
+      "l1": "#3f7a3a",
+      "l2": "#2f5e2c",
+      "fr": "#e07a2f"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "cucamelon",
+    "nome": "Cucamelon",
+    "arch": "rampicante",
+    "d": 30,
+    "dr": 60,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 75,
+    "mesi": [
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "basilico",
+      "cipolla",
+      "prezzemolo"
+    ],
+    "nemiche": [
+      "finocchio"
+    ],
+    "resa": 0.5,
+    "nota": "Piccoli frutti croccanti; produttivo su rete in serra.",
+    "col": {
+      "l1": "#3f7a3a",
+      "l2": "#2f5e2c",
+      "fr": "#e07a2f"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "asparago",
+    "nome": "Asparago",
+    "arch": "piumosa",
+    "d": 40,
+    "dr": 80,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 730,
+    "mesi": [
+      3,
+      4
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.5,
+    "nota": "Perenne: richiede pazienza, ma produce per molti anni.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "carciofo",
+    "nome": "Carciofo",
+    "arch": "cespuglio",
+    "d": 80,
+    "dr": 100,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 180,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 1.2,
+    "nota": "Coltura grande e decorativa; proteggi dal gelo intenso.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "cardo",
+    "nome": "Cardo",
+    "arch": "rosetta",
+    "d": 60,
+    "dr": 90,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 150,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 1,
+    "nota": "Parente del carciofo; imbianchisci le coste prima del raccolto.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "crescione",
+    "nome": "Crescione",
+    "arch": "rosetta",
+    "d": 15,
+    "dr": 20,
+    "h": "bassa",
+    "sole": "mezzombra",
+    "acqua": "alta",
+    "gg": 30,
+    "mesi": [
+      3,
+      4,
+      5,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "mizuna",
+    "nome": "Mizuna",
+    "arch": "frastagliata",
+    "d": 20,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 35,
+    "mesi": [
+      3,
+      4,
+      5,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.18,
+    "nota": "Senape giapponese facile; foglie frastagliate per mix insalata.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "senape_foglia",
+    "nome": "Senape da foglia",
+    "arch": "frastagliata",
+    "d": 25,
+    "dr": 35,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 40,
+    "mesi": [
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.25,
+    "nota": "Foglie piccanti; semina in fresco per evitare fioritura precoce.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "tatsoi",
+    "nome": "Tatsoi",
+    "arch": "rosetta",
+    "d": 20,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 45,
+    "mesi": [
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.2,
+    "nota": "Rosetta compatta, molto resistente al freddo.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "cavolo_cinese",
+    "nome": "Cavolo cinese",
+    "arch": "brassica",
+    "d": 35,
+    "dr": 50,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "alta",
+    "gg": 65,
+    "mesi": [
+      3,
+      4,
+      8,
+      9
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.9,
+    "nota": "Forma un cespo tenero; proteggi da caldo e stress idrico.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "daikon",
+    "nome": "Daikon",
+    "arch": "rosetta",
+    "d": 25,
+    "dr": 40,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 0.5,
+    "nota": "Ravanello lungo: terreno profondo e raccolta prima che lignifichi.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "scorzonera",
+    "nome": "Scorzonera",
+    "arch": "rosetta",
+    "d": 25,
+    "dr": 35,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 150,
+    "mesi": [
+      3,
+      4
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 0.5,
+    "nota": "Radice nera lunga; richiede suolo leggero e profondo.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "topinambur",
+    "nome": "Topinambur",
+    "arch": "cespuglio",
+    "d": 50,
+    "dr": 90,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 180,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 2,
+    "nota": "Tubero rustico e produttivo; delimita lo spazio perché si espande.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "fava",
+    "nome": "Fava",
+    "arch": "cespuglio",
+    "d": 30,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      2,
+      3,
+      10,
+      11
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "mais_dolce"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio"
+    ],
+    "resa": 0.7,
+    "nota": "Legume precoce e resistente al fresco; migliora il terreno.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#2f6b3a",
+      "fl": "#f1d27a"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "soia_edamame",
+    "nome": "Soia edamame",
+    "arch": "cespuglio",
+    "d": 30,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 90,
+    "mesi": [
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "mais_dolce"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio"
+    ],
+    "resa": 0.6,
+    "nota": "Raccogli i baccelli verdi quando i semi sono pieni ma teneri.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#2f6b3a",
+      "fl": "#f1d27a"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "cece",
+    "nome": "Cece",
+    "arch": "cespuglio",
+    "d": 25,
+    "dr": 40,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 100,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "mais_dolce"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio"
+    ],
+    "resa": 0.35,
+    "nota": "Ama asciutto e caldo; non eccedere con acqua in serra.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#2f6b3a",
+      "fl": "#f1d27a"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "lenticchia",
+    "nome": "Lenticchia",
+    "arch": "cespuglio",
+    "d": 20,
+    "dr": 35,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 95,
+    "mesi": [
+      3,
+      4
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "mais_dolce"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio"
+    ],
+    "resa": 0.25,
+    "nota": "Piccolo legume rustico; adatto a bordure asciutte.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#2f6b3a",
+      "fl": "#f1d27a"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "fagiolo_borlotto",
+    "nome": "Fagiolo borlotto",
+    "arch": "rampicante",
+    "d": 30,
+    "dr": 60,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 95,
+    "mesi": [
+      4,
+      5,
+      6
+    ],
+    "amiche": [
+      "carota",
+      "cetriolo",
+      "mais_dolce"
+    ],
+    "nemiche": [
+      "cipolla",
+      "aglio"
+    ],
+    "resa": 0.8,
+    "nota": "Per baccelli freschi o granella; usa tutori robusti.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#2f6b3a",
+      "fl": "#f1d27a"
+    },
+    "tipo": "legume"
+  },
+  {
+    "id": "cavolo_rosso",
+    "nome": "Cavolo rosso",
+    "arch": "brassica",
+    "d": 45,
+    "dr": 60,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 110,
+    "mesi": [
+      2,
+      3,
+      4,
+      7,
+      8
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 1.5,
+    "nota": "Cespo compatto e colorato; ottimo per raccolti autunnali.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "cavolo_navone",
+    "nome": "Navone",
+    "arch": "brassica",
+    "d": 35,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 100,
+    "mesi": [
+      3,
+      4,
+      7,
+      8
+    ],
+    "amiche": [
+      "lattuga",
+      "cipolla",
+      "pisello"
+    ],
+    "nemiche": [],
+    "resa": 1,
+    "nota": "Radice grande e rustica; utile per autunno e inverno.",
+    "col": {
+      "l1": "#5f8b46",
+      "l2": "#3f6533",
+      "fr": "#c98242"
+    },
+    "tipo": "radice"
+  },
+  {
+    "id": "broccolo_rapa",
+    "nome": "Cime di rapa",
+    "arch": "frastagliata",
+    "d": 25,
+    "dr": 40,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 55,
+    "mesi": [
+      3,
+      4,
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.35,
+    "nota": "Raccogli cime e foglie prima della piena fioritura.",
+    "col": {
+      "l1": "#4f8a45",
+      "l2": "#376b34"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "shiso",
+    "nome": "Shiso",
+    "arch": "cespuglio",
+    "d": 30,
+    "dr": 45,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 70,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "pomodoro",
+      "cavolo",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.08,
+    "nota": "Aromatica asiatica profumata; bella anche in vaso in serra.",
+    "col": {
+      "l1": "#5a8a4f",
+      "l2": "#416b39"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "broccolo_romanesco",
+    "nome": "Broccolo romanesco",
+    "arch": "foglia",
+    "d": 50,
+    "dr": 60,
+    "h": "alta",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 75,
+    "mesi": [
+      2,
+      3,
+      7,
+      8
+    ],
+    "amiche": [
+      "carota",
+      "cipolla",
+      "sedano",
+      "lattuga"
+    ],
+    "nemiche": [
+      "pomodoro",
+      "peperone"
+    ],
+    "resa": 0.6,
+    "nota": "Varietà ornamentale di broccolo con testa a spirale. Sapore delicato.",
+    "col": {
+      "l1": "#7a9a6a",
+      "l2": "#5c7a4a"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "friggitello",
+    "nome": "Friggitello",
+    "arch": "frutto",
+    "d": 40,
+    "dr": 50,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 70,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "basilico",
+      "carota",
+      "cipolla"
+    ],
+    "nemiche": [
+      "finocchio"
+    ],
+    "resa": 0.8,
+    "nota": "Peperone dolce allungato tipico dell'Italia meridionale. Ottimo fritto.",
+    "col": {
+      "l1": "#4a8a3a",
+      "l2": "#366a28",
+      "fr": "#a8c850"
+    },
+    "tipo": "frutto"
+  },
+  {
+    "id": "agretti",
+    "nome": "Agretti",
+    "arch": "cespuglio",
+    "d": 15,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 45,
+    "mesi": [
+      2,
+      3,
+      4
+    ],
+    "amiche": [
+      "lattuga",
+      "spinaci",
+      "ravanello"
+    ],
+    "nemiche": [],
+    "resa": 0.15,
+    "nota": "Ortaggio primaverile tipico italiano. Si consuma lessato con olio.",
+    "col": {
+      "l1": "#4a7a3a",
+      "l2": "#366028"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "borragine",
+    "nome": "Borragine",
+    "arch": "cespuglio",
+    "d": 30,
+    "dr": 40,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 55,
+    "mesi": [
+      3,
+      4,
+      5,
+      9
+    ],
+    "amiche": [
+      "pomodoro",
+      "zucchina",
+      "fragola"
+    ],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "Fiori e foglie commestibili. Attira api e insetti utili. Ottima pianta companion.",
+    "col": {
+      "l1": "#4a7a54",
+      "l2": "#345a3c"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "catalogna",
+    "nome": "Catalogna",
+    "arch": "rosetta",
+    "d": 25,
+    "dr": 35,
+    "h": "media",
+    "sole": "pieno",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      7,
+      8,
+      9
+    ],
+    "amiche": [
+      "carota",
+      "lattuga",
+      "cipolla"
+    ],
+    "nemiche": [],
+    "resa": 0.35,
+    "nota": "Cicoria tipica romana. Le puntarelle (germogli centrali) si mangiano crude con acciughe.",
+    "col": {
+      "l1": "#6a8a5a",
+      "l2": "#4e6842"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "acetosa",
+    "nome": "Acetosa",
+    "arch": "rosetta",
+    "d": 30,
+    "dr": 40,
+    "h": "bassa",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 55,
+    "mesi": [
+      2,
+      3,
+      9
+    ],
+    "amiche": [
+      "fragola",
+      "cipolla",
+      "erba_cipollina"
+    ],
+    "nemiche": [],
+    "resa": 0.2,
+    "nota": "Foglie acidule usate in zuppe primaverili (borș cu macriș). Perenne.",
+    "col": {
+      "l1": "#5a8a4a",
+      "l2": "#426636"
+    },
+    "tipo": "foglia"
+  },
+  {
+    "id": "leurda",
+    "nome": "Leurda",
+    "arch": "cespuglio",
+    "d": 20,
+    "dr": 25,
+    "h": "bassa",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      8,
+      9,
+      10
+    ],
+    "amiche": [
+      "carota",
+      "barbabietola",
+      "fragola"
+    ],
+    "nemiche": [
+      "fagiolino",
+      "fagiolo"
+    ],
+    "resa": 0.15,
+    "nota": "Aglio selvatico con foglie commestibili. Tipico della cucina primaverile rumena.",
+    "col": {
+      "l1": "#4a8040",
+      "l2": "#346030"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "melissa",
+    "nome": "Melissa",
+    "arch": "cespuglio",
+    "d": 40,
+    "dr": 50,
+    "h": "media",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 60,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "pomodoro",
+      "zucchina",
+      "cetriolo"
+    ],
+    "nemiche": [],
+    "resa": 0.15,
+    "nota": "Aromatica perenne al profumo di limone. Ottima per tisane e in cucina.",
+    "col": {
+      "l1": "#7a9a5a",
+      "l2": "#5c7842"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "cerfoglio",
+    "nome": "Cerfoglio",
+    "arch": "frastagliata",
+    "d": 15,
+    "dr": 20,
+    "h": "bassa",
+    "sole": "mezzombra",
+    "acqua": "media",
+    "gg": 40,
+    "mesi": [
+      2,
+      3,
+      8,
+      9
+    ],
+    "amiche": [
+      "carota",
+      "ravanello",
+      "lattuga"
+    ],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "Aromatica delicata dal sapore erbaceo-aniceto. Si usa fresca, mai cotta.",
+    "col": {
+      "l1": "#6a9a5a",
+      "l2": "#4e7642"
+    },
+    "tipo": "aromatica"
+  },
+  {
+    "id": "cimbru",
+    "nome": "Cimbru",
+    "arch": "cespuglio",
+    "d": 25,
+    "dr": 30,
+    "h": "bassa",
+    "sole": "pieno",
+    "acqua": "bassa",
+    "gg": 65,
+    "mesi": [
+      3,
+      4,
+      5
+    ],
+    "amiche": [
+      "fagiolino",
+      "fagiolo",
+      "cipolla",
+      "carota"
+    ],
+    "nemiche": [],
+    "resa": 0.1,
+    "nota": "L'erba aromatica più usata in Romania: indispensabile per fagioli, sottaceti e sarmale.",
+    "col": {
+      "l1": "#6a9050",
+      "l2": "#4e6e3c"
+    },
+    "tipo": "aromatica"
+  }
+]

@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Area Riservata · Orto in Serra</title>
+    <!-- Configurazione Asset e Versione -->
+    <script>
+      window.SERRA_APP_VERSION = "2026-06-29-192";
+      window.SERRA_IS_LOCAL_DEV =
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1" ||
+        location.hostname === "0.0.0.0" ||
+        location.hostname === "::1" ||
+        location.hostname === "";
+      window.SERRA_ASSET_VERSION = window.SERRA_IS_LOCAL_DEV
+        ? String(Date.now())
+        : window.SERRA_APP_VERSION;
+      window.serraAsset = function (path) {
+        return path + "?v=" + window.SERRA_ASSET_VERSION;
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,600;9..144,0,800;9..144,1,300&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      document.write(
+        '<link rel="icon" href="' +
+          serraAsset("assets/img/icons/logo-192.png") +
+          '" type="image/png" />'
+      );
+    </script>
+    <!-- Fogli di stile -->
+    <script>
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/index.css") +
+          '" />'
+      );
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/theme.css") +
+          '" />'
+      );
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/account.css") +
+          '" />'
+      );
+    </script>
+    <!-- Script di gestione del tema -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem("serra-theme");
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Header e Navigazione -->
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="nav-brand" aria-label="Orto in Serra Home">
+          <span class="nav-brand-logo"
+            ><img src="assets/img/svg/logo.svg" alt=""
+          /></span>
+          <span class="nav-brand-copy">
+            <strong class="nav-brand-text">Orto in Serra</strong>
+            <small>Area Riservata</small>
+          </span>
+        </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+          <a href="index.html" class="nav-link">🏠 Home</a>
+          <a href="index.html#stagione" class="nav-link">🌿 Catalogo completo</a>
+          <a href="index.html#abbinamenti" class="nav-link">🤝 Abbinamenti</a>
+          <a href="configuratore.html" class="nav-link nav-link--configuratore">📐 Configuratore</a>
+          <a href="account.html" class="nav-link nav-link--current nav-link--account" id="navAccountBtn" aria-current="page">👤 Area Personale</a>
+        </nav>
+        <div class="nav-actions">
+          <!-- Toggle Tema -->
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Attiva modalità scura"
+            aria-pressed="false"
+            title="Cambia tema"
+          >
+            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
+            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+          </button>
+          <button
+            class="nav-menu-toggle"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Apri menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+
+
+    <!-- Contenuto Principale -->
+    <main class="account-container">
+      
+      <!-- SEZIONE 1: LOGIN E REGISTRAZIONE -->
+      <section id="authSection" class="auth-section card">
+        <div class="auth-tabs">
+          <button id="tabLogin" class="auth-tab active" onclick="switchAuthTab('login')">Accedi</button>
+          <button id="tabRegister" class="auth-tab" onclick="switchAuthTab('register')">Registrati</button>
+        </div>
+
+        <!-- Form Login -->
+        <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" placeholder="user@ortoinserra.it" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" required />
+          </div>
+          <div class="form-feedback error" id="loginError" hidden></div>
+          <button type="submit" class="btn btn-primary">Entra</button>
+          <div class="auth-hint">
+            <p><strong>Utenti di test pronti:</strong></p>
+            <ul>
+              <li>Cliente: <code>user@ortoinserra.it</code> / password: <code>password</code></li>
+              <li>Admin: <code>admin@ortoinserra.it</code> / password: <code>admin</code></li>
+            </ul>
+          </div>
+        </form>
+
+        <!-- Form Registrazione -->
+        <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)" hidden>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="regNome">Nome Completo</label>
+              <input type="text" id="regNome" placeholder="Mario Rossi" required />
+            </div>
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <input type="email" id="regEmail" placeholder="mario.rossi@esempio.it" required />
+            </div>
+            <div class="form-group">
+              <label for="regPassword">Password</label>
+              <input type="password" id="regPassword" placeholder="Minimo 6 caratteri" minlength="6" required />
+            </div>
+            <div class="form-group">
+              <label for="regTelefono">Telefono</label>
+              <input type="tel" id="regTelefono" placeholder="3331234567" required />
+            </div>
+            <div class="form-group span-2">
+              <label for="regIndirizzo">Indirizzo di Spedizione</label>
+              <input type="text" id="regIndirizzo" placeholder="Via Roma 12" required />
+            </div>
+            <div class="form-group">
+              <label for="regCitta">Città</label>
+              <input type="text" id="regCitta" placeholder="Milano" required />
+            </div>
+            <div class="form-group">
+              <label for="regCap">CAP</label>
+              <input type="text" id="regCap" placeholder="20121" maxlength="5" required />
+            </div>
+          </div>
+          <div class="form-feedback error" id="regError" hidden></div>
+          <button type="submit" class="btn btn-primary">Crea Account</button>
+        </form>
+      </section>
+
+      <!-- SEZIONE 2: CRUSCOTTO UTENTE -->
+      <section id="userDashboardSection" class="dashboard-section" hidden>
+        <!-- Banner Notifiche Stato Ordine -->
+        <div id="notificationBanner" class="notification-banner card" hidden>
+          <div class="notification-content">
+            <span class="notification-icon">🔔</span>
+            <div id="notificationMessage">Caricamento avvisi...</div>
+          </div>
+          <button class="btn btn-small btn-outline" onclick="handleDismissNotifications()">Segna come lette</button>
+        </div>
+
+        <div class="dashboard-header card">
+          <div class="profile-info">
+            <div class="profile-avatar">👤</div>
+            <div>
+              <h2 id="userNameTitle">Caricamento...</h2>
+              <p id="userEmailSub">utente@ortoinserra.it</p>
+            </div>
+          </div>
+          <button class="btn btn-outline" onclick="window.SerraAPI.logout()">Esci</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Modulo Dati Profilo -->
+          <div class="dashboard-card card">
+            <h3>Dati di Spedizione</h3>
+            <form id="profileForm" onsubmit="handleUpdateProfile(event)">
+              <div class="form-group">
+                <label for="profNome">Nome Completo</label>
+                <input type="text" id="profNome" required />
+              </div>
+              <div class="form-group">
+                <label for="profTelefono">Telefono</label>
+                <input type="tel" id="profTelefono" required />
+              </div>
+              <div class="form-group">
+                <label for="profIndirizzo">Indirizzo</label>
+                <input type="text" id="profIndirizzo" required />
+              </div>
+              <div class="form-grid-small">
+                <div class="form-group">
+                  <label for="profCitta">Città</label>
+                  <input type="text" id="profCitta" required />
+                </div>
+                <div class="form-group">
+                  <label for="profCap">CAP</label>
+                  <input type="text" id="profCap" maxlength="5" required />
+                </div>
+              </div>
+              <div class="form-feedback success" id="profileSuccess" hidden>Modifiche salvate con successo!</div>
+              <button type="submit" class="btn btn-outline btn-save">Salva modifiche</button>
+            </form>
+          </div>
+
+          <!-- Modulo Storico Ordini -->
+          <div class="dashboard-card card span-2-large">
+            <h3>I miei ordini di semi</h3>
+            <div class="table-responsive">
+              <table class="data-table" id="userOrdersTable">
+                <thead>
+                  <tr>
+                    <th>ID Ordine</th>
+                    <th>Data</th>
+                    <th>Prodotti</th>
+                    <th>Totale</th>
+                    <th>Stato</th>
+                    <th>Azioni</th>
+                  </tr>
+                </thead>
+                <tbody id="userOrdersList">
+                  <!-- Caricato via JS -->
+                </tbody>
+              </table>
+              <div class="empty-orders-note" id="emptyOrdersNote" hidden>
+                Non hai ancora effettuato ordini. Visita la <a href="index.html#stagione">Home</a> o il <a href="configuratore.html">Configuratore</a> per inserire semi nel carrello!
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEZIONE 3: CRUSCOTTO AMMINISTRATORE -->
+      <section id="adminDashboardSection" class="dashboard-section" hidden>
+        <div class="dashboard-header card admin-header">
+          <div class="profile-info">
+            <div class="profile-avatar">⚙️</div>
+            <div>
+              <h2>Pannello Amministratore</h2>
+              <p>Gestione Prodotti, Ordini e Listino prezzi</p>
+            </div>
+          </div>
+          <button class="btn btn-outline" onclick="window.SerraAPI.logout()">Esci</button>
+        </div>
+
+        <div class="admin-tabs">
+          <button id="btnTabAdminPlants" class="admin-tab active" onclick="switchAdminTab('plants')">Gestione Catalogo Piante</button>
+          <button id="btnTabAdminOrders" class="admin-tab" onclick="switchAdminTab('orders')">Ordini Ricevuti</button>
+          <button id="btnTabAdminUsers" class="admin-tab" onclick="switchAdminTab('users')">Gestione Utenti</button>
+          <button id="btnTabAdminBackup" class="admin-tab" onclick="switchAdminTab('backup')">Manutenzione Database</button>
+        </div>
+
+        <!-- Sotto-scheda 1: Gestione Piante -->
+        <div id="adminTabPlants" class="admin-tab-content">
+          <div class="admin-action-row">
+            <h3>Elenco Colture in Catalogo</h3>
+            <div class="admin-search-wrapper" style="display: flex; gap: 10px; align-items: center;">
+              <input type="text" id="adminPlantSearch" placeholder="Cerca coltura..." oninput="filterAdminPlants()" />
+              <button class="btn btn-primary" onclick="openPlantModal('new')">✚ Nuova Pianta</button>
+            </div>
+          </div>
+          <div class="table-responsive card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Visual</th>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Categoria</th>
+                  <th>Prezzo Pacchetto</th>
+                  <th>Semi/Conf</th>
+                  <th>Giorni Matur.</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="adminPlantsList">
+                <!-- Caricato via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sotto-scheda 2: Ordini Ricevuti -->
+        <div id="adminTabOrders" class="admin-tab-content" hidden>
+          <h3>Storico Ordini di tutti i Clienti</h3>
+          <div class="table-responsive card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID Ordine</th>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Elementi Ordinati</th>
+                  <th>Totale</th>
+                  <th>Stato Spedizione</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersList">
+                <!-- Caricato via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sotto-scheda 2b: Gestione Utenti -->
+        <div id="adminTabUsers" class="admin-tab-content" hidden>
+          <h3>Elenco Clienti Registrati</h3>
+          <div class="table-responsive card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Telefono</th>
+                  <th>Indirizzo Spedizione</th>
+                  <th>Ruolo</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersList">
+                <!-- Caricato via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sotto-scheda 3: Backup & Resets -->
+        <div id="adminTabBackup" class="admin-tab-content" hidden>
+          <h3>Amministrazione Database Locale</h3>
+          <div class="admin-backup-grid">
+            <div class="card">
+              <h4>Ripristina default</h4>
+              <p>Cancella tutte le modifiche apportate al catalogo delle piante e reimposta l'elenco predefinito iniziale dell'applicazione.</p>
+              <button class="btn btn-danger" onclick="resetCatalogToDefault()">Ripristina piante di fabbrica</button>
+            </div>
+            <div class="card">
+              <h4>Esporta backup database</h4>
+              <p>Scarica un file JSON contenente lo stato completo del tuo catalogo piante locale.</p>
+              <button class="btn btn-outline" onclick="exportDatabaseJson()">Esporta JSON</button>
+            </div>
+            <div class="card">
+              <h4>Stato del Server Locale</h4>
+              <p id="adminServerDetails">Verifica dello stato della connessione in corso...</p>
+            </div>
+            <div class="card">
+              <h4>Statistiche Database & Reset</h4>
+              <p id="adminStatsText">Caricamento statistiche in corso...</p>
+              <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="btn btn-outline btn-danger btn-small" onclick="handleClearOrders()">Azzera Ordini</button>
+                <button class="btn btn-outline btn-danger btn-small" onclick="handleClearUsers()">Azzera Clienti</button>
+              </div>
+            </div>
+            
+            <!-- Grafici delle statistiche di vendita -->
+            <div class="card span-2-large" style="grid-column: span 2; margin-top: 10px;">
+              <h4>Grafici e Report Vendite</h4>
+              <p style="margin-bottom: 20px;">Analisi dell'andamento dei ricavi e delle colture più richieste dai clienti.</p>
+              <div class="charts-container">
+                <div class="chart-box">
+                  <h5>Ricavi per Categoria di Coltura (€)</h5>
+                  <div id="revenueChartContainer" class="svg-chart-wrapper"></div>
+                </div>
+                <div class="chart-box">
+                  <h5>Top 5 Varietà di Semi Ordinati (Bustine Totali)</h5>
+                  <div id="topCropsChartContainer" class="svg-chart-wrapper"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- MODALE EDIT/CREATE PIANTA (ADMIN) -->
+    <div id="plantModal" class="modal-overlay" hidden>
+      <div class="modal-card card">
+        <h3 id="plantModalTitle">Modifica Coltura</h3>
+        <form id="plantForm" onsubmit="handleSavePlant(event)">
+          <input type="hidden" id="editPlantAction" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="editPlantId">ID Pianta (univoco, minuscolo)</label>
+              <input type="text" id="editPlantId" placeholder="pomodoro_ciliegino" required />
+            </div>
+            <div class="form-group">
+              <label for="editPlantNome">Nome Visualizzato</label>
+              <input type="text" id="editPlantNome" placeholder="Pomodoro Ciliegino" required />
+            </div>
+            <div class="form-group">
+              <label for="editPlantCategory">Categoria</label>
+              <select id="editPlantCategory" required>
+                <option value="frutto">Frutto</option>
+                <option value="foglia">Foglia</option>
+                <option value="radice">Radice</option>
+                <option value="legume">Legume</option>
+                <option value="aromatica">Aromatica</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPlantEmoji">Emoji di backup (es: 🍅)</label>
+              <input type="text" id="editPlantEmoji" placeholder="🍅" required />
+            </div>
+            <div class="form-group">
+              <label for="editPlantFoto">Foto Reale (Nome file o URL)</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="editPlantFoto" placeholder="pomodoro.webp" style="flex: 1;" />
+                <div class="modal-photo-preview-container">
+                  <img id="editPlantFotoPreview" src="assets/img/svg/logo.svg" alt="Preview" onerror="this.src='assets/img/svg/logo.svg'" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="editPlantPrice">Prezzo Busta (€)</label>
+              <input type="number" id="editPlantPrice" step="0.1" min="0.1" placeholder="3.5" required />
+            </div>
+            <div class="form-group">
+              <label for="editPlantSeeds">Semi per busta</label>
+              <input type="number" id="editPlantSeeds" min="1" placeholder="20" required />
+            </div>
+            <div class="form-group">
+              <label for="editPlantMaturity">Giorni di crescita</label>
+              <input type="number" id="editPlantMaturity" min="1" placeholder="90" required />
+            </div>
+            <div class="form-group">
+              <label for="editPlantSpacing">Distanza di semina (cm)</label>
+              <input type="number" id="editPlantSpacing" min="1" placeholder="50" required />
+            </div>
+            <div class="form-group span-2">
+              <label for="editPlantMonths">Mesi di semina in serra (seleziona più mesi tenendo premuto Ctrl/Cmd)</label>
+              <select id="editPlantMonths" multiple required style="height: 120px;">
+                <option value="1">Gennaio</option>
+                <option value="2">Febbraio</option>
+                <option value="3">Marzo</option>
+                <option value="4">Aprile</option>
+                <option value="5">Maggio</option>
+                <option value="6">Giugno</option>
+                <option value="7">Luglio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Settembre</option>
+                <option value="10">Ottobre</option>
+                <option value="11">Novembre</option>
+                <option value="12">Dicembre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPlantAmiche">Piante Amiche (Consociazioni compatibili - Ctrl/Cmd)</label>
+              <select id="editPlantAmiche" multiple style="height: 120px;"></select>
+            </div>
+            <div class="form-group">
+              <label for="editPlantNemiche">Piante Nemiche (Consociazioni incompatibili - Ctrl/Cmd)</label>
+              <select id="editPlantNemiche" multiple style="height: 120px;"></select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline" onclick="closePlantModal()">Annulla</button>
+            <button type="submit" class="btn btn-primary">Salva nel catalogo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer Botanico -->
+    <footer class="footer-botanico">
+      <div class="footer-plant-strip">
+        <div class="footer-plant-row">
+          <span class="footer-plant-icon">🍅</span>
+          <span class="footer-plant-icon">🫑</span>
+          <span class="footer-plant-icon">🍆</span>
+          <span class="footer-plant-icon">🥒</span>
+          <span class="footer-plant-icon">🥬</span>
+          <span class="footer-plant-icon">🥦</span>
+          <span class="footer-plant-icon">🧅</span>
+          <span class="footer-plant-icon">🥕</span>
+          <span class="footer-plant-icon">🥔</span>
+          <span class="footer-plant-icon">🫘</span>
+          <span class="footer-plant-icon">🫛</span>
+          <span class="footer-plant-icon">🌽</span>
+          <span class="footer-plant-icon">🍅</span>
+          <span class="footer-plant-icon">🫑</span>
+          <span class="footer-plant-icon">🍆</span>
+          <span class="footer-plant-icon">🥒</span>
+          <span class="footer-plant-icon">🥬</span>
+          <span class="footer-plant-icon">🥦</span>
+          <span class="footer-plant-icon">🧅</span>
+          <span class="footer-plant-icon">🥕</span>
+          <span class="footer-plant-icon">🥔</span>
+          <span class="footer-plant-icon">🫘</span>
+          <span class="footer-plant-icon">🫛</span>
+          <span class="footer-plant-icon">🌽</span>
+        </div>
+      </div>
+      <div class="footer-main">
+        <div class="footer-brand-col">
+          <div class="footer-logo-row">
+            <img class="footer-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra" />
+            <span class="footer-brand-name">Orto in Serra</span>
+          </div>
+          <div class="footer-motto">"Pianta con cura, raccogli con gioia."</div>
+          <div class="footer-social">
+            <a href="#" title="Instagram" aria-label="Instagram"><img src="assets/img/svg/icon-instagram.svg" alt="" class="footer-social-icon" /></a>
+            <a href="#" title="Facebook" aria-label="Facebook"><img src="assets/img/svg/icon-facebook.svg" alt="" class="footer-social-icon" /></a>
+            <a href="#" title="YouTube" aria-label="YouTube"><img src="assets/img/svg/icon-youtube.svg" alt="" class="footer-social-icon" /></a>
+          </div>
+          <div class="footer-tip-inline">
+            <div class="footer-tip-kicker">Consiglio del mese</div>
+            <div class="footer-tip-text">Annaffia alla base, mai sulle foglie: previeni l'oidio.</div>
+          </div>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-nav-title">Esplora</div>
+          <ul class="footer-nav-list">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="configuratore.html">📐 Configuratore</a></li>
+            <li><a href="index.html#abbinamenti">🌿 Abbinamenti</a></li>
+            <li><a href="index.html#kit">📦 Kit del mese</a></li>
+            <li><a href="index.html#contatti">✉️ Contatti</a></li>
+            <li><a href="account.html">👤 Area Personale</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-legal-title">Legale</div>
+          <ul class="footer-legal-list">
+            <li><a href="#" onclick="return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="return false;">Cookie Policy</a></li>
+            <li><a href="#" onclick="return false;">Termini di Servizio</a></li>
+          </ul>
+          <div class="footer-support-block">
+            <div class="footer-nav-title">Supporto</div>
+            <ul class="footer-legal-list">
+              <li><a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a></li>
+              <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-company-info">
+          Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023 Impruneta (FI)
+        </div>
+        <div class="footer-gdpr-copy">
+          © 2026 Orto in Serra · Tutti i diritti riservati
+        </div>
+      </div>
+    </footer>
+
+    <!-- Contenitore Nascosto per Stampa Ricevuta (A4) -->
+    <div id="invoicePrintContainer" class="invoice-print-section"></div>
+
+    <!-- Script della pagina -->
+    <script>
+      document.write(
+        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
+      );
+      document.write(
+        '<script src="' + serraAsset("assets/js/account.js") + '"><\/script>'
+      );
+    </script>
+  </body>
+</html>

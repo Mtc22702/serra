@@ -314,6 +314,16 @@ const PHOTO_MAP = {
 
 // Risorse visive
 function photoSrc(id) {
+  const p = (window.PLANTS || []).find(x => x.id === id);
+  if (p && p.foto) {
+    if (p.foto.startsWith("http://") || p.foto.startsWith("https://") || p.foto.startsWith("data:")) {
+      return p.foto;
+    }
+    if (p.foto.includes("/")) {
+      return p.foto;
+    }
+    return `assets/img/photo/${p.foto}`;
+  }
   return `assets/img/photo/${PHOTO_MAP[id] || id + ".webp"}`;
 }
 const FRUIT_EMOJI = {

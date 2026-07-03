@@ -634,7 +634,20 @@ function updateConfCartUI() {
       .map(({ id, bustine }) => {
         const p = BYID[id];
         if (!p) return "";
-        const photo = PLANT_PHOTOS[id] || "";
+        let photo = "";
+        if (p.foto) {
+          if (p.foto.startsWith("http://") || p.foto.startsWith("https://") || p.foto.startsWith("data:")) {
+            photo = p.foto;
+          } else if (p.foto.includes("/")) {
+            photo = p.foto;
+          } else {
+            photo = `assets/img/photo/${p.foto}`;
+          }
+        } else if (PLANT_PHOTOS[id]) {
+          photo = PLANT_PHOTOS[id];
+        } else {
+          photo = `assets/img/photo/${id}.webp`;
+        }
         const emoji = FRUIT_EMOJI[id] || "🌱";
         const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
         const bustLabel =
@@ -722,24 +735,51 @@ function showConfCartNudge(count) {
 
 // Mostra il riepilogo ordine all'utente
 function alertConfCheckout() {
-  const lines = confCart
-    .map(({ id, bustine }) => {
-      const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
-      const pd = PACK_DATA[id] || { price: 2.5 };
-      const b =
-        bustine === 1
-          ? tx("cart.pack_one")
-          : tx("cart.pack_many", { count: bustine });
-      return `- ${nome}: ${b} × ${formatMoney(pd.price)} = ${formatMoney(bustine * pd.price)}`;
-    })
-    .join("\n");
-  const total = formatMoney(
-    confCart.reduce(
-      (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
-      0
-    )
+  if (!confCart.length) return;
+
+  // Controlla se l'utente è autenticato
+  const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
+  if (!user) {
+    alert("Per completare l'acquisto ed inviare la richiesta dei semi della tua serra, devi prima accedere o registrarti alla tua Area Personale.");
+    window.location.href = "account.html";
+    return;
+  }
+
+  const orderItems = confCart.map(({ id, bustine }) => {
+    const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
+    const price = PACK_DATA[id]?.price ?? 2.5;
+    return {
+      id,
+      nome,
+      bustine,
+      prezzo: price
+    };
+  });
+  const totalVal = confCart.reduce(
+    (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
+    0
   );
-  alert(tx("cart.checkout_msg", { lines, total }));
+
+  window.SerraAPI.getOrders().then(orders => {
+    const newOrder = {
+      id: "ORD-" + Math.floor(10000 + Math.random() * 90000),
+      email: user.email,
+      date: new Date().toISOString(),
+      items: orderItems,
+      total: totalVal,
+      status: "In elaborazione"
+    };
+    orders.push(newOrder);
+    window.SerraAPI.saveOrders(orders).then(() => {
+      // Svuota il carrello del configuratore dopo l'acquisto
+      confCart = [];
+      if (typeof updateConfCartUI === "function") {
+        updateConfCartUI();
+      }
+      alert(`Ordine ${newOrder.id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.`);
+      window.location.href = "account.html";
+    });
+  });
 }
 
 // Sincronizzazione lingua
