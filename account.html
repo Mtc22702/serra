@@ -79,13 +79,44 @@
           </span>
         </a>
         <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
-          <a href="index.html" class="nav-link" data-i18n-acc="nav.home">🏠 Home</a>
-          <a href="index.html#stagione" class="nav-link" data-i18n-acc="nav.catalog">🌿 Catalogo completo</a>
-          <a href="index.html#abbinamenti" class="nav-link" data-i18n-acc="nav.abbinamenti">🤝 Abbinamenti</a>
-          <a href="index.html#kit" class="nav-link" data-i18n-acc="nav.kit">📦 Kit del mese</a>
-          <a href="configuratore.html" class="nav-link nav-link--configuratore" data-i18n-acc="nav.configuratore">📐 Configuratore</a>
-          <a href="index.html#contatti" class="nav-link" data-i18n-acc="nav.contatti">✉️ Contatti</a>
-          <a href="account.html" class="nav-link nav-link--current nav-link--account" id="navAccountBtn" aria-current="page" data-i18n-acc="nav.account">👤 Area Personale</a>
+          <a href="index.html" class="nav-link" data-i18n-acc="nav.home"
+            >🏠 Home</a
+          >
+          <a
+            href="index.html#stagione"
+            class="nav-link"
+            data-i18n-acc="nav.catalog"
+            >🌿 Catalogo completo</a
+          >
+          <a
+            href="index.html#abbinamenti"
+            class="nav-link"
+            data-i18n-acc="nav.abbinamenti"
+            >🤝 Abbinamenti</a
+          >
+          <a href="index.html#kit" class="nav-link" data-i18n-acc="nav.kit"
+            >📦 Kit del mese</a
+          >
+          <a
+            href="configuratore.html"
+            class="nav-link nav-link--configuratore"
+            data-i18n-acc="nav.configuratore"
+            >📐 Configuratore</a
+          >
+          <a
+            href="index.html#contatti"
+            class="nav-link"
+            data-i18n-acc="nav.contatti"
+            >✉️ Contatti</a
+          >
+          <a
+            href="account.html"
+            class="nav-link nav-link--current nav-link--account"
+            id="navAccountBtn"
+            aria-current="page"
+            data-i18n-acc="nav.account"
+            >👤 Area Personale</a
+          >
         </nav>
         <div class="nav-actions">
           <button
@@ -107,8 +138,12 @@
             aria-pressed="false"
             title="Cambia tema"
           >
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
+              >☾</span
+            >
+            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
+              >☀</span
+            >
           </button>
           <div class="nav-lang">
             <select
@@ -126,68 +161,149 @@
             aria-label="Apri carrello"
           >
             <span class="cart-icon" aria-hidden="true">🛒</span>
-            <span class="cart-label" data-i18n-acc="nav.carrello">Carrello</span>
+            <span class="cart-label" data-i18n-acc="nav.carrello"
+              >Carrello</span
+            >
             <span class="cart-count" id="cartCount">0</span>
           </button>
         </div>
       </div>
     </header>
 
-
-
     <!-- Contenuto Principale -->
     <main class="account-container">
-      
       <!-- SEZIONE 1: LOGIN E REGISTRAZIONE -->
       <section id="authSection" class="auth-section card">
         <div class="auth-tabs">
-          <button id="tabLogin" class="auth-tab active" onclick="switchAuthTab('login')" data-i18n-acc="auth.title_login">Accedi</button>
-          <button id="tabRegister" class="auth-tab" onclick="switchAuthTab('register')" data-i18n-acc="auth.title_register">Registrati</button>
+          <button
+            id="tabLogin"
+            class="auth-tab active"
+            onclick="switchAuthTab('login')"
+            data-i18n-acc="auth.title_login"
+          >
+            Accedi
+          </button>
+          <button
+            id="tabRegister"
+            class="auth-tab"
+            onclick="switchAuthTab('register')"
+            data-i18n-acc="auth.title_register"
+          >
+            Registrati
+          </button>
         </div>
 
         <!-- Form Login -->
         <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
           <div class="form-group">
             <label for="loginEmail" data-i18n-acc="auth.email">Email</label>
-            <input type="email" id="loginEmail" placeholder="user@ortoinserra.it" required />
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="user@ortoinserra.it"
+              required
+            />
           </div>
           <div class="form-group">
-            <label for="loginPassword" data-i18n-acc="auth.password">Password</label>
-            <input type="password" id="loginPassword" placeholder="••••••••" required />
+            <label for="loginPassword" data-i18n-acc="auth.password"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="••••••••"
+              required
+            />
           </div>
           <div class="form-feedback error" id="loginError" hidden></div>
-          <button type="submit" class="btn btn-primary" data-i18n-acc="auth.login_btn">Entra</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            data-i18n-acc="auth.login_btn"
+          >
+            Entra
+          </button>
           <div class="auth-hint">
-            <p><strong data-i18n-acc="auth.test_users">Utenti di test pronti:</strong></p>
+            <p>
+              <strong data-i18n-acc="auth.test_users"
+                >Utenti di test pronti:</strong
+              >
+            </p>
             <ul>
-              <li><span data-i18n-acc="auth.test_customer">Cliente:</span> <code>user@ortoinserra.it</code> / password: <code>password</code></li>
-              <li><span data-i18n-acc="auth.test_admin">Amministratore:</span> <code>admin@ortoinserra.it</code> / password: <code>admin</code></li>
+              <li>
+                <span data-i18n-acc="auth.test_customer">Cliente:</span>
+                <code>user@ortoinserra.it</code> / password:
+                <code>password</code>
+              </li>
+              <li>
+                <span data-i18n-acc="auth.test_admin">Amministratore:</span>
+                <code>admin@ortoinserra.it</code> / password: <code>admin</code>
+              </li>
             </ul>
           </div>
         </form>
 
         <!-- Form Registrazione -->
-        <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)" hidden>
+        <form
+          id="registerForm"
+          class="auth-form"
+          onsubmit="handleRegister(event)"
+          hidden
+        >
           <div class="form-grid">
             <div class="form-group">
-              <label for="regNome" data-i18n-acc="auth.name">Nome Completo</label>
-              <input type="text" id="regNome" placeholder="Mario Rossi" required />
+              <label for="regNome" data-i18n-acc="auth.name"
+                >Nome Completo</label
+              >
+              <input
+                type="text"
+                id="regNome"
+                placeholder="Mario Rossi"
+                required
+              />
             </div>
             <div class="form-group">
               <label for="regEmail" data-i18n-acc="auth.email">Email</label>
-              <input type="email" id="regEmail" placeholder="mario.rossi@esempio.it" required />
+              <input
+                type="email"
+                id="regEmail"
+                placeholder="mario.rossi@esempio.it"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="regPassword" data-i18n-acc="auth.password">Password</label>
-              <input type="password" id="regPassword" placeholder="Minimo 6 caratteri" minlength="6" required />
+              <label for="regPassword" data-i18n-acc="auth.password"
+                >Password</label
+              >
+              <input
+                type="password"
+                id="regPassword"
+                placeholder="Minimo 6 caratteri"
+                minlength="6"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="regTelefono" data-i18n-acc="auth.phone">Telefono</label>
-              <input type="tel" id="regTelefono" placeholder="3331234567" required />
+              <label for="regTelefono" data-i18n-acc="auth.phone"
+                >Telefono</label
+              >
+              <input
+                type="tel"
+                id="regTelefono"
+                placeholder="3331234567"
+                required
+              />
             </div>
             <div class="form-group span-2">
-              <label for="regIndirizzo" data-i18n-acc="auth.address">Indirizzo di Spedizione</label>
-              <input type="text" id="regIndirizzo" placeholder="Via Roma 12" required />
+              <label for="regIndirizzo" data-i18n-acc="auth.address"
+                >Indirizzo di Spedizione</label
+              >
+              <input
+                type="text"
+                id="regIndirizzo"
+                placeholder="Via Roma 12"
+                required
+              />
             </div>
             <div class="form-group">
               <label for="regCitta" data-i18n-acc="auth.city">Città</label>
@@ -195,11 +311,23 @@
             </div>
             <div class="form-group">
               <label for="regCap" data-i18n-acc="auth.cap">CAP</label>
-              <input type="text" id="regCap" placeholder="20121" maxlength="5" required />
+              <input
+                type="text"
+                id="regCap"
+                placeholder="20121"
+                maxlength="5"
+                required
+              />
             </div>
           </div>
           <div class="form-feedback error" id="regError" hidden></div>
-          <button type="submit" class="btn btn-primary" data-i18n-acc="auth.register_btn">Crea Account</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            data-i18n-acc="auth.register_btn"
+          >
+            Crea Account
+          </button>
         </form>
       </section>
 
@@ -209,9 +337,17 @@
         <div id="notificationBanner" class="notification-banner card" hidden>
           <div class="notification-content">
             <span class="notification-icon">🔔</span>
-            <div id="notificationMessage" data-i18n-acc="dash.notif_loading">Caricamento avvisi...</div>
+            <div id="notificationMessage" data-i18n-acc="dash.notif_loading">
+              Caricamento avvisi...
+            </div>
           </div>
-          <button class="btn btn-small btn-outline" onclick="handleDismissNotifications()" data-i18n-acc="dash.notif_dismiss">Segna come lette</button>
+          <button
+            class="btn btn-small btn-outline"
+            onclick="handleDismissNotifications()"
+            data-i18n-acc="dash.notif_dismiss"
+          >
+            Segna come lette
+          </button>
         </div>
 
         <div class="dashboard-header card">
@@ -222,7 +358,13 @@
               <p id="userEmailSub">utente@ortoinserra.it</p>
             </div>
           </div>
-          <button class="btn btn-outline" onclick="window.SerraAPI.logout()" data-i18n-acc="dash.logout">Esci</button>
+          <button
+            class="btn btn-outline"
+            onclick="window.SerraAPI.logout()"
+            data-i18n-acc="dash.logout"
+          >
+            Esci
+          </button>
         </div>
 
         <div class="dashboard-grid">
@@ -231,15 +373,21 @@
             <h3 data-i18n-acc="dash.title">Dati di Spedizione</h3>
             <form id="profileForm" onsubmit="handleUpdateProfile(event)">
               <div class="form-group">
-                <label for="profNome" data-i18n-acc="auth.name">Nome Completo</label>
+                <label for="profNome" data-i18n-acc="auth.name"
+                  >Nome Completo</label
+                >
                 <input type="text" id="profNome" required />
               </div>
               <div class="form-group">
-                <label for="profTelefono" data-i18n-acc="auth.phone">Telefono</label>
+                <label for="profTelefono" data-i18n-acc="auth.phone"
+                  >Telefono</label
+                >
                 <input type="tel" id="profTelefono" required />
               </div>
               <div class="form-group">
-                <label for="profIndirizzo" data-i18n-acc="auth.address">Indirizzo</label>
+                <label for="profIndirizzo" data-i18n-acc="auth.address"
+                  >Indirizzo</label
+                >
                 <input type="text" id="profIndirizzo" required />
               </div>
               <div class="form-grid-small">
@@ -252,8 +400,21 @@
                   <input type="text" id="profCap" maxlength="5" required />
                 </div>
               </div>
-              <div class="form-feedback success" id="profileSuccess" data-i18n-acc="dash.profile_saved" hidden>Modifiche salvate con successo!</div>
-              <button type="submit" class="btn btn-outline btn-save" data-i18n-acc="dash.save_btn">Salva modifiche</button>
+              <div
+                class="form-feedback success"
+                id="profileSuccess"
+                data-i18n-acc="dash.profile_saved"
+                hidden
+              >
+                Modifiche salvate con successo!
+              </div>
+              <button
+                type="submit"
+                class="btn btn-outline btn-save"
+                data-i18n-acc="dash.save_btn"
+              >
+                Salva modifiche
+              </button>
             </form>
           </div>
 
@@ -276,8 +437,16 @@
                   <!-- Caricato via JS -->
                 </tbody>
               </table>
-              <div class="empty-orders-note" id="emptyOrdersNote" data-i18n-acc="dash.empty_orders" hidden>
-                Non hai ancora effettuato ordini. Visita la <a href="index.html#stagione">Home</a> o il <a href="configuratore.html">Configuratore</a> per inserire semi nel carrello!
+              <div
+                class="empty-orders-note"
+                id="emptyOrdersNote"
+                data-i18n-acc="dash.empty_orders"
+                hidden
+              >
+                Non hai ancora effettuato ordini. Visita la
+                <a href="index.html#stagione">Home</a> o il
+                <a href="configuratore.html">Configuratore</a> per inserire semi
+                nel carrello!
               </div>
             </div>
           </div>
@@ -291,26 +460,79 @@
             <div class="profile-avatar">⚙️</div>
             <div>
               <h2 data-i18n-acc="admin.panel_title">Pannello Amministratore</h2>
-              <p data-i18n-acc="admin.panel_sub">Gestione Prodotti, Ordini e Listino prezzi</p>
+              <p data-i18n-acc="admin.panel_sub">
+                Gestione Prodotti, Ordini e Listino prezzi
+              </p>
             </div>
           </div>
-          <button class="btn btn-outline" onclick="window.SerraAPI.logout()" data-i18n-acc="dash.logout">Esci</button>
+          <button
+            class="btn btn-outline"
+            onclick="window.SerraAPI.logout()"
+            data-i18n-acc="dash.logout"
+          >
+            Esci
+          </button>
         </div>
 
         <div class="admin-tabs">
-          <button id="btnTabAdminPlants" class="admin-tab active" onclick="switchAdminTab('plants')" data-i18n-acc="admin.tab_plants">Gestione Catalogo Piante</button>
-          <button id="btnTabAdminOrders" class="admin-tab" onclick="switchAdminTab('orders')" data-i18n-acc="admin.tab_orders">Ordini Ricevuti</button>
-          <button id="btnTabAdminUsers" class="admin-tab" onclick="switchAdminTab('users')" data-i18n-acc="admin.tab_users">Gestione Utenti</button>
-          <button id="btnTabAdminBackup" class="admin-tab" onclick="switchAdminTab('backup')" data-i18n-acc="admin.tab_backup">Manutenzione Database</button>
+          <button
+            id="btnTabAdminPlants"
+            class="admin-tab active"
+            onclick="switchAdminTab('plants')"
+            data-i18n-acc="admin.tab_plants"
+          >
+            Gestione Catalogo Piante
+          </button>
+          <button
+            id="btnTabAdminOrders"
+            class="admin-tab"
+            onclick="switchAdminTab('orders')"
+            data-i18n-acc="admin.tab_orders"
+          >
+            Ordini Ricevuti
+          </button>
+          <button
+            id="btnTabAdminUsers"
+            class="admin-tab"
+            onclick="switchAdminTab('users')"
+            data-i18n-acc="admin.tab_users"
+          >
+            Gestione Utenti
+          </button>
+          <button
+            id="btnTabAdminBackup"
+            class="admin-tab"
+            onclick="switchAdminTab('backup')"
+            data-i18n-acc="admin.tab_backup"
+          >
+            Manutenzione Database
+          </button>
         </div>
 
         <!-- Sotto-scheda 1: Gestione Piante -->
         <div id="adminTabPlants" class="admin-tab-content">
           <div class="admin-action-row">
-            <h3 data-i18n-acc="admin.catalog_list_title">Elenco Colture in Catalogo</h3>
-            <div class="admin-search-wrapper" style="display: flex; gap: 10px; align-items: center;">
-              <input type="text" id="adminPlantSearch" placeholder="Cerca coltura..." data-i18n-acc-placeholder="admin.search_placeholder" oninput="filterAdminPlants()" />
-              <button class="btn btn-primary" onclick="openPlantModal('new')" data-i18n-acc="admin.add_plant_btn">✚ Nuova Pianta</button>
+            <h3 data-i18n-acc="admin.catalog_list_title">
+              Elenco Colture in Catalogo
+            </h3>
+            <div
+              class="admin-search-wrapper"
+              style="display: flex; gap: 10px; align-items: center"
+            >
+              <input
+                type="text"
+                id="adminPlantSearch"
+                placeholder="Cerca coltura..."
+                data-i18n-acc-placeholder="admin.search_placeholder"
+                oninput="filterAdminPlants()"
+              />
+              <button
+                class="btn btn-primary"
+                onclick="openPlantModal('new')"
+                data-i18n-acc="admin.add_plant_btn"
+              >
+                ✚ Nuova Pianta
+              </button>
             </div>
           </div>
           <div class="table-responsive card">
@@ -336,7 +558,9 @@
 
         <!-- Sotto-scheda 2: Ordini Ricevuti -->
         <div id="adminTabOrders" class="admin-tab-content" hidden>
-          <h3 data-i18n-acc="admin.orders_title">Storico Ordini di tutti i Clienti</h3>
+          <h3 data-i18n-acc="admin.orders_title">
+            Storico Ordini di tutti i Clienti
+          </h3>
           <div class="table-responsive card">
             <table class="data-table">
               <thead>
@@ -367,7 +591,9 @@
                   <th data-i18n-acc="admin.users_name">Nome</th>
                   <th data-i18n-acc="admin.users_email">Email</th>
                   <th data-i18n-acc="admin.users_phone">Telefono</th>
-                  <th data-i18n-acc="admin.users_address">Indirizzo Spedizione</th>
+                  <th data-i18n-acc="admin.users_address">
+                    Indirizzo Spedizione
+                  </th>
                   <th data-i18n-acc="admin.users_role">Ruolo</th>
                   <th data-i18n-acc="admin.table_actions">Azioni</th>
                 </tr>
@@ -381,43 +607,98 @@
 
         <!-- Sotto-scheda 3: Backup & Resets -->
         <div id="adminTabBackup" class="admin-tab-content" hidden>
-          <h3 data-i18n-acc="admin.stats_title">Amministrazione Database Locale</h3>
+          <h3 data-i18n-acc="admin.stats_title">
+            Amministrazione Database Locale
+          </h3>
           <div class="admin-backup-grid">
             <div class="card">
               <h4 data-i18n-acc="admin.reset_title">Ripristina default</h4>
-              <p data-i18n-acc="admin.reset_desc">Cancella tutte le modifiche apportate al catalogo delle piante e reimposta l'elenco predefinito iniziale dell'applicazione.</p>
-              <button class="btn btn-danger" onclick="resetCatalogToDefault()" data-i18n-acc="admin.reset_catalog">Ripristina piante di fabbrica</button>
+              <p data-i18n-acc="admin.reset_desc">
+                Cancella tutte le modifiche apportate al catalogo delle piante e
+                reimposta l'elenco predefinito iniziale dell'applicazione.
+              </p>
+              <button
+                class="btn btn-danger"
+                onclick="resetCatalogToDefault()"
+                data-i18n-acc="admin.reset_catalog"
+              >
+                Ripristina piante di fabbrica
+              </button>
             </div>
             <div class="card">
-              <h4 data-i18n-acc="admin.export_title">Esporta backup database</h4>
-              <p data-i18n-acc="admin.export_desc">Scarica un file JSON contenente lo stato completo del tuo catalogo piante locale.</p>
-              <button class="btn btn-outline" onclick="exportDatabaseJson()" data-i18n-acc="admin.export_db">Esporta JSON</button>
+              <h4 data-i18n-acc="admin.export_title">
+                Esporta backup database
+              </h4>
+              <p data-i18n-acc="admin.export_desc">
+                Scarica un file JSON contenente lo stato completo del tuo
+                catalogo piante locale.
+              </p>
+              <button
+                class="btn btn-outline"
+                onclick="exportDatabaseJson()"
+                data-i18n-acc="admin.export_db"
+              >
+                Esporta JSON
+              </button>
             </div>
             <div class="card">
-              <h4 data-i18n-acc="admin.server_status">Stato del Server Locale</h4>
-              <p id="adminServerDetails">Verifica dello stato della connessione in corso...</p>
+              <h4 data-i18n-acc="admin.server_status">
+                Stato del Server Locale
+              </h4>
+              <p id="adminServerDetails">
+                Verifica dello stato della connessione in corso...
+              </p>
             </div>
             <div class="card">
-              <h4 data-i18n-acc="admin.stats_reset">Statistiche Database & Reset</h4>
+              <h4 data-i18n-acc="admin.stats_reset">
+                Statistiche Database & Reset
+              </h4>
               <p id="adminStatsText">Caricamento statistiche in corso...</p>
-              <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <button class="btn btn-outline btn-danger btn-small" onclick="handleClearOrders()" data-i18n-acc="admin.clear_orders">Azzera Ordini</button>
-                <button class="btn btn-outline btn-danger btn-small" onclick="handleClearUsers()" data-i18n-acc="admin.clear_users">Azzera Clienti</button>
+              <div style="display: flex; gap: 10px; margin-top: 10px">
+                <button
+                  class="btn btn-outline btn-danger btn-small"
+                  onclick="handleClearOrders()"
+                  data-i18n-acc="admin.clear_orders"
+                >
+                  Azzera Ordini
+                </button>
+                <button
+                  class="btn btn-outline btn-danger btn-small"
+                  onclick="handleClearUsers()"
+                  data-i18n-acc="admin.clear_users"
+                >
+                  Azzera Clienti
+                </button>
               </div>
             </div>
-            
+
             <!-- Grafici delle statistiche di vendita -->
             <div class="card span-2-large admin-charts-card">
-              <h4 data-i18n-acc="admin.charts_title">Grafici e Report Vendite</h4>
-              <p style="margin-bottom: 20px;" data-i18n-acc="admin.charts_desc">Analisi dell'andamento dei ricavi e delle colture più richieste dai clienti.</p>
+              <h4 data-i18n-acc="admin.charts_title">
+                Grafici e Report Vendite
+              </h4>
+              <p style="margin-bottom: 20px" data-i18n-acc="admin.charts_desc">
+                Analisi dell'andamento dei ricavi e delle colture più richieste
+                dai clienti.
+              </p>
               <div class="charts-container">
                 <div class="chart-box">
-                  <h5 data-i18n-acc="admin.chart_rev_title">Ricavi per Categoria di Coltura (€)</h5>
-                  <div id="revenueChartContainer" class="svg-chart-wrapper"></div>
+                  <h5 data-i18n-acc="admin.chart_rev_title">
+                    Ricavi per Categoria di Coltura (€)
+                  </h5>
+                  <div
+                    id="revenueChartContainer"
+                    class="svg-chart-wrapper"
+                  ></div>
                 </div>
                 <div class="chart-box">
-                  <h5 data-i18n-acc="admin.chart_top_title">Top 5 Varietà di Semi Ordinati (Bustine Totali)</h5>
-                  <div id="topCropsChartContainer" class="svg-chart-wrapper"></div>
+                  <h5 data-i18n-acc="admin.chart_top_title">
+                    Top 5 Varietà di Semi Ordinati (Bustine Totali)
+                  </h5>
+                  <div
+                    id="topCropsChartContainer"
+                    class="svg-chart-wrapper"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -429,20 +710,38 @@
     <!-- MODALE EDIT/CREATE PIANTA (ADMIN) -->
     <div id="plantModal" class="modal-overlay" hidden>
       <div class="modal-card card">
-        <h3 id="plantModalTitle" data-i18n-acc="modal.edit_title">Modifica Coltura</h3>
+        <h3 id="plantModalTitle" data-i18n-acc="modal.edit_title">
+          Modifica Coltura
+        </h3>
         <form id="plantForm" onsubmit="handleSavePlant(event)">
           <input type="hidden" id="editPlantAction" />
           <div class="form-grid">
             <div class="form-group">
-              <label for="editPlantId" data-i18n-acc="modal.plant_id">ID Pianta (univoco, minuscolo)</label>
-              <input type="text" id="editPlantId" placeholder="pomodoro_ciliegino" required />
+              <label for="editPlantId" data-i18n-acc="modal.plant_id"
+                >ID Pianta (univoco, minuscolo)</label
+              >
+              <input
+                type="text"
+                id="editPlantId"
+                placeholder="pomodoro_ciliegino"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="editPlantNome" data-i18n-acc="modal.plant_name">Nome Visualizzato</label>
-              <input type="text" id="editPlantNome" placeholder="Pomodoro Ciliegino" required />
+              <label for="editPlantNome" data-i18n-acc="modal.plant_name"
+                >Nome Visualizzato</label
+              >
+              <input
+                type="text"
+                id="editPlantNome"
+                placeholder="Pomodoro Ciliegino"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="editPlantCategory" data-i18n-acc="modal.category">Categoria</label>
+              <label for="editPlantCategory" data-i18n-acc="modal.category"
+                >Categoria</label
+              >
               <select id="editPlantCategory" required>
                 <option value="frutto">Frutto</option>
                 <option value="foglia">Foglia</option>
@@ -452,37 +751,97 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="editPlantEmoji" data-i18n-acc="modal.emoji">Emoji di backup (es: 🍅)</label>
-              <input type="text" id="editPlantEmoji" placeholder="🍅" required />
+              <label for="editPlantEmoji" data-i18n-acc="modal.emoji"
+                >Emoji di backup (es: 🍅)</label
+              >
+              <input
+                type="text"
+                id="editPlantEmoji"
+                placeholder="🍅"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="editPlantFoto" data-i18n-acc="modal.photo">Foto Reale (Nome file o URL)</label>
+              <label for="editPlantFoto" data-i18n-acc="modal.photo"
+                >Foto Reale (Nome file o URL)</label
+              >
               <div class="modal-photo-field">
-                <input type="text" id="editPlantFoto" placeholder="pomodoro.webp" style="flex: 1;" />
+                <input
+                  type="text"
+                  id="editPlantFoto"
+                  placeholder="pomodoro.webp"
+                  style="flex: 1"
+                />
                 <div class="modal-photo-preview-container">
-                  <img id="editPlantFotoPreview" src="assets/img/svg/logo.svg" alt="Preview" onerror="this.src='assets/img/svg/logo.svg'" />
+                  <img
+                    id="editPlantFotoPreview"
+                    src="assets/img/svg/logo.svg"
+                    alt="Preview"
+                    onerror="this.src = 'assets/img/svg/logo.svg'"
+                  />
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label for="editPlantPrice" data-i18n-acc="modal.price">Prezzo Busta (€)</label>
-              <input type="number" id="editPlantPrice" step="0.1" min="0.1" placeholder="3.5" required />
+              <label for="editPlantPrice" data-i18n-acc="modal.price"
+                >Prezzo Busta (€)</label
+              >
+              <input
+                type="number"
+                id="editPlantPrice"
+                step="0.1"
+                min="0.1"
+                placeholder="3.5"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="editPlantSeeds" data-i18n-acc="modal.seeds">Semi per busta</label>
-              <input type="number" id="editPlantSeeds" min="1" placeholder="20" required />
+              <label for="editPlantSeeds" data-i18n-acc="modal.seeds"
+                >Semi per busta</label
+              >
+              <input
+                type="number"
+                id="editPlantSeeds"
+                min="1"
+                placeholder="20"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="editPlantMaturity" data-i18n-acc="modal.maturity">Giorni di crescita</label>
-              <input type="number" id="editPlantMaturity" min="1" placeholder="90" required />
+              <label for="editPlantMaturity" data-i18n-acc="modal.maturity"
+                >Giorni di crescita</label
+              >
+              <input
+                type="number"
+                id="editPlantMaturity"
+                min="1"
+                placeholder="90"
+                required
+              />
             </div>
             <div class="form-group">
-              <label for="editPlantSpacing" data-i18n-acc="modal.spacing">Distanza di semina (cm)</label>
-              <input type="number" id="editPlantSpacing" min="1" placeholder="50" required />
+              <label for="editPlantSpacing" data-i18n-acc="modal.spacing"
+                >Distanza di semina (cm)</label
+              >
+              <input
+                type="number"
+                id="editPlantSpacing"
+                min="1"
+                placeholder="50"
+                required
+              />
             </div>
             <div class="form-group span-2">
-              <label for="editPlantMonths" data-i18n-acc="modal.months">Mesi di semina in serra (seleziona più mesi tenendo premuto Ctrl/Cmd)</label>
-              <select id="editPlantMonths" multiple required style="height: 120px;">
+              <label for="editPlantMonths" data-i18n-acc="modal.months"
+                >Mesi di semina in serra (seleziona più mesi tenendo premuto
+                Ctrl/Cmd)</label
+              >
+              <select
+                id="editPlantMonths"
+                multiple
+                required
+                style="height: 120px"
+              >
                 <option value="1">Gennaio</option>
                 <option value="2">Febbraio</option>
                 <option value="3">Marzo</option>
@@ -498,17 +857,42 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="editPlantAmiche" data-i18n-acc="modal.amiche">Piante Amiche (Consociazioni compatibili - Ctrl/Cmd)</label>
-              <select id="editPlantAmiche" multiple style="height: 120px;"></select>
+              <label for="editPlantAmiche" data-i18n-acc="modal.amiche"
+                >Piante Amiche (Consociazioni compatibili - Ctrl/Cmd)</label
+              >
+              <select
+                id="editPlantAmiche"
+                multiple
+                style="height: 120px"
+              ></select>
             </div>
             <div class="form-group">
-              <label for="editPlantNemiche" data-i18n-acc="modal.nemiche">Piante Nemiche (Consociazioni incompatibili - Ctrl/Cmd)</label>
-              <select id="editPlantNemiche" multiple style="height: 120px;"></select>
+              <label for="editPlantNemiche" data-i18n-acc="modal.nemiche"
+                >Piante Nemiche (Consociazioni incompatibili - Ctrl/Cmd)</label
+              >
+              <select
+                id="editPlantNemiche"
+                multiple
+                style="height: 120px"
+              ></select>
             </div>
           </div>
           <div class="modal-actions">
-            <button type="button" class="btn btn-outline" onclick="closePlantModal()" data-i18n-acc="modal.cancel">Annulla</button>
-            <button type="submit" class="btn btn-primary" data-i18n-acc="modal.save">Salva nel catalogo</button>
+            <button
+              type="button"
+              class="btn btn-outline"
+              onclick="closePlantModal()"
+              data-i18n-acc="modal.cancel"
+            >
+              Annulla
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-i18n-acc="modal.save"
+            >
+              Salva nel catalogo
+            </button>
           </div>
         </form>
       </div>
@@ -547,42 +931,107 @@
       <div class="footer-main">
         <div class="footer-brand-col">
           <div class="footer-logo-row">
-            <img class="footer-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra" />
+            <img
+              class="footer-logo"
+              src="assets/img/svg/logo.svg"
+              alt="Orto in Serra"
+            />
             <span class="footer-brand-name">Orto in Serra</span>
           </div>
-          <div class="footer-motto" data-i18n-acc="footer.motto">"Pianta con cura, raccogli con gioia."</div>
+          <div class="footer-motto" data-i18n-acc="footer.motto">
+            "Pianta con cura, raccogli con gioia."
+          </div>
           <div class="footer-social">
-            <a href="#" title="Instagram" aria-label="Instagram"><img src="assets/img/svg/icon-instagram.svg" alt="" class="footer-social-icon" /></a>
-            <a href="#" title="Facebook" aria-label="Facebook"><img src="assets/img/svg/icon-facebook.svg" alt="" class="footer-social-icon" /></a>
-            <a href="#" title="YouTube" aria-label="YouTube"><img src="assets/img/svg/icon-youtube.svg" alt="" class="footer-social-icon" /></a>
+            <a href="#" title="Instagram" aria-label="Instagram"
+              ><img
+                src="assets/img/svg/icon-instagram.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="Facebook" aria-label="Facebook"
+              ><img
+                src="assets/img/svg/icon-facebook.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="YouTube" aria-label="YouTube"
+              ><img
+                src="assets/img/svg/icon-youtube.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
           </div>
           <div class="footer-tip-inline">
-            <div class="footer-tip-kicker" data-i18n-acc="footer.tip_title">Consiglio del mese</div>
-            <div class="footer-tip-text" data-i18n-acc="footer.tip_text">Annaffia alla base, mai sulle foglie: previeni l'oidio.</div>
+            <div class="footer-tip-kicker" data-i18n-acc="footer.tip_title">
+              Consiglio del mese
+            </div>
+            <div class="footer-tip-text" data-i18n-acc="footer.tip_text">
+              Annaffia alla base, mai sulle foglie: previeni l'oidio.
+            </div>
           </div>
         </div>
         <div class="footer-nav-col">
-          <div class="footer-nav-title" data-i18n-acc="footer.explore">Esplora</div>
+          <div class="footer-nav-title" data-i18n-acc="footer.explore">
+            Esplora
+          </div>
           <ul class="footer-nav-list">
             <li><a href="index.html" data-i18n-acc="nav.home">🏠 Home</a></li>
-            <li><a href="configuratore.html" data-i18n-acc="nav.configuratore">📐 Configuratore</a></li>
-            <li><a href="index.html#abbinamenti" data-i18n-acc="nav.abbinamenti">🌿 Abbinamenti</a></li>
-            <li><a href="index.html#kit" data-i18n-acc="nav.kit">📦 Kit del mese</a></li>
-            <li><a href="index.html#contatti" data-i18n-acc="nav.contatti">✉️ Contatti</a></li>
-            <li><a href="account.html" data-i18n-acc="nav.account">👤 Area Personale</a></li>
+            <li>
+              <a href="configuratore.html" data-i18n-acc="nav.configuratore"
+                >📐 Configuratore</a
+              >
+            </li>
+            <li>
+              <a href="index.html#abbinamenti" data-i18n-acc="nav.abbinamenti"
+                >🌿 Abbinamenti</a
+              >
+            </li>
+            <li>
+              <a href="index.html#kit" data-i18n-acc="nav.kit"
+                >📦 Kit del mese</a
+              >
+            </li>
+            <li>
+              <a href="index.html#contatti" data-i18n-acc="nav.contatti"
+                >✉️ Contatti</a
+              >
+            </li>
+            <li>
+              <a href="account.html" data-i18n-acc="nav.account"
+                >👤 Area Personale</a
+              >
+            </li>
           </ul>
         </div>
         <div class="footer-nav-col">
-          <div class="footer-legal-title" data-i18n-acc="footer.legal">Legale</div>
+          <div class="footer-legal-title" data-i18n-acc="footer.legal">
+            Legale
+          </div>
           <ul class="footer-legal-list">
-            <li><a href="#" onclick="return false;" data-i18n-acc="footer.privacy">Privacy Policy</a></li>
-            <li><a href="#" onclick="return false;" data-i18n-acc="footer.cookie">Cookie Policy</a></li>
-            <li><a href="#" onclick="return false;" data-i18n-acc="footer.terms">Termini di Servizio</a></li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n-acc="footer.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n-acc="footer.cookie"
+                >Cookie Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" onclick="return false;" data-i18n-acc="footer.terms"
+                >Termini di Servizio</a
+              >
+            </li>
           </ul>
           <div class="footer-support-block">
-            <div class="footer-nav-title" data-i18n-acc="footer.support">Supporto</div>
+            <div class="footer-nav-title" data-i18n-acc="footer.support">
+              Supporto
+            </div>
             <ul class="footer-legal-list">
-              <li><a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a></li>
+              <li>
+                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+              </li>
               <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
             </ul>
           </div>
@@ -590,7 +1039,8 @@
       </div>
       <div class="footer-bottom">
         <div class="footer-company-info">
-          Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023 Impruneta (FI)
+          Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023
+          Impruneta (FI)
         </div>
         <div class="footer-gdpr-copy" data-i18n-acc="footer.rights">
           © 2026 Orto in Serra · Tutti i diritti riservati

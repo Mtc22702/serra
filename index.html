@@ -128,7 +128,10 @@
           <a href="#contatti" class="nav-link" data-i18n="nav.contatti"
             >✉️ Contatti</a
           >
-          <a href="account.html" class="nav-link nav-link--account" id="navAccountBtn"
+          <a
+            href="account.html"
+            class="nav-link nav-link--account"
+            id="navAccountBtn"
             >👤 Area Personale</a
           >
         </nav>
@@ -869,9 +872,7 @@
               >
             </li>
             <li>
-              <a href="account.html"
-                ><span>👤 Area Personale</span></a
-              >
+              <a href="account.html"><span>👤 Area Personale</span></a>
             </li>
           </ul>
         </div>
@@ -1805,7 +1806,7 @@
           const customPlants = await window.SerraAPI.getPlants();
           if (customPlants) {
             window.PLANTS = customPlants;
-            customPlants.forEach(p => {
+            customPlants.forEach((p) => {
               if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
             });
           }
@@ -1818,7 +1819,7 @@
           "assets/js/home/home-catalog.js",
           "assets/js/home/home-cart.js",
           "assets/js/home/home-app.js"
-        ].map(src => serraAsset(src));
+        ].map((src) => serraAsset(src));
 
         function loadNextScript(index) {
           if (index >= homeScripts.length) return;
