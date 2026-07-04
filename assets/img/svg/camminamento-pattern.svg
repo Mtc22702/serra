@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68">
+  <defs>
+    <linearGradient id="gravel-light" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f1ebdb"/>
+      <stop offset=".52" stop-color="#d5cab4"/>
+      <stop offset="1" stop-color="#b7aa91"/>
+    </linearGradient>
+  </defs>
+  <rect width="68" height="68" fill="#d8d0bd"/>
+  <rect width="68" height="68" fill="url(#gravel-light)" opacity=".78"/>
+  <g stroke="#5d574a" stroke-opacity=".28" stroke-width=".8">
+    <ellipse cx="9" cy="10" rx="5.4" ry="2.7" transform="rotate(-18 9 10)" fill="#c7beaa"/>
+    <ellipse cx="28" cy="7" rx="3.8" ry="2.3" transform="rotate(23 28 7)" fill="#ddd5c4"/>
+    <ellipse cx="51" cy="12" rx="6.2" ry="3" transform="rotate(-9 51 12)" fill="#bdb39d"/>
+    <ellipse cx="65" cy="25" rx="4.6" ry="2.5" transform="rotate(31 65 25)" fill="#d7cebb"/>
+    <ellipse cx="18" cy="29" rx="6.5" ry="3.3" transform="rotate(14 18 29)" fill="#b8ae98"/>
+    <ellipse cx="40" cy="27" rx="4.2" ry="2.5" transform="rotate(-28 40 27)" fill="#e0d8c8"/>
+    <ellipse cx="55" cy="39" rx="5.8" ry="2.9" transform="rotate(19 55 39)" fill="#c2b8a2"/>
+    <ellipse cx="5" cy="48" rx="4.3" ry="2.4" transform="rotate(-25 5 48)" fill="#ded6c5"/>
+    <ellipse cx="26" cy="52" rx="5.7" ry="3" transform="rotate(27 26 52)" fill="#c0b6a0"/>
+    <ellipse cx="45" cy="61" rx="4.6" ry="2.5" transform="rotate(-12 45 61)" fill="#dcd3c1"/>
+    <ellipse cx="64" cy="59" rx="6" ry="3.1" transform="rotate(17 64 59)" fill="#b9af99"/>
+  </g>
+  <g fill="#fff" opacity=".34">
+    <ellipse cx="7.5" cy="9" rx="2.2" ry=".8" transform="rotate(-18 7.5 9)"/>
+    <ellipse cx="49" cy="10.8" rx="2.5" ry=".9" transform="rotate(-9 49 10.8)"/>
+    <ellipse cx="16" cy="27.5" rx="2.6" ry="1" transform="rotate(14 16 27.5)"/>
+    <ellipse cx="53" cy="37.6" rx="2.2" ry=".8" transform="rotate(19 53 37.6)"/>
+    <ellipse cx="24" cy="50.5" rx="2.3" ry=".9" transform="rotate(27 24 50.5)"/>
+    <ellipse cx="62" cy="57.6" rx="2.4" ry=".9" transform="rotate(17 62 57.6)"/>
+  </g>
+</svg>

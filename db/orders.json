@@ -1,0 +1,39 @@
+[
+  {
+    "id": "ORD-73921",
+    "email": "user@ortoinserra.it",
+    "date": "2026-06-25T14:32:00.000Z",
+    "items": [
+      {
+        "id": "pomodoro",
+        "nome": "Pomodoro",
+        "bustine": 2,
+        "prezzo": 3.5
+      },
+      {
+        "id": "basilico",
+        "nome": "Basilico",
+        "bustine": 1,
+        "prezzo": 2.4
+      }
+    ],
+    "total": 9.4,
+    "status": "Spedito"
+  },
+  {
+    "id": "ORD-84201",
+    "email": "user@ortoinserra.it",
+    "date": "2026-07-02T09:15:00.000Z",
+    "items": [
+      {
+        "id": "zucchina",
+        "nome": "Zucchina",
+        "bustine": 1,
+        "prezzo": 3.8
+      }
+    ],
+    "total": 3.8,
+    "status": "Spedito",
+    "tracking": "12342321111"
+  }
+]
