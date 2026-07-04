@@ -101,7 +101,7 @@ function seminabili() {
 }
 // Recupera il tipo della pianta
 function typeOfPlant(p) {
-  return TIPO[p.id] || "foglia";
+  return p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
 }
 // Recupera la distanza di coltivazione
 function plantDistanceValue(p) {

@@ -701,7 +701,7 @@ function configDetailTabIcon(tab) {
 // Costruisce il profilo tecnico per le schede coltivazione e cura
 function configDetailProfile(p, sow) {
   const ro = state.lang === "ro";
-  const type = TIPO[p.id] || "foglia";
+  const type = p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
   const soil = ro
     ? {
         frutto:
@@ -909,8 +909,10 @@ function configDiseaseGroup(id) {
     return "legumes";
   if (id === "basilico") return "basil";
   if (id === "fragola") return "strawberry";
-  if ((TIPO[id] || "") === "aromatica") return "herbs";
-  if ((TIPO[id] || "") === "foglia") return "leafy";
+  const plant = typeof BYID !== "undefined" ? BYID[id] : null;
+  const type = plant ? (plant.tipo || plant.arch) : ((typeof TIPO !== "undefined" && TIPO[id]) || "");
+  if (type === "aromatica") return "herbs";
+  if (type === "foglia") return "leafy";
   return "other";
 }
 

@@ -1375,7 +1375,7 @@ function openDetail(id, preserveTab = false) {
   document.getElementById("detailName").textContent = plantName(id);
 
 
-  const tipo = TIPO[p.id] || "foglia";
+  const tipo = p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
   const diffLevel = DIFFICULTY[p.id] || 2;
   const diffLabel =
     diffLevel === 1

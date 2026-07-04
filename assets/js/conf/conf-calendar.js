@@ -69,7 +69,7 @@ function calendarIsPerennial(plant) {
 // Verifica se la pianta ammette il trapianto
 function calendarCanTransplant(plant) {
   if (calendarIsPerennial(plant)) return false;
-  const type = TIPO[plant.id] || plant.tipo || "foglia";
+  const type = plant.tipo || plant.arch || (typeof TIPO !== "undefined" && TIPO[plant.id]) || "foglia";
   if (type === "radice" || type === "legume") return false;
   return Number(plant.gg) >= 50 && Number(plant.d) >= 20;
 }
