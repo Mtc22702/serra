@@ -804,100 +804,114 @@ window.addEventListener("storage", (event) => {
 
 window.addEventListener("serra:themechange", () => render());
 
-initConfig();
-initEvents();
-loadConfCart();
-const _bootCfg = readSavedConfig();
-
-const _bootLivello = BOOT_PARAMS.get("livello");
-const _shouldFocusGuidedIntroOnBoot = LIVELLI.has(_bootLivello);
-
-if (LIVELLI.has(_bootLivello)) {
-  state.livello = _bootLivello;
-  const _hasExplicitBootIntent =
-    isFreeProjectBoot() || shouldImportCart() || Boolean(requestedBootPreset());
-  const _bootIntentApplied = _hasExplicitBootIntent ? applyBootIntent() : false;
-
-  if (_bootLivello === "esperto") {
-    vegFilter = "all-beds";
-    state.autoPlan = false;
-    setLivello(_bootLivello, { mapMode: false });
-    setMode("expert", false);
-    syncVegFilterTabs();
-    render();
-    if (!_shouldFocusGuidedIntroOnBoot) focusManualPlanningPath();
-  } else if (_bootLivello === "intermedio") {
-    vegFilter = "all";
-    state.autoPlan = true;
-    setLivello(_bootLivello, { mapMode: false });
-    setMode("fit", false);
-    syncVegFilterTabs();
-    if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
-    else render();
-    if (!_shouldFocusGuidedIntroOnBoot) focusManualPlanningPath();
-  } else {
-    vegFilter = "in";
-    state.autoPlan = true;
-    setLivello(_bootLivello, { mapMode: false });
-    setMode("fit", false);
-    resetNoviceAdvancedOptions();
-    syncVegFilterTabs();
-
-    if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
-    else render();
-    if (!_shouldFocusGuidedIntroOnBoot) scrollToScene();
+(async () => {
+  try {
+    const customPlants = await window.SerraAPI.getPlants();
+    if (customPlants) {
+      window.PLANTS = customPlants;
+      customPlants.forEach(p => {
+        if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
+      });
+    }
+  } catch (e) {
+    console.error("Errore nel caricamento del catalogo piante:", e);
   }
-  saveConfig(true);
-  clearBootParams();
-  scrollToGuidedIntroForLivello(_bootLivello);
-} else {
-  const _bootIntentApplied =
-    isGuidedBoot() ||
-    isFreeProjectBoot() ||
-    shouldImportCart() ||
-    _bootCfg?.done
-      ? applyBootIntent()
-      : false;
 
-  if (_bootIntentApplied && isGuidedBoot()) {
-  } else if (!_bootIntentApplied && !_bootCfg) {
-    autoFill();
-  } else if (
-    !_bootIntentApplied &&
-    _bootCfg?.done &&
-    state.autoPlan &&
-    state.beds.length === 0
-  ) {
-    autoFill();
-  } else if (!_bootIntentApplied) {
-    render();
-  }
-  if (BOOT_PARAMS.get("mode") === "expert") {
-    state.autoPlan = false;
+  initConfig();
+  initEvents();
+  loadConfCart();
+  const _bootCfg = readSavedConfig();
+
+  const _bootLivello = BOOT_PARAMS.get("livello");
+  const _shouldFocusGuidedIntroOnBoot = LIVELLI.has(_bootLivello);
+
+  if (LIVELLI.has(_bootLivello)) {
+    state.livello = _bootLivello;
+    const _hasExplicitBootIntent =
+      isFreeProjectBoot() || shouldImportCart() || Boolean(requestedBootPreset());
+    const _bootIntentApplied = _hasExplicitBootIntent ? applyBootIntent() : false;
+
+    if (_bootLivello === "esperto") {
+      vegFilter = "all-beds";
+      state.autoPlan = false;
+      setLivello(_bootLivello, { mapMode: false });
+      setMode("expert", false);
+      syncVegFilterTabs();
+      render();
+      if (!_shouldFocusGuidedIntroOnBoot) focusManualPlanningPath();
+    } else if (_bootLivello === "intermedio") {
+      vegFilter = "all";
+      state.autoPlan = true;
+      setLivello(_bootLivello, { mapMode: false });
+      setMode("fit", false);
+      syncVegFilterTabs();
+      if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
+      else render();
+      if (!_shouldFocusGuidedIntroOnBoot) focusManualPlanningPath();
+    } else {
+      vegFilter = "in";
+      state.autoPlan = true;
+      setLivello(_bootLivello, { mapMode: false });
+      setMode("fit", false);
+      resetNoviceAdvancedOptions();
+      syncVegFilterTabs();
+
+      if (!_bootIntentApplied || BOOT_PARAMS.get("guided") === "1") autoFill();
+      else render();
+      if (!_shouldFocusGuidedIntroOnBoot) scrollToScene();
+    }
+    saveConfig(true);
     clearBootParams();
+    scrollToGuidedIntroForLivello(_bootLivello);
+  } else {
+    const _bootIntentApplied =
+      isGuidedBoot() ||
+      isFreeProjectBoot() ||
+      shouldImportCart() ||
+      _bootCfg?.done
+        ? applyBootIntent()
+        : false;
+
+    if (_bootIntentApplied && isGuidedBoot()) {
+    } else if (!_bootIntentApplied && !_bootCfg) {
+      autoFill();
+    } else if (
+      !_bootIntentApplied &&
+      _bootCfg?.done &&
+      state.autoPlan &&
+      state.beds.length === 0
+    ) {
+      autoFill();
+    } else if (!_bootIntentApplied) {
+      render();
+    }
+    if (BOOT_PARAMS.get("mode") === "expert") {
+      state.autoPlan = false;
+      clearBootParams();
+    }
+    setMode(state.autoPlan ? "fit" : "expert", false);
+
+    setLivello(state.livello, { mapMode: false });
   }
-  setMode(state.autoPlan ? "fit" : "expert", false);
+  syncVegFilterTabs();
 
-  setLivello(state.livello, { mapMode: false });
-}
-syncVegFilterTabs();
+  updateGuidedIntroDynamic();
 
-updateGuidedIntroDynamic();
+  collapseSettingsPanelAfterAutoPlan({
+    scroll: !_shouldFocusGuidedIntroOnBoot
+  });
 
-collapseSettingsPanelAfterAutoPlan({
-  scroll: !_shouldFocusGuidedIntroOnBoot
-});
-
-// Desktop: scroll allo stage per esperto (collapseSettingsPanelAfterAutoPlan
-// non scorre quando autoPlan=false). Su mobile ci pensa scrollToGuidedIntroForLivello.
-if (!isResponsiveConfiguratorLayout() && !state.autoPlan) {
-  scheduleElementBelowHeader(
-    () =>
-      document.querySelector(".stage .scene-wrap") ||
-      document.getElementById("scene") ||
-      document.querySelector(".stage"),
-    "smooth",
-    { delay: 200 }
-  );
-}
+  // Desktop: scroll allo stage per esperto (collapseSettingsPanelAfterAutoPlan
+  // non scorre quando autoPlan=false). Su mobile ci pensa scrollToGuidedIntroForLivello.
+  if (!isResponsiveConfiguratorLayout() && !state.autoPlan) {
+    scheduleElementBelowHeader(
+      () =>
+        document.querySelector(".stage .scene-wrap") ||
+        document.getElementById("scene") ||
+        document.querySelector(".stage"),
+      "smooth",
+      { delay: 200 }
+    );
+  }
+})();
 

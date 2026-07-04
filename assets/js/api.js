@@ -32,7 +32,7 @@
       return false;
     }
     try {
-      const res = await fetchWithTimeout(`${apiBase}/api/status`, { timeout: 800 });
+      const res = await fetchWithTimeout(`${apiBase}/api/status`, { timeout: 180 });
       return res.ok;
     } catch (e) {
       return false;

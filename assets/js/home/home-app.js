@@ -447,34 +447,48 @@ window.addEventListener(
   { passive: true }
 );
 
-loadPrefs();
-if (new URLSearchParams(window.location.search).get("catalog") === "all") {
-  toggleCatalogFull();
-}
-if (
-  new URLSearchParams(window.location.search).get("from") === "configuratore"
-) {
-  history.replaceState(null, "", window.location.pathname);
-  setTimeout(openCart, 320);
-}
-if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-if (!window.location.hash) window.scrollTo(0, 0);
-const _initLang = localStorage.getItem("ois.lang") || "it";
-if (_initLang !== "it") {
-  applyLang(_initLang);
-} else {
-  render();
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.getAttribute("data-i18n");
-    const val = t(key);
-    if (val.includes("<") || val.includes("&")) el.innerHTML = val;
-    else el.textContent = val;
-  });
-  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-    el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
-  });
-}
-initCookieBanner();
+(async () => {
+  try {
+    const customPlants = await window.SerraAPI.getPlants();
+    if (customPlants) {
+      window.PLANTS = customPlants;
+      customPlants.forEach((p) => {
+        if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
+      });
+    }
+  } catch (e) {
+    console.error("Errore nel caricamento del catalogo piante:", e);
+  }
+
+  loadPrefs();
+  if (new URLSearchParams(window.location.search).get("catalog") === "all") {
+    toggleCatalogFull();
+  }
+  if (
+    new URLSearchParams(window.location.search).get("from") === "configuratore"
+  ) {
+    history.replaceState(null, "", window.location.pathname);
+    setTimeout(openCart, 320);
+  }
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (!window.location.hash) window.scrollTo(0, 0);
+  const _initLang = localStorage.getItem("ois.lang") || "it";
+  if (_initLang !== "it") {
+    applyLang(_initLang);
+  } else {
+    render();
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      const val = t(key);
+      if (val.includes("<") || val.includes("&")) el.innerHTML = val;
+      else el.textContent = val;
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
+    });
+  }
+  initCookieBanner();
+})();
 
 // Scroll con offset
 function scrollElementBelowNav(target, behavior = "smooth") {

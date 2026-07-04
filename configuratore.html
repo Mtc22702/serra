@@ -28,25 +28,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Icone e manifest -->
-    <script>
-      document.write(
-        '<link rel="icon" href="' +
-          serraAsset("assets/img/icons/logo-192.png") +
-          '" type="image/png" />'
-      );
-    </script>
-    <script>
-      document.write(
-        '<link rel="apple-touch-icon" sizes="180x180" href="' +
-          serraAsset("assets/img/icons/logo-180.png") +
-          '" />'
-      );
-    </script>
-    <script>
-      document.write(
-        '<link rel="manifest" href="' + serraAsset("manifest.json") + '" />'
-      );
-    </script>
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icons/logo-180.png" />
+    <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#2f6b3a" />
     <!-- Rilevamento tema iniziale -->
     <script>
@@ -63,23 +47,9 @@
       rel="stylesheet"
     />
     <!-- Fogli di stile -->
-    <script>
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/index.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/style.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/theme.css") +
-          '" />'
-      );
-    </script>
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -342,6 +312,13 @@
       <div class="col-left">
         <div class="mode-section is-active" data-mode-section="fit">
           <div class="panel panel--settings" id="panelSettings">
+            <script>
+              (function() {
+                if (new URLSearchParams(window.location.search).get("livello") === "novizio") {
+                  document.getElementById("panelSettings").classList.add("is-collapsed");
+                }
+              })();
+            </script>
             <div class="pad">
               <div class="panel-head panel-head--static">
                 <span class="settings-head-icon" aria-hidden="true">
@@ -1548,66 +1525,24 @@
         </div>
     </footer>
 
-    <!-- Script della pagina -->
-    <script>
-      document.write(
-        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/plants-data.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
-      );
-    </script>
-    <script>
-      (async () => {
-        try {
-          const customPlants = await window.SerraAPI.getPlants();
-          if (customPlants) {
-            window.PLANTS = customPlants;
-            customPlants.forEach(p => {
-              if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
-            });
-          }
-        } catch (e) {
-          console.error("Errore nel caricamento del catalogo piante:", e);
-        }
+    <!-- Script della pagina (Caricamento parallelo nativo) -->
+    <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/i18n.js" defer></script>
+    <script src="assets/js/plants-data.js" defer></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/conf/conf-data.js" defer></script>
+    <script src="assets/js/conf/conf-state.js" defer></script>
+    <script src="assets/js/conf/conf-projects.js" defer></script>
+    <script src="assets/js/conf/conf-text.js" defer></script>
+    <script src="assets/js/conf/conf-draw.js" defer></script>
+    <script src="assets/js/conf/conf-ui.js" defer></script>
+    <script src="assets/js/conf/conf-companions.js" defer></script>
+    <script src="assets/js/conf/conf-shopping.js" defer></script>
+    <script src="assets/js/conf/conf-engine.js" defer></script>
+    <script src="assets/js/conf/conf-calendar.js" defer></script>
+    <script src="assets/js/conf/conf-app.js" defer></script>
 
-        const confScripts = [
-          "assets/js/conf/conf-data.js",
-          "assets/js/conf/conf-state.js",
-          "assets/js/conf/conf-projects.js",
-          "assets/js/conf/conf-text.js",
-          "assets/js/conf/conf-draw.js",
-          "assets/js/conf/conf-ui.js",
-          "assets/js/conf/conf-companions.js",
-          "assets/js/conf/conf-shopping.js",
-          "assets/js/conf/conf-engine.js",
-          "assets/js/conf/conf-calendar.js",
-          "assets/js/conf/conf-app.js"
-        ].map(src => serraAsset(src));
-
-        function loadNextScript(index) {
-          if (index >= confScripts.length) return;
-          const s = document.createElement("script");
-          s.src = confScripts[index];
-          s.onload = () => loadNextScript(index + 1);
-          s.onerror = (e) => {
-            console.error("Errore nel caricamento di " + confScripts[index], e);
-            loadNextScript(index + 1);
-          };
-          document.body.appendChild(s);
-        }
-        loadNextScript(0);
-      })();
-    </script>
     <!-- Scroll listener torna su -->
     <script>
       window.addEventListener(

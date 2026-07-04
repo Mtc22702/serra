@@ -32,25 +32,9 @@
       rel="stylesheet"
     />
     <!-- Icone e manifest PWA -->
-    <script>
-      document.write(
-        '<link rel="icon" href="' +
-          serraAsset("assets/img/icons/logo-192.png") +
-          '" type="image/png" />'
-      );
-    </script>
-    <script>
-      document.write(
-        '<link rel="apple-touch-icon" sizes="180x180" href="' +
-          serraAsset("assets/img/icons/logo-180.png") +
-          '" />'
-      );
-    </script>
-    <script>
-      document.write(
-        '<link rel="manifest" href="' + serraAsset("manifest.json") + '" />'
-      );
-    </script>
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icons/logo-180.png" />
+    <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#2f6b3a" />
     <!-- Gestione del tema (chiaro/scuro) -->
     <script>
@@ -63,18 +47,8 @@
       })();
     </script>
     <!-- Fogli di stile principali -->
-    <script>
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/index.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/theme.css") +
-          '" />'
-      );
-    </script>
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -83,6 +57,7 @@
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       crossorigin=""
+      defer
     ></script>
   </head>
   <body>
@@ -1780,60 +1755,16 @@
         }
       }
     </script>
-    <!-- Caricamento degli script dell'applicazione -->
-    <script>
-      document.write(
-        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' +
-          serraAsset("assets/js/plants-data.js") +
-          '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
-      );
-    </script>
-    <script>
-      (async () => {
-        try {
-          const customPlants = await window.SerraAPI.getPlants();
-          if (customPlants) {
-            window.PLANTS = customPlants;
-            customPlants.forEach((p) => {
-              if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
-            });
-          }
-        } catch (e) {
-          console.error("Errore nel caricamento del catalogo piante:", e);
-        }
 
-        const homeScripts = [
-          "assets/js/home/home-data.js",
-          "assets/js/home/home-catalog.js",
-          "assets/js/home/home-cart.js",
-          "assets/js/home/home-app.js"
-        ].map((src) => serraAsset(src));
-
-        function loadNextScript(index) {
-          if (index >= homeScripts.length) return;
-          const s = document.createElement("script");
-          s.src = homeScripts[index];
-          s.onload = () => loadNextScript(index + 1);
-          s.onerror = (e) => {
-            console.error("Errore nel caricamento di " + homeScripts[index], e);
-            loadNextScript(index + 1);
-          };
-          document.body.appendChild(s);
-        }
-        loadNextScript(0);
-      })();
-    </script>
+    <!-- Caricamento degli script dell'applicazione (Caricamento parallelo nativo) -->
+    <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/i18n.js" defer></script>
+    <script src="assets/js/plants-data.js" defer></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/home/home-data.js" defer></script>
+    <script src="assets/js/home/home-catalog.js" defer></script>
+    <script src="assets/js/home/home-cart.js" defer></script>
+    <script src="assets/js/home/home-app.js" defer></script>
   </body>
 </html>

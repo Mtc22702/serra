@@ -553,6 +553,13 @@
         updateModalPhotoPreview("", this.value);
       }
     });
+
+    // 6. Rendi infinita la striscia degli ortaggi nel footer duplicando gli elementi
+    const footerRow = document.getElementById("footerPlantRow");
+    if (footerRow) {
+      const html = footerRow.innerHTML;
+      footerRow.innerHTML = html + html + html + html;
+    }
   }
 
   if (document.readyState === "loading") {

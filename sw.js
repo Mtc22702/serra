@@ -183,16 +183,17 @@ self.addEventListener("fetch", (e) => {
     destination === "script" ||
     destination === "manifest";
 
-  // Script e stili: reload per bypassare la cache HTTP
+  // Script e stili: strategia cache-first
   if (needsFreshCopy) {
     e.respondWith(
-      fetch(e.request, { cache: "reload" })
-        .then((response) => {
+      caches.match(e.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(e.request).then((response) => {
           const copy = response.clone();
           caches.open(CACHE).then((cache) => cache.put(e.request, copy));
           return response;
-        })
-        .catch(() => caches.match(e.request))
+        });
+      })
     );
     return;
   }
