@@ -484,7 +484,10 @@ window.addEventListener(
       else el.textContent = val;
     });
     document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-      el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
+      el.setAttribute(
+        "placeholder",
+        t(el.getAttribute("data-i18n-placeholder"))
+      );
     });
   }
   initCookieBanner();
@@ -504,7 +507,9 @@ function scrollElementBelowNav(target, behavior = "smooth") {
 
 // Scorrimento morbido generico per tutti i link di navigazione della homepage
 document
-  .querySelectorAll('a[href^="#"]:not([href="#"]):not([href="#catalogSearch"]), a[href^="index.html#"]:not([href="index.html#"])')
+  .querySelectorAll(
+    'a[href^="#"]:not([href="#"]):not([href="#catalogSearch"]), a[href^="index.html#"]:not([href="index.html#"])'
+  )
   .forEach((link) => {
     link.addEventListener("click", (e) => {
       const href = link.getAttribute("href");
@@ -537,22 +542,26 @@ document
     }
   }
 
-
-  var searchObserver = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting) {
-
-      setTimeout(function() { triggerSearchAttention(true); }, 300);
-      searchObserver.disconnect();
-    }
-  }, { threshold: 0.85 });
+  var searchObserver = new IntersectionObserver(
+    function (entries) {
+      if (entries[0].isIntersecting) {
+        setTimeout(function () {
+          triggerSearchAttention(true);
+        }, 300);
+        searchObserver.disconnect();
+      }
+    },
+    { threshold: 0.85 }
+  );
 
   searchObserver.observe(searchLabel);
 
-
   var catalogLink = document.querySelector(".hero-cfg-catalog-link");
   if (catalogLink) {
-    catalogLink.addEventListener("click", function() {
-      setTimeout(function() { triggerSearchAttention(true); }, 600);
+    catalogLink.addEventListener("click", function () {
+      setTimeout(function () {
+        triggerSearchAttention(true);
+      }, 600);
     });
   }
 })();
@@ -595,7 +604,6 @@ if (catalogSearchLink) {
   const inner = document.getElementById("hcgPeekInner");
   if (!svg || !peek || !inner) return;
 
-
   const EMOJI_MAP = {
     pomodoro: "🍅",
     carota: "🥕",
@@ -613,15 +621,12 @@ if (catalogSearchLink) {
     qty: QTY_MAP[id]
   })).filter((p) => p.id);
 
-
-
   const BEDS = [
     { p: PLANTS[0], x: 5, y: 5, w: 92, h: 68, cols: 2, rows: 2, r: 11 },
     { p: PLANTS[1], x: 5, y: 81, w: 92, h: 74, cols: 2, rows: 3, r: 9 },
     { p: PLANTS[2], x: 105, y: 5, w: 110, h: 50, cols: 3, rows: 2, r: 8 },
     { p: PLANTS[3], x: 105, y: 63, w: 110, h: 92, cols: 3, rows: 4, r: 7 }
   ];
-
 
   // Calcola le posizioni delle piante nell'aiuola
   function bedPlantPositions(bed) {
@@ -636,7 +641,6 @@ if (catalogSearchLink) {
     }
     return pts;
   }
-
 
   // Genera numeri casuali deterministici
   function makeRng(seed) {
@@ -661,18 +665,36 @@ if (catalogSearchLink) {
   ]);
   // Disegna l'icona di raccolta
   function harvestVector(plant, size) {
-    const s = size, c = plant.col || {};
-    const finish = (content) => `<g style="pointer-events:none;filter:drop-shadow(0 ${s * .13}px ${s * .1}px rgba(18,28,15,.5))"><ellipse cy="${s * .34}" rx="${s * .36}" ry="${s * .11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * .075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * .13}" cy="${-s * .16}" rx="${s * .052}" ry="${s * .11}" fill="#fff" opacity=".5"/><ellipse cx="${s * .12}" cy="${s * .17}" rx="${s * .11}" ry="${s * .055}" fill="#10190d" opacity=".18"/></g>`;
-    if (plant.id === "carota") return finish(`<path d="M0 ${-s * .3} C${s * .3} ${-s * .23} ${s * .23} ${s * .2} 0 ${s * .48} C${-s * .23} ${s * .2} ${-s * .3} ${-s * .23} 0 ${-s * .3}Z" fill="url(#harvestOrange)" stroke="#854c35" stroke-width="${s * .045}"/><path d="M0 ${-s * .27} q${s * .08} ${-s * .2} ${s * .25} ${-s * .22} M0 ${-s * .27} q${-s * .08} ${-s * .2} ${-s * .25} ${-s * .22}" fill="none" stroke="#4b843f" stroke-width="${s * .1}" stroke-linecap="round"/>`);
-    if (plant.id === "pomodoro") return finish(`<circle r="${s * .36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * .05}"/><ellipse cx="${-s * .11}" cy="${-s * .12}" rx="${s * .07}" ry="${s * .12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * .31} l${s * .2} ${-s * .1} l${-s * .16} ${s * .2} l${-s * .18} ${-s * .18}Z" fill="#356c35"/>`);
-    return finish(`<g transform="rotate(-32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * .14}" rx="${s * .17}" ry="${s * .38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * .045}"/></g>`);
+    const s = size,
+      c = plant.col || {};
+    const finish = (content) =>
+      `<g style="pointer-events:none;filter:drop-shadow(0 ${s * 0.13}px ${s * 0.1}px rgba(18,28,15,.5))"><ellipse cy="${s * 0.34}" rx="${s * 0.36}" ry="${s * 0.11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * 0.075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * 0.13}" cy="${-s * 0.16}" rx="${s * 0.052}" ry="${s * 0.11}" fill="#fff" opacity=".5"/><ellipse cx="${s * 0.12}" cy="${s * 0.17}" rx="${s * 0.11}" ry="${s * 0.055}" fill="#10190d" opacity=".18"/></g>`;
+    if (plant.id === "carota")
+      return finish(
+        `<path d="M0 ${-s * 0.3} C${s * 0.3} ${-s * 0.23} ${s * 0.23} ${s * 0.2} 0 ${s * 0.48} C${-s * 0.23} ${s * 0.2} ${-s * 0.3} ${-s * 0.23} 0 ${-s * 0.3}Z" fill="url(#harvestOrange)" stroke="#854c35" stroke-width="${s * 0.045}"/><path d="M0 ${-s * 0.27} q${s * 0.08} ${-s * 0.2} ${s * 0.25} ${-s * 0.22} M0 ${-s * 0.27} q${-s * 0.08} ${-s * 0.2} ${-s * 0.25} ${-s * 0.22}" fill="none" stroke="#4b843f" stroke-width="${s * 0.1}" stroke-linecap="round"/>`
+      );
+    if (plant.id === "pomodoro")
+      return finish(
+        `<circle r="${s * 0.36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * 0.05}"/><ellipse cx="${-s * 0.11}" cy="${-s * 0.12}" rx="${s * 0.07}" ry="${s * 0.12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * 0.31} l${s * 0.2} ${-s * 0.1} l${-s * 0.16} ${s * 0.2} l${-s * 0.18} ${-s * 0.18}Z" fill="#356c35"/>`
+      );
+    return finish(
+      `<g transform="rotate(-32)"><ellipse cy="${-s * 0.14}" rx="${s * 0.17}" ry="${s * 0.38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * 0.045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * 0.14}" rx="${s * 0.17}" ry="${s * 0.38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * 0.045}"/></g>`
+    );
   }
   // Verifica se mostrare l'icona di raccolta
   function shouldShowHarvestVector(plant) {
     if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
     return new Set([
-      "broccolo", "cavolfiore", "cavolo", "verza", "cavolorapa",
-      "cavoletti", "cavolo_rosso", "cavolo_navone", "carciofo", "asparago",
+      "broccolo",
+      "cavolfiore",
+      "cavolo",
+      "verza",
+      "cavolorapa",
+      "cavoletti",
+      "cavolo_rosso",
+      "cavolo_navone",
+      "carciofo",
+      "asparago",
       "finocchio"
     ]).has(plant.id);
   }
@@ -803,7 +825,6 @@ if (catalogSearchLink) {
     return `<g>${s}</g>`;
   }
 
-
   // Costruisce la mappa dimostrativa
   function buildMap() {
     let defs = `<defs>
@@ -828,7 +849,6 @@ if (catalogSearchLink) {
     svg.innerHTML = defs + s;
   }
 
-
   // Aggiunge una pianta alla mappa
   function addPlant(cx, cy, plant, r, seed) {
     const rng = makeRng(seed);
@@ -852,7 +872,6 @@ if (catalogSearchLink) {
     );
   }
 
-
   // Costruisce il pannello riepilogo
   function buildPanel() {
     inner.innerHTML = PLANTS.map(
@@ -867,7 +886,6 @@ if (catalogSearchLink) {
       </div>`
     ).join("");
   }
-
 
   let timers = [];
   // Registra un timer animazione
@@ -889,7 +907,6 @@ if (catalogSearchLink) {
       .querySelectorAll(".hcg-card")
       .forEach((c) => c.classList.remove("hcg-card--in"));
 
-
     let delay = 180;
     BEDS.forEach((bed, bi) => {
       const pts = bedPlantPositions(bed);
@@ -903,7 +920,6 @@ if (catalogSearchLink) {
       delay += 100;
     });
 
-
     const panelIn = delay + 300;
     t(() => {
       peek.classList.add("hcg-peek--in");
@@ -913,7 +929,6 @@ if (catalogSearchLink) {
           setTimeout(() => c.classList.add("hcg-card--in"), i * 110)
         );
     }, panelIn);
-
 
     t(
       () => {
@@ -949,22 +964,46 @@ if (catalogSearchLink) {
 
   // Legge la configurazione salvata
   function readSavedCfg() {
-    try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || "null"); } catch { return null; }
+    try {
+      return JSON.parse(localStorage.getItem(CONFIG_KEY) || "null");
+    } catch {
+      return null;
+    }
   }
 
   // Salva la pre-configurazione
   function savePreconfigToStorage() {
-    const w = Math.min(12, Math.max(1, parseFloat(document.getElementById("pcW")?.value) || 3));
-    const l = Math.min(30, Math.max(1, parseFloat(document.getElementById("pcL")?.value) || 5));
-    const path = Math.min(120, Math.max(30, parseInt(document.getElementById("pcPathNum")?.value) || 60));
+    const w = Math.min(
+      12,
+      Math.max(1, parseFloat(document.getElementById("pcW")?.value) || 3)
+    );
+    const l = Math.min(
+      30,
+      Math.max(1, parseFloat(document.getElementById("pcL")?.value) || 5)
+    );
+    const path = Math.min(
+      120,
+      Math.max(30, parseInt(document.getElementById("pcPathNum")?.value) || 60)
+    );
     const zona = document.getElementById("pcZona")?.value ?? "temperato";
     const riscaldata = document.getElementById("pcRisc")?.value === "si";
-    const mese = parseInt(document.getElementById("pcMese")?.value) || (new Date().getMonth() + 1);
+    const mese =
+      parseInt(document.getElementById("pcMese")?.value) ||
+      new Date().getMonth() + 1;
     const existing = readSavedCfg() || {};
     try {
-      localStorage.setItem(CONFIG_KEY, JSON.stringify({
-        ...existing, larghezza: w, lunghezza: l, path, zona, riscaldata, mese
-      }));
+      localStorage.setItem(
+        CONFIG_KEY,
+        JSON.stringify({
+          ...existing,
+          larghezza: w,
+          lunghezza: l,
+          path,
+          zona,
+          riscaldata,
+          mese
+        })
+      );
     } catch {}
     return { w, l, path, zona, riscaldata, mese };
   }
@@ -1004,12 +1043,26 @@ if (catalogSearchLink) {
     const path = parseInt(document.getElementById("pcPathNum")?.value) || 60;
     const zona = document.getElementById("pcZona")?.value ?? "temperato";
     const heated = document.getElementById("pcRisc")?.value === "si";
-    const mese = parseInt(document.getElementById("pcMese")?.value) || (new Date().getMonth() + 1);
+    const mese =
+      parseInt(document.getElementById("pcMese")?.value) ||
+      new Date().getMonth() + 1;
     const lang = document.documentElement.lang === "ro" ? "ro" : "it";
-    const months = (window.SERRA_I18N && window.SERRA_I18N.months && window.SERRA_I18N.months[lang])
-      || [];
+    const months =
+      (window.SERRA_I18N &&
+        window.SERRA_I18N.months &&
+        window.SERRA_I18N.months[lang]) ||
+      [];
     const monthName = months[mese - 1] || mese;
-    const zonaLabel = pcT("hero.zone_" + (zona === "freddo" ? "cold" : zona === "temperato" ? "temp" : "warm") + "_label") || zona;
+    const zonaLabel =
+      pcT(
+        "hero.zone_" +
+          (zona === "freddo"
+            ? "cold"
+            : zona === "temperato"
+              ? "temp"
+              : "warm") +
+          "_label"
+      ) || zona;
     const heatedLabel = pcT("preconfig.serra_heated") || "🔥";
     el.textContent = `${w}×${l} m · cam. ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
   }
@@ -1020,15 +1073,40 @@ if (catalogSearchLink) {
     if (sel) sel.value = heated ? "si" : "no";
   }
 
-
   // Imposta la serra riscaldata
-  function setPcHeated(active) { syncPcRiscSelect(active); }
+  function setPcHeated(active) {
+    syncPcRiscSelect(active);
+  }
 
   var PC_MONTHS = {
-    it: ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
-         "Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"],
-    ro: ["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie",
-         "Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"]
+    it: [
+      "Gennaio",
+      "Febbraio",
+      "Marzo",
+      "Aprile",
+      "Maggio",
+      "Giugno",
+      "Luglio",
+      "Agosto",
+      "Settembre",
+      "Ottobre",
+      "Novembre",
+      "Dicembre"
+    ],
+    ro: [
+      "Ianuarie",
+      "Februarie",
+      "Martie",
+      "Aprilie",
+      "Mai",
+      "Iunie",
+      "Iulie",
+      "August",
+      "Septembrie",
+      "Octombrie",
+      "Noiembrie",
+      "Decembrie"
+    ]
   };
 
   // Popola i mesi della pre-configurazione
@@ -1039,7 +1117,7 @@ if (catalogSearchLink) {
     const months = PC_MONTHS[lang] || PC_MONTHS.it;
     const currentVal = sel.value;
     sel.innerHTML = "";
-    months.forEach(function(m, i) {
+    months.forEach(function (m, i) {
       const opt = document.createElement("option");
       opt.value = i + 1;
       opt.textContent = m;
@@ -1048,79 +1126,83 @@ if (catalogSearchLink) {
     if (currentVal) sel.value = currentVal;
   }
 
-
   var PC_TR = {
     it: {
-      "preconfig.title":          "La tua serra",
-      "preconfig.tag":            "Imposta i parametri",
-      "preconfig.sizes_label":    "1. Misure interne",
-      "preconfig.sizes_badge":    "Fondamentale",
-      "preconfig.sizes_note":     "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
-      "preconfig.width":          "Larghezza",
-      "preconfig.length":         "Lunghezza",
-      "preconfig.path_label":     "Camminamento tra aiuole",
-      "preconfig.climate_label":  "2. Clima",
-      "preconfig.zona_label":     "Zona",
-      "preconfig.serra_label":    "Serra",
-      "preconfig.serra_cold":     "Fredda",
-      "preconfig.serra_heated":   "Riscaldata",
-      "preconfig.month_label":    "3. Mese di semina",
-      "preconfig.cta":            "Vai al configuratore",
-      "hero.cfg_levels_title":    "Che tipo di coltivatore sei?",
-      "hero.cfg_novizio":         "Principiante",
-      "hero.cfg_nov_hint":        "Orto pronto, guidato passo passo",
-      "hero.cfg_intermedio":      "Intermedio",
-      "hero.cfg_int_hint":        "Guidato, ma personalizzabile",
-      "hero.cfg_esperto":         "Esperto",
-      "hero.cfg_exp_hint":        "Catalogo completo, scelta libera",
-      "hero.zone_cold_label":     "Fredda",
-      "hero.zone_temp_label":     "Temperata",
-      "hero.zone_warm_label":     "Calda"
+      "preconfig.title": "La tua serra",
+      "preconfig.tag": "Imposta i parametri",
+      "preconfig.sizes_label": "1. Misure interne",
+      "preconfig.sizes_badge": "Fondamentale",
+      "preconfig.sizes_note":
+        "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
+      "preconfig.width": "Larghezza",
+      "preconfig.length": "Lunghezza",
+      "preconfig.path_label": "Camminamento tra aiuole",
+      "preconfig.climate_label": "2. Clima",
+      "preconfig.zona_label": "Zona",
+      "preconfig.serra_label": "Serra",
+      "preconfig.serra_cold": "Fredda",
+      "preconfig.serra_heated": "Riscaldata",
+      "preconfig.month_label": "3. Mese di semina",
+      "preconfig.cta": "Vai al configuratore",
+      "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
+      "hero.cfg_novizio": "Principiante",
+      "hero.cfg_nov_hint": "Orto pronto, guidato passo passo",
+      "hero.cfg_intermedio": "Intermedio",
+      "hero.cfg_int_hint": "Guidato, ma personalizzabile",
+      "hero.cfg_esperto": "Esperto",
+      "hero.cfg_exp_hint": "Catalogo completo, scelta libera",
+      "hero.zone_cold_label": "Fredda",
+      "hero.zone_temp_label": "Temperata",
+      "hero.zone_warm_label": "Calda"
     },
     ro: {
-      "preconfig.title":          "Sera ta",
-      "preconfig.tag":            "Setează parametrii",
-      "preconfig.sizes_label":    "1. Dimensiuni interne",
-      "preconfig.sizes_badge":    "Esențial",
-      "preconfig.sizes_note":     "Dimensiunile determină câte straturi și plante poți cultiva.",
-      "preconfig.width":          "Lățime",
-      "preconfig.length":         "Lungime",
-      "preconfig.path_label":     "Cărare între straturi",
-      "preconfig.climate_label":  "2. Climă",
-      "preconfig.zona_label":     "Zonă",
-      "preconfig.serra_label":    "Seră",
-      "preconfig.serra_cold":     "Rece",
-      "preconfig.serra_heated":   "Încălzită",
-      "preconfig.month_label":    "3. Luna de semănat",
-      "preconfig.cta":            "Mergi la configurator",
-      "hero.cfg_levels_title":    "Ce fel de cultivator ești?",
-      "hero.cfg_novizio":         "Începător",
-      "hero.cfg_nov_hint":        "Grădină gata, ghidat pas cu pas",
-      "hero.cfg_intermedio":      "Intermediar",
-      "hero.cfg_int_hint":        "Ghidat, dar personalizabil",
-      "hero.cfg_esperto":         "Expert",
-      "hero.cfg_exp_hint":        "Catalog complet, alegere liberă",
-      "hero.zone_cold_label":     "Rece",
-      "hero.zone_temp_label":     "Temperată",
-      "hero.zone_warm_label":     "Caldă"
+      "preconfig.title": "Sera ta",
+      "preconfig.tag": "Setează parametrii",
+      "preconfig.sizes_label": "1. Dimensiuni interne",
+      "preconfig.sizes_badge": "Esențial",
+      "preconfig.sizes_note":
+        "Dimensiunile determină câte straturi și plante poți cultiva.",
+      "preconfig.width": "Lățime",
+      "preconfig.length": "Lungime",
+      "preconfig.path_label": "Cărare între straturi",
+      "preconfig.climate_label": "2. Climă",
+      "preconfig.zona_label": "Zonă",
+      "preconfig.serra_label": "Seră",
+      "preconfig.serra_cold": "Rece",
+      "preconfig.serra_heated": "Încălzită",
+      "preconfig.month_label": "3. Luna de semănat",
+      "preconfig.cta": "Mergi la configurator",
+      "hero.cfg_levels_title": "Ce fel de cultivator ești?",
+      "hero.cfg_novizio": "Începător",
+      "hero.cfg_nov_hint": "Grădină gata, ghidat pas cu pas",
+      "hero.cfg_intermedio": "Intermediar",
+      "hero.cfg_int_hint": "Ghidat, dar personalizabil",
+      "hero.cfg_esperto": "Expert",
+      "hero.cfg_exp_hint": "Catalog complet, alegere liberă",
+      "hero.zone_cold_label": "Rece",
+      "hero.zone_temp_label": "Temperată",
+      "hero.zone_warm_label": "Caldă"
     }
   };
 
   // Traduce una chiave della pre-configurazione
   function pcT(key) {
     var lang = document.documentElement.lang === "ro" ? "ro" : "it";
-    return (PC_TR[lang] && PC_TR[lang][key]) || (PC_TR.it && PC_TR.it[key]) || key;
+    return (
+      (PC_TR[lang] && PC_TR[lang][key]) || (PC_TR.it && PC_TR.it[key]) || key
+    );
   }
 
   // Applica la lingua alla pre-configurazione
   function applyPreconfigLang() {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
-    overlay.querySelectorAll("[data-i18n]").forEach(function(el) {
+    overlay.querySelectorAll("[data-i18n]").forEach(function (el) {
       const key = el.getAttribute("data-i18n");
       const val = pcT(key);
       if (val && val !== key) {
-        if (val.indexOf("<") !== -1 || val.indexOf("&") !== -1) el.innerHTML = val;
+        if (val.indexOf("<") !== -1 || val.indexOf("&") !== -1)
+          el.innerHTML = val;
         else el.textContent = val;
       }
     });
@@ -1129,7 +1211,9 @@ if (catalogSearchLink) {
 
   // Aggiorna la CTA pre-configurazione
   function updatePreconfigCta() {
-    const active = document.querySelector("#preconfigPersonaSection .pc-persona-card.is-active");
+    const active = document.querySelector(
+      "#preconfigPersonaSection .pc-persona-card.is-active"
+    );
     const cta = document.getElementById("preconfigCta");
     if (!cta) return;
     if (active) {
@@ -1175,7 +1259,6 @@ if (catalogSearchLink) {
     if (pcMese) pcMese.value = mese;
     updatePreconfigSummary();
 
-
     const urlParams = new URL(targetUrl, location.href).searchParams;
     const livello = urlParams.get("livello");
     const personaSection = document.getElementById("preconfigPersonaSection");
@@ -1183,12 +1266,13 @@ if (catalogSearchLink) {
 
     if (personaSection) personaSection.hidden = hasLivello;
 
-    document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(btn => {
-      const isActive = hasLivello ? btn.dataset.livello === livello : false;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-pressed", String(isActive));
-    });
-
+    document
+      .querySelectorAll("#preconfigPersonaSection .pc-persona-card")
+      .forEach((btn) => {
+        const isActive = hasLivello ? btn.dataset.livello === livello : false;
+        btn.classList.toggle("is-active", isActive);
+        btn.setAttribute("aria-pressed", String(isActive));
+      });
 
     const cta = document.getElementById("preconfigCta");
     if (cta && hasLivello) {
@@ -1204,15 +1288,19 @@ if (catalogSearchLink) {
       requestAnimationFrame(() => {
         overlay.classList.add("is-open");
 
-        setTimeout(function() {
+        setTimeout(function () {
           const dimsCard = overlay.querySelector(".preconfig-vfield--primary");
           if (!dimsCard) return;
           dimsCard.classList.remove("dims-attention");
           void dimsCard.offsetWidth;
           dimsCard.classList.add("dims-attention");
-          dimsCard.addEventListener("animationend", function() {
-            dimsCard.classList.remove("dims-attention");
-          }, { once: true });
+          dimsCard.addEventListener(
+            "animationend",
+            function () {
+              dimsCard.classList.remove("dims-attention");
+            },
+            { once: true }
+          );
         }, 280);
       });
     });
@@ -1232,95 +1320,130 @@ if (catalogSearchLink) {
   }
 
   function initHomeApp() {
-
-    document.querySelectorAll(".hero-cfg-level, .nav-link--configuratore").forEach(link => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        openPreconfigSheet(this.href);
-      });
-    });
-
-
-    document.getElementById("preconfigBackdrop")?.addEventListener("click", closePreconfigSheet);
-    document.getElementById("preconfigClose")?.addEventListener("click", closePreconfigSheet);
-
-
-    document.getElementById("pcZona")?.addEventListener("change", updatePreconfigSummary);
-    document.getElementById("pcRisc")?.addEventListener("change", updatePreconfigSummary);
-
-
-    document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(btn => {
-      btn.addEventListener("click", function () {
-        document.querySelectorAll("#preconfigPersonaSection .pc-persona-card").forEach(b => {
-          b.classList.remove("is-active");
-          b.setAttribute("aria-pressed", "false");
+    document
+      .querySelectorAll(".hero-cfg-level, .nav-link--configuratore")
+      .forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          openPreconfigSheet(this.href);
         });
-        this.classList.add("is-active");
-        this.setAttribute("aria-pressed", "true");
-        updatePreconfigCta();
       });
-    });
 
+    document
+      .getElementById("preconfigBackdrop")
+      ?.addEventListener("click", closePreconfigSheet);
+    document
+      .getElementById("preconfigClose")
+      ?.addEventListener("click", closePreconfigSheet);
 
-    document.querySelectorAll(".preconfig-step-btn").forEach(btn => {
+    document
+      .getElementById("pcZona")
+      ?.addEventListener("change", updatePreconfigSummary);
+    document
+      .getElementById("pcRisc")
+      ?.addEventListener("change", updatePreconfigSummary);
+
+    document
+      .querySelectorAll("#preconfigPersonaSection .pc-persona-card")
+      .forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll("#preconfigPersonaSection .pc-persona-card")
+            .forEach((b) => {
+              b.classList.remove("is-active");
+              b.setAttribute("aria-pressed", "false");
+            });
+          this.classList.add("is-active");
+          this.setAttribute("aria-pressed", "true");
+          updatePreconfigCta();
+        });
+      });
+
+    document.querySelectorAll(".preconfig-step-btn").forEach((btn) => {
       btn.addEventListener("click", function () {
         const input = document.getElementById(this.dataset.target);
         if (!input) return;
         const step = parseFloat(this.dataset.step);
         const min = parseFloat(input.min) || 1;
         const max = parseFloat(input.max) || 40;
-        const val = Math.round((Math.min(max, Math.max(min, (parseFloat(input.value) || 0) + step))) * 10) / 10;
+        const val =
+          Math.round(
+            Math.min(
+              max,
+              Math.max(min, (parseFloat(input.value) || 0) + step)
+            ) * 10
+          ) / 10;
         input.value = val;
         updatePreconfigSummary();
       });
     });
 
-
     document.getElementById("pcWSlider")?.addEventListener("input", () => {
-      syncPcInputFromSlider("pcWSlider", "pcW"); updatePreconfigSummary();
+      syncPcInputFromSlider("pcWSlider", "pcW");
+      updatePreconfigSummary();
     });
     document.getElementById("pcLSlider")?.addEventListener("input", () => {
-      syncPcInputFromSlider("pcLSlider", "pcL"); updatePreconfigSummary();
+      syncPcInputFromSlider("pcLSlider", "pcL");
+      updatePreconfigSummary();
     });
-    document.getElementById("pcW")?.addEventListener("input", () => syncPcSlider("pcW", "pcWSlider"));
-    document.getElementById("pcL")?.addEventListener("input", () => syncPcSlider("pcL", "pcLSlider"));
+    document
+      .getElementById("pcW")
+      ?.addEventListener("input", () => syncPcSlider("pcW", "pcWSlider"));
+    document
+      .getElementById("pcL")
+      ?.addEventListener("input", () => syncPcSlider("pcL", "pcLSlider"));
 
+    document
+      .getElementById("pcPath")
+      ?.addEventListener("input", () => syncPcPath("slider"));
+    document
+      .getElementById("pcPathNum")
+      ?.addEventListener("change", () => syncPcPath("num"));
 
-    document.getElementById("pcPath")?.addEventListener("input", () => syncPcPath("slider"));
-    document.getElementById("pcPathNum")?.addEventListener("change", () => syncPcPath("num"));
-
-
-    ["pcW", "pcL", "pcMese"].forEach(id => {
-      document.getElementById(id)?.addEventListener("change", updatePreconfigSummary);
+    ["pcW", "pcL", "pcMese"].forEach((id) => {
+      document
+        .getElementById(id)
+        ?.addEventListener("change", updatePreconfigSummary);
     });
 
+    document
+      .getElementById("preconfigCta")
+      ?.addEventListener("click", function () {
+        savePreconfigToStorage();
+      });
 
-    document.getElementById("preconfigCta")?.addEventListener("click", function () {
-      savePreconfigToStorage();
-    });
-
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape" && !document.getElementById("preconfigOverlay")?.hasAttribute("hidden")) {
+    document.addEventListener("keydown", (e) => {
+      if (
+        e.key === "Escape" &&
+        !document.getElementById("preconfigOverlay")?.hasAttribute("hidden")
+      ) {
         closePreconfigSheet();
       }
     });
 
-
     new MutationObserver(() => {
       applyPreconfigLang();
       updatePreconfigSummary();
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
-
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"]
+    });
 
     if (document.getElementById("map") && typeof L !== "undefined") {
       try {
-        const map = L.map("map", { scrollWheelZoom: false }).setView([43.6853, 11.2547], 15);
+        const map = L.map("map", { scrollWheelZoom: false }).setView(
+          [43.6853, 11.2547],
+          15
+        );
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        L.marker([43.6853, 11.2547]).addTo(map)
-          .bindPopup("<b>Orto in Serra</b><br>Via delle Serre, 42<br>50023 Impruneta (FI)")
+        L.marker([43.6853, 11.2547])
+          .addTo(map)
+          .bindPopup(
+            "<b>Orto in Serra</b><br>Via delle Serre, 42<br>50023 Impruneta (FI)"
+          )
           .openPopup();
       } catch (err) {
         console.error("Errore nel caricamento della mappa Leaflet:", err);

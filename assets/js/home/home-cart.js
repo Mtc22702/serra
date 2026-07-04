@@ -243,11 +243,13 @@ function alertCheckout() {
     openCart();
     return;
   }
-  
+
   // Controlla se l'utente è autenticato
   const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
   if (!user) {
-    alert("Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area Personale.");
+    alert(
+      "Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area Personale."
+    );
     window.location.href = "account.html";
     return;
   }
@@ -258,9 +260,12 @@ function alertCheckout() {
     bustine,
     prezzo: packPrice(id)
   }));
-  const totalVal = cart.reduce((sum, { id, bustine }) => sum + packPrice(id) * bustine, 0);
+  const totalVal = cart.reduce(
+    (sum, { id, bustine }) => sum + packPrice(id) * bustine,
+    0
+  );
 
-  window.SerraAPI.getOrders().then(orders => {
+  window.SerraAPI.getOrders().then((orders) => {
     const newOrder = {
       id: "ORD-" + Math.floor(10000 + Math.random() * 90000),
       email: user.email,
@@ -276,8 +281,10 @@ function alertCheckout() {
       savePrefs();
       updateCartUI();
       closeCart();
-      
-      alert(`Ordine ${newOrder.id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.`);
+
+      alert(
+        `Ordine ${newOrder.id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.`
+      );
       window.location.href = "account.html";
     });
   });
@@ -1369,13 +1376,12 @@ function openDetail(id, preserveTab = false) {
   const guide = localizedSowingGuide(p);
   const profile = technicalProfile(p, guide);
 
-
   document.getElementById("detailPhoto").src = photoSrc(id);
   document.getElementById("detailPhoto").alt = plantName(id);
   document.getElementById("detailName").textContent = plantName(id);
 
-
-  const tipo = p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
+  const tipo =
+    p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
   const diffLevel = DIFFICULTY[p.id] || 2;
   const diffLabel =
     diffLevel === 1
@@ -1394,18 +1400,15 @@ function openDetail(id, preserveTab = false) {
   diffEl.textContent = diffLabel;
   diffEl.className = `detail-hero-diff ${diffClass}`;
 
-
   document.getElementById("detailBadges").innerHTML =
     `<span class="badge badge--sun">${SOLE_ICON[p.sole]} ${sunLabel(p)}</span>
      <span class="badge badge--water">${ACQUA_ICON[p.acqua]} ${t("plant.water")} ${t(`water.${p.acqua}`)}</span>
      <span class="badge badge--type" style="${TIPO_STYLE[tipo] || ""}">${typeLabel(tipo)}</span>`;
 
-
   const nota = plantNote(p);
   const notaEl = document.getElementById("detailNota");
   notaEl.textContent = profile.description;
   notaEl.hidden = !profile.description;
-
 
   const sp = PLANT_SPACING[p.id] || {};
   const svgDiagram = spacingInfographic(p);
@@ -1420,7 +1423,6 @@ function openDetail(id, preserveTab = false) {
          <span class="detail-tile-label">${t("detail.spacing_label")}</span>
          <b class="detail-spacing-val">—</b>
        </div>`;
-
 
   const hcm = PLANT_HEIGHT_CM[p.id] ? ` · ${PLANT_HEIGHT_CM[p.id]} cm` : "";
   const price = packPrice(id);
@@ -1458,7 +1460,6 @@ function openDetail(id, preserveTab = false) {
   document.getElementById("detailHarvestGuide").innerHTML =
     renderTechnicalCards(profile.harvest);
 
-
   const activeMonths = Array.from(effectiveMonths(p))
     .sort((a, b) => a - b)
     .map((m) => ABBR_MESI[m - 1])
@@ -1487,7 +1488,6 @@ function openDetail(id, preserveTab = false) {
        <span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span>
      </div>`;
 
-
   let comp = "";
   if (p.amiche.length)
     comp += `<div class="detail-companions-group">
@@ -1512,7 +1512,6 @@ function openDetail(id, preserveTab = false) {
   const compEl = document.getElementById("detailCompanions");
   compEl.innerHTML = comp;
   compEl.hidden = !comp;
-
 
   const sowEl = document.getElementById("detailSow");
   const sowBodyEl = document.getElementById("detailSowBody");
@@ -1543,7 +1542,6 @@ function openDetail(id, preserveTab = false) {
   }
   sowBodyEl.innerHTML = sowHtml;
   sowEl.hidden = !sowHtml;
-
 
   const inC = inCart(id);
   const btn = document.getElementById("detailAddBtn");
@@ -1604,8 +1602,6 @@ document.getElementById("detailPanel")?.addEventListener(
   (e) => {
     const panel = document.getElementById("detailPanel");
     if (!panel) return;
-
-
 
     const scroller =
       panel.querySelector(".detail-scroll") &&

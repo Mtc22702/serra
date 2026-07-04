@@ -610,10 +610,7 @@ function openSettingsPanelAndFocusDimensions() {
     if (inW) {
       inW.focus({ preventScroll: true });
       panel.classList.add("guided-highlight");
-      window.setTimeout(
-        () => panel.classList.remove("guided-highlight"),
-        1600
-      );
+      window.setTimeout(() => panel.classList.remove("guided-highlight"), 1600);
     }
   };
   if (!isResponsiveConfiguratorLayout()) {
@@ -701,7 +698,8 @@ function configDetailTabIcon(tab) {
 // Costruisce il profilo tecnico per le schede coltivazione e cura
 function configDetailProfile(p, sow) {
   const ro = state.lang === "ro";
-  const type = p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
+  const type =
+    p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
   const soil = ro
     ? {
         frutto:
@@ -910,7 +908,9 @@ function configDiseaseGroup(id) {
   if (id === "basilico") return "basil";
   if (id === "fragola") return "strawberry";
   const plant = typeof BYID !== "undefined" ? BYID[id] : null;
-  const type = plant ? (plant.tipo || plant.arch) : ((typeof TIPO !== "undefined" && TIPO[id]) || "");
+  const type = plant
+    ? plant.tipo || plant.arch
+    : (typeof TIPO !== "undefined" && TIPO[id]) || "";
   if (type === "aromatica") return "herbs";
   if (type === "foglia") return "leafy";
   return "other";
@@ -1437,7 +1437,8 @@ function openPlantDetailPanel() {
   if (!panel) return;
   renderPlantDetailPanel();
   panel.hidden = false;
-  if (settings && isResponsiveConfiguratorLayout()) setPanelCollapsed(settings, true);
+  if (settings && isResponsiveConfiguratorLayout())
+    setPanelCollapsed(settings, true);
   requestAnimationFrame(() => scrollPlantDetailPanelIntoView("smooth"));
 }
 
@@ -1448,7 +1449,8 @@ function closePlantDetailPanel() {
   const keepGreenhouseRow =
     isResponsiveConfiguratorLayout() && panel && !panel.hidden;
   if (panel) panel.hidden = true;
-  if (settings && isResponsiveConfiguratorLayout()) setPanelCollapsed(settings, false);
+  if (settings && isResponsiveConfiguratorLayout())
+    setPanelCollapsed(settings, false);
   state.selected = -1;
   render();
   if (keepGreenhouseRow) {
@@ -1470,7 +1472,11 @@ function renderPlantDetailPanel() {
   const resaTot = b.count * p.resa;
   let photoSrc = `assets/img/svg/${p.id}.svg`;
   if (p.foto) {
-    if (p.foto.startsWith("http://") || p.foto.startsWith("https://") || p.foto.startsWith("data:")) {
+    if (
+      p.foto.startsWith("http://") ||
+      p.foto.startsWith("https://") ||
+      p.foto.startsWith("data:")
+    ) {
       photoSrc = p.foto;
     } else if (p.foto.includes("/")) {
       photoSrc = p.foto;

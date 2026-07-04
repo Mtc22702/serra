@@ -101,7 +101,9 @@ function seminabili() {
 }
 // Recupera il tipo della pianta
 function typeOfPlant(p) {
-  return p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
+  return (
+    p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia"
+  );
 }
 // Recupera la distanza di coltivazione
 function plantDistanceValue(p) {
@@ -475,7 +477,6 @@ function renderHero() {
     ?.classList.toggle("active", state.riscaldata);
   applyDynamicStaticText();
 
-
   const plants = diversePlants(seminabili(), 8);
   const positions = [
     { top: "8%", right: "3%", size: 160, opacity: 0.2, dur: 7, delay: 0 },
@@ -709,10 +710,11 @@ function renderEditorialPlants() {
       })
       .join("");
   } else {
-    document.getElementById("compactPlants").classList.remove("compact-list-view");
+    document
+      .getElementById("compactPlants")
+      .classList.remove("compact-list-view");
     const featured = plants.slice(0, 3);
     const rest = plants.slice(3);
-
 
     const editHTML = `<div class="plant-catalog-top">
       ${featured
@@ -751,7 +753,6 @@ function renderEditorialPlants() {
         .join("")}
     </div>`;
     document.getElementById("editorialPlants").innerHTML = editHTML;
-
 
     document.getElementById("compactPlants").innerHTML = rest
       .map((p) => {
@@ -901,7 +902,6 @@ function renderFooter() {
   const footerSeasonTag = document.getElementById("footerSeasonTag");
   if (footerSeasonTag) footerSeasonTag.innerHTML = stagLabel;
 
-
   let previousEmoji = "";
   const icons = nonRepeatingPlantOrder(PLANTS)
     .map((p, i) => {
@@ -915,8 +915,7 @@ function renderFooter() {
       return `<span class="footer-plant-icon">${visual}</span>`;
     })
     .join("");
-  document.getElementById("footerPlantRow").innerHTML =
-    icons + icons;
+  document.getElementById("footerPlantRow").innerHTML = icons + icons;
 }
 
 // Aggiornamento generale
