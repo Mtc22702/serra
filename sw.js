@@ -1,15 +1,24 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-06-29-192";
+const CACHE_VERSION = "2026-07-04-1425";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
   "./",
   "./index.html",
   "./configuratore.html",
+  "./account.html",
   "./manifest.json",
   "./assets/css/index.css",
   "./assets/css/style.css",
   "./assets/css/theme.css",
+  "./assets/css/account.css",
+  "./assets/js/app-version.js",
+  "./assets/js/theme-init.js",
+  "./assets/js/sw-register.js",
+  "./assets/js/configuratore-init.js",
+  "./assets/js/back-to-top.js",
+  "./assets/js/account-i18n-data.js",
+  "./assets/js/api-fallback-data.js",
   "./assets/css/index/01-fondazioni-hero.css",
   "./assets/css/index/02-calendario-catalogo.css",
   "./assets/css/index/03-pannelli-overlay.css",

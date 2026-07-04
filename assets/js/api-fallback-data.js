@@ -1,4 +1,4 @@
-[
+window.SERRA_DEFAULT_USERS = [
   {
     "email": "admin@ortoinserra.it",
     "password": "admin",
@@ -17,14 +17,6 @@
     "citta": "Milano",
     "cap": "20121",
     "telefono": "3331234567",
-    "role": "user",
-    "notifications": [
-      {
-        "id": 1783070968901,
-        "message": "Il tuo ordine <strong>ORD-84201</strong> è ora nello stato <strong>Spedito</strong>! (Codice tracking: 12342321111)",
-        "read": true,
-        "date": "2026-07-03T09:29:28.901Z"
-      }
-    ]
+    "role": "user"
   }
-]
+];

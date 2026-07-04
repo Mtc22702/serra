@@ -8,62 +8,20 @@
     />
     <title>Area Riservata · Orto in Serra</title>
     <!-- Configurazione Asset e Versione -->
-    <script>
-      window.SERRA_APP_VERSION = "2026-06-29-192";
-      window.SERRA_IS_LOCAL_DEV =
-        location.hostname === "localhost" ||
-        location.hostname === "127.0.0.1" ||
-        location.hostname === "0.0.0.0" ||
-        location.hostname === "::1" ||
-        location.hostname === "";
-      window.SERRA_ASSET_VERSION = window.SERRA_IS_LOCAL_DEV
-        ? String(Date.now())
-        : window.SERRA_APP_VERSION;
-      window.serraAsset = function (path) {
-        return path + "?v=" + window.SERRA_ASSET_VERSION;
-      };
-    </script>
+    <script src="assets/js/app-version.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,600;9..144,0,800;9..144,1,300&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script>
-      document.write(
-        '<link rel="icon" href="' +
-          serraAsset("assets/img/icons/logo-192.png") +
-          '" type="image/png" />'
-      );
-    </script>
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
     <!-- Fogli di stile -->
-    <script>
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/index.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/theme.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/account.css") +
-          '" />'
-      );
-    </script>
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/account.css" />
     <!-- Script di gestione del tema -->
-    <script>
-      (function () {
-        var saved = localStorage.getItem("serra-theme");
-        var dark = saved
-          ? saved === "dark"
-          : window.matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.dataset.theme = dark ? "dark" : "light";
-      })();
-    </script>
+    <script src="assets/js/theme-init.js"></script>
   </head>
   <body>
     <!-- Header e Navigazione -->
@@ -1052,22 +1010,13 @@
     <div id="invoicePrintContainer" class="invoice-print-section"></div>
 
     <!-- Script della pagina -->
-    <script>
-      document.write(
-        '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/account.js") + '"><\/script>'
-      );
-    </script>
+    <script src="assets/js/i18n.js" defer></script>
+    <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/account-i18n-data.js" defer></script>
+    <script src="assets/js/api-fallback-data.js" defer></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/account.js" defer></script>
+    <script src="assets/js/sw-register.js" defer></script>
   </body>
 </html>
