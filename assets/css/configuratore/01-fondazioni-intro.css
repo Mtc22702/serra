@@ -203,6 +203,17 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  .guided-meta-row:focus-visible {
+    outline: 2px solid var(--oro);
+    outline-offset: 2px;
+  }
+  /* Icona matita: inerte su desktop (c'è già spazio e il pannello
+     impostazioni è visibile), compare solo nella versione compatta mobile. */
+  .guided-meta-edit {
+    display: none;
   }
   .guided-tags {
     display: flex;

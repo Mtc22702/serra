@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-06-201";
+      window.SERRA_APP_VERSION = "2026-07-06-202";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -181,13 +181,34 @@
               </p>
             </div>
           </div>
-          <div class="guided-meta-row">
+          <div
+            class="guided-meta-row"
+            id="guidedMetaRow"
+            role="button"
+            tabindex="0"
+            aria-label="Modifica misure, zona e mese di semina"
+          >
             <div class="guided-tags" aria-label="Dati attuali della serra">
               <span class="tag" id="tagZona">🌡️&nbsp;temperata</span>
               <span class="tag" id="tagMese">📅&nbsp;—</span>
               <span class="tag" id="tagArea">📐&nbsp;3×5 m</span>
             </div>
             <div class="guided-summary" id="guidedSummary"></div>
+            <span class="guided-meta-edit" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="13"
+                height="13"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+            </span>
           </div>
         </div>
 

@@ -118,4 +118,23 @@
       toggle.setAttribute("aria-expanded", String(isOpen));
     });
   });
+
+  // Riga riepilogo (zona/mese/misure): tutta la riga apre le impostazioni,
+  // così su smartphone non serve tenere il blocco esteso sempre visibile.
+  ready(function () {
+    const row = document.getElementById("guidedMetaRow");
+    if (!row) return;
+    function open() {
+      if (typeof openSettingsPanelAndFocusDimensions === "function") {
+        openSettingsPanelAndFocusDimensions();
+      }
+    }
+    row.addEventListener("click", open);
+    row.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
 })();

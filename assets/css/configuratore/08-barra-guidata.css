@@ -237,6 +237,75 @@
     .stage-subtitle {
       display: none;
     }
+
+    /* Riepilogo serra (zona/mese/misure) compresso su una riga sola, con
+       matita per aprire le impostazioni, invece del blocco a griglia alto
+       che rubava spazio prima di arrivare alla barra guidata. */
+    .guided-intro-head {
+      gap: 6px;
+    }
+    .guided-intro-right {
+      gap: 6px;
+    }
+    .guided-meta-row {
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 6px;
+      cursor: pointer;
+    }
+    .guided-tags {
+      display: flex;
+      flex-wrap: nowrap;
+      flex: 1;
+      min-width: 0;
+      width: auto;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .guided-tags::-webkit-scrollbar {
+      display: none;
+    }
+    .guided-tags .tag {
+      display: inline-flex;
+      flex: none;
+      width: auto;
+      min-height: 0;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+    .guided-summary {
+      flex-basis: 100%;
+      order: 3;
+      width: auto;
+      margin-top: 0;
+      padding: 0;
+      background: none;
+      font-size: 10px;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+    .guided-meta-edit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(47, 107, 58, 0.12);
+      color: var(--verde);
+    }
+
+    /* Selettore livello: già chiuso di default, qui solo un po' più basso
+       visto che il testo di aiuto (hint) è già nascosto sotto i 640px. */
+    .persona-pick-head {
+      min-height: 46px;
+      padding: 8px 10px;
+    }
   }
 }
 
