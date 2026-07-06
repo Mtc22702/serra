@@ -242,6 +242,20 @@
     border-left: 3px solid rgba(47, 107, 58, 0.3);
   }
 
+  /* Rassicura che i dati inseriti qui non sono definitivi: si potranno
+     rivedere nel configuratore, per non dare la sensazione di ripetere
+     lo stesso lavoro due volte. */
+  .preconfig-intro-note {
+    font-size: 11.5px;
+    color: #5c6b57;
+    margin: 0 0 8px;
+    line-height: 1.45;
+    padding: 8px 10px;
+    background: rgba(217, 164, 65, 0.1);
+    border: 1px solid rgba(217, 164, 65, 0.24);
+    border-radius: 9px;
+  }
+
   .preconfig-vfield--primary {
     border-color: rgba(47, 107, 58, 0.28);
     box-shadow:
@@ -788,6 +802,11 @@
     color: #8aaa8a;
     background: rgba(82, 183, 136, 0.07);
     border-left-color: rgba(82, 183, 136, 0.3);
+  }
+  html[data-theme="dark"] .preconfig-intro-note {
+    color: #cdbd8e;
+    background: rgba(217, 164, 65, 0.08);
+    border-color: rgba(217, 164, 65, 0.22);
   }
   html[data-theme="dark"] .preconfig-vfield--primary {
     border-color: rgba(82, 183, 136, 0.3);

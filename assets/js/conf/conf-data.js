@@ -1410,6 +1410,25 @@ const PLANT_PHOTOS = {
   cimbru: "assets/img/photo/cimbru.webp"
 };
 
+// Restituisce il percorso della foto reale di una pianta (con fallback a un
+// nome file ipotizzato dall'id), da usare al posto delle emoji nelle liste
+function plantPhotoSrc(plant, id) {
+  const p = plant || {};
+  if (p.foto) {
+    if (
+      p.foto.startsWith("http://") ||
+      p.foto.startsWith("https://") ||
+      p.foto.startsWith("data:")
+    ) {
+      return p.foto;
+    }
+    if (p.foto.includes("/")) return p.foto;
+    return `assets/img/photo/${p.foto}`;
+  }
+  if (PLANT_PHOTOS[id]) return PLANT_PHOTOS[id];
+  return `assets/img/photo/${id}.webp`;
+}
+
 // Preset pronti
 const PRESETS = {
   insalate: [

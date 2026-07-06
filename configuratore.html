@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-06-29-192";
+      window.SERRA_APP_VERSION = "2026-07-06-201";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -307,6 +307,47 @@
           </details>
         </div>
       </div>
+
+      <!-- Barra guidata a passi: percorso principale del configuratore -->
+      <nav class="wizard-bar" id="wizardBar" aria-label="Passi del configuratore">
+        <button
+          class="wizard-step is-current"
+          type="button"
+          data-wizard-step="settings"
+          data-wizard-target="panelSettings"
+          aria-current="step"
+        >
+          <span class="wizard-step-num" aria-hidden="true">1</span>
+          <span class="wizard-step-body">
+            <span class="wizard-step-label" data-i18n-conf="wizardStep1Label">Serra e clima</span>
+            <span class="wizard-step-hint" data-i18n-conf="wizardStep1Hint">Misure, zona, mese di semina</span>
+          </span>
+        </button>
+        <button
+          class="wizard-step"
+          type="button"
+          data-wizard-step="crops"
+          data-wizard-target="panelCustomize"
+        >
+          <span class="wizard-step-num" aria-hidden="true">2</span>
+          <span class="wizard-step-body">
+            <span class="wizard-step-label" data-i18n-conf="wizardStep2Label">Le tue colture</span>
+            <span class="wizard-step-hint" data-i18n-conf="wizardStep2Hint">Scegli o modifica le piante</span>
+          </span>
+        </button>
+        <button
+          class="wizard-step"
+          type="button"
+          data-wizard-step="yield"
+          data-wizard-target="panelYield"
+        >
+          <span class="wizard-step-num" aria-hidden="true">3</span>
+          <span class="wizard-step-body">
+            <span class="wizard-step-label" data-i18n-conf="wizardStep3Label">Lista della spesa</span>
+            <span class="wizard-step-hint" data-i18n-conf="wizardStep3Hint">Rivedi i semi e completa</span>
+          </span>
+        </button>
+      </nav>
 
       <!-- Impostazioni serra -->
       <div class="col-left">
@@ -718,7 +759,17 @@
               </div>
             </div>
           </div>
-          <div class="view-toolbar">
+          <button
+            type="button"
+            class="stage-tools-kicker"
+            id="stageToolsToggle"
+            aria-expanded="false"
+            aria-controls="viewToolbar"
+          >
+            <span data-i18n-conf="stageToolsExtra">Strumenti extra</span>
+            <span class="stage-tools-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="view-toolbar" id="viewToolbar">
               <div class="view-select-wrap">
                 <span class="view-select-label" id="viewModeLabel">Vista</span>
                 <span class="view-select-value" id="viewModeValue"
@@ -1051,9 +1102,10 @@
                         </svg>
                       </span>
                       <span class="crop-action-text">
-                        <span class="btn-label">Sistema senza riempire</span>
+                        <span class="btn-label">Riordina le aiuole</span>
                         <small class="btn-hint"
-                          >Riordina le aiuole e non cambia i numeri.</small
+                          >Sistema la disposizione, le quantità restano
+                          uguali.</small
                         >
                       </span>
                     </button>
@@ -1082,7 +1134,8 @@
                       <span class="crop-action-text">
                         <span class="btn-label">Riempi spazi vuoti</span>
                         <small class="btn-hint"
-                          >Aumenta solo le colture automatiche.</small
+                          >Aggiunge altre piante già scelte per non lasciare
+                          spazio libero.</small
                         >
                       </span>
                     </button>
@@ -1202,7 +1255,9 @@
               </div>
               <div class="summary" id="summary"></div>
               <ul class="shop" id="shop"></ul>
+              <div class="shop-total" id="shopTotal" hidden></div>
               <div class="materials" id="materials"></div>
+              <div class="order-grand-total" id="orderGrandTotal" hidden></div>
             </div>
             <!-- Azioni lista semi -->
             <div class="yield-footer">
@@ -1542,6 +1597,7 @@
     <script src="assets/js/conf/conf-engine.js" defer></script>
     <script src="assets/js/conf/conf-calendar.js" defer></script>
     <script src="assets/js/conf/conf-app.js" defer></script>
+    <script src="assets/js/conf/conf-wizard.js" defer></script>
 
     <!-- Scroll listener torna su -->
     <script>

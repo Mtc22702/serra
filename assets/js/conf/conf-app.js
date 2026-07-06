@@ -595,8 +595,13 @@ function saveConfCart() {
 
 // Aggiorna la visualizzazione del carrello
 function updateConfCartUI() {
+  // Materiali extra facoltativi selezionati nella lista sopra (terriccio,
+  // concime, sostegni, etichette): sono parte dell'ordine solo se scelti qui.
+  const materials =
+    typeof selectedMaterialItems === "function" ? selectedMaterialItems() : [];
+
   const badge = document.getElementById("cartCount");
-  if (badge) badge.textContent = confCart.length;
+  if (badge) badge.textContent = confCart.length + materials.length;
 
   const speciesLine = document.getElementById("cartSpeciesLine");
   if (speciesLine) {
@@ -617,7 +622,7 @@ function updateConfCartUI() {
   const clearBtn = document.getElementById("cartClearBtn");
   if (!empty || !items || !foot) return;
 
-  if (!confCart.length) {
+  if (!confCart.length && !materials.length) {
     empty.hidden = false;
     items.hidden = true;
     foot.hidden = true;
@@ -629,38 +634,46 @@ function updateConfCartUI() {
   foot.hidden = false;
   if (clearBtn) clearBtn.hidden = false;
 
-  items.innerHTML =
-    confCart
-      .map(({ id, bustine }) => {
-        const p = BYID[id];
-        if (!p) return "";
-        let photo = "";
-        if (p.foto) {
-          if (
-            p.foto.startsWith("http://") ||
-            p.foto.startsWith("https://") ||
-            p.foto.startsWith("data:")
-          ) {
-            photo = p.foto;
-          } else if (p.foto.includes("/")) {
-            photo = p.foto;
-          } else {
-            photo = `assets/img/photo/${p.foto}`;
-          }
-        } else if (PLANT_PHOTOS[id]) {
-          photo = PLANT_PHOTOS[id];
+  const seedsTotal = confCart.reduce(
+    (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
+    0
+  );
+  const materialsTotal = materials.reduce(
+    (s, m) => s + m.bustine * m.prezzo,
+    0
+  );
+
+  const seedRows = confCart
+    .map(({ id, bustine }) => {
+      const p = BYID[id];
+      if (!p) return "";
+      let photo = "";
+      if (p.foto) {
+        if (
+          p.foto.startsWith("http://") ||
+          p.foto.startsWith("https://") ||
+          p.foto.startsWith("data:")
+        ) {
+          photo = p.foto;
+        } else if (p.foto.includes("/")) {
+          photo = p.foto;
         } else {
-          photo = `assets/img/photo/${id}.webp`;
+          photo = `assets/img/photo/${p.foto}`;
         }
-        const emoji = FRUIT_EMOJI[id] || "🌱";
-        const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
-        const bustLabel =
-          bustine === 1
-            ? tx("cart.pack_one")
-            : tx("cart.pack_many", { count: bustine });
-        const seedLabel = tx("cart.seeds_per_pack", { count: pd.seeds });
-        const priceLabel = tx("cart.per_pack");
-        return `<div class="cart-item">
+      } else if (PLANT_PHOTOS[id]) {
+        photo = PLANT_PHOTOS[id];
+      } else {
+        photo = `assets/img/photo/${id}.webp`;
+      }
+      const emoji = FRUIT_EMOJI[id] || "🌱";
+      const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
+      const bustLabel =
+        bustine === 1
+          ? tx("cart.pack_one")
+          : tx("cart.pack_many", { count: bustine });
+      const seedLabel = tx("cart.seeds_per_pack", { count: pd.seeds });
+      const priceLabel = tx("cart.per_pack");
+      return `<div class="cart-item">
         ${
           photo
             ? `<img src="${photo}" alt="${plantText(p, "nome")}" loading="lazy" />`
@@ -676,12 +689,48 @@ function updateConfCartUI() {
         </span>
         <button class="cart-item-remove" onclick="removeFromConfCart('${id}')" title="${tx("remove")}">✕</button>
       </div>`;
-      })
-      .join("") +
-    `<div class="cart-total-row">
-      <span>${tx("cart.total")}</span>
-      <b>${formatMoney(confCart.reduce((s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine, 0))}</b>
-    </div>`;
+    })
+    .join("");
+
+  const materialsHeading = materials.length
+    ? `<div class="cart-section-heading">${tx("cart.materials_section")}</div>`
+    : "";
+  const materialRows = materials
+    .map((m) => {
+      const qtyLabel = shoppingUnitLabel(m.unit, m.bustine);
+      return `<div class="cart-item">
+        <span style="font-size:2rem;line-height:1;flex-shrink:0">${m.icon || "🧰"}</span>
+        <span class="cart-item-copy">
+          <span class="cart-item-name">${m.nome}</span>
+          <span class="cart-item-pack">
+            <span>${qtyLabel}</span>
+            <b>${formatMoney(m.bustine * m.prezzo)}</b>
+          </span>
+        </span>
+        <button class="cart-item-remove" onclick="unselectMaterial('${m.id}')" title="${tx("remove")}">✕</button>
+      </div>`;
+    })
+    .join("");
+
+  const totalRow = materials.length
+    ? `<div class="cart-total-row cart-total-row--sub">
+        <span>${tx("cart.total")}</span>
+        <b>${formatMoney(seedsTotal)}</b>
+      </div>
+      <div class="cart-total-row cart-total-row--sub">
+        <span>${tx("cart.materials_section")}</span>
+        <b>${formatMoney(materialsTotal)}</b>
+      </div>
+      <div class="cart-total-row">
+        <span>${tx("cart.materials_grand_total")}</span>
+        <b>${formatMoney(seedsTotal + materialsTotal)}</b>
+      </div>`
+    : `<div class="cart-total-row">
+        <span>${tx("cart.total")}</span>
+        <b>${formatMoney(seedsTotal)}</b>
+      </div>`;
+
+  items.innerHTML = seedRows + materialsHeading + materialRows + totalRow;
 }
 
 // Rimuove una voce dal carrello
@@ -739,7 +788,9 @@ function showConfCartNudge(count) {
 
 // Mostra il riepilogo ordine all'utente
 function alertConfCheckout() {
-  if (!confCart.length) return;
+  const materials =
+    typeof selectedMaterialItems === "function" ? selectedMaterialItems() : [];
+  if (!confCart.length && !materials.length) return;
 
   // Controlla se l'utente è autenticato
   const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
@@ -751,7 +802,7 @@ function alertConfCheckout() {
     return;
   }
 
-  const orderItems = confCart.map(({ id, bustine }) => {
+  const seedItems = confCart.map(({ id, bustine }) => {
     const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
     const price = PACK_DATA[id]?.price ?? 2.5;
     return {
@@ -761,10 +812,17 @@ function alertConfCheckout() {
       prezzo: price
     };
   });
-  const totalVal = confCart.reduce(
+  // I materiali extra selezionati (facoltativi) entrano nello stesso ordine
+  const orderItems = seedItems.concat(materials);
+  const seedsTotal = confCart.reduce(
     (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
     0
   );
+  const materialsTotal = materials.reduce(
+    (s, m) => s + m.bustine * m.prezzo,
+    0
+  );
+  const totalVal = seedsTotal + materialsTotal;
 
   window.SerraAPI.getOrders().then((orders) => {
     const newOrder = {
@@ -777,8 +835,18 @@ function alertConfCheckout() {
     };
     orders.push(newOrder);
     window.SerraAPI.saveOrders(orders).then(() => {
-      // Svuota il carrello del configuratore dopo l'acquisto
+      // Svuota il carrello e la selezione materiali extra dopo l'acquisto
       confCart = [];
+      saveConfCart();
+      Object.keys(shoppingChecked).forEach((k) => {
+        shoppingChecked[k] = false;
+      });
+      if (typeof saveMaterialsSelection === "function") {
+        saveMaterialsSelection();
+      }
+      if (typeof renderMaterials === "function") {
+        renderMaterials();
+      }
       if (typeof updateConfCartUI === "function") {
         updateConfCartUI();
       }

@@ -9,22 +9,36 @@
     padding: 0;
   }
   :root {
-    --green: #2d6a4f;
-    --green-dk: #1b4332;
-    --green-lt: #52b788;
+    /* Palette unificata di "Orto in Serra": stessi valori usati anche dal
+       configuratore (assets/css/configuratore/01-fondazioni-intro.css), che
+       li richiama tramite alias in italiano (--verde, --terra, --oro...).
+       Questo file è il primo caricato su tutte e tre le pagine (home,
+       configuratore, area personale), quindi resta la fonte unica. */
+    --green: #2f6b3a;
+    --green-dk: #1f3a26;
+    --green-lt: #5b9c4a;
     --lime: #74c69d;
-    --earth: #6b4226;
-    --sand: #f4e4c1;
-    --sand-lt: #faf6ee;
-    --bg: #f5f0e8;
-    --text: #1a1a1a;
-    --muted: #6b6254;
-    --border: #ddd3be;
-    --accent: #e76f51;
-    --yellow: #f4a261;
-    --white: #fff;
+    --earth: #6b5440;
+    --sand: #eef0df;
+    --sand-lt: #f6f8f0;
+    --bg: #eef0df;
+    --text: #26342a;
+    --muted: #5f6f60;
+    --border: #d7ddd2;
+    --accent: #c8643c;
+    --yellow: #d9a441;
+    --white: #fffdf6;
     --r: 16px;
     --nav-h: 76px;
+
+    /* Scala condivisa di raggi e ombre per i nuovi componenti unificati */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+    --shadow-sm: 0 2px 8px rgba(31, 58, 38, 0.08);
+    --shadow-md: 0 12px 34px rgba(31, 58, 38, 0.14);
+    --shadow-lg: 0 20px 48px rgba(31, 58, 38, 0.18);
   }
   html {
     scroll-behavior: smooth;

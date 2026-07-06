@@ -1395,6 +1395,29 @@
   .cart-total-row b {
     font-size: 1rem;
   }
+  .cart-total-row--sub {
+    margin-top: 0.3rem;
+    padding: 0.55rem 0.85rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .cart-total-row--sub b {
+    font-size: 0.85rem;
+    color: var(--green-dk);
+  }
+  .cart-section-heading {
+    margin-top: 0.9rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--border);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
   .cart-footer {
     margin-top: 1.2rem;
     padding-top: 1.2rem;

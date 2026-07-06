@@ -1,20 +1,23 @@
 /* Fondazioni e introduzione */
 @layer base {
   :root {
-    --verde-scuro: #1f3a26;
-    --verde: #2f6b3a;
-    --verde-chiaro: #5b9c4a;
-    --terra: #6b5440;
+    /* Alias in italiano allineati alla palette unificata definita in
+       assets/css/index/01-fondazioni-hero.css (stessi valori esatti, con
+       fallback per sicurezza se quel file non fosse ancora caricato). */
+    --verde-scuro: var(--green-dk, #1f3a26);
+    --verde: var(--green, #2f6b3a);
+    --verde-chiaro: var(--green-lt, #5b9c4a);
+    --terra: var(--earth, #6b5440);
     --terra-scuro: #4b3a2b;
     --ghiaia: #d8cfbd;
-    --crema: #eef0df;
-    --carta: #fffdf6;
-    --inchiostro: #26342a;
-    --terracotta: #c8643c;
-    --oro: #d9a441;
-    --ombra: 0 12px 34px rgba(31, 58, 38, 0.14);
+    --crema: var(--bg, #eef0df);
+    --carta: var(--white, #fffdf6);
+    --inchiostro: var(--text, #26342a);
+    --terracotta: var(--accent, #c8643c);
+    --oro: var(--yellow, #d9a441);
+    --ombra: var(--shadow-md, 0 12px 34px rgba(31, 58, 38, 0.14));
     --bordo: 1px solid rgba(31, 58, 38, 0.12);
-    --raggio: 8px;
+    --raggio: var(--radius-sm, 8px);
     --serif: "Fraunces", Georgia, "Times New Roman", serif;
     --sans: "Outfit", "Segoe UI", system-ui, sans-serif;
   }

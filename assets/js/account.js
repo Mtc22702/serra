@@ -953,6 +953,9 @@
     allOrders.forEach((order) => {
       if (order.status === "Annullato") return;
       order.items.forEach((it) => {
+        // I materiali extra (terriccio, concime, ecc.) non sono semi: non
+        // hanno una categoria coltura, li escludiamo da questo grafico.
+        if (it.type === "material") return;
         const plant = allPlants.find((p) => p.id === it.id);
         const cat = (plant ? plant.arch : null) || "foglia";
         const price = it.prezzo || 2.5;
@@ -1006,11 +1009,12 @@
     revSvg += `</svg>`;
     revContainer.innerHTML = revSvg;
 
-    // 2. Top 5 semi ordinati
+    // 2. Top 5 semi ordinati (materiali extra esclusi: unità diverse)
     const cropCounts = {};
     allOrders.forEach((order) => {
       if (order.status === "Annullato") return;
       order.items.forEach((it) => {
+        if (it.type === "material") return;
         const itemName = plantLabel(it);
         cropCounts[itemName] = (cropCounts[itemName] || 0) + it.bustine;
       });

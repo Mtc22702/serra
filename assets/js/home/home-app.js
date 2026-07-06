@@ -1130,6 +1130,8 @@ if (catalogSearchLink) {
     it: {
       "preconfig.title": "La tua serra",
       "preconfig.tag": "Imposta i parametri",
+      "preconfig.intro_note":
+        "Un avvio rapido: bastano pochi dati per aprire il configuratore già pronto. Nulla è definitivo, potrai cambiare tutto in qualsiasi momento nella pagina successiva.",
       "preconfig.sizes_label": "1. Misure interne",
       "preconfig.sizes_badge": "Fondamentale",
       "preconfig.sizes_note":
@@ -1158,6 +1160,8 @@ if (catalogSearchLink) {
     ro: {
       "preconfig.title": "Sera ta",
       "preconfig.tag": "Setează parametrii",
+      "preconfig.intro_note":
+        "Un început rapid: e nevoie doar de câteva date pentru a deschide configuratorul deja pregătit. Nimic nu este definitiv, poți schimba totul oricând pe pagina următoare.",
       "preconfig.sizes_label": "1. Dimensiuni interne",
       "preconfig.sizes_badge": "Esențial",
       "preconfig.sizes_note":

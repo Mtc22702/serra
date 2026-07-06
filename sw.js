@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-06-29-192";
+const CACHE_VERSION = "2026-07-06-201";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -24,6 +24,7 @@ const PRECACHE = [
   "./assets/css/configuratore/05-progetti-calendario.css",
   "./assets/css/configuratore/06-rifiniture-pdp.css",
   "./assets/css/configuratore/07-livelli-esperienza.css",
+  "./assets/css/configuratore/08-barra-guidata.css",
   "./assets/css/tema/01-fondazioni.css",
   "./assets/css/tema/02-dark-principale.css",
   "./assets/css/tema/03-modali-calendario.css",
@@ -49,6 +50,7 @@ const PRECACHE = [
   "./assets/js/conf/conf-engine.js",
   "./assets/js/conf/conf-calendar.js",
   "./assets/js/conf/conf-app.js",
+  "./assets/js/conf/conf-wizard.js",
   "./assets/img/icons/logo-180.png",
   "./assets/img/icons/logo-192.png",
   "./assets/img/icons/logo-512.png",

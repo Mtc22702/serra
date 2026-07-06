@@ -567,8 +567,11 @@ function setCustomizePanelCollapsed(collapsed) {
 }
 
 // Adatta il pannello personalizzazione al livello utente
+// Resta chiuso di default per novizio/intermedio (meno controlli in vista al
+// primo caricamento): si apre da sé quando l'utente segue il passo 2 della
+// barra guidata o quando sceglie esplicitamente un profilo guidato.
 function syncCustomizePanelForLivello() {
-  setCustomizePanelCollapsed(state.livello === "novizio");
+  setCustomizePanelCollapsed(state.livello !== "esperto");
 }
 
 // Apre il pannello colture e scrolla con evidenziazione
@@ -1715,6 +1718,9 @@ function renderSummary() {
   if (state.beds.length === 0) {
     s.innerHTML = tx("addEstimate");
     shop.innerHTML = "";
+    const shopTotalEmpty = document.getElementById("shopTotal");
+    if (shopTotalEmpty) shopTotalEmpty.hidden = true;
+    if (typeof updateOrderGrandTotal === "function") updateOrderGrandTotal();
     const guidedSummary = document.getElementById("guidedSummary");
     if (guidedSummary) guidedSummary.textContent = "";
     const slotEmpty = document.getElementById("cartBtnSlot");
@@ -1758,28 +1764,44 @@ function renderSummary() {
       yield: yieldLabel(kg)
     });
   }
+  let seedsTotalForShop = 0;
   shop.innerHTML = state.beds
     .map((b) => {
       const p = BYID[b.plantId];
-      const packs = Math.max(
-        1,
-        Math.ceil(b.count / (PACK_DATA[b.plantId]?.seeds ?? 100))
-      );
+      const pd = PACK_DATA[b.plantId] || { seeds: 100, price: 2.5 };
+      const packs = Math.max(1, Math.ceil(b.count / (pd.seeds ?? 100)));
       const packLabel =
         packs === 1
           ? tx("cart.pack_one")
           : tx("cart.pack_many", { count: packs });
-      const emoji = FRUIT_EMOJI[p.id] || "🌱";
+      const photoSrc = plantPhotoSrc(p, p.id);
+      const rowSubtotal = packs * pd.price;
+      seedsTotalForShop += rowSubtotal;
       return `<li>
-        <span class="shop-emoji" role="img" aria-hidden="true">${emoji}</span>
+        <span class="shop-emoji" role="img" aria-label="${plantText(p, "nome")}">
+          <img class="shop-photo" src="${photoSrc}" alt="" loading="lazy"
+            onerror="this.onerror=null;this.src='assets/img/svg/leaf.svg';this.classList.add('shop-photo--fallback');">
+        </span>
         <span class="shop-plant">
           <b>${plantText(p, "nome")}</b>
           <small>${tx("shoppingItem", { count: b.count })}</small>
         </span>
-        <span class="shop-pack">${packLabel}</span>
+        <span class="shop-side">
+          <span class="shop-pack">${packLabel}</span>
+          <b class="shop-price">${euro(rowSubtotal)}</b>
+        </span>
       </li>`;
     })
     .join("");
+
+  const shopTotal = document.getElementById("shopTotal");
+  if (shopTotal) {
+    shopTotal.hidden = false;
+    shopTotal.innerHTML = `
+      <span>${tx("shop.seeds_total")}</span>
+      <b>${euro(seedsTotalForShop)}</b>`;
+  }
+  if (typeof updateOrderGrandTotal === "function") updateOrderGrandTotal();
 
   const yieldBadge = document.getElementById("yieldToggleBadge");
   if (yieldBadge) {
