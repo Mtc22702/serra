@@ -1379,8 +1379,23 @@ function openDetail(id, preserveTab = false) {
   const guide = localizedSowingGuide(p);
   const profile = technicalProfile(p, guide);
 
-  document.getElementById("detailPhoto").src = photoSrc(id);
-  document.getElementById("detailPhoto").alt = plantName(id);
+  // Nella foto grande della scheda si preferisce la versione ad alta
+  // risoluzione quando disponibile (cartella "large/"), tenendo quella
+  // leggera per le miniature ovunque altrove. Vale solo per le foto locali
+  // del catalogo: URL esterni o percorsi personalizzati restano invariati.
+  const smallPhotoSrc = photoSrc(id);
+  const heroMatch = /^assets\/img\/photo\/([^/]+)$/.exec(smallPhotoSrc);
+  const detailPhotoEl = document.getElementById("detailPhoto");
+  let heroFallbackTried = false;
+  detailPhotoEl.onerror = function () {
+    if (heroFallbackTried) return;
+    heroFallbackTried = true;
+    this.src = smallPhotoSrc;
+  };
+  detailPhotoEl.src = heroMatch
+    ? `assets/img/photo/large/${heroMatch[1]}`
+    : smallPhotoSrc;
+  detailPhotoEl.alt = plantName(id);
   document.getElementById("detailName").textContent = plantName(id);
 
   const tipo =

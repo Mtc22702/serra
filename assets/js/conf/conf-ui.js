@@ -1501,6 +1501,15 @@ function renderPlantDetailPanel() {
   } else {
     photoSrc = `assets/img/photo/${p.id}.webp`;
   }
+  // Nella foto grande della scheda si preferisce la versione ad alta
+  // risoluzione quando disponibile (cartella "large/"), tenendo quella
+  // leggera per le miniature ovunque altrove. Vale solo per le foto locali
+  // del catalogo: URL esterni o percorsi personalizzati restano invariati.
+  let heroPhotoSrc = photoSrc;
+  const heroMatch = /^assets\/img\/photo\/([^/]+)$/.exec(photoSrc);
+  if (heroMatch) {
+    heroPhotoSrc = `assets/img/photo/large/${heroMatch[1]}`;
+  }
   const desc = (PLANT_DESC[state.lang] || PLANT_DESC.it)[p.id] || "";
   const months = [...effectiveMonths(p)]
     .sort((a, b) => a - b)
@@ -1569,8 +1578,8 @@ function renderPlantDetailPanel() {
 
   container.innerHTML = `
     <div class="pdp-hero-wrap">
-      <img class="pdp-photo-full" src="${photoSrc}" alt="${plantText(p, "nome")}"
-           onerror="this.src='assets/img/svg/${p.id}.svg'">
+      <img class="pdp-photo-full" src="${heroPhotoSrc}" alt="${plantText(p, "nome")}"
+           onerror="if(!this.dataset.fallbackStep){this.dataset.fallbackStep='1';this.src='${photoSrc}';}else{this.src='assets/img/svg/${p.id}.svg';}">
       <div class="pdp-hero-gradient"></div>
       <div class="pdp-hero-meta">
         ${tipoLabel ? `<span class="pdp-hero-type">${tipoLabel}</span>` : ""}
