@@ -280,10 +280,14 @@ function setLivello(liv, { mapMode = true } = {}) {
 function chooseLivello(liv) {
   const prev = state.livello;
 
+  // Passare a "novizio" rigenera sempre il piano automatico (vedi ramo sotto),
+  // quindi qualunque aiuola già presente verrebbe sostituita: l'avviso deve
+  // comparire ogni volta che c'è qualcosa da perdere, non solo quando
+  // state.autoPlan risulta già false (altrimenti si perdono modifiche senza
+  // preavviso in alcuni percorsi).
   if (
     liv === "novizio" &&
     prev !== "novizio" &&
-    !state.autoPlan &&
     state.beds.length > 0 &&
     !confirm(tx("confirmNoviceReset"))
   ) {
@@ -332,7 +336,10 @@ function chooseLivello(liv) {
     syncVegFilterTabs();
     collapseSettingsPanelAfterAutoPlan({ scroll: false });
     setCustomizePanelCollapsed(true);
-    scrollToGuidedIntroForLivello("novizio");
+    // "Le tue scelte" ora è chiusa di default (ingranaggio accanto al
+    // titolo): dopo il riempimento automatico si scorre alla serra, non più
+    // a quel pannello secondario.
+    scrollToScene();
   }
   saveConfig(true);
   if (prev !== liv) updateGuidedIntroDynamic();

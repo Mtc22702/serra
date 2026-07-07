@@ -9,6 +9,7 @@ let catalog = {
   type: "",
   seasonOnly: false,
   easyOnly: false,
+  easyOnlyTouched: false,
   sort: "season",
   layout: localStorage.getItem("serra.catalog.layout") || "grid"
 };

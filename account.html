@@ -9,7 +9,7 @@
     <title>Area Riservata · Orto in Serra</title>
     <!-- Configurazione Asset e Versione -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-07-uiux2";
+      window.SERRA_APP_VERSION = "2026-07-07-uiux12";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -422,6 +422,36 @@
                 Salva modifiche
               </button>
             </form>
+          </div>
+
+          <!-- Progetti serra salvati nel configuratore -->
+          <div class="dashboard-card card span-2-large">
+            <h3 data-i18n-acc="dash.projects_title">Le mie serre progettate</h3>
+            <div class="table-responsive">
+              <table class="data-table" id="userProjectsTable">
+                <thead>
+                  <tr>
+                    <th data-i18n-acc="dash.project_name">Progetto</th>
+                    <th data-i18n-acc="dash.project_beds">Aiuole</th>
+                    <th data-i18n-acc="dash.project_updated">Aggiornato</th>
+                    <th data-i18n-acc="dash.order_actions">Azioni</th>
+                  </tr>
+                </thead>
+                <tbody id="userProjectsList">
+                  <!-- Caricato via JS -->
+                </tbody>
+              </table>
+              <div
+                class="empty-orders-note"
+                id="emptyProjectsNote"
+                data-i18n-acc="dash.empty_projects"
+                hidden
+              >
+                Non hai ancora salvato una serra. Apri il
+                <a href="configuratore.html">Configuratore</a> per iniziare a
+                progettarne una!
+              </div>
+            </div>
           </div>
 
           <!-- Modulo Storico Ordini -->

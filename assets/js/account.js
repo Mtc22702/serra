@@ -37,6 +37,14 @@
 
       // User Dashboard
       "dash.title": "Dati di Spedizione",
+      "dash.projects_title": "Le mie serre progettate",
+      "dash.project_name": "Progetto",
+      "dash.project_beds": "Aiuole",
+      "dash.project_updated": "Aggiornato",
+      "dash.project_open_btn": "Apri nel configuratore",
+      "dash.project_active": "Attivo",
+      "dash.empty_projects":
+        'Non hai ancora salvato una serra. Apri il <a href="configuratore.html">Configuratore</a> per iniziare a progettarne una!',
       "dash.orders_title": "I miei ordini di semi",
       "dash.save_btn": "Salva modifiche",
       "dash.logout": "Esci",
@@ -247,6 +255,14 @@
 
       // User Dashboard
       "dash.title": "Date de Livrare",
+      "dash.projects_title": "Serele mele proiectate",
+      "dash.project_name": "Proiect",
+      "dash.project_beds": "Straturi",
+      "dash.project_updated": "Actualizat",
+      "dash.project_open_btn": "Deschide în configurator",
+      "dash.project_active": "Activ",
+      "dash.empty_projects":
+        'Nu ai salvat încă o seră. Deschide <a href="configuratore.html">Configuratorul</a> pentru a începe să proiectezi una!',
       "dash.orders_title": "Comenzile mele de semințe",
       "dash.save_btn": "Salvează modificările",
       "dash.logout": "Deconectare",
@@ -712,7 +728,98 @@
 
     // Renderizza ordini utente
     renderUserOrders();
+    // Renderizza le serre salvate nel configuratore
+    renderUserProjects();
   }
+
+  // Elenco delle serre salvate dal configuratore (localStorage condiviso
+  // "serra.projects.v1"): l'area personale prima mostrava solo lo storico
+  // ordini, senza alcun accenno ai progetti di disposizione già creati.
+  function renderUserProjects() {
+    const listContainer = document.getElementById("userProjectsList");
+    const emptyNote = document.getElementById("emptyProjectsNote");
+    const table = document.getElementById("userProjectsTable");
+    if (!listContainer || !emptyNote || !table) return;
+
+    let store = null;
+    try {
+      store = JSON.parse(localStorage.getItem("serra.projects.v1") || "null");
+    } catch (_) {
+      store = null;
+    }
+    const projects = store && Array.isArray(store.projects) ? store.projects : [];
+
+    if (!projects.length) {
+      emptyNote.hidden = false;
+      table.style.display = "none";
+      return;
+    }
+
+    emptyNote.hidden = true;
+    table.style.display = "table";
+    listContainer.innerHTML = "";
+
+    const sorted = [...projects].sort(
+      (a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)
+    );
+
+    sorted.forEach((p) => {
+      const tr = document.createElement("tr");
+      const bedsCount = p.config?.beds?.length || 0;
+      const isActive = store.activeId === p.id;
+      tr.innerHTML = `
+        <td data-label="${tAcc("dash.project_name")}"><strong>${escapeHtmlAccount(p.name || "")}</strong>${isActive ? ` <span class="status-badge user">${tAcc("dash.project_active")}</span>` : ""}</td>
+        <td data-label="${tAcc("dash.project_beds")}">${bedsCount}</td>
+        <td data-label="${tAcc("dash.project_updated")}">${formatDate(p.updatedAt || p.createdAt || Date.now())}</td>
+        <td data-label="${tAcc("dash.order_actions")}">
+          <button class="btn btn-outline btn-small" onclick="openUserProject('${p.id}')">${tAcc("dash.project_open_btn")}</button>
+        </td>
+      `;
+      listContainer.appendChild(tr);
+    });
+  }
+
+  // Esegue l'escape dei caratteri HTML speciali (nomi progetto liberi)
+  function escapeHtmlAccount(s) {
+    return String(s).replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        })[c]
+    );
+  }
+
+  // Attiva il progetto scelto e apre il configuratore già su quella serra:
+  // stessa logica di switchToProject() del configuratore (imposta l'id
+  // attivo nello store progetti e copia la sua config in "serra.config.v1"),
+  // ripetuta qui perché account.html non carica gli script del configuratore.
+  window.openUserProject = function (id) {
+    try {
+      const store = JSON.parse(
+        localStorage.getItem("serra.projects.v1") || "null"
+      );
+      if (!store || !Array.isArray(store.projects)) {
+        window.location.href = "configuratore.html";
+        return;
+      }
+      const target = store.projects.find((p) => p.id === id);
+      if (!target) {
+        window.location.href = "configuratore.html";
+        return;
+      }
+      store.activeId = id;
+      localStorage.setItem("serra.projects.v1", JSON.stringify(store));
+      if (target.config) {
+        localStorage.setItem("serra.config.v1", JSON.stringify(target.config));
+      }
+    } catch (_) {}
+    window.location.href = "configuratore.html";
+  };
 
   function renderUserOrders() {
     const listContainer = document.getElementById("userOrdersList");

@@ -592,17 +592,6 @@ function openCustomizePanelAndFocus() {
   });
 }
 
-// Scrolla all'intro guidata del livello selezionato
-function scrollToGuidedIntroForLivello(liv) {
-  if (!isResponsiveConfiguratorLayout()) return;
-  if (!LIVELLI?.has?.(liv)) return;
-  scheduleElementBelowHeader(
-    () => document.getElementById("guidedIntro"),
-    "smooth",
-    { delay: 200 }
-  );
-}
-
 // Apre il pannello impostazioni e mette a fuoco le dimensioni
 function openSettingsPanelAndFocusDimensions() {
   const panel = document.getElementById("panelSettings");

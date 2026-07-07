@@ -61,6 +61,9 @@ function addKitAndPlan() {
   renderAbbinamenti();
   savePrefs();
   if (availableIds.length) {
+    if (typeof syncCatalogClimateToSharedConfig === "function") {
+      syncCatalogClimateToSharedConfig();
+    }
     window.location.href = "configuratore.html?import=cart";
   }
 }

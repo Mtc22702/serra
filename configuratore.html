@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-07-uiux2";
+      window.SERRA_APP_VERSION = "2026-07-07-uiux12";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="assets/css/index.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-07-uiux2" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-07-uiux12" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -178,19 +178,31 @@
             Progetta il tuo orto pianta per pianta · vista dall'alto
           </p>
         </div>
+        <button
+          type="button"
+          class="guided-setup-gear"
+          id="guidedIntroGear"
+          aria-expanded="false"
+          aria-controls="guidedIntro"
+          aria-label="Rivedi o modifica misure, clima e mese già impostati"
+          title="Modifica misure, clima e mese"
+        >
+          <span aria-hidden="true">⚙</span>
+        </button>
       </section>
 
-      <!-- Intro guidata -->
+      <!-- Intro guidata: secondaria, si apre solo se serve modificare qualcosa -->
       <details class="guided-intro guided-setup-toggle" id="guidedIntro">
         <summary
           class="guided-setup-summary"
-          aria-label="Apri parametri iniziali del configuratore"
+          aria-label="Rivedi o modifica misure, clima e mese già impostati"
         >
           <span class="guided-setup-summary-icon" aria-hidden="true">⚙</span>
           <span class="guided-setup-summary-copy">
-            <b data-i18n-conf="guidedSetupTitle">Parametri iniziali</b>
+            <b data-i18n-conf="guidedSetupTitle">Le tue scelte</b>
             <small data-i18n-conf="guidedSetupHint"
-              >Profilo, clima, mese e misure già impostati</small
+              >Misure, clima e mese già impostati: modificali qui se
+              vuoi</small
             >
           </span>
           <span class="guided-setup-summary-action">
@@ -352,6 +364,7 @@
           data-wizard-step="settings"
           data-wizard-target="panelSettings"
           aria-current="step"
+          title="Misure, zona e mese di semina"
         >
           <span class="wizard-step-num" aria-hidden="true">1</span>
           <span class="wizard-step-body">
@@ -364,25 +377,40 @@
           type="button"
           data-wizard-step="crops"
           data-wizard-target="panelCustomize"
+          title="Scegli o modifica le piante"
         >
           <span class="wizard-step-num" aria-hidden="true">2</span>
           <span class="wizard-step-body">
             <span class="wizard-step-label" data-i18n-conf="wizardStep2Label">Le tue colture</span>
             <span class="wizard-step-hint" data-i18n-conf="wizardStep2Hint">Scegli o modifica le piante</span>
           </span>
+          <span
+            class="wizard-step-badge"
+            id="wizardCropsBadge"
+            aria-hidden="true"
+          ></span>
         </button>
         <button
           class="wizard-step"
           type="button"
           data-wizard-step="yield"
           data-wizard-target="panelYield"
+          title="Rivedi i semi e completa"
         >
           <span class="wizard-step-num" aria-hidden="true">3</span>
           <span class="wizard-step-body">
             <span class="wizard-step-label" data-i18n-conf="wizardStep3Label">Lista della spesa</span>
             <span class="wizard-step-hint" data-i18n-conf="wizardStep3Hint">Rivedi i semi e completa</span>
           </span>
+          <span
+            class="wizard-step-badge"
+            id="wizardYieldBadge"
+            aria-hidden="true"
+          ></span>
         </button>
+        <span class="wizard-progress-rail" aria-hidden="true"
+          ><span class="wizard-progress-fill" id="wizardProgressFill"></span
+        ></span>
       </nav>
 
       <!-- Impostazioni serra -->
@@ -391,7 +419,23 @@
           <div class="panel panel--settings" id="panelSettings">
             <script>
               (function() {
-                if (new URLSearchParams(window.location.search).get("livello") === "novizio") {
+                // Chi arriva dalla home ha già scelto misure, clima e mese
+                // nel pannello di preconfigurazione: non serve ripresentarli
+                // già aperti per nessuno dei 3 profili, si parte collassati
+                // e si riapre solo su richiesta ("Modifica" / riepilogo in alto).
+                // Vale sia per il primo arrivo (livello in querystring) sia
+                // per un refresh/ritorno successivo, quando la querystring è
+                // già stata ripulita ma il profilo resta salvato in locale:
+                // altrimenti solo il primo arrivo restava collassato e un
+                // semplice refresh faceva ricomparire il pannello aperto.
+                var liv = new URLSearchParams(window.location.search).get("livello");
+                if (!liv) {
+                  try {
+                    var saved = JSON.parse(localStorage.getItem("serra.config.v1") || "null");
+                    if (saved && saved.livello) liv = saved.livello;
+                  } catch (e) {}
+                }
+                if (liv === "novizio" || liv === "intermedio" || liv === "esperto") {
                   document.getElementById("panelSettings").classList.add("is-collapsed");
                 }
               })();
@@ -1103,6 +1147,17 @@
                       >Ricomincia</span
                     >
                   </button>
+                  <button
+                    class="btn btn-primary btn-icon novice-yield-cta"
+                    id="btnNoviceGoToYield"
+                    type="button"
+                    title="Vai alla lista dei semi da acquistare"
+                  >
+                    <span class="btn-label" id="btnNoviceGoToYieldLabel"
+                      >Vai alla lista della spesa</span
+                    >
+                    <span aria-hidden="true">→</span>
+                  </button>
                 </div>
                 <div
                   class="crops-customize-footer"
@@ -1437,8 +1492,9 @@
             id="confCartNote"
             data-i18n-conf="cart.request_note"
           >
-            Pagamento non ancora online: invia la lista e ti confermiamo
-            disponibilità e prezzo finale.
+            Confermando crei un ordine reale (pagamento non online): ti
+            confermiamo disponibilità e prezzo finale. Per completarlo serve
+            accedere alla tua Area Personale.
           </div>
           <button
             class="cart-conf-link"

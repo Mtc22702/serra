@@ -942,7 +942,19 @@ window.addEventListener("serra:themechange", () => render());
     }
     saveConfig(true);
     clearBootParams();
-    scrollToGuidedIntroForLivello(_bootLivello);
+    // Su desktop chi arriva con un livello esplicito viene già portato allo
+    // stage (o al pannello colture per l'esperto) più sotto in questa stessa
+    // funzione. Su mobile, invece di fermarsi al riepilogo "Le tue scelte"
+    // (già visibile in cima, non serve scorrerci apposta), si applica la
+    // stessa destinazione: la serra pronta per novizio/intermedio, il
+    // pannello colture aperto per l'esperto che deve riempirla da solo.
+    if (isResponsiveConfiguratorLayout()) {
+      if (_bootLivello === "esperto") {
+        focusManualPlanningPath();
+      } else {
+        scrollToScene();
+      }
+    }
   } else {
     const _bootIntentApplied =
       isGuidedBoot() ||
@@ -972,6 +984,11 @@ window.addEventListener("serra:themechange", () => render());
     setMode(state.autoPlan ? "fit" : "expert", false);
 
     setLivello(state.livello, { mapMode: false });
+    // Un refresh o un ritorno senza livello esplicito in querystring arriva
+    // qui: se esiste già una serra salvata, "La tua serra" deve restare
+    // collassata come al primo arrivo (altrimenti collapseSettingsPanelAfterAutoPlan
+    // qui sotto non la chiude per l'esperto, che non usa autoPlan).
+    if (_bootCfg?.livello) setPanelCollapsed("panelSettings", true);
   }
   syncVegFilterTabs();
 
@@ -982,7 +999,8 @@ window.addEventListener("serra:themechange", () => render());
   });
 
   // Desktop: scroll allo stage per esperto (collapseSettingsPanelAfterAutoPlan
-  // non scorre quando autoPlan=false). Su mobile ci pensa scrollToGuidedIntroForLivello.
+  // non scorre quando autoPlan=false). Su mobile ci pensa il ramo sopra
+  // (scrollToScene/focusManualPlanningPath).
   if (!isResponsiveConfiguratorLayout() && !state.autoPlan) {
     scheduleElementBelowHeader(
       () =>

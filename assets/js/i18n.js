@@ -702,7 +702,7 @@
         "cart.pack": "1 bustina",
         "cart.estimate": "Totale indicativo",
         "cart.request_note":
-          "Pagamento non ancora online: invia la lista e ti confermiamo disponibilità e prezzo finale.",
+          "Confermando crei un ordine reale (pagamento non online): ti confermiamo disponibilità e prezzo finale. Per completarlo serve accedere alla tua Area Personale.",
         "cart.mail_subject": "Richiesta semi Orto in Serra",
         "cart.pack_many": "{count} bustine",
         "cart.seeds_per_pack": "{count} semi/busta",
@@ -1098,7 +1098,7 @@
         "cart.pack": "1 plic",
         "cart.estimate": "Total orientativ",
         "cart.request_note":
-          "Plata nu este încă online: trimite lista și îți confirmăm disponibilitatea și prețul final.",
+          "Confirmând creezi o comandă reală (fără plată online): îți confirmăm disponibilitatea și prețul final. Pentru a o finaliza trebuie să accesezi Contul tău.",
         "cart.mail_subject": "Cerere semințe Orto in Serra",
         "cart.pack_many": "{count} plicuri",
         "cart.seeds_per_pack": "{count} semințe/plic",
@@ -1332,8 +1332,9 @@
         guidedAppTitle: "Configuratore Serra",
         guidedAppSub:
           "Progetta il tuo orto pianta per pianta · vista dall'alto",
-        guidedSetupTitle: "Parametri iniziali",
-        guidedSetupHint: "Profilo, clima, mese e misure già impostati",
+        guidedSetupTitle: "Le tue scelte",
+        guidedSetupHint:
+          "Misure, clima e mese già impostati: modificali qui se vuoi",
         guidedSetupAction: "Modifica",
         stageContextTitle: "Parametri progetto",
         modalKicker: "Configurazione iniziale",
@@ -1804,8 +1805,9 @@
         brandSub: "Proiectează sera de sus, plantă cu plantă",
         guidedAppTitle: "Configurator seră",
         guidedAppSub: "Proiectează grădina plantă cu plantă · vedere de sus",
-        guidedSetupTitle: "Setări inițiale",
-        guidedSetupHint: "Profil, climă, lună și dimensiuni deja setate",
+        guidedSetupTitle: "Alegerile tale",
+        guidedSetupHint:
+          "Dimensiuni, climă și lună deja setate: le poți modifica aici",
         guidedSetupAction: "Modifică",
         stageContextTitle: "Parametrii proiectului",
         modalKicker: "Configurare inițială",

@@ -11,6 +11,7 @@
     align-items: stretch;
     gap: 4px;
     padding: 7px;
+    padding-bottom: 10px;
     margin-top: 2px;
     border: 1.5px solid rgba(47, 107, 58, 0.2);
     border-radius: 14px;
@@ -26,6 +27,27 @@
   }
   .wizard-bar[hidden] {
     display: none;
+  }
+  /* Rail di avanzamento: si riempie in base allo step corrente (1/3, 2/3,
+     3/3), rinforzo visivo aggregato oltre all'evidenza sul singolo passo. */
+  .wizard-progress-rail {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 4px;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.12);
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .wizard-progress-fill {
+    display: block;
+    height: 100%;
+    width: var(--wizard-progress, 33.33%);
+    background: var(--verde);
+    border-radius: inherit;
+    transition: width 0.3s ease;
   }
   .wizard-step {
     position: relative;
@@ -64,6 +86,13 @@
     border-top: 2px solid rgba(31, 58, 38, 0.16);
     transform: translateY(-50%) rotate(45deg);
     z-index: 2;
+    transition: border-color 0.2s ease;
+  }
+  /* Una volta visitato un passo, la freccetta verso il successivo si accende
+     di verde: dà un senso di percorso "illuminato" via via che si avanza,
+     puro rinforzo visivo senza alcun blocco/sblocco funzionale. */
+  .wizard-step.is-visited:not(:last-child)::after {
+    border-color: rgba(47, 107, 58, 0.55);
   }
   .wizard-step-num {
     display: inline-flex;
@@ -113,6 +142,47 @@
   .wizard-step.is-current .wizard-step-num {
     background: var(--verde);
     color: #fff;
+    box-shadow: 0 0 0 3px rgba(47, 107, 58, 0.16);
+  }
+  /* Passo completato (non quello corrente): il numero diventa una spunta.
+     Per "Serra e clima" basta averlo visitato (valori sempre validi di
+     default); per colture/lista semi serve davvero avere almeno una varietà
+     in serra, così la spunta riflette uno stato reale, non solo lo scroll. */
+  .wizard-step.is-done:not(.is-current) .wizard-step-num {
+    background: rgba(47, 107, 58, 0.16);
+    color: var(--verde);
+    font-size: 0;
+  }
+  .wizard-step.is-done:not(.is-current) .wizard-step-num::before {
+    content: "✓";
+    font-size: 13px;
+    font-weight: 900;
+  }
+  /* Contatore live (varietà scelte): appare solo quando c'è qualcosa da
+     mostrare, in alto a destra del passo. */
+  .wizard-step-badge {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.16);
+    color: var(--verde-scuro);
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+  }
+  .wizard-step-badge:empty {
+    display: none;
+  }
+  .wizard-step.is-current .wizard-step-badge {
+    background: rgba(47, 107, 58, 0.24);
   }
   .wizard-step:focus-visible {
     outline: 2px solid var(--oro);
@@ -230,6 +300,22 @@
       height: 22px;
       font-size: 10.5px;
     }
+    .wizard-step.is-done:not(.is-current) .wizard-step-num::before {
+      font-size: 11px;
+    }
+    .wizard-step-badge {
+      top: 3px;
+      right: 4px;
+      min-width: 15px;
+      height: 15px;
+      padding: 0 4px;
+      font-size: 9px;
+    }
+    .wizard-progress-rail {
+      left: 8px;
+      right: 8px;
+      bottom: 3px;
+    }
 
     /* Meno testo descrittivo ripetuto prima della vista della serra: la
        barra guidata e i titoli bastano a spiegare cosa fare. */
@@ -344,6 +430,21 @@
   html[data-theme="dark"] .wizard-step.is-current .wizard-step-num {
     background: var(--verde);
     color: #0b1712;
+  }
+  html[data-theme="dark"] .wizard-step.is-done:not(.is-current) .wizard-step-num {
+    background: rgba(105, 183, 125, 0.22);
+    color: #8fe0a8;
+  }
+  html[data-theme="dark"] .wizard-step-badge {
+    background: rgba(105, 183, 125, 0.22);
+    color: #d7f3df;
+    box-shadow: 0 0 0 2px rgba(23, 39, 31, 0.9);
+  }
+  html[data-theme="dark"] .wizard-step.is-current .wizard-step-badge {
+    background: rgba(105, 183, 125, 0.32);
+  }
+  html[data-theme="dark"] .wizard-progress-rail {
+    background: rgba(173, 211, 186, 0.16);
   }
   html[data-theme="dark"] .stage-tools-kicker {
     color: #9fb3a4;

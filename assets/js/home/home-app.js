@@ -175,6 +175,7 @@ function toggleCatalogFull() {
 // Alterna catalog easy only
 function toggleCatalogEasyOnly() {
   catalog.easyOnly = !catalog.easyOnly;
+  catalog.easyOnlyTouched = true;
   render();
 }
 // Imposta catalog sort
@@ -255,16 +256,61 @@ function savePrefs() {
     JSON.stringify({
       zona: state.zona,
       riscaldata: state.riscaldata,
-      mese: state.mese
+      mese: state.mese,
+      easyOnly: catalog.easyOnly,
+      easyOnlyTouched: catalog.easyOnlyTouched
     })
   );
 }
+// Riporta zona/riscaldamento del catalogo nella configurazione condivisa con
+// il drawer di preconfigurazione e il configuratore. Va richiamata solo nel
+// momento in cui l'utente porta davvero il carrello nel configuratore (link
+// "Pianifica la disposizione in serra" / "Aggiungi kit e pianifica"): così chi
+// ha filtrato il catalogo per un certo clima non se lo vede ignorato appena
+// entra nel configuratore, ma senza sovrascrivere in continuazione una serra
+// già configurata solo perché si sta sfogliando il catalogo per curiosità.
+function syncCatalogClimateToSharedConfig() {
+  try {
+    const existing =
+      JSON.parse(localStorage.getItem("serra.config.v1") || "{}") || {};
+    localStorage.setItem(
+      "serra.config.v1",
+      JSON.stringify({
+        ...existing,
+        zona: state.zona,
+        riscaldata: state.riscaldata
+      })
+    );
+  } catch (_) {}
+}
+
 // Carica prefs
 function loadPrefs() {
   try {
     const p = JSON.parse(localStorage.getItem("ois.prefs") || "{}");
     if (p.zona) state.zona = p.zona;
     if (p.riscaldata !== undefined) state.riscaldata = p.riscaldata;
+    // Se esiste già una serra configurata (drawer/configuratore), il catalogo
+    // riparte dallo stesso clima invece che da un valore diverso salvato solo
+    // qui: evita di mostrare "adatto ora" calcolato su una zona che non è più
+    // quella della propria serra.
+    try {
+      const shared = JSON.parse(
+        localStorage.getItem("serra.config.v1") || "null"
+      );
+      if (shared?.zona) state.zona = shared.zona;
+      if (shared?.riscaldata !== undefined) state.riscaldata = shared.riscaldata;
+      // Chi ha scelto il profilo "novizio" nel configuratore parte nel
+      // catalogo con il filtro "Facili per iniziare" già attivo, invece
+      // dello stesso catalogo denso pensato per intermedio/esperto — ma solo
+      // finché non lo tocca esplicitamente lui stesso (p.easyOnlyTouched),
+      // altrimenti la sua scelta manuale verrebbe ignorata ad ogni visita.
+      if (p.easyOnlyTouched) {
+        catalog.easyOnly = Boolean(p.easyOnly);
+      } else if (shared?.livello === "novizio") {
+        catalog.easyOnly = true;
+      }
+    } catch (_) {}
     // Il mese corrente viene ignorato in fase di caricamento per rimanere allineato con la data reale
     const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
     cart = raw.map((i) => (typeof i === "string" ? { id: i, bustine: 1 } : i));
@@ -1242,8 +1288,10 @@ if (catalogSearchLink) {
     const l = saved?.lunghezza ?? 5;
     const zona = saved?.zona ?? "temperato";
     const riscaldata = Boolean(saved?.riscaldata);
-    // Mostra sempre di default il mese corrente reale all'apertura della modale di preconfigurazione
-    const mese = new Date().getMonth() + 1;
+    // Come zona/misure/riscaldamento: ripristina il mese scelto in precedenza
+    // (utile per chi sta pianificando in anticipo una semina futura), e
+    // ripiega sul mese corrente reale solo se non c'è ancora nulla di salvato.
+    const mese = saved?.mese ?? new Date().getMonth() + 1;
 
     const path = saved?.path ?? 60;
     const pcW = document.getElementById("pcW");
