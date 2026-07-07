@@ -9,7 +9,7 @@
     <title>Area Riservata · Orto in Serra</title>
     <!-- Configurazione Asset e Versione -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-06-203";
+      window.SERRA_APP_VERSION = "2026-07-07-uiux2";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -51,6 +51,11 @@
       document.write(
         '<link rel="stylesheet" href="' +
           serraAsset("assets/css/account.css") +
+          '" />'
+      );
+      document.write(
+        '<link rel="stylesheet" href="' +
+          serraAsset("assets/css/uiux-polish.css") +
           '" />'
       );
     </script>
@@ -223,12 +228,12 @@
           >
             Entra
           </button>
-          <div class="auth-hint">
-            <p>
+          <details class="auth-hint auth-hint-demo">
+            <summary>
               <strong data-i18n-acc="auth.test_users"
                 >Utenti di test pronti:</strong
               >
-            </p>
+            </summary>
             <ul>
               <li>
                 <span data-i18n-acc="auth.test_customer">Cliente:</span>
@@ -240,7 +245,7 @@
                 <code>admin@ortoinserra.it</code> / password: <code>admin</code>
               </li>
             </ul>
-          </div>
+          </details>
         </form>
 
         <!-- Form Registrazione -->

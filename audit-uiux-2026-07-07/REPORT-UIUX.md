@@ -35,6 +35,16 @@ L'app ha una direzione visiva forte e riconoscibile: palette agricola coerente, 
 
 La criticità principale non è la bellezza, ma la densità prima dell'azione: su smartphone ci sono molti livelli prima che l'utente arrivi alla parte operativa. Questo si vede soprattutto nel configuratore, dove guided intro, percorso utente, wizard, pannello serra e vista dall'alto competono nello stesso primo scroll.
 
+## Modello utenti da preservare
+
+L'app è correttamente costruita attorno a tre intenzioni diverse:
+
+- Principiante: sa poco o niente di colture, vuole essere guidato e arrivare con sicurezza all'acquisto dei semi.
+- Intermedio: conosce già qualcosa, vuole partire da un piano utile ma poter personalizzare contenuto e quantità nella serra prima dell'acquisto.
+- Esperto: vuole controllo pieno, parte da una serra vuota e la riempie a mano, oppure può saltare il configuratore e aggiungere semi direttamente dal catalogo in home.
+
+Questa distinzione va mantenuta, ma resa più immediata: non tre esperienze visivamente pesanti, bensì tre livelli di controllo progressivo.
+
 ## Findings prioritari
 
 ### 1. Configuratore mobile: guided intro ancora troppo alta
@@ -140,6 +150,31 @@ Su smartphone la card potrebbe diventare:
 4. Tendina aperta: tre righe alte 48-56 px con nome profilo, microcopy di una riga, stato attivo.
 
 Questo eliminerebbe circa 60-120 px nello stato chiuso e oltre 150 px nello stato aperto, mantenendo la stessa funzione.
+
+## Comportamento consigliato per profilo
+
+Principiante:
+
+- Primo messaggio: "Ti preparo una serra pronta e ti porto alla lista semi."
+- Configuratore già compilato.
+- Personalizzazione minima e sicura: modifica misure, clima, mese, riduci/aumenta quantità, elimina colture.
+- CTA principale sempre orientata all'acquisto: "Vedi lista semi" / "Aggiungi semi al carrello".
+
+Intermedio:
+
+- Primo messaggio: "Parti da un piano pronto, poi scegli cosa cambiare."
+- Configuratore precompilato ma modificabile.
+- Pannello colture più visibile.
+- CTA bilanciata: "Personalizza colture" e poi "Vai alla lista semi".
+
+Esperto:
+
+- Primo messaggio: "Parti da una serra vuota o aggiungi semi dal catalogo."
+- Configuratore senza riempimento automatico.
+- Strumenti manuali e catalogo più esposti.
+- CTA primaria: "Aggiungi colture" / "Apri catalogo".
+
+In home, il catalogo diretto dovrebbe essere più chiaramente presentato come strada da esperto o da acquisto rapido, mentre il configuratore resta la strada consigliata per principiante e intermedio.
 
 ## Priorità consigliata
 

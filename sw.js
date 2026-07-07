@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-06-203";
+const CACHE_VERSION = "2026-07-07-uiux2";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -10,6 +10,7 @@ const PRECACHE = [
   "./assets/css/index.css",
   "./assets/css/style.css",
   "./assets/css/theme.css",
+  "./assets/css/uiux-polish.css",
   "./assets/css/index/01-fondazioni-hero.css",
   "./assets/css/index/02-calendario-catalogo.css",
   "./assets/css/index/03-pannelli-overlay.css",

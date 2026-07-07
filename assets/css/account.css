@@ -129,9 +129,61 @@ html[data-theme="dark"] .auth-tab.active {
 html[data-theme="dark"] .auth-hint {
   background: rgba(255, 255, 255, 0.02);
 }
+.auth-hint-demo {
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(47, 107, 58, 0.08);
+  background: rgba(47, 107, 58, 0.035);
+}
+.auth-hint-demo summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 13px;
+  cursor: pointer;
+  color: var(--text-muted, #64748b);
+  list-style: none;
+}
+.auth-hint-demo summary::-webkit-details-marker {
+  display: none;
+}
+.auth-hint-demo summary::after {
+  content: "⌄";
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(47, 107, 58, 0.08);
+  color: var(--c-green, #2f6b3a);
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-hint-demo[open] summary {
+  border-bottom: 1px solid rgba(47, 107, 58, 0.08);
+}
+.auth-hint-demo[open] summary::after {
+  content: "⌃";
+}
+html[data-theme="dark"] .auth-hint-demo {
+  border-color: rgba(104, 211, 145, 0.1);
+  background: rgba(104, 211, 145, 0.035);
+}
+html[data-theme="dark"] .auth-hint-demo summary::after {
+  background: rgba(104, 211, 145, 0.12);
+  color: #68d391;
+}
 .auth-hint ul {
   padding-left: 18px;
   margin: 6px 0 0;
+}
+.auth-hint-demo ul {
+  padding: 11px 14px 14px 30px;
+  margin: 0;
 }
 .auth-hint code {
   background: rgba(0, 0, 0, 0.06);

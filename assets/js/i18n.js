@@ -1332,6 +1332,10 @@
         guidedAppTitle: "Configuratore Serra",
         guidedAppSub:
           "Progetta il tuo orto pianta per pianta · vista dall'alto",
+        guidedSetupTitle: "Parametri iniziali",
+        guidedSetupHint: "Profilo, clima, mese e misure già impostati",
+        guidedSetupAction: "Modifica",
+        stageContextTitle: "Parametri progetto",
         modalKicker: "Configurazione iniziale",
         modalTitle: "Prima scegli il clima",
         modalCopy:
@@ -1800,6 +1804,10 @@
         brandSub: "Proiectează sera de sus, plantă cu plantă",
         guidedAppTitle: "Configurator seră",
         guidedAppSub: "Proiectează grădina plantă cu plantă · vedere de sus",
+        guidedSetupTitle: "Setări inițiale",
+        guidedSetupHint: "Profil, climă, lună și dimensiuni deja setate",
+        guidedSetupAction: "Modifică",
+        stageContextTitle: "Parametrii proiectului",
         modalKicker: "Configurare inițială",
         modalTitle: "Alege mai întâi clima",
         modalCopy:

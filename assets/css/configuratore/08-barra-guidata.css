@@ -358,3 +358,172 @@
     background: rgba(173, 211, 186, 0.14);
   }
 }
+
+@layer base {
+  /* Rifinitura UX profili: mantiene intatto il comportamento dei tre livelli,
+     ma riduce l'altezza della scelta guidata su mobile/tablet. */
+  @media (max-width: 900px) {
+    .persona-pick[open] {
+      box-shadow:
+        0 8px 20px rgba(31, 58, 38, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    .persona-pick[open] .persona-cards {
+      gap: 6px;
+      padding: 0 8px 8px;
+    }
+
+    .persona-pick[open] .persona-card,
+    .persona-pick[open] .persona-card.is-active {
+      min-height: 54px;
+      padding: 8px 10px;
+      border-width: 1.4px;
+      border-radius: 11px;
+    }
+
+    .persona-pick[open] .persona-card-ico,
+    .persona-pick[open] .persona-card.is-active .persona-card-ico {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+    }
+
+    .persona-pick[open] .persona-card-body {
+      gap: 1px;
+    }
+
+    .persona-pick[open] .persona-card-body b {
+      font-size: 12.5px;
+      line-height: 1.12;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .persona-pick[open] .persona-card-body small {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+      overflow: hidden;
+      font-size: 10.5px;
+      line-height: 1.2;
+    }
+
+    .persona-pick[open] .persona-card-go {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .guided-intro {
+      padding: 10px 11px;
+      gap: 8px;
+      border-radius: 13px;
+    }
+
+    .guided-intro-head {
+      padding-bottom: 8px;
+    }
+
+    .guided-brand-row {
+      gap: 8px;
+    }
+
+    .guided-brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+    .guided-brand-mark img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .guided-brand-copy h1 {
+      font-size: 18px;
+    }
+
+    .guided-summary {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .persona-pick {
+      margin-top: 0;
+      border-width: 1px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .persona-pick-head {
+      min-height: 42px;
+      padding: 7px 8px;
+      gap: 7px;
+    }
+
+    .persona-pick-current b {
+      font-size: 12.5px;
+    }
+
+    .persona-pick-current small {
+      font-size: 10px;
+    }
+
+    .persona-pick-action {
+      min-height: 26px;
+      padding-inline: 8px;
+      font-size: 10px;
+    }
+
+    .persona-pick-chevron {
+      width: 26px;
+      height: 26px;
+      font-size: 14px;
+    }
+
+    .persona-pick[open] .persona-cards {
+      grid-template-columns: 1fr;
+      padding: 0 7px 7px;
+    }
+
+    .persona-pick[open] .persona-card,
+    .persona-pick[open] .persona-card.is-active {
+      min-height: 46px;
+      padding: 7px 8px;
+      gap: 8px;
+    }
+
+    .persona-pick[open] .persona-card-ico,
+    .persona-pick[open] .persona-card.is-active .persona-card-ico {
+      width: 28px;
+      height: 28px;
+    }
+
+    .persona-pick[open] .persona-level-label {
+      display: none;
+    }
+
+    .persona-pick[open] .persona-card-body small {
+      display: none;
+    }
+
+    .persona-pick[open] .persona-card-go {
+      width: 22px;
+      height: 22px;
+    }
+
+    .wizard-bar {
+      padding: 5px;
+      border-radius: 11px;
+    }
+
+    .wizard-step {
+      min-height: 42px;
+    }
+  }
+}

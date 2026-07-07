@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-06-203";
+      window.SERRA_APP_VERSION = "2026-07-07-uiux2";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="assets/css/index.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-07-uiux2" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -167,53 +168,66 @@
         </select>
       </div>
 
-      <!-- Intro guidata -->
-      <div class="guided-intro" id="guidedIntro">
-        <div class="guided-intro-head">
-          <div class="guided-brand-row">
-            <span class="guided-brand-mark" aria-hidden="true">
-              <img src="assets/img/photo/seed.webp" alt="" />
-            </span>
-            <div class="guided-brand-copy">
-              <h1 id="guidedAppTitle">Configuratore Serra</h1>
-              <p id="guidedAppSub">
-                Progetta il tuo orto pianta per pianta · vista dall'alto
-              </p>
-            </div>
-          </div>
-          <div
-            class="guided-meta-row"
-            id="guidedMetaRow"
-            role="button"
-            tabindex="0"
-            aria-label="Modifica misure, zona e mese di semina"
-          >
-            <div class="guided-tags" aria-label="Dati attuali della serra">
-              <span class="tag" id="tagZona">🌡️&nbsp;temperata</span>
-              <span class="tag" id="tagMese">📅&nbsp;—</span>
-              <span class="tag" id="tagArea">📐&nbsp;3×5 m</span>
-            </div>
-            <div class="guided-summary" id="guidedSummary"></div>
-            <span class="guided-meta-edit" aria-hidden="true">
-              <svg
-                viewBox="0 0 24 24"
-                width="13"
-                height="13"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 20h9" />
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
-              </svg>
-            </span>
-          </div>
+      <section class="config-page-title" aria-labelledby="guidedAppTitle">
+        <span class="guided-brand-mark" aria-hidden="true">
+          <img src="assets/img/photo/seed.webp" alt="" />
+        </span>
+        <div class="guided-brand-copy">
+          <h1 id="guidedAppTitle">Configuratore Serra</h1>
+          <p id="guidedAppSub">
+            Progetta il tuo orto pianta per pianta · vista dall'alto
+          </p>
         </div>
+      </section>
 
-        <!-- Scelta percorso utente -->
-        <div class="guided-intro-right">
+      <!-- Intro guidata -->
+      <details class="guided-intro guided-setup-toggle" id="guidedIntro">
+        <summary
+          class="guided-setup-summary"
+          aria-label="Apri parametri iniziali del configuratore"
+        >
+          <span class="guided-setup-summary-icon" aria-hidden="true">⚙</span>
+          <span class="guided-setup-summary-copy">
+            <b data-i18n-conf="guidedSetupTitle">Parametri iniziali</b>
+            <small data-i18n-conf="guidedSetupHint"
+              >Profilo, clima, mese e misure già impostati</small
+            >
+          </span>
+          <span class="guided-setup-summary-action">
+            <span data-i18n-conf="guidedSetupAction">Modifica</span>
+            <span class="guided-setup-summary-chevron" aria-hidden="true"
+              >⌄</span
+            >
+          </span>
+        </summary>
+        <div class="guided-intro-body">
+          <div class="guided-intro-head">
+            <div
+              class="guided-meta-row stage-context-row setup-context-row"
+              id="guidedMetaRow"
+              role="button"
+              tabindex="0"
+              aria-label="Modifica misure, zona e mese di semina"
+            >
+              <div class="stage-context-copy">
+                <span data-i18n-conf="stageContextTitle">Parametri progetto</span>
+                <small class="guided-summary" id="guidedSummary"></small>
+              </div>
+              <div class="guided-tags" aria-label="Dati attuali della serra">
+                <span class="tag" id="tagZona">🌡️&nbsp;temperata</span>
+                <span class="tag" id="tagMese">📅&nbsp;—</span>
+                <span class="tag" id="tagArea">📐&nbsp;3×5 m</span>
+              </div>
+              <span
+                class="stage-context-action"
+                data-i18n-conf="guidedSetupAction"
+                >Modifica</span
+              >
+            </div>
+          </div>
+
+          <!-- Scelta percorso utente -->
+          <div class="guided-intro-right">
           <details class="persona-pick" id="personaPickDetails">
             <summary class="persona-pick-head">
               <span class="persona-pick-copy">
@@ -326,8 +340,9 @@
               </button>
             </div>
           </details>
+          </div>
         </div>
-      </div>
+      </details>
 
       <!-- Barra guidata a passi: percorso principale del configuratore -->
       <nav class="wizard-bar" id="wizardBar" aria-label="Passi del configuratore">
