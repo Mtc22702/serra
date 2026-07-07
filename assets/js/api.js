@@ -246,11 +246,16 @@
       const user = this.getCurrentUser();
       const btn = document.getElementById("navAccountBtn");
       if (btn) {
+        const ro = (document.documentElement.lang || "it")
+          .toLowerCase()
+          .startsWith("ro");
         if (user) {
           const firstName = user.nome.split(" ")[0];
-          btn.textContent = `👤 Ciao, ${firstName}`;
+          btn.textContent = ro
+            ? `👤 Salut, ${firstName}`
+            : `👤 Ciao, ${firstName}`;
         } else {
-          btn.textContent = "👤 Accedi";
+          btn.textContent = ro ? "👤 Conectare" : "👤 Accedi";
         }
       }
     }
@@ -265,4 +270,9 @@
   } else {
     SerraAPI.updateNavbarUser();
   }
+  // Riallinea il testo del bottone utente quando cambia la lingua della pagina
+  new MutationObserver(() => SerraAPI.updateNavbarUser()).observe(
+    document.documentElement,
+    { attributes: true, attributeFilter: ["lang"] }
+  );
 })();

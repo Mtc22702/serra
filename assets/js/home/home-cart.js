@@ -250,9 +250,7 @@ function alertCheckout() {
   // Controlla se l'utente è autenticato
   const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
   if (!user) {
-    alert(
-      "Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area Personale."
-    );
+    alert(t("cart.checkout_login_required"));
     window.location.href = "account.html";
     return;
   }
@@ -285,9 +283,7 @@ function alertCheckout() {
       updateCartUI();
       closeCart();
 
-      alert(
-        `Ordine ${newOrder.id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.`
-      );
+      alert(t("cart.order_success").replace("{id}", newOrder.id));
       window.location.href = "account.html";
     });
   });

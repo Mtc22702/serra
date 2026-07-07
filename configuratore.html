@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-08-perf3";
+      window.SERRA_APP_VERSION = "2026-07-08-perf4";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -185,7 +185,9 @@
           aria-expanded="false"
           aria-controls="guidedIntro"
           aria-label="Rivedi o modifica misure, clima e mese già impostati"
+          data-i18n-conf-aria="guidedGearAria"
           title="Modifica misure, clima e mese"
+          data-i18n-conf-title="guidedGearTitle"
         >
           <span aria-hidden="true">⚙</span>
         </button>
@@ -196,6 +198,7 @@
         <summary
           class="guided-setup-summary"
           aria-label="Rivedi o modifica misure, clima e mese già impostati"
+          data-i18n-conf-aria="guidedGearAria"
         >
           <span class="guided-setup-summary-icon" aria-hidden="true">⚙</span>
           <span class="guided-setup-summary-copy">
@@ -220,12 +223,17 @@
               role="button"
               tabindex="0"
               aria-label="Modifica misure, zona e mese di semina"
+              data-i18n-conf-aria="guidedMetaRowAria"
             >
               <div class="stage-context-copy">
                 <span data-i18n-conf="stageContextTitle">Parametri progetto</span>
                 <small class="guided-summary" id="guidedSummary"></small>
               </div>
-              <div class="guided-tags" aria-label="Dati attuali della serra">
+              <div
+                class="guided-tags"
+                aria-label="Dati attuali della serra"
+                data-i18n-conf-aria="guidedTagsAria"
+              >
                 <span class="tag" id="tagZona">🌡️&nbsp;temperata</span>
                 <span class="tag" id="tagMese">📅&nbsp;—</span>
                 <span class="tag" id="tagArea">📐&nbsp;3×5 m</span>
@@ -265,6 +273,7 @@
               class="persona-cards"
               role="tablist"
               aria-label="Livello di esperienza"
+              data-i18n-conf-aria="personaCardsAria"
             >
               <button
                 class="persona-card persona-card--novizio"
@@ -357,7 +366,12 @@
       </details>
 
       <!-- Barra guidata a passi: percorso principale del configuratore -->
-      <nav class="wizard-bar" id="wizardBar" aria-label="Passi del configuratore">
+      <nav
+        class="wizard-bar"
+        id="wizardBar"
+        aria-label="Passi del configuratore"
+        data-i18n-conf-aria="wizardBarAria"
+      >
         <button
           class="wizard-step is-current"
           type="button"
@@ -365,6 +379,7 @@
           data-wizard-target="panelSettings"
           aria-current="step"
           title="Misure, zona e mese di semina"
+          data-i18n-conf-title="wizardStep1Hint"
         >
           <span class="wizard-step-num" aria-hidden="true">1</span>
           <span class="wizard-step-body">
@@ -378,6 +393,7 @@
           data-wizard-step="crops"
           data-wizard-target="panelCustomize"
           title="Scegli o modifica le piante"
+          data-i18n-conf-title="wizardStep2Hint"
         >
           <span class="wizard-step-num" aria-hidden="true">2</span>
           <span class="wizard-step-body">
@@ -396,6 +412,7 @@
           data-wizard-step="yield"
           data-wizard-target="panelYield"
           title="Rivedi i semi e completa"
+          data-i18n-conf-title="wizardStep3Hint"
         >
           <span class="wizard-step-num" aria-hidden="true">3</span>
           <span class="wizard-step-body">
@@ -497,6 +514,7 @@
                         data-step="-0.5"
                         data-target="inW"
                         aria-label="Riduci larghezza"
+                        data-i18n-conf-aria="stepBtnReduceWidthAria"
                       >
                         −
                       </button>
@@ -527,6 +545,7 @@
                       value="3"
                       class="dim-slider"
                       aria-label="Larghezza slider"
+                      data-i18n-conf-aria="widthSliderAria"
                     />
                   </div>
                   <div>
@@ -538,6 +557,7 @@
                         data-step="-0.5"
                         data-target="inL"
                         aria-label="Riduci lunghezza"
+                        data-i18n-conf-aria="stepBtnReduceLengthAria"
                       >
                         −
                       </button>
@@ -568,6 +588,7 @@
                       value="5"
                       class="dim-slider"
                       aria-label="Lunghezza slider"
+                      data-i18n-conf-aria="lengthSliderAria"
                     />
                   </div>
                 </div>
@@ -597,6 +618,7 @@
                         data-step="-5"
                         data-target="inPathNum"
                         aria-label="Riduci camminamento"
+                        data-i18n-conf-aria="stepBtnReducePathAria"
                       >
                         −
                       </button>
@@ -646,7 +668,11 @@
                   </div>
                   <div>
                     <label class="fld" id="orientLabel">Sole</label>
-                    <select id="inSole" aria-label="Lato piu soleggiato">
+                    <select
+                      id="inSole"
+                      aria-label="Lato piu soleggiato"
+                      data-i18n-conf-aria="inSoleAria"
+                    >
                       <option value="alto" selected>In alto</option>
                       <option value="basso">In basso</option>
                     </select>
@@ -668,6 +694,7 @@
                   class="btn btn-primary btn-icon crops-fill-main-btn"
                   id="btnRipristina"
                   title="Rigenera da capo il piano automatico con le colture di stagione (sostituisce le modifiche manuali)"
+                  data-i18n-conf-title="btnRipristinaTitle"
                 >
                   <svg
                     class="btn-ico"
@@ -755,6 +782,7 @@
               id="btnExpertSeasonal"
               type="button"
               title="Crea un piano automatico con le colture di stagione, da cui partire e modificare"
+              data-i18n-conf-title="btnExpertSeasonalTitle"
             >
               <span class="btn-label" id="btnExpertSeasonalLabel"
                 >Genera piano di stagione</span
@@ -798,7 +826,9 @@
                   id="btnStampaMobile"
                   type="button"
                   title="Esporta il progetto"
+                  data-i18n-conf-title="exportProjectAria"
                   aria-label="Esporta il progetto"
+                  data-i18n-conf-aria="exportProjectAria"
                   aria-haspopup="menu"
                   aria-controls="projectExportMenu"
                   aria-expanded="false"
@@ -844,6 +874,7 @@
                   id="inMeseStage"
                   class="smp-select"
                   aria-label="Mese di semina"
+                  data-i18n-conf-aria="monthAria"
                 ></select>
               </div>
             </div>
@@ -881,6 +912,7 @@
                 id="btnProjects"
                 type="button"
                 title="I miei progetti"
+                data-i18n-conf-title="projects.button"
                 onclick="openProjectsModal()"
               >
                 <svg
@@ -901,6 +933,7 @@
                 id="btnCalendar"
                 type="button"
                 title="Calendario di manutenzione"
+                data-i18n-conf-title="calendar.title"
                 onclick="openCalendarModal()"
               >
                 <svg
@@ -1053,6 +1086,7 @@
                   class="veg-filters"
                   role="group"
                   aria-label="Filtra piante"
+                  data-i18n-conf-aria="vegFiltersAria"
                 >
                   <button
                     class="veg-filter-tab active"
@@ -1096,7 +1130,9 @@
                       id="vegSearchClear"
                       type="button"
                       aria-label="Cancella ricerca"
+                      data-i18n-conf-aria="search.aria_clear"
                       title="Cancella ricerca"
+                      data-i18n-conf-title="search.aria_clear"
                       hidden
                     >
                       ×
@@ -1109,6 +1145,7 @@
                   type="button"
                   onclick="scrollGreenhouseImageIntoView('smooth')"
                   aria-label="Vai alla vista della serra"
+                  data-i18n-conf-aria="goToSceneAria"
                 >
                   <svg
                     class="btn-ico"
@@ -1133,12 +1170,17 @@
                 <div class="veg-list-scroll-wrap" id="vegListScrollWrap">
                   <div class="veg-list" id="vegList"></div>
                 </div>
-                <div class="novice-restart-row" aria-label="Ricomincia da capo">
+                <div
+                  class="novice-restart-row"
+                  aria-label="Ricomincia da capo"
+                  data-i18n-conf-aria="noviceRestartRowAria"
+                >
                   <button
                     class="btn btn-soft btn-icon novice-restart-btn"
                     id="btnNoviceRestart"
                     type="button"
                     title="Ricrea l'orto di stagione da capo"
+                    data-i18n-conf-title="btnNoviceRestartTitle"
                   >
                     <svg
                       class="btn-ico"
@@ -1161,8 +1203,12 @@
                     id="btnNoviceGoToYield"
                     type="button"
                     title="Vai alla lista dei semi da acquistare"
+                    data-i18n-conf-title="noviceGoToYieldTitle"
                   >
-                    <span class="btn-label" id="btnNoviceGoToYieldLabel"
+                    <span
+                      class="btn-label"
+                      id="btnNoviceGoToYieldLabel"
+                      data-i18n-conf="noviceGoToYieldLabel"
                       >Vai alla lista della spesa</span
                     >
                     <span aria-hidden="true">→</span>
@@ -1171,6 +1217,7 @@
                 <div
                   class="crops-customize-footer"
                   aria-label="Azioni sulle colture inserite"
+                  data-i18n-conf-aria="cropsCustomizeFooterAria"
                 >
                   <div class="crop-actions-copy">
                     <b id="cropActionsTitle">Azioni sulle colture inserite</b>
@@ -1184,6 +1231,7 @@
                       class="crop-action-btn crop-action-btn--secondary"
                       id="btnArrangeSelected"
                       title="Riordina la mappa senza cambiare le quantità"
+                      data-i18n-conf-title="btnArrangeSelectedTitle"
                     >
                       <span class="crop-action-icon" aria-hidden="true">
                         <svg
@@ -1213,6 +1261,7 @@
                       class="crop-action-btn crop-action-btn--primary"
                       id="btnFillSelected"
                       title="Riempi gli spazi vuoti usando solo le piante già inserite"
+                      data-i18n-conf-title="btnFillSelectedTitle"
                     >
                       <span class="crop-action-icon" aria-hidden="true">
                         <svg
@@ -1243,6 +1292,7 @@
                       class="crop-action-btn crop-action-btn--danger crops-clear-btn"
                       id="btnClear"
                       title="Rimuove tutte le piante dalla serra"
+                      data-i18n-conf-title="btnClearTitle"
                     >
                       <span class="crop-action-icon" aria-hidden="true">
                         <svg
@@ -1268,12 +1318,17 @@
                       </span>
                     </button>
                   </div>
-                  <div class="crops-history-row" aria-label="Annulla e ripristina">
+                  <div
+                    class="crops-history-row"
+                    aria-label="Annulla e ripristina"
+                    data-i18n-conf-aria="cropsHistoryRowAria"
+                  >
                     <button
                       class="crop-action-btn crop-action-btn--secondary"
                       id="btnUndo"
                       type="button"
                       title="Annulla l'ultima modifica (Ctrl+Z)"
+                      data-i18n-conf-title="btnUndoTitle"
                       disabled
                     >
                       <span class="crop-action-icon" aria-hidden="true">
@@ -1297,6 +1352,7 @@
                       id="btnRedo"
                       type="button"
                       title="Ripristina la modifica annullata (Ctrl+Shift+Z)"
+                      data-i18n-conf-title="btnRedoTitle"
                       disabled
                     >
                       <span class="crop-action-icon" aria-hidden="true">
@@ -1400,6 +1456,7 @@
       class="back-to-top"
       id="backToTop"
       aria-label="Torna all'inizio della pagina"
+      data-i18n-conf-aria="backtotop.aria"
       type="button"
       onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
     >
@@ -1412,7 +1469,7 @@
       <div class="projects-dialog">
         <div class="projects-head">
           <h2 class="projects-title" id="projectsModalTitle" data-i18n-conf="projects.title">I miei progetti</h2>
-          <button class="projects-close" type="button" onclick="closeProjectsModal()" aria-label="Chiudi">✕</button>
+          <button class="projects-close" type="button" onclick="closeProjectsModal()" aria-label="Chiudi" data-i18n-conf-aria="projectsCloseAria">✕</button>
         </div>
         <p class="projects-intro" data-i18n-conf="projects.intro">Ogni progetto conserva il suo layout, le misure e il mese. Apri, duplica, rinomina o elimina.</p>
         <ul class="projects-list" id="projectsList"></ul>
@@ -1434,11 +1491,20 @@
             <h2 class="projects-title" id="calendarModalTitle" data-i18n-conf="calendar.title">Calendario di manutenzione</h2>
             <small class="calendar-subtitle" id="calendarSubtitle"></small>
           </div>
-          <button class="projects-close" type="button" onclick="closeCalendarModal()" aria-label="Chiudi">✕</button>
+          <button class="projects-close" type="button" onclick="closeCalendarModal()" aria-label="Chiudi" data-i18n-conf-aria="projectsCloseAria">✕</button>
         </div>
         <p class="projects-intro" id="calendarIntro" data-i18n-conf="calendar.intro">Semina, cura e raccolta stimate mese per mese.</p>
-        <div class="calendar-tools" aria-label="Strumenti calendario">
-          <div class="calendar-view-tabs" role="tablist" aria-label="Vista calendario">
+        <div
+          class="calendar-tools"
+          aria-label="Strumenti calendario"
+          data-i18n-conf-aria="calendarToolsAria"
+        >
+          <div
+            class="calendar-view-tabs"
+            role="tablist"
+            aria-label="Vista calendario"
+            data-i18n-conf-aria="calendarViewTabsAria"
+          >
             <button class="calendar-view-tab is-active" id="calendarViewProject" type="button" role="tab" aria-selected="true" data-calendar-view="project" onclick="setCalendarView('project')">Il mio progetto</button>
             <button class="calendar-view-tab" id="calendarViewAll" type="button" role="tab" aria-selected="false" data-calendar-view="all" onclick="setCalendarView('all')">Tutte le colture</button>
           </div>
@@ -1454,7 +1520,13 @@
             </label>
           </div>
         </div>
-        <div class="calendar-month-strip" id="calendarMonthStrip" role="tablist" aria-label="Mesi"></div>
+        <div
+          class="calendar-month-strip"
+          id="calendarMonthStrip"
+          role="tablist"
+          aria-label="Mesi"
+          data-i18n-conf-aria="calendarMonthStripAria"
+        ></div>
         <div class="calendar-summary" id="calendarSummary" aria-live="polite"></div>
         <div class="calendar-grid" id="calendarGrid"></div>
       </div>
@@ -1560,7 +1632,9 @@
             />
             <span class="footer-brand-name">Orto in Serra</span>
           </div>
-          <div class="footer-motto">"Pianta con cura, raccogli con gioia."</div>
+          <div class="footer-motto">
+            "<span data-i18n-conf="footer.motto">Pianta con cura, raccogli con gioia.</span>"
+          </div>
           <div class="footer-social">
             <a href="#" title="Instagram" aria-label="Instagram"
               ><img
@@ -1588,7 +1662,11 @@
             >
               Consiglio del mese
             </div>
-            <div class="footer-tip-text" id="footerTip">
+            <div
+              class="footer-tip-text"
+              id="footerTip"
+              data-i18n-conf="footer.tip_default"
+            >
               Annaffia alla base, mai sulle foglie: previeni l'oidio.
             </div>
           </div>
@@ -1622,7 +1700,7 @@
             </li>
             <li>
               <a href="account.html"
-                ><span>👤 Area Personale</span></a
+                ><span data-i18n-conf="nav.account">👤 Area Personale</span></a
               >
             </li>
           </ul>
@@ -1679,6 +1757,7 @@
           © 2025 Orto in Serra ·
           <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span>
         </div>
+      </div>
     </footer>
 
     <!-- Script della pagina (Caricamento parallelo nativo) -->

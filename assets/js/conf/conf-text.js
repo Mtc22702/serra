@@ -299,11 +299,22 @@ function applyLanguage() {
   document.title = tx("title");
   document.querySelectorAll("[data-i18n-conf]").forEach((el) => {
     const key = el.dataset.i18nConf;
-    const translated = SITE_I18N[state.lang]?.[key];
+    // Prova prima il dizionario del configuratore, poi quello condiviso
+    // dell'header/footer (copiato dalla home): alcune chiavi esistono solo
+    // nell'uno o nell'altro.
+    const translated = I18N[state.lang]?.[key] ?? SITE_I18N[state.lang]?.[key];
     if (!translated) return;
     if (translated.includes("<") || translated.includes("&"))
       el.innerHTML = translated;
     else el.textContent = translated;
+  });
+  document.querySelectorAll("[data-i18n-conf-aria]").forEach((el) => {
+    const translated = SITE_I18N[state.lang]?.[el.dataset.i18nConfAria];
+    if (translated) el.setAttribute("aria-label", translated);
+  });
+  document.querySelectorAll("[data-i18n-conf-title]").forEach((el) => {
+    const translated = SITE_I18N[state.lang]?.[el.dataset.i18nConfTitle];
+    if (translated) el.setAttribute("title", translated);
   });
   syncLanguageControls();
   setText("#mainLangLabel", "language");
@@ -383,7 +394,7 @@ function applyLanguage() {
   setText("#startBtn", isGuidedBoot() ? "guidedStart" : "start");
   setText(".disclaimer", "disclaimer");
   setText(".panel-head h2", "settingsTitle");
-  setText(".panel-head .sub", "settingsSub");
+  setText(".panel-head-tag", "settingsTag");
   setText("#sizesSectionLabel", "sizes");
   setText("#climateSectionLabel", "climate");
   setText("#autoPlanSectionLabel", "quickStart");

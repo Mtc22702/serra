@@ -9,7 +9,7 @@
     <title>Area Riservata · Orto in Serra</title>
     <!-- Configurazione Asset e Versione -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-08-perf3";
+      window.SERRA_APP_VERSION = "2026-07-08-perf4";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -83,7 +83,12 @@
             <small data-i18n-acc="nav.brand_sub">Coltiva con un piano</small>
           </span>
         </a>
-        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+        <nav
+          class="nav-links"
+          id="mainNav"
+          aria-label="Navigazione principale"
+          data-i18n-acc-aria="nav.aria_main"
+        >
           <a href="index.html" class="nav-link" data-i18n-acc="nav.home"
             >🏠 Home</a
           >
@@ -164,6 +169,7 @@
             class="cart-btn"
             onclick="openCart()"
             aria-label="Apri carrello"
+            data-i18n-acc-aria="cart.aria_open"
           >
             <span class="cart-icon" aria-hidden="true">🛒</span>
             <span class="cart-label" data-i18n-acc="nav.carrello"
@@ -237,12 +243,15 @@
             <ul>
               <li>
                 <span data-i18n-acc="auth.test_customer">Cliente:</span>
-                <code>user@ortoinserra.it</code> / password:
+                <code>user@ortoinserra.it</code> /
+                <span data-i18n-acc="auth.password">Password</span>:
                 <code>password</code>
               </li>
               <li>
                 <span data-i18n-acc="auth.test_admin">Amministratore:</span>
-                <code>admin@ortoinserra.it</code> / password: <code>admin</code>
+                <code>admin@ortoinserra.it</code> /
+                <span data-i18n-acc="auth.password">Password</span>:
+                <code>admin</code>
               </li>
             </ul>
           </details>
@@ -360,7 +369,9 @@
           <div class="profile-info">
             <div class="profile-avatar">👤</div>
             <div>
-              <h2 id="userNameTitle">Caricamento...</h2>
+              <h2 id="userNameTitle" data-i18n-acc="dash.loading_generic">
+                Caricamento...
+              </h2>
               <p id="userEmailSub">utente@ortoinserra.it</p>
             </div>
           </div>
@@ -681,7 +692,10 @@
               <h4 data-i18n-acc="admin.server_status">
                 Stato del Server Locale
               </h4>
-              <p id="adminServerDetails">
+              <p
+                id="adminServerDetails"
+                data-i18n-acc="admin.checking_connection"
+              >
                 Verifica dello stato della connessione in corso...
               </p>
             </div>
@@ -689,7 +703,9 @@
               <h4 data-i18n-acc="admin.stats_reset">
                 Statistiche Database & Reset
               </h4>
-              <p id="adminStatsText">Caricamento statistiche in corso...</p>
+              <p id="adminStatsText" data-i18n-acc="admin.loading_stats">
+                Caricamento statistiche in corso...
+              </p>
               <div style="display: flex; gap: 10px; margin-top: 10px">
                 <button
                   class="btn btn-outline btn-danger btn-small"

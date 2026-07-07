@@ -442,6 +442,12 @@ function applyLang(lang) {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
     el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
   });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    el.setAttribute("title", t(el.getAttribute("data-i18n-title")));
+  });
 
   localStorage.setItem("ois.lang", lang);
   render();
@@ -1110,7 +1116,8 @@ if (catalogSearchLink) {
           "_label"
       ) || zona;
     const heatedLabel = pcT("preconfig.serra_heated") || "🔥";
-    el.textContent = `${w}×${l} m · cam. ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
+    const pathAbbr = pcT("preconfig.path_abbr");
+    el.textContent = `${w}×${l} m · ${pathAbbr} ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
   }
 
   // Allinea il selettore serra riscaldata
@@ -1185,6 +1192,7 @@ if (catalogSearchLink) {
       "preconfig.width": "Larghezza",
       "preconfig.length": "Lunghezza",
       "preconfig.path_label": "Camminamento tra aiuole",
+      "preconfig.path_abbr": "cam.",
       "preconfig.climate_label": "2. Clima",
       "preconfig.zona_label": "Zona",
       "preconfig.serra_label": "Serra",
@@ -1215,6 +1223,7 @@ if (catalogSearchLink) {
       "preconfig.width": "Lățime",
       "preconfig.length": "Lungime",
       "preconfig.path_label": "Cărare între straturi",
+      "preconfig.path_abbr": "căr.",
       "preconfig.climate_label": "2. Climă",
       "preconfig.zona_label": "Zonă",
       "preconfig.serra_label": "Seră",

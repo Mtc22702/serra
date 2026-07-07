@@ -10,7 +10,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-08-perf3";
+      window.SERRA_APP_VERSION = "2026-07-08-perf4";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -74,7 +74,12 @@
             <small data-i18n="nav.brand_sub">Coltiva con un piano</small>
           </span>
         </a>
-        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+        <nav
+          class="nav-links"
+          id="mainNav"
+          aria-label="Navigazione principale"
+          data-i18n-aria="nav.aria_main"
+        >
           <a
             href="#"
             class="nav-link nav-link--current nav-link--home"
@@ -151,6 +156,7 @@
             class="cart-btn"
             onclick="openCart()"
             aria-label="Apri carrello"
+            data-i18n-aria="cart.aria_open"
           >
             <span class="cart-icon" aria-hidden="true">🛒</span>
             <span class="cart-label" data-i18n="nav.carrello">Carrello</span>
@@ -212,6 +218,7 @@
                   id="cfgLevels"
                   role="group"
                   aria-label="Scegli il livello"
+                  data-i18n-aria="hero.aria_levels"
                   hidden
                 >
                   <span
@@ -337,6 +344,7 @@
         <div
           class="catalog-tools catalog-tools--pro catalog-tools--advanced"
           aria-label="Filtri catalogo semi"
+          data-i18n-aria="catalog.aria_filters"
         >
           <div class="catalog-filter-group catalog-filter-group--clima">
             <div class="catalog-filter-group-head">
@@ -352,7 +360,11 @@
                 >
               </div>
             </div>
-            <div class="catalog-clima-bar" aria-label="Filtri clima">
+            <div
+              class="catalog-clima-bar"
+              aria-label="Filtri clima"
+              data-i18n-aria="catalog.aria_climate_filters"
+            >
               <div class="catalog-zona-row">
                 <button
                   class="hero-zone-btn catalog-zona-btn"
@@ -477,6 +489,7 @@
                       class="catalog-search-clear"
                       onclick="clearCatalogSearch()"
                       aria-label="Cancella ricerca"
+                      data-i18n-aria="search.aria_clear"
                     >
                       ✕
                     </button>
@@ -506,6 +519,7 @@
                 <div
                   class="catalog-scope catalog-scope--advanced"
                   aria-label="Ambito catalogo"
+                  data-i18n-aria="catalog.aria_scope"
                 >
                   <button
                     class="catalog-chip active"
@@ -555,6 +569,7 @@
               class="cat-sort-select"
               onchange="setCatalogSort(this.value)"
               aria-label="Ordina per"
+              data-i18n-aria="catalog.aria_sort"
             >
               <option value="season" data-i18n="catalog.sort_season">
                 Ordina: Consigliati
@@ -579,6 +594,7 @@
               class="catalog-layout-toggle"
               role="group"
               aria-label="Visualizzazione catalogo"
+              data-i18n-aria="catalog.aria_view"
             >
               <button
                 type="button"
@@ -587,6 +603,7 @@
                 onclick="setCatalogLayout('grid')"
                 aria-pressed="true"
                 title="Vista griglia"
+                data-i18n-title="catalog.title_grid"
               >
                 <svg
                   width="16"
@@ -612,6 +629,7 @@
                 onclick="setCatalogLayout('compact')"
                 aria-pressed="false"
                 title="Vista compatta"
+                data-i18n-title="catalog.title_compact"
               >
                 <svg
                   width="16"
@@ -798,7 +816,9 @@
             />
             <span class="footer-brand-name">Orto in Serra</span>
           </div>
-          <div class="footer-motto">"Pianta con cura, raccogli con gioia."</div>
+          <div class="footer-motto">
+            "<span data-i18n="footer.motto">Pianta con cura, raccogli con gioia.</span>"
+          </div>
           <div class="footer-social">
             <a href="#" title="Instagram" aria-label="Instagram"
               ><img
@@ -850,7 +870,9 @@
               >
             </li>
             <li>
-              <a href="account.html"><span>👤 Area Personale</span></a>
+              <a href="account.html"
+                ><span data-i18n="nav.account">👤 Area Personale</span></a
+              >
             </li>
           </ul>
         </div>
@@ -912,6 +934,7 @@
           type="button"
           onclick="closeDetail()"
           aria-label="Chiudi scheda pianta"
+          data-i18n-aria="detail.aria_close"
         >
           ✕
         </button>
@@ -938,6 +961,7 @@
                 class="detail-tabs"
                 role="tablist"
                 aria-label="Sezioni della scheda tecnica"
+                data-i18n-aria="detail.aria_tabs"
               >
                 <button
                   class="detail-tab active"
@@ -1247,6 +1271,7 @@
       class="back-to-top"
       id="backToTop"
       aria-label="Torna all'inizio della pagina"
+      data-i18n-aria="backtotop.aria"
       onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
     >
       ↑
@@ -1358,6 +1383,7 @@
             class="preconfig-close"
             id="preconfigClose"
             aria-label="Chiudi pannello"
+            data-i18n-aria="preconfig.aria_close"
           >
             <svg
               viewBox="0 0 20 20"

@@ -17,6 +17,12 @@
       "nav.account": "👤 Area Personale",
       "nav.brand_sub": "Coltiva con un piano",
       "nav.carrello": "Carrello",
+      "nav.aria_main": "Navigazione principale",
+      "cart.aria_open": "Apri carrello",
+      "dash.tracking_label": "📦 Tracking:",
+      "dash.loading_generic": "Caricamento...",
+      "admin.checking_connection": "Verifica dello stato della connessione in corso...",
+      "admin.loading_stats": "Caricamento statistiche in corso...",
 
       // Auth Section
       "auth.title_login": "Accedi",
@@ -213,6 +219,8 @@
       "invoice.sender": "Mittente",
       "invoice.recipient": "Destinatario Spedizione",
       "invoice.address": "Indirizzo",
+      "invoice.email": "Email",
+      "invoice.phone": "Tel",
       "invoice.product": "Descrizione Prodotto (Semi)",
       "invoice.code": "Codice",
       "invoice.qty": "Quantità (Bustine)",
@@ -235,6 +243,12 @@
       "nav.account": "👤 Contul Meu",
       "nav.brand_sub": "Cultivă cu un plan",
       "nav.carrello": "Coș",
+      "nav.aria_main": "Navigare principală",
+      "cart.aria_open": "Deschide coșul",
+      "dash.tracking_label": "📦 Tracking:",
+      "dash.loading_generic": "Se încarcă...",
+      "admin.checking_connection": "Se verifică starea conexiunii...",
+      "admin.loading_stats": "Se încarcă statisticile...",
 
       // Auth Section
       "auth.title_login": "Autentificare",
@@ -429,6 +443,8 @@
       "invoice.sender": "Expeditor",
       "invoice.recipient": "Destinatar Livrare",
       "invoice.address": "Adresă",
+      "invoice.email": "Email",
+      "invoice.phone": "Tel",
       "invoice.product": "Descriere Produs (Semințe)",
       "invoice.code": "Cod",
       "invoice.qty": "Cantitate (Plicuri)",
@@ -561,6 +577,14 @@
     document.querySelectorAll("[data-i18n-acc-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-acc-placeholder");
       el.setAttribute("placeholder", tAcc(key));
+    });
+
+    document.querySelectorAll("[data-i18n-acc-aria]").forEach((el) => {
+      el.setAttribute("aria-label", tAcc(el.getAttribute("data-i18n-acc-aria")));
+    });
+
+    document.querySelectorAll("[data-i18n-acc-title]").forEach((el) => {
+      el.setAttribute("title", tAcc(el.getAttribute("data-i18n-acc-title")));
     });
 
     updateAccountSelectLabels();
@@ -703,7 +727,11 @@
       currentUser = freshUser;
     }
 
-    document.getElementById("userNameTitle").textContent = currentUser.nome;
+    const userNameTitleEl = document.getElementById("userNameTitle");
+    userNameTitleEl.textContent = currentUser.nome;
+    // Il nome reale sostituisce il placeholder "Caricamento...": l'attributo
+    // va rimosso, altrimenti un cambio lingua successivo lo sovrascriverebbe.
+    userNameTitleEl.removeAttribute("data-i18n-acc");
     document.getElementById("userEmailSub").textContent = currentUser.email;
 
     // Popola campi profilo
@@ -865,7 +893,7 @@
       itemsListHtml += "</div>";
 
       const trackingHtml = order.tracking
-        ? `<br><small class="order-tracking-note">📦 Tracking: <a href="https://www.google.com/search?q=${encodeURIComponent(order.tracking)}" target="_blank" class="order-tracking-link">${order.tracking}</a></small>`
+        ? `<br><small class="order-tracking-note">${tAcc("dash.tracking_label")} <a href="https://www.google.com/search?q=${encodeURIComponent(order.tracking)}" target="_blank" class="order-tracking-link">${order.tracking}</a></small>`
         : "";
 
       tr.innerHTML = `
@@ -989,7 +1017,7 @@
       selectHtml += `</select>`;
 
       const trackingHtml = order.tracking
-        ? `<br><small class="order-tracking-note">📦 Tracking: <strong>${order.tracking}</strong></small>`
+        ? `<br><small class="order-tracking-note">${tAcc("dash.tracking_label")} <strong>${order.tracking}</strong></small>`
         : "";
 
       tr.innerHTML = `
@@ -1039,6 +1067,9 @@
   function updateAdminStats() {
     const statsText = document.getElementById("adminStatsText");
     if (!statsText) return;
+    // I dati reali sostituiscono il placeholder "Caricamento...": l'attributo
+    // va rimosso, altrimenti un cambio lingua successivo lo sovrascriverebbe.
+    statsText.removeAttribute("data-i18n-acc");
     const clientsCount = allUsers.filter((u) => u.role !== "admin").length;
     statsText.innerHTML = `
       • <strong>${tAcc("admin.stats_plants")}:</strong> ${allPlants.length}<br>
@@ -1782,13 +1813,13 @@
           <p>Via delle Serre, 42</p>
           <p>50023 Impruneta (FI)</p>
           <p>P.IVA: 07123456789</p>
-          <p>Email: info@ortoinserra.it</p>
+          <p>${tAcc("invoice.email")}: info@ortoinserra.it</p>
         </div>
         <div class="invoice-block">
           <h4>${tAcc("invoice.recipient")}</h4>
           <p><strong>${user.nome}</strong></p>
-          <p>Email: ${user.email}</p>
-          <p>Tel: ${user.phone || "-"}</p>
+          <p>${tAcc("invoice.email")}: ${user.email}</p>
+          <p>${tAcc("invoice.phone")}: ${user.phone || "-"}</p>
           <p>${tAcc("invoice.address")}: ${user.indirizzo || "-"}</p>
         </div>
       </div>

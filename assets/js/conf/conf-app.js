@@ -795,9 +795,7 @@ function alertConfCheckout() {
   // Controlla se l'utente è autenticato
   const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
   if (!user) {
-    alert(
-      "Per completare l'acquisto ed inviare la richiesta dei semi della tua serra, devi prima accedere o registrarti alla tua Area Personale."
-    );
+    alert(tx("cart.checkout_login_required"));
     window.location.href = "account.html";
     return;
   }
@@ -850,9 +848,7 @@ function alertConfCheckout() {
       if (typeof updateConfCartUI === "function") {
         updateConfCartUI();
       }
-      alert(
-        `Ordine ${newOrder.id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.`
-      );
+      alert(tx("cart.order_success", { id: newOrder.id }));
       window.location.href = "account.html";
     });
   });

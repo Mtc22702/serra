@@ -5,16 +5,19 @@
   const menu = document.getElementById("mainNav");
   if (!header || !toggle || !menu) return;
 
+  const isRo = () =>
+    (document.documentElement.lang || "it").toLowerCase().startsWith("ro");
+
   const closeMenu = () => {
     document.body.classList.remove("nav-menu-open");
     toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Apri menu");
+    toggle.setAttribute("aria-label", isRo() ? "Deschide meniul" : "Apri menu");
   };
 
   const openMenu = () => {
     document.body.classList.add("nav-menu-open");
     toggle.setAttribute("aria-expanded", "true");
-    toggle.setAttribute("aria-label", "Chiudi menu");
+    toggle.setAttribute("aria-label", isRo() ? "Închide meniul" : "Chiudi menu");
   };
 
   toggle.addEventListener("click", () => {
@@ -51,4 +54,16 @@
       if (window.innerWidth > 900) closeMenu();
     }, 150)
   );
+
+  // Riallinea l'etichetta del bottone quando cambia la lingua della pagina
+  new MutationObserver(() => {
+    const open = document.body.classList.contains("nav-menu-open");
+    toggle.setAttribute(
+      "aria-label",
+      isRo() ? (open ? "Închide meniul" : "Deschide meniul") : open ? "Chiudi menu" : "Apri menu"
+    );
+  }).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["lang"]
+  });
 })();
