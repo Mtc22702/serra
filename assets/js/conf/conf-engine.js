@@ -576,7 +576,7 @@ function removePlantById(id) {
     expandLockedCounts: false
   });
 
-  if (refill) fillColumnTailsWithFiller();
+  if (refill) fillColumnTailsWithFiller(new Set([id]));
   commitColumnAssignment();
   saveConfig(true);
   render();
@@ -1023,8 +1023,9 @@ const FILLER_CROPS = [
 const FILLER_MIN_GAP = 60;
 
 // Sceglie la coltura tappabuchi più adatta al gap disponibile
-function pickFillerCrop(gap) {
+function pickFillerCrop(gap, excludeIds = null) {
   const present = new Set(state.beds.map((b) => b.plantId));
+  if (excludeIds) excludeIds.forEach((id) => present.add(id));
   const allPlants = state.beds.map((b) => BYID[b.plantId]).filter(Boolean);
   const seasonalIds = new Set(seminabili().map((p) => p.id));
   const fits = (p) =>
@@ -1053,7 +1054,8 @@ function pickFillerCrop(gap) {
 }
 
 // Riempie le code delle colonne con colture tappabuchi
-function fillColumnTailsWithFiller() {
+// excludeIds: piante da non riproporre come tappabuchi (es. appena rimossa dall'utente)
+function fillColumnTailsWithFiller(excludeIds = null) {
   let guard = 0;
   while (guard++ < 40) {
     const L = computeLayout();
@@ -1072,7 +1074,7 @@ function fillColumnTailsWithFiller() {
       }
     });
     if (shortCol < 0 || maxGap < FILLER_MIN_GAP) break;
-    const filler = pickFillerCrop(maxGap);
+    const filler = pickFillerCrop(maxGap, excludeIds);
     if (!filler) break;
     state.beds.push({
       plantId: filler.id,
