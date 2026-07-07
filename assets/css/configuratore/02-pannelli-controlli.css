@@ -183,6 +183,44 @@
     min-height: 50px;
     box-shadow: 0 10px 22px rgba(47, 107, 58, 0.2);
   }
+  /* Guida rapida per il novizio: prende il posto della colonna sinistra
+     quando non c'è altro da mostrare (vedi syncColLeftLayout in
+     conf-ui.js), invece di far sparire la colonna e cambiare larghezza
+     alla scena della serra. */
+  .panel--novice-guide {
+    border-top: 4px solid var(--verde);
+  }
+  .novice-guide-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+  .novice-guide-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .novice-guide-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    border-radius: 50%;
+    background: rgba(47, 107, 58, 0.12);
+    font-size: 13px;
+    line-height: 1;
+  }
+  .novice-guide-text {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--theme-text);
+    padding-top: 3px;
+  }
   .panel--customize.is-focus-pulse {
     animation: focusPulse 1.35s ease-out 1;
   }
@@ -1180,6 +1218,9 @@
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       0 5px 14px rgba(0, 0, 0, 0.14);
+  }
+  html[data-theme="dark"] .novice-guide-ico {
+    background: rgba(173, 211, 186, 0.14);
   }
   html[data-theme="dark"] .settings-visual-field--dimensions {
     background-color: #162a1e;

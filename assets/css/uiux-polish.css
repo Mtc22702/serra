@@ -378,13 +378,14 @@
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista
-     (tipicamente il profilo novizio), la colonna sinistra non ha più nulla
-     da mostrare: invece di lasciarla vuota, sparisce e la scena della serra
-     recupera lo spazio, restando comunque l'elemento visivo principale
-     della pagina. Torna visibile non appena c'è di nuovo qualcosa da
-     mostrarci (es. si riapre "La tua serra" dallo step 1 della barra
-     guidata), gestito da syncColLeftLayout() in conf-ui.js. */
+  /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista, la
+     colonna sinistra non ha più nulla da mostrare. Per il novizio ci
+     mettiamo la guida rapida (#noviceGuidePanel) al suo posto, così la
+     scena della serra mantiene sempre la stessa larghezza indipendentemente
+     dal profilo. Per gli altri profili la colonna sparisce e la scena
+     recupera lo spazio, come prima. Torna visibile non appena c'è di nuovo
+     qualcosa da mostrarci (es. si riapre "La tua serra" dallo step 1 della
+     barra guidata), gestito da syncColLeftLayout() in conf-ui.js. */
   .app.col-left-collapsed {
     grid-template-columns: minmax(420px, 1fr) 330px;
   }
@@ -396,6 +397,17 @@
   .app.col-left-collapsed .scene {
     max-width: 960px;
   }
+
+  #noviceGuidePanel:not([hidden]) {
+    display: block;
+  }
+}
+
+/* Guida rapida del novizio: solo desktop (vedi il blocco sopra), sempre
+   nascosta sotto i 1101px dove la colonna sinistra si comporta diversamente
+   (accordion mobile). */
+#noviceGuidePanel {
+  display: none;
 }
 
 @media (max-width: 660px) {

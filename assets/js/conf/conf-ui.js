@@ -563,7 +563,9 @@ function setPanelCollapsed(panelOrId, collapsed) {
 
 // Su desktop, quando la colonna sinistra non ha davvero nulla da mostrare
 // ("La tua serra" chiusa e nessun layout pronto in evidenza, tipicamente per
-// il profilo novizio) la colonna sparisce e la scena della serra recupera
+// il profilo novizio): per il novizio ci mettiamo la guida rapida al posto
+// del pannello, così la scena della serra mantiene sempre la stessa
+// larghezza; per gli altri profili la colonna sparisce e la scena recupera
 // lo spazio, invece di lasciare un vuoto fisso a sinistra. Richiamata ad
 // ogni cambio di pannello/profilo così resta sempre coerente con quello che
 // è davvero visibile in quel momento.
@@ -572,13 +574,26 @@ function syncColLeftLayout() {
   if (!app) return;
   const panelSettings = document.getElementById("panelSettings");
   const presetBar = document.getElementById("presetBar");
+  const noviceGuide = document.getElementById("noviceGuidePanel");
+  const modeSection = panelSettings
+    ? panelSettings.closest(".mode-section")
+    : null;
   const settingsOpen = Boolean(
     panelSettings && !panelSettings.classList.contains("is-collapsed")
   );
   const presetVisible = Boolean(
     presetBar && getComputedStyle(presetBar).display !== "none"
   );
-  app.classList.toggle("col-left-collapsed", !settingsOpen && !presetVisible);
+  const colEmpty = !settingsOpen && !presetVisible;
+  const showGuide = colEmpty && state.livello === "novizio";
+  if (noviceGuide) noviceGuide.hidden = !showGuide;
+  // Con "La tua serra" e i layout pronti entrambi nascosti, .mode-section
+  // resterebbe comunque nel flusso flex della colonna come contenitore
+  // vuoto, aggiungendo un gap fantasma sopra la guida e disallineandone il
+  // bordo superiore rispetto a scena e colonna destra. Lo si toglie del
+  // tutto dal flusso quando la guida prende il suo posto.
+  if (modeSection) modeSection.style.display = showGuide ? "none" : "";
+  app.classList.toggle("col-left-collapsed", colEmpty && !showGuide);
 }
 
 // Apre o chiude il pannello personalizzazione colture

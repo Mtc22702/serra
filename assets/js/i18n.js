@@ -1543,6 +1543,18 @@
         calendarToolsAria: "Strumenti calendario",
         calendarViewTabsAria: "Vista calendario",
         calendarMonthStripAria: "Mesi",
+        noviceGuideTitle: "Come funziona questa pagina",
+        noviceGuideTag: "Guida rapida",
+        noviceGuideStep1:
+          "Le misure, la zona e il mese sono già impostati: puoi modificarli quando vuoi da \"Le tue scelte\", in alto.",
+        noviceGuideStep2:
+          "Abbiamo già preparato un piano di semina automatico con colture di stagione, pronto qui a fianco.",
+        noviceGuideStep3:
+          "Tocca un'aiuola nella serra per vederne i dettagli e cambiare la quantità di piante.",
+        noviceGuideStep4:
+          "Quando sei soddisfatto, passa alla \"Lista della spesa\" per rivedere i semi e completare l'ordine.",
+        noviceGuideStep5:
+          "Puoi sempre rigenerare il piano o annullare l'ultima modifica con i pulsanti sotto la serra.",
         stageToolsExtra: "Strumenti extra",
         viewMode: "Vista",
         viewNatural: "Vista naturale",
@@ -2055,6 +2067,18 @@
         calendarToolsAria: "Instrumente calendar",
         calendarViewTabsAria: "Vizualizare calendar",
         calendarMonthStripAria: "Luni",
+        noviceGuideTitle: "Cum funcționează această pagină",
+        noviceGuideTag: "Ghid rapid",
+        noviceGuideStep1:
+          "Dimensiunile, zona și luna sunt deja setate: le poți modifica oricând din \"Alegerile tale\", sus.",
+        noviceGuideStep2:
+          "Am pregătit deja un plan de semănat automat cu culturi de sezon, gata de văzut aici alături.",
+        noviceGuideStep3:
+          "Atinge o aiuolă din seră pentru a vedea detaliile și a schimba cantitatea de plante.",
+        noviceGuideStep4:
+          "Când ești mulțumit, treci la \"Lista de cumpărături\" pentru a revizui semințele și a finaliza comanda.",
+        noviceGuideStep5:
+          "Poți oricând regenera planul sau anula ultima modificare cu butoanele de sub seră.",
         stageToolsExtra: "Instrumente suplimentare",
         viewMode: "Vedere",
         viewNatural: "Vedere naturală",

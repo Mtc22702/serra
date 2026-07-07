@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-08-perf4";
+      window.SERRA_APP_VERSION = "2026-07-08-perf6";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -455,15 +455,7 @@
                 if (liv === "novizio" || liv === "intermedio" || liv === "esperto") {
                   document.getElementById("panelSettings").classList.add("is-collapsed");
                 }
-                // Per il novizio la colonna sinistra resta comunque vuota
-                // ("La tua serra" chiusa e i layout pronti nascosti per
-                // questo profilo): si anticipa qui il collasso della
-                // colonna, così la scena della serra parte già alla
-                // larghezza corretta invece di "saltare" dopo il boot JS.
-                if (liv === "novizio") {
-                  var appEl = document.querySelector(".app");
-                  if (appEl) appEl.classList.add("col-left-collapsed");
-                }
+                window.__ORTO_BOOT_LIVELLO__ = liv;
               })();
             </script>
             <div class="pad">
@@ -805,6 +797,85 @@
             </div>
           </div>
         </div>
+
+        <!-- Guida rapida al posto della colonna, quando per il novizio non
+             c'è altro da mostrare a sinistra (vedi syncColLeftLayout in
+             conf-ui.js): mantiene la larghezza della colonna costante, così
+             la scena della serra non cambia dimensione tra un profilo e
+             l'altro. -->
+        <div class="panel panel--novice-guide" id="noviceGuidePanel" hidden>
+          <div class="pad">
+            <div class="panel-head panel-head--static">
+              <span class="settings-head-icon" aria-hidden="true">💡</span>
+              <div class="panel-head-title-group">
+                <h2 data-i18n-conf="noviceGuideTitle">Come funziona questa pagina</h2>
+                <span class="panel-head-tag" data-i18n-conf="noviceGuideTag">Guida rapida</span>
+              </div>
+            </div>
+            <ul class="novice-guide-list">
+              <li>
+                <span class="novice-guide-ico" aria-hidden="true">🌡️</span>
+                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep1"
+                  >Le misure, la zona e il mese sono già impostati: puoi
+                  modificarli quando vuoi da "Le tue scelte", in alto.</span
+                >
+              </li>
+              <li>
+                <span class="novice-guide-ico" aria-hidden="true">🌱</span>
+                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep2"
+                  >Abbiamo già preparato un piano di semina automatico con
+                  colture di stagione, pronto qui a fianco.</span
+                >
+              </li>
+              <li>
+                <span class="novice-guide-ico" aria-hidden="true">✏️</span>
+                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep3"
+                  >Tocca un'aiuola nella serra per vederne i dettagli e
+                  cambiare la quantità di piante.</span
+                >
+              </li>
+              <li>
+                <span class="novice-guide-ico" aria-hidden="true">🛒</span>
+                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep4"
+                  >Quando sei soddisfatto, passa alla "Lista della spesa" per
+                  rivedere i semi e completare l'ordine.</span
+                >
+              </li>
+              <li>
+                <span class="novice-guide-ico" aria-hidden="true">🔄</span>
+                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep5"
+                  >Puoi sempre rigenerare il piano o annullare l'ultima
+                  modifica con i pulsanti sotto la serra.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <script>
+          // Per il novizio "La tua serra" resta chiusa e i layout pronti
+          // nascosti: la colonna sinistra avrebbe altrimenti nulla da
+          // mostrare. Invece di farla sparire (e cambiare larghezza alla
+          // scena della serra), mostriamo qui la guida rapida, subito al
+          // parsing, così non "salta" dopo il boot JS (vedi syncColLeftLayout
+          // in conf-ui.js per il comportamento a runtime).
+          if (window.__ORTO_BOOT_LIVELLO__ === "novizio") {
+            document.getElementById("noviceGuidePanel").hidden = false;
+            // .mode-section (che contiene "La tua serra" e i layout pronti,
+            // entrambi vuoti/nascosti per il novizio) va tolto dal flusso
+            // fin da subito: altrimenti il suo gap flessibile resterebbe
+            // sopra la guida per una frazione di secondo prima che
+            // syncColLeftLayout() lo corregga, causando un salto visibile
+            // e un margine superiore disallineato rispetto a scena e
+            // colonna destra.
+            var bootModeSection = document.querySelector(
+              "#panelSettings.is-collapsed"
+            );
+            bootModeSection = bootModeSection
+              ? bootModeSection.closest(".mode-section")
+              : null;
+            if (bootModeSection) bootModeSection.style.display = "none";
+          }
+        </script>
       </div>
 
       <!-- Vista dall'alto della serra -->
