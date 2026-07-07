@@ -377,6 +377,25 @@
   .setup-context-row.stage-context-row {
     grid-template-columns: minmax(0, 1fr) auto;
   }
+
+  /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista
+     (tipicamente il profilo novizio), la colonna sinistra non ha più nulla
+     da mostrare: invece di lasciarla vuota, sparisce e la scena della serra
+     recupera lo spazio, restando comunque l'elemento visivo principale
+     della pagina. Torna visibile non appena c'è di nuovo qualcosa da
+     mostrarci (es. si riapre "La tua serra" dallo step 1 della barra
+     guidata), gestito da syncColLeftLayout() in conf-ui.js. */
+  .app.col-left-collapsed {
+    grid-template-columns: minmax(420px, 1fr) 330px;
+  }
+
+  .app.col-left-collapsed .col-left {
+    display: none;
+  }
+
+  .app.col-left-collapsed .scene {
+    max-width: 960px;
+  }
 }
 
 @media (max-width: 660px) {

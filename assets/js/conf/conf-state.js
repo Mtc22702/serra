@@ -274,6 +274,7 @@ function setLivello(liv, { mapMode = true } = {}) {
   });
   syncPersonaPickerSummary();
   if (mapMode) setMode(next === "esperto" ? "expert" : "fit", false);
+  if (typeof syncColLeftLayout === "function") syncColLeftLayout();
 }
 
 // Cambia il livello utente con conferma se necessario

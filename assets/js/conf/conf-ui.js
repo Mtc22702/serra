@@ -558,6 +558,27 @@ function setPanelCollapsed(panelOrId, collapsed) {
   panel.classList.toggle("is-collapsed", Boolean(collapsed));
   const toggle = panel.querySelector(".panel-toggle");
   if (toggle) updatePanelToggle(toggle);
+  syncColLeftLayout();
+}
+
+// Su desktop, quando la colonna sinistra non ha davvero nulla da mostrare
+// ("La tua serra" chiusa e nessun layout pronto in evidenza, tipicamente per
+// il profilo novizio) la colonna sparisce e la scena della serra recupera
+// lo spazio, invece di lasciare un vuoto fisso a sinistra. Richiamata ad
+// ogni cambio di pannello/profilo così resta sempre coerente con quello che
+// è davvero visibile in quel momento.
+function syncColLeftLayout() {
+  const app = document.querySelector(".app");
+  if (!app) return;
+  const panelSettings = document.getElementById("panelSettings");
+  const presetBar = document.getElementById("presetBar");
+  const settingsOpen = Boolean(
+    panelSettings && !panelSettings.classList.contains("is-collapsed")
+  );
+  const presetVisible = Boolean(
+    presetBar && getComputedStyle(presetBar).display !== "none"
+  );
+  app.classList.toggle("col-left-collapsed", !settingsOpen && !presetVisible);
 }
 
 // Apre o chiude il pannello personalizzazione colture
