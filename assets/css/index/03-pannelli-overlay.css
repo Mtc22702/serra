@@ -1261,7 +1261,7 @@
     padding-top: 0.18rem;
   }
   .cart-clear-btn {
-    height: 28px;
+    height: 36px;
     padding: 0 0.7rem;
     border-radius: 6px;
     border: 1px solid rgba(82, 183, 136, 0.35);
@@ -1287,8 +1287,8 @@
     color: var(--green-dk);
   }
   .cart-close {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: none;
     background: var(--sand);
@@ -1530,10 +1530,21 @@
     background: #fff;
     color: var(--green-dk);
     padding: 0.52rem 0.85rem;
-    min-height: 38px;
+    min-height: 44px;
     font:
       800 0.82rem "Outfit",
       sans-serif;
     cursor: pointer;
+  }
+
+  /* Mobile: il cassetto carrello occupa tutta la larghezza disponibile e
+     rispetta le aree sicure (notch, home-indicator) invece di avere un
+     padding fisso che può finire sotto gli angoli arrotondati dello schermo. */
+  @media (max-width: 480px) {
+    .cart-drawer {
+      width: 100vw;
+      padding: calc(1.1rem + env(safe-area-inset-top)) calc(1.1rem + env(safe-area-inset-right))
+        calc(1.1rem + env(safe-area-inset-bottom)) calc(1.1rem + env(safe-area-inset-left));
+    }
   }
 }

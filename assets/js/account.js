@@ -23,6 +23,7 @@
       "auth.title_register": "Registrati",
       "auth.email": "Indirizzo Email",
       "auth.password": "Password",
+      "auth.password_min_chars": "Minimo 6 caratteri",
       "auth.login_btn": "Accedi all'Area Riservata",
       "auth.name": "Nome e Cognome",
       "auth.phone": "Numero di Telefono",
@@ -122,10 +123,11 @@
       "modal.maturity": "Giorni di crescita",
       "modal.spacing": "Distanza di semina (cm)",
       "modal.months":
-        "Mesi di semina in serra (seleziona più mesi tenendo premuto Ctrl/Cmd)",
-      "modal.amiche": "Piante Amiche (Consociazioni compatibili - Ctrl/Cmd)",
+        "Mesi di semina in serra (seleziona più mesi: tocca per aggiungere/togliere, oppure Ctrl/Cmd su desktop)",
+      "modal.amiche":
+        "Piante Amiche (Consociazioni compatibili - tocca per selezionare più voci)",
       "modal.nemiche":
-        "Piante Nemiche (Consociazioni incompatibili - Ctrl/Cmd)",
+        "Piante Nemiche (Consociazioni incompatibili - tocca per selezionare più voci)",
       "modal.cancel": "Annulla",
       "modal.save": "Salva nel catalogo",
       "modal.edit_title": "Modifica Coltura",
@@ -231,6 +233,7 @@
       "auth.title_register": "Înregistrare",
       "auth.email": "Adresă Email",
       "auth.password": "Parolă",
+      "auth.password_min_chars": "Minim 6 caractere",
       "auth.login_btn": "Conectează-te la Zona Rezervată",
       "auth.name": "Nume și Prenume",
       "auth.phone": "Număr de Telefon",
@@ -331,9 +334,11 @@
       "modal.maturity": "Zile de creștere",
       "modal.spacing": "Distanță de semănare (cm)",
       "modal.months":
-        "Luni de semănare în seră (selectează mai multe luni ținând apăsat Ctrl/Cmd)",
-      "modal.amiche": "Plante Prietene (Asocieri compatibile - Ctrl/Cmd)",
-      "modal.nemiche": "Plante Dușmane (Asocieri incompatibile - Ctrl/Cmd)",
+        "Luni de semănare în seră (selectează mai multe: atinge pentru a adăuga/elimina, sau Ctrl/Cmd pe desktop)",
+      "modal.amiche":
+        "Plante Prietene (Asocieri compatibile - atinge pentru a selecta mai multe)",
+      "modal.nemiche":
+        "Plante Dușmane (Asocieri incompatibile - atinge pentru a selecta mai multe)",
       "modal.cancel": "Anulează",
       "modal.save": "Salvează în catalog",
       "modal.edit_title": "Modifică cultura",
@@ -753,7 +758,7 @@
       itemsListHtml += "</div>";
 
       const trackingHtml = order.tracking
-        ? `<br><small style="display:block;margin-top:4px;color:#718096;white-space:nowrap;">📦 Tracking: <a href="https://www.google.com/search?q=${encodeURIComponent(order.tracking)}" target="_blank" style="color:var(--c-green,#2f6b3a);text-decoration:underline;font-weight:500;">${order.tracking}</a></small>`
+        ? `<br><small class="order-tracking-note">📦 Tracking: <a href="https://www.google.com/search?q=${encodeURIComponent(order.tracking)}" target="_blank" class="order-tracking-link">${order.tracking}</a></small>`
         : "";
 
       tr.innerHTML = `
@@ -763,7 +768,7 @@
         <td data-label="${tAcc("dash.order_total")}">€ ${parseFloat(order.total).toFixed(2)}</td>
         <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(order.status)}</span>${trackingHtml}</td>
         <td data-label="${tAcc("dash.order_actions")}">
-          <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')" title="${tAcc("dash.print_btn")}">${tAcc("dash.print_btn")}</button>
+          <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')">${tAcc("dash.print_btn")}</button>
         </td>
       `;
       listContainer.appendChild(tr);
@@ -877,7 +882,7 @@
       selectHtml += `</select>`;
 
       const trackingHtml = order.tracking
-        ? `<br><small style="display:block;margin-top:4px;color:#718096;white-space:nowrap;">📦 Tracking: <strong>${order.tracking}</strong></small>`
+        ? `<br><small class="order-tracking-note">📦 Tracking: <strong>${order.tracking}</strong></small>`
         : "";
 
       tr.innerHTML = `

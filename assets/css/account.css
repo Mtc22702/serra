@@ -430,6 +430,57 @@ html[data-theme="dark"] .data-table tr:hover {
   background: rgba(74, 85, 104, 0.15);
   color: #4a5568;
 }
+html[data-theme="dark"] .status-badge.spedito {
+  background: rgba(72, 187, 120, 0.22);
+  color: #6ee7a5;
+}
+html[data-theme="dark"] .status-badge.in-elaborazione {
+  background: rgba(236, 201, 75, 0.22);
+  color: #f2cf5f;
+}
+html[data-theme="dark"] .status-badge.completato {
+  background: rgba(66, 153, 225, 0.22);
+  color: #7cb8f0;
+}
+html[data-theme="dark"] .status-badge.annullato {
+  background: rgba(229, 62, 62, 0.22);
+  color: #f28686;
+}
+html[data-theme="dark"] .status-badge.admin {
+  background: rgba(153, 102, 204, 0.24);
+  color: #c9a6ea;
+}
+html[data-theme="dark"] .status-badge.user {
+  background: rgba(160, 174, 192, 0.2);
+  color: #cbd5e0;
+}
+.badge-category {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(47, 107, 58, 0.12);
+  color: var(--verde-scuro, #1f3a26);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+html[data-theme="dark"] .badge-category {
+  background: rgba(120, 190, 140, 0.18);
+  color: #a9e0b8;
+}
+
+.order-tracking-note {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-muted, #718096);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.order-tracking-link {
+  color: var(--c-green, #2f6b3a);
+  text-decoration: underline;
+  font-weight: 500;
+}
 
 /* Cerca piante in admin dashboard */
 .admin-search-wrapper input {
@@ -1197,6 +1248,11 @@ html[data-theme="dark"] .notification-content {
   .admin-order-actions select {
     flex: 1 1 100%;
     width: 100%;
+  }
+
+  .btn-small {
+    min-height: 44px;
+    padding: 10px 12px;
   }
 
   .modal-photo-field {

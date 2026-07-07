@@ -10,7 +10,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-06-202";
+      window.SERRA_APP_VERSION = "2026-07-06-203";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -767,7 +767,9 @@
               <div class="contatti-item">
                 <div class="contatti-icon">📱</div>
                 <div>
-                  <div class="contatti-label">Social</div>
+                  <div class="contatti-label" data-i18n="contatti.lbl.social">
+                    Social
+                  </div>
                   <div class="contatti-value">
                     <a href="#">@ortoinserra</a> · Instagram · Facebook
                   </div>
@@ -1282,7 +1284,11 @@
         <span class="cookie-desktop-copy" data-i18n="cookie.text2">
           per saperne di più.</span
         >
-        <a class="cookie-mobile-copy" href="#" onclick="return false;"
+        <a
+          class="cookie-mobile-copy"
+          href="#"
+          onclick="return false;"
+          data-i18n="cookie.mobile_link"
           >Cookie e privacy</a
         >
       </div>

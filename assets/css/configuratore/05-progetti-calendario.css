@@ -885,6 +885,7 @@
   }
   .mat-qty input {
     width: 62px;
+    min-height: 40px;
     padding: 3px 6px;
     border: var(--bordo, 1px solid rgba(31, 58, 38, 0.25));
     border-radius: var(--raggio, 8px);
@@ -901,7 +902,8 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 5px 10px;
+    min-height: 40px;
+    padding: 5px 12px;
     border: 1.5px solid rgba(47, 107, 58, 0.3);
     border-radius: var(--radius-pill, 999px);
     cursor: pointer;

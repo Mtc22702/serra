@@ -1055,8 +1055,8 @@
   }
   .settings-visual-field--climate {
     display: grid;
-    grid-template-columns: minmax(0, 1.12fr) minmax(92px, 0.88fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.5), rgba(249, 252, 247, 0.48)),
       url("../../img/svg/clima-pattern.svg");
@@ -1065,8 +1065,18 @@
       112px 76px;
   }
   #climateField select {
-    padding-inline: 8px 22px;
+    padding-inline: 6px 20px;
     font-size: 12px;
+  }
+  .path-unit-label {
+    font-size: 12px;
+    opacity: 0.65;
+    flex-shrink: 0;
+  }
+  @media (max-width: 380px) {
+    .settings-visual-field--climate {
+      grid-template-columns: 1fr;
+    }
   }
   #inRisc.is-heated {
     border-color: #f0b429;
