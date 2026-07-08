@@ -644,6 +644,7 @@
           "La ricerca include tutto il catalogo. Alcuni risultati potrebbero non essere adatti alla semina in {month}.",
         "catalog.count_all": "{count} semi nel catalogo",
         "catalog.count_filtered": "{shown} di {total} semi mostrati",
+        "catalog.load_more": "Mostra altri {count}",
         "zone.freddo": "fredda",
         "zone.temperato": "temperata",
         "zone.caldo": "calda",
@@ -1063,6 +1064,7 @@
           "Căutarea include întregul catalog. Unele rezultate pot să nu fie potrivite pentru semănat în {month}.",
         "catalog.count_all": "{count} semințe în catalog",
         "catalog.count_filtered": "{shown} din {total} semințe afișate",
+        "catalog.load_more": "Arată încă {count}",
         "zone.freddo": "rece",
         "zone.temperato": "temperată",
         "zone.caldo": "caldă",
@@ -1381,6 +1383,7 @@
         guidedSetupHint:
           "Misure, clima e mese già impostati: modificali qui se vuoi",
         guidedSetupAction: "Modifica",
+        guidedSetupCloseAction: "Chiudi",
         stageContextTitle: "Parametri progetto",
         modalKicker: "Configurazione iniziale",
         modalTitle: "Prima scegli il clima",
@@ -1904,6 +1907,7 @@
         guidedSetupHint:
           "Dimensiuni, climă și lună deja setate: le poți modifica aici",
         guidedSetupAction: "Modifică",
+        guidedSetupCloseAction: "Închide",
         stageContextTitle: "Parametrii proiectului",
         modalKicker: "Configurare inițială",
         modalTitle: "Alege mai întâi clima",

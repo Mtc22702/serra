@@ -4,6 +4,12 @@ let state = {
   riscaldata: false,
   mese: new Date().getMonth() + 1
 };
+// Quante piante mostrare per "pagina" nella lista del catalogo (oltre alle
+// 3 in evidenza nella vista a griglia) e di quante farla crescere ogni
+// volta che si preme "Mostra altri", per evitare di renderizzare/scrollare
+// tutto il catalogo in un colpo solo.
+const CATALOG_PAGE_SIZE = 12;
+const CATALOG_PAGE_STEP = 12;
 let catalog = {
   search: "",
   type: "",
@@ -11,7 +17,9 @@ let catalog = {
   easyOnly: false,
   easyOnlyTouched: false,
   sort: "season",
-  layout: localStorage.getItem("serra.catalog.layout") || "grid"
+  layout: localStorage.getItem("serra.catalog.layout") || "grid",
+  visibleCount: CATALOG_PAGE_SIZE,
+  _lastFilterSignature: null
 };
 let cart = [];
 let currentDetail = null;
@@ -593,6 +601,24 @@ function renderEditorialPlants() {
   const filtersActive =
     Boolean(catalog.search || catalog.type || catalog.easyOnly) ||
     catalog.seasonOnly;
+
+  // Se filtri, ordinamento o vista sono cambiati dall'ultima volta, si
+  // riparte dalla prima pagina di risultati: altrimenti il "Mostra altri"
+  // di una ricerca precedente resterebbe applicato a un elenco diverso,
+  // mostrando o nascondendo piante in modo incoerente col conteggio.
+  const filterSignature = JSON.stringify([
+    catalog.search,
+    catalog.type,
+    catalog.easyOnly,
+    catalog.seasonOnly,
+    catalog.sort,
+    catalog.layout
+  ]);
+  if (catalog._lastFilterSignature !== filterSignature) {
+    catalog.visibleCount = CATALOG_PAGE_SIZE;
+    catalog._lastFilterSignature = filterSignature;
+  }
+
   syncCatalogControls();
   const catalogStatus = document.getElementById("catalogStatus");
   if (catalogStatus) {
@@ -680,7 +706,8 @@ function renderEditorialPlants() {
   if (catalog.layout === "compact") {
     document.getElementById("editorialPlants").innerHTML = "";
     document.getElementById("compactPlants").classList.add("compact-list-view");
-    document.getElementById("compactPlants").innerHTML = plants
+    const visiblePlants = plants.slice(0, catalog.visibleCount);
+    document.getElementById("compactPlants").innerHTML = visiblePlants
       .map((p) => {
         const tipo = typeOfPlant(p);
         const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
@@ -709,53 +736,19 @@ function renderEditorialPlants() {
           <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
         </div>`;
       })
-      .join("");
+      .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
   } else {
+    // Griglia uniforme a 2 colonne: tutte le piante (comprese le prime 3,
+    // prima mostrate più grandi come "in evidenza") usano la stessa card
+    // compatta, stessa dimensione per tutte. "editorialPlants" non viene
+    // più usato in questa vista.
     document
       .getElementById("compactPlants")
       .classList.remove("compact-list-view");
-    const featured = plants.slice(0, 3);
-    const rest = plants.slice(3);
+    document.getElementById("editorialPlants").innerHTML = "";
+    const visiblePlants = plants.slice(0, catalog.visibleCount);
 
-    const editHTML = `<div class="plant-catalog-top">
-      ${featured
-        .map((p) => {
-          const tipo = typeOfPlant(p);
-          const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
-          const inC = inCart(p.id);
-          return `<div class="plant-card-top${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
-          <div class="top-photo">
-            <img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" />
-            <span class="photo-type-tag" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
-            <span class="photo-cart-check">✓</span>
-          </div>
-          <div class="top-body">
-            <div class="top-nameline">
-              <div class="top-name">${plantName(p.id)}</div>
-              ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
-            </div>
-            <div class="top-facts-row">
-              <span class="top-fact">⏱&nbsp;${daysLabel(p)}</span>
-              <span class="top-fact">↔&nbsp;${spacingLabel(p)}</span>
-              <span class="top-fact">⚖&nbsp;${yieldLabel(p)}</span>
-            </div>
-            <div class="top-buy-row">
-              <span class="top-price">
-                <b>${money(packPrice(p.id))}</b>
-                <small>${seedsPerPack(p.id)} ${t("catalog.seeds")}</small>
-              </span>
-              <button class="top-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')">
-                ${cartActionLabel(inC)}
-              </button>
-            </div>
-          </div>
-        </div>`;
-        })
-        .join("")}
-    </div>`;
-    document.getElementById("editorialPlants").innerHTML = editHTML;
-
-    document.getElementById("compactPlants").innerHTML = rest
+    document.getElementById("compactPlants").innerHTML = visiblePlants
       .map((p) => {
         const tipo = typeOfPlant(p);
         const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
@@ -781,8 +774,29 @@ function renderEditorialPlants() {
           </div>
         </div>`;
       })
-      .join("");
+      .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
   }
+}
+
+// Pulsante "Mostra altri N" in fondo alla lista, quando ci sono più
+// risultati di quanti mostrati finora (vedi CATALOG_PAGE_SIZE/STEP).
+function catalogLoadMoreHTML(remainingCount) {
+  if (remainingCount <= 0) return "";
+  const label = tv("catalog.load_more", {
+    count: Math.min(remainingCount, CATALOG_PAGE_STEP)
+  });
+  return `<div class="catalog-load-more-wrap">
+    <button class="catalog-load-more-btn" type="button" onclick="loadMoreCatalogPlants()">
+      <span>${label}</span>
+      <span class="catalog-load-more-icon" aria-hidden="true">↓</span>
+    </button>
+  </div>`;
+}
+
+// Mostra la pagina successiva di risultati del catalogo
+function loadMoreCatalogPlants() {
+  catalog.visibleCount += CATALOG_PAGE_STEP;
+  renderEditorialPlants();
 }
 
 // Imposta catalog layout

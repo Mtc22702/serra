@@ -26,16 +26,22 @@
   padding: 52px 10px 2px;
 }
 
+/* Da icona muta a pillola con etichetta e freccetta: da sola una ruota
+   dentata non comunica "apri per rivedere/modificare le tue scelte", né dà
+   un indizio che sia un controllo apri/chiudi. Etichetta + chevron (che
+   ruota da aperto) sono lo stesso linguaggio già usato altrove nell'app
+   (es. .stage-tools-kicker, .persona-pick-chevron). */
 .guided-setup-gear {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  gap: 7px;
   height: 40px;
+  padding: 0 13px 0 11px;
   flex: 0 0 auto;
   margin-left: auto;
   border: 1px solid rgba(47, 107, 58, 0.16);
-  border-radius: 11px;
+  border-radius: 999px;
   background: linear-gradient(
     155deg,
     rgba(255, 255, 255, 0.92),
@@ -52,12 +58,41 @@
     transform 0.1s ease;
 }
 
+.guided-setup-gear-icon {
+  display: inline-flex;
+  flex: none;
+  font-size: 16px;
+}
+
+.guided-setup-gear-label {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.guided-setup-gear-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  font-size: 12px;
+  color: var(--verde);
+  transition: transform 0.18s ease;
+}
+
+.guided-setup-gear[aria-expanded="true"] .guided-setup-gear-chevron {
+  transform: rotate(180deg);
+}
+
 .guided-setup-gear:hover {
   background: rgba(47, 107, 58, 0.12);
 }
 
 .guided-setup-gear:active {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
 .guided-setup-gear:focus-visible {
@@ -186,7 +221,8 @@
   min-height: 32px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(47, 107, 58, 0.1);
+  border: 1px solid rgba(47, 107, 58, 0.32);
+  background: rgba(47, 107, 58, 0.14);
   color: var(--verde-scuro);
   font-size: 11px;
   font-weight: 800;
@@ -196,7 +232,7 @@
 }
 
 .guided-setup-summary:hover .guided-setup-summary-action {
-  background: rgba(47, 107, 58, 0.16);
+  background: rgba(47, 107, 58, 0.22);
 }
 
 .guided-setup-summary-chevron {
@@ -322,19 +358,26 @@
   overflow: visible;
 }
 
+/* Etichette informative (zona/mese/misure): tono caldo neutro, non verde,
+   per distinguerle a colpo d'occhio dai controlli cliccabili (verde) come
+   "Modifica" subito accanto — prima usavano la stessa famiglia di colori
+   e si confondevano tra loro. */
 .stage-context-row .guided-tags .tag {
   min-height: 30px;
   padding: 6px 9px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.86);
-  border-color: rgba(47, 107, 58, 0.12);
-  color: #415440;
+  background: rgba(216, 205, 184, 0.4);
+  border-color: rgba(107, 84, 64, 0.22);
+  color: #5c4a38;
   box-shadow: none;
   font-size: 11px;
   font-weight: 800;
   white-space: nowrap;
 }
 
+/* Pulsante "Modifica": bordo proprio invece del solo sfondo tenue, così si
+   riconosce subito come un controllo cliccabile e non come un'altra
+   etichetta informativa. */
 .stage-context-action {
   display: inline-flex;
   align-items: center;
@@ -342,7 +385,8 @@
   min-height: 32px;
   padding: 0 11px;
   border-radius: 999px;
-  background: rgba(47, 107, 58, 0.1);
+  border: 1px solid rgba(47, 107, 58, 0.32);
+  background: rgba(47, 107, 58, 0.14);
   color: var(--verde-scuro);
   font-size: 11px;
   font-weight: 850;
@@ -527,11 +571,25 @@
     height: 22px;
   }
 
+  /* Spazio ridotto: l'etichetta sparisce, resta l'icona con la freccetta
+     (più piccola) a segnalare comunque che è un apri/chiudi, non solo
+     un'icona decorativa. */
   .guided-setup-gear {
-    width: 34px;
     height: 34px;
+    padding: 0 9px;
+    gap: 5px;
     border-radius: 10px;
     font-size: 15px;
+  }
+
+  .guided-setup-gear-label {
+    display: none;
+  }
+
+  .guided-setup-gear-chevron {
+    width: 12px;
+    height: 12px;
+    font-size: 10px;
   }
 
   .config-page-title .guided-brand-copy h1 {
@@ -796,12 +854,13 @@ html[data-theme="dark"] .guided-setup-summary-copy small {
 
 html[data-theme="dark"] .guided-setup-summary-action,
 html[data-theme="dark"] .stage-context-action {
-  background: rgba(139, 212, 158, 0.16);
+  border: 1px solid rgba(139, 212, 158, 0.4);
+  background: rgba(139, 212, 158, 0.2);
   color: var(--dark-green);
 }
 
 html[data-theme="dark"] .guided-setup-summary:hover .guided-setup-summary-action {
-  background: rgba(139, 212, 158, 0.24);
+  background: rgba(139, 212, 158, 0.3);
 }
 
 html[data-theme="dark"] .guided-setup-toggle[open] .guided-setup-summary {
@@ -825,10 +884,12 @@ html[data-theme="dark"] .stage-context-copy .guided-summary {
   color: var(--dark-muted);
 }
 
+/* Neutro anche a tema scuro, non verde: stessa distinzione informativo vs
+   cliccabile del tema chiaro (vedi commento sulla regola chiara sopra). */
 html[data-theme="dark"] .stage-context-row .guided-tags .tag {
-  background: rgba(139, 212, 158, 0.14);
+  background: rgba(255, 255, 255, 0.06);
   border-color: var(--dark-border);
-  color: var(--dark-text);
+  color: var(--dark-muted);
 }
 
 /* Su smartphone (sotto i 640px) il selettore profilo aveva uno sfondo

@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-08-perf6";
+      window.SERRA_APP_VERSION = "2026-07-08-perf15";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="assets/css/index.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-08-perf2" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-08-perf15" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -189,7 +189,14 @@
           title="Modifica misure, clima e mese"
           data-i18n-conf-title="guidedGearTitle"
         >
-          <span aria-hidden="true">⚙</span>
+          <span class="guided-setup-gear-icon" aria-hidden="true">⚙</span>
+          <span
+            class="guided-setup-gear-label"
+            data-i18n-conf="guidedSetupTitle"
+            aria-hidden="true"
+            >Le tue scelte</span
+          >
+          <span class="guided-setup-gear-chevron" aria-hidden="true">⌄</span>
         </button>
       </section>
 
@@ -209,7 +216,7 @@
             >
           </span>
           <span class="guided-setup-summary-action">
-            <span data-i18n-conf="guidedSetupAction">Modifica</span>
+            <span data-i18n-conf="guidedSetupCloseAction">Chiudi</span>
             <span class="guided-setup-summary-chevron" aria-hidden="true"
               >⌄</span
             >

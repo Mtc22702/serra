@@ -183,6 +183,16 @@
     min-height: 50px;
     box-shadow: 0 10px 22px rgba(47, 107, 58, 0.2);
   }
+  /* Aperta ("La tua serra" con i campi visibili), la stessa ombra di quando
+     è chiusa non basta a far percepire che il pannello è espanso: qui si
+     rinforzano i tre lati non verdi e l'ombra, lasciando intoccato
+     l'accento verde in alto. */
+  .panel--settings:not(.is-collapsed) {
+    border-left-color: rgba(47, 107, 58, 0.4);
+    border-right-color: rgba(47, 107, 58, 0.4);
+    border-bottom-color: rgba(47, 107, 58, 0.4);
+    box-shadow: var(--ombra-aperta, 0 20px 44px rgba(31, 58, 38, 0.22));
+  }
   /* Guida rapida per il novizio: prende il posto della colonna sinistra
      quando non c'è altro da mostrare (vedi syncColLeftLayout in
      conf-ui.js), invece di far sparire la colonna e cambiare larghezza

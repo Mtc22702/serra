@@ -18,6 +18,13 @@
     --ombra: var(--shadow-md, 0 12px 34px rgba(31, 58, 38, 0.14));
     --bordo: 1px solid rgba(31, 58, 38, 0.12);
     --raggio: var(--radius-sm, 8px);
+    /* Ombra/bordo "sollevati", riservati alle tendine/pannelli richiudibili
+       quando sono aperti: più profondi di --ombra/--bordo così il contenuto
+       espanso si stacca chiaramente dallo sfondo della pagina invece di
+       confondersi con essa (vedi .view-toolbar.is-open, .materials-accordion,
+       .pdp-accordion in questo stesso set di file). */
+    --ombra-aperta: 0 20px 44px rgba(31, 58, 38, 0.22);
+    --bordo-aperto: 1.5px solid rgba(47, 107, 58, 0.32);
     --serif: "Fraunces", Georgia, "Times New Roman", serif;
     --sans: "Outfit", "Segoe UI", system-ui, sans-serif;
   }
@@ -151,6 +158,17 @@
   .guided-intro[hidden] {
     display: none;
   }
+  /* Aperta (mostra anche le azioni "Adatta"/"Esperto"), l'ombra di riposo è
+     troppo simile a quella chiusa: qui si intensifica bordo e ombra così
+     lo stato espanso si stacca chiaramente dal resto della pagina. Il
+     bordo superiore verde (accento) resta intoccato: si rinforzano solo
+     gli altri tre lati, più leggeri, per non perdere l'accento esistente. */
+  .guided-intro[open] {
+    border-left-color: rgba(47, 107, 58, 0.4);
+    border-right-color: rgba(47, 107, 58, 0.4);
+    border-bottom-color: rgba(47, 107, 58, 0.4);
+    box-shadow: var(--ombra-aperta);
+  }
 
   .guided-intro-head {
     display: flex;
@@ -221,12 +239,15 @@
     flex-wrap: wrap;
     gap: 4px;
   }
+  /* Neutro (non verde) come nel riepilogo compatto in uiux-polish.css:
+     un'etichetta informativa non deve avere lo stesso colore dei controlli
+     cliccabili accanto. */
   .guided-tags .tag {
     padding: 3px 7px;
     border-radius: 7px;
-    background: rgba(47, 107, 58, 0.07);
-    border: 1px solid rgba(47, 107, 58, 0.1);
-    color: #536454;
+    background: rgba(216, 205, 184, 0.4);
+    border: 1px solid rgba(107, 84, 64, 0.22);
+    color: #5c4a38;
     font-size: 10.5px;
     font-weight: 700;
   }

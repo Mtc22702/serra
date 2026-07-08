@@ -52,6 +52,11 @@
     --terra-scuro: #d0b69e;
     --bordo: 1px solid rgba(173, 211, 186, 0.15);
     --ombra: 0 16px 42px rgba(0, 0, 0, 0.34);
+    /* Controparte scura di --ombra-aperta/--bordo-aperto (vedi
+       configuratore/01-fondazioni-intro.css): tendine/pannelli aperti
+       restano ben distinguibili dallo sfondo scuro. */
+    --ombra-aperta: 0 22px 50px rgba(0, 0, 0, 0.5);
+    --bordo-aperto: 1.5px solid rgba(105, 183, 125, 0.4);
     --theme-surface: #13221b;
     --theme-surface-2: #182a21;
     --theme-surface-3: #21362a;

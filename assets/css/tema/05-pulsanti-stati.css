@@ -52,6 +52,7 @@
   .pdp-back-btn,
   .novice-crops-note button,
   .novice-restart-btn,
+  .catalog-load-more-btn,
   body:not(.serra-empty) .crops-fill-main-btn {
     background: var(--button-secondary-bg);
     color: var(--button-secondary-text);
@@ -65,6 +66,7 @@
   .pdp-back-btn:hover,
   .novice-crops-note button:hover,
   .novice-restart-btn:hover,
+  .catalog-load-more-btn:hover,
   body:not(.serra-empty) .crops-fill-main-btn:hover {
     background: var(--button-secondary-bg-hover);
     color: var(--button-secondary-text);
@@ -184,6 +186,7 @@
       .back-home-btn,
       .cart-nudge button,
       .novice-crops-note button,
+      .catalog-load-more-btn,
       body:not(.serra-empty) .crops-fill-main-btn,
       .percorso-cta-alt,
       .percorso-path--free,
@@ -208,6 +211,7 @@
       .back-home-btn,
       .cart-nudge button,
       .novice-crops-note button,
+      .catalog-load-more-btn,
       body:not(.serra-empty) .crops-fill-main-btn,
       .percorso-cta-alt,
       .percorso-path--free,

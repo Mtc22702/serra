@@ -807,8 +807,11 @@
   }
   html[data-theme="dark"] .persona-pick-action,
   html[data-theme="dark"] .persona-pick-chevron {
-    background: rgba(111, 207, 151, 0.12);
+    background: rgba(111, 207, 151, 0.18);
     color: #a8e6bd;
+  }
+  html[data-theme="dark"] .persona-pick-action {
+    border: 1px solid rgba(111, 207, 151, 0.4);
   }
   html[data-theme="dark"] .persona-card {
     background: #263c31;

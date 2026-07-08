@@ -300,15 +300,11 @@ function loadPrefs() {
       );
       if (shared?.zona) state.zona = shared.zona;
       if (shared?.riscaldata !== undefined) state.riscaldata = shared.riscaldata;
-      // Chi ha scelto il profilo "novizio" nel configuratore parte nel
-      // catalogo con il filtro "Facili per iniziare" già attivo, invece
-      // dello stesso catalogo denso pensato per intermedio/esperto — ma solo
-      // finché non lo tocca esplicitamente lui stesso (p.easyOnlyTouched),
-      // altrimenti la sua scelta manuale verrebbe ignorata ad ogni visita.
+      // Il catalogo mostra sempre tutte le piante di default, indipendentemente
+      // dal profilo scelto nel configuratore: il filtro "Facili per iniziare"
+      // resta disattivato finché l'utente non lo attiva lui stesso.
       if (p.easyOnlyTouched) {
         catalog.easyOnly = Boolean(p.easyOnly);
-      } else if (shared?.livello === "novizio") {
-        catalog.easyOnly = true;
       }
     } catch (_) {}
     // Il mese corrente viene ignorato in fase di caricamento per rimanere allineato con la data reale

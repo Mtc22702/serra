@@ -273,6 +273,18 @@
     .view-toolbar:not(.is-open) {
       display: none;
     }
+    /* Da elenco di controlli sciolti a vero e proprio "cassetto" visivo:
+       bordo, sfondo e ombra marcata così l'area aperta si stacca subito
+       dallo sfondo della scena, invece di sembrare parte del contenuto
+       circostante. */
+    .view-toolbar.is-open {
+      margin-top: 4px;
+      padding: 10px;
+      border: var(--bordo-aperto);
+      border-radius: 14px;
+      background: var(--carta);
+      box-shadow: var(--ombra-aperta);
+    }
   }
 
   /* Mobile: barra compatta, solo numero + etichetta breve */

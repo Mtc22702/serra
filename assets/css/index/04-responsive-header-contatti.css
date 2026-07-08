@@ -530,7 +530,7 @@
       height: 170px;
     }
     .plant-compact-list {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 0.4rem;
     }
     .plant-card-compact {
