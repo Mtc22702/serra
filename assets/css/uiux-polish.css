@@ -898,3 +898,31 @@ html[data-theme="dark"] .stage-context-row .guided-tags .tag {
 html[data-theme="dark"] .persona-pick {
   background: linear-gradient(135deg, var(--dark-raised), var(--dark-surface));
 }
+
+/* --- Rifiniture responsive per hero e badge del mese su mobile --- */
+.hero-cfg-badges {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.4rem;
+}
+
+.hero-cfg-badge-dot--month {
+  background: #ffd166 !important; /* Puntino giallo caldo per distinguere il mese */
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 660px) {
+  /* Nascondi la pillola superiore per liberare spazio verticale */
+  .hero-season-kicker {
+    display: none !important;
+  }
+
+  .hero-cfg-badges {
+    justify-content: center;
+  }
+}
+

@@ -471,6 +471,10 @@ function renderHero() {
   document.getElementById("hero").style.setProperty("--hero-bg", HERO_BG[stag]);
   document.getElementById("heroKicker").textContent = HERO_KICKER[stag];
   document.getElementById("heroMonth").textContent = NOMI_MESI[state.mese - 1];
+  const heroCfgMonth = document.getElementById("heroCfgMonth");
+  if (heroCfgMonth) {
+    heroCfgMonth.textContent = NOMI_MESI[state.mese - 1];
+  }
   document.getElementById("heroTagline").textContent =
     STAGIONE_QUOTE[state.mese];
   document.querySelectorAll(".hero-zone-btn").forEach((b) => {
