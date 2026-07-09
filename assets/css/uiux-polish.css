@@ -924,5 +924,19 @@ html[data-theme="dark"] .persona-pick {
   .hero-cfg-badges {
     justify-content: center;
   }
+
+  /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
+  .hero-content {
+    gap: 0.6rem !important;
+    padding-top: 0.5rem !important;
+  }
+
+  .hero-sub {
+    margin-bottom: 0 !important;
+  }
+
+  .hero-cfg {
+    margin-top: 0 !important;
+  }
 }
 
