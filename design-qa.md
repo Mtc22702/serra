@@ -89,6 +89,18 @@ Evidenza iniziale: `audit-settings-2026-07-10/01-closed-desktop.png`, `audit-set
 
 Verifica finale: `qa-settings-2026-07-10/01-open-desktop.png`, `02-closed-desktop.png`, `03-closed-mobile.png`, `04-open-mobile.png`, `05-open-mobile-ro.png`, `06-closed-tablet.png`, `07-open-tablet.png`; confronto affiancato `compare-open-desktop.png`. Nessun overflow a 390/820 px, italiano e rumeno verificati, azione “Modifica dati” funzionante e nessun errore in console.
 
+### Iterazione 5 — persona card della hero
+
+- [P1] In light mode i titoli “Începător / Intermediar / Expert” erano verde scuro sopra card verdi trasparenti, con contrasto insufficiente.
+- [P1] Le card mobili erano alte circa 51 px e titolo, descrizione e freccia avevano una gerarchia troppo debole.
+- [P2] La sola freccia non rendeva esplicita l'azione associata a ogni percorso.
+
+Fix: card ad alto contrasto con superficie chiara e tinta specifica per profilo in light mode; superfici profonde, bordi colorati e testo chiaro in dark mode. Titoli portati a 16 px su mobile, descrizioni più leggibili, icone ingrandite e CTA “Apri / Deschide” sempre visibile. Il gruppo dei livelli ha ora un contenitore proprio e target da almeno 66 px.
+
+Evidenza iniziale: `audit-persona-2026-07-10/01-mobile-light.png`, `02-mobile-dark.png`.
+
+Verifica finale: `qa-persona-2026-07-10/01-mobile-dark-ro.png`, `02-mobile-light-ro.png`, `03-desktop-light-ro.png`, `04-tablet-light-ro.png`; confronto `compare-mobile-light.png`. Nessun overflow a 430/820/1440 px e nessun errore in console.
+
 ### Verifica finale
 
 - Nessun P0/P1/P2 residuo nelle viste e interazioni verificate.
