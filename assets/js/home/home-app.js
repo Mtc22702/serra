@@ -1198,11 +1198,11 @@ if (catalogSearchLink) {
       "preconfig.cta": "Vai al configuratore",
       "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
       "hero.cfg_novizio": "Principiante",
-      "hero.cfg_nov_hint": "Orto pronto, guidato passo passo",
+      "hero.cfg_nov_hint": "Ti guido dalla prima scelta fino all'acquisto",
       "hero.cfg_intermedio": "Intermedio",
-      "hero.cfg_int_hint": "Guidato, ma personalizzabile",
+      "hero.cfg_int_hint": "Parti da un piano pronto e personalizzalo",
       "hero.cfg_esperto": "Esperto",
-      "hero.cfg_exp_hint": "Catalogo completo, scelta libera",
+      "hero.cfg_exp_hint": "Apri la serra vuota e riempila liberamente",
       "hero.zone_cold_label": "Fredda",
       "hero.zone_temp_label": "Temperata",
       "hero.zone_warm_label": "Calda"
@@ -1229,11 +1229,11 @@ if (catalogSearchLink) {
       "preconfig.cta": "Mergi la configurator",
       "hero.cfg_levels_title": "Ce fel de cultivator ești?",
       "hero.cfg_novizio": "Începător",
-      "hero.cfg_nov_hint": "Grădină gata, ghidat pas cu pas",
+      "hero.cfg_nov_hint": "Te ghidez de la prima alegere până la cumpărare",
       "hero.cfg_intermedio": "Intermediar",
-      "hero.cfg_int_hint": "Ghidat, dar personalizabil",
+      "hero.cfg_int_hint": "Pornești de la un plan gata și îl personalizezi",
       "hero.cfg_esperto": "Expert",
-      "hero.cfg_exp_hint": "Catalog complet, alegere liberă",
+      "hero.cfg_exp_hint": "Deschizi sera goală și o umpli liber",
       "hero.zone_cold_label": "Rece",
       "hero.zone_temp_label": "Temperată",
       "hero.zone_warm_label": "Caldă"
@@ -1377,6 +1377,10 @@ if (catalogSearchLink) {
   }
 
   function initHomeApp() {
+    document
+      .getElementById("catalogFilterToggle")
+      ?.addEventListener("click", toggleCatalogFilters);
+
     document
       .querySelectorAll(".hero-cfg-level, .nav-link--configuratore")
       .forEach((link) => {

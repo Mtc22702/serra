@@ -938,18 +938,10 @@ window.addEventListener("serra:themechange", () => render());
     }
     saveConfig(true);
     clearBootParams();
-    // Su desktop chi arriva con un livello esplicito viene già portato allo
-    // stage (o al pannello colture per l'esperto) più sotto in questa stessa
-    // funzione. Su mobile, invece di fermarsi al riepilogo "Le tue scelte"
-    // (già visibile in cima, non serve scorrerci apposta), si applica la
-    // stessa destinazione: la serra pronta per novizio/intermedio, il
-    // pannello colture aperto per l'esperto che deve riempirla da solo.
+    // Ogni profilo arriva intenzionalmente alla serra: il banner sopra la
+    // planimetria spiega il percorso e offre l'azione successiva corretta.
     if (isResponsiveConfiguratorLayout()) {
-      if (_bootLivello === "esperto") {
-        focusManualPlanningPath();
-      } else {
-        scrollToScene();
-      }
+      scrollToScene();
     }
   } else {
     const _bootIntentApplied =
@@ -1000,6 +992,7 @@ window.addEventListener("serra:themechange", () => render());
   if (!isResponsiveConfiguratorLayout() && !state.autoPlan) {
     scheduleElementBelowHeader(
       () =>
+        document.getElementById("journeyContext") ||
         document.querySelector(".stage .scene-wrap") ||
         document.getElementById("scene") ||
         document.querySelector(".stage"),

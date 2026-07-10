@@ -598,6 +598,43 @@ function toggleCfgLevels() {
   }
 }
 
+// Pannello filtri compatto su smartphone: mantiene il catalogo raggiungibile
+// subito per l'esperto, senza togliere i controlli avanzati a chi li vuole.
+function updateCatalogFilterToggle() {
+  const toggle = document.getElementById("catalogFilterToggle");
+  const summary = document.getElementById("catalogFilterToggleSummary");
+  if (!toggle || !summary) return;
+  const count =
+    (catalog.seasonOnly ? 1 : 0) +
+    (catalog.type ? 1 : 0) +
+    (catalog.easyOnly ? 1 : 0) +
+    (catalog.search ? 1 : 0);
+  const ro = currentLang === "ro";
+  summary.textContent = ro
+    ? `${count} ${count === 1 ? "filtru activ" : "filtre active"}`
+    : `${count} ${count === 1 ? "filtro attivo" : "filtri attivi"}`;
+}
+
+function toggleCatalogFilters() {
+  const toggle = document.getElementById("catalogFilterToggle");
+  const tools = document.getElementById("catalogFilterTools");
+  if (!toggle || !tools) return;
+  const open = !tools.classList.contains("is-mobile-open");
+  tools.classList.toggle("is-mobile-open", open);
+  toggle.setAttribute("aria-expanded", String(open));
+  const action = toggle.querySelector(".catalog-mobile-filter-action");
+  if (action) {
+    const ro = currentLang === "ro";
+    action.firstChild.textContent = open
+      ? ro
+        ? "Închide "
+        : "Chiudi "
+      : ro
+        ? "Deschide "
+        : "Apri ";
+  }
+}
+
 // Rendering catalogo
 function renderEditorialPlants() {
   const seasonal = seminabili();
@@ -624,6 +661,7 @@ function renderEditorialPlants() {
   }
 
   syncCatalogControls();
+  updateCatalogFilterToggle();
   const catalogStatus = document.getElementById("catalogStatus");
   if (catalogStatus) {
     const pills = [];
@@ -737,7 +775,7 @@ function renderEditorialPlants() {
               ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
             </span>
           </span>
-          <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
+          <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
         </div>`;
       })
       .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
@@ -774,7 +812,7 @@ function renderEditorialPlants() {
           </div>
           <div class="compact-buy">
             <span class="compact-price">${money(packPrice(p.id))}</span>
-            <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}">${inC ? "✓" : "+"}</button>
+            <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
           </div>
         </div>`;
       })

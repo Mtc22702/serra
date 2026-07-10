@@ -346,6 +346,7 @@ function applyLanguage() {
   setText("#personaExpDesc", "personaExpDesc");
   if (typeof syncPersonaPickerSummary === "function")
     syncPersonaPickerSummary();
+  if (typeof updateJourneyContext === "function") updateJourneyContext();
   setText("#vegScrollHint span:first-child", "vegScrollHint");
 
   const filterIconMap = { all: "🌿", in: "✓", "all-beds": "⌕" };

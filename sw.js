@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-09-ui2";
+const CACHE_VERSION = "2026-07-10-settings";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [

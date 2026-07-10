@@ -283,13 +283,21 @@ function render() {
     temperato: tx("temperate"),
     caldo: tx("warm")
   };
-  document.getElementById("tagZona").textContent =
-    `🌡️ ${zoneNames[state.zona]}` +
+  const zoneValue =
+    zoneNames[state.zona] +
     (state.riscaldata ? ` · ${tx("heatedShort")}` : "");
-  document.getElementById("tagMese").textContent =
-    `📅 ${monthName(state.mese)}`;
-  document.getElementById("tagArea").textContent =
-    `📐 ${state.larghezza}×${state.lunghezza} m`;
+  const monthValue = monthName(state.mese);
+  const areaValue = `${state.larghezza}×${state.lunghezza} m`;
+  const tagZonaValue = document.getElementById("tagZonaValue");
+  const tagMeseValue = document.getElementById("tagMeseValue");
+  const tagAreaValue = document.getElementById("tagAreaValue");
+  if (tagZonaValue) tagZonaValue.textContent = zoneValue;
+  if (tagMeseValue) tagMeseValue.textContent = monthValue;
+  if (tagAreaValue) tagAreaValue.textContent = areaValue;
+  const guidedSetupCurrent = document.getElementById("guidedSetupCurrent");
+  if (guidedSetupCurrent) {
+    guidedSetupCurrent.textContent = `${areaValue} · ${zoneValue} · ${monthValue}`;
+  }
 
   const bmt = document.getElementById("btnMonthTag");
   if (bmt) bmt.textContent = monthName(state.mese);
@@ -523,6 +531,7 @@ function scrollPlantDetailPanelIntoView(behavior = "smooth") {
 // Porta in vista l'immagine SVG della serra
 function scrollGreenhouseImageIntoView(behavior = "auto") {
   const target =
+    document.getElementById("journeyContext") ||
     document.querySelector(".stage .scene-wrap") ||
     document.getElementById("scene") ||
     document.querySelector(".stage");
@@ -541,6 +550,7 @@ function collapseSettingsPanelAfterAutoPlan(options = {}) {
   if (!shouldScroll) return;
   scheduleElementBelowHeader(
     () =>
+      document.getElementById("journeyContext") ||
       document.querySelector(".stage .scene-wrap") ||
       document.getElementById("scene") ||
       document.querySelector(".stage"),

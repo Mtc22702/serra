@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0"
     />
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-09-ui2";
+      window.SERRA_APP_VERSION = "2026-07-10-settings";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -49,7 +49,7 @@
     <!-- Fogli di stile principali -->
     <link rel="stylesheet" href="assets/css/index.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-09-ui2" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-10-settings" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -200,38 +200,26 @@
                 </span>
               </div>
               <h2 class="hero-cfg-title" data-i18n="hero.cfg_title">
-                Progetta la tua serra, vista dall'alto
+                La tua serra, il tuo percorso
               </h2>
               <p class="hero-cfg-desc" data-i18n="hero.cfg_desc">
-                Misure reali, clima e colture disposte aiuola per aiuola. Vedi
-                com'è prima ancora di seminare.
+                Parti dal livello che ti rappresenta: la vista dall'alto resta
+                il centro del progetto, dalla prima scelta fino ai semi.
               </p>
               <div class="hero-cfg-actions">
-                <button
-                  class="hero-cfg-cta"
-                  type="button"
-                  id="cfgOpenBtn"
-                  aria-expanded="false"
-                  aria-controls="cfgLevels"
-                  onclick="toggleCfgLevels()"
-                >
-                  <span class="hero-cfg-cta-ico" aria-hidden="true">📐</span>
-                  <span data-i18n="hero.cfg_cta">Apri il configuratore</span>
-                  <span class="hero-cfg-cta-arrow" aria-hidden="true">▾</span>
-                </button>
+                <div class="hero-cfg-route-intro">
+                  <span class="hero-cfg-route-step">1</span>
+                  <span data-i18n="hero.cfg_levels_title"
+                    >Che tipo di coltivatore sei?</span
+                  >
+                </div>
                 <div
                   class="hero-cfg-levels"
                   id="cfgLevels"
                   role="group"
                   aria-label="Scegli il livello"
                   data-i18n-aria="hero.aria_levels"
-                  hidden
                 >
-                  <span
-                    class="hero-cfg-levels-title"
-                    data-i18n="hero.cfg_levels_title"
-                    >Che tipo di coltivatore sei?</span
-                  >
                   <div class="pc-persona-cards hero-cfg-levels-grid">
                     <a
                       class="pc-persona-card pc-persona-card--novizio hero-cfg-level"
@@ -246,7 +234,7 @@
                       <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_novizio">Principiante</b>
                         <small data-i18n="hero.cfg_nov_hint"
-                          >Orto pronto, guidato passo passo</small
+                          >Ti guido dalla prima scelta fino all'acquisto</small
                         >
                       </span>
                       <span class="pc-persona-go" aria-hidden="true">→</span>
@@ -264,7 +252,7 @@
                       <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_intermedio">Intermedio</b>
                         <small data-i18n="hero.cfg_int_hint"
-                          >Guidato, ma personalizzabile</small
+                          >Parti da un piano pronto e personalizzalo</small
                         >
                       </span>
                       <span class="pc-persona-go" aria-hidden="true">→</span>
@@ -282,7 +270,7 @@
                       <span class="pc-persona-body">
                         <b data-i18n="hero.cfg_esperto">Esperto</b>
                         <small data-i18n="hero.cfg_exp_hint"
-                          >Catalogo completo, scelta libera</small
+                          >Apri la serra vuota e riempila liberamente</small
                         >
                       </span>
                       <span class="pc-persona-go" aria-hidden="true">→</span>
@@ -291,7 +279,7 @@
                 </div>
                 <a class="hero-cfg-catalog-link" href="#stagione">
                   <span data-i18n="hero.cfg_or"
-                    >oppure sfoglia il catalogo semi</span
+                    >Sei esperto? Acquista direttamente dal catalogo</span
                   >
                   <span class="hero-cfg-catalog-arrow" aria-hidden="true"
                     >→</span
@@ -346,8 +334,23 @@
           <div class="stagione-meta" id="stagioneMeta"></div>
         </header>
 
+        <button
+          class="catalog-mobile-filter-toggle"
+          id="catalogFilterToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="catalogFilterTools"
+        >
+          <span class="catalog-mobile-filter-copy">
+            <b data-i18n="catalog.mobile_filters">Filtri e ricerca</b>
+            <small id="catalogFilterToggleSummary">1 filtro attivo</small>
+          </span>
+          <span class="catalog-mobile-filter-action">Apri <span aria-hidden="true">⌄</span></span>
+        </button>
+
         <!-- Strumenti di filtro del catalogo -->
         <div
+          id="catalogFilterTools"
           class="catalog-tools catalog-tools--pro catalog-tools--advanced"
           aria-label="Filtri catalogo semi"
           data-i18n-aria="catalog.aria_filters"
@@ -489,6 +492,8 @@
                       aria-expanded="false"
                       aria-autocomplete="list"
                       aria-controls="catalogSearchSuggestions"
+                      aria-label="Cerca una pianta nel catalogo"
+                      data-i18n-aria="catalog.aria_search"
                     />
                     <button
                       type="button"
@@ -1804,12 +1809,12 @@
     <!-- Caricamento degli script dell'applicazione (Caricamento parallelo nativo) -->
     <script src="assets/js/theme.js" defer></script>
     <script src="assets/js/nav.js" defer></script>
-    <script src="assets/js/i18n.js" defer></script>
+    <script src="assets/js/i18n.js?v=2026-07-10-settings" defer></script>
     <script src="assets/js/plants-data.js" defer></script>
     <script src="assets/js/api.js" defer></script>
     <script src="assets/js/home/home-data.js" defer></script>
-    <script src="assets/js/home/home-catalog.js" defer></script>
+    <script src="assets/js/home/home-catalog.js?v=2026-07-10-paths" defer></script>
     <script src="assets/js/home/home-cart.js" defer></script>
-    <script src="assets/js/home/home-app.js" defer></script>
+    <script src="assets/js/home/home-app.js?v=2026-07-10-paths" defer></script>
   </body>
 </html>

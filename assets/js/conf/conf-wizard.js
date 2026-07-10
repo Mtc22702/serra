@@ -1,7 +1,6 @@
-// Barra guidata a passi: navigazione rapida fra le 3 fasi del configuratore
-// (Impostazioni -> Colture -> Lista semi) e messa in evidenza del passo attivo
-// durante lo scorrimento. Non modifica lo stato dell'app: richiama solo le
-// funzioni di apertura/scorrimento già esistenti in conf-ui.js / conf-app.js.
+// La Journey Bar e' l'unica navigazione del percorso: collega le tre fasi
+// (Impostazioni -> Serra/colture -> Lista semi) e mette in evidenza quella
+// attiva durante lo scorrimento. Il testo cambia in base al profilo scelto.
 (function () {
   function ready(fn) {
     if (document.readyState !== "loading") fn();
@@ -41,10 +40,10 @@
   };
 
   ready(function () {
-    const bar = document.getElementById("wizardBar");
+    const bar = document.getElementById("journeyContext");
     if (!bar) return;
     const steps = Array.prototype.slice.call(
-      bar.querySelectorAll(".wizard-step")
+      bar.querySelectorAll(".journey-context-step")
     );
     if (!steps.length) return;
 
@@ -56,7 +55,8 @@
       const idx = steps.indexOf(step);
       steps.forEach(function (s) {
         s.classList.toggle("is-current", s === step);
-        s.setAttribute("aria-current", s === step ? "step" : "false");
+        if (s === step) s.setAttribute("aria-current", "step");
+        else s.removeAttribute("aria-current");
       });
       // Segna il passo come già visitato scorrendo/cliccando: solo un
       // rinforzo visivo di avanzamento, nessun blocco/sblocco funzionale.
@@ -64,21 +64,15 @@
       // "Serra e clima" ha sempre valori validi di default: averlo visitato
       // basta per considerarlo completato (spunta). Colture/lista semi usano
       // invece uno stato reale, sincronizzato da syncWizardDoneState().
-      if (step.dataset.wizardStep === "settings") {
+      if (step.dataset.journeyStep === "settings") {
         step.classList.add("is-done");
-      }
-      if (idx > -1) {
-        bar.style.setProperty(
-          "--wizard-progress",
-          ((idx + 1) / steps.length) * 100 + "%"
-        );
       }
     }
 
     steps.forEach(function (step) {
       step.addEventListener("click", function () {
         setActive(step);
-        const action = STEP_ACTIONS[step.dataset.wizardStep];
+        const action = STEP_ACTIONS[step.dataset.journeyStep];
         if (action) action();
       });
     });
@@ -113,15 +107,12 @@
         state.beds.length > 0;
       const count = hasCrops ? String(state.beds.length) : "";
       steps.forEach(function (step) {
-        const key = step.dataset.wizardStep;
+        const key = step.dataset.journeyStep;
         if (key === "crops" || key === "yield") {
           step.classList.toggle("is-done", hasCrops);
         }
       });
-      const cropsBadge = document.getElementById("wizardCropsBadge");
-      const yieldBadge = document.getElementById("wizardYieldBadge");
-      if (cropsBadge) cropsBadge.textContent = count;
-      if (yieldBadge) yieldBadge.textContent = count;
+      bar.dataset.cropCount = count;
     }
     syncWizardDoneState();
     const yieldBadgeSource = document.getElementById("yieldToggleBadge");
@@ -139,7 +130,10 @@
       .map(function (step) {
         return {
           step: step,
-          el: document.getElementById(step.dataset.wizardTarget)
+          el:
+            step.dataset.journeyTarget === "stage"
+              ? bar.closest(".stage")
+              : document.getElementById(step.dataset.journeyTarget)
         };
       })
       .filter(function (entry) {
@@ -172,7 +166,10 @@
     targets.forEach(function (t) {
       observer.observe(t.el);
     });
-    setActive(targets[0].step);
+    const greenhouseStep = steps.find(function (step) {
+      return step.dataset.journeyStep === "crops";
+    });
+    setActive(greenhouseStep || targets[0].step);
   });
 
   // Pulsante "Strumenti extra": su tablet/smartphone la toolbar della vista
@@ -216,6 +213,22 @@
     const cta = document.getElementById("btnNoviceGoToYield");
     if (!cta) return;
     cta.addEventListener("click", focusYieldPanel);
+  });
+
+  // CTA del banner di arrivo: continua il percorso scelto senza togliere
+  // centralità alla vista della serra.
+  ready(function () {
+    const cta = document.getElementById("journeyContextNext");
+    if (!cta) return;
+    cta.addEventListener("click", function () {
+      if (typeof state !== "undefined" && state.livello === "novizio") {
+        focusYieldPanel();
+        return;
+      }
+      if (typeof openCustomizePanelAndFocus === "function") {
+        openCustomizePanelAndFocus();
+      }
+    });
   });
 
   // Ingranaggio accanto al titolo "Configuratore Serra": apre/chiude

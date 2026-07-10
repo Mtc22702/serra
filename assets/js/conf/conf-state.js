@@ -181,6 +181,80 @@ function updateGuidedIntroDynamic() {
   const pill = document.getElementById("guidedMonthPill");
   if (pill)
     pill.textContent = `📅 ${monthName} · ${tx("tagZone")} ${zoneLabel}`;
+  updateJourneyContext();
+}
+
+// Mantiene visibile il motivo dello scroll automatico: ogni profilo arriva
+// alla serra con un contesto, un avanzamento e una sola azione successiva.
+function updateJourneyContext() {
+  const root = document.getElementById("journeyContext");
+  const level = document.getElementById("journeyContextLevel");
+  const title = document.getElementById("journeyContextTitle");
+  const desc = document.getElementById("journeyContextDesc");
+  const next = document.getElementById("journeyContextNext");
+  if (!root || !level || !title || !desc || !next) return;
+  const ro = state.lang === "ro";
+  const content = {
+    novizio: ro
+      ? {
+          level: "Traseu Începător",
+          title: "Grădina ta este deja pregătită",
+          desc: "Privește planul de sus, apoi mergi la lista de semințe.",
+          next: "Vezi semințele",
+          steps: ["1 · Alegeri", "2 · Verifică", "3 · Cumpără"]
+        }
+      : {
+          level: "Percorso Principiante",
+          title: "Il tuo orto è già pronto",
+          desc: "Controlla il piano dall'alto, poi passa alla lista dei semi.",
+          next: "Vai ai semi",
+          steps: ["1 · Scelte", "2 · Controlla", "3 · Acquista"]
+        },
+    intermedio: ro
+      ? {
+          level: "Traseu Intermediar",
+          title: "Planul este gata: acum fă-l al tău",
+          desc: "Sera rămâne în centru; modifică plantele și cantitățile.",
+          next: "Personalizează",
+          steps: ["1 · Setează", "2 · Proiectează", "3 · Cumpără"]
+        }
+      : {
+          level: "Percorso Intermedio",
+          title: "Il piano è pronto: ora fallo tuo",
+          desc: "La serra resta al centro; modifica colture e quantità quando vuoi.",
+          next: "Personalizza",
+          steps: ["1 · Imposta", "2 · Progetta", "3 · Acquista"]
+        },
+    esperto: ro
+      ? {
+          level: "Traseu Expert",
+          title: "Sera este goală: compune-o liber",
+          desc: "Alege din catalogul complet și așază culturile manual.",
+          next: "Adaugă plante",
+          steps: ["1 · Măsoară", "2 · Compune", "3 · Cumpără"]
+        }
+      : {
+          level: "Percorso Esperto",
+          title: "La serra è vuota: componila liberamente",
+          desc: "Scegli dal catalogo completo e disponi le colture a mano.",
+          next: "Aggiungi colture",
+          steps: ["1 · Misura", "2 · Componi", "3 · Acquista"]
+        }
+  }[state.livello] || null;
+  if (!content) return;
+  root.classList.remove(
+    "journey-context--novizio",
+    "journey-context--intermedio",
+    "journey-context--esperto"
+  );
+  root.classList.add(`journey-context--${state.livello}`);
+  level.textContent = content.level;
+  title.textContent = content.title;
+  desc.textContent = content.desc;
+  next.textContent = content.next;
+  root.querySelectorAll(".journey-context-step").forEach((step, i) => {
+    step.textContent = content.steps[i] || "";
+  });
 }
 
 // Aggiorna il riepilogo compatto del selettore profilo
@@ -273,6 +347,7 @@ function setLivello(liv, { mapMode = true } = {}) {
     card.setAttribute("aria-selected", String(on));
   });
   syncPersonaPickerSummary();
+  updateJourneyContext();
   if (mapMode) setMode(next === "esperto" ? "expert" : "fit", false);
   if (typeof syncColLeftLayout === "function") syncColLeftLayout();
 }
@@ -307,6 +382,7 @@ function chooseLivello(liv) {
     if (!isResponsiveConfiguratorLayout()) {
       scheduleElementBelowHeader(
         () =>
+          document.getElementById("journeyContext") ||
           document.querySelector(".stage .scene-wrap") ||
           document.querySelector(".stage"),
         "smooth",
@@ -323,6 +399,7 @@ function chooseLivello(liv) {
     if (!isResponsiveConfiguratorLayout()) {
       scheduleElementBelowHeader(
         () =>
+          document.getElementById("journeyContext") ||
           document.querySelector(".stage .scene-wrap") ||
           document.querySelector(".stage"),
         "smooth",
@@ -400,7 +477,8 @@ function updateVegSearchUI() {
 
 // Scrolla fino alla scena della serra
 function scrollToScene() {
-  const resolveStage = () => document.querySelector(".stage");
+  const resolveStage = () =>
+    document.getElementById("journeyContext") || document.querySelector(".stage");
   if (typeof scheduleElementBelowHeader === "function") {
     scheduleElementBelowHeader(resolveStage, "smooth", { delay: 120 });
     return;
