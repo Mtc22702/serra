@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-10-personas";
+const CACHE_VERSION = "2026-07-11-mobile-persona-height";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [

@@ -745,7 +745,7 @@
         "cookie.accept": "Accetta",
         "cookie.reject": "Solo essenziali",
         "hero.kicker_active": "Stagione attiva",
-        "hero.headline": "Semi freschi per la tua serra.",
+        "hero.headline": "Progetta la serra. Scegli i semi giusti.",
         "hero.sub":
           "40+ varietà filtrate per clima e mese. Aggiungi al carrello e pianta con metodo.",
         "hero.action_catalog": "Sfoglia il catalogo",
@@ -1172,7 +1172,7 @@
         "cookie.accept": "Accept",
         "cookie.reject": "Doar esențiale",
         "hero.kicker_active": "Sezon activ",
-        "hero.headline": "Semințe proaspete pentru sera ta.",
+        "hero.headline": "Planifică sera. Alege semințele potrivite.",
         "hero.sub":
           "40+ soiuri filtrate după climă și lună. Adaugă în coș și plantează cu metodă.",
         "hero.action_catalog": "Răsfoiește catalogul",

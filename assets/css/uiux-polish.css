@@ -1111,7 +1111,15 @@ html[data-theme="dark"] .journey-context-step.is-current {
     /* Safari iOS può sovrapporre la barra inferiore all'ultimo controllo.
        Questa riserva permette di far scorrere la CTA completamente sopra la
        toolbar e include anche l'area del gesto Home sui dispositivi con notch. */
-    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Le due descrizioni ripetono ciò che titolo, anteprima e profili spiegano
+     già. Su mobile le rimuoviamo per portare tutte le scelte sopra la toolbar
+     dinamica di Safari senza impoverire il percorso. */
+  .hero-sub,
+  .hero-cfg-desc {
+    display: none;
   }
 
   .hero-cfg-inner {
@@ -1377,36 +1385,47 @@ html[data-theme="dark"] .persona-pick {
   background: linear-gradient(135deg, var(--dark-raised), var(--dark-surface));
 }
 
-/* --- Rifiniture responsive per hero e badge del mese su mobile --- */
-.hero-cfg-badges {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-bottom: 0.4rem;
-}
-
-.hero-cfg-badge-dot--month {
-  background: #ffd166 !important; /* Puntino giallo caldo per distinguere il mese */
-  animation: none !important;
-  box-shadow: none !important;
-}
-
 @media (max-width: 660px) {
   /* Nascondi la pillola superiore per liberare spazio verticale */
   .hero-season-kicker {
     display: none !important;
   }
 
-  .hero-cfg-badges {
-    justify-content: center;
-  }
-
   /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
   .hero-content {
-    gap: 0.6rem !important;
-    padding-top: 0.5rem !important;
+    gap: 1rem !important;
+    padding-top: 0.75rem !important;
+  }
+
+  .hero-headline {
+    max-width: 10.5ch;
+    font-size: clamp(2.05rem, 9vw, 2.25rem);
+    line-height: 1.13;
+  }
+
+  .hero-cfg-inner {
+    gap: 1rem;
+    padding: 1rem 0.9rem 1.25rem;
+  }
+
+  .hero-cfg-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.2em;
+    margin-top: 0;
+    font-size: clamp(1.5rem, 7vw, 1.75rem);
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .hero-cfg-actions {
+    gap: 0.9rem;
+    margin-top: 1.05rem;
+  }
+
+  .hero-cfg-route-intro {
+    min-height: 34px;
   }
 
   .hero-sub {
@@ -1867,9 +1886,13 @@ html[data-theme="dark"] .hero-cfg-level .hero-cfg-level-action {
     border-radius: 16px;
   }
 
+  .hero-cfg-levels-grid {
+    gap: 10px;
+  }
+
   .hero-cfg-level {
     min-height: 66px;
-    padding: 8px 9px 8px 12px;
+    padding: 8px 10px 8px 12px;
     gap: 9px;
   }
 
