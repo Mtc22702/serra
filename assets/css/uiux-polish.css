@@ -1297,6 +1297,17 @@ html[data-theme="dark"] .journey-context-step.is-current {
     margin: 0;
   }
 
+  body.nav-menu-open .site-header .nav-menu-toggle,
+  body.nav-menu-open .site-header .nav-menu-toggle:hover,
+  body.nav-menu-open .site-header .nav-menu-toggle:focus,
+  body.nav-menu-open .site-header .nav-menu-toggle:active {
+    border-color: #72c58a;
+    background: #2d6a4f;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(27, 67, 50, 0.24);
+    transform: none;
+  }
+
   .site-header .nav-actions > .theme-toggle,
   .site-header .nav-actions > .nav-lang {
     display: none !important;
