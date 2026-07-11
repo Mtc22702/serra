@@ -143,6 +143,10 @@
     }
     .site-header .nav-menu-toggle {
       margin-right: 0;
+      /* Su questa larghezza l'header è su due righe: resta centrato in
+         orizzontale ma allineato alla seconda riga (quella delle azioni),
+         non a metà tra logo e azioni. */
+      top: 74px;
     }
   }
 }

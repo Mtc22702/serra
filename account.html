@@ -9,7 +9,7 @@
     <title>Area Riservata · Orto in Serra</title>
     <!-- Configurazione Asset e Versione -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-11-i18n-scroll-fix";
+      window.SERRA_APP_VERSION = "2026-07-11-menu-redesign";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -89,6 +89,9 @@
           aria-label="Navigazione principale"
           data-i18n-acc-aria="nav.aria_main"
         >
+          <span class="mobile-nav-section-title" data-i18n-acc="nav.menu_explore"
+            >Esplora</span
+          >
           <a href="index.html" class="nav-link" data-i18n-acc="nav.home"
             >🏠 Home</a
           >
@@ -127,6 +130,56 @@
             data-i18n-acc="nav.account"
             >👤 Area Personale</a
           >
+          <div class="mobile-nav-preferences">
+            <span
+              class="mobile-nav-section-title"
+              data-i18n-acc="nav.menu_preferences"
+              >Preferenze</span
+            >
+            <button
+              class="theme-toggle mobile-menu-theme"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+            >
+              <span class="mobile-menu-pref-icon" aria-hidden="true">
+                <span class="theme-toggle-icon theme-toggle-moon">☾</span>
+                <span class="theme-toggle-icon theme-toggle-sun">☀</span>
+              </span>
+              <span class="mobile-menu-pref-copy">
+                <b data-i18n-acc="nav.theme">Tema</b>
+                <small data-i18n-acc="nav.theme_hint">Chiaro / scuro</small>
+              </span>
+              <span class="mobile-menu-switch" aria-hidden="true"
+                ><span class="mobile-menu-switch-knob"></span
+              ></span>
+            </button>
+            <div class="mobile-menu-language">
+              <span class="mobile-menu-pref-icon" aria-hidden="true">🌐</span>
+              <span class="mobile-menu-pref-copy">
+                <b data-i18n-acc="nav.language">Lingua</b>
+                <small>Italiano / Română</small>
+              </span>
+              <div class="lang-switch" role="group" aria-label="Lingua / Limbă">
+                <button
+                  type="button"
+                  class="lang-switch-opt"
+                  data-lang="it"
+                  onclick="setLang('it')"
+                >
+                  IT
+                </button>
+                <button
+                  type="button"
+                  class="lang-switch-opt"
+                  data-lang="ro"
+                  onclick="setLang('ro')"
+                >
+                  RO
+                </button>
+              </div>
+            </div>
+          </div>
         </nav>
         <div class="nav-actions">
           <button
