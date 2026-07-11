@@ -7,6 +7,8 @@
     align-items: center;
     justify-content: center;
     padding: 16px;
+    overflow: hidden;
+    overscroll-behavior: none;
   }
   .preconfig-overlay[hidden] {
     display: none;
@@ -44,8 +46,10 @@
       transform 0.3s cubic-bezier(0.34, 1.26, 0.64, 1),
       opacity 0.24s ease;
     width: min(480px, 100%);
-    max-height: 90svh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    max-height: min(84dvh, 720px);
+    overflow: hidden;
     overscroll-behavior: contain;
   }
   .preconfig-overlay.is-open .preconfig-sheet {
@@ -92,14 +96,19 @@
   /* Regole responsive */
   @media (min-width: 661px) {
     .preconfig-sheet {
-      max-height: 96svh;
-      overflow-y: visible;
+      max-height: calc(100dvh - 32px);
+    }
+    .preconfig-body {
+      overflow: visible;
+      padding-top: 3px;
+      padding-bottom: 3px;
+      gap: 1px;
     }
     .preconfig-footer {
       padding: 8px 14px 12px;
     }
     .preconfig-section-label {
-      margin: 4px 0 3px;
+      margin: 3px 0 2px;
     }
     .preconfig-sizes-note {
       margin-bottom: 3px;
@@ -116,8 +125,8 @@
       height: 28px;
     }
     .preconfig-month-wrap {
-      min-height: 40px;
-      margin-bottom: 8px;
+      min-height: 36px;
+      margin-bottom: 4px;
     }
   }
 
@@ -128,6 +137,7 @@
     padding: 10px 14px 10px;
     border-bottom: 1px solid rgba(47, 107, 58, 0.12);
     margin-bottom: 2px;
+    flex: 0 0 auto;
   }
   .preconfig-head-left {
     display: flex;
@@ -185,6 +195,12 @@
   }
 
   .preconfig-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
     padding: 6px 14px 2px;
     display: flex;
     flex-direction: column;
@@ -630,8 +646,46 @@
     color: rgba(47, 107, 58, 0.4);
     box-shadow: none;
     cursor: not-allowed;
-    pointer-events: none;
     border: 1.5px dashed rgba(47, 107, 58, 0.25);
+  }
+
+  /* Su tablet e desktop il pannello è abbastanza largo da mostrare tutti i
+     controlli insieme: il corpo usa la propria altezza naturale e non crea
+     una seconda area di scorrimento. */
+  @media (min-width: 661px) {
+    .preconfig-body {
+      flex: 0 0 auto;
+      min-height: auto;
+      overflow: visible;
+    }
+    .preconfig-vfield {
+      padding: 5px;
+    }
+    .preconfig-fld {
+      margin-bottom: 2px;
+    }
+    .preconfig-step-btn {
+      min-height: 32px;
+    }
+    .preconfig-step-input {
+      padding-block: 5px;
+    }
+    .preconfig-path-field {
+      padding: 4px;
+    }
+    .preconfig-path-row {
+      padding: 3px 6px;
+    }
+    #preconfigPersonaSection .pc-persona-card {
+      padding: 4px 10px 4px 12px;
+    }
+    #preconfigPersonaSection .pc-persona-ico {
+      width: 28px;
+      height: 28px;
+    }
+    .preconfig-month-select {
+      padding-block: 6px;
+    }
   }
 
   .preconfig-path-field {
@@ -722,6 +776,13 @@
     border-top: 1px solid rgba(47, 107, 58, 0.1);
     position: sticky;
     bottom: 0;
+    flex: 0 0 auto;
+  }
+
+  html.preconfig-open,
+  body.preconfig-open {
+    overflow: hidden !important;
+    overscroll-behavior: none;
   }
   .preconfig-summary {
     font-size: 0.7rem;
@@ -752,6 +813,16 @@
   .preconfig-cta:active {
     transform: scale(0.97);
     box-shadow: 0 3px 10px rgba(27, 67, 50, 0.2);
+  }
+  .preconfig-cta.preconfig-cta--disabled {
+    background: rgba(47, 107, 58, 0.1);
+    color: rgba(47, 107, 58, 0.52);
+    border: 1.5px dashed rgba(47, 107, 58, 0.28);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  .preconfig-cta.preconfig-cta--disabled:active {
+    transform: none;
   }
   .preconfig-cta-arrow {
     font-size: 1.1rem;
@@ -910,5 +981,17 @@
   }
   html[data-theme="dark"] .preconfig-handle {
     background: rgba(255, 255, 255, 0.14);
+  }
+
+  @media (min-width: 661px) {
+    .preconfig-path-field {
+      padding: 4px;
+    }
+    .preconfig-path-row {
+      padding: 3px 6px;
+    }
+    .preconfig-month-select {
+      padding-block: 6px;
+    }
   }
 }

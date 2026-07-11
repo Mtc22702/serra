@@ -794,6 +794,15 @@
   }
 }
 
+@layer base {
+  @media (max-width: 660px) {
+    .site-header .nav-actions > .theme-toggle,
+    .site-header .nav-actions > .nav-lang {
+      display: none !important;
+    }
+  }
+}
+
 /* Percorsi 2026: la serra resta il fulcro visivo, mentre i tre ingressi
    diventano immediatamente leggibili senza un clic preliminare. */
 .hero-cfg-inner {
@@ -811,20 +820,18 @@
 }
 
 .hero-content {
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .hero-headline {
   font-size: clamp(2.3rem, 4.5vw, 3.5rem);
+  line-height: 1.13;
 }
 
 .hero-cfg-title {
+  min-height: 2.2em;
   font-size: clamp(1.65rem, 2.15vw, 2rem);
-}
-
-.hero-cfg-desc {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  line-height: 1.1;
 }
 
 .hero-cfg-route-intro {
@@ -1114,14 +1121,6 @@ html[data-theme="dark"] .journey-context-step.is-current {
     padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* Le due descrizioni ripetono ciò che titolo, anteprima e profili spiegano
-     già. Su mobile le rimuoviamo per portare tutte le scelte sopra la toolbar
-     dinamica di Safari senza impoverire il percorso. */
-  .hero-sub,
-  .hero-cfg-desc {
-    display: none;
-  }
-
   .hero-cfg-inner {
     padding: 0.9rem 0.9rem 1rem;
     gap: 0.7rem;
@@ -1133,11 +1132,6 @@ html[data-theme="dark"] .journey-context-step.is-current {
 
   .hero-cfg-title {
     font-size: clamp(1.65rem, 8vw, 2rem);
-  }
-
-  .hero-cfg-desc {
-    font-size: 0.8rem;
-    line-height: 1.35;
   }
 
   .hero-cfg-route-intro {
@@ -1271,6 +1265,196 @@ html[data-theme="dark"] .journey-context-step.is-current {
 @media (max-width: 380px) {
   .site-header .theme-toggle {
     display: none;
+  }
+}
+
+/* Menu mobile: la testata conserva solo le azioni frequenti; tema e lingua
+   diventano preferenze esplicite dentro al drawer. */
+.mobile-nav-section-title,
+.mobile-nav-preferences {
+  display: none;
+}
+
+@media (max-width: 660px) {
+  .site-header-inner {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+
+  .site-header .nav-brand {
+    grid-column: 1;
+    width: auto;
+  }
+
+  .site-header .nav-actions {
+    grid-column: 2;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-header .nav-menu-toggle {
+    order: 1;
+    margin: 0;
+  }
+
+  .site-header .nav-actions > .theme-toggle,
+  .site-header .nav-actions > .nav-lang {
+    display: none !important;
+  }
+
+  .site-header .cart-btn {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .site-header .nav-links {
+    left: 0.5rem;
+    right: 0.5rem;
+    top: calc(100% + 6px);
+    max-height: calc(100dvh - var(--nav-h, 60px) - 18px);
+    padding: 0.65rem;
+    gap: 0.28rem;
+    border-radius: 20px;
+  }
+
+  .site-header .mobile-nav-section-title {
+    display: block;
+    padding: 0.35rem 0.65rem 0.2rem;
+    color: #647268;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .site-header .nav-link,
+  .site-header .nav-link:not(.cart-btn) {
+    min-height: 48px;
+    padding: 0.72rem 0.78rem;
+    border: 1px solid transparent;
+    border-radius: 13px;
+    font-size: 0.92rem;
+    font-weight: 650;
+  }
+
+  .site-header .nav-link--current {
+    background: rgba(47, 107, 58, 0.08);
+    border-color: rgba(47, 107, 58, 0.14);
+  }
+
+  .site-header .nav-link--configuratore {
+    margin-top: 0.18rem;
+    background: #2f6b3a;
+    border-color: #2f6b3a;
+    color: #fff;
+    box-shadow: 0 7px 18px rgba(47, 107, 58, 0.2);
+  }
+
+  .site-header .nav-link--account {
+    margin-top: 0.22rem;
+    border-top-color: rgba(107, 98, 84, 0.14);
+  }
+
+  .site-header .mobile-nav-preferences {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(107, 98, 84, 0.14);
+  }
+
+  .site-header .mobile-nav-preferences > .mobile-nav-section-title {
+    padding-inline: 0.15rem;
+  }
+
+  .site-header .mobile-menu-theme,
+  .site-header .mobile-menu-language {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+    min-height: 58px;
+    margin: 0;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid rgba(47, 107, 58, 0.16);
+    border-radius: 14px;
+    background: rgba(47, 107, 58, 0.055);
+    color: #26382c;
+    text-align: left;
+  }
+
+  .site-header .mobile-menu-theme {
+    width: auto;
+    height: auto;
+    cursor: pointer;
+  }
+
+  .mobile-menu-pref-icon {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #fff;
+    color: #2f6b3a;
+  }
+
+  .mobile-menu-pref-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .mobile-menu-pref-copy b {
+    font-size: 0.78rem;
+    line-height: 1.1;
+  }
+
+  .mobile-menu-pref-copy small {
+    color: #6f7b72;
+    font-size: 0.62rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .mobile-menu-pref-action {
+    color: #2f6b3a;
+    font-size: 1.25rem;
+  }
+
+  .mobile-menu-language select {
+    width: 58px;
+    min-width: 58px;
+    min-height: 36px;
+    padding: 0 0.25rem;
+    border: 1px solid rgba(47, 107, 58, 0.2);
+    border-radius: 10px;
+    background: #fff;
+    color: #26382c;
+    font-size: 0.7rem;
+    font-weight: 750;
+  }
+
+  html[data-theme="dark"] .site-header .mobile-menu-theme,
+  html[data-theme="dark"] .site-header .mobile-menu-language {
+    border-color: rgba(173, 221, 190, 0.17);
+    background: rgba(255, 255, 255, 0.055);
+    color: #edf5ef;
+  }
+
+  html[data-theme="dark"] .mobile-menu-pref-icon,
+  html[data-theme="dark"] .mobile-menu-language select {
+    background: #1d3327;
+    color: #edf5ef;
+  }
+
+  html[data-theme="dark"] .mobile-menu-pref-copy small,
+  html[data-theme="dark"] .site-header .mobile-nav-section-title {
+    color: #aebdb2;
   }
 }
 
@@ -1426,10 +1610,6 @@ html[data-theme="dark"] .persona-pick {
 
   .hero-cfg-route-intro {
     min-height: 34px;
-  }
-
-  .hero-sub {
-    margin-bottom: 0 !important;
   }
 
   .hero-cfg {
@@ -1738,8 +1918,8 @@ html[data-theme="dark"] .setup-context-row .guided-tags .tag b {
 
 .hero-cfg-level {
   --accent-text: #245b2a;
-  min-height: 72px;
-  padding: 10px 11px 10px 14px;
+  min-height: 66px;
+  padding: 6px 11px 6px 14px;
   gap: 11px;
   border-width: 1.5px;
   border-color: color-mix(in srgb, var(--accent) 38%, #d6ddd2);

@@ -404,8 +404,9 @@ function applyLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
   document.title = t("page.title");
-  const sel = document.getElementById("langSelect");
-  if (sel) sel.value = lang;
+  document.querySelectorAll("[data-lang-select]").forEach((sel) => {
+    sel.value = lang;
+  });
 
   if (lang === "ro") {
     NOMI_MESI.splice(0, 12, ...NOMI_MESI_RO);
@@ -1039,6 +1040,9 @@ if (catalogSearchLink) {
       parseInt(document.getElementById("pcMese")?.value) ||
       new Date().getMonth() + 1;
     const existing = readSavedCfg() || {};
+    const activePersona = document.querySelector(
+      "#preconfigPersonaSection .pc-persona-card.is-active"
+    );
     try {
       localStorage.setItem(
         CONFIG_KEY,
@@ -1049,7 +1053,9 @@ if (catalogSearchLink) {
           path,
           zona,
           riscaldata,
-          mese
+          mese,
+          livello:
+            activePersona?.dataset.livello || existing.livello || "novizio"
         })
       );
     } catch {}
@@ -1196,6 +1202,8 @@ if (catalogSearchLink) {
       "preconfig.serra_heated": "Riscaldata",
       "preconfig.month_label": "3. Mese di semina",
       "preconfig.cta": "Vai al configuratore",
+      "preconfig.choose_persona_alert":
+        "Scegli prima che tipo di coltivatore sei.",
       "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
       "hero.cfg_novizio": "Principiante",
       "hero.cfg_nov_hint": "Ti guido dalla prima scelta fino all'acquisto",
@@ -1227,6 +1235,8 @@ if (catalogSearchLink) {
       "preconfig.serra_heated": "Încălzită",
       "preconfig.month_label": "3. Luna de semănat",
       "preconfig.cta": "Mergi la configurator",
+      "preconfig.choose_persona_alert":
+        "Alege mai întâi ce tip de cultivator ești.",
       "hero.cfg_levels_title": "Ce fel de cultivator ești?",
       "hero.cfg_novizio": "Începător",
       "hero.cfg_nov_hint": "Te ghidez de la prima alegere până la cumpărare",
@@ -1318,6 +1328,8 @@ if (catalogSearchLink) {
 
     const urlParams = new URL(targetUrl, location.href).searchParams;
     const livello = urlParams.get("livello");
+    const validLevels = ["novizio", "intermedio", "esperto"];
+    const selectedLivello = validLevels.includes(livello) ? livello : null;
     const personaSection = document.getElementById("preconfigPersonaSection");
     const hasLivello = Boolean(livello);
 
@@ -1326,7 +1338,7 @@ if (catalogSearchLink) {
     document
       .querySelectorAll("#preconfigPersonaSection .pc-persona-card")
       .forEach((btn) => {
-        const isActive = hasLivello ? btn.dataset.livello === livello : false;
+        const isActive = btn.dataset.livello === selectedLivello;
         btn.classList.toggle("is-active", isActive);
         btn.setAttribute("aria-pressed", String(isActive));
       });
@@ -1361,7 +1373,8 @@ if (catalogSearchLink) {
         }, 280);
       });
     });
-    document.body.style.overflow = "hidden";
+    document.documentElement.classList.add("preconfig-open");
+    document.body.classList.add("preconfig-open");
   }
 
   // Chiude la scheda pre-configurazione
@@ -1371,7 +1384,8 @@ if (catalogSearchLink) {
     overlay.classList.remove("is-open");
     const onEnd = () => {
       overlay.setAttribute("hidden", "");
-      document.body.style.overflow = "";
+      document.documentElement.classList.remove("preconfig-open");
+      document.body.classList.remove("preconfig-open");
     };
     overlay.addEventListener("transitionend", onEnd, { once: true });
   }
@@ -1469,7 +1483,15 @@ if (catalogSearchLink) {
 
     document
       .getElementById("preconfigCta")
-      ?.addEventListener("click", function () {
+      ?.addEventListener("click", function (event) {
+        if (this.classList.contains("preconfig-cta--disabled")) {
+          event.preventDefault();
+          window.alert(
+            pcT("preconfig.choose_persona_alert") ||
+              "Scegli prima che tipo di coltivatore sei."
+          );
+          return;
+        }
         savePreconfigToStorage();
       });
 

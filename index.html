@@ -10,7 +10,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-11-mobile-persona-height";
+      window.SERRA_APP_VERSION = "2026-07-11-mobile-nav-space";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -47,9 +47,9 @@
       })();
     </script>
     <!-- Fogli di stile principali -->
-    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/index.css?v=2026-07-11-mobile-nav-space" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-11-mobile-persona-height" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-11-mobile-nav-space" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -80,6 +80,9 @@
           aria-label="Navigazione principale"
           data-i18n-aria="nav.aria_main"
         >
+          <span class="mobile-nav-section-title" data-i18n="nav.menu_explore"
+            >Esplora</span
+          >
           <a
             href="#"
             class="nav-link nav-link--current nav-link--home"
@@ -115,6 +118,45 @@
             id="navAccountBtn"
             >👤 Area Personale</a
           >
+          <div class="mobile-nav-preferences">
+            <span
+              class="mobile-nav-section-title"
+              data-i18n="nav.menu_preferences"
+              >Preferenze</span
+            >
+            <button
+              class="theme-toggle mobile-menu-theme"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+            >
+              <span class="mobile-menu-pref-icon" aria-hidden="true">
+                <span class="theme-toggle-icon theme-toggle-moon">☾</span>
+                <span class="theme-toggle-icon theme-toggle-sun">☀</span>
+              </span>
+              <span class="mobile-menu-pref-copy">
+                <b data-i18n="nav.theme">Tema</b>
+                <small data-i18n="nav.theme_hint">Chiaro / scuro</small>
+              </span>
+              <span class="mobile-menu-pref-action" aria-hidden="true">›</span>
+            </button>
+            <label class="mobile-menu-language">
+              <span class="mobile-menu-pref-icon" aria-hidden="true">🌐</span>
+              <span class="mobile-menu-pref-copy">
+                <b data-i18n="nav.language">Lingua</b>
+                <small>Italiano / Română</small>
+              </span>
+              <select
+                id="mobileLangSelect"
+                data-lang-select
+                onchange="setLang(this.value)"
+                aria-label="Lingua / Limbă"
+              >
+                <option value="it">🇮🇹 IT</option>
+                <option value="ro">🇷🇴 RO</option>
+              </select>
+            </label>
+          </div>
         </nav>
         <div class="nav-actions">
           <button
@@ -145,6 +187,7 @@
           <div class="nav-lang">
             <select
               id="langSelect"
+              data-lang-select
               onchange="setLang(this.value)"
               title="Lingua / Limbă"
             >
@@ -174,10 +217,6 @@
         <h1 class="hero-headline" data-i18n="hero.headline">
           Progetta la serra. Scegli i semi giusti.
         </h1>
-        <p class="hero-sub" data-i18n="hero.sub">
-          40+ varietà filtrate per clima e mese. Aggiungi al carrello e coltiva
-          con metodo.
-        </p>
         <span id="heroTagline" hidden></span>
         <!-- Accesso al configuratore -->
         <div class="hero-cfg">
@@ -186,10 +225,6 @@
               <h2 class="hero-cfg-title" data-i18n="hero.cfg_title">
                 La tua serra, il tuo percorso
               </h2>
-              <p class="hero-cfg-desc" data-i18n="hero.cfg_desc">
-                Parti dal livello che ti rappresenta: la vista dall'alto resta
-                il centro del progetto, dalla prima scelta fino ai semi.
-              </p>
               <div class="hero-cfg-actions">
                 <div class="hero-cfg-route-intro">
                   <span class="hero-cfg-route-step">1</span>
@@ -1401,11 +1436,6 @@
         </div>
 
         <div class="preconfig-body">
-          <p class="preconfig-intro-note" data-i18n="preconfig.intro_note">
-            Un avvio rapido: bastano pochi dati per aprire il configuratore già
-            pronto. Nulla è definitivo, potrai cambiare tutto in qualsiasi
-            momento nella pagina successiva.
-          </p>
           <div class="preconfig-section-label preconfig-section-label--primary">
             <span data-i18n="preconfig.sizes_label">1. Misure interne</span>
             <span
@@ -1414,9 +1444,6 @@
               >Fondamentale</span
             >
           </div>
-          <p class="preconfig-sizes-note" data-i18n="preconfig.sizes_note">
-            Le dimensioni determinano quante aiuole e piante puoi coltivare.
-          </p>
           <div
             class="preconfig-vfield preconfig-vfield--dims preconfig-vfield--primary"
           >
@@ -1799,12 +1826,12 @@
     <!-- Caricamento degli script dell'applicazione (Caricamento parallelo nativo) -->
     <script src="assets/js/theme.js" defer></script>
     <script src="assets/js/nav.js" defer></script>
-    <script src="assets/js/i18n.js?v=2026-07-11-mobile-persona-height" defer></script>
+    <script src="assets/js/i18n.js?v=2026-07-11-mobile-nav-space" defer></script>
     <script src="assets/js/plants-data.js" defer></script>
     <script src="assets/js/api.js" defer></script>
     <script src="assets/js/home/home-data.js" defer></script>
     <script src="assets/js/home/home-catalog.js?v=2026-07-10-paths" defer></script>
     <script src="assets/js/home/home-cart.js" defer></script>
-    <script src="assets/js/home/home-app.js?v=2026-07-10-paths" defer></script>
+    <script src="assets/js/home/home-app.js?v=2026-07-11-mobile-nav-space" defer></script>
   </body>
 </html>
