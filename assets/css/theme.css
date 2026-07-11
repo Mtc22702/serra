@@ -1,7 +1,7 @@
 /* Moduli CSS del tema globale */
 @layer base, dark-theme;
-@import url("./tema/01-fondazioni.css");
-@import url("./tema/02-dark-principale.css?v=2026-06-29-191");
+@import url("./tema/01-fondazioni.css?v=2026-07-11-menu-blur-dark-fix2");
+@import url("./tema/02-dark-principale.css?v=2026-07-11-menu-blur-dark-fix2");
 @import url("./tema/03-modali-calendario.css?v=2026-06-29-191");
 @import url("./tema/04-catalogo-footer.css");
 @import url("./tema/05-pulsanti-stati.css");

@@ -35,7 +35,11 @@
     color: var(--dark-text);
   }
   html[data-theme="dark"] .site-header {
-    background: rgba(20, 34, 27, 0.96);
+    /* Come in chiaro (dove lo sfondo è solo ~90% opaco): un fondo quasi
+       opaco qui (era 0.96) copriva quasi del tutto il backdrop-filter
+       impostato in 01-fondazioni.css, rendendo il blur praticamente
+       invisibile in dark mode. */
+    background: rgba(15, 27, 22, 0.88);
   }
   html[data-theme="dark"] .nav-brand-mark {
     background: #23382e;

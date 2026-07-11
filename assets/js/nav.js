@@ -8,13 +8,27 @@
   const isRo = () =>
     (document.documentElement.lang || "it").toLowerCase().startsWith("ro");
 
+  // Su iOS Safari "overflow: hidden" sul body non basta a impedire lo
+  // scroll/rimbalzo della pagina dietro a un pannello aperto: si blocca il
+  // body con position:fixed nel punto esatto in cui si trovava, e alla
+  // chiusura si ripristina la stessa posizione di scroll, così la pagina
+  // torna a funzionare esattamente come prima.
+  let lockedScrollY = 0;
+
   const closeMenu = () => {
+    const wasOpen = document.body.classList.contains("nav-menu-open");
     document.body.classList.remove("nav-menu-open");
+    if (wasOpen) {
+      document.body.style.top = "";
+      window.scrollTo(0, lockedScrollY);
+    }
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", isRo() ? "Deschide meniul" : "Apri menu");
   };
 
   const openMenu = () => {
+    lockedScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = `-${lockedScrollY}px`;
     document.body.classList.add("nav-menu-open");
     toggle.setAttribute("aria-expanded", "true");
     toggle.setAttribute("aria-label", isRo() ? "Închide meniul" : "Chiudi menu");

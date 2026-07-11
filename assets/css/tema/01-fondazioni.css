@@ -164,11 +164,20 @@
   html[data-theme="dark"] body::before {
     opacity: 0.22;
   }
+  /* Il body ha un solo ::before: la regola sopra (pensata per un dettaglio
+     decorativo di sfondo) intercetta per errore anche l'overlay sfocato
+     del menu mobile (definito in index/04-responsive-header-contatti.css),
+     abbassandone l'opacità al 22% e quindi rendendo il blur quasi
+     invisibile in dark mode. Qui lo riportiamo a piena intensità. */
+  html[data-theme="dark"] body.nav-menu-open::before {
+    opacity: 1;
+  }
   html[data-theme="dark"] .site-header {
     background: rgba(10, 23, 18, 0.94);
     border-bottom-color: var(--theme-line);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
   html[data-theme="dark"] .nav-brand,
   html[data-theme="dark"] .nav-brand-text,
