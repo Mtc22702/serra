@@ -457,6 +457,7 @@ function headerScrollOffset() {
 let pendingPageScrollTimer = 0;
 let pendingPageScrollFrame = 0;
 let pendingPageScrollToken = 0;
+let pendingPageScrollFontsTimer = 0;
 
 // Annulla eventuali scroll pagina programmati ma non ancora eseguiti
 function cancelPendingPageScroll() {
@@ -468,6 +469,10 @@ function cancelPendingPageScroll() {
   if (pendingPageScrollFrame) {
     window.cancelAnimationFrame(pendingPageScrollFrame);
     pendingPageScrollFrame = 0;
+  }
+  if (pendingPageScrollFontsTimer) {
+    window.clearTimeout(pendingPageScrollFontsTimer);
+    pendingPageScrollFontsTimer = 0;
   }
 }
 
@@ -504,8 +509,33 @@ function scheduleElementBelowHeader(
       if (target && typeof options.after === "function") options.after(target);
     });
   };
-  if (delay) pendingPageScrollTimer = window.setTimeout(run, delay);
-  else run();
+  const start = () => {
+    if (token !== pendingPageScrollToken) return;
+    if (delay) pendingPageScrollTimer = window.setTimeout(run, delay);
+    else run();
+  };
+  // Se i webfont sono ancora in caricamento, il loro swap può cambiare
+  // altezza delle righe/andare a capo del testo e spostare il layout dopo
+  // che lo scroll è già stato calcolato. Si aspetta che siano pronti (con
+  // una rete di sicurezza) prima di partire, altrimenti la posizione finale
+  // può risultare sbagliata (percepito come "lo scroll salta storto").
+  if (
+    document.fonts &&
+    document.fonts.ready &&
+    document.fonts.status !== "loaded"
+  ) {
+    let started = false;
+    const kick = () => {
+      if (started) return;
+      started = true;
+      pendingPageScrollFontsTimer = 0;
+      start();
+    };
+    document.fonts.ready.then(kick).catch(kick);
+    pendingPageScrollFontsTimer = window.setTimeout(kick, 400);
+  } else {
+    start();
+  }
 }
 
 // Scrolla un elemento sotto l'header con offset corretto

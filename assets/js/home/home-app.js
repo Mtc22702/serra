@@ -540,6 +540,9 @@ window.addEventListener(
     });
   }
   initCookieBanner();
+  // Il testo è già nella lingua corretta: si può mostrare il contenuto
+  // (vedi il guard "serra-i18n-pending" impostato in <head>).
+  document.documentElement.classList.remove("serra-i18n-pending");
 })();
 
 // Scroll con offset

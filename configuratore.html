@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-10-personas";
+      window.SERRA_APP_VERSION = "2026-07-11-i18n-scroll-fix";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -42,6 +42,32 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
+    <!-- Applica subito la lingua salvata: evita che si veda il testo IT
+         di default e poi "scatti" in RO quando gli script differiti girano
+         (il flash percepito come un refresh su mobile). -->
+    <style>
+      html.serra-i18n-pending body {
+        visibility: hidden;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var lang = localStorage.getItem("ois.lang");
+          if (lang === "it" || lang === "ro") {
+            document.documentElement.lang = lang;
+          }
+          if (lang === "ro") {
+            document.documentElement.classList.add("serra-i18n-pending");
+            // Rete di sicurezza: se per qualsiasi motivo lo script di lingua
+            // non completa, il contenuto torna visibile comunque.
+            window.setTimeout(function () {
+              document.documentElement.classList.remove("serra-i18n-pending");
+            }, 1200);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Outfit:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -50,7 +76,7 @@
     <link rel="stylesheet" href="assets/css/index.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-10-personas" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-11-i18n-scroll-fix" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -1822,21 +1848,21 @@
     <!-- Script della pagina (Caricamento parallelo nativo) -->
     <script src="assets/js/theme.js" defer></script>
     <script src="assets/js/nav.js" defer></script>
-    <script src="assets/js/i18n.js?v=2026-07-10-personas" defer></script>
+    <script src="assets/js/i18n.js?v=2026-07-11-i18n-scroll-fix" defer></script>
     <script src="assets/js/plants-data.js" defer></script>
     <script src="assets/js/api.js" defer></script>
     <script src="assets/js/conf/conf-data.js" defer></script>
-    <script src="assets/js/conf/conf-state.js?v=2026-07-10-journey" defer></script>
+    <script src="assets/js/conf/conf-state.js?v=2026-07-11-i18n-scroll-fix" defer></script>
     <script src="assets/js/conf/conf-projects.js" defer></script>
-    <script src="assets/js/conf/conf-text.js?v=2026-07-10-paths" defer></script>
+    <script src="assets/js/conf/conf-text.js?v=2026-07-11-i18n-scroll-fix" defer></script>
     <script src="assets/js/conf/conf-draw.js" defer></script>
-    <script src="assets/js/conf/conf-ui.js?v=2026-07-10-settings" defer></script>
+    <script src="assets/js/conf/conf-ui.js?v=2026-07-11-i18n-scroll-fix" defer></script>
     <script src="assets/js/conf/conf-companions.js" defer></script>
     <script src="assets/js/conf/conf-shopping.js" defer></script>
     <script src="assets/js/conf/conf-engine.js" defer></script>
     <script src="assets/js/conf/conf-calendar.js" defer></script>
-    <script src="assets/js/conf/conf-app.js?v=2026-07-10-paths" defer></script>
-    <script src="assets/js/conf/conf-wizard.js?v=2026-07-10-journey" defer></script>
+    <script src="assets/js/conf/conf-app.js?v=2026-07-11-i18n-scroll-fix" defer></script>
+    <script src="assets/js/conf/conf-wizard.js?v=2026-07-11-i18n-scroll-fix" defer></script>
 
     <!-- Scroll listener torna su -->
     <script>
