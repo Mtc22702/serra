@@ -774,7 +774,7 @@
         "hero.cfg_int_hint":
           "Parti da un piano pronto e personalizzalo",
         "hero.cfg_exp_hint":
-          "Apri la serra vuota e riempila liberamente",
+          "Scegli un layout pronto oppure componi liberamente",
         "hero.cfg_choose": "Apri",
         "nav.brand_sub": "Coltiva con un piano",
         "detail.how_to_sow": "Come si semina",
@@ -1205,7 +1205,7 @@
           "Te ghidez de la prima alegere până la cumpărare",
         "hero.cfg_int_hint":
           "Pornești de la un plan gata și îl personalizezi",
-        "hero.cfg_exp_hint": "Deschizi sera goală și o umpli liber",
+        "hero.cfg_exp_hint": "Alege un plan gata sau compune liber",
         "hero.cfg_choose": "Deschide",
         "nav.brand_sub": "Cultivă cu un plan",
         "detail.how_to_sow": "Cum se seamănă",

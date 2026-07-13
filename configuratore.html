@@ -314,6 +314,46 @@
         </button>
       </section>
 
+      <!-- Contesto del percorso: è comune a tutti i profili e precede i
+           contenuti operativi specifici (preset, serra e catalogo). -->
+      <div
+        class="journey-context journey-context--intermedio"
+        id="journeyContext"
+        role="region"
+        aria-label="Percorso corrente"
+        aria-live="polite"
+      >
+        <span class="journey-context-level" id="journeyContextLevel">Percorso Intermedio</span>
+        <div class="journey-context-copy">
+          <b id="journeyContextTitle">Il piano è pronto: ora fallo tuo</b>
+          <small id="journeyContextDesc">La serra resta al centro; modifica colture e quantità quando vuoi.</small>
+        </div>
+        <nav class="journey-context-progress" aria-label="Passi del percorso">
+          <button
+            class="journey-context-step is-done"
+            type="button"
+            data-journey-step="settings"
+            data-journey-target="panelSettings"
+          >1 · Imposta</button>
+          <button
+            class="journey-context-step is-current"
+            type="button"
+            data-journey-step="crops"
+            data-journey-target="stage"
+            aria-current="step"
+          >2 · Progetta</button>
+          <button
+            class="journey-context-step"
+            type="button"
+            data-journey-step="yield"
+            data-journey-target="panelYield"
+          >3 · Acquista</button>
+        </nav>
+        <button class="journey-context-next" id="journeyContextNext" type="button">
+          Personalizza
+        </button>
+      </div>
+
       <!-- Intro guidata: secondaria, si apre solo se serve modificare qualcosa -->
       <details class="guided-intro guided-setup-toggle" id="guidedIntro">
         <summary
@@ -946,43 +986,6 @@
 
       <!-- Vista dall'alto della serra -->
       <div class="stage">
-        <div
-          class="journey-context journey-context--intermedio"
-          id="journeyContext"
-          role="region"
-          aria-label="Percorso corrente"
-          aria-live="polite"
-        >
-          <span class="journey-context-level" id="journeyContextLevel">Percorso Intermedio</span>
-          <div class="journey-context-copy">
-            <b id="journeyContextTitle">Il piano è pronto: ora fallo tuo</b>
-            <small id="journeyContextDesc">La serra resta al centro; modifica colture e quantità quando vuoi.</small>
-          </div>
-          <nav class="journey-context-progress" aria-label="Passi del percorso">
-            <button
-              class="journey-context-step is-done"
-              type="button"
-              data-journey-step="settings"
-              data-journey-target="panelSettings"
-            >1 · Imposta</button>
-            <button
-              class="journey-context-step is-current"
-              type="button"
-              data-journey-step="crops"
-              data-journey-target="stage"
-              aria-current="step"
-            >2 · Progetta</button>
-            <button
-              class="journey-context-step"
-              type="button"
-              data-journey-step="yield"
-              data-journey-target="panelYield"
-            >3 · Acquista</button>
-          </nav>
-          <button class="journey-context-next" id="journeyContextNext" type="button">
-            Personalizza
-          </button>
-        </div>
         <div class="stage-head">
           <div class="stage-title-row">
             <div>

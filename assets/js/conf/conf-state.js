@@ -199,15 +199,15 @@ function updateJourneyContext() {
       ? {
           level: "Traseu Începător",
           title: "Grădina ta este deja pregătită",
-          desc: "Privește planul de sus, apoi mergi la lista de semințe.",
-          next: "Vezi semințele",
+          desc: "Verifică planul de sus; când ești gata, mergi la lista de semințe.",
+          next: "Verifică planul",
           steps: ["1 · Alegeri", "2 · Verifică", "3 · Cumpără"]
         }
       : {
           level: "Percorso Principiante",
           title: "Il tuo orto è già pronto",
-          desc: "Controlla il piano dall'alto, poi passa alla lista dei semi.",
-          next: "Vai ai semi",
+          desc: "Controlla il piano dall'alto; quando sei pronto, passa alla lista dei semi.",
+          next: "Controlla il piano",
           steps: ["1 · Scelte", "2 · Controlla", "3 · Acquista"]
         },
     intermedio: ro

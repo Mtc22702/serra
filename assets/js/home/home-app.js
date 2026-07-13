@@ -1213,7 +1213,7 @@ if (catalogSearchLink) {
       "hero.cfg_intermedio": "Intermedio",
       "hero.cfg_int_hint": "Parti da un piano pronto e personalizzalo",
       "hero.cfg_esperto": "Esperto",
-      "hero.cfg_exp_hint": "Apri la serra vuota e riempila liberamente",
+      "hero.cfg_exp_hint": "Scegli un layout pronto oppure componi liberamente",
       "hero.zone_cold_label": "Fredda",
       "hero.zone_temp_label": "Temperata",
       "hero.zone_warm_label": "Calda"
@@ -1246,7 +1246,7 @@ if (catalogSearchLink) {
       "hero.cfg_intermedio": "Intermediar",
       "hero.cfg_int_hint": "Pornești de la un plan gata și îl personalizezi",
       "hero.cfg_esperto": "Expert",
-      "hero.cfg_exp_hint": "Deschizi sera goală și o umpli liber",
+      "hero.cfg_exp_hint": "Alege un plan gata sau compune liber",
       "hero.zone_cold_label": "Rece",
       "hero.zone_temp_label": "Temperată",
       "hero.zone_warm_label": "Caldă"

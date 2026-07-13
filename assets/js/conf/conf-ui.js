@@ -562,7 +562,6 @@ function scrollPlantDetailPanelIntoView(behavior = "smooth") {
 // Porta in vista l'immagine SVG della serra
 function scrollGreenhouseImageIntoView(behavior = "auto") {
   const target =
-    document.getElementById("journeyContext") ||
     document.querySelector(".stage .scene-wrap") ||
     document.getElementById("scene") ||
     document.querySelector(".stage");

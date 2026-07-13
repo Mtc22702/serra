@@ -215,14 +215,16 @@
     cta.addEventListener("click", focusYieldPanel);
   });
 
-  // CTA del banner di arrivo: continua il percorso scelto senza togliere
-  // centralità alla vista della serra.
+  // CTA del banner di arrivo: il novizio verifica prima il piano; gli altri
+  // profili proseguono direttamente alla personalizzazione.
   ready(function () {
     const cta = document.getElementById("journeyContextNext");
     if (!cta) return;
     cta.addEventListener("click", function () {
       if (typeof state !== "undefined" && state.livello === "novizio") {
-        focusYieldPanel();
+        if (typeof scrollGreenhouseImageIntoView === "function") {
+          scrollGreenhouseImageIntoView("smooth");
+        }
         return;
       }
       if (typeof openCustomizePanelAndFocus === "function") {
