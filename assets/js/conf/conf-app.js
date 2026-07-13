@@ -936,6 +936,10 @@ window.addEventListener("serra:themechange", () => render());
       else render();
       if (!_shouldFocusGuidedIntroOnBoot) scrollToScene();
     }
+    // Il markup iniziale usa Intermedio come fallback. La maschera impostata
+    // nel <head> per un arrivo da Principiante può sparire solo ora, dopo che
+    // setLivello ha sincronizzato testo, classi e selettore col profilo reale.
+    document.documentElement.classList.remove("serra-boot-novizio");
     saveConfig(true);
     clearBootParams();
     // Ogni profilo arriva intenzionalmente alla serra: il banner sopra la
