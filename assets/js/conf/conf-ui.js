@@ -1159,7 +1159,7 @@ function renderConfigDiseases(p) {
   const diseases = configDiseasesForPlant(p);
   return `<details class="detail-diseases">
     <summary class="detail-diseases-head"><div><h3>${detailText("detail.diseases_title")}</h3><p>${detailText("detail.diseases_subtitle")}</p></div><span class="detail-diseases-head-actions"><span class="detail-diseases-count">${detailText("detail.diseases_count", { count: diseases.length })}</span><span class="detail-diseases-chevron" aria-hidden="true">▾</span></span></summary>
-    <div class="detail-disease-list">${diseases.map((d) => `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${d[0]}</span><span class="detail-disease-toggle">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.disease_symptoms")}</b><p>${d[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.disease_action")}</b><p>${d[2]}</p></div></div></details>`).join("")}</div>
+    <div class="detail-disease-list">${diseases.map((d) => `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${d[0]}</span><span class="detail-disease-toggle" aria-hidden="true">⌄</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.disease_symptoms")}</b><p>${d[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.disease_action")}</b><p>${d[2]}</p></div></div></details>`).join("")}</div>
     <p class="detail-treatment-note">${detailText("detail.treatment_note")}</p>
   </details>`;
 }
@@ -1491,7 +1491,7 @@ function renderConfigPests(p) {
   return `<details class="detail-diseases detail-pests"><summary class="detail-diseases-head"><div><h3>${detailText("detail.pests_title")}</h3><p>${detailText("detail.pests_subtitle")}</p></div><span class="detail-diseases-head-actions"><span class="detail-diseases-count">${detailText("detail.pests_count", { count: pests.length })}</span><span class="detail-diseases-chevron" aria-hidden="true">▾</span></span></summary><div class="detail-disease-list">${pests
     .map((item, index) => {
       const key = keys[index];
-      return `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${item[0]}</span><span class="detail-disease-toggle">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.pest_signs")}</b><p>${item[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.pest_action")}</b><p>${item[2]}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${detailText("detail.pest_products")} · ${plantText(p, "nome")}</b><p>${products[key]}</p></div></div></details>`;
+      return `<details class="detail-disease-card"><summary><span class="detail-disease-marker"></span><span>${item[0]}</span><span class="detail-disease-toggle" aria-hidden="true">⌄</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${detailText("detail.pest_signs")}</b><p>${item[1]}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${detailText("detail.pest_action")}</b><p>${item[2]}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${detailText("detail.pest_products")} · ${plantText(p, "nome")}</b><p>${products[key]}</p></div></div></details>`;
     })
     .join(
       ""

@@ -942,7 +942,7 @@ function renderPlantDiseases(p) {
     .map(
       (disease) =>
         `<details class="detail-disease-card">
-      <summary><span class="detail-disease-marker" aria-hidden="true"></span><span>${disease.name}</span><span class="detail-disease-toggle" aria-hidden="true">+</span></summary>
+      <summary><span class="detail-disease-marker" aria-hidden="true"></span><span>${disease.name}</span><span class="detail-disease-toggle" aria-hidden="true">⌄</span></summary>
       <div class="detail-disease-body">
         <div class="detail-disease-info"><b>${t("detail.disease_symptoms")}</b><p>${disease.symptoms}</p></div>
         <div class="detail-disease-info detail-disease-info--action"><b>${t("detail.disease_action")}</b><p>${disease.action}</p></div>
@@ -1357,7 +1357,7 @@ function renderPlantPests(p) {
   list.innerHTML = pests
     .map(
       (pest) =>
-        `<details class="detail-disease-card"><summary><span class="detail-disease-marker" aria-hidden="true"></span><span>${pest.name}</span><span class="detail-disease-toggle" aria-hidden="true">+</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${t("detail.pest_signs")}</b><p>${pest.signs}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${t("detail.pest_action")}</b><p>${pest.action}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${t("detail.pest_products")} · ${plantName(p.id)}</b><p>${products[pest.key]}</p></div></div></details>`
+        `<details class="detail-disease-card"><summary><span class="detail-disease-marker" aria-hidden="true"></span><span>${pest.name}</span><span class="detail-disease-toggle" aria-hidden="true">⌄</span></summary><div class="detail-disease-body"><div class="detail-disease-info"><b>${t("detail.pest_signs")}</b><p>${pest.signs}</p></div><div class="detail-disease-info detail-disease-info--action"><b>${t("detail.pest_action")}</b><p>${pest.action}</p></div><div class="detail-disease-info detail-disease-info--products"><b>${t("detail.pest_products")} · ${plantName(p.id)}</b><p>${products[pest.key]}</p></div></div></details>`
     )
     .join("");
 }

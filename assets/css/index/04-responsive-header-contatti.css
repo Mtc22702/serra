@@ -1439,6 +1439,22 @@
     border-color: var(--green);
     color: #fff;
   }
+
+  /* Tra desktop compatto e desktop pieno la nav centrale aveva 62px in più
+     dello spazio disponibile: essendo centrata e con overflow nascosto,
+     tagliava proprio "Home" (il primo punto di ingresso). Riduciamo solo
+     ritmo e spaziatura in questa fascia, mantenendo tutte le voci visibili. */
+  @media (min-width: 901px) and (max-width: 1320px) {
+    .site-header .nav-links {
+      gap: 0;
+    }
+
+    .site-header .nav-link {
+      padding-inline: 0.43rem;
+      font-size: 0.72rem;
+    }
+  }
+
   .nav-actions {
     display: flex;
     align-items: center;

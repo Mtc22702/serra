@@ -216,6 +216,7 @@
 .guided-setup-summary-action {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   flex: 0 0 auto;
   min-height: 32px;
@@ -226,9 +227,20 @@
   color: var(--verde-scuro);
   font-size: 11px;
   font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
   transition:
     background 0.14s ease,
     transform 0.1s ease;
+}
+
+.guided-setup-summary-action > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1em;
+  line-height: 1;
 }
 
 .guided-setup-summary:hover .guided-setup-summary-action {
@@ -1096,6 +1108,19 @@ html[data-theme="dark"] .journey-context-step.is-current {
 }
 
 @media (max-width: 660px) {
+  .catalog-clima-bar .hero-zone-btn {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .catalog-clima-bar .hero-zone-btn small {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
   .site-header .nav-menu-toggle,
   .site-header .theme-toggle,
   .site-header .nav-lang,

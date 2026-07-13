@@ -571,7 +571,7 @@
       background 0.16s;
   }
   .panel--plant-detail .detail-disease-card[open] .detail-disease-toggle {
-    transform: rotate(45deg);
+    transform: rotate(180deg);
   }
   .panel--plant-detail .detail-disease-card[open] summary {
     background: rgba(198, 123, 83, 0.08);
