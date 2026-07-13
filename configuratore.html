@@ -57,6 +57,13 @@
       html.serra-boot-novizio .journey-context {
         visibility: hidden;
       }
+
+      /* Su mobile il catalogo viene completato in modo asincrono. Evitiamo
+         di mostrare per un istante l'inizio della pagina e poi spostarla al
+         punto di arrivo scelto dal profilo. */
+      html.serra-boot-positioning body {
+        visibility: hidden;
+      }
     </style>
     <script>
       (function () {
@@ -80,8 +87,20 @@
       (function () {
         // Questa informazione arriva nell'URL e va applicata prima del primo
         // paint, non quando terminano gli script deferiti del configuratore.
-        if (new URLSearchParams(window.location.search).get("livello") === "novizio") {
+        var livello = new URLSearchParams(window.location.search).get("livello");
+        if (livello === "novizio") {
           document.documentElement.classList.add("serra-boot-novizio");
+        }
+        if (
+          (livello === "novizio" || livello === "intermedio" || livello === "esperto") &&
+          window.matchMedia("(max-width: 1100px)").matches
+        ) {
+          document.documentElement.classList.add("serra-boot-positioning");
+          // Se uno script esterno non riuscisse a completare il boot, la
+          // pagina non deve rimanere invisibile.
+          window.setTimeout(function () {
+            document.documentElement.classList.remove("serra-boot-positioning");
+          }, 2200);
         }
       })();
     </script>

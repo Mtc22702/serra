@@ -395,7 +395,10 @@ function chooseLivello(liv) {
     if (!state.beds.length) autoFill();
     else render();
     syncVegFilterTabs();
-    openCustomizePanelAndFocus();
+    // Su responsive il punto di arrivo dell'Intermedio è la barra dei
+    // layout pronti. Apriamo comunque le colture, ma senza farle diventare
+    // un secondo target di scroll concorrente.
+    openCustomizePanelAndFocus({ scroll: false });
     if (!isResponsiveConfiguratorLayout()) {
       scheduleElementBelowHeader(
         () =>
@@ -405,6 +408,8 @@ function chooseLivello(liv) {
         "smooth",
         { delay: 150 }
       );
+    } else {
+      scrollToLivelloLanding("intermedio");
     }
   } else {
     vegFilter = "in";
@@ -417,7 +422,7 @@ function chooseLivello(liv) {
     // "Le tue scelte" ora è chiusa di default (ingranaggio accanto al
     // titolo): dopo il riempimento automatico si scorre alla serra, non più
     // a quel pannello secondario.
-    scrollToScene();
+    scrollToLivelloLanding("novizio");
   }
   saveConfig(true);
   if (prev !== liv) updateGuidedIntroDynamic();
@@ -476,22 +481,51 @@ function updateVegSearchUI() {
 }
 
 // Scrolla fino alla scena della serra
-function scrollToScene() {
-  const resolveStage = () =>
-    document.getElementById("journeyContext") || document.querySelector(".stage");
+function scrollToLivelloLanding(livello = state.livello, options = {}) {
+  const { behavior = "smooth", delay = 120, waitForFonts = true } = options;
+  const resolveTarget = () => {
+    // Per l'Esperto la barra dei layout pronti è il miglior ingresso: offre
+    // una scorciatoia per partire da un esempio, ma lascia subito sotto il
+    // percorso manuale e il catalogo completo per chi vuole comporre tutto
+    // da zero.
+    if (livello === "esperto") {
+      return (
+        document.getElementById("presetBar") ||
+        document.getElementById("panelCustomize") ||
+        document.getElementById("journeyContext") ||
+        document.querySelector(".stage")
+      );
+    }
+    if (livello === "intermedio") {
+      return (
+        document.getElementById("presetBar") ||
+        document.getElementById("journeyContext") ||
+        document.querySelector(".stage")
+      );
+    }
+    return (
+      document.getElementById("journeyContext") || document.querySelector(".stage")
+    );
+  };
   if (typeof scheduleElementBelowHeader === "function") {
-    scheduleElementBelowHeader(resolveStage, "smooth", { delay: 120 });
+    scheduleElementBelowHeader(resolveTarget, behavior, { delay, waitForFonts });
     return;
   }
   window.setTimeout(() => {
-    const stage = document.querySelector(".stage");
-    if (!stage) return;
+    const target = resolveTarget();
+    if (!target) return;
     const navH = parseInt(
       getComputedStyle(document.documentElement).getPropertyValue("--nav-h") ||
         "66",
       10
     );
-    const top = stage.getBoundingClientRect().top + window.scrollY - navH - 12;
-    window.scrollTo({ top, behavior: "smooth" });
-  }, 120);
+    const top = target.getBoundingClientRect().top + window.scrollY - navH - 12;
+    window.scrollTo({ top, behavior });
+  }, delay);
+}
+
+// Compatibilità con le azioni esistenti che intendono la scena/pannello
+// contestuale come destinazione.
+function scrollToScene() {
+  scrollToLivelloLanding(state.livello);
 }

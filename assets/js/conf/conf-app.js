@@ -942,10 +942,26 @@ window.addEventListener("serra:themechange", () => render());
     document.documentElement.classList.remove("serra-boot-novizio");
     saveConfig(true);
     clearBootParams();
-    // Ogni profilo arriva intenzionalmente alla serra: il banner sopra la
-    // planimetria spiega il percorso e offre l'azione successiva corretta.
+    // Un solo ancoraggio responsive al termine del boot. Principiante parte
+    // dal contesto del percorso, Intermedio e Esperto dai layout pronti.
+    // Per l'Esperto questi restano una scorciatoia prima del catalogo manuale.
+    // L'esecuzione subito dopo il layout evita il "doppio salto" causato da
+    // scroll posticipati.
     if (isResponsiveConfiguratorLayout()) {
-      scrollToScene();
+      scrollToLivelloLanding(_bootLivello, {
+        behavior: "auto",
+        delay: 0,
+        waitForFonts: false
+      });
+      // scheduleElementBelowHeader usa il frame successivo: rimuoviamo la
+      // maschera solo nel frame seguente, dopo lo scroll effettivo.
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          document.documentElement.classList.remove("serra-boot-positioning");
+        });
+      });
+    } else {
+      document.documentElement.classList.remove("serra-boot-positioning");
     }
   } else {
     const _bootIntentApplied =

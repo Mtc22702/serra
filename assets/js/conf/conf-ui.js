@@ -520,6 +520,7 @@ function scheduleElementBelowHeader(
   // una rete di sicurezza) prima di partire, altrimenti la posizione finale
   // può risultare sbagliata (percepito come "lo scroll salta storto").
   if (
+    options.waitForFonts !== false &&
     document.fonts &&
     document.fonts.ready &&
     document.fonts.status !== "loaded"
@@ -651,11 +652,12 @@ function syncCustomizePanelForLivello() {
 }
 
 // Apre il pannello colture e scrolla con evidenziazione
-function openCustomizePanelAndFocus() {
+function openCustomizePanelAndFocus(options = {}) {
+  const { scroll = true } = options;
   const crops = document.getElementById("panelCustomize");
   if (!crops) return;
   setCustomizePanelCollapsed(false);
-  if (!isResponsiveConfiguratorLayout()) {
+  if (!isResponsiveConfiguratorLayout() || !scroll) {
     crops.classList.add("is-focus-pulse");
     window.setTimeout(() => crops.classList.remove("is-focus-pulse"), 1600);
     return;
