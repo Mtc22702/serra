@@ -1,16 +1,18 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-13-catalog-scope-reset";
+const CACHE_VERSION = "2026-07-13-guide-locale";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
   "./",
   "./index.html",
   "./configuratore.html",
+  "./guida.html",
   "./manifest.json",
   "./assets/css/index.css",
   "./assets/css/style.css",
   "./assets/css/theme.css",
   "./assets/css/uiux-polish.css",
+  "./assets/css/guida.css",
   "./assets/css/index/01-fondazioni-hero.css",
   "./assets/css/index/02-calendario-catalogo.css",
   "./assets/css/index/03-pannelli-overlay.css",
@@ -34,6 +36,8 @@ const PRECACHE = [
   "./assets/css/tema/06-header-ritmo.css",
   "./assets/js/theme.js",
   "./assets/js/nav.js",
+  "./assets/js/guide.js",
+  "./assets/js/guide-link-i18n.js",
   "./assets/js/i18n.js",
   "./assets/js/plants-data.js",
   "./assets/js/home/home-data.js",

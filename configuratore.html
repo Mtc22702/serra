@@ -10,7 +10,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-13-catalog-scope-reset";
+      window.SERRA_APP_VERSION = "2026-07-13-guide-locale";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -109,10 +109,10 @@
       rel="stylesheet"
     />
     <!-- Fogli di stile -->
-    <link rel="stylesheet" href="assets/css/index.css?v=2026-07-13-catalog-scope-reset" />
+    <link rel="stylesheet" href="assets/css/index.css?v=2026-07-13-guide-locale" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-13-catalog-scope-reset" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-13-guide-locale" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -312,6 +312,10 @@
           <span class="guided-setup-gear-action" data-i18n-conf="guidedSetupAction">Modifica</span>
           <span class="guided-setup-gear-chevron" aria-hidden="true">⌄</span>
         </button>
+        <a class="guided-tutorial-link" href="guida.html" aria-label="Apri la guida per usare il configuratore">
+          <span aria-hidden="true">?</span>
+          <span data-guide-link-label>Scopri come usare l'app</span>
+        </a>
       </section>
 
       <!-- Contesto del percorso: è comune a tutti i profili e precede i
@@ -1939,6 +1943,7 @@
 
     <!-- Script della pagina (Caricamento parallelo nativo) -->
     <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/guide-link-i18n.js?v=2026-07-13-guide-locale" defer></script>
     <script src="assets/js/nav.js" defer></script>
     <script src="assets/js/i18n.js?v=2026-07-11-menu-blur-dark-fix2" defer></script>
     <script src="assets/js/plants-data.js" defer></script>

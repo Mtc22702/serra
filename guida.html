@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <title>Come usare Orto in Serra</title>
+    <script>
+      window.SERRA_APP_VERSION = "2026-07-13-guide-locale";
+      window.SERRA_IS_LOCAL_DEV =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      (function () {
+        var saved = localStorage.getItem("serra-theme");
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/guida.css?v=2026-07-13-guide-locale" />
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="guide-brand" href="index.html" aria-label="Orto in Serra, home">
+        <img src="assets/img/svg/logo.svg" alt="" />
+        <span><b>Orto in Serra</b><small>Coltiva con un piano</small></span>
+      </a>
+      <nav aria-label="Navigazione guida">
+        <a href="index.html" data-guide-key="nav.home">Home</a>
+        <a href="configuratore.html" data-guide-key="nav.config">Configuratore</a>
+        <span class="guide-lang" role="group" aria-label="Lingua / Limbă"><button type="button" data-guide-lang="it">IT</button><button type="button" data-guide-lang="ro">RO</button></span>
+        <button class="theme-toggle guide-theme-toggle" type="button" aria-label="Attiva modalità scura" aria-pressed="false" title="Cambia tema"><span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span><span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span></button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero" aria-labelledby="guideTitle">
+        <p class="guide-kicker" data-guide-key="hero.kicker">GUIDA ALL'APP</p>
+        <h1 id="guideTitle" data-guide-key="hero.title">Impara a progettare la tua serra.</h1>
+        <p data-guide-key="hero.copy">Segui il percorso adatto a te: ogni guida mostra solo le azioni che servono, nell’ordine giusto.</p>
+        <div class="guide-tabs" role="tablist" aria-label="Scegli il tuo livello">
+          <button class="guide-tab is-active" type="button" role="tab" aria-selected="true" data-guide="novizio" data-guide-key="tab.novizio">🌱 Principiante</button>
+          <button class="guide-tab" type="button" role="tab" aria-selected="false" data-guide="intermedio" data-guide-key="tab.intermedio">🌿 Intermedio</button>
+          <button class="guide-tab" type="button" role="tab" aria-selected="false" data-guide="esperto" data-guide-key="tab.esperto">🧭 Esperto</button>
+        </div>
+      </section>
+
+      <section class="guide-route is-active" id="guide-novizio" data-route="novizio" aria-labelledby="noviceTitle">
+        <header class="route-heading route-heading--novice">
+          <span aria-hidden="true">🌱</span>
+          <div><p data-guide-key="novice.kicker">PER CHI INIZIA</p><h2 id="noviceTitle" data-guide-key="novice.title">Principiante: un orto pronto, passo passo</h2></div>
+        </header>
+        <ol class="guide-steps">
+          <li><span class="step-no">1</span><div><h3 data-guide-key="novice.s1t">Inserisci le condizioni della serra</h3><p data-guide-key="novice.s1p">Scegli dimensioni, clima e mese. L’app prepara una proposta adatta alla stagione.</p></div><span class="step-icon">📐</span></li>
+          <li><span class="step-no">2</span><div><h3 data-guide-key="novice.s2t">Controlla la vista dall’alto</h3><p data-guide-key="novice.s2p">Guarda le aiuole già organizzate: puoi toccare una coltura per vederne quantità e dettagli.</p></div><span class="step-icon">👀</span></li>
+          <li><span class="step-no">3</span><div><h3 data-guide-key="novice.s3t">Apri la lista dei semi</h3><p data-guide-key="novice.s3p">Trovi solo ciò che serve al piano. Aggiungi l’occorrente al carrello quando sei soddisfatto.</p></div><span class="step-icon">🛒</span></li>
+          <li><span class="step-no">4</span><div><h3 data-guide-key="novice.s4t">Ricomincia quando cambia la stagione</h3><p data-guide-key="novice.s4p">Modifica il mese nelle impostazioni iniziali e lascia che la proposta si aggiorni.</p></div><span class="step-icon">🔄</span></li>
+        </ol>
+        <a class="guide-cta" href="configuratore.html?livello=novizio&guided=1"><span data-guide-key="novice.cta">Inizia il percorso guidato</span> <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="guide-route" id="guide-intermedio" data-route="intermedio" aria-labelledby="intermediateTitle" hidden>
+        <header class="route-heading route-heading--intermediate">
+          <span aria-hidden="true">🌿</span>
+          <div><p data-guide-key="intermediate.kicker">PER CHI VUOLE PERSONALIZZARE</p><h2 id="intermediateTitle" data-guide-key="intermediate.title">Intermedio: parti da un piano e rendilo tuo</h2></div>
+        </header>
+        <ol class="guide-steps">
+          <li><span class="step-no">1</span><div><h3 data-guide-key="intermediate.s1t">Parti dal piano di stagione</h3><p data-guide-key="intermediate.s1p">Ricevi una base già compatibile con clima, mese e spazio disponibile.</p></div><span class="step-icon">🗺️</span></li>
+          <li><span class="step-no">2</span><div><h3 data-guide-key="intermediate.s2t">Apri “Colture nella serra”</h3><p data-guide-key="intermediate.s2p">Aggiungi, togli o modifica le quantità delle varietà che preferisci.</p></div><span class="step-icon">➕</span></li>
+          <li><span class="step-no">3</span><div><h3 data-guide-key="intermediate.s3t">Controlla compatibilità e spazio</h3><p data-guide-key="intermediate.s3p">La serra segnala gli abbinamenti e ti aiuta a mantenere il piano ordinato.</p></div><span class="step-icon">✓</span></li>
+          <li><span class="step-no">4</span><div><h3 data-guide-key="intermediate.s4t">Conferma la lista semi</h3><p data-guide-key="intermediate.s4p">Quando il piano ti convince, passa alla lista aggiornata per l’acquisto.</p></div><span class="step-icon">🛒</span></li>
+        </ol>
+        <a class="guide-cta" href="configuratore.html?livello=intermedio&guided=1"><span data-guide-key="intermediate.cta">Personalizza un piano</span> <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="guide-route" id="guide-esperto" data-route="esperto" aria-labelledby="expertTitle" hidden>
+        <header class="route-heading route-heading--expert">
+          <span aria-hidden="true">🧭</span>
+          <div><p data-guide-key="expert.kicker">PER CHI VUOLE DECIDERE TUTTO</p><h2 id="expertTitle" data-guide-key="expert.title">Esperto: componi la serra liberamente</h2></div>
+        </header>
+        <ol class="guide-steps">
+          <li><span class="step-no">1</span><div><h3 data-guide-key="expert.s1t">Scegli un layout o una serra vuota</h3><p data-guide-key="expert.s1p">Puoi partire da un esempio pronto oppure costruire il piano da zero.</p></div><span class="step-icon">🧩</span></li>
+          <li><span class="step-no">2</span><div><h3 data-guide-key="expert.s2t">Cerca le colture nel catalogo</h3><p data-guide-key="expert.s2p">Usa “Tutto il catalogo” anche per vedere piante fuori stagione, sempre ben evidenziate.</p></div><span class="step-icon">⌕</span></li>
+          <li><span class="step-no">3</span><div><h3 data-guide-key="expert.s3t">Aggiungi e regola le quantità</h3><p data-guide-key="expert.s3p">Usa +, − e rimuovi per definire le colture presenti in ogni aiuola.</p></div><span class="step-icon">⚙</span></li>
+          <li><span class="step-no">4</span><div><h3 data-guide-key="expert.s4t">Riordina o riempi gli spazi</h3><p data-guide-key="expert.s4p">Le azioni di ottimizzazione sistemano il layout senza perdere le tue scelte.</p></div><span class="step-icon">↔</span></li>
+          <li><span class="step-no">5</span><div><h3 data-guide-key="expert.s5t">Verifica prima di acquistare</h3><p data-guide-key="expert.s5p">Controlla spazio e compatibilità, poi genera la lista dei semi.</p></div><span class="step-icon">✓</span></li>
+        </ol>
+        <a class="guide-cta" href="configuratore.html?livello=esperto&mode=expert&empty=1"><span data-guide-key="expert.cta">Apri modalità esperto</span> <span aria-hidden="true">→</span></a>
+      </section>
+
+      <aside class="guide-help">
+        <span aria-hidden="true">💡</span>
+        <p data-guide-key="help"><b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore.</p>
+      </aside>
+    </main>
+    <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/guide.js?v=2026-07-13-guide-locale" defer></script>
+  </body>
+</html>

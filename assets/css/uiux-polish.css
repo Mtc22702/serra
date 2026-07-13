@@ -2479,3 +2479,94 @@ html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
     padding-top: 10px;
   }
 }
+/* Accesso alla guida: vicino alle impostazioni, senza competere con l'azione primaria. */
+.guided-tutorial-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  min-height: 34px;
+  padding: 0.38rem 0.65rem;
+  border: 1px solid rgba(47, 107, 58, 0.2);
+  border-radius: 999px;
+  color: var(--verde-scuro);
+  background: rgba(255, 253, 246, 0.84);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+}
+.guided-tutorial-link > span:first-child {
+  width: 16px;
+  height: 16px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--verde);
+  font-size: 0.68rem;
+}
+.guided-tutorial-link:hover {
+  border-color: var(--verde);
+  background: rgba(79, 154, 63, 0.12);
+}
+.hero-guide-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.46rem;
+  min-height: 40px;
+  padding: 0.48rem 0.84rem;
+  border: 1px solid rgba(47, 107, 58, 0.22);
+  border-radius: 999px;
+  color: var(--verde-scuro);
+  background: rgba(255, 253, 246, 0.78);
+  box-shadow: 0 5px 14px rgba(31, 58, 38, 0.08);
+  font-size: 0.83rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+}
+.hero-guide-link-icon {
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--verde);
+  font-size: 0.7rem;
+}
+.hero-guide-link:hover {
+  border-color: var(--verde);
+  background: #fffdf6;
+  transform: translateY(-1px);
+}
+html[data-theme="dark"] .guided-tutorial-link,
+html[data-theme="dark"] .hero-guide-link {
+  border-color: rgba(139, 212, 158, 0.34);
+  color: var(--dark-green);
+  background: rgba(20, 43, 30, 0.9);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
+}
+html[data-theme="dark"] .guided-tutorial-link > span:first-child,
+html[data-theme="dark"] .hero-guide-link-icon {
+  color: #0b1a13;
+  background: var(--dark-green);
+}
+html[data-theme="dark"] .guided-tutorial-link:hover,
+html[data-theme="dark"] .hero-guide-link:hover {
+  border-color: var(--dark-green);
+  background: rgba(139, 212, 158, 0.16);
+}
+@media (max-width: 640px) {
+  .guided-tutorial-link {
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-height: 32px;
+  }
+  .hero-guide-link {
+    width: 100%;
+    max-width: 22rem;
+  }
+}
