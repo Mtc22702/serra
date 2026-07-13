@@ -1261,6 +1261,9 @@
     padding-top: 0.18rem;
   }
   .cart-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     height: 36px;
     padding: 0 0.7rem;
     border-radius: 6px;
@@ -1284,6 +1287,8 @@
     font-family: "Fraunces", serif;
     font-size: 1.35rem;
     font-weight: 700;
+    line-height: 1;
+    text-align: center;
     color: var(--green-dk);
   }
   .cart-close {
@@ -1466,6 +1471,9 @@
     opacity: 0.6;
   }
   .cart-checkout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 0.85rem;
     border-radius: 12px;
@@ -1476,6 +1484,8 @@
     font-weight: 600;
     font-family: "Outfit", sans-serif;
     cursor: pointer;
+    line-height: 1.2;
+    text-align: center;
     margin-top: 0.65rem;
     transition: background 0.16s;
   }

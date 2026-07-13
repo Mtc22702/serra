@@ -978,6 +978,9 @@
 }
 
 .journey-context-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 32px;
   padding: 4px 7px;
   border: 1px solid transparent;
@@ -989,6 +992,8 @@
   font-weight: 750;
   white-space: nowrap;
   cursor: pointer;
+  line-height: 1.15;
+  text-align: center;
   transition:
     background 0.16s ease,
     border-color 0.16s ease,
@@ -1021,6 +1026,9 @@
 }
 
 .journey-context-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 42px;
   padding: 0 14px;
   border: 0;
@@ -1031,6 +1039,8 @@
   font-size: 11px;
   font-weight: 850;
   cursor: pointer;
+  line-height: 1.15;
+  text-align: center;
 }
 
 .catalog-mobile-filter-toggle {
@@ -1230,6 +1240,10 @@ html[data-theme="dark"] .journey-context-step.is-current {
     color: var(--green-dk);
     box-shadow: 0 8px 22px rgba(27, 67, 50, 0.12);
     backdrop-filter: blur(14px);
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
   }
 
   .catalog-mobile-filter-copy {
@@ -1250,6 +1264,12 @@ html[data-theme="dark"] .journey-context-step.is-current {
   }
 
   .catalog-mobile-filter-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    gap: 0.28rem;
+    line-height: 1;
     font-size: 0.76rem;
     font-weight: 800;
   }
@@ -1257,8 +1277,35 @@ html[data-theme="dark"] .journey-context-step.is-current {
   .catalog-mobile-filter-toggle[aria-expanded="true"]
     .catalog-mobile-filter-action
     span {
-    display: inline-block;
+    display: inline-flex;
     transform: rotate(180deg);
+  }
+
+  .catalog-mobile-filter-toggle[aria-expanded="true"] {
+    border-color: rgba(45, 106, 79, 0.52);
+    background: rgba(231, 246, 235, 0.98);
+    box-shadow:
+      0 0 0 3px rgba(82, 183, 136, 0.16),
+      0 10px 24px rgba(27, 67, 50, 0.14);
+  }
+
+  html[data-theme="dark"] .catalog-mobile-filter-toggle {
+    border-color: rgba(126, 211, 153, 0.34);
+    background: rgba(29, 48, 39, 0.96);
+    color: #edf7ee;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  }
+
+  html[data-theme="dark"] .catalog-mobile-filter-copy small {
+    color: #b9cdbd;
+  }
+
+  html[data-theme="dark"] .catalog-mobile-filter-toggle[aria-expanded="true"] {
+    border-color: rgba(126, 211, 153, 0.78);
+    background: rgba(43, 83, 61, 0.98);
+    box-shadow:
+      0 0 0 3px rgba(126, 211, 153, 0.16),
+      0 10px 26px rgba(0, 0, 0, 0.38);
   }
 
   .catalog-tools--advanced {

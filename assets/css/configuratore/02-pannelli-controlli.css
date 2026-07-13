@@ -577,6 +577,9 @@
     line-height: 1.35;
   }
   .preset-seasonal-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     min-height: 38px;
     padding: 8px 10px;
@@ -587,6 +590,7 @@
     font-size: 11.5px;
     font-weight: 800;
     line-height: 1.25;
+    text-align: center;
   }
   .preset-seasonal-btn:hover {
     background: rgba(47, 107, 58, 0.08);
@@ -1283,11 +1287,16 @@
   }
 
   .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     border-radius: 11px;
     padding: 10px 14px;
     font-weight: 600;
     font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
     transition:
       transform 0.08s ease,
       filter 0.15s ease;

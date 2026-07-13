@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-13-guided-accordion-ui";
+const CACHE_VERSION = "2026-07-13-button-align-global";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
