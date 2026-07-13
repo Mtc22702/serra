@@ -662,8 +662,6 @@ function renderEditorialPlants() {
   const catalogStatus = document.getElementById("catalogStatus");
   if (catalogStatus) {
     const pills = [];
-    if (!catalog.seasonOnly)
-      pills.push({ kind: "scope", label: t("catalog.filter_all_plants") });
     if (catalog.search)
       pills.push({ kind: "search", label: `"${catalog.search}"` });
     if (catalog.type)
@@ -672,11 +670,17 @@ function renderEditorialPlants() {
       pills.push({ kind: "easy", label: t("catalog.easy_only") });
     if (catalog.sort && catalog.sort !== "season")
       pills.push({ kind: "sort", label: t(`catalog.sort_${catalog.sort}`) });
-    catalogStatus.hidden = !pills.length;
-    if (pills.length) {
+    const showFullCatalogAction = catalog.seasonOnly;
+    const showScopeState = !catalog.seasonOnly;
+    catalogStatus.hidden =
+      !pills.length && !showFullCatalogAction && !showScopeState;
+    if (!catalogStatus.hidden) {
       const remove = t("catalog.remove_filter");
       catalogStatus.innerHTML =
         `<span class="catalog-status-count">${plants.length} ${t("catalog.results")}</span>` +
+        (showScopeState
+          ? `<span class="catalog-filter-pill catalog-filter-pill--static">${t("catalog.filter_all_plants")}</span>`
+          : "") +
         `<span class="catalog-status-pills">` +
         pills
           .map(
@@ -685,7 +689,12 @@ function renderEditorialPlants() {
           )
           .join("") +
         `</span>` +
-        `<button class="catalog-clear-all" type="button" onclick="showFullCatalog()">${t("catalog.reset_short")}</button>`;
+        (showFullCatalogAction
+          ? `<button class="catalog-show-full" type="button" onclick="showFullCatalog()">${t("catalog.show_all")}</button>`
+          : "") +
+        (pills.length
+          ? `<button class="catalog-clear-all" type="button" onclick="resetCatalogFilters()">${t("catalog.reset_short")}</button>`
+          : "");
     }
   }
   if (catalog.seasonOnly) {

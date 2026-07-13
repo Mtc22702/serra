@@ -1263,6 +1263,23 @@
     background: var(--accent);
     color: #fff;
   }
+  .catalog-filter-pill--static {
+    cursor: default;
+  }
+  .catalog-show-full {
+    border: none;
+    background: none;
+    color: var(--green);
+    font-family: "Outfit", sans-serif;
+    font-weight: 800;
+    font-size: 0.76rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .catalog-show-full:hover {
+    color: var(--green-dk);
+  }
   .catalog-clear-all {
     border: none;
     background: none;

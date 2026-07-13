@@ -871,14 +871,22 @@
       min-width: 0;
     }
     .veg.in .veg-nameline {
-      flex-wrap: nowrap;
-      gap: 4px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 3px 4px;
     }
     .veg.in .veg-name {
+      flex: 1 1 100%;
+      min-width: 0;
       font-size: 13px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      overflow: visible;
+      overflow-wrap: anywhere;
+      text-overflow: clip;
+    }
+    .veg.in .veg-offseason {
+      order: 2;
+      max-width: 100%;
     }
     .veg.in .veg-diff {
       margin-top: 3px;
@@ -949,6 +957,17 @@
     }
     .veg.in + .veg.in {
       margin-top: 10px;
+    }
+
+    /* Nelle liste mobili il nome è l'informazione primaria: non va mai
+       nascosto per fare spazio a quantità, badge o azioni secondarie. */
+    .bedchip .t,
+    .shop li b,
+    .mat-name {
+      white-space: normal;
+      overflow: visible;
+      overflow-wrap: anywhere;
+      text-overflow: clip;
     }
 
     #panelCustomize .panel-title-row {

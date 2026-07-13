@@ -245,6 +245,22 @@ function showFullCatalog() {
   catalog.easyOnly = false;
   catalog.seasonOnly = false;
   catalog.sort = "season";
+  const input = document.getElementById("catalogSearch");
+  if (input) input.value = "";
+  hideCatalogSearchSuggestions();
+  render();
+}
+// Ripristina il catalogo consigliato, senza lasciare filtri nascosti.
+function resetCatalogFilters() {
+  catalog.search = "";
+  catalog.type = "";
+  catalog.easyOnly = false;
+  catalog.easyOnlyTouched = false;
+  catalog.seasonOnly = true;
+  catalog.sort = "season";
+  const input = document.getElementById("catalogSearch");
+  if (input) input.value = "";
+  hideCatalogSearchSuggestions();
   render();
 }
 
