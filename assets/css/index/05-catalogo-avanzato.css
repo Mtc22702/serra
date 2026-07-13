@@ -54,6 +54,12 @@
     position: relative;
   }
 
+  .catalog-search-quick {
+    display: block;
+    width: min(100%, 540px);
+    margin: 0 0 1rem;
+  }
+
   .catalog-tools--pro {
     position: sticky;
     top: calc(var(--nav-h) + 10px);
@@ -329,6 +335,22 @@
     grid-template-columns: minmax(260px, 0.82fr) minmax(360px, 1.18fr);
     gap: 0.75rem;
     align-items: stretch;
+  }
+  @media (min-width: 901px) {
+    .catalog-filter-group--type {
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+    .catalog-filter-group--type .catalog-filter-group-head {
+      grid-column: 1 / -1;
+    }
+    .catalog-filter-group--type .catalog-category-rail {
+      grid-column: 1;
+    }
+    .catalog-filter-group--type .catalog-scope--advanced {
+      grid-column: 2;
+    }
   }
   .catalog-filter-group {
     min-width: 0;

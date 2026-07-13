@@ -605,8 +605,7 @@ function updateCatalogFilterToggle() {
   const count =
     (catalog.seasonOnly ? 1 : 0) +
     (catalog.type ? 1 : 0) +
-    (catalog.easyOnly ? 1 : 0) +
-    (catalog.search ? 1 : 0);
+    (catalog.easyOnly ? 1 : 0);
   const ro = currentLang === "ro";
   summary.textContent = ro
     ? `${count} ${count === 1 ? "filtru activ" : "filtre active"}`
