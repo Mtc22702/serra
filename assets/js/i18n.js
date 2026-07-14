@@ -1407,6 +1407,13 @@
         guidedSetupAction: "Modifica",
         guidedSetupEditData: "Modifica dati",
         guidedSetupCloseAction: "Chiudi",
+        workflowHubAria: "Il tuo percorso di acquisto",
+        journeyContextAria: "Stato del percorso corrente",
+        workflowHelpAria: "Apri la guida per usare il configuratore",
+        workflowHelpShort: "Guida",
+        workflowEditTitle: "Personalizza il percorso",
+        workflowEditHint:
+          "Aggiorna i dati della serra o il livello di esperienza",
         stageContextTitle: "Dati della serra",
         guidedSetupOriginHint:
           "Questi dati sono stati usati per creare il progetto iniziale",
@@ -1574,42 +1581,42 @@
         calendarToolsAria: "Strumenti calendario",
         calendarViewTabsAria: "Vista calendario",
         calendarMonthStripAria: "Mesi",
-        noviceGuideTitle: "Come funziona questa pagina",
-        noviceGuideTag: "Guida rapida",
+        noviceGuideTitle: "Segui il tuo piano",
+        noviceGuideTag: "Percorso Principiante",
         noviceGuideStep1:
-          "Le misure, la zona e il mese sono già impostati: puoi modificarli quando vuoi da \"Impostazioni iniziali\", in alto.",
+          "Il badge in alto mostra il percorso attivo: toccalo solo se vuoi scegliere un livello diverso.",
         noviceGuideStep2:
-          "Abbiamo già preparato un piano di semina automatico con colture di stagione, pronto qui a fianco.",
+          "Usa \"Ricontrolla scelta\" per rivedere le dimensioni, la zona e il mese già scelti.",
         noviceGuideStep3:
-          "Tocca un'aiuola nella serra per vederne i dettagli e cambiare la quantità di piante.",
+          "Controlla il piano dall'alto: puoi aprire un'aiuola per vedere le colture e le quantità proposte.",
         noviceGuideStep4:
-          "Quando sei soddisfatto, passa alla \"Lista della spesa\" per rivedere i semi e completare l'ordine.",
+          "Quando il piano ti convince, apri la lista dei semi e aggiungi al carrello solo ciò che ti serve.",
         noviceGuideStep5:
-          "Puoi sempre rigenerare il piano o annullare l'ultima modifica con i pulsanti sotto la serra.",
-        intermediateGuideTitle: "Come personalizzare il piano",
-        intermediateGuideTag: "Guida rapida",
+          "Vuoi più libertà? Tocca il badge del percorso e passa a Intermedio, senza perdere il contesto.",
+        intermediateGuideTitle: "Personalizza il tuo piano",
+        intermediateGuideTag: "Percorso Intermedio",
         intermediateGuideStep1:
-          "Misure, clima e mese sono già impostati: puoi rivederli da \"Impostazioni iniziali\", in alto.",
+          "Il badge in alto mostra il percorso attivo: toccalo quando vuoi passare a Principiante o Esperto.",
         intermediateGuideStep2:
-          "Il piano stagionale è pronto: guarda la serra dall'alto prima di modificarlo.",
+          "Usa \"Ricontrolla scelta\" per rivedere le dimensioni, la zona e il mese già scelti.",
         intermediateGuideStep3:
-          "Apri \"Colture nella serra\" per aggiungere, togliere o cambiare le quantità.",
+          "Apri \"Colture nella serra\" per aggiungere, togliere o cambiare le quantità del piano.",
         intermediateGuideStep4:
-          "Tocca un'aiuola per controllare le piante, lo spazio e i dettagli di coltivazione.",
+          "Controlla la serra dall'alto: apri un'aiuola per verificare colture, spazio e dettagli.",
         intermediateGuideStep5:
-          "Quando il piano ti convince, apri la lista della spesa per acquistare solo i semi necessari.",
-        expertGuideTitle: "Come comporre la serra",
-        expertGuideTag: "Guida rapida",
+          "Quando il piano è pronto, apri la lista dei semi e aggiungi al carrello solo ciò che vuoi acquistare.",
+        expertGuideTitle: "Componi il tuo piano",
+        expertGuideTag: "Percorso Esperto",
         expertGuideStep1:
-          "Misure, clima e mese sono sempre disponibili in \"Impostazioni iniziali\".",
+          "Il badge in alto mostra il percorso attivo: toccalo quando vuoi cambiare livello di autonomia.",
         expertGuideStep2:
-          "Scegli un layout pronto oppure genera il piano di stagione come punto di partenza.",
+          "Usa \"Ricontrolla scelta\" per rivedere le dimensioni, la zona e il mese già scelti.",
         expertGuideStep3:
-          "Apri \"Colture nella serra\" per cercare nell'intero catalogo e aggiungere le piante.",
+          "La serra parte libera: apri \"Colture nella serra\" per cercare nel catalogo completo e aggiungere piante.",
         expertGuideStep4:
-          "Tocca un'aiuola per controllare le quantità, lo spazio e i dettagli di coltivazione.",
+          "Controlla la serra dall'alto e apri un'aiuola per modificare quantità, spazio e dettagli.",
         expertGuideStep5:
-          "Quando hai finito, apri la lista della spesa per acquistare i semi del tuo progetto.",
+          "Quando il progetto è pronto, apri la lista dei semi e aggiungi al carrello ciò che vuoi acquistare.",
         stageToolsExtra: "Strumenti extra",
         viewMode: "Vista",
         viewNatural: "Vista naturale",
@@ -1962,6 +1969,13 @@
         guidedSetupAction: "Modifică",
         guidedSetupEditData: "Modifică datele",
         guidedSetupCloseAction: "Închide",
+        workflowHubAria: "Traseul tău de cumpărare",
+        journeyContextAria: "Starea traseului curent",
+        workflowHelpAria: "Deschide ghidul de utilizare al configuratorului",
+        workflowHelpShort: "Ghid",
+        workflowEditTitle: "Personalizează traseul",
+        workflowEditHint:
+          "Actualizează datele serei sau nivelul de experiență",
         stageContextTitle: "Datele serei",
         guidedSetupOriginHint:
           "Aceste date au fost folosite pentru proiectul inițial",
@@ -2130,42 +2144,42 @@
         calendarToolsAria: "Instrumente calendar",
         calendarViewTabsAria: "Vizualizare calendar",
         calendarMonthStripAria: "Luni",
-        noviceGuideTitle: "Cum funcționează această pagină",
-        noviceGuideTag: "Ghid rapid",
+        noviceGuideTitle: "Urmează-ți planul",
+        noviceGuideTag: "Traseu Începător",
         noviceGuideStep1:
-          "Dimensiunile, zona și luna sunt deja setate: le poți modifica oricând din \"Setări inițiale\", sus.",
+          "Insigna de sus arată traseul activ: atinge-o doar dacă vrei să alegi un alt nivel.",
         noviceGuideStep2:
-          "Am pregătit deja un plan de semănat automat cu culturi de sezon, gata de văzut aici alături.",
+          "Folosește \"Verifică alegerile\" pentru a revizui dimensiunile, zona și luna deja alese.",
         noviceGuideStep3:
-          "Atinge o parcelă din seră pentru a vedea detaliile și a schimba cantitatea de plante.",
+          "Verifică planul de sus: poți deschide o parcelă pentru a vedea plantele și cantitățile propuse.",
         noviceGuideStep4:
-          "Când ești mulțumit, treci la \"Lista de cumpărături\" pentru a revizui semințele și a finaliza comanda.",
+          "Când planul te mulțumește, deschide lista de semințe și adaugă în coș doar ce ai nevoie.",
         noviceGuideStep5:
-          "Poți oricând regenera planul sau anula ultima modificare cu butoanele de sub seră.",
-        intermediateGuideTitle: "Cum personalizezi planul",
-        intermediateGuideTag: "Ghid rapid",
+          "Vrei mai multă libertate? Atinge insigna traseului și treci la Intermediar, fără să pierzi contextul.",
+        intermediateGuideTitle: "Personalizează-ți planul",
+        intermediateGuideTag: "Traseu Intermediar",
         intermediateGuideStep1:
-          "Dimensiunile, clima și luna sunt deja setate: le poți revizui din \"Setări inițiale\", sus.",
+          "Insigna de sus arată traseul activ: atinge-o când vrei să treci la Începător sau Expert.",
         intermediateGuideStep2:
-          "Planul de sezon este gata: privește sera de sus înainte să îl modifici.",
+          "Folosește \"Verifică alegerile\" pentru a revizui dimensiunile, zona și luna deja alese.",
         intermediateGuideStep3:
-          "Deschide \"Culturile din seră\" pentru a adăuga, elimina sau schimba cantitățile.",
+          "Deschide \"Culturile din seră\" pentru a adăuga, elimina sau schimba cantitățile din plan.",
         intermediateGuideStep4:
-          "Atinge o parcelă pentru a verifica plantele, spațiul și detaliile de cultivare.",
+          "Verifică sera de sus: deschide o parcelă pentru plante, spațiu și detalii.",
         intermediateGuideStep5:
-          "Când planul te mulțumește, deschide lista de cumpărături și cumpără doar semințele necesare.",
-        expertGuideTitle: "Cum compui sera",
-        expertGuideTag: "Ghid rapid",
+          "Când planul este gata, deschide lista de semințe și adaugă în coș doar ce vrei să cumperi.",
+        expertGuideTitle: "Compune-ți planul",
+        expertGuideTag: "Traseu Expert",
         expertGuideStep1:
-          "Dimensiunile, clima și luna rămân disponibile oricând în \"Setări inițiale\".",
+          "Insigna de sus arată traseul activ: atinge-o când vrei să schimbi nivelul de autonomie.",
         expertGuideStep2:
-          "Alege un layout pregătit sau generează planul de sezon ca punct de plecare.",
+          "Folosește \"Verifică alegerile\" pentru a revizui dimensiunile, zona și luna deja alese.",
         expertGuideStep3:
-          "Deschide \"Culturile din seră\" pentru a căuta în catalogul complet și a adăuga plante.",
+          "Sera pornește liberă: deschide \"Culturile din seră\" pentru catalogul complet și pentru a adăuga plante.",
         expertGuideStep4:
-          "Atinge o parcelă pentru a verifica cantitățile, spațiul și detaliile de cultivare.",
+          "Verifică sera de sus și deschide o parcelă pentru a modifica cantitățile, spațiul și detaliile.",
         expertGuideStep5:
-          "Când ai terminat, deschide lista de cumpărături pentru semințele proiectului tău.",
+          "Când proiectul este gata, deschide lista de semințe și adaugă în coș ce vrei să cumperi.",
         stageToolsExtra: "Instrumente suplimentare",
         viewMode: "Vedere",
         viewNatural: "Vedere naturală",

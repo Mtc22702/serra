@@ -28,11 +28,37 @@
       if (typeof openSettingsPanelAndFocusDimensions === "function") {
         openSettingsPanelAndFocusDimensions();
       }
+      // Anche il primo passo deve essere una vera destinazione su desktop:
+      // il pannello vive nella colonna sinistra e la sua apertura, da sola,
+      // non sposta la pagina quando l'utente arriva dal basso.
+      if (
+        typeof isResponsiveConfiguratorLayout === "function" &&
+        !isResponsiveConfiguratorLayout() &&
+        typeof scrollElementBelowHeader === "function"
+      ) {
+        scrollElementBelowHeader(
+          document.getElementById("panelSettings"),
+          "smooth"
+        );
+      }
     },
     crops: function () {
       if (typeof openCustomizePanelAndFocus === "function") {
         openCustomizePanelAndFocus();
-      } else if (typeof scrollGreenhouseImageIntoView === "function") {
+      }
+      // Sul desktop il catalogo è una colonna laterale: aprirlo non cambia
+      // quindi la posizione della pagina. Il secondo passo deve invece
+      // portare sempre alla planimetria, in qualunque percorso utente.
+      if (
+        typeof isResponsiveConfiguratorLayout === "function" &&
+        !isResponsiveConfiguratorLayout() &&
+        typeof scrollGreenhouseImageIntoView === "function"
+      ) {
+        scrollGreenhouseImageIntoView("smooth");
+      } else if (
+        typeof openCustomizePanelAndFocus !== "function" &&
+        typeof scrollGreenhouseImageIntoView === "function"
+      ) {
         scrollGreenhouseImageIntoView("smooth");
       }
     },
@@ -132,7 +158,7 @@
           step: step,
           el:
             step.dataset.journeyTarget === "stage"
-              ? bar.closest(".stage")
+              ? document.querySelector(".stage")
               : document.getElementById(step.dataset.journeyTarget)
         };
       })
@@ -215,43 +241,33 @@
     cta.addEventListener("click", focusYieldPanel);
   });
 
-  // CTA del banner di arrivo: il novizio verifica prima il piano; gli altri
-  // profili proseguono direttamente alla personalizzazione.
+  // Il badge del percorso è l'unico ingresso per cambiare profilo: mantiene
+  // il selettore vicino al contesto che modifica e non aggiunge una card
+  // impostazioni concorrente.
   ready(function () {
-    const cta = document.getElementById("journeyContextNext");
-    if (!cta) return;
-    cta.addEventListener("click", function () {
-      if (typeof state !== "undefined" && state.livello === "novizio") {
-        if (typeof scrollGreenhouseImageIntoView === "function") {
-          scrollGreenhouseImageIntoView("smooth");
-        }
-        return;
-      }
-      if (typeof openCustomizePanelAndFocus === "function") {
-        openCustomizePanelAndFocus();
-      }
-    });
-  });
+    const trigger = document.getElementById("personaPickerTrigger");
+    const panel = document.getElementById("guidedIntro");
+    const picker = document.getElementById("personaPickDetails");
+    if (!trigger || !panel || !picker) return;
 
-  // Ingranaggio accanto al titolo "Configuratore Serra": apre/chiude
-  // "Le tue scelte" senza che sembri un primo passo obbligato. L'evento
-  // nativo "toggle" tiene sincronizzato il bottone sia che l'apertura
-  // avvenga da qui sia da un clic diretto sul riepilogo (quando è aperto).
-  ready(function () {
-    const gear = document.getElementById("guidedIntroGear");
-    const details = document.getElementById("guidedIntro");
-    if (!gear || !details) return;
-    gear.addEventListener("click", function () {
-      details.open = !details.open;
+    function syncPicker(open) {
+      panel.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+      trigger.classList.toggle("is-open", open);
+    }
+
+    trigger.addEventListener("click", function () {
+      picker.open = !picker.open;
     });
-    details.addEventListener("toggle", function () {
-      gear.setAttribute("aria-expanded", String(details.open));
-      if (details.open) {
-        if (typeof scrollElementBelowHeader === "function") {
-          scrollElementBelowHeader(details, "smooth");
-        } else {
-          details.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+
+    picker.addEventListener("toggle", function () {
+      syncPicker(picker.open);
+    });
+
+    picker.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        picker.open = false;
+        trigger.focus();
       }
     });
   });

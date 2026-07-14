@@ -309,7 +309,9 @@ function applyLanguage() {
     else el.textContent = translated;
   });
   document.querySelectorAll("[data-i18n-conf-aria]").forEach((el) => {
-    const translated = SITE_I18N[state.lang]?.[el.dataset.i18nConfAria];
+    const translated =
+      I18N[state.lang]?.[el.dataset.i18nConfAria] ??
+      SITE_I18N[state.lang]?.[el.dataset.i18nConfAria];
     if (translated) el.setAttribute("aria-label", translated);
   });
   document.querySelectorAll("[data-i18n-conf-title]").forEach((el) => {

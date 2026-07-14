@@ -575,9 +575,10 @@ function collapseSettingsPanelAfterAutoPlan(options = {}) {
   // Esperto non usa autoPlan: non collassare e non scrollare
   if (!panel || !state.autoPlan) return;
   setPanelCollapsed(panel, true);
-  // Mobile: rispetta l'opzione scroll; Desktop: scrolla sempre allo stage
-  const shouldScroll = isResponsiveConfiguratorLayout() ? scroll : true;
-  if (!shouldScroll) return;
+  // L'opzione è esplicita su ogni viewport: l'ingresso dalla home e il
+  // cambio profilo restano in alto, le azioni avviate dall'utente possono
+  // invece richiedere lo scroll di default.
+  if (!scroll) return;
   scheduleElementBelowHeader(
     () =>
       document.getElementById("journeyContext") ||

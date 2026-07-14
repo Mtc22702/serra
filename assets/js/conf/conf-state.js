@@ -185,14 +185,13 @@ function updateGuidedIntroDynamic() {
 }
 
 // Mantiene visibile il motivo dello scroll automatico: ogni profilo arriva
-// alla serra con un contesto, un avanzamento e una sola azione successiva.
+// alla serra con un contesto e tre passi navigabili, senza CTA duplicata.
 function updateJourneyContext() {
   const root = document.getElementById("journeyContext");
   const level = document.getElementById("journeyContextLevel");
   const title = document.getElementById("journeyContextTitle");
   const desc = document.getElementById("journeyContextDesc");
-  const next = document.getElementById("journeyContextNext");
-  if (!root || !level || !title || !desc || !next) return;
+  if (!root || !level || !title || !desc) return;
   const ro = state.lang === "ro";
   const content = {
     novizio: ro
@@ -200,45 +199,39 @@ function updateJourneyContext() {
           level: "Traseu Începător",
           title: "Grădina ta este deja pregătită",
           desc: "Verifică planul de sus; când ești gata, mergi la lista de semințe.",
-          next: "Verifică planul",
-          steps: ["1 · Alegeri", "2 · Verifică", "3 · Cumpără"]
+          steps: ["1 · Verifică alegerile", "2 · Verifică", "3 · Cumpără"]
         }
       : {
           level: "Percorso Principiante",
           title: "Il tuo orto è già pronto",
           desc: "Controlla il piano dall'alto; quando sei pronto, passa alla lista dei semi.",
-          next: "Controlla il piano",
-          steps: ["1 · Scelte", "2 · Controlla", "3 · Acquista"]
+          steps: ["1 · Ricontrolla scelta", "2 · Controlla", "3 · Acquista"]
         },
     intermedio: ro
       ? {
           level: "Traseu Intermediar",
           title: "Planul este gata: acum fă-l al tău",
           desc: "Sera rămâne în centru; modifică plantele și cantitățile.",
-          next: "Personalizează",
-          steps: ["1 · Setează", "2 · Proiectează", "3 · Cumpără"]
+          steps: ["1 · Verifică alegerile", "2 · Proiectează", "3 · Cumpără"]
         }
       : {
           level: "Percorso Intermedio",
           title: "Il piano è pronto: ora fallo tuo",
           desc: "La serra resta al centro; modifica colture e quantità quando vuoi.",
-          next: "Personalizza",
-          steps: ["1 · Imposta", "2 · Progetta", "3 · Acquista"]
+          steps: ["1 · Ricontrolla scelta", "2 · Progetta", "3 · Acquista"]
         },
     esperto: ro
       ? {
           level: "Traseu Expert",
           title: "Sera este goală: compune-o liber",
           desc: "Alege din catalogul complet și așază culturile manual.",
-          next: "Adaugă plante",
-          steps: ["1 · Măsoară", "2 · Compune", "3 · Cumpără"]
+          steps: ["1 · Verifică alegerile", "2 · Compune", "3 · Cumpără"]
         }
       : {
           level: "Percorso Esperto",
           title: "La serra è vuota: componila liberamente",
           desc: "Scegli dal catalogo completo e disponi le colture a mano.",
-          next: "Aggiungi colture",
-          steps: ["1 · Misura", "2 · Componi", "3 · Acquista"]
+          steps: ["1 · Ricontrolla scelta", "2 · Componi", "3 · Acquista"]
         }
   }[state.livello] || null;
   if (!content) return;
@@ -251,7 +244,6 @@ function updateJourneyContext() {
   level.textContent = content.level;
   title.textContent = content.title;
   desc.textContent = content.desc;
-  next.textContent = content.next;
   root.querySelectorAll(".journey-context-step").forEach((step, i) => {
     step.textContent = content.steps[i] || "";
   });
@@ -284,6 +276,13 @@ function syncPersonaPickerDisclosure() {
   const picker = document.getElementById("personaPickDetails");
   if (!picker) return;
   picker.open = false;
+  const panel = document.getElementById("guidedIntro");
+  const trigger = document.getElementById("personaPickerTrigger");
+  if (panel) panel.hidden = true;
+  if (trigger) {
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.classList.remove("is-open");
+  }
 }
 
 // Modalità configuratore
@@ -356,6 +355,15 @@ function setLivello(liv, { mapMode = true } = {}) {
 // Cambia il livello utente con conferma se necessario
 function chooseLivello(liv) {
   const prev = state.livello;
+  // Dopo il cambio profilo si riparte dall'inizio del configuratore: evita
+  // atterraggi intermedi sopra il percorso o più in basso nella pagina.
+  const returnToConfiguratorStart = () => {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      });
+    });
+  };
 
   // Passare a "novizio" rigenera sempre il piano automatico (vedi ramo sotto),
   // quindi qualunque aiuola già presente verrebbe sostituita: l'avviso deve
@@ -379,39 +387,15 @@ function chooseLivello(liv) {
     syncVegFilterTabs();
     render();
     setPanelCollapsed("panelSettings", true);
-    openCustomizePanelAndFocus();
-    if (!isResponsiveConfiguratorLayout()) {
-      scheduleElementBelowHeader(
-        () =>
-          document.getElementById("journeyContext") ||
-          document.querySelector(".stage .scene-wrap") ||
-          document.querySelector(".stage"),
-        "smooth",
-        { delay: 150 }
-      );
-    }
+    openCustomizePanelAndFocus({ scroll: false });
   } else if (liv === "intermedio") {
     vegFilter = "all";
     state.autoPlan = true;
     if (!state.beds.length) autoFill();
     else render();
     syncVegFilterTabs();
-    // Su responsive il punto di arrivo dell'Intermedio è la barra dei
-    // layout pronti. Apriamo comunque le colture, ma senza farle diventare
-    // un secondo target di scroll concorrente.
+    // Apriamo comunque le colture, senza cambiare la posizione dell'utente.
     openCustomizePanelAndFocus({ scroll: false });
-    if (!isResponsiveConfiguratorLayout()) {
-      scheduleElementBelowHeader(
-        () =>
-          document.getElementById("journeyContext") ||
-          document.querySelector(".stage .scene-wrap") ||
-          document.querySelector(".stage"),
-        "smooth",
-        { delay: 150 }
-      );
-    } else {
-      scrollToLivelloLanding("intermedio");
-    }
   } else {
     vegFilter = "in";
     state.autoPlan = true;
@@ -420,15 +404,19 @@ function chooseLivello(liv) {
     syncVegFilterTabs();
     collapseSettingsPanelAfterAutoPlan({ scroll: false });
     setCustomizePanelCollapsed(true);
-    // "Le tue scelte" ora è chiusa di default (ingranaggio accanto al
-    // titolo): dopo il riempimento automatico si scorre alla serra, non più
-    // a quel pannello secondario.
-    scrollToLivelloLanding("novizio");
   }
   saveConfig(true);
   if (prev !== liv) updateGuidedIntroDynamic();
   const picker = document.getElementById("personaPickDetails");
   if (picker) picker.open = false;
+  const pickerPanel = document.getElementById("guidedIntro");
+  const pickerTrigger = document.getElementById("personaPickerTrigger");
+  if (pickerPanel) pickerPanel.hidden = true;
+  if (pickerTrigger) {
+    pickerTrigger.setAttribute("aria-expanded", "false");
+    pickerTrigger.classList.remove("is-open");
+  }
+  returnToConfiguratorStart();
 }
 
 // Allinea le tab filtro colture al filtro attivo

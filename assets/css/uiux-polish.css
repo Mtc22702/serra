@@ -1050,24 +1050,6 @@ body.livello-esperto #panelSettings.is-collapsed {
     color-mix(in srgb, var(--journey-accent) 18%, transparent);
 }
 
-.journey-context-next {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 11px;
-  background: var(--journey-accent);
-  color: #fff;
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 850;
-  cursor: pointer;
-  line-height: 1.15;
-  text-align: center;
-}
-
 .catalog-mobile-filter-toggle {
   display: none;
 }
@@ -1251,13 +1233,6 @@ html[data-theme="dark"] .journey-context-step.is-current {
     min-height: 38px;
     padding-inline: 3px;
     text-align: center;
-  }
-
-  .journey-context-next {
-    grid-column: 2;
-    grid-row: 1;
-    min-height: 36px;
-    padding-inline: 10px;
   }
 
   .catalog-mobile-filter-toggle {
@@ -2582,4 +2557,754 @@ html[data-theme="dark"] .hero-guide-link:hover {
     width: 100%;
     max-width: 22rem;
   }
+}
+
+/* Hub del percorso: sostituisce la sequenza di card indipendenti (contesto,
+   impostazioni e aiuto) con un solo blocco leggibile. La CTA cambia già con
+   il livello scelto; qui la gerarchia rende evidente che tutto appartiene al
+   medesimo percorso di acquisto. */
+.workflow-hub {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(47, 107, 58, 0.22);
+  border-top: 4px solid var(--verde);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #fffef9, #eff7eb);
+  box-shadow: 0 10px 26px rgba(31, 58, 38, 0.1);
+}
+
+.workflow-hub .journey-context {
+  position: static;
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) auto;
+  gap: 9px 14px;
+  margin: 0;
+  padding: 14px 16px 12px;
+  border: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.workflow-hub .journey-context-progress {
+  grid-column: 2 / -1;
+  justify-content: flex-start;
+  order: initial;
+  gap: 6px;
+}
+
+.workflow-hub-utilities {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px 12px 0;
+}
+
+.workflow-hub .guided-setup-gear {
+  width: min(315px, 27vw);
+  min-height: 46px;
+  margin: 0;
+  padding: 6px 9px;
+  border-radius: 12px;
+}
+
+.workflow-hub .guided-setup-gear-copy b {
+  font-size: 12px;
+}
+
+.workflow-hub .guided-setup-gear-copy small {
+  font-size: 9.5px;
+}
+
+.workflow-hub .guided-setup-gear-action {
+  min-height: 28px;
+  padding-inline: 8px;
+  font-size: 10px;
+}
+
+.workflow-hub .guided-setup-gear-icon {
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+}
+
+.workflow-hub .guided-tutorial-link {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding-inline: 0.58rem;
+  white-space: nowrap;
+}
+
+.workflow-hub .guided-tutorial-link-short {
+  display: none;
+}
+
+.workflow-hub .guided-setup-toggle {
+  grid-column: 1 / -1;
+  width: 100%;
+  border-radius: 0;
+}
+
+.workflow-hub .guided-setup-toggle[open] {
+  border-width: 1px 0 0;
+  border-top: 1px solid rgba(47, 107, 58, 0.3);
+  border-radius: 0;
+  box-shadow: inset 0 10px 24px rgba(31, 58, 38, 0.05);
+}
+
+.workflow-hub .guided-setup-toggle[open] .guided-setup-summary {
+  min-height: 52px;
+}
+
+html[data-theme="dark"] .workflow-hub {
+  border-color: rgba(139, 212, 158, 0.38);
+  border-top-color: var(--dark-green);
+  background: linear-gradient(145deg, #173322, #10291b);
+}
+
+@media (max-width: 900px) {
+  .workflow-hub {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-hub .journey-context {
+    padding-bottom: 8px;
+  }
+
+  .workflow-hub-utilities {
+    padding: 0 16px 12px;
+  }
+
+  .workflow-hub .guided-setup-gear {
+    width: min(420px, 100%);
+  }
+}
+
+@media (max-width: 660px) {
+  .workflow-hub {
+    border-radius: 14px;
+  }
+
+  .workflow-hub .journey-context {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    padding: 11px 11px 8px;
+  }
+
+  .workflow-hub .journey-context-copy {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .workflow-hub .journey-context-progress {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-content: stretch;
+  }
+
+  .workflow-hub .journey-context-step {
+    flex: 1;
+    min-height: 36px;
+  }
+
+  .workflow-hub-utilities {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 7px;
+    padding: 0 11px 11px;
+  }
+
+  .workflow-hub .guided-setup-gear {
+    width: 100%;
+    min-height: 54px;
+    padding: 7px 9px;
+  }
+
+  .workflow-hub .guided-tutorial-link {
+    grid-column: auto;
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0;
+  }
+
+  .workflow-hub .guided-tutorial-link > span[data-guide-link-label] {
+    display: none;
+  }
+
+  .workflow-hub .guided-tutorial-link-short {
+    display: inline;
+    font-size: 11px;
+  }
+
+  .workflow-hub .guided-tutorial-link > span:first-child {
+    width: 21px;
+    height: 21px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .workflow-hub .guided-tutorial-link-short {
+    display: none;
+  }
+
+  .workflow-hub .guided-tutorial-link {
+    min-width: 48px;
+  }
+}
+
+/* Il livello scelto è anche il controllo per cambiarlo: così il profilo
+   resta nel punto in cui spiega il flusso e non richiede un pannello extra. */
+.workflow-hub .journey-context {
+  grid-column: 1 / -1;
+  grid-template-columns: auto minmax(180px, 1fr) auto auto;
+}
+
+.workflow-hub .journey-context-level--chooser {
+  border: 0;
+  cursor: pointer;
+  gap: 6px;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.workflow-hub .journey-context-level--chooser:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--journey-accent) 26%, transparent);
+}
+
+.workflow-hub .journey-context-level--chooser:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--journey-accent) 48%, transparent);
+  outline-offset: 3px;
+}
+
+.workflow-hub .journey-context-level-edit {
+  display: inline-grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.workflow-hub .journey-context-level--chooser.is-open .journey-context-level-edit {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.workflow-hub .journey-context-help {
+  align-self: center;
+  margin-left: -4px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--verde-scuro);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.workflow-hub .journey-context-help:hover {
+  border-color: transparent;
+  background: transparent;
+  color: var(--verde);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* La guida è un aiuto secondario: rimuoviamo l'aspetto da pulsante circolare
+   del punto interrogativo, mantenendo un link leggero ma accessibile. */
+.workflow-hub .journey-context-help > span:first-child {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  color: var(--verde);
+  font-size: 0.9rem;
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-help > span:first-child {
+  background: transparent;
+  color: var(--dark-green);
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-help,
+html[data-theme="dark"] .workflow-hub .journey-context-help:hover {
+  border-color: transparent;
+  background: transparent;
+  color: var(--dark-green);
+  box-shadow: none;
+}
+
+.workflow-persona-panel {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(47, 107, 58, 0.22);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.workflow-persona-panel[hidden] {
+  display: none;
+}
+
+.workflow-persona-panel .persona-pick {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.workflow-persona-panel .persona-pick-head {
+  display: none;
+}
+
+.workflow-persona-panel .persona-cards,
+.workflow-persona-panel .persona-pick[open] .persona-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 12px 16px 16px;
+}
+
+.workflow-persona-panel .persona-pick[open] .persona-card {
+  min-height: 74px;
+}
+
+html[data-theme="dark"] .workflow-persona-panel {
+  border-top-color: rgba(139, 212, 158, 0.28);
+  background: rgba(0, 0, 0, 0.13);
+}
+
+@media (max-width: 900px) {
+  .workflow-hub .journey-context {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
+}
+
+@media (max-width: 660px) {
+  .workflow-hub .journey-context {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .workflow-hub .journey-context-level--chooser {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .workflow-hub .journey-context-help {
+    grid-column: 3;
+    grid-row: 1;
+    margin: 0;
+    min-width: 0;
+    font-size: 10px;
+  }
+
+  .workflow-hub .journey-context-copy,
+  .workflow-hub .journey-context-progress {
+    grid-column: 1 / -1;
+  }
+
+  .workflow-persona-panel .persona-cards,
+  .workflow-persona-panel .persona-pick[open] .persona-cards {
+    grid-template-columns: 1fr;
+    padding: 10px 11px 12px;
+  }
+
+  .workflow-persona-panel .persona-pick[open] .persona-card {
+    min-height: 60px;
+  }
+}
+
+/* Azioni del percorso: una sola priorità per riga. Il controllo delle
+   impostazioni già scelte è un raccordo leggero; il passo attivo è la CTA. */
+.config-page-title .guided-brand-copy {
+  flex: 1 1 auto;
+}
+
+.config-page-title .config-guide-link {
+  flex: 0 0 auto;
+  margin-left: auto;
+  min-height: 36px;
+  padding-inline: 0.7rem;
+  box-shadow: 0 3px 10px rgba(31, 58, 38, 0.06);
+}
+
+.config-page-title .guided-tutorial-link-short {
+  display: none;
+}
+
+.workflow-hub .journey-context {
+  grid-template-columns: auto minmax(180px, 1fr) auto;
+}
+
+.workflow-hub .journey-context-progress {
+  grid-column: 2 / -1;
+  align-items: center;
+  gap: 7px;
+}
+
+.workflow-hub .journey-context-step[data-journey-step="settings"],
+.workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+.workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+  min-height: 28px;
+  padding: 2px 1px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: #687568;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.workflow-hub .journey-context-step[data-journey-step="settings"]::before {
+  content: "↺";
+  margin-right: 3px;
+  color: var(--journey-accent);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.workflow-hub .journey-context-step[data-journey-step="settings"]:hover {
+  background: transparent;
+  color: var(--verde-scuro);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+  min-height: 32px;
+  padding-inline: 10px;
+  border-color: color-mix(in srgb, var(--journey-accent) 28%, transparent);
+  background: rgba(255, 255, 255, 0.64);
+  color: #435544;
+}
+
+.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]) {
+  min-height: 36px;
+  padding-inline: 13px;
+  border-color: var(--journey-accent);
+  background: var(--journey-accent);
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--journey-accent) 26%, transparent);
+  color: #fff;
+  font-weight: 850;
+}
+
+.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
+  background: color-mix(in srgb, var(--journey-accent) 88%, #000);
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-step[data-journey-step="settings"],
+html[data-theme="dark"] .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+html[data-theme="dark"] .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+  background: transparent;
+  color: var(--dark-muted);
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+  border-color: rgba(139, 212, 158, 0.3);
+  background: rgba(8, 27, 17, 0.28);
+  color: var(--dark-text);
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]) {
+  border-color: var(--dark-green);
+  background: var(--dark-green);
+  color: #0b1a13;
+}
+
+@media (max-width: 660px) {
+  .config-page-title {
+    flex-wrap: nowrap;
+  }
+
+  .config-page-title .guided-brand-copy {
+    flex: 1 1 auto;
+  }
+
+  .config-page-title .config-guide-link {
+    min-height: 34px;
+    margin-left: 0;
+    padding: 0.35rem 0.54rem;
+    white-space: nowrap;
+  }
+
+  .config-page-title .config-guide-link > span[data-guide-link-label] {
+    display: none;
+  }
+
+  .config-page-title .guided-tutorial-link-short {
+    display: inline;
+    font-size: 10px;
+  }
+
+  .config-page-title .config-guide-link > span:first-child {
+    width: 17px;
+    height: 17px;
+  }
+
+  .workflow-hub .journey-context-progress {
+    display: flex;
+    grid-column: 1 / -1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 6px;
+  }
+
+  .workflow-hub .journey-context-step[data-journey-step="settings"],
+  .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+  .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    min-height: 36px;
+  }
+
+  .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 36px;
+    padding-inline: 7px;
+  }
+}
+
+/* Desktop: il riepilogo e i tre passi condividono la stessa riga. I due
+   passi operativi ricevono spazio equivalente; il controllo di revisione
+   resta leggero, senza creare una fila di elementi ammassati a sinistra. */
+@media (min-width: 1101px) {
+  .workflow-hub .journey-context {
+    grid-template-columns: auto minmax(260px, 1fr) minmax(430px, 0.85fr);
+    align-items: center;
+  }
+
+  .workflow-hub .journey-context-progress {
+    display: grid;
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: auto repeat(2, minmax(132px, 1fr));
+    align-items: center;
+    width: 100%;
+    justify-content: normal;
+    gap: 8px;
+  }
+
+  .workflow-hub .journey-context-step[data-journey-step="settings"] {
+    justify-self: start;
+  }
+
+  .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+    width: 100%;
+  }
+}
+
+/* I passi sono l'unica azione del percorso: colori e contrasto identificano
+   il profilo, senza replicare un CTA sopra la planimetria. */
+.workflow-hub .journey-context--novizio {
+  --journey-action: #347a3b;
+  --journey-soft: #e7f4e4;
+  --journey-line: #a9cfaa;
+}
+
+.workflow-hub .journey-context--intermedio {
+  --journey-action: #986811;
+  --journey-soft: #fff0d0;
+  --journey-line: #dfc17a;
+}
+
+.workflow-hub .journey-context--esperto {
+  --journey-action: #a8472b;
+  --journey-soft: #fae1d7;
+  --journey-line: #dfad9b;
+}
+
+.workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+  position: relative;
+  gap: 6px;
+  border-color: var(--journey-line);
+  background: rgba(255, 255, 255, 0.78);
+  color: color-mix(in srgb, var(--journey-action) 72%, #1d3022);
+  font-weight: 780;
+}
+
+.workflow-hub .journey-context-step:not([data-journey-step="settings"])::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.62;
+}
+
+.workflow-hub .journey-context-step.is-done:not(.is-current):not([data-journey-step="settings"]) {
+  border-color: color-mix(in srgb, var(--journey-action) 36%, transparent);
+  background: var(--journey-soft);
+  color: var(--journey-action);
+}
+
+.workflow-hub .journey-context-step.is-done:not(.is-current):not([data-journey-step="settings"])::before {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  background: currentColor;
+  opacity: 1;
+}
+
+.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]) {
+  border-color: var(--journey-action);
+  background: var(--journey-action);
+  box-shadow: 0 6px 14px color-mix(in srgb, var(--journey-action) 30%, transparent);
+  color: #fff;
+}
+
+.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"])::before {
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentColor;
+  opacity: 0.96;
+}
+
+.workflow-hub .journey-context-step:not([data-journey-step="settings"]):hover {
+  border-color: var(--journey-action);
+  background: var(--journey-soft);
+  color: var(--journey-action);
+}
+
+.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
+  background: color-mix(in srgb, var(--journey-action) 88%, #000);
+  color: #fff;
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context--novizio {
+  --journey-action: #8bd49e;
+  --journey-soft: rgba(139, 212, 158, 0.16);
+  --journey-line: rgba(139, 212, 158, 0.5);
+  --journey-action-text: #0b1a13;
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context--intermedio {
+  --journey-action: #f1ca72;
+  --journey-soft: rgba(241, 202, 114, 0.15);
+  --journey-line: rgba(241, 202, 114, 0.48);
+  --journey-action-text: #2a1d05;
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context--esperto {
+  --journey-action: #f0a087;
+  --journey-soft: rgba(240, 160, 135, 0.15);
+  --journey-line: rgba(240, 160, 135, 0.48);
+  --journey-action-text: #2e120b;
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+  border-color: var(--journey-line);
+  background: rgba(7, 25, 15, 0.42);
+  color: var(--journey-action);
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-step.is-done:not(.is-current):not([data-journey-step="settings"]) {
+  border-color: var(--journey-line);
+  background: var(--journey-soft);
+  color: var(--journey-action);
+}
+
+html[data-theme="dark"] .workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]),
+html[data-theme="dark"] .workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
+  border-color: var(--journey-action);
+  background: var(--journey-action);
+  color: var(--journey-action-text);
+}
+
+/* Desktop: il confronto fra i tre percorsi deve restare immediato. Manteniamo
+   l'ordine naturale delle card e rendiamo attivo il profilo scelto, senza
+   estrarlo in una riga separata. */
+@media (min-width: 901px) {
+  .workflow-persona-panel .persona-cards,
+  .workflow-persona-panel .persona-pick[open] .persona-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 16px 16px;
+  }
+
+  .workflow-persona-panel .persona-card,
+  .workflow-persona-panel .persona-pick[open] .persona-card,
+  .workflow-persona-panel .persona-card.is-active,
+  .workflow-persona-panel .persona-pick[open] .persona-card.is-active,
+  body.livello-novizio .workflow-persona-panel .persona-card--novizio,
+  body.livello-intermedio .workflow-persona-panel .persona-card--intermedio,
+  body.livello-esperto .workflow-persona-panel .persona-card--esperto {
+    order: initial;
+    grid-column: auto;
+    min-height: 92px;
+    padding: 12px 13px 12px 15px;
+  }
+
+  .workflow-persona-panel .persona-card.is-active {
+    border: 2px solid var(--accent);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 17%, #fff),
+      color-mix(in srgb, var(--accent) 7%, #fff)
+    );
+    box-shadow:
+      0 10px 22px color-mix(in srgb, var(--accent) 28%, transparent),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.62);
+    transform: translateY(-2px);
+  }
+
+  .workflow-persona-panel .persona-card.is-active::before {
+    width: 7px;
+  }
+
+  .workflow-persona-panel .persona-card.is-active .persona-card-go {
+    width: 28px;
+    height: 28px;
+    box-shadow: 0 3px 8px color-mix(in srgb, var(--accent) 32%, transparent);
+  }
+
+  html[data-theme="dark"] .workflow-persona-panel .persona-card {
+    border-color: rgba(139, 212, 158, 0.2);
+    background: rgba(6, 25, 15, 0.32);
+  }
+
+  html[data-theme="dark"] .workflow-persona-panel .persona-card.is-active {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 20%, #10271a);
+    box-shadow:
+      0 10px 24px color-mix(in srgb, var(--accent) 24%, transparent),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* La guida rapida cambia contenuto con il percorso: l'accento riprende il
+   profilo attivo senza dipendere dai colori chiari del tema. */
+body.livello-novizio #noviceGuidePanel {
+  border-top-color: var(--persona-nov);
+}
+
+body.livello-intermedio #noviceGuidePanel {
+  border-top-color: var(--persona-int);
+}
+
+body.livello-esperto #noviceGuidePanel {
+  border-top-color: var(--persona-exp);
+}
+
+html[data-theme="dark"] body.livello-novizio #noviceGuidePanel {
+  border-top-color: #8bd49e;
+}
+
+html[data-theme="dark"] body.livello-intermedio #noviceGuidePanel {
+  border-top-color: #f1ca72;
+}
+
+html[data-theme="dark"] body.livello-esperto #noviceGuidePanel {
+  border-top-color: #f0a087;
 }
