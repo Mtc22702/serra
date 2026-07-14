@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-13-guide-locale";
+const CACHE_VERSION = "2026-07-14-mobile-crops-journey";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
