@@ -7,6 +7,17 @@
     else document.addEventListener("DOMContentLoaded", fn);
   }
 
+  function cropsJourneyTarget() {
+    const isGuidedResponsive =
+      typeof isResponsiveConfiguratorLayout === "function" &&
+      isResponsiveConfiguratorLayout() &&
+      (document.body.classList.contains("livello-novizio") ||
+        document.body.classList.contains("livello-intermedio"));
+    return isGuidedResponsive
+      ? document.getElementById("panelCustomize")
+      : document.querySelector(".stage");
+  }
+
   // Apre e mette in evidenza il pannello "Lista semi da acquistare"
   function focusYieldPanel() {
     const panel = document.getElementById("panelYield");
@@ -46,11 +57,18 @@
       const isResponsive =
         typeof isResponsiveConfiguratorLayout === "function" &&
         isResponsiveConfiguratorLayout();
+      const isGuidedResponsive =
+        isResponsive &&
+        (document.body.classList.contains("livello-novizio") ||
+          document.body.classList.contains("livello-intermedio"));
 
-      // Sui piccoli schermi il catalogo e la serra sono impilati. Aprire il
-      // catalogo qui ereditava il suo autofocus e mandava la viewport molto
-      // più in basso, lontano dalla vista dall'alto promessa dal journey.
-      // Il catalogo resta comunque raggiungibile dal suo pannello dedicato.
+      // Nei percorsi guidati su mobile le colture precedono la planimetria:
+      // il secondo passo apre e mette a fuoco proprio questa card.
+      if (isGuidedResponsive && typeof openCustomizePanelAndFocus === "function") {
+        openCustomizePanelAndFocus();
+        return;
+      }
+
       if (!isResponsive && typeof openCustomizePanelAndFocus === "function") {
         openCustomizePanelAndFocus();
       }
@@ -157,7 +175,7 @@
           step: step,
           el:
             step.dataset.journeyTarget === "stage"
-              ? document.querySelector(".stage")
+              ? cropsJourneyTarget()
               : document.getElementById(step.dataset.journeyTarget)
         };
       })

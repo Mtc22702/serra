@@ -230,6 +230,16 @@
     body.mode-expert .stage {
       order: 3;
     }
+    /* Nei percorsi guidati la scelta delle colture precede la planimetria:
+       su schermi stretti l'utente configura prima, poi controlla il risultato. */
+    body.livello-novizio [data-mode-section="expert"],
+    body.livello-intermedio [data-mode-section="expert"] {
+      order: 2;
+    }
+    body.livello-novizio .stage,
+    body.livello-intermedio .stage {
+      order: 3;
+    }
     #panelYield {
       order: 4;
     }
@@ -791,6 +801,32 @@
     }
     .panel-toggle-label {
       display: none;
+    }
+
+    /* Nel riepilogo acquisti il comando finiva da solo sotto al titolo e,
+       senza etichetta su mobile, sembrava un elemento schiacciato a sinistra.
+       Lo rendiamo una riga di controllo leggibile e facile da toccare. */
+    #panelYield .yield-title-inner {
+      flex: 1;
+    }
+    #panelYield .panel-toggle--yield {
+      align-self: stretch;
+      width: 100%;
+      min-height: 34px;
+      padding: 0 10px;
+      justify-content: flex-start;
+      background: rgba(47, 107, 58, 0.06);
+      border-color: rgba(47, 107, 58, 0.2);
+      border-radius: 9px;
+    }
+    #panelYield .panel-toggle--yield .panel-toggle-label {
+      display: inline-flex;
+      flex: 1;
+      min-width: 0;
+      justify-content: flex-start;
+    }
+    #panelYield .panel-toggle--yield .panel-toggle-icon {
+      margin-left: auto;
     }
 
     .site-header {
