@@ -43,22 +43,21 @@
       }
     },
     crops: function () {
-      if (typeof openCustomizePanelAndFocus === "function") {
+      const isResponsive =
+        typeof isResponsiveConfiguratorLayout === "function" &&
+        isResponsiveConfiguratorLayout();
+
+      // Sui piccoli schermi il catalogo e la serra sono impilati. Aprire il
+      // catalogo qui ereditava il suo autofocus e mandava la viewport molto
+      // più in basso, lontano dalla vista dall'alto promessa dal journey.
+      // Il catalogo resta comunque raggiungibile dal suo pannello dedicato.
+      if (!isResponsive && typeof openCustomizePanelAndFocus === "function") {
         openCustomizePanelAndFocus();
       }
-      // Sul desktop il catalogo è una colonna laterale: aprirlo non cambia
-      // quindi la posizione della pagina. Il secondo passo deve invece
-      // portare sempre alla planimetria, in qualunque percorso utente.
-      if (
-        typeof isResponsiveConfiguratorLayout === "function" &&
-        !isResponsiveConfiguratorLayout() &&
-        typeof scrollGreenhouseImageIntoView === "function"
-      ) {
-        scrollGreenhouseImageIntoView("smooth");
-      } else if (
-        typeof openCustomizePanelAndFocus !== "function" &&
-        typeof scrollGreenhouseImageIntoView === "function"
-      ) {
+
+      // La seconda fase ha sempre la planimetria come destinazione visiva,
+      // in tutti i livelli utente e a ogni larghezza di schermo.
+      if (typeof scrollGreenhouseImageIntoView === "function") {
         scrollGreenhouseImageIntoView("smooth");
       }
     },
