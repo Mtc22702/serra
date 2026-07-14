@@ -378,7 +378,7 @@ function chooseLivello(liv) {
     state.autoPlan = false;
     syncVegFilterTabs();
     render();
-    setPanelCollapsed("panelSettings", false);
+    setPanelCollapsed("panelSettings", true);
     openCustomizePanelAndFocus();
     if (!isResponsiveConfiguratorLayout()) {
       scheduleElementBelowHeader(

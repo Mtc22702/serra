@@ -993,10 +993,8 @@ window.addEventListener("serra:themechange", () => render());
 
     setLivello(state.livello, { mapMode: false });
     // Un refresh senza livello esplicito conserva l'ingresso compatto per
-    // Principiante e Intermedio. L'Esperto mantiene invece le impostazioni
-    // aperte, come al primo accesso a questa modalità.
-    if (_bootCfg?.livello && state.livello !== "esperto")
-      setPanelCollapsed("panelSettings", true);
+    // tutti i profili, Esperto incluso, come al primo accesso.
+    if (_bootCfg?.livello) setPanelCollapsed("panelSettings", true);
   }
   syncVegFilterTabs();
 
