@@ -264,7 +264,7 @@ function localizedSowingGuide(plant) {
   ]);
 
   let method =
-    "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
+    "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în parcelă.";
   if (direct.has(plant.id))
     method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
   if (bulbs.has(plant.id))

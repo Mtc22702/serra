@@ -625,15 +625,36 @@ function syncColLeftLayout() {
     presetBar && getComputedStyle(presetBar).display !== "none"
   );
   const colEmpty = !settingsOpen && !presetVisible;
-  const showGuide = colEmpty && state.livello === "novizio";
+  const isNovice = state.livello === "novizio";
+  const isIntermediate = state.livello === "intermedio";
+  const isExpert = state.livello === "esperto";
+  // Per il principiante la guida occupa la colonna al posto dei pannelli
+  // chiusi; per intermedio ed esperto resta sempre visibile.
+  const showGuide = (isNovice && colEmpty) || isIntermediate || isExpert;
   if (noviceGuide) noviceGuide.hidden = !showGuide;
-  // Con "La tua serra" e i layout pronti entrambi nascosti, .mode-section
-  // resterebbe comunque nel flusso flex della colonna come contenitore
-  // vuoto, aggiungendo un gap fantasma sopra la guida e disallineandone il
-  // bordo superiore rispetto a scena e colonna destra. Lo si toglie del
-  // tutto dal flusso quando la guida prende il suo posto.
-  if (modeSection) modeSection.style.display = showGuide ? "none" : "";
+  // Solo per il principiante, con "La tua serra" e i layout pronti nascosti,
+  // .mode-section resterebbe nel flusso come contenitore vuoto. La togliamo
+  // per evitare un gap fantasma sopra la guida; nell'intermedio resta invece
+  // visibile, con la guida subito sotto ai piani pronti.
+  if (modeSection) modeSection.style.display = isNovice && showGuide ? "none" : "";
   app.classList.toggle("col-left-collapsed", colEmpty && !showGuide);
+}
+
+// La guida rapida desktop accompagna ciascun percorso. Il testo viene
+// ricreato qui sia al cambio profilo sia al cambio lingua, così resta sempre
+// allineato alle preferenze già scelte dall'utente.
+function syncQuickGuide() {
+  const prefix =
+    state.livello === "esperto"
+      ? "expertGuide"
+      : state.livello === "intermedio"
+        ? "intermediateGuide"
+        : "noviceGuide";
+  const keys = ["Title", "Tag", "Step1", "Step2", "Step3", "Step4", "Step5"];
+  keys.forEach((suffix) => {
+    const element = document.getElementById(`quickGuide${suffix}`);
+    if (element) element.textContent = tx(`${prefix}${suffix}`);
+  });
 }
 
 // Apre o chiude il pannello personalizzazione colture
@@ -1701,7 +1722,7 @@ function renderPlantDetailPanel() {
       <div class="detail-tab-panel" data-detail-panel="harvest" hidden>
         <div class="detail-section-heading"><span>${detailText("detail.harvest_title")}</span><small>${detailText("detail.harvest_subtitle")}</small></div>
         <div class="detail-tech-grid">${renderConfigTechCards(profile.harvest)}</div>
-        <div class="detail-nota">${state.lang === "ro" ? `${b.count} plante în strat · producție totală estimată ${yieldLabel(resaTot)}` : `${b.count} piante nell'aiuola · resa totale stimata ${yieldLabel(resaTot)}`}</div>
+        <div class="detail-nota">${state.lang === "ro" ? `${b.count} plante în parcelă · producție totală estimată ${yieldLabel(resaTot)}` : `${b.count} piante nell'aiuola · resa totale stimata ${yieldLabel(resaTot)}`}</div>
       </div>
     </div>
   `;

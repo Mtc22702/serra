@@ -143,7 +143,7 @@ function localizedSowingGuide(plant) {
   const row = plant.d;
   const between = plant.dr || plant.d;
   let method =
-    "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în strat.";
+    "Seamănă în alveole sau răsadniță, apoi transplantează plante viguroase în parcelă.";
   if (direct.has(plant.id))
     method = "Seamănă direct în rânduri, în sol fin și ușor umed.";
   if (bulbs.has(plant.id))
@@ -346,6 +346,7 @@ function applyLanguage() {
   setText("#personaExpDesc", "personaExpDesc");
   if (typeof syncPersonaPickerSummary === "function")
     syncPersonaPickerSummary();
+  if (typeof syncQuickGuide === "function") syncQuickGuide();
   if (typeof updateJourneyContext === "function") updateJourneyContext();
   setText("#vegScrollHint span:first-child", "vegScrollHint");
 

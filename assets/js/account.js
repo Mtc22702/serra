@@ -281,7 +281,7 @@
       "dash.title": "Date de Livrare",
       "dash.projects_title": "Serele mele proiectate",
       "dash.project_name": "Proiect",
-      "dash.project_beds": "Straturi",
+      "dash.project_beds": "Parcele",
       "dash.project_updated": "Actualizat",
       "dash.project_open_btn": "Deschide în configurator",
       "dash.project_active": "Activ",

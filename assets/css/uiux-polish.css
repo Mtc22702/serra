@@ -439,7 +439,7 @@
   }
 
   /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista, la
-     colonna sinistra non ha più nulla da mostrare. Per il novizio ci
+     colonna sinistra non ha più nulla da mostrare. Per i percorsi guidati ci
      mettiamo la guida rapida (#noviceGuidePanel) al suo posto, così la
      scena della serra mantiene sempre la stessa larghezza indipendentemente
      dal profilo. Per gli altri profili la colonna sparisce e la scena
@@ -461,13 +461,26 @@
   #noviceGuidePanel:not([hidden]) {
     display: block;
   }
+
+  /* In intermedio ed esperto la guida dà prima il contesto, poi propone i
+     layout e le impostazioni; nel principiante prende la sezione vuota. */
+  body:is(.livello-intermedio, .livello-esperto) #noviceGuidePanel {
+    order: -1;
+  }
+
 }
 
-/* Guida rapida del novizio: solo desktop (vedi il blocco sopra), sempre
+/* Guida rapida dei percorsi guidati: solo desktop (vedi il blocco sopra), sempre
    nascosta sotto i 1101px dove la colonna sinistra si comporta diversamente
    (accordion mobile). */
 #noviceGuidePanel {
   display: none;
+}
+
+/* Nell'esperto “La tua serra” deve restare raggiungibile: da chiusa si
+   nasconde solo il contenuto, non l'intestazione della card. */
+body.livello-esperto #panelSettings.is-collapsed {
+  display: block;
 }
 
 @media (max-width: 660px) {

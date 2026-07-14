@@ -349,6 +349,7 @@ function setLivello(liv, { mapMode = true } = {}) {
   syncPersonaPickerSummary();
   updateJourneyContext();
   if (mapMode) setMode(next === "esperto" ? "expert" : "fit", false);
+  if (typeof syncQuickGuide === "function") syncQuickGuide();
   if (typeof syncColLeftLayout === "function") syncColLeftLayout();
 }
 

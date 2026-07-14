@@ -112,7 +112,7 @@
     <link rel="stylesheet" href="assets/css/index.css?v=2026-07-13-guide-locale" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-13-guide-locale" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-14-expert-settings-card" />
   </head>
   <body>
     <!-- Header e navigazione -->
@@ -547,9 +547,10 @@
             <script>
               (function() {
                 // Chi arriva dalla home ha già scelto misure, clima e mese
-                // nel pannello di preconfigurazione: non serve ripresentarli
-                // già aperti per nessuno dei 3 profili, si parte collassati
-                // e si riapre solo su richiesta ("Modifica" / riepilogo in alto).
+                // nel pannello di preconfigurazione: per Principiante e
+                // Intermedio si parte dal piano già pronto e il pannello
+                // resta chiuso. L'Esperto invece entra con i campi aperti,
+                // perché li usa per comporre liberamente la serra.
                 // Vale sia per il primo arrivo (livello in querystring) sia
                 // per un refresh/ritorno successivo, quando la querystring è
                 // già stata ripulita ma il profilo resta salvato in locale:
@@ -562,7 +563,7 @@
                     if (saved && saved.livello) liv = saved.livello;
                   } catch (e) {}
                 }
-                if (liv === "novizio" || liv === "intermedio" || liv === "esperto") {
+                if (liv === "novizio" || liv === "intermedio") {
                   document.getElementById("panelSettings").classList.add("is-collapsed");
                 }
                 window.__ORTO_BOOT_LIVELLO__ = liv;
@@ -908,8 +909,8 @@
           </div>
         </div>
 
-        <!-- Guida rapida al posto della colonna, quando per il novizio non
-             c'è altro da mostrare a sinistra (vedi syncColLeftLayout in
+        <!-- Guida rapida al posto della colonna, quando per un percorso
+             guidato non c'è altro da mostrare a sinistra (vedi syncColLeftLayout in
              conf-ui.js): mantiene la larghezza della colonna costante, così
              la scena della serra non cambia dimensione tra un profilo e
              l'altro. -->
@@ -918,42 +919,42 @@
             <div class="panel-head panel-head--static">
               <span class="settings-head-icon" aria-hidden="true">💡</span>
               <div class="panel-head-title-group">
-                <h2 data-i18n-conf="noviceGuideTitle">Come funziona questa pagina</h2>
-                <span class="panel-head-tag" data-i18n-conf="noviceGuideTag">Guida rapida</span>
+                <h2 id="quickGuideTitle">Come funziona questa pagina</h2>
+                <span class="panel-head-tag" id="quickGuideTag">Guida rapida</span>
               </div>
             </div>
             <ul class="novice-guide-list">
               <li>
                 <span class="novice-guide-ico" aria-hidden="true">🌡️</span>
-                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep1"
+                <span class="novice-guide-text" id="quickGuideStep1"
                   >Le misure, la zona e il mese sono già impostati: puoi
                   modificarli quando vuoi da "Impostazioni iniziali", in alto.</span
                 >
               </li>
               <li>
                 <span class="novice-guide-ico" aria-hidden="true">🌱</span>
-                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep2"
+                <span class="novice-guide-text" id="quickGuideStep2"
                   >Abbiamo già preparato un piano di semina automatico con
                   colture di stagione, pronto qui a fianco.</span
                 >
               </li>
               <li>
                 <span class="novice-guide-ico" aria-hidden="true">✏️</span>
-                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep3"
+                <span class="novice-guide-text" id="quickGuideStep3"
                   >Tocca un'aiuola nella serra per vederne i dettagli e
                   cambiare la quantità di piante.</span
                 >
               </li>
               <li>
                 <span class="novice-guide-ico" aria-hidden="true">🛒</span>
-                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep4"
+                <span class="novice-guide-text" id="quickGuideStep4"
                   >Quando sei soddisfatto, passa alla "Lista della spesa" per
                   rivedere i semi e completare l'ordine.</span
                 >
               </li>
               <li>
                 <span class="novice-guide-ico" aria-hidden="true">🔄</span>
-                <span class="novice-guide-text" data-i18n-conf="noviceGuideStep5"
+                <span class="novice-guide-text" id="quickGuideStep5"
                   >Puoi sempre rigenerare il piano o annullare l'ultima
                   modifica con i pulsanti sotto la serra.</span
                 >
@@ -1945,20 +1946,20 @@
     <script src="assets/js/theme.js" defer></script>
     <script src="assets/js/guide-link-i18n.js?v=2026-07-13-guide-locale" defer></script>
     <script src="assets/js/nav.js" defer></script>
-    <script src="assets/js/i18n.js?v=2026-07-11-menu-blur-dark-fix2" defer></script>
+    <script src="assets/js/i18n.js?v=2026-07-14-expert-guide" defer></script>
     <script src="assets/js/plants-data.js" defer></script>
     <script src="assets/js/api.js" defer></script>
     <script src="assets/js/conf/conf-data.js" defer></script>
-    <script src="assets/js/conf/conf-state.js?v=2026-07-11-menu-blur-dark-fix2" defer></script>
+    <script src="assets/js/conf/conf-state.js?v=2026-07-14-desktop-guides" defer></script>
     <script src="assets/js/conf/conf-projects.js" defer></script>
-    <script src="assets/js/conf/conf-text.js?v=2026-07-11-menu-blur-dark-fix2" defer></script>
+    <script src="assets/js/conf/conf-text.js?v=2026-07-14-desktop-guides" defer></script>
     <script src="assets/js/conf/conf-draw.js" defer></script>
-    <script src="assets/js/conf/conf-ui.js?v=2026-07-11-menu-blur-dark-fix2" defer></script>
+    <script src="assets/js/conf/conf-ui.js?v=2026-07-14-expert-guide" defer></script>
     <script src="assets/js/conf/conf-companions.js" defer></script>
     <script src="assets/js/conf/conf-shopping.js" defer></script>
     <script src="assets/js/conf/conf-engine.js" defer></script>
     <script src="assets/js/conf/conf-calendar.js" defer></script>
-    <script src="assets/js/conf/conf-app.js?v=2026-07-13-novice-boot-flicker-fix" defer></script>
+    <script src="assets/js/conf/conf-app.js?v=2026-07-14-expert-settings-open" defer></script>
     <script src="assets/js/conf/conf-wizard.js?v=2026-07-11-menu-blur-dark-fix2" defer></script>
 
     <!-- Scroll listener torna su -->

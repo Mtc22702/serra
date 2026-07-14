@@ -1242,10 +1242,10 @@ if (catalogSearchLink) {
       "preconfig.sizes_label": "1. Dimensiuni interne",
       "preconfig.sizes_badge": "Esențial",
       "preconfig.sizes_note":
-        "Dimensiunile determină câte straturi și plante poți cultiva.",
+          "Dimensiunile determină câte parcele și plante poți cultiva.",
       "preconfig.width": "Lățime",
       "preconfig.length": "Lungime",
-      "preconfig.path_label": "Cărare între straturi",
+      "preconfig.path_label": "Cărare între parcele",
       "preconfig.path_abbr": "căr.",
       "preconfig.climate_label": "2. Climă",
       "preconfig.zona_label": "Zonă",

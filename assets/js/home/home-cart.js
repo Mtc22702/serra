@@ -1153,7 +1153,7 @@ function targetedPestProducts(p) {
           flea_beetles:
             "Piretrine naturale pentru reducerea rapidă a adulților; spinosad dacă paguba continuă pe frunzele noi.",
           slugs:
-            "Fosfat feric granular în jurul stratului, reînnoit după udări abundente.",
+            "Fosfat feric granular în jurul parcelei, reînnoit după udări abundente.",
           aphids:
             "Săpun potasic pe ambele fețe ale frunzei; piretrine numai pentru colonii persistente."
         },

@@ -992,11 +992,11 @@ window.addEventListener("serra:themechange", () => render());
     setMode(state.autoPlan ? "fit" : "expert", false);
 
     setLivello(state.livello, { mapMode: false });
-    // Un refresh o un ritorno senza livello esplicito in querystring arriva
-    // qui: se esiste già una serra salvata, "La tua serra" deve restare
-    // collassata come al primo arrivo (altrimenti collapseSettingsPanelAfterAutoPlan
-    // qui sotto non la chiude per l'esperto, che non usa autoPlan).
-    if (_bootCfg?.livello) setPanelCollapsed("panelSettings", true);
+    // Un refresh senza livello esplicito conserva l'ingresso compatto per
+    // Principiante e Intermedio. L'Esperto mantiene invece le impostazioni
+    // aperte, come al primo accesso a questa modalità.
+    if (_bootCfg?.livello && state.livello !== "esperto")
+      setPanelCollapsed("panelSettings", true);
   }
   syncVegFilterTabs();
 

@@ -1257,7 +1257,7 @@
         "detail.disease_action": "Ce trebuie făcut",
         "detail.treatment_note":
           "Înainte de a folosi un produs fitosanitar, verifică dacă este autorizat pentru cultură și respectă întotdeauna eticheta.",
-        "detail.quantity_bed": "Cantitate în strat",
+        "detail.quantity_bed": "Cantitate în parcelă",
         "detail.plants_count": "{count} plante",
         "detail.pests_title": "Insecte și dăunători",
         "detail.pests_subtitle":
@@ -1586,6 +1586,30 @@
           "Quando sei soddisfatto, passa alla \"Lista della spesa\" per rivedere i semi e completare l'ordine.",
         noviceGuideStep5:
           "Puoi sempre rigenerare il piano o annullare l'ultima modifica con i pulsanti sotto la serra.",
+        intermediateGuideTitle: "Come personalizzare il piano",
+        intermediateGuideTag: "Guida rapida",
+        intermediateGuideStep1:
+          "Misure, clima e mese sono già impostati: puoi rivederli da \"Impostazioni iniziali\", in alto.",
+        intermediateGuideStep2:
+          "Il piano stagionale è pronto: guarda la serra dall'alto prima di modificarlo.",
+        intermediateGuideStep3:
+          "Apri \"Colture nella serra\" per aggiungere, togliere o cambiare le quantità.",
+        intermediateGuideStep4:
+          "Tocca un'aiuola per controllare le piante, lo spazio e i dettagli di coltivazione.",
+        intermediateGuideStep5:
+          "Quando il piano ti convince, apri la lista della spesa per acquistare solo i semi necessari.",
+        expertGuideTitle: "Come comporre la serra",
+        expertGuideTag: "Guida rapida",
+        expertGuideStep1:
+          "Misure, clima e mese sono sempre disponibili in \"Impostazioni iniziali\".",
+        expertGuideStep2:
+          "Scegli un layout pronto oppure genera il piano di stagione come punto di partenza.",
+        expertGuideStep3:
+          "Apri \"Colture nella serra\" per cercare nell'intero catalogo e aggiungere le piante.",
+        expertGuideStep4:
+          "Tocca un'aiuola per controllare le quantità, lo spazio e i dettagli di coltivazione.",
+        expertGuideStep5:
+          "Quando hai finito, apri la lista della spesa per acquistare i semi del tuo progetto.",
         stageToolsExtra: "Strumenti extra",
         viewMode: "Vista",
         viewNatural: "Vista naturale",
@@ -1972,7 +1996,7 @@
         guidedExpStep2:
           "Răsfoiește <strong>tot catalogul</strong> și adaugă culturile dorite, chiar și în afara sezonului",
         guidedExpStep3:
-          "Aranjează <strong>straturile</strong> și ajustează cantitățile și aspectul manual",
+          "Aranjează <strong>parcelele</strong> și ajustează cantitățile și aspectul manual",
         guidedIntroEdit: "Personalizează",
         guidedIntroEditHint: "Modifică dimensiuni, plante și layout",
         guidedIntroView: "Vezi proiectul",
@@ -2021,7 +2045,7 @@
         width: "Lățime",
         length: "Lungime",
         sowMonth: "Luna de semănare",
-        pathWidth: "Lățimea aleii dintre straturi",
+        pathWidth: "Lățimea aleii dintre parcele",
         zone: "Zonă",
         greenhouse: "Seră",
         sunSide: "Soare",
@@ -2061,7 +2085,7 @@
         sowAt: "Semănare",
         stageMonthKicker: "Seamănă în",
         stageTitle: "Vedere de sus",
-        stageSub: "Apasă pe un strat pentru detalii de cultivare.",
+        stageSub: "Apasă pe o parcelă pentru detalii de cultivare.",
         wizardStep1Label: "Seră și climă",
         wizardStep1Hint: "Dimensiuni, zonă, luna de semănat",
         wizardStep2Label: "Culturile tale",
@@ -2113,11 +2137,35 @@
         noviceGuideStep2:
           "Am pregătit deja un plan de semănat automat cu culturi de sezon, gata de văzut aici alături.",
         noviceGuideStep3:
-          "Atinge o aiuolă din seră pentru a vedea detaliile și a schimba cantitatea de plante.",
+          "Atinge o parcelă din seră pentru a vedea detaliile și a schimba cantitatea de plante.",
         noviceGuideStep4:
           "Când ești mulțumit, treci la \"Lista de cumpărături\" pentru a revizui semințele și a finaliza comanda.",
         noviceGuideStep5:
           "Poți oricând regenera planul sau anula ultima modificare cu butoanele de sub seră.",
+        intermediateGuideTitle: "Cum personalizezi planul",
+        intermediateGuideTag: "Ghid rapid",
+        intermediateGuideStep1:
+          "Dimensiunile, clima și luna sunt deja setate: le poți revizui din \"Setări inițiale\", sus.",
+        intermediateGuideStep2:
+          "Planul de sezon este gata: privește sera de sus înainte să îl modifici.",
+        intermediateGuideStep3:
+          "Deschide \"Culturile din seră\" pentru a adăuga, elimina sau schimba cantitățile.",
+        intermediateGuideStep4:
+          "Atinge o parcelă pentru a verifica plantele, spațiul și detaliile de cultivare.",
+        intermediateGuideStep5:
+          "Când planul te mulțumește, deschide lista de cumpărături și cumpără doar semințele necesare.",
+        expertGuideTitle: "Cum compui sera",
+        expertGuideTag: "Ghid rapid",
+        expertGuideStep1:
+          "Dimensiunile, clima și luna rămân disponibile oricând în \"Setări inițiale\".",
+        expertGuideStep2:
+          "Alege un layout pregătit sau generează planul de sezon ca punct de plecare.",
+        expertGuideStep3:
+          "Deschide \"Culturile din seră\" pentru a căuta în catalogul complet și a adăuga plante.",
+        expertGuideStep4:
+          "Atinge o parcelă pentru a verifica cantitățile, spațiul și detaliile de cultivare.",
+        expertGuideStep5:
+          "Când ai terminat, deschide lista de cumpărături pentru semințele proiectului tău.",
         stageToolsExtra: "Instrumente suplimentare",
         viewMode: "Vedere",
         viewNatural: "Vedere naturală",
@@ -2127,7 +2175,7 @@
         restoreAutoFill: "Regenerează planul de sezon",
         noviceRestart: "Începe din nou",
         expertSeasonal: "Generează planul de sezon",
-        arrangeSelected: "Reordonează straturile",
+        arrangeSelected: "Reordonează parcelele",
         arrangeSelectedHint: "Aranjează dispunerea, cantitățile rămân aceleași.",
         arrangeSelectedTitle:
           "Reordonează harta fără să schimbe cantitățile alese",
@@ -2206,9 +2254,9 @@
         howTo2:
           "Personalizează <strong>culturile</strong>, chiar și <em>în afara sezonului</em>",
         howTo3:
-          "Apasă pe un strat pentru a vedea <strong>fișa plantei</strong>",
+          "Apasă pe o parcelă pentru a vedea <strong>fișa plantei</strong>",
         inGreenhouse: "În seră",
-        bedsSub: "Lista straturilor inserate. Clic pe un rând pentru selecție.",
+        bedsSub: "Lista parcelelor introduse. Clic pe un rând pentru selecție.",
         yieldCost: "Semințe de cumpărat",
         yieldSub:
           "Semințele necesare și recolta estimată pentru realizarea acestui proiect.",
@@ -2279,7 +2327,7 @@
         harvest: "Recoltare",
         yieldPlant: "Recoltă/plantă",
         distanceHelp:
-          "Pe rând × între rânduri: spațiul minim între plante și între două rânduri din același strat.",
+          "Pe rând × între rânduri: spațiul minim între plante și între două rânduri din aceeași parcelă.",
         harvestHelp:
           "Zile orientative de la transplantare sau semănare directă; variază cu temperatura, soiul și îngrijirea.",
         perennial: "perenă",
@@ -2299,7 +2347,7 @@
         removePlant: "Elimină din seră",
         remove: "Elimină",
         overflowWarning:
-          "Straturile depășesc lungimea serei. Redu numărul de plante sau mărește sera (linia roșie = capătul serei).",
+          "Parcelele depășesc lungimea serei. Redu numărul de plante sau mărește sera (linia roșie = capătul serei).",
         autoPlanCompromise:
           "Am adăugat o cultură mai puțin ideală deoarece luna aceasta există puține alternative compatibile.",
         autoPlanEmptySeason:
@@ -2316,7 +2364,7 @@
           "<b>{a}</b> și <b>{b}</b> nu se potrivesc: mai bine ține-le la distanță sau separă-le cu altă cultură.",
         goodCompanions: "Asocieri bune prezente: {pairs}.",
         summary:
-          "<b>{plants}</b> plante în <b>{beds}</b> straturi · recoltă estimată <b>{yield}</b> la finalul ciclului.",
+          "<b>{plants}</b> plante în <b>{beds}</b> parcele · recoltă estimată <b>{yield}</b> la finalul ciclului.",
         shoppingItem: "{count} plante/semințe",
         clearGreenhouse: "Golește sera",
         undoAction: "Anulează",
@@ -2370,10 +2418,10 @@
         "preconfig.sizes_label": "1. Dimensiuni interne",
         "preconfig.sizes_badge": "Esențial",
         "preconfig.sizes_note":
-          "Dimensiunile determină câte straturi și plante poți cultiva.",
+          "Dimensiunile determină câte parcele și plante poți cultiva.",
         "preconfig.width": "Lățime",
         "preconfig.length": "Lungime",
-        "preconfig.path_label": "Cărare între straturi",
+        "preconfig.path_label": "Cărare între parcele",
         "preconfig.climate_label": "2. Climă",
         "preconfig.zona_label": "Zonă",
         "preconfig.serra_label": "Seră",
