@@ -88,6 +88,24 @@
       return null;
     },
 
+    // Carica il catalogo piante aggiornato e lo installa come window.PLANTS
+    // (con aggiornamento di window.TIPO per le nuove voci). Da chiamare una
+    // volta all'avvio di ogni pagina che usa il catalogo dinamico: prima era
+    // duplicato identico in conf-app.js e home-app.js.
+    async bootstrapPlants() {
+      try {
+        const customPlants = await this.getPlants();
+        if (customPlants) {
+          window.PLANTS = customPlants;
+          customPlants.forEach((p) => {
+            if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
+          });
+        }
+      } catch (e) {
+        console.error("Errore nel caricamento del catalogo piante:", e);
+      }
+    },
+
     async savePlants(plants) {
       const serverActive = await this.isServerActive();
       if (serverActive) {

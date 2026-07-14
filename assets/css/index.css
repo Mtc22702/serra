@@ -2,9 +2,9 @@
 @layer base, dark-theme;
 
 @import url("./index/01-fondazioni-hero.css");
-@import url("./index/02-calendario-catalogo.css");
-@import url("./index/03-pannelli-overlay.css");
-@import url("./index/04-responsive-header-contatti.css?v=2026-07-13-guide-locale");
-@import url("./index/05-catalogo-avanzato.css?v=2026-07-13-guide-locale");
+@import url("./index/02-calendario-catalogo.css?v=2026-07-14-cleanup-pass");
+@import url("./index/03-pannelli-overlay.css?v=2026-07-14-cleanup-pass");
+@import url("./index/04-responsive-header-contatti.css?v=2026-07-14-cleanup-fix2");
+@import url("./index/05-catalogo-avanzato.css?v=2026-07-14-cleanup-fix2");
 @import url("./index/06-hero-configuratore.css");
 @import url("./index/07-preconfigurazione.css");

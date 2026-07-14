@@ -1,9 +1,9 @@
 /* Moduli CSS del configuratore */
 @import url("./configuratore/01-fondazioni-intro.css");
-@import url("./configuratore/02-pannelli-controlli.css");
-@import url("./configuratore/03-scena-dettagli.css");
-@import url("./configuratore/04-modali-responsive.css");
+@import url("./configuratore/02-pannelli-controlli.css?v=2026-07-14-cleanup-round2");
+@import url("./configuratore/03-scena-dettagli.css?v=2026-07-14-cleanup-pass");
+@import url("./configuratore/04-modali-responsive.css?v=2026-07-14-cleanup-pass");
 @import url("./configuratore/05-progetti-calendario.css?v=2026-07-08-perf8");
 @import url("./configuratore/06-rifiniture-pdp.css?v=2026-07-08-perf8");
-@import url("./configuratore/07-livelli-esperienza.css");
+@import url("./configuratore/07-livelli-esperienza.css?v=2026-07-14-cleanup-pass");
 @import url("./configuratore/08-barra-guidata.css?v=2026-07-08-perf8");

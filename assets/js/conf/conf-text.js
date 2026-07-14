@@ -123,10 +123,36 @@ function localizedSowingGuide(plant) {
     "ravanello",
     "barbabietola",
     "rapa",
-    "valerianella"
+    "valerianella",
+    "daikon",
+    "scorzonera",
+    "fava",
+    "soia_edamame",
+    "cece",
+    "lenticchia",
+    "fagiolo_borlotto",
+    "crescione"
   ]);
-  const bulbs = new Set(["aglio", "scalogno", "cipolla"]);
-  const aromatics = new Set(["rosmarino", "timo", "origano", "salvia"]);
+  const bulbs = new Set([
+    "aglio",
+    "scalogno",
+    "cipolla",
+    "cipolla_rossa",
+    "cipollotto"
+  ]);
+  const aromatics = new Set([
+    "rosmarino",
+    "timo",
+    "origano",
+    "salvia",
+    "erba_cipollina",
+    "leustean",
+    "dragoncello",
+    "menta",
+    "maggiorana",
+    "camomilla",
+    "shiso"
+  ]);
   const warm = new Set([
     "pomodoro",
     "peperone",
@@ -137,7 +163,13 @@ function localizedSowingGuide(plant) {
     "cetriolo",
     "melone",
     "anguria",
-    "basilico"
+    "basilico",
+    "tomatillo",
+    "physalis",
+    "cucamelon",
+    "mais_dolce",
+    "patata_dolce",
+    "friggitello"
   ]);
   const name = plantText(plant, "nome").toLowerCase();
   const row = plant.d;
@@ -158,6 +190,12 @@ function localizedSowingGuide(plant) {
   if (plant.id === "fragola")
     method =
       "Transplantează plăntuțe sau stoloni înrădăcinați; semănarea din sămânță este lentă.";
+  if (plant.id === "patata")
+    method =
+      "Plantează tuberculi sănătoși și mușuroiește când tulpinile cresc.";
+  if (plant.id === "asparago")
+    method =
+      "Pornește de la coroane sau plăntuțe; cultura este perenă și cere răbdare.";
 
   let depth = sow.depth
     .replace("Colletto a livello del terreno", "Coletul la nivelul solului")

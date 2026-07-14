@@ -344,7 +344,7 @@
   body.livello-novizio .veg-filters,
   body.livello-novizio .crops-fill-main-btn,
   body.livello-novizio .crops-customize-footer {
-    display: none !important;
+    display: none;
   }
 
   body.livello-novizio .guided-intro-novizio,

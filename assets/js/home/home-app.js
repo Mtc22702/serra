@@ -112,15 +112,7 @@ function updateCatalogSearchSuggestions() {
   list.hidden = false;
   input.setAttribute("aria-expanded", "true");
 }
-// Esegue l'escape HTML
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
+// escapeHtml è ora definita una sola volta in assets/js/shared/escape-html.js
 (function setupCatalogSearchSuggestionsClick() {
   document.addEventListener("mousedown", (e) => {
     const btn = e.target.closest("#catalogSearchSuggestions button[data-name]");
@@ -513,17 +505,8 @@ window.addEventListener(
 );
 
 (async () => {
-  try {
-    const customPlants = await window.SerraAPI.getPlants();
-    if (customPlants) {
-      window.PLANTS = customPlants;
-      customPlants.forEach((p) => {
-        if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
-      });
-    }
-  } catch (e) {
-    console.error("Errore nel caricamento del catalogo piante:", e);
-  }
+  // Bootstrap del catalogo piante: logica condivisa in assets/js/api.js
+  await window.SerraAPI.bootstrapPlants();
 
   loadPrefs();
   if (new URLSearchParams(window.location.search).get("catalog") === "all") {

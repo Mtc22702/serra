@@ -656,7 +656,7 @@
   }
   body.cart-open .back-to-top,
   body.cart-open .cart-nudge {
-    display: none !important;
+    display: none;
   }
   .back-to-top:hover {
     background: #fff;

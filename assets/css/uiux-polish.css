@@ -1,5 +1,13 @@
 /* Rifiniture UI/UX finali: solo presentazione, nessuna logica applicativa. */
 
+/* Layer esplicito e dichiarato per ultimo: le regole di questo file
+   restano prioritarie sulle regole "normal" di base/dark-theme (come
+   già accadeva restando fuori da ogni layer), ma ora in modo esplicito
+   e prevedibile invece di dipendere da un dettaglio implicito della
+   cascata. Comportamento visivo invariato. */
+@layer base, dark-theme, polish;
+
+@layer polish {
 .guided-setup-toggle {
   display: block;
   grid-column: 1 / -1;
@@ -281,7 +289,7 @@
 }
 
 .guided-setup-toggle .guided-meta-edit {
-  display: none !important;
+  display: none;
 }
 
 .guided-setup-toggle .guided-intro-head {
@@ -411,19 +419,19 @@
 
 @media (min-width: 1101px) {
   .guided-setup-toggle > .guided-intro-body {
-    grid-template-areas: none !important;
+    grid-template-areas: none;
     grid-template-columns: minmax(360px, 0.9fr) minmax(430px, 1.1fr);
     align-items: stretch;
   }
 
   .guided-setup-toggle .guided-intro-head,
   .guided-setup-toggle .guided-intro-right {
-    grid-area: auto !important;
-    padding: 0 !important;
+    grid-area: auto;
+    padding: 0;
   }
 
   .guided-setup-toggle .guided-intro-right {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     justify-content: center;
   }
@@ -819,15 +827,6 @@ body.livello-esperto #panelSettings.is-collapsed {
   }
 }
 
-@layer base {
-  @media (max-width: 660px) {
-    .site-header .nav-actions > .theme-toggle,
-    .site-header .nav-actions > .nav-lang {
-      display: none !important;
-    }
-  }
-}
-
 /* Percorsi 2026: la serra resta il fulcro visivo, mentre i tre ingressi
    diventano immediatamente leggibili senza un clic preliminare. */
 .hero-cfg-inner {
@@ -1155,7 +1154,7 @@ html[data-theme="dark"] .journey-context-step.is-current {
     /* Safari iOS può sovrapporre la barra inferiore all'ultimo controllo.
        Questa riserva permette di far scorrere la CTA completamente sopra la
        toolbar e include anche l'area del gesto Home sui dispositivi con notch. */
-    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .hero-cfg-inner {
@@ -1379,20 +1378,20 @@ html[data-theme="dark"] .journey-context-step.is-current {
   .site-header .nav-menu-toggle:focus-visible,
   .site-header .nav-menu-toggle:active,
   .site-header .nav-menu-toggle[aria-expanded="true"] {
-    border-color: #72c58a !important;
-    background: #2d6a4f !important;
-    color: #fff !important;
+    border-color: #72c58a;
+    background: #2d6a4f;
+    color: #fff;
     box-shadow: 0 6px 16px rgba(27, 67, 50, 0.24);
     transform: translate(-50%, -50%);
   }
 
   .site-header .nav-menu-toggle span {
-    background: #fff !important;
+    background: #fff;
   }
 
   .site-header .nav-actions > .theme-toggle,
   .site-header .nav-actions > .nav-lang {
-    display: none !important;
+    display: none;
   }
 
   .site-header .cart-btn {
@@ -1778,13 +1777,13 @@ html[data-theme="dark"] .persona-pick {
 @media (max-width: 660px) {
   /* Nascondi la pillola superiore per liberare spazio verticale */
   .hero-season-kicker {
-    display: none !important;
+    display: none;
   }
 
   /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
   .hero-content {
-    gap: 1rem !important;
-    padding-top: 0.75rem !important;
+    gap: 1rem;
+    padding-top: 0.75rem;
   }
 
   .hero-headline {
@@ -1819,7 +1818,7 @@ html[data-theme="dark"] .persona-pick {
   }
 
   .hero-cfg {
-    margin-top: 0 !important;
+    margin-top: 0;
   }
 }
 
@@ -3308,3 +3307,5 @@ html[data-theme="dark"] body.livello-intermedio #noviceGuidePanel {
 html[data-theme="dark"] body.livello-esperto #noviceGuidePanel {
   border-top-color: #f0a087;
 }
+
+} /* fine @layer polish */

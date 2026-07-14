@@ -308,9 +308,6 @@
     color: #b03020;
     text-decoration-color: rgba(176, 48, 32, 0.4);
   }
-  .catalog-reset-btn[hidden] {
-    display: none !important;
-  }
   .catalog-hint {
     display: flex;
     align-items: center;
@@ -1166,10 +1163,6 @@
     color: rgba(255, 255, 255, 0.55);
     width: 100%;
   }
-  .conf-cart-hint[hidden] {
-    display: none !important;
-  }
-
   footer.footer-botanico {
     background: var(--green-dk);
     margin-top: 0;

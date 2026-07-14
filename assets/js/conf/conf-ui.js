@@ -1561,24 +1561,8 @@ function renderPlantDetailPanel() {
   const b = state.beds[state.selected];
   const p = BYID[b.plantId];
   const resaTot = b.count * p.resa;
-  let photoSrc = `assets/img/svg/${p.id}.svg`;
-  if (p.foto) {
-    if (
-      p.foto.startsWith("http://") ||
-      p.foto.startsWith("https://") ||
-      p.foto.startsWith("data:")
-    ) {
-      photoSrc = p.foto;
-    } else if (p.foto.includes("/")) {
-      photoSrc = p.foto;
-    } else {
-      photoSrc = `assets/img/photo/${p.foto}`;
-    }
-  } else if (PLANT_PHOTOS[p.id]) {
-    photoSrc = PLANT_PHOTOS[p.id];
-  } else {
-    photoSrc = `assets/img/photo/${p.id}.webp`;
-  }
+  // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
+  let photoSrc = window.resolvePlantPhoto(p, p.id);
   // Nella foto grande della scheda si preferisce la versione ad alta
   // risoluzione quando disponibile (cartella "large/"), tenendo quella
   // leggera per le miniature ovunque altrove. Vale solo per le foto locali

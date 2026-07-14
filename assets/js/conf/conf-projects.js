@@ -32,19 +32,9 @@ function projectsDefaultName(n) {
   return projectsText("projects.default_name", { n });
 }
 
-// Esegue l'escape dei caratteri HTML speciali
+// Delega all'unica implementazione condivisa: vedi assets/js/shared/escape-html.js
 function escapeHtmlProjects(s) {
-  return String(s).replace(
-    /[&<>"']/g,
-    (c) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[c]
-  );
+  return window.escapeHtml(s);
 }
 
 // Restituisce la configurazione di default per un nuovo progetto

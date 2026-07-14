@@ -27,7 +27,7 @@
   }
   body.detail-open .cart-nudge,
   body.detail-open .back-to-top {
-    display: none !important;
+    display: none;
   }
   .detail-panel {
     --detail-panel-height: min(96.6dvh, calc(100dvh - 2rem));
@@ -1225,7 +1225,7 @@
   }
   body.cart-open .cart-nudge,
   body.cart-open .back-to-top {
-    display: none !important;
+    display: none;
   }
   @keyframes slideLeft {
     from {

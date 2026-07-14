@@ -10,7 +10,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-14-mobile-crops-journey";
+      window.SERRA_APP_VERSION = "2026-07-14-i18n-account";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -75,7 +75,7 @@
     <!-- Fogli di stile principali -->
     <link rel="stylesheet" href="assets/css/index.css?v=2026-07-13-guide-locale" />
     <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-13-guide-locale" />
+    <link rel="stylesheet" href="assets/css/uiux-polish.css?v=2026-07-14-i18n-account" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -557,7 +557,7 @@
                 id="catalogType"
                 onchange="setCatalogType(this.value)"
                 aria-hidden="true"
-                style="display: none"
+                hidden
               >
                 <option value=""></option>
                 <option value="frutto">frutto</option>
@@ -986,7 +986,7 @@
           Impruneta (FI)
         </div>
         <div class="footer-gdpr-copy" id="footerCopy">
-          © 2025 Orto in Serra ·
+          © 2026 Orto in Serra ·
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
       </div>
@@ -1773,82 +1773,21 @@
     </div>
 
     <!-- Script di fine pagina -->
-    <!-- Gestione del Service Worker -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        const isLocalDev =
-          location.hostname === "localhost" ||
-          location.hostname === "127.0.0.1" ||
-          location.hostname === "0.0.0.0" ||
-          location.hostname === "::1" ||
-          location.hostname === "";
-
-        if (isLocalDev) {
-          const hadController = Boolean(navigator.serviceWorker.controller);
-          navigator.serviceWorker
-            .getRegistrations()
-            .then((registrations) =>
-              Promise.all(
-                registrations.map((registration) => registration.unregister())
-              )
-            )
-            .then(() => ("caches" in window ? caches.keys() : []))
-            .then((keys) =>
-              Promise.all(
-                keys
-                  .filter((key) => key.startsWith("serra-"))
-                  .map((key) => caches.delete(key))
-              )
-            )
-            .then(() => {
-              const reloadKey = "serra.dev-cache-reset";
-              if (hadController && !sessionStorage.getItem(reloadKey)) {
-                sessionStorage.setItem(reloadKey, "1");
-                location.reload();
-              } else if (!hadController) {
-                sessionStorage.removeItem(reloadKey);
-              }
-            })
-            .catch(() => {});
-        } else {
-          const hadControllerAtBoot = Boolean(
-            navigator.serviceWorker.controller
-          );
-          navigator.serviceWorker.addEventListener("controllerchange", () => {
-            if (!hadControllerAtBoot) return;
-            if (sessionStorage.getItem("serra.sw-reloaded")) return;
-            sessionStorage.setItem("serra.sw-reloaded", "1");
-            location.reload();
-          });
-
-          navigator.serviceWorker
-            .register(serraAsset("./sw.js"), { updateViaCache: "none" })
-            .then((registration) => {
-              registration.update();
-              // sw.js chiama self.skipWaiting() senza condizioni: il nuovo
-              // worker si attiva da sé, non serve chiederglielo da qui. Ci
-              // limitiamo a "sbloccare" il listener sopra quando arriva
-              // davvero una nuova versione, così un secondo aggiornamento
-              // nella stessa sessione può ricaricare di nuovo la pagina.
-              registration.addEventListener("updatefound", () => {
-                sessionStorage.removeItem("serra.sw-reloaded");
-              });
-            })
-            .catch(() => {});
-        }
-      }
-    </script>
+    <!-- Gestione del Service Worker: logica condivisa in assets/js/boot-sw.js -->
+    <script src="assets/js/boot-sw.js?v=2026-07-14-i18n-account" defer></script>
 
     <!-- Caricamento degli script dell'applicazione (Caricamento parallelo nativo) -->
-    <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/theme.js?v=2026-07-14-i18n-account" defer></script>
     <script src="assets/js/guide-link-i18n.js?v=2026-07-13-guide-locale" defer></script>
-    <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/nav.js?v=2026-07-14-i18n-account" defer></script>
     <script src="assets/js/i18n.js?v=2026-07-13-catalog-search-visible" defer></script>
-    <script src="assets/js/plants-data.js" defer></script>
-    <script src="assets/js/api.js" defer></script>
-    <script src="assets/js/home/home-data.js" defer></script>
+    <script src="assets/js/plants-data.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/shared/plant-photo.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/shared/escape-html.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/api.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/home/home-data.js?v=2026-07-14-i18n-account" defer></script>
     <script src="assets/js/home/home-catalog.js?v=2026-07-13-guide-locale" defer></script>
-    <script src="assets/js/home/home-cart.js" defer></script>
-    <script src="assets/js/home/home-app.js?v=2026-07-13-guide-locale" defer></script>
+    <script src="assets/js/home/home-cart.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/home/home-app.js?v=2026-07-14-i18n-account" defer></script>
   </body>
 </html>

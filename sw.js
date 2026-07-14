@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-14-mobile-crops-journey";
+const CACHE_VERSION = "2026-07-14-i18n-account";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -35,11 +35,14 @@ const PRECACHE = [
   "./assets/css/tema/05-pulsanti-stati.css",
   "./assets/css/tema/06-header-ritmo.css",
   "./assets/js/theme.js",
+  "./assets/js/boot-sw.js",
   "./assets/js/nav.js",
   "./assets/js/guide.js",
   "./assets/js/guide-link-i18n.js",
   "./assets/js/i18n.js",
   "./assets/js/plants-data.js",
+  "./assets/js/shared/plant-photo.js",
+  "./assets/js/shared/escape-html.js",
   "./assets/js/home/home-data.js",
   "./assets/js/home/home-catalog.js",
   "./assets/js/home/home-cart.js",

@@ -1103,7 +1103,7 @@
     /* Sul mobile il mese si vede via stageAutoPlanRow, non nel pannello */
     .panel--settings .crops-month-selector,
     #autoPlanSectionLabel {
-      display: none !important;
+      display: none;
     }
   }
 
@@ -1335,7 +1335,7 @@
     color: var(--verde);
   }
   .livello-novizio .veg-search-wrap {
-    display: none !important;
+    display: none;
   }
 
   .veg-cat-header {

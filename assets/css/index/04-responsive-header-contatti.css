@@ -149,9 +149,6 @@
     .nav-link:not(.cart-btn) {
       display: none;
     }
-    .nav-lang {
-      display: flex !important;
-    }
     .nav-lang select {
       padding: 0.35rem 0.58rem;
       font-size: 0.78rem;

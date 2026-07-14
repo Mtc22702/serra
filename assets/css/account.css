@@ -535,6 +535,11 @@ html[data-theme="dark"] .badge-category {
 }
 
 /* Cerca piante in admin dashboard */
+.admin-search-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 .admin-search-wrapper input {
   padding: 8px 14px;
   font-size: 0.9rem;
@@ -632,7 +637,16 @@ html[data-theme="dark"] .admin-tab.active {
   grid-column: span 2;
   margin-top: 10px;
 }
-@media (max-width: 768px) {
+.admin-charts-desc {
+  margin-bottom: 20px;
+}
+/* Azioni di reset pericolose (azzera ordini/clienti) */
+.admin-danger-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+@media (max-width: 660px) {
   .admin-backup-grid {
     grid-template-columns: 1fr;
   }
@@ -734,6 +748,11 @@ html[data-theme="dark"] .modal-card h3 {
 .modal-card select[multiple] {
   min-height: 120px;
   overflow-x: hidden;
+}
+
+/* Select multiple del modal "Modifica pianta" (mesi, amiche, nemiche) */
+.modal-multiselect {
+  height: 120px;
 }
 
 .modal-photo-field {
@@ -1012,7 +1031,7 @@ html[data-theme="dark"] .notification-content {
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
-@media (max-width: 768px) {
+@media (max-width: 660px) {
   .charts-container {
     grid-template-columns: 1fr;
   }
@@ -1147,7 +1166,7 @@ html[data-theme="dark"] .notification-content {
   }
 
   .admin-backup-grid .span-2-large {
-    grid-column: auto !important;
+    grid-column: auto;
   }
 
   .admin-backup-grid .card > div[style*="display: flex"] {

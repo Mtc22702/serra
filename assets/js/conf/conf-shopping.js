@@ -45,7 +45,10 @@ function isSupportPlant(p) {
 
 // Formatta un numero come stringa euro
 function euro(v) {
-  return "€ " + (Math.round(v * 100) / 100).toFixed(2).replace(".", ",");
+  return new Intl.NumberFormat(state.lang === "ro" ? "ro-RO" : "it-IT", {
+    style: "currency",
+    currency: "EUR"
+  }).format(v);
 }
 
 // Calcolo materiali extra (facoltativi, non comprende i semi: quelli sono

@@ -302,37 +302,10 @@ const TIPO_STYLE = {
   aromatica:
     "background:var(--badge-aromatica-bg, rgba(116,198,157,.22));color:var(--badge-aromatica-color, #1b5438)"
 };
-const PHOTO_MAP = {
-  bietola: "bietola_coste.webp",
-  cavolo: "cavolo_cappuccio.webp",
-  cavolonero: "cavolo_nero.webp",
-  cavolorapa: "cavolo_rapa.webp",
-  cavoletti: "cavoletti_bruxelles.webp",
-  coriandolo: "coriandolo.webp",
-  fagiolino: "fagiolino_nano.webp",
-  fagiolo: "fagiolo_rampicante.webp",
-  indivia: "indivia_scarola.webp",
-  origano: "origano.webp",
-  pakchoi: "pak_choi.webp"
-};
-
-// Risorse visive
+// Risorse visive. Logica di fallback condivisa: vedi assets/js/shared/plant-photo.js
 function photoSrc(id) {
   const p = (window.PLANTS || []).find((x) => x.id === id);
-  if (p && p.foto) {
-    if (
-      p.foto.startsWith("http://") ||
-      p.foto.startsWith("https://") ||
-      p.foto.startsWith("data:")
-    ) {
-      return p.foto;
-    }
-    if (p.foto.includes("/")) {
-      return p.foto;
-    }
-    return `assets/img/photo/${p.foto}`;
-  }
-  return `assets/img/photo/${PHOTO_MAP[id] || id + ".webp"}`;
+  return window.resolvePlantPhoto(p, id);
 }
 const FRUIT_EMOJI = {
   pomodoro: "🍅",

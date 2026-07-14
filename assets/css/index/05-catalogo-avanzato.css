@@ -279,7 +279,7 @@
     }
 
     .catalog-scope--advanced {
-      flex-wrap: wrap !important;
+      flex-wrap: wrap;
       width: 100%;
       min-width: 0;
     }
@@ -797,7 +797,7 @@
     background: rgba(255, 255, 255, 0.18);
   }
   .catalog-scope--advanced {
-    display: flex !important;
+    display: flex;
     flex-wrap: wrap;
     gap: 0.38rem;
     align-items: center;
@@ -814,10 +814,10 @@
     white-space: nowrap;
   }
   .catalog-scope--advanced .catalog-chip {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0.45rem !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
     padding: 0.35rem 0.8rem;
     border: 1.5px solid rgba(45, 106, 79, 0.12);
     color: var(--green-dk);
@@ -857,22 +857,22 @@
     color: inherit;
   }
   .catalog-scope--advanced .catalog-chip .chip-count {
-    min-width: 20px !important;
-    height: 20px !important;
-    background: rgba(45, 106, 79, 0.08) !important;
-    color: var(--green-dk) !important;
-    font-weight: 700 !important;
-    font-size: 0.72rem !important;
-    padding: 0 4px !important;
-    border-radius: 6px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-left: 0.25rem !important;
+    min-width: 20px;
+    height: 20px;
+    background: rgba(45, 106, 79, 0.08);
+    color: var(--green-dk);
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0 4px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.25rem;
   }
   .catalog-scope--advanced .catalog-chip.active .chip-count {
-    background: rgba(255, 255, 255, 0.22) !important;
-    color: #fff !important;
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
   }
   .catalog-scope--advanced .catalog-chip.active .chip-lbl,
   .catalog-scope--advanced .catalog-chip.active .chip-ico {
@@ -1520,10 +1520,13 @@
     }
   }
 
-  .compact-list-view {
+  /* #compactPlants (id, non solo classe) per battere in specificità
+     .catalog-pro-section .plant-compact-list senza forzare con importante:
+     l'elemento ha sempre quell'id (vedi index.html). */
+  #compactPlants.compact-list-view {
     display: grid;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .plant-card-super-compact {

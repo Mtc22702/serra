@@ -9,7 +9,7 @@
     <title>Area Riservata · Orto in Serra</title>
     <!-- Configurazione Asset e Versione -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-14-mobile-crops-journey";
+      window.SERRA_APP_VERSION = "2026-07-14-i18n-account";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -615,10 +615,7 @@
             <h3 data-i18n-acc="admin.catalog_list_title">
               Elenco Colture in Catalogo
             </h3>
-            <div
-              class="admin-search-wrapper"
-              style="display: flex; gap: 10px; align-items: center"
-            >
+            <div class="admin-search-wrapper">
               <input
                 type="text"
                 id="adminPlantSearch"
@@ -759,7 +756,7 @@
               <p id="adminStatsText" data-i18n-acc="admin.loading_stats">
                 Caricamento statistiche in corso...
               </p>
-              <div style="display: flex; gap: 10px; margin-top: 10px">
+              <div class="admin-danger-actions">
                 <button
                   class="btn btn-outline btn-danger btn-small"
                   onclick="handleClearOrders()"
@@ -782,7 +779,7 @@
               <h4 data-i18n-acc="admin.charts_title">
                 Grafici e Report Vendite
               </h4>
-              <p style="margin-bottom: 20px" data-i18n-acc="admin.charts_desc">
+              <p class="admin-charts-desc" data-i18n-acc="admin.charts_desc">
                 Analisi dell'andamento dei ricavi e delle colture più richieste
                 dai clienti.
               </p>
@@ -875,7 +872,6 @@
                   type="text"
                   id="editPlantFoto"
                   placeholder="pomodoro.webp"
-                  style="flex: 1"
                 />
                 <div class="modal-photo-preview-container">
                   <img
@@ -943,9 +939,9 @@
               >
               <select
                 id="editPlantMonths"
+                class="modal-multiselect"
                 multiple
                 required
-                style="height: 120px"
               >
                 <option value="1">Gennaio</option>
                 <option value="2">Febbraio</option>
@@ -968,8 +964,8 @@
               >
               <select
                 id="editPlantAmiche"
+                class="modal-multiselect"
                 multiple
-                style="height: 120px"
               ></select>
             </div>
             <div class="form-group">
@@ -979,8 +975,8 @@
               >
               <select
                 id="editPlantNemiche"
+                class="modal-multiselect"
                 multiple
-                style="height: 120px"
               ></select>
             </div>
           </div>
@@ -1173,8 +1169,21 @@
         '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
       );
       document.write(
+        '<script src="' +
+          serraAsset("assets/js/shared/plant-photo.js") +
+          '"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          serraAsset("assets/js/shared/escape-html.js") +
+          '"><\/script>'
+      );
+      document.write(
         '<script src="' + serraAsset("assets/js/account.js") + '"><\/script>'
       );
     </script>
+    <!-- Service worker: prima mancante su questa pagina, ora allineata
+         a index.html/configuratore.html tramite assets/js/boot-sw.js -->
+    <script src="assets/js/boot-sw.js?v=2026-07-14-i18n-account" defer></script>
   </body>
 </html>

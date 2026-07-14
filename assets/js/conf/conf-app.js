@@ -647,24 +647,8 @@ function updateConfCartUI() {
     .map(({ id, bustine }) => {
       const p = BYID[id];
       if (!p) return "";
-      let photo = "";
-      if (p.foto) {
-        if (
-          p.foto.startsWith("http://") ||
-          p.foto.startsWith("https://") ||
-          p.foto.startsWith("data:")
-        ) {
-          photo = p.foto;
-        } else if (p.foto.includes("/")) {
-          photo = p.foto;
-        } else {
-          photo = `assets/img/photo/${p.foto}`;
-        }
-      } else if (PLANT_PHOTOS[id]) {
-        photo = PLANT_PHOTOS[id];
-      } else {
-        photo = `assets/img/photo/${id}.webp`;
-      }
+      // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
+      let photo = window.resolvePlantPhoto(p, id);
       const emoji = FRUIT_EMOJI[id] || "🌱";
       const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
       const bustLabel =
@@ -877,17 +861,8 @@ window.addEventListener("storage", (event) => {
 window.addEventListener("serra:themechange", () => render());
 
 (async () => {
-  try {
-    const customPlants = await window.SerraAPI.getPlants();
-    if (customPlants) {
-      window.PLANTS = customPlants;
-      customPlants.forEach((p) => {
-        if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
-      });
-    }
-  } catch (e) {
-    console.error("Errore nel caricamento del catalogo piante:", e);
-  }
+  // Bootstrap del catalogo piante: logica condivisa in assets/js/api.js
+  await window.SerraAPI.bootstrapPlants();
 
   initConfig();
   initEvents();

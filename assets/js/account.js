@@ -7,468 +7,10 @@
   let currentLang = "it";
   let lastDbActive = null;
 
-  const ACCOUNT_I18N = {
-    it: {
-      "page.title": "Orto in Serra · Area Riservata",
-      "nav.home": "🏠 Home",
-      "nav.catalog": "🌿 Catalogo completo",
-      "nav.abbinamenti": "🤝 Abbinamenti",
-      "nav.configuratore": "📐 Configuratore",
-      "nav.account": "👤 Area Personale",
-      "nav.brand_sub": "Coltiva con un piano",
-      "nav.carrello": "Carrello",
-      "nav.aria_main": "Navigazione principale",
-      "nav.menu_explore": "Esplora",
-      "nav.menu_preferences": "Preferenze",
-      "nav.theme": "Tema",
-      "nav.theme_hint": "Chiaro / scuro",
-      "nav.language": "Lingua",
-      "cart.aria_open": "Apri carrello",
-      "dash.tracking_label": "📦 Tracking:",
-      "dash.loading_generic": "Caricamento...",
-      "admin.checking_connection": "Verifica dello stato della connessione in corso...",
-      "admin.loading_stats": "Caricamento statistiche in corso...",
-
-      // Auth Section
-      "auth.title_login": "Accedi",
-      "auth.title_register": "Registrati",
-      "auth.email": "Indirizzo Email",
-      "auth.password": "Password",
-      "auth.password_min_chars": "Minimo 6 caratteri",
-      "auth.login_btn": "Accedi all'Area Riservata",
-      "auth.name": "Nome e Cognome",
-      "auth.phone": "Numero di Telefono",
-      "auth.address": "Indirizzo di Spedizione",
-      "auth.city": "Città",
-      "auth.cap": "CAP",
-      "auth.register_btn": "Crea Account",
-      "auth.test_users": "Utenti di test pronti:",
-      "auth.test_customer": "Cliente:",
-      "auth.test_admin": "Amministratore:",
-
-      // User Dashboard
-      "dash.title": "Dati di Spedizione",
-      "dash.projects_title": "Le mie serre progettate",
-      "dash.project_name": "Progetto",
-      "dash.project_beds": "Aiuole",
-      "dash.project_updated": "Aggiornato",
-      "dash.project_open_btn": "Apri nel configuratore",
-      "dash.project_active": "Attivo",
-      "dash.empty_projects":
-        'Non hai ancora salvato una serra. Apri il <a href="configuratore.html">Configuratore</a> per iniziare a progettarne una!',
-      "dash.orders_title": "I miei ordini di semi",
-      "dash.save_btn": "Salva modifiche",
-      "dash.logout": "Esci",
-      "dash.empty_orders":
-        'Non hai ancora effettuato ordini. Visita la <a href="index.html#stagione">Home</a> o il <a href="configuratore.html">Configuratore</a> per inserire semi nel carrello!',
-      "dash.order_id": "ID Ordine",
-      "dash.order_date": "Data",
-      "dash.order_items": "Prodotti",
-      "dash.order_total": "Totale",
-      "dash.order_status": "Stato",
-      "dash.order_actions": "Azioni",
-      "dash.print_btn": "🖨️ Stampa",
-      "dash.notif_dismiss": "Segna come lette",
-      "dash.notif_loading": "Caricamento avvisi...",
-      "dash.profile_saved": "Modifiche salvate con successo!",
-
-      // Admin Dashboard Tabs
-      "admin.tab_plants": "Gestione Catalogo Piante",
-      "admin.tab_orders": "Ordini Ricevuti",
-      "admin.tab_users": "Gestione Utenti",
-      "admin.tab_backup": "Manutenzione Database",
-
-      "admin.panel_title": "Pannello Amministratore",
-      "admin.panel_sub": "Gestione Prodotti, Ordini e Listino prezzi",
-      "admin.catalog_list_title": "Elenco Colture in Catalogo",
-      "admin.search_placeholder": "Cerca coltura...",
-      "admin.add_plant_btn": "✚ Nuova Pianta",
-      "admin.visual": "Visual",
-      "admin.table_id": "ID",
-      "admin.table_name": "Nome",
-      "admin.table_cat": "Categoria",
-      "admin.table_price": "Prezzo Pacchetto",
-      "admin.table_qty": "Semi/Conf",
-      "admin.table_gg": "Giorni Matur.",
-      "admin.table_actions": "Azioni",
-
-      "admin.stats_title": "Amministrazione Database Locale",
-      "admin.reset_title": "Ripristina default",
-      "admin.reset_desc":
-        "Cancella tutte le modifiche apportate al catalogo delle piante e reimposta l'elenco predefinito iniziale dell'applicazione.",
-      "admin.reset_catalog": "Ripristina piante di fabbrica",
-      "admin.export_title": "Esporta backup database",
-      "admin.export_desc":
-        "Scarica un file JSON contenente lo stato completo del tuo catalogo piante locale.",
-      "admin.export_db": "Esporta JSON",
-      "admin.server_status": "Stato del Server Locale",
-      "admin.stats_reset": "Statistiche Database & Reset",
-      "admin.clear_orders": "Azzera Ordini",
-      "admin.clear_users": "Azzera Clienti",
-      "admin.charts_title": "Grafici e Report Vendite",
-      "admin.charts_desc":
-        "Analisi dell'andamento dei ricavi e delle colture più richieste dai clienti.",
-      "admin.chart_rev_title": "Ricavi per Categoria di Coltura (€)",
-      "admin.chart_top_title":
-        "Top 5 Varietà di Semi Ordinati (Bustine Totali)",
-      "admin.stats_plants": "Piante in catalogo",
-      "admin.stats_clients": "Clienti registrati",
-      "admin.stats_orders": "Ordini totali ricevuti",
-      "admin.no_sales": "Nessun dato di vendita disponibile.",
-      "admin.logged_in": "Loggato",
-      "admin.delete": "Elimina",
-      "admin.edit": "Modifica",
-      "admin.seeds": "semi",
-      "admin.days": "giorni",
-
-      "admin.orders_title": "Storico Ordini di tutti i Clienti",
-      "admin.orders_client": "Cliente",
-
-      "admin.users_title": "Elenco Clienti Registrati",
-      "admin.users_name": "Nome",
-      "admin.users_email": "Email",
-      "admin.users_phone": "Telefono",
-      "admin.users_address": "Indirizzo Spedizione",
-      "admin.users_role": "Ruolo",
-
-      // Edit Plant Modal
-      "modal.plant_id": "ID Pianta (univoco, minuscolo)",
-      "modal.plant_name": "Nome Visualizzato",
-      "modal.category": "Categoria",
-      "modal.emoji": "Emoji di backup (es: 🍅)",
-      "modal.photo": "Foto Reale (Nome file o URL)",
-      "modal.price": "Prezzo Busta (€)",
-      "modal.seeds": "Semi per busta",
-      "modal.maturity": "Giorni di crescita",
-      "modal.spacing": "Distanza di semina (cm)",
-      "modal.months":
-        "Mesi di semina in serra (seleziona più mesi: tocca per aggiungere/togliere, oppure Ctrl/Cmd su desktop)",
-      "modal.amiche":
-        "Piante Amiche (Consociazioni compatibili - tocca per selezionare più voci)",
-      "modal.nemiche":
-        "Piante Nemiche (Consociazioni incompatibili - tocca per selezionare più voci)",
-      "modal.cancel": "Annulla",
-      "modal.save": "Salva nel catalogo",
-      "modal.edit_title": "Modifica Coltura",
-      "modal.new_title": "Aggiungi nuova pianta",
-
-      // Footer
-      "footer.motto": '"Pianta con cura, raccogli con gioia."',
-      "footer.tip_title": "Consiglio del mese",
-      "footer.tip_text":
-        "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
-      "footer.explore": "Esplora",
-      "footer.legal": "Legale",
-      "footer.support": "Supporto",
-      "footer.rights": "© 2026 Orto in Serra · Tutti i diritti riservati",
-      "footer.privacy": "Privacy Policy",
-      "footer.cookie": "Cookie Policy",
-      "footer.terms": "Termini di Servizio",
-
-      // Kit & other keys
-      "nav.kit": "📦 Kit del mese",
-      "nav.contatti": "✉️ Contatti",
-
-      "db.online":
-        "<strong>Connesso al database locale del Mac (Node.js)</strong>. Le modifiche al catalogo saranno salvate direttamente sul disco.",
-      "db.online_details":
-        "🟢 <strong>Server attivo su http://localhost:3000</strong>.<br>Il catalogo viene letto e scritto direttamente nel file <code>db/plants.json</code> del tuo computer.",
-      "db.offline":
-        "<strong>Modalità GitHub Pages (Offline Database)</strong>. Il catalogo piante viene letto dal repository, le scritture verranno salvate in locale su questo dispositivo.",
-      "db.offline_details":
-        "🟡 <strong>Server locale non raggiungibile o protetto (Modalità statica)</strong>.<br>L'app è ospitata online. Le modifiche effettuate sono temporanee sul browser corrente tramite <code>localStorage</code>.",
-
-      "status.processing": "In elaborazione",
-      "status.shipped": "Spedito",
-      "status.completed": "Completato",
-      "status.cancelled": "Annullato",
-      "category.leaf": "Foglia",
-      "category.fruit": "Frutto",
-      "category.root": "Radice",
-      "category.aromatic": "Aromatica/Fiore",
-      "category.legume": "Legume",
-
-      "confirm.delete_order":
-        "Sei sicuro di voler eliminare definitivamente l'ordine '{id}' dal database?",
-      "confirm.clear_orders":
-        "Attenzione! Stai per eliminare TUTTI gli ordini presenti nel database. Questa azione non è reversibile. Procedere?",
-      "confirm.clear_users":
-        "Attenzione! Stai per eliminare tutti i clienti registrati. Rimarrà attivo solo l'account amministratore di default. Procedere?",
-      "confirm.delete_user":
-        "Sei sicuro di voler eliminare definitivamente l'utente con email '{email}'?\nI suoi ordini rimarranno associati al suo indirizzo come Cliente Occasionale.",
-      "confirm.delete_plant":
-        "Sei sicuro di voler eliminare la pianta '{id}' dal catalogo?",
-      "confirm.reset_catalog":
-        "Attenzione! Ripristinando il catalogo di fabbrica, eliminerai tutte le piante inserite o modificate. Procedere?",
-      "alert.orders_cleared": "Storico ordini svuotato con successo.",
-      "alert.users_cleared": "Database clienti ripristinato.",
-      "alert.plant_exists": "Una pianta con questo ID esiste già!",
-      "alert.catalog_reset":
-        "Catalogo ripristinato. La pagina verrà ricaricata.",
-      "alert.order_not_found": "Ordine non trovato!",
-      "prompt.tracking":
-        "Inserisci il codice di tracciamento della spedizione (opzionale):",
-      "notification.tracking": " (Codice tracking: {code})",
-      "notification.order_status":
-        "Il tuo ordine <strong>{id}</strong> è ora nello stato <strong>{status}</strong>!{tracking}",
-      "auth.login_error": "Email o Password non corrette.",
-      "auth.email_exists": "Questo indirizzo Email è già registrato.",
-      "auth.register_error": "Errore durante la registrazione. Riprova.",
-      "customer.guest": "Cliente Occasionale",
-
-      "invoice.subtitle": "Soluzioni Botaniche Professionali",
-      "invoice.title": "RICEVUTA D'ORDINE",
-      "invoice.number": "Numero",
-      "invoice.date": "Data",
-      "invoice.status": "Stato",
-      "invoice.sender": "Mittente",
-      "invoice.recipient": "Destinatario Spedizione",
-      "invoice.address": "Indirizzo",
-      "invoice.email": "Email",
-      "invoice.phone": "Tel",
-      "invoice.product": "Descrizione Prodotto (Semi)",
-      "invoice.code": "Codice",
-      "invoice.qty": "Quantità (Bustine)",
-      "invoice.unit_price": "Prezzo Unitario",
-      "invoice.subtotal": "Subtotale",
-      "invoice.taxable": "Imponibile",
-      "invoice.vat": "IVA (22%)",
-      "invoice.total": "Totale Ricevuta",
-      "invoice.thanks":
-        "Grazie per aver acquistato da Orto in Serra! Per qualsiasi domanda scrivi a assistenza@ortoinserra.it",
-      "invoice.legal":
-        "Documento valido come ricevuta d'acquisto telematica. IVA assolta all'origine."
-    },
-    ro: {
-      "page.title": "Orto in Serra · Zonă Rezervată",
-      "nav.home": "🏠 Acasă",
-      "nav.catalog": "🌿 Catalog complet",
-      "nav.abbinamenti": "🤝 Asocieri",
-      "nav.configuratore": "📐 Configurator",
-      "nav.account": "👤 Contul Meu",
-      "nav.brand_sub": "Cultivă cu un plan",
-      "nav.carrello": "Coș",
-      "nav.aria_main": "Navigare principală",
-      "nav.menu_explore": "Explorează",
-      "nav.menu_preferences": "Preferințe",
-      "nav.theme": "Temă",
-      "nav.theme_hint": "Luminos / întunecat",
-      "nav.language": "Limbă",
-      "cart.aria_open": "Deschide coșul",
-      "dash.tracking_label": "📦 Tracking:",
-      "dash.loading_generic": "Se încarcă...",
-      "admin.checking_connection": "Se verifică starea conexiunii...",
-      "admin.loading_stats": "Se încarcă statisticile...",
-
-      // Auth Section
-      "auth.title_login": "Autentificare",
-      "auth.title_register": "Înregistrare",
-      "auth.email": "Adresă Email",
-      "auth.password": "Parolă",
-      "auth.password_min_chars": "Minim 6 caractere",
-      "auth.login_btn": "Conectează-te la Zona Rezervată",
-      "auth.name": "Nume și Prenume",
-      "auth.phone": "Număr de Telefon",
-      "auth.address": "Adresă de Livrare",
-      "auth.city": "Oraș",
-      "auth.cap": "Cod Poștal",
-      "auth.register_btn": "Creează Cont",
-      "auth.test_users": "Utilizatori de test:",
-      "auth.test_customer": "Client:",
-      "auth.test_admin": "Administrator:",
-
-      // User Dashboard
-      "dash.title": "Date de Livrare",
-      "dash.projects_title": "Serele mele proiectate",
-      "dash.project_name": "Proiect",
-      "dash.project_beds": "Parcele",
-      "dash.project_updated": "Actualizat",
-      "dash.project_open_btn": "Deschide în configurator",
-      "dash.project_active": "Activ",
-      "dash.empty_projects":
-        'Nu ai salvat încă o seră. Deschide <a href="configuratore.html">Configuratorul</a> pentru a începe să proiectezi una!',
-      "dash.orders_title": "Comenzile mele de semințe",
-      "dash.save_btn": "Salvează modificările",
-      "dash.logout": "Deconectare",
-      "dash.empty_orders":
-        'Nu ai efectuat nicio comandă încă. Vizitează <a href="index.html#stagione">Pagina Principală</a> sau <a href="configuratore.html">Configuratorul</a> pentru a adăuga semințe în coș!',
-      "dash.order_id": "ID Comandă",
-      "dash.order_date": "Dată",
-      "dash.order_items": "Produse",
-      "dash.order_total": "Total",
-      "dash.order_status": "Stare",
-      "dash.order_actions": "Acțiuni",
-      "dash.print_btn": "Tipărește",
-      "dash.notif_dismiss": "Marchează ca citite",
-      "dash.notif_loading": "Se încarcă alertele...",
-      "dash.profile_saved": "Modificările au fost salvate cu succes!",
-
-      // Admin Dashboard Tabs
-      "admin.tab_plants": "Gestionare Catalog de Plante",
-      "admin.tab_orders": "Comenzi Primite",
-      "admin.tab_users": "Gestionare Utilizatori",
-      "admin.tab_backup": "Mentenanță Bază de Date",
-
-      "admin.panel_title": "Panou Administrator",
-      "admin.panel_sub": "Administrare Produse, Comenzi și Listă de Prețuri",
-      "admin.catalog_list_title": "Listă Culturi în Catalog",
-      "admin.search_placeholder": "Caută cultură...",
-      "admin.add_plant_btn": "✚ Plantă Nouă",
-      "admin.visual": "Imagine",
-      "admin.table_id": "ID",
-      "admin.table_name": "Nume",
-      "admin.table_cat": "Categorie",
-      "admin.table_price": "Preț Pachet",
-      "admin.table_qty": "Semințe/Conf",
-      "admin.table_gg": "Zile Matur.",
-      "admin.table_actions": "Acțiuni",
-
-      "admin.stats_title": "Administrare Bază de Date Locală",
-      "admin.reset_title": "Restabilire setări implicite",
-      "admin.reset_desc":
-        "Șterge toate modificările aduse catalogului de plante și restabilește lista implicită inițială a aplicației.",
-      "admin.reset_catalog": "Restabilește plantele implicite",
-      "admin.export_title": "Exportă backup bază de date",
-      "admin.export_desc":
-        "Descarcă un fișier JSON care conține starea completă a catalogului tău local de plante.",
-      "admin.export_db": "Exportă JSON",
-      "admin.server_status": "Stare Server Local",
-      "admin.stats_reset": "Statistici și Resetare Bază de Date",
-      "admin.clear_orders": "Șterge Comenzile",
-      "admin.clear_users": "Șterge Clienții",
-      "admin.charts_title": "Grafice și Rapoarte Vânzări",
-      "admin.charts_desc":
-        "Analiza evoluției veniturilor și a celor mai solicitate culturi de către clienți.",
-      "admin.chart_rev_title": "Venituri pe Categorie de Cultură (€)",
-      "admin.chart_top_title":
-        "Top 5 Soiuri de Semințe Ordonate (Total Plicuri)",
-      "admin.stats_plants": "Plante în catalog",
-      "admin.stats_clients": "Clienți înregistrați",
-      "admin.stats_orders": "Comenzi totale primite",
-      "admin.no_sales": "Nu există date de vânzări disponibile.",
-      "admin.logged_in": "Conectat",
-      "admin.delete": "Șterge",
-      "admin.edit": "Modifică",
-      "admin.seeds": "semințe",
-      "admin.days": "zile",
-
-      "admin.orders_title": "Istoricul Comenzilor Tuturor Clienților",
-      "admin.orders_client": "Client",
-
-      // Admin Users Tab
-      "admin.users_title": "Listă Clienți Înregistrați",
-      "admin.users_name": "Nume",
-      "admin.users_email": "Email",
-      "admin.users_phone": "Telefon",
-      "admin.users_address": "Adresă Livrare",
-      "admin.users_role": "Rol",
-
-      // Edit Plant Modal
-      "modal.plant_id": "ID Plantă (unic, minuscule)",
-      "modal.plant_name": "Nume Afișat",
-      "modal.category": "Categorie",
-      "modal.emoji": "Emoji de rezervă (ex: 🍅)",
-      "modal.photo": "Fotografie Reală (Nume fișier sau URL)",
-      "modal.price": "Preț Plic (€)",
-      "modal.seeds": "Semințe pe plic",
-      "modal.maturity": "Zile de creștere",
-      "modal.spacing": "Distanță de semănare (cm)",
-      "modal.months":
-        "Luni de semănare în seră (selectează mai multe: atinge pentru a adăuga/elimina, sau Ctrl/Cmd pe desktop)",
-      "modal.amiche":
-        "Plante Prietene (Asocieri compatibile - atinge pentru a selecta mai multe)",
-      "modal.nemiche":
-        "Plante Dușmane (Asocieri incompatibile - atinge pentru a selecta mai multe)",
-      "modal.cancel": "Anulează",
-      "modal.save": "Salvează în catalog",
-      "modal.edit_title": "Modifică cultura",
-      "modal.new_title": "Adaugă plantă nouă",
-
-      // Footer
-      "footer.motto": '"Plantează cu grijă, culege cu bucurie."',
-      "footer.tip_title": "Sfatul lunii",
-      "footer.tip_text": "Udă la bază, niciodată pe frunze: previi făinarea.",
-      "footer.explore": "Explorare",
-      "footer.legal": "Legal",
-      "footer.support": "Asistență",
-      "footer.rights": "© 2026 Orto in Serra · Toate drepturile rezervate",
-      "footer.privacy": "Politica de confidențialitate",
-      "footer.cookie": "Politica privind cookie-urile",
-      "footer.terms": "Termeni de utilizare",
-
-      // Kit & other keys
-      "nav.kit": "📦 Kitul lunii",
-      "nav.contatti": "✉️ Contact",
-
-      "db.online":
-        "<strong>Conectat la baza de date locală de pe Mac (Node.js)</strong>. Modificările catalogului vor fi salvate direct pe disc.",
-      "db.online_details":
-        "🟢 <strong>Server activ pe http://localhost:3000</strong>.<br>Catalogul este citit și scris direct în fișierul <code>db/plants.json</code> de pe computer.",
-      "db.offline":
-        "<strong>Mod GitHub Pages (Bază de date offline)</strong>. Catalogul de plante este citit din repository, iar modificările vor fi salvate local pe acest dispozitiv.",
-      "db.offline_details":
-        "🟡 <strong>Serverul local nu este accesibil sau este protejat (Mod static)</strong>.<br>Aplicația este găzduită online. Modificările făcute sunt temporare în browserul curent prin <code>localStorage</code>.",
-
-      "status.processing": "În procesare",
-      "status.shipped": "Expediat",
-      "status.completed": "Finalizat",
-      "status.cancelled": "Anulat",
-      "category.leaf": "Frunze",
-      "category.fruit": "Fruct",
-      "category.root": "Rădăcină",
-      "category.aromatic": "Aromatice/Flori",
-      "category.legume": "Leguminoase",
-
-      "confirm.delete_order":
-        "Sigur vrei să ștergi definitiv comanda '{id}' din baza de date?",
-      "confirm.clear_orders":
-        "Atenție! Urmează să ștergi TOATE comenzile din baza de date. Această acțiune nu este reversibilă. Continui?",
-      "confirm.clear_users":
-        "Atenție! Urmează să ștergi toți clienții înregistrați. Va rămâne activ doar contul implicit de administrator. Continui?",
-      "confirm.delete_user":
-        "Sigur vrei să ștergi definitiv utilizatorul cu emailul '{email}'?\nComenzile lui vor rămâne asociate adresei ca Client Ocazional.",
-      "confirm.delete_plant": "Sigur vrei să ștergi planta '{id}' din catalog?",
-      "confirm.reset_catalog":
-        "Atenție! Prin resetarea catalogului implicit, vei șterge toate plantele adăugate sau modificate. Continui?",
-      "alert.orders_cleared": "Istoricul comenzilor a fost golit cu succes.",
-      "alert.users_cleared": "Baza de date cu clienți a fost resetată.",
-      "alert.plant_exists": "Există deja o plantă cu acest ID!",
-      "alert.catalog_reset":
-        "Catalogul a fost resetat. Pagina se va reîncărca.",
-      "alert.order_not_found": "Comanda nu a fost găsită!",
-      "prompt.tracking": "Introdu codul de urmărire al expedierii (opțional):",
-      "notification.tracking": " (Cod tracking: {code})",
-      "notification.order_status":
-        "Comanda ta <strong>{id}</strong> este acum în starea <strong>{status}</strong>!{tracking}",
-      "auth.login_error": "Emailul sau parola nu sunt corecte.",
-      "auth.email_exists": "Această adresă de email este deja înregistrată.",
-      "auth.register_error": "Eroare la înregistrare. Încearcă din nou.",
-      "customer.guest": "Client Ocazional",
-
-      "invoice.subtitle": "Soluții Botanice Profesionale",
-      "invoice.title": "CHITANȚĂ COMANDĂ",
-      "invoice.number": "Număr",
-      "invoice.date": "Dată",
-      "invoice.status": "Stare",
-      "invoice.sender": "Expeditor",
-      "invoice.recipient": "Destinatar Livrare",
-      "invoice.address": "Adresă",
-      "invoice.email": "Email",
-      "invoice.phone": "Tel",
-      "invoice.product": "Descriere Produs (Semințe)",
-      "invoice.code": "Cod",
-      "invoice.qty": "Cantitate (Plicuri)",
-      "invoice.unit_price": "Preț Unitar",
-      "invoice.subtotal": "Subtotal",
-      "invoice.taxable": "Bază impozabilă",
-      "invoice.vat": "TVA (22%)",
-      "invoice.total": "Total Chitanță",
-      "invoice.thanks":
-        "Îți mulțumim că ai cumpărat de la Orto in Serra! Pentru orice întrebare scrie la assistenza@ortoinserra.it",
-      "invoice.legal":
-        "Document valabil ca chitanță de cumpărare online. TVA achitat la origine."
-    }
-  };
+  // Dizionario spostato in assets/js/i18n.js (shared.account), caricato
+  // prima di questo file: qui restano solo il motore di lookup (tAcc) e gli
+  // attributi data-i18n-acc*, invariati.
+  const ACCOUNT_I18N = window.SERRA_I18N?.account || { it: {}, ro: {} };
 
   function tAcc(key, vars = {}) {
     const dict = ACCOUNT_I18N[currentLang] || ACCOUNT_I18N.it;
@@ -817,19 +359,9 @@
     });
   }
 
-  // Esegue l'escape dei caratteri HTML speciali (nomi progetto liberi)
+  // Delega all'unica implementazione condivisa: vedi assets/js/shared/escape-html.js
   function escapeHtmlAccount(s) {
-    return String(s).replace(
-      /[&<>"']/g,
-      (c) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;"
-        })[c]
-    );
+    return window.escapeHtml(s);
   }
 
   // Attiva il progetto scelto e apre il configuratore già su quella serra:
@@ -1689,61 +1221,100 @@
       anguria: "🍉",
       lattuga: "🥬",
       radicchio: "🥬",
-      rucola: "🌿",
+      rucola: "🥬",
       spinaci: "🥬",
       bietola: "🥬",
-      cavolo: "🥦",
+      cavolo: "🥬",
       verza: "🥬",
       broccolo: "🥦",
       cavolfiore: "🥦",
-      finocchio: "🌱",
-      sedano: "🌿",
+      cavolonero: "🥬",
+      cavolorapa: "🥦",
+      carota: "🥕",
+      finocchio: "🌿",
       prezzemolo: "🌿",
       basilico: "🌿",
-      aglio: "🧄",
+      coriandolo: "🌿",
+      aneto: "🌿",
       cipolla: "🧅",
-      porro: "🌱",
-      carota: "🥕",
-      ravanello: "🍒",
-      patata: "🥔",
+      aglio: "🧄",
+      porro: "🧅",
+      scalogno: "🧅",
+      fagiolino: "🫘",
       fagiolo: "🫘",
-      fagiolino: "🌱",
       pisello: "🫛",
-      fave: "🌱"
+      fragola: "🍓",
+      sedano: "🌿",
+      ravanello: "🥬",
+      barbabietola: "🌿",
+      cicoria: "🥬",
+      indivia: "🥬",
+      pakchoi: "🥬",
+      cavoletti: "🥬",
+      rapa: "🌿",
+      valerianella: "🥬",
+      rosmarino: "🌿",
+      timo: "🌿",
+      origano: "🌿",
+      salvia: "🌿",
+      pastinaca: "🥕",
+      radice_prezemolo: "🌿",
+      sedano_rapa: "🌿",
+      rafano: "🌿",
+      patata: "🥔",
+      patata_dolce: "🍠",
+      cipolla_rossa: "🧅",
+      cipollotto: "🧅",
+      erba_cipollina: "🌿",
+      loboda: "🥬",
+      stevia_dolce: "🥬",
+      leustean: "🌿",
+      dragoncello: "🌿",
+      menta: "🌿",
+      maggiorana: "🌿",
+      camomilla: "🌼",
+      mais_dolce: "🌽",
+      tomatillo: "🍅",
+      physalis: "🍒",
+      cucamelon: "🥒",
+      asparago: "🌿",
+      carciofo: "🌿",
+      cardo: "🥬",
+      crescione: "🥬",
+      mizuna: "🥬",
+      senape_foglia: "🥬",
+      tatsoi: "🥬",
+      cavolo_cinese: "🥬",
+      daikon: "🥬",
+      scorzonera: "🌿",
+      topinambur: "🌻",
+      fava: "🫘",
+      soia_edamame: "🫘",
+      cece: "🫘",
+      lenticchia: "🫘",
+      fagiolo_borlotto: "🫘",
+      cavolo_rosso: "🥬",
+      cavolo_navone: "🌿",
+      broccolo_rapa: "🥬",
+      shiso: "🌿",
+      broccolo_romanesco: "🥦",
+      friggitello: "🫑",
+      agretti: "🌿",
+      borragine: "🌸",
+      catalogna: "🥬",
+      acetosa: "🌿",
+      leurda: "🧄",
+      melissa: "🌿",
+      cerfoglio: "🌿",
+      cimbru: "🌿"
     };
     return emojis[plantId] || "🌿";
   }
 
-  const PHOTO_MAP = {
-    bietola: "bietola_coste.webp",
-    cavolo: "cavolo_cappuccio.webp",
-    cavolonero: "cavolo_nero.webp",
-    cavolorapa: "cavolo_rapa.webp",
-    cavoletti: "cavoletti_bruxelles.webp",
-    coriandolo: "coriandolo.webp",
-    fagiolino: "fagiolino_nano.webp",
-    fagiolo: "fagiolo_rampicante.webp",
-    indivia: "indivia_scarola.webp",
-    origano: "origano.webp",
-    pakchoi: "pak_choi.webp"
-  };
-
+  // Logica di fallback condivisa: vedi assets/js/shared/plant-photo.js
   function getPhotoSrc(id) {
     const plantObj = allPlants.find((p) => p.id === id);
-    if (plantObj && plantObj.foto) {
-      if (
-        plantObj.foto.startsWith("http://") ||
-        plantObj.foto.startsWith("https://") ||
-        plantObj.foto.startsWith("data:")
-      ) {
-        return plantObj.foto;
-      }
-      if (plantObj.foto.includes("/")) {
-        return plantObj.foto;
-      }
-      return `assets/img/photo/${plantObj.foto}`;
-    }
-    return `assets/img/photo/${PHOTO_MAP[id] || id + ".webp"}`;
+    return window.resolvePlantPhoto(plantObj, id);
   }
 
   function updateModalPhotoPreview(val, plantId) {
@@ -1763,7 +1334,7 @@
         src = `assets/img/photo/${val}`;
       }
     } else if (plantId) {
-      src = `assets/img/photo/${PHOTO_MAP[plantId] || plantId + ".webp"}`;
+      src = window.resolvePlantPhoto(null, plantId);
     }
     previewImg.src = src;
   }
