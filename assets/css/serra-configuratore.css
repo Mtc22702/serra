@@ -15498,23 +15498,23 @@ html[data-theme="dark"]
     display: flex;
     align-items: center;
     gap: 7px;
-    margin: 0 0 8px 0;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0.35px;
+    margin: 0 0 6px 0;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
     text-transform: uppercase;
-    color: var(--verde-scuro);
+    color: var(--muted);
   }
   .veg-search-label::after {
     content: var(--veg-search-badge, "Cerca qui");
     display: inline-flex;
     align-items: center;
-    padding: 3px 9px;
+    padding: 2px 7px;
     border-radius: 999px;
-    background: var(--verde-scuro);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 800;
+    background: rgba(45, 106, 79, 0.08);
+    color: #587160;
+    font-size: 9px;
+    font-weight: 700;
     letter-spacing: 0.05em;
   }
   .veg-search-box {
@@ -15524,14 +15524,12 @@ html[data-theme="dark"]
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    min-height: 58px;
-    padding: 0 1.1rem;
-    border: 2px solid rgba(45, 106, 79, 0.35);
-    border-radius: 16px;
-    background: #fff;
-    box-shadow:
-      0 4px 18px rgba(27, 67, 50, 0.1),
-      0 1px 3px rgba(27, 67, 50, 0.06);
+    min-height: 48px;
+    padding: 0 0.8rem;
+    border: 1px solid rgba(45, 106, 79, 0.2);
+    border-radius: 12px;
+    background: #f8faf7;
+    box-shadow: 0 1px 3px rgba(27, 67, 50, 0.05);
     transition:
       border-color 0.16s,
       box-shadow 0.16s,
@@ -15540,23 +15538,23 @@ html[data-theme="dark"]
   .veg-search-box:focus-within {
     border-color: var(--green);
     box-shadow:
-      0 0 0 4px rgba(82, 183, 136, 0.2),
-      0 4px 16px rgba(27, 67, 50, 0.12);
-    background: #fff;
-    transform: translateY(-1px);
+      0 0 0 3px rgba(82, 183, 136, 0.16),
+      0 2px 8px rgba(27, 67, 50, 0.08);
+    background: #fffdf9;
+    transform: none;
   }
   .veg-search-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    border-radius: 11px;
-    background: rgba(45, 106, 79, 0.1);
-    color: var(--green);
-    font-weight: 900;
-    font-size: 1.35rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(45, 106, 79, 0.06);
+    color: #5f806b;
+    font-weight: 800;
+    font-size: 1rem;
     line-height: 1;
   }
   .veg-search-input {
@@ -15567,14 +15565,14 @@ html[data-theme="dark"]
     outline: 0;
     background: transparent;
     color: var(--green-dk);
-    padding: 0 0.5rem 0 0.4rem;
-    font-size: 1.25rem;
-    font-weight: 600;
+    padding: 0 0.35rem;
+    font-size: 1rem;
+    font-weight: 500;
   }
   .veg-search-input::placeholder {
-    color: #7a9a88;
+    color: #82948a;
     font-weight: 500;
-    font-size: 1.15rem;
+    font-size: 0.95rem;
   }
   .veg-search-input::-webkit-search-cancel-button {
     display: none;
@@ -15601,9 +15599,9 @@ html[data-theme="dark"]
 
 /* Variante dark allineata alla ricerca principale della Home. */
 html[data-theme="dark"] .veg-search-box {
-  background: #f4f9f6;
-  border-color: var(--green, #2d6a4f);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: #dce8df;
+  border-color: rgba(139, 198, 154, 0.32);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
 }
 
 html[data-theme="dark"] .veg-search-input {
@@ -15617,8 +15615,8 @@ html[data-theme="dark"] .veg-search-input::placeholder {
 }
 
 html[data-theme="dark"] .veg-search-icon {
-  background: rgba(45, 106, 79, 0.1);
-  color: #2d6a4f;
+  background: rgba(45, 106, 79, 0.06);
+  color: #466b54;
 }
 
 html[data-theme="dark"] .veg-search-clear {
@@ -20917,16 +20915,16 @@ html[data-theme="dark"] .veg-search-clear:hover {
     border-color: var(--dark-border);
   }
   html[data-theme="dark"] .veg-search-box {
-    border-color: rgba(82, 183, 136, 0.45);
-    box-shadow:
-      0 4px 14px rgba(0, 0, 0, 0.22),
-      0 1px 3px rgba(0, 0, 0, 0.14);
+    background: #dce8df;
+    border-color: rgba(139, 198, 154, 0.32);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
   }
   html[data-theme="dark"] .veg-search-label {
     color: var(--dark-text);
   }
   html[data-theme="dark"] .veg-search-label::after {
-    background: #376f49;
+    background: rgba(139, 198, 154, 0.14);
+    color: #b9d8c1;
   }
   html[data-theme="dark"]
     .veg-list-scroll-wrap.has-overflow:not(.is-at-end)::after {
