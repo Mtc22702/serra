@@ -424,9 +424,9 @@ function applyLanguage() {
   if (fld[4]) fld[4].textContent = tx("greenhouse");
   setText("#presetBar .fld", "readyLayouts");
   setText("#presetBarHint", "readyLayoutsHint");
-  setOptionText("inZona", "freddo", "zoneColdTitle");
-  setOptionText("inZona", "temperato", "zoneTempTitle");
-  setOptionText("inZona", "caldo", "zoneWarmTitle");
+  setOptionText("inZona", "freddo", "zoneColdOption");
+  setOptionText("inZona", "temperato", "zoneTempOption");
+  setOptionText("inZona", "caldo", "zoneWarmOption");
   setOptionText("inRisc", "no", "unheated");
   setOptionText("inRisc", "si", "heatedOption");
   setText("#orientLabel", "sunSide");
