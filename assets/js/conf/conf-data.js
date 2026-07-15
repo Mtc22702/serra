@@ -4,7 +4,6 @@ const MARGIN = 18;
 const PATH = 34;
 const BED_GAP = 6;
 const BEDPAD = 9;
-const MAX_GLYPH = 1400;
 const MIN_VISUAL_GLYPH_R = 8;
 
 const MESI = [

@@ -765,32 +765,6 @@ function emojiSpreadIndexes(itemCount, cols, targetCount) {
   return result;
 }
 
-// Seleziona gli elementi da disegnare in un'aiuola
-function visualItemsForBed(bed, maxItems) {
-  if (bed.positions.length <= maxItems) {
-    return bed.positions.map((pos, sourceIndex) => ({ pos, sourceIndex }));
-  }
-
-  const cols = Math.max(1, bed.cols);
-  const totalRows = Math.max(1, Math.ceil(bed.positions.length / cols));
-  const showRows = Math.max(
-    1,
-    Math.min(totalRows, Math.floor(maxItems / cols))
-  );
-  const items = [];
-  for (let s = 0; s < showRows; s++) {
-    const row =
-      showRows === 1 ? 0 : Math.round((s * (totalRows - 1)) / (showRows - 1));
-    for (let c = 0; c < cols; c++) {
-      const sourceIndex = row * cols + c;
-      if (sourceIndex < bed.positions.length) {
-        items.push({ pos: bed.positions[sourceIndex], sourceIndex });
-      }
-    }
-  }
-  return items;
-}
-
 // Calcola la dimensione ottimale del testo etichetta
 function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
   const greenhouseScale = Math.min(sceneWidth, sceneHeight) * 0.016;
@@ -951,8 +925,6 @@ function buildScene() {
   if (L.beds.length === 0) {
     g += `<text x="${ox + Wi / 2}" y="${oy + Li / 2}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${Math.min(Wi, Li) * 0.06}" fill="#8c8470">${tx("emptyGreenhouse")}</text>`;
   }
-  let drawn = 0;
-
   const totalPlants = L.beds.reduce((sum, b) => sum + b.count, 0);
   L.beds.forEach((bed) => {
     const bx = ox + bed.x,
@@ -972,11 +944,11 @@ function buildScene() {
     if (state.overlay) g += overlayShape(bed, bx, by);
 
     const r = fittedPlantRadius(bed.plant, bed);
-    const bedGlyphBudget =
-      totalPlants <= MAX_GLYPH
-        ? bed.count
-        : Math.max(6, Math.floor((bed.count * MAX_GLYPH) / totalPlants));
-    const bedItems = visualItemsForBed(bed, bedGlyphBudget);
+    // Ogni posizione calcolata dal motore corrisponde a una pianta disegnata.
+    const bedItems = bed.positions.map((pos, sourceIndex) => ({
+      pos,
+      sourceIndex
+    }));
     const glyphDetail =
       totalPlants > 360 || bedItems.length > 60 ? "compact" : "full";
     const emojiCount = Math.min(
@@ -990,12 +962,10 @@ function buildScene() {
     );
     const pendingEmoji = [];
     bedItems.forEach(({ pos, sourceIndex }, i) => {
-      if (drawn >= MAX_GLYPH) return;
-      drawn++;
       const rng = rngFrom((bed.idx + 1) * 7919 + sourceIndex * 131);
       const rr = r * (0.92 + rng() * 0.16);
       const rot = Math.floor(rng() * 360);
-      g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng, glyphDetail)}</g>`;
+      g += `<g class="plant-glyph" transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng, glyphDetail)}</g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
         const fs = Math.max(rr * 1.2, 8) * 0.8;

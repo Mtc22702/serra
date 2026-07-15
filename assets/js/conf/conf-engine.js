@@ -510,9 +510,13 @@ function addPlant(id) {
   state.manualPlanNotice = "";
   state.selected = state.beds.findIndex((b) => b.plantId === id);
 
+  // In esperto il catalogo può continuare a completare la serra in automatico,
+  // ma distribuisce l'espansione tra le colture e applica un tetto per specie:
+  // evita che una sola pianta minuta diventi un'aiuola enorme.
   autoBalanceLayout(true, true, {
     preserveLockedCounts: true,
-    expandLockedCounts: false
+    expandLockedCounts: false,
+    respectDiversityLimit: true
   });
 
   const noSpace =
@@ -619,8 +623,13 @@ function fillSelectedPlants() {
   const historyBefore = captureHistorySnapshot();
   state.autoPlan = false;
   state.manualPlanNotice = "";
-  const manualCounts = new Map(
-    state.beds.map((bed) => [bed.plantId, bed.count])
+  // “Riempi spazi vuoti” può modificare solo le colture non bloccate.
+  // Conserviamo quindi esclusivamente le quantità che l'utente ha fissato:
+  // ripristinare anche quelle libere annullava il riempimento appena calcolato.
+  const lockedCounts = new Map(
+    state.beds
+      .filter((bed) => bed.countLocked)
+      .map((bed) => [bed.plantId, bed.count])
   );
   normalizeSelectedCropInputsForOptimization();
   state.beds.forEach((bed) => {
@@ -634,7 +643,7 @@ function fillSelectedPlants() {
     expandLockedCounts: false,
     preserveLockedCounts: true
   });
-  restoreManualCountsWhenPossible(manualCounts);
+  restoreManualCountsWhenPossible(lockedCounts);
   commitColumnAssignment();
   if (bedsSnapshotsMatch(historyBefore.beds, cloneBedsSnapshot())) {
     state.autoPlan = historyBefore.autoPlan;
