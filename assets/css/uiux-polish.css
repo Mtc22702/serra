@@ -899,9 +899,9 @@
     border-radius: 999px;
     background: var(--journey-accent);
     color: #fff;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.05em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.035em;
     text-transform: uppercase;
     white-space: nowrap;
   }
@@ -1527,7 +1527,7 @@
       border-radius: 8px;
       background: transparent;
       color: #6f7b72;
-      font-family: "Outfit", sans-serif;
+      font-family: "DM Sans", sans-serif;
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.02em;
@@ -1716,9 +1716,10 @@
     }
 
     .hero-headline {
-      max-width: 10.5ch;
-      font-size: clamp(2.05rem, 9vw, 2.25rem);
-      line-height: 1.13;
+      max-width: 100%;
+      font-size: clamp(2rem, 8.3vw, 2.25rem);
+      line-height: 1.08;
+      text-wrap: pretty;
     }
 
     .hero-cfg-inner {
@@ -2235,6 +2236,65 @@
       min-height: 32px;
       padding-inline: 9px;
       font-size: 0.66rem;
+    }
+
+    /* La menzione "consigliato" non deve più comprimere la descrizione: ogni
+       elemento ha una propria area e l'azione resta sempre sulla destra. */
+    .hero-cfg-level {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) max-content;
+      grid-template-areas:
+        "icon body action"
+        "icon recommendation action";
+      column-gap: 9px;
+      row-gap: 4px;
+      align-items: center;
+      min-height: 76px;
+    }
+
+    .hero-cfg-level .pc-persona-ico {
+      grid-area: icon;
+    }
+
+    .hero-cfg-level .pc-persona-body {
+      grid-area: body;
+    }
+
+    .hero-cfg-level .hero-cfg-level-action {
+      grid-area: action;
+      align-self: center;
+    }
+
+    .hero-cfg-level .hero-cfg-recommendation {
+      grid-area: recommendation;
+      justify-self: start;
+      position: static;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 18px;
+      margin: 0;
+      padding: 0.12rem 0.42rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 12%, #fff);
+      color: var(--accent-text);
+      font-size: 0.6rem;
+      font-weight: 650;
+      letter-spacing: 0.025em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .hero-cfg-level .pc-persona-body b {
+      font-weight: 600;
+    }
+
+    .hero-cfg-level .pc-persona-body small {
+      display: block;
+      font-weight: 500;
+      overflow: visible;
+      -webkit-line-clamp: unset;
     }
   }
 
@@ -3290,6 +3350,205 @@
 
     .hero-cfg {
       margin-top: 0;
+    }
+  }
+
+  /* Su smartphone accorcia l'hero della home del 10%, senza scalare i contenuti. */
+  @media (max-width: 660px) {
+    .hero-immersive {
+      min-height: 90vh;
+      min-height: 90svh;
+    }
+
+    .hero-content {
+      gap: 0.9rem;
+      padding-bottom: calc(6.75rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .hero-cfg-inner {
+      gap: 0.63rem;
+      padding: 0.81rem 0.81rem 0.9rem;
+    }
+  }
+
+  /* Base tipografica comune: leggibile prima di tutto, senza microtesti o pesi aggressivi. */
+  body {
+    font-weight: 400;
+    letter-spacing: 0.002em;
+  }
+
+  main :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--serif, "Fraunces", Georgia, serif);
+    font-weight: 600 !important;
+    letter-spacing: -0.008em;
+    line-height: 1.18;
+  }
+
+  main :is(p, li) {
+    line-height: 1.52;
+  }
+
+  main :is(label, small, .tag, .badge, .chip) {
+    font-family: var(--sans, "DM Sans", system-ui, sans-serif);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  main :is(button, .btn, input, select, textarea) {
+    font-family: var(--sans, "DM Sans", system-ui, sans-serif);
+    font-weight: 500 !important;
+  }
+
+  /* CTA e controlli: un peso medio evita testo denso e visivamente schiacciato. */
+  :where(
+    button,
+    [role="button"],
+    .btn,
+    .nav-link,
+    .hero-cfg-level,
+    .hero-cfg-catalog-link,
+    .guide-cta,
+    .guide-start-modal-confirm,
+    .preconfig-cta,
+    .conf-btn,
+    .kit-cta-btn,
+    .empty-cta,
+    .catalog-import-btn
+  ) {
+    font-weight: 600 !important;
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+
+  :where(
+    button,
+    [role="button"],
+    .btn,
+    .nav-link,
+    .hero-cfg-level,
+    .hero-cfg-catalog-link,
+    .guide-cta,
+    .guide-start-modal-confirm,
+    .preconfig-cta,
+    .conf-btn,
+    .kit-cta-btn,
+    .empty-cta,
+    .catalog-import-btn
+  ) :where(span, b, strong) {
+    font-weight: inherit;
+    letter-spacing: inherit;
+  }
+
+  /* Header mobile: menu a sinistra, identità dell'app centrata, carrello a destra. */
+  @media (max-width: 660px) {
+    .site-header-inner {
+      position: relative;
+    }
+
+    .site-header .nav-brand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      max-width: calc(100vw - 9rem);
+      margin: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .site-header .nav-menu-toggle {
+      left: 0.68rem;
+      transform: translateY(-50%);
+    }
+
+    .site-header .nav-menu-toggle,
+    .site-header .nav-menu-toggle:hover,
+    .site-header .nav-menu-toggle:focus,
+    .site-header .nav-menu-toggle:focus-visible,
+    .site-header .nav-menu-toggle:active,
+    .site-header .nav-menu-toggle[aria-expanded="true"] {
+      transform: translateY(-50%);
+    }
+  }
+
+  /* Su mobile i passaggi restano affiancati, con spazio distribuito in base alla
+     lunghezza dell'etichetta invece di rimpicciolire troppo il testo. */
+  @media (max-width: 660px) {
+    .workflow-hub .journey-context-progress {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.2rem;
+      align-items: center;
+    }
+
+    .workflow-hub .journey-context-step,
+    .workflow-hub .journey-context-step.is-current,
+    .workflow-hub .journey-context-step.is-done {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 40px;
+      padding: 0.38rem 0.2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .workflow-hub .journey-context-step[data-journey-step="settings"],
+    .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+    .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+      flex: 1.45 1 0;
+      min-height: 40px;
+      padding: 0.38rem 0.16rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+      justify-content: center;
+    }
+  }
+
+  /* Tablet e desktop: i passaggi restano compatti, ma non usano più il
+     microtesto ereditato dalla prima versione della barra guidata. */
+  .workflow-hub .journey-context-step[data-journey-step="settings"],
+  .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+  .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+
+  .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]) {
+    font-weight: 650;
+  }
+
+  @media (max-width: 660px) {
+    .workflow-hub .journey-context-step[data-journey-step="settings"],
+    .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+    .workflow-hub .journey-context-step[data-journey-step="settings"].is-current,
+    .workflow-hub .journey-context-step:not([data-journey-step="settings"]),
+    .workflow-hub
+      .journey-context-step.is-current:not([data-journey-step="settings"]) {
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .workflow-hub .journey-context-level {
+      min-height: 30px;
+      padding-inline: 0.62rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .config-page-title .guided-tutorial-link-short {
+      font-size: 0.7rem;
+      font-weight: 600;
     }
   }
 } /* fine @layer polish */

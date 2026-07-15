@@ -843,7 +843,7 @@
       border-radius: 8px;
       background: transparent;
       color: var(--green);
-      font-family: "Outfit", sans-serif;
+      font-family: "DM Sans", sans-serif;
       font-size: 0.79rem;
       font-weight: 700;
       text-align: center;
@@ -862,7 +862,7 @@
       border-radius: 12px;
       background: var(--bg);
       color: #fff;
-      font-family: "Outfit", sans-serif;
+      font-family: "DM Sans", sans-serif;
       font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;

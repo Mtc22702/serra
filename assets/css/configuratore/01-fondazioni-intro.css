@@ -20,7 +20,7 @@
     --ombra-aperta: 0 20px 44px rgba(31, 58, 38, 0.22);
     --bordo-aperto: 1.5px solid rgba(47, 107, 58, 0.32);
     --serif: "Fraunces", Georgia, "Times New Roman", serif;
-    --sans: "Outfit", "Segoe UI", system-ui, sans-serif;
+    --sans: "DM Sans", "Segoe UI", system-ui, sans-serif;
   }
   * {
     box-sizing: border-box;

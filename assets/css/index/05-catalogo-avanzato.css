@@ -143,6 +143,35 @@
     transform: translateY(-2px);
     box-shadow: 0 14px 30px rgba(27, 67, 50, 0.1);
   }
+
+  /* Anche nelle due colonne del tablet il tipo resta una piccola etichetta
+     allineata alla destra del nome, senza saltare su una seconda riga. */
+  @media (max-width: 1024px) {
+    .catalog-pro-section .compact-name-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) max-content;
+      align-items: center;
+      gap: 0.32rem;
+      min-width: 0;
+    }
+    .catalog-pro-section .compact-name {
+      min-width: 0;
+      font-size: 0.78rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .catalog-pro-section .compact-badge {
+      justify-self: end;
+      min-width: 0;
+      padding: 0.1rem 0.34rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+  }
   .catalog-pro-section .compact-thumb {
     width: 64px;
     height: 64px;
@@ -227,11 +256,34 @@
       border-radius: 0;
     }
     .catalog-pro-section .compact-info {
-      padding: 0.55rem 0.65rem 0.15rem;
+      padding: 0.55rem 0.4rem 0.15rem;
       gap: 0.28rem;
     }
+    /* Nome e categoria condividono una riga stabile: la categoria non può più
+       scendere sotto il nome di alcune piante e restare a destra per altre. */
+    .catalog-pro-section .compact-name-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) max-content;
+      align-items: center;
+      gap: 0.28rem;
+      min-width: 0;
+    }
     .catalog-pro-section .compact-name {
-      font-size: 0.86rem;
+      min-width: 0;
+      font-size: 0.78rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .catalog-pro-section .compact-badge {
+      justify-self: end;
+      min-width: 0;
+      padding: 0.1rem 0.3rem;
+      font-size: 0.56rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      white-space: nowrap;
     }
     .catalog-pro-section .compact-note {
       font-size: 0.72rem;
@@ -1087,7 +1139,7 @@
     flex: 0 0 auto;
   }
   .top-price b {
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 1.05rem;
     font-weight: 800;
     color: var(--green-dk);
@@ -1231,7 +1283,7 @@
     border-radius: 999px;
     background: var(--white);
     color: var(--green-dk);
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.76rem;
     font-weight: 600;
     cursor: pointer;
@@ -1266,7 +1318,7 @@
     border: none;
     background: none;
     color: var(--green);
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 800;
     font-size: 0.76rem;
     cursor: pointer;
@@ -1280,7 +1332,7 @@
     border: none;
     background: none;
     color: var(--accent);
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 700;
     font-size: 0.78rem;
     cursor: pointer;
@@ -1298,7 +1350,7 @@
     border: none;
     background: var(--green);
     color: #fff;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 700;
     font-size: 0.86rem;
     cursor: pointer;
@@ -1327,7 +1379,7 @@
     gap: 0.5rem;
     padding: 0.7rem 1.5rem;
     border-radius: 999px;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 700;
     font-size: 0.86rem;
     cursor: pointer;
@@ -1419,7 +1471,7 @@
     border-radius: 10px;
     background-color: rgba(45, 106, 79, 0.07);
     color: var(--green-dk);
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
@@ -1618,7 +1670,7 @@
 
   .super-compact-price {
     flex-shrink: 0;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.86rem;
     font-weight: 700;
     color: var(--green);
@@ -1790,4 +1842,12 @@ html[data-theme="dark"]
   .chip-count {
   background: #0f2219 !important;
   color: #fff !important;
+}
+
+/* Regola finale: prevale sulle dimensioni desktop definite più sopra e
+   mantiene completi i nomi anche nella griglia a due colonne del tablet. */
+@media (min-width: 701px) and (max-width: 1024px) {
+  .catalog-pro-section .compact-name {
+    font-size: 0.78rem;
+  }
 }

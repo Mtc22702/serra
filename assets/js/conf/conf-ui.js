@@ -2098,10 +2098,10 @@ async function buildProjectExportCanvas() {
     ctx.fillStyle = "#f7f4e9";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#1f3a26";
-    ctx.font = '800 54px "Outfit", Arial, sans-serif';
+    ctx.font = '800 54px "DM Sans", Arial, sans-serif';
     ctx.fillText(tx("print.title"), side, 82);
     ctx.fillStyle = "#617064";
-    ctx.font = '500 27px "Outfit", Arial, sans-serif';
+    ctx.font = '500 27px "DM Sans", Arial, sans-serif';
     const zoneKey =
       state.zona === "freddo"
         ? "cold"
@@ -2124,11 +2124,11 @@ async function buildProjectExportCanvas() {
 
     const summaryTop = headerHeight + mapHeight + 60;
     ctx.fillStyle = "#1f3a26";
-    ctx.font = '800 35px "Outfit", Arial, sans-serif';
+    ctx.font = '800 35px "DM Sans", Arial, sans-serif';
     ctx.fillText(tx("inGreenhouse"), side, summaryTop);
     const totalPlants = crops.reduce((sum, crop) => sum + crop.count, 0);
     ctx.textAlign = "right";
-    ctx.font = '700 25px "Outfit", Arial, sans-serif';
+    ctx.font = '700 25px "DM Sans", Arial, sans-serif';
     ctx.fillStyle = "#52705a";
     ctx.fillText(
       `${tx("print.total")}: ${totalPlants}`,
@@ -2143,11 +2143,11 @@ async function buildProjectExportCanvas() {
       const x = side + column * (columnWidth + 70);
       const y = summaryTop + 54 + row * 42;
       ctx.fillStyle = "#2c4633";
-      ctx.font = '600 25px "Outfit", Arial, sans-serif';
+      ctx.font = '600 25px "DM Sans", Arial, sans-serif';
       ctx.fillText(crop.name, x, y);
       ctx.textAlign = "right";
       ctx.fillStyle = "#6b776d";
-      ctx.font = '500 23px "Outfit", Arial, sans-serif';
+      ctx.font = '500 23px "DM Sans", Arial, sans-serif';
       ctx.fillText(String(crop.count), x + columnWidth, y);
       ctx.textAlign = "left";
     });

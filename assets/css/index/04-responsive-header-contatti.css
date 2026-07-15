@@ -936,7 +936,7 @@
     font-weight: 600;
     color: var(--green);
     cursor: pointer;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     transition: border-color 0.15s;
   }
   .nav-lang select:hover {
@@ -1280,7 +1280,7 @@
     border: none;
     font-size: 0.84rem;
     font-weight: 700;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     cursor: pointer;
     transition: background 0.14s;
   }
@@ -1295,7 +1295,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 0.84rem;
     font-weight: 500;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     cursor: pointer;
     transition: all 0.14s;
   }
@@ -1480,7 +1480,7 @@
     border-radius: 8px;
     background: transparent;
     color: var(--green);
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.79rem;
     font-weight: 700;
     text-align: center;
@@ -1499,7 +1499,7 @@
     border-radius: 13px;
     background: var(--bg);
     color: #fff;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.82rem;
     font-weight: 700;
     cursor: pointer;

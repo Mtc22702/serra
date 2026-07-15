@@ -68,7 +68,7 @@
     line-height: 1.15;
   }
   .month-tile-count {
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.9rem;
     font-weight: 800;
     color: var(--green);
@@ -78,7 +78,7 @@
     color: #fff;
   }
   .month-tile-label {
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.6rem;
     font-weight: 600;
     color: var(--muted);
@@ -169,7 +169,7 @@
     background: var(--white);
     color: var(--text);
     font:
-      500 0.9rem "Outfit",
+      500 0.9rem "DM Sans",
       sans-serif;
     padding: 0 0.78rem;
     box-shadow: 0 2px 8px rgba(31, 58, 38, 0.04);
@@ -194,7 +194,7 @@
     color: var(--muted);
     padding: 0.38rem 0.5rem;
     font:
-      600 0.83rem "Outfit",
+      600 0.83rem "DM Sans",
       sans-serif;
     cursor: pointer;
     transition: all 0.18s;
@@ -293,7 +293,7 @@
     color: var(--muted);
     padding: 0 0.65rem;
     font:
-      600 0.8rem "Outfit",
+      600 0.8rem "DM Sans",
       sans-serif;
     cursor: pointer;
     transition: all 0.16s;
@@ -466,7 +466,7 @@
     color: var(--green);
     font-size: 0.83rem;
     font-weight: 600;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     cursor: pointer;
     transition: all 0.16s;
     display: flex;
@@ -784,7 +784,7 @@
     color: var(--green-dk);
     font-size: 0.8rem;
     font-weight: 700;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     cursor: pointer;
     transition: all 0.16s;
   }
@@ -900,7 +900,7 @@
     border-radius: 12px;
     font-size: 0.9rem;
     font-weight: 800;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     background: var(--green-dk);
     color: #fff;
     border: none;
@@ -925,7 +925,7 @@
     text-decoration: none;
     font-size: 0.84rem;
     font-weight: 800;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     cursor: pointer;
   }
   .kit-plan-link:hover {

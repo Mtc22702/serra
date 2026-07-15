@@ -960,7 +960,7 @@ function buildScene() {
   });
 
   if (L.beds.length === 0) {
-    g += `<text x="${ox + Wi / 2}" y="${oy + Li / 2}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${Math.min(Wi, Li) * 0.06}" fill="#8c8470">${tx("emptyGreenhouse")}</text>`;
+    g += `<text x="${ox + Wi / 2}" y="${oy + Li / 2}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${Math.min(Wi, Li) * 0.06}" fill="#8c8470">${tx("emptyGreenhouse")}</text>`;
   }
   const totalPlants = L.beds.reduce((sum, b) => sum + b.count, 0);
   L.beds.forEach((bed) => {
@@ -1035,7 +1035,7 @@ function buildScene() {
     const qBg = "rgba(20,40,20,.52)";
     const qLine = "rgba(255,255,255,.78)";
     const qText =
-      'font-family="Outfit,sans-serif" font-size="' +
+      'font-family="DM Sans,sans-serif" font-size="' +
       dimFs +
       '" font-weight="700" fill="rgba(255,255,255,.97)" stroke="rgba(0,0,0,.55)" stroke-width="2.5" paint-order="stroke" pointer-events="none"';
     if (bed.w >= 70 && bed.h >= 55) {
@@ -1074,14 +1074,14 @@ function buildScene() {
             ? ` textLength="${Math.max(20, dimBW - 8)}" lengthAdjust="spacingAndGlyphs"`
             : "";
         g += `<rect x="${dimBX}" y="${dimBY}" width="${dimBW}" height="${dimBH}" rx="3" fill="${qBg}" pointer-events="none"/>`;
-        g += `<text x="${bx + bed.w / 2}" y="${dimBY + dimFs2 + 1}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${dimFs2}" font-weight="700" fill="rgba(255,255,255,.97)" pointer-events="none"${dimTextFit}>${dimText}</text>`;
+        g += `<text x="${bx + bed.w / 2}" y="${dimBY + dimFs2 + 1}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${dimFs2}" font-weight="700" fill="rgba(255,255,255,.97)" pointer-events="none"${dimTextFit}>${dimText}</text>`;
       }
     }
     g += `</g>`;
     g += pendingEmoji.join("");
     g += `<g pointer-events="none">`;
     g += `<rect x="${labelCenterX - labelW / 2}" y="${labelTop}" width="${labelW}" height="${labelH}" rx="${Math.min(5, labelH / 2)}" fill="${nightMode ? "rgba(20,43,32,.68)" : "rgba(249,251,245,.62)"}" stroke="${nightMode ? "rgba(176,221,190,.3)" : "rgba(31,80,49,.24)"}" stroke-width=".6"/>`;
-    g += `<text x="${labelCenterX}" y="${labelTop + labelH / 2}" dominant-baseline="middle" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${labelSize}" font-weight="750" fill="${nightMode ? "#e8f4eb" : "#254331"}"${labelTextFit}>${label}</text>`;
+    g += `<text x="${labelCenterX}" y="${labelTop + labelH / 2}" dominant-baseline="middle" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${labelSize}" font-weight="750" fill="${nightMode ? "#e8f4eb" : "#254331"}"${labelTextFit}>${label}</text>`;
     g += `</g>`;
   });
   g += `</g>`;
@@ -1121,7 +1121,7 @@ function buildScene() {
   g += `<g transform="translate(${vbW - PAD - 2} ${sunY})" opacity="0.9">
         <circle r="15" fill="${nightMode ? "#10231f" : "#fff"}" stroke="${nightMode ? "#e7d98d" : "#d9a441"}" stroke-width="${nightMode ? "1.5" : "2"}"/>
         <text x="0" y="5" text-anchor="middle" font-size="16">${nightMode ? "🌙" : "☀️"}</text>
-        <text x="0" y="${sunLabelY}" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="${nightMode ? "#e9dfaa" : "#7b6a3a"}">${nightMode ? tx("nightLabel") : tx("compassSouth")}</text>
+        <text x="0" y="${sunLabelY}" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="800" fill="${nightMode ? "#e9dfaa" : "#7b6a3a"}">${nightMode ? tx("nightLabel") : tx("compassSouth")}</text>
       </g>`;
 
   const sceneLabel = tx("sceneAria", {
@@ -1176,7 +1176,7 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   s += `<line x1="${doorX}" y1="${doorY + 2}" x2="${doorX}" y2="${doorY + doorH - 2}" stroke="rgba(91,111,112,.72)" stroke-width="1.5" pointer-events="none"/>`;
   s += `<rect x="${doorX - dw / 2 + 4}" y="${doorY + 3}" width="${dw - 8}" height="${doorH - 6}" rx="2" fill="url(#glass)" stroke="rgba(255,255,255,.62)" stroke-width=".8" pointer-events="none"/>`;
   s += `<circle cx="${doorX + dw * 0.18}" cy="${doorY + doorH / 2}" r="1.45" fill="#9a7138" stroke="rgba(255,255,255,.7)" stroke-width=".45" pointer-events="none"/>`;
-  s += `<text x="${doorX}" y="${doorY + doorH + 12}" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="#4b5d5e" stroke="rgba(255,255,255,.82)" stroke-width="2" paint-order="stroke" pointer-events="none">${tx("greenhouseEntrance")}</text>`;
+  s += `<text x="${doorX}" y="${doorY + doorH + 12}" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="800" fill="#4b5d5e" stroke="rgba(255,255,255,.82)" stroke-width="2" paint-order="stroke" pointer-events="none">${tx("greenhouseEntrance")}</text>`;
   return s;
 }
 

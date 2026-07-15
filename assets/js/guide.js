@@ -58,6 +58,13 @@
       "expert.s5p":
         "Controlla spazio e compatibilità, poi genera la lista dei semi.",
       "expert.cta": "Apri modalità esperto",
+      "modal.kicker": "PERCORSO SELEZIONATO",
+      "modal.title": "Pronto a iniziare?",
+      "modal.cancel": "Torna alla guida",
+      "modal.confirm": "Apri il configuratore",
+      "modal.novizio": "Ti guideremo passo passo, con un piano automatico adatto alla tua serra.",
+      "modal.intermedio": "Partirai da un piano stagionale che potrai personalizzare liberamente.",
+      "modal.esperto": "Aprirai una serra vuota, pronta per costruire il tuo progetto in piena libertà.",
       help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore."
     },
     ro: {
@@ -119,6 +126,13 @@
       "expert.s5p":
         "Controlează spațiul și compatibilitatea, apoi generează lista de semințe.",
       "expert.cta": "Deschide modul expert",
+      "modal.kicker": "TRASEU SELECTAT",
+      "modal.title": "Gata să începi?",
+      "modal.cancel": "Înapoi la ghid",
+      "modal.confirm": "Deschide configuratorul",
+      "modal.novizio": "Te vom ghida pas cu pas, cu un plan automat potrivit pentru sera ta.",
+      "modal.intermedio": "Vei porni de la un plan de sezon pe care îl poți personaliza liber.",
+      "modal.esperto": "Vei deschide o seră goală, gata să îți construiești proiectul în deplină libertate.",
       help: "<b>Poți schimba nivelul oricând.</b> Setările serei rămân disponibile în configurator."
     }
   };
@@ -130,6 +144,12 @@
     intermedio: { icon: "🌿", hint: "tab.intermedio_hint" },
     esperto: { icon: "🧭", hint: "tab.esperto_hint" }
   };
+  const startTargets = {
+    novizio: "configuratore.html?livello=novizio&guided=1",
+    intermedio: "configuratore.html?livello=intermedio&guided=1",
+    esperto: "configuratore.html?livello=esperto&mode=expert&empty=1"
+  };
+  let modalReturnFocus = null;
 
   // Compatibilità con il markup memorizzato nella cache.
   tabs.forEach((tab) => {
@@ -179,6 +199,29 @@
         ?.focus({ preventScroll: true });
   }
 
+  function closeStartModal() {
+    const modal = document.getElementById("guideStartModal");
+    if (!modal || modal.hasAttribute("hidden")) return;
+    modal.setAttribute("hidden", "");
+    document.documentElement.classList.remove("guide-modal-open");
+    document.body.classList.remove("guide-modal-open");
+    modalReturnFocus?.focus();
+  }
+
+  function openStartModal(level, trigger) {
+    const modal = document.getElementById("guideStartModal");
+    const confirm = document.getElementById("guideStartModalConfirm");
+    const copyElement = document.getElementById("guideStartModalCopy");
+    if (!modal || !confirm || !startTargets[level]) return;
+    modalReturnFocus = trigger;
+    confirm.href = startTargets[level];
+    copyElement.textContent = copy[document.documentElement.lang === "ro" ? "ro" : "it"][`modal.${level}`];
+    modal.removeAttribute("hidden");
+    document.documentElement.classList.add("guide-modal-open");
+    document.body.classList.add("guide-modal-open");
+    modal.querySelector(".guide-start-modal-confirm")?.focus();
+  }
+
   tabs.forEach((tab) =>
     tab.addEventListener("click", () => selectRoute(tab.dataset.guide, true))
   );
@@ -205,6 +248,15 @@
       selectRoute(nextTab.dataset.guide);
       nextTab.focus();
     });
+  document.querySelectorAll("[data-guide-start]").forEach((button) => {
+    button.addEventListener("click", () => openStartModal(button.dataset.guideStart, button));
+  });
+  document.querySelectorAll("[data-guide-modal-close]").forEach((button) => {
+    button.addEventListener("click", closeStartModal);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeStartModal();
+  });
   document
     .getElementById("guideLangSelect")
     ?.addEventListener("change", (event) => applyLanguage(event.target.value));

@@ -1013,7 +1013,7 @@
     .print-summary {
       display: block;
       break-inside: avoid;
-      font-family: Outfit, Arial, sans-serif;
+      font-family: DM Sans, Arial, sans-serif;
       color: #1f3a26;
     }
     .print-heading {

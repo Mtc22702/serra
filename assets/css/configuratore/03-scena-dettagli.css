@@ -558,7 +558,7 @@
     color: var(--verde);
   }
   .count-ctl b {
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 18px;
     font-weight: 700;
     min-width: 42px;
@@ -826,7 +826,7 @@
     color: #46554a;
   }
   .summary b {
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 700;
     color: var(--verde-scuro);
   }

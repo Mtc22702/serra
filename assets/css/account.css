@@ -2,7 +2,7 @@
 
 :root {
   --font-serif: "Fraunces", Georgia, serif;
-  --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -871,7 +871,7 @@ html[data-theme="dark"] .order-item-qty {
     width: 100%;
     background: #fff !important;
     color: #000 !important;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     padding: 20px;
     box-sizing: border-box;
   }

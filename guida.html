@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#2f6b3a" />
     <title>Come usare Orto in Serra</title>
     <script>
-      window.SERRA_APP_VERSION = "2026-07-15-hero-vertical-rhythm";
+      window.SERRA_APP_VERSION = "2026-07-15-full-text-audit-2";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" || location.hostname === "127.0.0.1";
       (function () {
@@ -21,12 +21,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="assets/css/serra-guida.css?v=2026-07-15-hero-vertical-rhythm"
+      href="assets/css/serra-guida.css?v=2026-07-15-full-text-audit-2"
     />
   </head>
   <body>
@@ -37,7 +37,14 @@
         <span><b>Orto in Serra</b><small>Coltiva con un piano</small></span>
       </a>
       <nav aria-label="Navigazione guida">
-        <a href="index.html" data-guide-key="nav.home">Home</a>
+        <a
+          class="guide-home-link"
+          href="index.html"
+          aria-label="Torna alla home"
+        >
+          <span class="guide-home-icon" aria-hidden="true">🏠</span>
+          <span data-guide-key="nav.home">Home</span>
+        </a>
       </nav>
       <div class="guide-header-actions">
         <button
@@ -196,10 +203,10 @@
             <span class="step-icon">🔄</span>
           </li>
         </ol>
-        <a class="guide-cta" href="index.html?preconfig=novizio"
+        <button class="guide-cta" type="button" data-guide-start="novizio"
           ><span data-guide-key="novice.cta">Inizia il percorso guidato</span>
           <span aria-hidden="true">→</span></a
-        >
+        </button>
       </section>
 
       <!-- Percorso intermedio con piano iniziale e possibilità di personalizzazione -->
@@ -275,10 +282,10 @@
             <span class="step-icon">🛒</span>
           </li>
         </ol>
-        <a class="guide-cta" href="index.html?preconfig=intermedio"
+        <button class="guide-cta" type="button" data-guide-start="intermedio"
           ><span data-guide-key="intermediate.cta">Personalizza un piano</span>
           <span aria-hidden="true">→</span></a
-        >
+        </button>
       </section>
 
       <!-- Percorso esperto con controllo completo su colture e disposizione -->
@@ -358,10 +365,10 @@
             <span class="step-icon">✓</span>
           </li>
         </ol>
-        <a class="guide-cta" href="index.html?preconfig=esperto"
+        <button class="guide-cta" type="button" data-guide-start="esperto"
           ><span data-guide-key="expert.cta">Apri modalità esperto</span>
           <span aria-hidden="true">→</span></a
-        >
+        </button>
       </section>
 
       <!-- Nota che chiarisce la possibilità di cambiare livello nel configuratore -->
@@ -373,12 +380,51 @@
         </p>
       </aside>
     </main>
+
+    <!-- Modale esclusiva della guida: conferma il percorso senza transitare dalla home. -->
+    <div
+      class="guide-start-modal"
+      id="guideStartModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="guideStartModalTitle"
+      hidden
+    >
+      <div class="guide-start-modal-backdrop" data-guide-modal-close></div>
+      <section class="guide-start-modal-card" role="document">
+        <button
+          class="guide-start-modal-close"
+          type="button"
+          data-guide-modal-close
+          aria-label="Chiudi"
+        >
+          ×
+        </button>
+        <span class="guide-start-modal-icon" aria-hidden="true">🌱</span>
+        <p class="guide-start-modal-kicker" data-guide-key="modal.kicker">
+          PERCORSO SELEZIONATO
+        </p>
+        <h2 id="guideStartModalTitle" data-guide-key="modal.title">
+          Pronto a iniziare?
+        </h2>
+        <p id="guideStartModalCopy"></p>
+        <div class="guide-start-modal-actions">
+          <button class="guide-start-modal-cancel" type="button" data-guide-modal-close data-guide-key="modal.cancel">
+            Torna alla guida
+          </button>
+          <a class="guide-start-modal-confirm" id="guideStartModalConfirm" href="configuratore.html">
+            <span data-guide-key="modal.confirm">Apri il configuratore</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+    </div>
     <!-- Script per tema, contenuto interattivo della guida e supporto offline -->
     <script src="assets/js/theme.js?v=2026-07-15-guide-nav" defer></script>
     <script
-      src="assets/js/guide.js?v=2026-07-15-heated-modal"
+      src="assets/js/guide.js?v=2026-07-15-full-text-audit-2"
       defer
     ></script>
-    <script src="assets/js/boot-sw.js?v=2026-07-15-hero-vertical-rhythm" defer></script>
+    <script src="assets/js/boot-sw.js?v=2026-07-15-full-text-audit-2" defer></script>
   </body>
 </html>

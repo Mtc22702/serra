@@ -111,7 +111,7 @@
     border-radius: 13px;
     background: linear-gradient(135deg, #8fe0b4 0%, #52b788 100%);
     color: #0f2a1c;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 1.04rem;
     font-weight: 800;
     text-decoration: none;
@@ -146,7 +146,7 @@
     background: rgba(255, 255, 255, 0.1);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: #fff;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 0.94rem;
     font-weight: 700;
     text-decoration: none;
@@ -329,18 +329,18 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
   }
   .hcg-card-meta {
     font-size: 7.5px;
     color: rgba(180, 220, 195, 0.65);
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
   }
   .hcg-card-qty {
     font-size: 8px;
     font-weight: 700;
     color: #74c69d;
-    font-family: "Outfit", sans-serif;
+    font-family: "DM Sans", sans-serif;
     flex: 0 0 auto;
   }
   .hcg-caption {
