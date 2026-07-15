@@ -401,7 +401,7 @@ function chooseLivello(liv) {
     vegFilter = "in";
     state.autoPlan = true;
     resetNoviceAdvancedOptions();
-    autoFill();
+    autoFill({ compactPaths: false });
     syncVegFilterTabs();
     collapseSettingsPanelAfterAutoPlan({ scroll: false });
     setCustomizePanelCollapsed(true);

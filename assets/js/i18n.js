@@ -1354,6 +1354,8 @@
         "calendar.no_results":
           "Prova un altro mese oppure rimuovi ricerca e filtro.",
         "companion.score_label": "Compatibilità del piano",
+        "companion.score_scope":
+          "Valutazione complessiva delle colture presenti, non della vicinanza tra singole aiuole.",
         "companion.rating_great": "Ottima",
         "companion.rating_good": "Buona",
         "companion.rating_review": "Da rivedere",
@@ -1558,15 +1560,16 @@
         lengthSliderAria: "Lunghezza slider",
         inSoleAria: "Lato piu soleggiato",
         btnRipristinaTitle:
-          "Rigenera da capo il piano automatico con le colture di stagione (sostituisce le modifiche manuali)",
+          "Rigenera il piano con le colture di stagione, mantenendo il camminamento scelto",
         btnExpertSeasonalTitle:
-          "Crea un piano automatico con le colture di stagione, da cui partire e modificare",
+          "Crea un piano stagionale mantenendo il camminamento scelto",
         monthAria: "Mese di semina",
         exportProjectAria: "Esporta il progetto",
         vegFiltersAria: "Filtra piante",
         goToSceneAria: "Vai alla vista della serra",
         noviceRestartRowAria: "Ricomincia da capo",
-        btnNoviceRestartTitle: "Ricrea l'orto di stagione da capo",
+        btnNoviceRestartTitle:
+          "Ricrea l'orto di stagione mantenendo il camminamento scelto",
         cropsCustomizeFooterAria: "Azioni sulle colture inserite",
         btnArrangeSelectedTitle: "Riordina la mappa senza cambiare le quantità",
         btnFillSelectedTitle:
@@ -1919,6 +1922,8 @@
         "calendar.no_results":
           "Încearcă altă lună sau elimină căutarea și filtrul.",
         "companion.score_label": "Compatibilitatea planului",
+        "companion.score_scope":
+          "Evaluare generală a culturilor prezente, nu a proximității dintre straturi individuale.",
         "companion.rating_great": "Excelentă",
         "companion.rating_good": "Bună",
         "companion.rating_review": "De revizuit",
@@ -2122,15 +2127,16 @@
         lengthSliderAria: "Cursor lungime",
         inSoleAria: "Latura cea mai însorită",
         btnRipristinaTitle:
-          "Regenerează de la zero planul automat cu culturile de sezon (înlocuiește modificările manuale)",
+          "Regenerează planul cu culturile de sezon, păstrând cărarea aleasă",
         btnExpertSeasonalTitle:
-          "Creează un plan automat cu culturile de sezon, de la care să pornești și să modifici",
+          "Creează un plan de sezon păstrând cărarea aleasă",
         monthAria: "Luna de semănat",
         exportProjectAria: "Exportă proiectul",
         vegFiltersAria: "Filtrează plantele",
         goToSceneAria: "Mergi la vizualizarea serei",
         noviceRestartRowAria: "Reia de la zero",
-        btnNoviceRestartTitle: "Recreează grădina de sezon de la zero",
+        btnNoviceRestartTitle:
+          "Recreează grădina de sezon păstrând cărarea aleasă",
         cropsCustomizeFooterAria: "Acțiuni asupra culturilor adăugate",
         btnArrangeSelectedTitle: "Reordonează harta fără a schimba cantitățile",
         btnFillSelectedTitle:

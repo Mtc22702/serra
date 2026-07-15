@@ -355,8 +355,7 @@ function rebalanceManualLayoutOnly() {
 
 // Bilanciamento automatico
 // Individua le aiuole riducibili per fare spazio a una bloccata
-function flexibleCropReductionCandidates(layout, lockedPlantId, options = {}) {
-  const allowBelowMinimum = options.allowBelowMinimum === true;
+function flexibleCropReductionCandidates(layout, lockedPlantId) {
   return state.beds
     .map((bed, index) => {
       const plant = BYID[bed.plantId];
@@ -371,10 +370,9 @@ function flexibleCropReductionCandidates(layout, lockedPlantId, options = {}) {
         return null;
       }
       const minCount = Math.max(1, minimumCountForPlant(plant));
-      const floorCount = allowBelowMinimum ? 1 : minCount;
-      const surplus = bed.count - floorCount;
+      const surplus = bed.count - minCount;
       if (surplus <= 0) return null;
-      return { bed, index, plant, layoutBed, floorCount, minCount, surplus };
+      return { bed, index, plant, layoutBed, floorCount: minCount, surplus };
     })
     .filter(Boolean)
     .sort(
@@ -387,20 +385,12 @@ function flexibleCropReductionCandidates(layout, lockedPlantId, options = {}) {
     );
 }
 
-let lastFlexibleReductionBelowMinimum = false;
-
 // Riduce le colture flessibili per ospitare la pianta bloccata
 function reduceFlexibleCropsForLockedChange(lockedPlantId) {
-  lastFlexibleReductionBelowMinimum = false;
   let guard = 0;
   while (computeLayout().overflow && guard < 700) {
     const layout = computeLayout();
-    let candidates = flexibleCropReductionCandidates(layout, lockedPlantId);
-    if (!candidates.length) {
-      candidates = flexibleCropReductionCandidates(layout, lockedPlantId, {
-        allowBelowMinimum: true
-      });
-    }
+    const candidates = flexibleCropReductionCandidates(layout, lockedPlantId);
     if (!candidates.length) break;
     const item = candidates[0];
     const step = Math.max(1, rowSizeForPlant(item.plant));
@@ -411,8 +401,6 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
     );
     if (item.bed.count === before) break;
 
-    if (item.bed.count < item.minCount)
-      lastFlexibleReductionBelowMinimum = true;
     rebalanceManualLayoutOnly();
     guard++;
   }
@@ -437,7 +425,6 @@ function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
       )
     );
   };
-  lastFlexibleReductionBelowMinimum = false;
   rebalanceManualLayoutOnly();
   if (computeLayout().overflow) {
     reduceFlexibleCropsForLockedChange(lockedPlantId);
@@ -451,7 +438,7 @@ function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
     return "rejected";
   }
   if (!hasFlexibleAdjustments()) return "accepted";
-  return lastFlexibleReductionBelowMinimum ? "adjustedBelowMin" : "adjusted";
+  return "adjusted";
 }
 
 // Esegue il ciclo completo di bilanciamento automatico
@@ -503,7 +490,7 @@ function addPlant(id) {
   if (state.beds.some((b) => b.plantId === id)) return;
   const p = BYID[id];
   if (!p) return;
-  recordHistory();
+  const historyBefore = captureHistorySnapshot();
 
   const before = {
     beds: cloneBedsSnapshot(),
@@ -535,6 +522,8 @@ function addPlant(id) {
     state.autoPlan = before.autoPlan;
     state.manualPlanNotice = "addNoSpace";
     state.selected = -1;
+  } else {
+    recordHistorySnapshot(historyBefore);
   }
   commitColumnAssignment();
   saveConfig(true);
@@ -591,7 +580,7 @@ function refreshForSeasonChange() {
     state.livello === "novizio" ||
     state.beds.length === 0
   ) {
-    autoFill();
+    autoFill({ compactPaths: false });
   } else {
     clearColumnAssignment();
     autoBalanceLayout(true, false);
@@ -606,12 +595,17 @@ function arrangeSelectedPlantsExact() {
     alert(tx("noSelectedPlants"));
     return;
   }
-  recordHistory();
+  const historyBefore = captureHistorySnapshot();
   state.autoPlan = false;
   state.manualPlanNotice = "";
   normalizeSelectedCropInputsForOptimization();
   rebalanceManualLayoutOnly();
   commitColumnAssignment();
+  if (bedsSnapshotsMatch(historyBefore.beds, cloneBedsSnapshot())) {
+    state.autoPlan = historyBefore.autoPlan;
+  } else {
+    recordHistorySnapshot(historyBefore);
+  }
   saveConfig(true);
   render();
 }
@@ -622,7 +616,7 @@ function fillSelectedPlants() {
     alert(tx("noSelectedPlants"));
     return;
   }
-  recordHistory();
+  const historyBefore = captureHistorySnapshot();
   state.autoPlan = false;
   state.manualPlanNotice = "";
   const manualCounts = new Map(
@@ -641,9 +635,12 @@ function fillSelectedPlants() {
     preserveLockedCounts: true
   });
   restoreManualCountsWhenPossible(manualCounts);
-
-  fillColumnTailsWithFiller();
   commitColumnAssignment();
+  if (bedsSnapshotsMatch(historyBefore.beds, cloneBedsSnapshot())) {
+    state.autoPlan = historyBefore.autoPlan;
+  } else {
+    recordHistorySnapshot(historyBefore);
+  }
   saveConfig(true);
   render();
 }
@@ -671,7 +668,7 @@ function finalizeManualCountChange(fitResult, selectedPlant) {
 function changePlantCount(id, delta) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
   if (index < 0) return;
-  recordHistory();
+  const historyBefore = captureHistorySnapshot();
   const selectedPlant = rememberSelection();
   const before = cloneBedsSnapshot();
   const bed = state.beds[index];
@@ -679,6 +676,8 @@ function changePlantCount(id, delta) {
   bed.countLocked = true;
   state.autoPlan = false;
   const fitResult = fitLockedCountChange(id, before);
+  if (fitResult === "rejected") state.autoPlan = historyBefore.autoPlan;
+  else recordHistorySnapshot(historyBefore);
   finalizeManualCountChange(fitResult, selectedPlant);
 }
 
@@ -686,7 +685,7 @@ function changePlantCount(id, delta) {
 function setPlantCount(id, value) {
   const index = state.beds.findIndex((bed) => bed.plantId === id);
   if (index < 0) return;
-  recordHistory();
+  const historyBefore = captureHistorySnapshot();
   const nextCount = Math.max(1, Math.round(parseInt(value) || 1));
   const selectedPlant = rememberSelection();
   const before = cloneBedsSnapshot();
@@ -695,6 +694,8 @@ function setPlantCount(id, value) {
   bed.countLocked = true;
   state.autoPlan = false;
   const fitResult = fitLockedCountChange(id, before);
+  if (fitResult === "rejected") state.autoPlan = historyBefore.autoPlan;
+  else recordHistorySnapshot(historyBefore);
   finalizeManualCountChange(fitResult, selectedPlant);
 }
 
@@ -755,6 +756,11 @@ function cloneBedsSnapshot() {
   }));
 }
 
+// Confronta due snapshot senza dipendere da riferimenti mutabili dello stato.
+function bedsSnapshotsMatch(first, second) {
+  return JSON.stringify(first) === JSON.stringify(second);
+}
+
 // Ripristina lo stato delle aiuole da uno snapshot
 function restoreBedsSnapshot(snapshot) {
   state.beds = snapshot.map((bed) => ({
@@ -789,12 +795,18 @@ function applyHistorySnapshot(snap) {
   state.selected = snap.selected;
 }
 
-// Aggiunge lo stato attuale allo stack undo
-function recordHistory() {
-  undoStack.push(captureHistorySnapshot());
+// Registra uno snapshot già acquisito: evita passi vuoti nello storico quando
+// un'azione viene rifiutata perché non entra nella serra.
+function recordHistorySnapshot(snapshot) {
+  undoStack.push(snapshot);
   if (undoStack.length > HISTORY_LIMIT) undoStack.shift();
   redoStack = [];
   if (typeof updateUndoRedoButtons === "function") updateUndoRedoButtons();
+}
+
+// Aggiunge lo stato attuale allo stack undo
+function recordHistory() {
+  recordHistorySnapshot(captureHistorySnapshot());
 }
 
 // Azzera gli stack undo e redo
@@ -1375,7 +1387,7 @@ function exportConfToCart() {
 }
 
 // Importa le piante del carrello nel piano
-function importCartToPlan() {
+function importCartToPlan(options = {}) {
   let raw = [];
   try {
     raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
@@ -1387,6 +1399,9 @@ function importCartToPlan() {
     (id, index) => BYID[id] && ids.indexOf(id) === index
   );
   if (!uniqueIds.length) return false;
+  const historyBefore = options.recordHistory
+    ? captureHistorySnapshot()
+    : null;
   state.beds = uniqueIds.map((id) => {
     const plant = BYID[id];
     return {
@@ -1403,6 +1418,7 @@ function importCartToPlan() {
   state.selected = state.beds.length ? 0 : -1;
   vegFilter = "in";
   autoBalanceLayout(true, true);
+  if (historyBefore) recordHistorySnapshot(historyBefore);
   saveConfig(true);
   render();
   setMode("expert", false);

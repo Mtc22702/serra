@@ -256,16 +256,16 @@ function initEvents() {
     recordHistory();
     saveConfig(true);
     setMode("fit", false);
-    autoFill();
+    autoFill({ compactPaths: false });
     collapseSettingsPanelAfterAutoPlan();
   });
   document
     .getElementById("btnPresetSeasonal")
     ?.addEventListener("click", () => {
-      recordHistory();
-      saveConfig(true);
-      setMode("fit", false);
-      autoFill();
+    recordHistory();
+    saveConfig(true);
+    setMode("fit", false);
+    autoFill({ compactPaths: false });
     });
   document
     .getElementById("btnArrangeSelected")
@@ -278,7 +278,7 @@ function initEvents() {
 
   document.getElementById("btnNoviceRestart")?.addEventListener("click", () => {
     recordHistory();
-    autoFill();
+    autoFill({ compactPaths: false });
     scrollToScene();
   });
 
@@ -286,7 +286,7 @@ function initEvents() {
     .getElementById("btnExpertSeasonal")
     ?.addEventListener("click", () => {
       recordHistory();
-      autoFill();
+      autoFill({ compactPaths: false });
     });
 
   document.addEventListener("keydown", (e) => {
@@ -848,7 +848,7 @@ function closeConfCart() {
 function importCartAndClose() {
   closeConfCart();
 
-  importCartToPlan();
+  importCartToPlan({ recordHistory: true });
 }
 
 // Mostra il banner temporaneo del carrello

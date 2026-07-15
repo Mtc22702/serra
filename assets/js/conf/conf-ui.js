@@ -434,12 +434,8 @@ function renderBeds() {
     el.addEventListener("click", (e) => {
       e.stopPropagation();
       const i = parseInt(el.dataset.del);
-      state.beds.splice(i, 1);
-      state.autoPlan = false;
-      if (state.selected >= state.beds.length) state.selected = -1;
-      autoBalanceLayout(true, false);
-      saveConfig(true);
-      render();
+      const plantId = state.beds[i]?.plantId;
+      if (plantId) removePlantById(plantId);
     })
   );
 }
@@ -1754,6 +1750,7 @@ function renderWarnings(L) {
       <div class="companion-score-body">
         <div class="companion-score-top"><b>${tx("companion.score_label")}</b><span class="companion-score-val">${analysis.score}/100 · ${ratingLabel}</span></div>
         <div class="companion-score-bar"><span style="width:${analysis.score}%"></span></div>
+        <div class="companion-score-scope">${tx("companion.score_scope")}</div>
       </div>
     </div>`;
   }
