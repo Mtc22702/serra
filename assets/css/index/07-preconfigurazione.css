@@ -490,6 +490,22 @@
     border-color: #2f6b3a;
   }
 
+  /* Stato selezionato per il menu “Serra” della modale. */
+  #pcRisc.is-heated {
+    border-color: #d99613;
+    background-color: #fff5d8;
+    color: #7a4600;
+    box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.18);
+    font-weight: 750;
+  }
+
+  html[data-theme="dark"] #pcRisc.is-heated {
+    border-color: #e4a72d;
+    background-color: rgba(113, 75, 14, 0.58);
+    color: #ffe3a3;
+    box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.2);
+  }
+
   :root {
     --pc-nov: #4f9a3f;
     --pc-int: #c9962f;

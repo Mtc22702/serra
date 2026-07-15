@@ -1250,7 +1250,9 @@ if (catalogSearchLink) {
   // Allinea il selettore serra riscaldata
   function syncPcRiscSelect(heated) {
     const sel = document.getElementById("pcRisc");
-    if (sel) sel.value = heated ? "si" : "no";
+    if (!sel) return;
+    sel.value = heated ? "si" : "no";
+    sel.classList.toggle("is-heated", Boolean(heated));
   }
 
   var PC_MONTHS = {
@@ -1547,7 +1549,13 @@ if (catalogSearchLink) {
       ?.addEventListener("change", updatePreconfigSummary);
     document
       .getElementById("pcRisc")
-      ?.addEventListener("change", updatePreconfigSummary);
+      ?.addEventListener("change", (event) => {
+        event.currentTarget.classList.toggle(
+          "is-heated",
+          event.currentTarget.value === "si"
+        );
+        updatePreconfigSummary();
+      });
 
     document
       .querySelectorAll("#preconfigPersonaSection .pc-persona-card")

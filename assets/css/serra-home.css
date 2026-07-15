@@ -10581,11 +10581,27 @@ html[data-theme="dark"]
     border-color: rgba(255, 255, 255, 0.1);
     color: #a0c8a0;
   }
-  html[data-theme="dark"] .preconfig-heated-btn.active {
+html[data-theme="dark"] .preconfig-heated-btn.active {
     background: rgba(240, 180, 41, 0.15);
     border-color: #c9941f;
     color: #f5c84a;
   }
+
+/* Evidenzia la serra riscaldata anche nel selettore nativo della modale. */
+#pcRisc.is-heated {
+  border-color: #d99613;
+  background-color: #fff5d8;
+  color: #7a4600;
+  box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.18);
+  font-weight: 750;
+}
+
+html[data-theme="dark"] #pcRisc.is-heated {
+  border-color: #e4a72d;
+  background-color: rgba(113, 75, 14, 0.58);
+  color: #ffe3a3;
+  box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.2);
+}
   html[data-theme="dark"] .preconfig-path-row {
     background: rgba(21, 48, 37, 0.82);
     border-color: rgba(207, 219, 207, 0.13);
