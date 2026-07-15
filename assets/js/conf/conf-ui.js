@@ -307,6 +307,7 @@ function render() {
 
   const built = buildScene();
   document.getElementById("scene").innerHTML = built.svg;
+  bindPlantAssetFallbacks();
   const L = built.layout;
   const used = (L.usedH / 100).toFixed(1);
   const status = L.overflow
@@ -363,17 +364,36 @@ function render() {
   renderFooter();
 
   document.querySelectorAll(".bedhit").forEach((el) => {
-    el.addEventListener("click", () => {
+    const openBedDetail = () => {
       const idx = parseInt(el.dataset.bed);
       if (state.selected === idx) {
         state.selected = -1;
         closePlantDetailPanel();
       } else {
+        const detailReturnScroll = isResponsiveConfiguratorLayout()
+          ? null
+          : { left: window.scrollX, top: window.scrollY };
         state.selected = idx;
         render();
-        openPlantDetailPanel();
+        openPlantDetailPanel(detailReturnScroll);
       }
+    };
+    el.addEventListener("click", openBedDetail);
+    el.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openBedDetail();
     });
+  });
+}
+
+// Attiva il glifo nativo solo se un file SVG esterno non è disponibile.
+function bindPlantAssetFallbacks() {
+  document.querySelectorAll("#scene image[data-plant-asset]").forEach((image) => {
+    image.addEventListener("error", () => {
+      image.previousElementSibling?.removeAttribute("hidden");
+      image.remove();
+    }, { once: true });
   });
 }
 // Genera l'HTML della legenda overlay
@@ -453,6 +473,9 @@ let pendingPageScrollTimer = 0;
 let pendingPageScrollFrame = 0;
 let pendingPageScrollToken = 0;
 let pendingPageScrollFontsTimer = 0;
+let plantDetailScrollFrame = 0;
+let plantDetailReturnScrollFrame = 0;
+let plantDetailReturnScrollTimer = 0;
 
 // Annulla eventuali scroll pagina programmati ma non ancora eseguiti
 function cancelPendingPageScroll() {
@@ -547,11 +570,51 @@ function isResponsiveConfiguratorLayout() {
 
 // Porta in vista il pannello dettaglio pianta
 function scrollPlantDetailPanelIntoView(behavior = "smooth") {
-  if (!isResponsiveConfiguratorLayout()) return;
-  scrollElementBelowHeader(
-    document.getElementById("panelPlantDetail"),
-    behavior
-  );
+  if (plantDetailScrollFrame) {
+    window.cancelAnimationFrame(plantDetailScrollFrame);
+  }
+  plantDetailScrollFrame = window.requestAnimationFrame(() => {
+    plantDetailScrollFrame = 0;
+    scrollElementBelowHeader(
+      document.getElementById("panelPlantDetail"),
+      behavior
+    );
+  });
+}
+
+function cancelPlantDetailScroll() {
+  if (!plantDetailScrollFrame) return;
+  window.cancelAnimationFrame(plantDetailScrollFrame);
+  plantDetailScrollFrame = 0;
+}
+
+function cancelPlantDetailReturnScroll() {
+  if (plantDetailReturnScrollFrame) {
+    window.cancelAnimationFrame(plantDetailReturnScrollFrame);
+    plantDetailReturnScrollFrame = 0;
+  }
+  if (!plantDetailReturnScrollTimer) return;
+  window.clearTimeout(plantDetailReturnScrollTimer);
+  plantDetailReturnScrollTimer = 0;
+}
+
+function restorePlantDetailScroll(position) {
+  if (!position) return;
+  cancelPlantDetailReturnScroll();
+  plantDetailReturnScrollFrame = window.requestAnimationFrame(() => {
+    plantDetailReturnScrollFrame = window.requestAnimationFrame(() => {
+      plantDetailReturnScrollFrame = 0;
+      plantDetailReturnScrollTimer = window.setTimeout(() => {
+        plantDetailReturnScrollTimer = 0;
+        window.scrollTo({
+          left: position.left,
+          top: position.top,
+          behavior: "auto"
+        });
+        document.documentElement.style.removeProperty("overflow-anchor");
+      }, 120);
+    });
+  });
 }
 
 // Porta in vista l'immagine SVG della serra
@@ -1527,33 +1590,79 @@ function renderConfigPests(p) {
 }
 
 // Apertura pannelli
+function getPlantDetailReturnScroll(panel) {
+  if (!panel) return null;
+  const left = Number(panel.dataset.returnScrollLeft);
+  const top = Number(panel.dataset.returnScrollTop);
+  if (!Number.isFinite(left) || !Number.isFinite(top)) return null;
+  return { left, top };
+}
+
 // Apre il pannello dettaglio della pianta selezionata
-function openPlantDetailPanel() {
+function openPlantDetailPanel(originScroll = null) {
   const panel = document.getElementById("panelPlantDetail");
   const settings = document.getElementById("panelSettings");
   if (!panel) return;
+  if (!isResponsiveConfiguratorLayout() && panel.hidden) {
+    const returnScroll = originScroll || {
+      left: window.scrollX,
+      top: window.scrollY
+    };
+    panel.dataset.returnScrollLeft = String(returnScroll.left);
+    panel.dataset.returnScrollTop = String(returnScroll.top);
+    document.documentElement.style.overflowAnchor = "none";
+  }
   renderPlantDetailPanel();
   panel.hidden = false;
   if (settings && isResponsiveConfiguratorLayout())
     setPanelCollapsed(settings, true);
-  requestAnimationFrame(() => scrollPlantDetailPanelIntoView("smooth"));
+  scrollPlantDetailPanelIntoView("smooth");
 }
 
 // Chiude il pannello dettaglio e ripristina la selezione
 function closePlantDetailPanel() {
   const panel = document.getElementById("panelPlantDetail");
   const settings = document.getElementById("panelSettings");
+  const selectedBedIndex = state.selected;
+  const desktopReturnScroll = !isResponsiveConfiguratorLayout()
+    ? getPlantDetailReturnScroll(panel)
+    : null;
   const keepGreenhouseRow =
     isResponsiveConfiguratorLayout() && panel && !panel.hidden;
+  cancelPlantDetailScroll();
+  cancelPlantDetailReturnScroll();
+  if (desktopReturnScroll) {
+    // Ferma lo smooth-scroll dell'apertura, se la chiusura è molto rapida.
+    cancelPendingPageScroll();
+    window.scrollTo({
+      left: window.scrollX,
+      top: window.scrollY,
+      behavior: "instant"
+    });
+  }
+  if (panel) {
+    delete panel.dataset.returnScrollLeft;
+    delete panel.dataset.returnScrollTop;
+  }
   if (panel) panel.hidden = true;
   if (settings && isResponsiveConfiguratorLayout())
     setPanelCollapsed(settings, false);
   state.selected = -1;
   render();
+  if (desktopReturnScroll && selectedBedIndex >= 0) {
+    document
+      .querySelector(`.bedhit[data-bed="${selectedBedIndex}"]`)
+      ?.focus({ preventScroll: true });
+  }
   if (keepGreenhouseRow) {
     requestAnimationFrame(() =>
       requestAnimationFrame(() => scrollStageIntoView("auto"))
     );
+    document.documentElement.style.removeProperty("overflow-anchor");
+  } else {
+    if (!desktopReturnScroll)
+      document.documentElement.style.removeProperty("overflow-anchor");
+    restorePlantDetailScroll(desktopReturnScroll);
   }
 }
 

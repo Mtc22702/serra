@@ -226,30 +226,6 @@ function localizedSowingGuide(plant) {
   return { method, depth, thin, tip: `${name}: ${tip}` };
 }
 
-// Distribuisce gli indici emoji lungo le aiuole a serpente
-function emojiSpreadIndexes(itemCount, cols, targetCount) {
-  if (!targetCount) return new Set();
-  if (itemCount <= targetCount)
-    return new Set(Array.from({ length: itemCount }, (_, i) => i));
-  const safeCols = Math.max(1, cols);
-  const rows = Math.ceil(itemCount / safeCols);
-  const snake = [];
-  for (let r = 0; r < rows; r++) {
-    const start = r * safeCols;
-    const end = Math.min(start + safeCols, itemCount);
-    if (r % 2 === 0) {
-      for (let i = start; i < end; i++) snake.push(i);
-    } else {
-      for (let i = end - 1; i >= start; i--) snake.push(i);
-    }
-  }
-  const result = new Set();
-  for (let k = 0; k < targetCount; k++) {
-    result.add(snake[Math.floor(((k + 0.5) * snake.length) / targetCount)]);
-  }
-  return result;
-}
-
 // Restituisce il nome del mese per l'indice dato
 function monthName(index) {
   return (MONTHS[state.lang] || MONTHS.it)[index - 1];

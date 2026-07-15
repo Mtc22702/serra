@@ -84,12 +84,253 @@ const LATER_PLANT_SVG_IDS = new Set([
   "cimbru"
 ]);
 
+// Escape minimale per testo e attributi nel markup SVG generato.
+function escapeSvg(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+// Versione leggera per serre dense. Ogni famiglia mantiene una silhouette
+// botanica riconoscibile e resta contenuta entro il raggio assegnato al posto.
+function compactGlyph(plant, r, rng) {
+  const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
+  const shadow = `<ellipse cy="${r * 0.16}" rx="${r * 0.76}" ry="${r * 0.48}" fill="${shade}"/>`;
+  const leaf = (len, wid, color, rotation = 0) =>
+    `<g transform="rotate(${rotation})"><path d="${leafPath(len, wid)}" fill="${color}"/></g>`;
+  const lobed = (len, wid, color, rotation = 0) =>
+    `<g transform="rotate(${rotation})"><path d="${lobedLeafPath(len, wid)}" fill="${color}"/></g>`;
+  const fruit = c.fr || "#e2452f";
+  let s = shadow;
+
+  switch (plant.arch) {
+    case "cucurbita": {
+      for (let i = 0; i < 5; i++) {
+        const angle = i * 72 + rng() * 8;
+        s += `<g transform="rotate(${angle})"><path d="${palmatePath(
+          r * (0.54 + (i % 2) * 0.06)
+        )}" fill="${i % 2 ? c.l1 : c.l2}" stroke="rgba(20,50,20,.14)" stroke-width="${r * 0.025}"/></g>`;
+      }
+      if (c.fl) {
+        for (let i = 0; i < 5; i++)
+          s += `<ellipse rx="${r * 0.09}" ry="${r * 0.18}" fill="${c.fl}" transform="rotate(${i * 72}) translate(0 ${-r * 0.13})"/>`;
+        s += `<circle r="${r * 0.07}" fill="#e0902a"/>`;
+      }
+      break;
+    }
+    case "rampicante": {
+      for (let i = 0; i < 4; i++) {
+        const angle = i * 90 + rng() * 12;
+        const isPea = plant.id === "pisello";
+        s += isPea
+          ? leaf(r * 0.62, r * 0.34, i % 2 ? c.l1 : c.l2, angle)
+          : lobed(r * 0.58, r * 0.4, i % 2 ? c.l1 : c.l2, angle);
+      }
+      s += `<path d="M${-r * 0.5} ${r * 0.34} Q0 ${-r * 0.62} ${r * 0.5} ${r * 0.12}" fill="none" stroke="${c.l2}" stroke-width="${r * 0.055}" stroke-linecap="round"/><path d="M${r * 0.36} ${-r * 0.18} q${r * 0.22} ${-r * 0.1} ${r * 0.12} ${r * 0.16}" fill="none" stroke="${c.l1}" stroke-width="${r * 0.04}"/>`;
+      break;
+    }
+    case "piumosa": {
+      for (let i = 0; i < 6; i++) {
+        const angle = i * 60 + rng() * 8;
+        const len = r * 0.7;
+        s += `<g transform="rotate(${angle})"><path d="M0 0 L0 ${-len}" stroke="${i % 2 ? c.l1 : c.l2}" stroke-width="${r * 0.06}" stroke-linecap="round"/><path d="M0 ${-len * 0.35} l${r * 0.17} ${-r * 0.12} M0 ${-len * 0.35} l${-r * 0.17} ${-r * 0.12} M0 ${-len * 0.64} l${r * 0.12} ${-r * 0.1} M0 ${-len * 0.64} l${-r * 0.12} ${-r * 0.1}" stroke="${c.l1}" stroke-width="${r * 0.034}" stroke-linecap="round"/></g>`;
+      }
+      break;
+    }
+    case "bulbo": {
+      for (let i = -3; i <= 3; i++) {
+        const lean = i * r * 0.12;
+        s += `<path d="M0 ${r * 0.2} Q${lean} ${-r * 0.32} ${lean * 1.35} ${-r * 0.78}" fill="none" stroke="${i % 2 ? c.l1 : c.l2}" stroke-width="${r * 0.11}" stroke-linecap="round"/>`;
+      }
+      s += `<ellipse cy="${r * 0.18}" rx="${r * 0.26}" ry="${r * 0.18}" fill="${c.fr || c.l2}" opacity=".82"/>`;
+      break;
+    }
+    case "brassica":
+    case "foglia": {
+      for (let i = 0; i < 6; i++)
+        s += lobed(r * 0.72, r * 0.48, i % 2 ? c.l1 : c.l2, i * 60);
+      const head = c.head || (plant.id.includes("broccolo") ? "#86ad5e" : "#bed6a0");
+      s += `<circle r="${r * 0.31}" fill="${head}"/>`;
+      if (plant.id.includes("broccolo") || plant.id === "cavolfiore") {
+        for (let i = 0; i < 6; i++) {
+          const angle = (i * Math.PI * 2) / 6;
+          s += `<circle cx="${Math.cos(angle) * r * 0.17}" cy="${Math.sin(angle) * r * 0.17}" r="${r * 0.12}" fill="${head}" stroke="rgba(25,55,25,.12)" stroke-width="${r * 0.018}"/>`;
+        }
+      }
+      break;
+    }
+    case "fragola": {
+      for (let i = 0; i < 3; i++) {
+        const angle = i * 120 + rng() * 10;
+        s += `<g transform="rotate(${angle})">${leaf(r * 0.48, r * 0.29, c.l1)}<g transform="rotate(35)">${leaf(r * 0.36, r * 0.22, c.l2)}</g><g transform="rotate(-35)">${leaf(r * 0.36, r * 0.22, c.l2)}</g></g>`;
+      }
+      s += `<path d="M${-r * 0.16} ${r * 0.06} q${r * 0.16} ${r * 0.38} ${r * 0.32} 0 q${-r * 0.16} ${r * 0.28} ${-r * 0.32} 0Z" fill="${fruit}"/><circle cx="0" cy="${r * 0.2}" r="${r * 0.035}" fill="#f7d469"/>`;
+      break;
+    }
+    case "erbafine": {
+      for (let i = 0; i < 13; i++) {
+        const angle = (i / 13) * Math.PI * 2 + rng() * 0.16;
+        const len = r * (0.45 + rng() * 0.22);
+        s += `<path d="M0 ${r * 0.12} L${Math.cos(angle) * len} ${Math.sin(angle) * len}" stroke="${i % 2 ? c.l1 : c.l2}" stroke-width="${r * 0.065}" stroke-linecap="round"/>`;
+      }
+      break;
+    }
+    case "frastagliata": {
+      for (let i = 0; i < 7; i++)
+        s += lobed(r * 0.7, r * 0.4, i % 2 ? c.l1 : c.l2, i * (360 / 7));
+      s += `<circle r="${r * 0.12}" fill="${c.l2}"/>`;
+      break;
+    }
+    case "frutto": {
+      const pepperFamily = ["peperone", "peperoncino", "friggitello", "melanzana"].includes(plant.id);
+      for (let i = 0; i < 5; i++) {
+        const angle = i * 72 + rng() * 9;
+        s += pepperFamily
+          ? leaf(r * 0.61, r * 0.32, i % 2 ? c.l1 : c.l2, angle)
+          : lobed(r * 0.62, r * 0.36, i % 2 ? c.l1 : c.l2, angle);
+      }
+      const fruitCount = pepperFamily ? 2 : 3;
+      for (let i = 0; i < fruitCount; i++) {
+        const angle = (i / fruitCount) * Math.PI * 2 + 0.35;
+        const x = Math.cos(angle) * r * 0.28;
+        const y = Math.sin(angle) * r * 0.28;
+        const rx = pepperFamily ? r * 0.11 : r * 0.13;
+        const ry = pepperFamily ? r * 0.2 : r * 0.13;
+        s += `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${fruit}" transform="rotate(${pepperFamily ? angle * 57.3 : 0} ${x} ${y})"/>`;
+      }
+      break;
+    }
+    case "cespuglio": {
+      for (let i = 0; i < 7; i++) {
+        const angle = i * (360 / 7) + rng() * 10;
+        s += leaf(r * 0.52, r * 0.34, i % 2 ? c.l1 : c.l2, angle);
+      }
+      s += `<circle r="${r * 0.11}" fill="${c.fl || c.fr || c.l1}"/>`;
+      break;
+    }
+    case "rosetta":
+    default: {
+      for (let i = 0; i < 8; i++)
+        s += leaf(r * (i % 2 ? 0.58 : 0.7), r * 0.3, i % 2 ? c.l1 : c.l2, i * 45);
+      s += `<circle r="${r * 0.12}" fill="${c.fr || c.l1}"/>`;
+    }
+  }
+  return s;
+}
+
+// Fallback nativo, mostrato soltanto se un asset SVG esterno non si carica.
+function assetFallbackGlyph(plant, r) {
+  const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
+  return `<g data-asset-fallback hidden pointer-events="none"><ellipse cy="${r * 0.16}" rx="${r * 0.72}" ry="${r * 0.42}" fill="${shade}"/><path d="${leafPath(r * 0.9, r * 0.34)}" fill="${c.l1}" transform="rotate(-42)"/><path d="${leafPath(r * 0.9, r * 0.34)}" fill="${c.l2}" transform="rotate(42)"/><circle r="${r * 0.18}" fill="${c.fr || c.l1}"/></g>`;
+}
+
+// Segni specifici della specie, applicati solo al glifo completo. Sono tutti
+// disegnati dentro 0,76×r: migliorano il riconoscimento senza toccare layout,
+// spaziatura o numero di piante previsto dall'aiuola.
+function speciesAccent(plant, r, rng) {
+  const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
+  const id = plant.id;
+  const fruit = c.fr || "#e2452f";
+  let s = "";
+  const compoundLeaf = (angle, color) => {
+    const len = r * 0.62;
+    return `<g transform="rotate(${angle})"><path d="M0 0 L0 ${-len}" stroke="${color}" stroke-width="${r * 0.045}" stroke-linecap="round"/><ellipse cx="${r * 0.14}" cy="${-len * 0.34}" rx="${r * 0.1}" ry="${r * 0.22}" fill="${color}" transform="rotate(36 ${r * 0.14} ${-len * 0.34})"/><ellipse cx="${-r * 0.14}" cy="${-len * 0.34}" rx="${r * 0.1}" ry="${r * 0.22}" fill="${color}" transform="rotate(-36 ${-r * 0.14} ${-len * 0.34})"/><ellipse cx="${r * 0.11}" cy="${-len * 0.62}" rx="${r * 0.085}" ry="${r * 0.18}" fill="${color}" transform="rotate(32 ${r * 0.11} ${-len * 0.62})"/><ellipse cx="${-r * 0.11}" cy="${-len * 0.62}" rx="${r * 0.085}" ry="${r * 0.18}" fill="${color}" transform="rotate(-32 ${-r * 0.11} ${-len * 0.62})"/></g>`;
+  };
+
+  if (["pomodoro", "tomatillo", "physalis", "patata"].includes(id)) {
+    for (let i = 0; i < 3; i++)
+      s += compoundLeaf(i * 120 + rng() * 10, i % 2 ? c.l1 : c.l2);
+    if (id === "pomodoro") {
+      for (let i = 0; i < 3; i++) {
+        const angle = (i * Math.PI * 2) / 3 + 0.25;
+        s += `<circle cx="${Math.cos(angle) * r * 0.31}" cy="${Math.sin(angle) * r * 0.31}" r="${r * 0.105}" fill="${fruit}"/><path d="M${Math.cos(angle) * r * 0.31} ${Math.sin(angle) * r * 0.31} l${r * 0.05} ${-r * 0.09} l${-r * 0.1} 0Z" fill="${c.l2}"/>`;
+      }
+    }
+    return s;
+  }
+
+  if (["peperone", "peperoncino", "melanzana"].includes(id)) {
+    const elongated = id !== "melanzana";
+    for (let i = 0; i < 3; i++) {
+      const angle = i * 120 + 15;
+      s += `<g transform="rotate(${angle})"><path d="${leafPath(r * 0.58, r * 0.28)}" fill="${i % 2 ? c.l1 : c.l2}"/><path d="M0 0 L0 ${-r * 0.48}" stroke="rgba(245,255,232,.3)" stroke-width="${r * 0.025}"/></g>`;
+    }
+    for (let i = 0; i < 2; i++) {
+      const x = (i ? 0.22 : -0.22) * r;
+      const y = (i ? -0.12 : 0.2) * r;
+      s += `<ellipse cx="${x}" cy="${y}" rx="${r * (elongated ? 0.095 : 0.14)}" ry="${r * (elongated ? 0.24 : 0.18)}" fill="${fruit}" transform="rotate(${elongated ? i * 36 - 18 : 0} ${x} ${y})"/><path d="M${x} ${y - r * (elongated ? 0.24 : 0.18)} l${r * 0.06} ${-r * 0.08}" stroke="${c.l2}" stroke-width="${r * 0.04}"/>`;
+    }
+    return s;
+  }
+
+  if (["mais_dolce", "asparago"].includes(id)) {
+    const count = id === "mais_dolce" ? 7 : 9;
+    for (let i = 0; i < count; i++) {
+      const angle = (i - (count - 1) / 2) * (id === "mais_dolce" ? 12 : 18);
+      s += `<g transform="rotate(${angle})"><path d="M0 ${r * 0.2} Q${r * 0.13} ${-r * 0.36} 0 ${-r * 0.78} Q${-r * 0.13} ${-r * 0.36} 0 ${r * 0.2}Z" fill="${i % 2 ? c.l1 : c.l2}"/></g>`;
+    }
+    if (id === "mais_dolce")
+      s += `<ellipse cy="${-r * 0.06}" rx="${r * 0.12}" ry="${r * 0.29}" fill="#d8b64b"/><path d="M0 ${-r * 0.34} q${r * 0.13} ${-r * 0.1} ${r * 0.22} ${-r * 0.02}" stroke="#916f27" stroke-width="${r * 0.035}" fill="none"/>`;
+    return s;
+  }
+
+  if (["cipolla", "cipolla_rossa", "cipollotto", "porro", "aglio", "scalogno"].includes(id)) {
+    const blades = id === "porro" ? 6 : 5;
+    for (let i = 0; i < blades; i++) {
+      const spread = (i - (blades - 1) / 2) * r * 0.14;
+      const height = r * (id === "porro" ? 0.84 : 0.67);
+      s += `<path d="M0 ${r * 0.19} Q${spread} ${-r * 0.18} ${spread * 1.25} ${-height}" fill="none" stroke="${i % 2 ? c.l1 : c.l2}" stroke-width="${r * 0.105}" stroke-linecap="round"/>`;
+    }
+    if (id === "cipolla_rossa" || id === "scalogno")
+      s += `<ellipse cy="${r * 0.17}" rx="${r * 0.22}" ry="${r * 0.16}" fill="${c.fr || "#a64d68"}" opacity=".9"/>`;
+    return s;
+  }
+
+  if (["basilico", "menta", "melissa", "salvia", "origano", "maggiorana", "stevia_dolce"].includes(id)) {
+    for (let i = 0; i < 4; i++) {
+      const angle = i * 90 + rng() * 8;
+      s += `<g transform="rotate(${angle})"><path d="${leafPath(r * 0.52, r * (id === "salvia" ? 0.32 : 0.24))}" fill="${i % 2 ? c.l1 : c.l2}"/><path d="M0 0 L0 ${-r * 0.43}" stroke="rgba(255,255,235,.22)" stroke-width="${r * 0.025}"/></g>`;
+    }
+    if (["origano", "maggiorana"].includes(id))
+      s += `<circle r="${r * 0.11}" fill="#e4c58c" opacity=".85"/>`;
+    return s;
+  }
+
+  if (["bietola", "barbabietola", "radicchio"].includes(id)) {
+    const vein = id === "radicchio" ? "#f0d7d2" : c.fr || "#c76a62";
+    for (let i = 0; i < 5; i++) {
+      const angle = i * 72;
+      s += `<g transform="rotate(${angle})"><path d="M0 0 L0 ${-r * 0.65}" stroke="${vein}" stroke-opacity=".72" stroke-width="${r * 0.045}"/><path d="M0 ${-r * 0.34} l${r * 0.15} ${-r * 0.12} M0 ${-r * 0.34} l${-r * 0.15} ${-r * 0.12}" stroke="${vein}" stroke-opacity=".45" stroke-width="${r * 0.025}"/></g>`;
+    }
+    return s;
+  }
+
+  if (["fagiolo", "fagiolino", "fava", "soia_edamame", "cece", "lenticchia", "fagiolo_borlotto"].includes(id)) {
+    for (let i = 0; i < 3; i++) {
+      const angle = i * 120;
+      s += `<g transform="rotate(${angle})"><ellipse cx="${r * 0.13}" cy="${-r * 0.31}" rx="${r * 0.13}" ry="${r * 0.23}" fill="${c.l1}" transform="rotate(34 ${r * 0.13} ${-r * 0.31})"/><ellipse cx="${-r * 0.13}" cy="${-r * 0.31}" rx="${r * 0.13}" ry="${r * 0.23}" fill="${c.l2}" transform="rotate(-34 ${-r * 0.13} ${-r * 0.31})"/><path d="M0 0 L0 ${-r * 0.53}" stroke="${c.l2}" stroke-width="${r * 0.04}"/></g>`;
+    }
+    return s;
+  }
+
+  if (id === "carciofo") {
+    for (let i = 0; i < 7; i++)
+      s += `<path d="M0 0 Q${r * 0.22} ${-r * 0.32} 0 ${-r * 0.68} Q${-r * 0.22} ${-r * 0.32} 0 0Z" fill="${i % 2 ? c.l1 : c.l2}" transform="rotate(${i * (360 / 7)})"/>`;
+    s += `<circle r="${r * 0.2}" fill="#8a9c62"/>`;
+  }
+  return s;
+}
+
 // Disegno piantine
-function glyph(plant, r, rng) {
+function glyph(plant, r, rng, detail = "full") {
+  if (detail === "compact") return compactGlyph(plant, r, rng);
   if (LATER_PLANT_SVG_IDS.has(plant?.id)) {
     const size = r * 2;
     const src = window.serraAsset(`assets/img/svg/${plant.id}.svg`);
-    return `<image href="${src}" x="${-r}" y="${-r}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
+    return `${assetFallbackGlyph(plant, r)}<image data-plant-asset="${escapeSvg(plant.id)}" href="${src}" x="${-r}" y="${-r}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>`;
   }
   const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
   const sh = `<ellipse cx="${r * 0.08}" cy="${r * 0.12}" rx="${r * 0.95}" ry="${r * 0.85}" fill="${shade}"/>`;
@@ -294,7 +535,7 @@ function glyph(plant, r, rng) {
       s += sh + `<circle r="${r * 0.7}" fill="${c.l1}"/>`;
     }
   }
-  return s;
+  return s + speciesAccent(plant, r, rng);
 }
 
 // Geometria della serra
@@ -467,6 +708,7 @@ function computeLayout() {
       h: bedH,
       cols,
       rows,
+      slotHeight: Math.max(10, (naturalBedH - 2 * BEDPAD) / rows),
       layout: isFila ? "fila" : "blocco",
       positions
     });
@@ -489,6 +731,38 @@ function computeLayout() {
 // Calcola il raggio visivo del glifo vegetale
 function visualPlantRadius(plant) {
   return Math.max(plant.d * 0.55, MIN_VISUAL_GLYPH_R);
+}
+
+// Riduce soltanto il disegno, mai le distanze agronomiche o i calcoli del piano.
+function fittedPlantRadius(plant, bed) {
+  const slotW = Math.max(10, (bed.w - 2 * BEDPAD) / Math.max(1, bed.cols));
+  const slotH = Math.max(10, bed.slotHeight || slotW);
+  const maxRadius = Math.max(4.5, Math.min(slotW, slotH) * 0.43);
+  return Math.min(visualPlantRadius(plant), maxRadius);
+}
+
+// Distribuisce gli indici emoji lungo le aiuole a serpente.
+function emojiSpreadIndexes(itemCount, cols, targetCount) {
+  if (!targetCount) return new Set();
+  if (itemCount <= targetCount)
+    return new Set(Array.from({ length: itemCount }, (_, i) => i));
+  const safeCols = Math.max(1, cols);
+  const rows = Math.ceil(itemCount / safeCols);
+  const snake = [];
+  for (let row = 0; row < rows; row++) {
+    const start = row * safeCols;
+    const end = Math.min(start + safeCols, itemCount);
+    if (row % 2 === 0) {
+      for (let index = start; index < end; index++) snake.push(index);
+    } else {
+      for (let index = end - 1; index >= start; index--) snake.push(index);
+    }
+  }
+  const result = new Set();
+  for (let index = 0; index < targetCount; index++) {
+    result.add(snake[Math.floor(((index + 0.5) * snake.length) / targetCount)]);
+  }
+  return result;
 }
 
 // Seleziona gli elementi da disegnare in un'aiuola
@@ -683,18 +957,28 @@ function buildScene() {
   L.beds.forEach((bed) => {
     const bx = ox + bed.x,
       by = oy + bed.y;
+    const plantLabel = plantText(bed.plant, "nome");
+    const bedActionLabel = tx("bedActionAria", {
+      plant: plantLabel,
+      count: bed.count
+    });
 
-    g += `<g class="bedhit" data-bed="${bed.idx}">`;
+    g += `<g class="bedhit" data-bed="${bed.idx}" role="button" tabindex="0" aria-label="${escapeSvg(bedActionLabel)}"><title>${escapeSvg(bedActionLabel)}</title>`;
     g += `<rect class="bed-border" x="${bx - 6}" y="${by - 6}" width="${bed.w + 12}" height="${bed.h + 12}" rx="7" fill="url(#woodGrain)" stroke="rgba(42,22,10,.55)" stroke-width="2" filter="url(#bedLift)"/>`;
     g += `<rect x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" rx="3" fill="url(#soil)" stroke="rgba(255,221,169,.16)" stroke-width="1.2"/>`;
     g += `<rect x="${bx + 2}" y="${by + 2}" width="${Math.max(0, bed.w - 4)}" height="${Math.max(0, bed.h - 4)}" rx="2" fill="none" stroke="rgba(30,15,7,.3)" stroke-width="1" pointer-events="none"/>`;
 
-    const r = visualPlantRadius(bed.plant);
+    // Overlay sotto a piante ed etichette: i dettagli restano sempre leggibili.
+    if (state.overlay) g += overlayShape(bed, bx, by);
+
+    const r = fittedPlantRadius(bed.plant, bed);
     const bedGlyphBudget =
       totalPlants <= MAX_GLYPH
         ? bed.count
         : Math.max(6, Math.floor((bed.count * MAX_GLYPH) / totalPlants));
     const bedItems = visualItemsForBed(bed, bedGlyphBudget);
+    const glyphDetail =
+      totalPlants > 360 || bedItems.length > 60 ? "compact" : "full";
     const emojiCount = Math.min(
       Math.max(1, Math.round(Math.sqrt(bed.count) * 1.3)),
       bedItems.length
@@ -711,7 +995,7 @@ function buildScene() {
       const rng = rngFrom((bed.idx + 1) * 7919 + sourceIndex * 131);
       const rr = r * (0.92 + rng() * 0.16);
       const rot = Math.floor(rng() * 360);
-      g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng)}</g>`;
+      g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng, glyphDetail)}</g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
         const fs = Math.max(rr * 1.2, 8) * 0.8;
@@ -720,7 +1004,7 @@ function buildScene() {
         );
       }
     });
-    const label = plantText(bed.plant, "nome");
+    const label = plantLabel;
     const labelSize = fitLabelSize(label, bed.w, bed.h, vbW, vbH);
     const labelReserve = bed.w >= 70 && bed.h >= 55 ? 17 : 0;
     const labelCenterX = bx + bed.w / 2;
@@ -772,12 +1056,16 @@ function buildScene() {
     } else {
       const dimText = `${wM} × ${hM}`;
       const dimFs2 = Math.max(9, Math.min(11, bed.w * 0.055));
-      const dimBW = dimText.length * dimFs2 * 0.56 + 12;
+      const naturalDimBW = dimText.length * dimFs2 * 0.56 + 12;
+      const dimBW = Math.min(naturalDimBW, Math.max(0, bed.w - 10));
       const dimBH = dimFs2 + 8;
       const dimBX = bx + bed.w / 2 - dimBW / 2;
       const dimBY = by + bed.h - dimBH - 4;
-      g += `<rect x="${dimBX}" y="${dimBY}" width="${dimBW}" height="${dimBH}" rx="3" fill="${qBg}" pointer-events="none"/>`;
-      g += `<text x="${bx + bed.w / 2}" y="${dimBY + dimFs2 + 1}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${dimFs2}" font-weight="700" fill="rgba(255,255,255,.97)" pointer-events="none">${dimText}</text>`;
+      if (dimBW >= 32) {
+        const dimTextFit = naturalDimBW > dimBW ? ` textLength="${Math.max(20, dimBW - 8)}" lengthAdjust="spacingAndGlyphs"` : "";
+        g += `<rect x="${dimBX}" y="${dimBY}" width="${dimBW}" height="${dimBH}" rx="3" fill="${qBg}" pointer-events="none"/>`;
+        g += `<text x="${bx + bed.w / 2}" y="${dimBY + dimFs2 + 1}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${dimFs2}" font-weight="700" fill="rgba(255,255,255,.97)" pointer-events="none"${dimTextFit}>${dimText}</text>`;
+      }
     }
     g += `</g>`;
     g += pendingEmoji.join("");
@@ -786,9 +1074,6 @@ function buildScene() {
     g += `<text x="${labelCenterX}" y="${labelTop + labelH / 2}" dominant-baseline="middle" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${labelSize}" font-weight="750" fill="${nightMode ? "#e8f4eb" : "#254331"}"${labelTextFit}>${label}</text>`;
     g += `</g>`;
 
-    if (state.overlay) {
-      g += overlayShape(bed, bx, by);
-    }
   });
   g += `</g>`;
 
@@ -830,8 +1115,13 @@ function buildScene() {
         <text x="0" y="${sunLabelY}" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="800" fill="${nightMode ? "#e9dfaa" : "#7b6a3a"}">${nightMode ? tx("nightLabel") : tx("compassSouth")}</text>
       </g>`;
 
+  const sceneLabel = tx("sceneAria", {
+    width: state.larghezza,
+    length: state.lunghezza,
+    beds: L.beds.length
+  });
   return {
-    svg: `<svg viewBox="0 0 ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" role="img">${g}</svg>`,
+    svg: `<svg viewBox="0 0 ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sceneTitle"><title id="sceneTitle">${escapeSvg(sceneLabel)}</title>${g}</svg>`,
     layout: L
   };
 }
