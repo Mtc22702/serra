@@ -443,7 +443,9 @@
     background: var(--verde);
     color: #0b1712;
   }
-  html[data-theme="dark"] .wizard-step.is-done:not(.is-current) .wizard-step-num {
+  html[data-theme="dark"]
+    .wizard-step.is-done:not(.is-current)
+    .wizard-step-num {
     background: rgba(105, 183, 125, 0.22);
     color: #8fe0a8;
   }

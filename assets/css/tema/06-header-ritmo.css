@@ -157,82 +157,81 @@
   }
 }
 @layer base {
-
-/* Rifinitura mobile: stesso set di controlli, meno peso visivo nel primo
+  /* Rifinitura mobile: stesso set di controlli, meno peso visivo nel primo
    viewport. Non nasconde funzioni come tema, lingua o carrello. */
-@media (max-width: 660px) {
-  .site-header {
-    --nav-h: 60px;
+  @media (max-width: 660px) {
+    .site-header {
+      --nav-h: 60px;
+    }
+
+    .site-header-inner {
+      min-height: 60px;
+      padding-inline: 0.44rem;
+    }
+
+    .site-header .nav-actions {
+      gap: 0.28rem;
+    }
+
+    .site-header .nav-menu-toggle {
+      width: 40px;
+      height: 38px;
+      min-width: 40px;
+      flex-basis: 40px;
+      margin-right: 0.12rem;
+    }
+
+    .site-header .theme-toggle {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      flex-basis: 38px;
+    }
+
+    .site-header .nav-lang {
+      width: 54px;
+      min-width: 54px;
+      height: 38px;
+      min-height: 38px;
+    }
+
+    .site-header .nav-lang .nav-action-icon {
+      display: none;
+    }
+
+    .site-header .nav-lang select {
+      width: 52px;
+      min-width: 52px;
+      font-size: 0.68rem;
+    }
+
+    .site-header .cart-btn {
+      width: 56px;
+      min-width: 56px;
+      height: 38px;
+      min-height: 38px;
+    }
+
+    .site-header .cart-icon {
+      font-size: 14px;
+    }
+
+    .site-header .cart-count {
+      min-width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
+    }
   }
 
-  .site-header-inner {
-    min-height: 60px;
-    padding-inline: 0.44rem;
-  }
+  @media (max-width: 380px) {
+    .site-header .nav-brand-text {
+      max-width: 112px;
+    }
 
-  .site-header .nav-actions {
-    gap: 0.28rem;
+    .site-header .nav-actions {
+      gap: 0.22rem;
+    }
   }
-
-  .site-header .nav-menu-toggle {
-    width: 40px;
-    height: 38px;
-    min-width: 40px;
-    flex-basis: 40px;
-    margin-right: 0.12rem;
-  }
-
-  .site-header .theme-toggle {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    flex-basis: 38px;
-  }
-
-  .site-header .nav-lang {
-    width: 54px;
-    min-width: 54px;
-    height: 38px;
-    min-height: 38px;
-  }
-
-  .site-header .nav-lang .nav-action-icon {
-    display: none;
-  }
-
-  .site-header .nav-lang select {
-    width: 52px;
-    min-width: 52px;
-    font-size: 0.68rem;
-  }
-
-  .site-header .cart-btn {
-    width: 56px;
-    min-width: 56px;
-    height: 38px;
-    min-height: 38px;
-  }
-
-  .site-header .cart-icon {
-    font-size: 14px;
-  }
-
-  .site-header .cart-count {
-    min-width: 18px;
-    height: 18px;
-    font-size: 0.65rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .site-header .nav-brand-text {
-    max-width: 112px;
-  }
-
-  .site-header .nav-actions {
-    gap: 0.22rem;
-  }
-}
   :root {
     --icon-text-gap: 0.52rem;
     --icon-text-gap-compact: 0.38rem;

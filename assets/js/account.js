@@ -132,7 +132,10 @@
     });
 
     document.querySelectorAll("[data-i18n-acc-aria]").forEach((el) => {
-      el.setAttribute("aria-label", tAcc(el.getAttribute("data-i18n-acc-aria")));
+      el.setAttribute(
+        "aria-label",
+        tAcc(el.getAttribute("data-i18n-acc-aria"))
+      );
     });
 
     document.querySelectorAll("[data-i18n-acc-title]").forEach((el) => {
@@ -327,7 +330,8 @@
     } catch (_) {
       store = null;
     }
-    const projects = store && Array.isArray(store.projects) ? store.projects : [];
+    const projects =
+      store && Array.isArray(store.projects) ? store.projects : [];
 
     if (!projects.length) {
       emptyNote.hidden = false;

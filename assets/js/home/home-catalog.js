@@ -755,15 +755,16 @@ function renderEditorialPlants() {
     document.getElementById("editorialPlants").innerHTML = "";
     document.getElementById("compactPlants").classList.add("compact-list-view");
     const visiblePlants = plants.slice(0, catalog.visibleCount);
-    document.getElementById("compactPlants").innerHTML = visiblePlants
-      .map((p) => {
-        const tipo = typeOfPlant(p);
-        const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
-        const inC = inCart(p.id);
-        const emoji = fruitEmoji(p.id);
-        const waterIcon = ACQUA_ICON[p.acqua] || "💧";
-        const sunIcon = p.sole === "pieno" ? "☀️" : "🌤️";
-        return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+    document.getElementById("compactPlants").innerHTML =
+      visiblePlants
+        .map((p) => {
+          const tipo = typeOfPlant(p);
+          const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
+          const inC = inCart(p.id);
+          const emoji = fruitEmoji(p.id);
+          const waterIcon = ACQUA_ICON[p.acqua] || "💧";
+          const sunIcon = p.sole === "pieno" ? "☀️" : "🌤️";
+          return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
           <span class="super-compact-thumb" aria-hidden="true">
             <img src="${photoSrc(p.id)}" alt="" loading="lazy" onerror="this.parentElement.dataset.fallback='1';this.style.display='none'" />
             <span class="super-compact-thumb-emoji">${emoji}</span>
@@ -783,8 +784,8 @@ function renderEditorialPlants() {
           </span>
           <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
         </div>`;
-      })
-      .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
+        })
+        .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
   } else {
     // Griglia uniforme a 2 colonne: tutte le piante (comprese le prime 3,
     // prima mostrate più grandi come "in evidenza") usano la stessa card
@@ -796,12 +797,13 @@ function renderEditorialPlants() {
     document.getElementById("editorialPlants").innerHTML = "";
     const visiblePlants = plants.slice(0, catalog.visibleCount);
 
-    document.getElementById("compactPlants").innerHTML = visiblePlants
-      .map((p) => {
-        const tipo = typeOfPlant(p);
-        const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
-        const inC = inCart(p.id);
-        return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+    document.getElementById("compactPlants").innerHTML =
+      visiblePlants
+        .map((p) => {
+          const tipo = typeOfPlant(p);
+          const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
+          const inC = inCart(p.id);
+          return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
           <div class="compact-thumb"><img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" /></div>
           <div class="compact-info">
             <div class="compact-name-row">
@@ -821,8 +823,8 @@ function renderEditorialPlants() {
             <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
           </div>
         </div>`;
-      })
-      .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
+        })
+        .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
   }
 }
 

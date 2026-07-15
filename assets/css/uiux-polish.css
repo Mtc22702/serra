@@ -8,445 +8,445 @@
 @layer base, dark-theme, polish;
 
 @layer polish {
-.guided-setup-toggle {
-  display: block;
-  grid-column: 1 / -1;
-  padding: 8px 10px;
-}
+  .guided-setup-toggle {
+    display: block;
+    grid-column: 1 / -1;
+    padding: 8px 10px;
+  }
 
-/* Chiuso (stato di default): nessuna barra visibile, resta solo l'ingranaggio
+  /* Chiuso (stato di default): nessuna barra visibile, resta solo l'ingranaggio
    accanto al titolo. L'intro guidata è così chiaramente secondaria, non un
    primo passo obbligato. */
-.guided-setup-toggle:not([open]) {
-  padding: 0;
-}
+  .guided-setup-toggle:not([open]) {
+    padding: 0;
+  }
 
-.guided-setup-toggle:not([open]) > .guided-setup-summary {
-  display: none;
-}
+  .guided-setup-toggle:not([open]) > .guided-setup-summary {
+    display: none;
+  }
 
-.config-page-title {
-  display: flex;
-  grid-column: 1 / -1;
-  align-items: center;
-  gap: 11px;
-  min-width: 0;
-  padding: 12px 10px 2px;
-}
+  .config-page-title {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    padding: 12px 10px 2px;
+  }
 
-/* Da icona muta a pillola con etichetta e freccetta: da sola una ruota
+  /* Da icona muta a pillola con etichetta e freccetta: da sola una ruota
    dentata non comunica "apri per rivedere/modificare le tue scelte", né dà
    un indizio che sia un controllo apri/chiudi. Etichetta + chevron (che
    ruota da aperto) sono lo stesso linguaggio già usato altrove nell'app
    (es. .stage-tools-kicker, .persona-pick-chevron). */
-.guided-setup-gear {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  height: 40px;
-  padding: 0 13px 0 11px;
-  flex: 0 0 auto;
-  margin-left: auto;
-  border: 1px solid rgba(47, 107, 58, 0.16);
-  border-radius: 999px;
-  background: linear-gradient(
-    155deg,
-    rgba(255, 255, 255, 0.92),
-    rgba(224, 240, 220, 0.85)
-  );
-  box-shadow: 0 2px 8px rgba(31, 58, 38, 0.08);
-  color: var(--verde-scuro);
-  font-size: 17px;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    background 0.14s ease,
-    box-shadow 0.14s ease,
-    transform 0.1s ease;
-}
-
-.guided-setup-gear-icon {
-  display: inline-flex;
-  flex: none;
-  font-size: 16px;
-}
-
-.guided-setup-gear-label {
-  font-family: var(--sans);
-  font-size: 12.5px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.guided-setup-gear-chevron {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: 14px;
-  height: 14px;
-  font-size: 12px;
-  color: var(--verde);
-  transition: transform 0.18s ease;
-}
-
-.guided-setup-gear[aria-expanded="true"] .guided-setup-gear-chevron {
-  transform: rotate(180deg);
-}
-
-.guided-setup-gear:hover {
-  background: rgba(47, 107, 58, 0.12);
-}
-
-.guided-setup-gear:active {
-  transform: scale(0.96);
-}
-
-.guided-setup-gear:focus-visible {
-  outline: 3px solid rgba(191, 151, 67, 0.4);
-  outline-offset: 2px;
-}
-
-.guided-setup-gear[aria-expanded="true"] {
-  background: rgba(47, 107, 58, 0.16);
-  box-shadow: inset 0 0 0 2px rgba(47, 107, 58, 0.28);
-}
-
-.config-page-title .guided-brand-mark {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 auto;
-  border-radius: 13px;
-}
-
-.config-page-title .guided-brand-mark img {
-  width: 25px;
-  height: 25px;
-}
-
-.config-page-title .guided-brand-copy {
-  min-width: 0;
-}
-
-.config-page-title .guided-brand-copy h1 {
-  color: var(--verde-scuro);
-  font-family: var(--serif);
-  font-size: clamp(24px, 3.1vw, 34px);
-  line-height: 1.02;
-  letter-spacing: 0;
-}
-
-.config-page-title .guided-brand-copy p {
-  margin-top: 4px;
-  color: #61715e;
-  font-size: 12px;
-  font-weight: 650;
-  line-height: 1.3;
-}
-
-.guided-setup-summary {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 52px;
-  padding: 6px 8px;
-  border-radius: 11px;
-  cursor: pointer;
-  list-style: none;
-  outline: none;
-  transition: background 0.14s ease;
-}
-
-.guided-setup-summary::-webkit-details-marker {
-  display: none;
-}
-
-.guided-setup-summary:hover {
-  background: rgba(47, 107, 58, 0.05);
-}
-
-.guided-setup-summary:focus-visible {
-  outline: 3px solid rgba(191, 151, 67, 0.4);
-  outline-offset: 2px;
-}
-
-.guided-setup-summary-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex: 0 0 auto;
-  border-radius: 11px;
-  border: 1px solid rgba(47, 107, 58, 0.16);
-  background: linear-gradient(
-    155deg,
-    rgba(255, 255, 255, 0.92),
-    rgba(224, 240, 220, 0.85)
-  );
-  box-shadow: 0 2px 8px rgba(31, 58, 38, 0.08);
-  color: var(--verde-scuro);
-  font-size: 17px;
-  line-height: 1;
-}
-
-.guided-setup-summary-copy {
-  display: flex;
-  min-width: 0;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.guided-setup-summary-copy b {
-  color: var(--verde-scuro);
-  font-family: var(--serif);
-  font-size: 16px;
-  line-height: 1.08;
-}
-
-.guided-setup-summary-copy small {
-  display: -webkit-box;
-  max-width: none;
-  color: #60705d;
-  font-size: 10.5px;
-  font-weight: 600;
-  line-height: 1.28;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  white-space: normal;
-}
-
-.guided-setup-summary-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  flex: 0 0 auto;
-  min-height: 32px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(47, 107, 58, 0.32);
-  background: rgba(47, 107, 58, 0.14);
-  color: var(--verde-scuro);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  transition:
-    background 0.14s ease,
-    transform 0.1s ease;
-}
-
-.guided-setup-summary-action > span:first-child {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 1em;
-  line-height: 1;
-}
-
-.guided-setup-summary:hover .guided-setup-summary-action {
-  background: rgba(47, 107, 58, 0.22);
-}
-
-.guided-setup-summary-chevron {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  color: var(--verde);
-  font-size: 13px;
-  transition: transform 0.18s ease;
-}
-
-.guided-setup-toggle[open] .guided-setup-summary {
-  border-bottom: 1px solid rgba(47, 107, 58, 0.1);
-  border-radius: 11px 11px 0 0;
-}
-
-.guided-setup-toggle[open] .guided-setup-summary-chevron {
-  transform: rotate(180deg);
-}
-
-.guided-setup-toggle > .guided-intro-body {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(280px, 1.15fr);
-  gap: 10px;
-  padding-top: 9px;
-}
-
-.guided-setup-toggle:not([open]) > .guided-intro-body {
-  display: none;
-}
-
-.guided-setup-toggle .guided-meta-edit {
-  display: none;
-}
-
-.guided-setup-toggle .guided-intro-head {
-  grid-area: auto;
-  min-width: 0;
-  padding: 0;
-}
-
-.guided-setup-toggle .guided-brand-copy p {
-  max-width: 38ch;
-}
-
-.setup-context-row.stage-context-row {
-  min-height: 100%;
-  align-content: center;
-}
-
-.setup-context-row .guided-tags {
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.setup-context-row .stage-context-action {
-  justify-self: start;
-  min-width: 112px;
-}
-
-.stage-context-row.guided-meta-row {
-  display: grid;
-  grid-template-columns: minmax(150px, 1fr) auto auto;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  min-height: 54px;
-  padding: 9px 10px 9px 12px;
-  border: 1px solid rgba(47, 107, 58, 0.13);
-  border-radius: 12px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(246, 250, 240, 0.78)
-    ),
-    rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 26px rgba(31, 58, 38, 0.06);
-  cursor: pointer;
-}
-
-.stage-context-row.guided-meta-row:hover {
-  border-color: rgba(47, 107, 58, 0.24);
-  box-shadow: 0 12px 30px rgba(31, 58, 38, 0.09);
-}
-
-.stage-context-row.guided-meta-row:focus-visible {
-  outline: 3px solid rgba(191, 151, 67, 0.34);
-  outline-offset: 2px;
-}
-
-.stage-context-copy {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.stage-context-copy > span {
-  color: var(--verde-scuro);
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: 0;
-  line-height: 1.15;
-}
-
-.stage-context-copy .guided-summary {
-  color: #62705f;
-  font-size: 11px;
-  font-weight: 650;
-  line-height: 1.25;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.stage-context-row .guided-tags {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  min-width: 0;
-  overflow: visible;
-}
-
-/* Etichette informative (zona/mese/misure): tono caldo neutro, non verde,
-   per distinguerle a colpo d'occhio dai controlli cliccabili (verde) come
-   "Modifica" subito accanto — prima usavano la stessa famiglia di colori
-   e si confondevano tra loro. */
-.stage-context-row .guided-tags .tag {
-  min-height: 30px;
-  padding: 6px 9px;
-  border-radius: 999px;
-  background: rgba(216, 205, 184, 0.4);
-  border-color: rgba(107, 84, 64, 0.22);
-  color: #5c4a38;
-  box-shadow: none;
-  font-size: 11px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-/* Pulsante "Modifica": bordo proprio invece del solo sfondo tenue, così si
-   riconosce subito come un controllo cliccabile e non come un'altra
-   etichetta informativa. */
-.stage-context-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 32px;
-  padding: 0 11px;
-  border-radius: 999px;
-  border: 1px solid rgba(47, 107, 58, 0.32);
-  background: rgba(47, 107, 58, 0.14);
-  color: var(--verde-scuro);
-  font-size: 11px;
-  font-weight: 850;
-  white-space: nowrap;
-}
-
-@media (min-width: 1101px) {
-  .guided-setup-toggle > .guided-intro-body {
-    grid-template-areas: none;
-    grid-template-columns: minmax(360px, 0.9fr) minmax(430px, 1.1fr);
-    align-items: stretch;
-  }
-
-  .guided-setup-toggle .guided-intro-head,
-  .guided-setup-toggle .guided-intro-right {
-    grid-area: auto;
-    padding: 0;
-  }
-
-  .guided-setup-toggle .guided-intro-right {
-    display: flex;
-    flex-direction: column;
+  .guided-setup-gear {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
+    gap: 7px;
+    height: 40px;
+    padding: 0 13px 0 11px;
+    flex: 0 0 auto;
+    margin-left: auto;
+    border: 1px solid rgba(47, 107, 58, 0.16);
+    border-radius: 999px;
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(224, 240, 220, 0.85)
+    );
+    box-shadow: 0 2px 8px rgba(31, 58, 38, 0.08);
+    color: var(--verde-scuro);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background 0.14s ease,
+      box-shadow 0.14s ease,
+      transform 0.1s ease;
   }
 
-  .guided-setup-toggle .persona-pick {
-    margin: 0;
-    height: 100%;
+  .guided-setup-gear-icon {
+    display: inline-flex;
+    flex: none;
+    font-size: 16px;
+  }
+
+  .guided-setup-gear-label {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .guided-setup-gear-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 14px;
+    height: 14px;
+    font-size: 12px;
+    color: var(--verde);
+    transition: transform 0.18s ease;
+  }
+
+  .guided-setup-gear[aria-expanded="true"] .guided-setup-gear-chevron {
+    transform: rotate(180deg);
+  }
+
+  .guided-setup-gear:hover {
+    background: rgba(47, 107, 58, 0.12);
+  }
+
+  .guided-setup-gear:active {
+    transform: scale(0.96);
+  }
+
+  .guided-setup-gear:focus-visible {
+    outline: 3px solid rgba(191, 151, 67, 0.4);
+    outline-offset: 2px;
+  }
+
+  .guided-setup-gear[aria-expanded="true"] {
+    background: rgba(47, 107, 58, 0.16);
+    box-shadow: inset 0 0 0 2px rgba(47, 107, 58, 0.28);
+  }
+
+  .config-page-title .guided-brand-mark {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    border-radius: 13px;
+  }
+
+  .config-page-title .guided-brand-mark img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .config-page-title .guided-brand-copy {
+    min-width: 0;
+  }
+
+  .config-page-title .guided-brand-copy h1 {
+    color: var(--verde-scuro);
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.1vw, 34px);
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .config-page-title .guided-brand-copy p {
+    margin-top: 4px;
+    color: #61715e;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .guided-setup-summary {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 6px 8px;
+    border-radius: 11px;
+    cursor: pointer;
+    list-style: none;
+    outline: none;
+    transition: background 0.14s ease;
+  }
+
+  .guided-setup-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .guided-setup-summary:hover {
+    background: rgba(47, 107, 58, 0.05);
+  }
+
+  .guided-setup-summary:focus-visible {
+    outline: 3px solid rgba(191, 151, 67, 0.4);
+    outline-offset: 2px;
+  }
+
+  .guided-setup-summary-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    border-radius: 11px;
+    border: 1px solid rgba(47, 107, 58, 0.16);
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(224, 240, 220, 0.85)
+    );
+    box-shadow: 0 2px 8px rgba(31, 58, 38, 0.08);
+    color: var(--verde-scuro);
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  .guided-setup-summary-copy {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .guided-setup-summary-copy b {
+    color: var(--verde-scuro);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .guided-setup-summary-copy small {
+    display: -webkit-box;
+    max-width: none;
+    color: #60705d;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.28;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+  }
+
+  .guided-setup-summary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex: 0 0 auto;
+    min-height: 32px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(47, 107, 58, 0.32);
+    background: rgba(47, 107, 58, 0.14);
+    color: var(--verde-scuro);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    transition:
+      background 0.14s ease,
+      transform 0.1s ease;
+  }
+
+  .guided-setup-summary-action > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 1em;
+    line-height: 1;
+  }
+
+  .guided-setup-summary:hover .guided-setup-summary-action {
+    background: rgba(47, 107, 58, 0.22);
+  }
+
+  .guided-setup-summary-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    color: var(--verde);
+    font-size: 13px;
+    transition: transform 0.18s ease;
+  }
+
+  .guided-setup-toggle[open] .guided-setup-summary {
+    border-bottom: 1px solid rgba(47, 107, 58, 0.1);
+    border-radius: 11px 11px 0 0;
+  }
+
+  .guided-setup-toggle[open] .guided-setup-summary-chevron {
+    transform: rotate(180deg);
+  }
+
+  .guided-setup-toggle > .guided-intro-body {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) minmax(280px, 1.15fr);
+    gap: 10px;
+    padding-top: 9px;
+  }
+
+  .guided-setup-toggle:not([open]) > .guided-intro-body {
+    display: none;
+  }
+
+  .guided-setup-toggle .guided-meta-edit {
+    display: none;
+  }
+
+  .guided-setup-toggle .guided-intro-head {
+    grid-area: auto;
+    min-width: 0;
     padding: 0;
+  }
+
+  .guided-setup-toggle .guided-brand-copy p {
+    max-width: 38ch;
   }
 
   .setup-context-row.stage-context-row {
-    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 100%;
+    align-content: center;
   }
 
-  /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista, la
+  .setup-context-row .guided-tags {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .setup-context-row .stage-context-action {
+    justify-self: start;
+    min-width: 112px;
+  }
+
+  .stage-context-row.guided-meta-row {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 54px;
+    padding: 9px 10px 9px 12px;
+    border: 1px solid rgba(47, 107, 58, 0.13);
+    border-radius: 12px;
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.92),
+        rgba(246, 250, 240, 0.78)
+      ),
+      rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 26px rgba(31, 58, 38, 0.06);
+    cursor: pointer;
+  }
+
+  .stage-context-row.guided-meta-row:hover {
+    border-color: rgba(47, 107, 58, 0.24);
+    box-shadow: 0 12px 30px rgba(31, 58, 38, 0.09);
+  }
+
+  .stage-context-row.guided-meta-row:focus-visible {
+    outline: 3px solid rgba(191, 151, 67, 0.34);
+    outline-offset: 2px;
+  }
+
+  .stage-context-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stage-context-copy > span {
+    color: var(--verde-scuro);
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+
+  .stage-context-copy .guided-summary {
+    color: #62705f;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .stage-context-row .guided-tags {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  /* Etichette informative (zona/mese/misure): tono caldo neutro, non verde,
+   per distinguerle a colpo d'occhio dai controlli cliccabili (verde) come
+   "Modifica" subito accanto — prima usavano la stessa famiglia di colori
+   e si confondevano tra loro. */
+  .stage-context-row .guided-tags .tag {
+    min-height: 30px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(216, 205, 184, 0.4);
+    border-color: rgba(107, 84, 64, 0.22);
+    color: #5c4a38;
+    box-shadow: none;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  /* Pulsante "Modifica": bordo proprio invece del solo sfondo tenue, così si
+   riconosce subito come un controllo cliccabile e non come un'altra
+   etichetta informativa. */
+  .stage-context-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(47, 107, 58, 0.32);
+    background: rgba(47, 107, 58, 0.14);
+    color: var(--verde-scuro);
+    font-size: 11px;
+    font-weight: 850;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 1101px) {
+    .guided-setup-toggle > .guided-intro-body {
+      grid-template-areas: none;
+      grid-template-columns: minmax(360px, 0.9fr) minmax(430px, 1.1fr);
+      align-items: stretch;
+    }
+
+    .guided-setup-toggle .guided-intro-head,
+    .guided-setup-toggle .guided-intro-right {
+      grid-area: auto;
+      padding: 0;
+    }
+
+    .guided-setup-toggle .guided-intro-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .guided-setup-toggle .persona-pick {
+      margin: 0;
+      height: 100%;
+      padding: 0;
+    }
+
+    .setup-context-row.stage-context-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista, la
      colonna sinistra non ha più nulla da mostrare. Per i percorsi guidati ci
      mettiamo la guida rapida (#noviceGuidePanel) al suo posto, così la
      scena della serra mantiene sempre la stessa larghezza indipendentemente
@@ -454,1586 +454,1473 @@
      recupera lo spazio, come prima. Torna visibile non appena c'è di nuovo
      qualcosa da mostrarci (es. si riapre "La tua serra" dallo step 1 della
      barra guidata), gestito da syncColLeftLayout() in conf-ui.js. */
-  .app.col-left-collapsed {
-    grid-template-columns: minmax(420px, 1fr) 330px;
+    .app.col-left-collapsed {
+      grid-template-columns: minmax(420px, 1fr) 330px;
+    }
+
+    .app.col-left-collapsed .col-left {
+      display: none;
+    }
+
+    .app.col-left-collapsed .scene {
+      max-width: 960px;
+    }
+
+    #noviceGuidePanel:not([hidden]) {
+      display: block;
+    }
+
+    /* In intermedio ed esperto la guida dà prima il contesto, poi propone i
+     layout e le impostazioni; nel principiante prende la sezione vuota. */
+    body:is(.livello-intermedio, .livello-esperto) #noviceGuidePanel {
+      order: -1;
+    }
   }
 
-  .app.col-left-collapsed .col-left {
+  /* Guida rapida dei percorsi guidati: solo desktop (vedi il blocco sopra), sempre
+   nascosta sotto i 1101px dove la colonna sinistra si comporta diversamente
+   (accordion mobile). */
+  #noviceGuidePanel {
     display: none;
   }
 
-  .app.col-left-collapsed .scene {
-    max-width: 960px;
-  }
-
-  #noviceGuidePanel:not([hidden]) {
+  /* Nell'esperto “La tua serra” deve restare raggiungibile: da chiusa si
+   nasconde solo il contenuto, non l'intestazione della card. */
+  body.livello-esperto #panelSettings.is-collapsed {
     display: block;
   }
 
-  /* In intermedio ed esperto la guida dà prima il contesto, poi propone i
-     layout e le impostazioni; nel principiante prende la sezione vuota. */
-  body:is(.livello-intermedio, .livello-esperto) #noviceGuidePanel {
+  @media (max-width: 660px) {
+    .site-header-inner {
+      min-height: 60px;
+      padding-inline: 0.44rem;
+    }
+
+    .site-header .nav-actions {
+      gap: 0.28rem;
+    }
+
+    .site-header .nav-menu-toggle {
+      width: 40px;
+      height: 38px;
+      min-width: 40px;
+      flex-basis: 40px;
+      margin-right: 0.12rem;
+    }
+
+    .site-header .theme-toggle {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      flex-basis: 38px;
+    }
+
+    .site-header .nav-lang {
+      width: 54px;
+      min-width: 54px;
+      height: 38px;
+      min-height: 38px;
+    }
+
+    .site-header .nav-lang .nav-action-icon {
+      display: none;
+    }
+
+    .site-header .nav-lang select {
+      width: 52px;
+      min-width: 52px;
+      font-size: 0.68rem;
+    }
+
+    .site-header .cart-btn {
+      width: 56px;
+      min-width: 56px;
+      height: 38px;
+      min-height: 38px;
+    }
+
+    .site-header .cart-icon {
+      font-size: 14px;
+    }
+
+    .site-header .cart-count {
+      min-width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
+    }
+
+    .cookie-banner {
+      bottom: 0.5rem;
+      width: calc(100vw - 1rem);
+      padding: 0.36rem 0.42rem calc(0.36rem + env(safe-area-inset-bottom));
+      border-radius: 12px;
+      gap: 0.38rem;
+      flex-wrap: nowrap;
+      box-shadow: 0 12px 34px rgba(18, 39, 28, 0.2);
+    }
+
+    .cookie-banner-text {
+      flex: 1;
+      min-width: 0;
+      font-size: 0.68rem;
+      line-height: 1.25;
+    }
+
+    .cookie-banner-btns {
+      width: auto;
+      gap: 0.28rem;
+    }
+
+    .cookie-accept-btn,
+    .cookie-reject-btn {
+      flex: none;
+      min-height: 34px;
+      padding: 0.34rem 0.52rem;
+      font-size: 0.66rem;
+    }
+
+    .cookie-reject-btn {
+      border-color: transparent;
+      color: rgba(255, 255, 255, 0.62);
+      padding-inline: 0.42rem;
+    }
+
+    .guided-intro {
+      padding: 8px 10px;
+      gap: 8px;
+      border-radius: 13px;
+    }
+
+    .config-page-title {
+      gap: 9px;
+      padding: 2px 8px 0;
+    }
+
+    .config-page-title .guided-brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+    }
+
+    .config-page-title .guided-brand-mark img {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* Spazio ridotto: l'etichetta sparisce, resta l'icona con la freccetta
+     (più piccola) a segnalare comunque che è un apri/chiudi, non solo
+     un'icona decorativa. */
+    .guided-setup-gear {
+      height: 34px;
+      padding: 0 9px;
+      gap: 5px;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .guided-setup-gear-label {
+      display: none;
+    }
+
+    .guided-setup-gear-chevron {
+      width: 12px;
+      height: 12px;
+      font-size: 10px;
+    }
+
+    .config-page-title .guided-brand-copy h1 {
+      font-size: 23px;
+    }
+
+    .config-page-title .guided-brand-copy p {
+      display: -webkit-box;
+      margin-top: 2px;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-height: 1.3;
+      font-size: 10.5px;
+    }
+
+    .guided-setup-summary {
+      min-height: 44px;
+      padding: 3px 2px;
+      gap: 8px;
+    }
+
+    .guided-setup-summary-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .guided-setup-summary-copy b {
+      font-size: 15px;
+    }
+
+    .guided-setup-summary-copy small {
+      font-size: 10px;
+    }
+
+    .guided-setup-summary-action {
+      min-height: 28px;
+      padding-inline: 8px 5px;
+      font-size: 10px;
+    }
+
+    .guided-setup-summary-chevron {
+      width: 22px;
+      height: 22px;
+    }
+
+    .guided-setup-toggle > .guided-intro-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 8px;
+    }
+
+    .guided-intro-head {
+      padding-bottom: 0;
+    }
+
+    .guided-brand-row {
+      gap: 8px;
+    }
+
+    .guided-brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+    .guided-brand-mark img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .guided-brand-copy h1 {
+      font-size: 18px;
+    }
+
+    .stage-context-row.guided-meta-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      min-height: 0;
+      padding: 9px;
+    }
+
+    .stage-context-copy {
+      grid-column: 1 / 2;
+    }
+
+    .stage-context-copy .guided-summary {
+      max-width: 34ch;
+    }
+
+    .stage-context-row .guided-tags {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .stage-context-row .guided-tags .tag {
+      min-height: 28px;
+      padding: 5px 8px;
+      font-size: 10.5px;
+    }
+
+    .stage-context-action {
+      grid-column: 2 / 3;
+      grid-row: 1;
+      min-height: 28px;
+      padding-inline: 9px;
+      font-size: 10px;
+    }
+
+    .persona-pick {
+      margin-top: 0;
+      border-width: 1px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .persona-pick-head {
+      min-height: 42px;
+      padding: 7px 8px;
+      gap: 7px;
+    }
+
+    .persona-pick-current b {
+      font-size: 12.5px;
+    }
+
+    .persona-pick-current small {
+      font-size: 10px;
+    }
+
+    .persona-pick-action {
+      min-height: 26px;
+      padding-inline: 8px;
+      font-size: 10px;
+    }
+
+    .persona-pick-chevron {
+      width: 26px;
+      height: 26px;
+      font-size: 14px;
+    }
+
+    .persona-pick[open] .persona-cards {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 0 7px 7px;
+    }
+
+    .persona-pick[open] .persona-card,
+    .persona-pick[open] .persona-card.is-active {
+      min-height: 46px;
+      padding: 7px 8px;
+      gap: 8px;
+      border-width: 1.4px;
+      border-radius: 11px;
+    }
+
+    .persona-pick[open] .persona-card-ico,
+    .persona-pick[open] .persona-card.is-active .persona-card-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+    }
+
+    .persona-pick[open] .persona-card-body {
+      gap: 1px;
+    }
+
+    .persona-pick[open] .persona-card-body b {
+      font-size: 12.5px;
+      line-height: 1.12;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .persona-pick[open] .persona-level-label,
+    .persona-pick[open] .persona-card-body small {
+      display: none;
+    }
+
+    .persona-pick[open] .persona-card-go {
+      width: 22px;
+      height: 22px;
+    }
+
+    .wizard-bar {
+      padding: 5px;
+      border-radius: 11px;
+    }
+
+    .wizard-step {
+      min-height: 42px;
+    }
+  }
+
+  /* Percorsi 2026: la serra resta il fulcro visivo, mentre i tre ingressi
+   diventano immediatamente leggibili senza un clic preliminare. */
+  .hero-cfg-inner {
+    grid-template-columns: minmax(430px, 1.18fr) minmax(340px, 0.82fr);
+    gap: clamp(1.4rem, 2.5vw, 2.5rem);
+    padding: 1.55rem 1.75rem;
+  }
+
+  .hero-cfg-visual {
     order: -1;
   }
 
-}
-
-/* Guida rapida dei percorsi guidati: solo desktop (vedi il blocco sopra), sempre
-   nascosta sotto i 1101px dove la colonna sinistra si comporta diversamente
-   (accordion mobile). */
-#noviceGuidePanel {
-  display: none;
-}
-
-/* Nell'esperto “La tua serra” deve restare raggiungibile: da chiusa si
-   nasconde solo il contenuto, non l'intestazione della card. */
-body.livello-esperto #panelSettings.is-collapsed {
-  display: block;
-}
-
-@media (max-width: 660px) {
-  .site-header-inner {
-    min-height: 60px;
-    padding-inline: 0.44rem;
+  .hero-cfg-visual .hcg {
+    max-width: 430px;
   }
 
-  .site-header .nav-actions {
-    gap: 0.28rem;
+  .hero-content {
+    gap: 1rem;
   }
 
-  .site-header .nav-menu-toggle {
-    width: 40px;
-    height: 38px;
-    min-width: 40px;
-    flex-basis: 40px;
-    margin-right: 0.12rem;
+  .hero-headline {
+    font-size: clamp(2.3rem, 4.5vw, 3.5rem);
+    line-height: 1.13;
   }
 
-  .site-header .theme-toggle {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    flex-basis: 38px;
+  .hero-cfg-title {
+    min-height: 2.2em;
+    font-size: clamp(1.65rem, 2.15vw, 2rem);
+    line-height: 1.1;
   }
 
-  .site-header .nav-lang {
-    width: 54px;
-    min-width: 54px;
-    height: 38px;
-    min-height: 38px;
-  }
-
-  .site-header .nav-lang .nav-action-icon {
-    display: none;
-  }
-
-  .site-header .nav-lang select {
-    width: 52px;
-    min-width: 52px;
-    font-size: 0.68rem;
-  }
-
-  .site-header .cart-btn {
-    width: 56px;
-    min-width: 56px;
-    height: 38px;
-    min-height: 38px;
-  }
-
-  .site-header .cart-icon {
-    font-size: 14px;
-  }
-
-  .site-header .cart-count {
-    min-width: 18px;
-    height: 18px;
-    font-size: 0.65rem;
-  }
-
-  .cookie-banner {
-    bottom: 0.5rem;
-    width: calc(100vw - 1rem);
-    padding: 0.36rem 0.42rem calc(0.36rem + env(safe-area-inset-bottom));
-    border-radius: 12px;
-    gap: 0.38rem;
-    flex-wrap: nowrap;
-    box-shadow: 0 12px 34px rgba(18, 39, 28, 0.2);
-  }
-
-  .cookie-banner-text {
-    flex: 1;
-    min-width: 0;
-    font-size: 0.68rem;
-    line-height: 1.25;
-  }
-
-  .cookie-banner-btns {
-    width: auto;
-    gap: 0.28rem;
-  }
-
-  .cookie-accept-btn,
-  .cookie-reject-btn {
-    flex: none;
-    min-height: 34px;
-    padding: 0.34rem 0.52rem;
-    font-size: 0.66rem;
-  }
-
-  .cookie-reject-btn {
-    border-color: transparent;
-    color: rgba(255, 255, 255, 0.62);
-    padding-inline: 0.42rem;
-  }
-
-  .guided-intro {
-    padding: 8px 10px;
-    gap: 8px;
-    border-radius: 13px;
-  }
-
-  .config-page-title {
-    gap: 9px;
-    padding: 2px 8px 0;
-  }
-
-  .config-page-title .guided-brand-mark {
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
-  }
-
-  .config-page-title .guided-brand-mark img {
-    width: 22px;
-    height: 22px;
-  }
-
-  /* Spazio ridotto: l'etichetta sparisce, resta l'icona con la freccetta
-     (più piccola) a segnalare comunque che è un apri/chiudi, non solo
-     un'icona decorativa. */
-  .guided-setup-gear {
-    height: 34px;
-    padding: 0 9px;
-    gap: 5px;
-    border-radius: 10px;
-    font-size: 15px;
-  }
-
-  .guided-setup-gear-label {
-    display: none;
-  }
-
-  .guided-setup-gear-chevron {
-    width: 12px;
-    height: 12px;
-    font-size: 10px;
-  }
-
-  .config-page-title .guided-brand-copy h1 {
-    font-size: 23px;
-  }
-
-  .config-page-title .guided-brand-copy p {
-    display: -webkit-box;
-    margin-top: 2px;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-height: 1.3;
-    font-size: 10.5px;
-  }
-
-  .guided-setup-summary {
-    min-height: 44px;
-    padding: 3px 2px;
-    gap: 8px;
-  }
-
-  .guided-setup-summary-icon {
-    width: 32px;
-    height: 32px;
-  }
-
-  .guided-setup-summary-copy b {
-    font-size: 15px;
-  }
-
-  .guided-setup-summary-copy small {
-    font-size: 10px;
-  }
-
-  .guided-setup-summary-action {
-    min-height: 28px;
-    padding-inline: 8px 5px;
-    font-size: 10px;
-  }
-
-  .guided-setup-summary-chevron {
-    width: 22px;
-    height: 22px;
-  }
-
-  .guided-setup-toggle > .guided-intro-body {
+  .hero-cfg-route-intro {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-top: 8px;
+    align-items: center;
+    gap: 0.55rem;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
   }
 
-  .guided-intro-head {
-    padding-bottom: 0;
-  }
-
-  .guided-brand-row {
-    gap: 8px;
-  }
-
-  .guided-brand-mark {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-  }
-
-  .guided-brand-mark img {
-    width: 22px;
-    height: 22px;
-  }
-
-  .guided-brand-copy h1 {
-    font-size: 18px;
-  }
-
-  .stage-context-row.guided-meta-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px;
-    min-height: 0;
-    padding: 9px;
-  }
-
-  .stage-context-copy {
-    grid-column: 1 / 2;
-  }
-
-  .stage-context-copy .guided-summary {
-    max-width: 34ch;
-  }
-
-  .stage-context-row .guided-tags {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-  .stage-context-row .guided-tags .tag {
-    min-height: 28px;
-    padding: 5px 8px;
-    font-size: 10.5px;
-  }
-
-  .stage-context-action {
-    grid-column: 2 / 3;
-    grid-row: 1;
-    min-height: 28px;
-    padding-inline: 9px;
-    font-size: 10px;
-  }
-
-  .persona-pick {
-    margin-top: 0;
-    border-width: 1px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.62);
-  }
-
-  .persona-pick-head {
-    min-height: 42px;
-    padding: 7px 8px;
-    gap: 7px;
-  }
-
-  .persona-pick-current b {
-    font-size: 12.5px;
-  }
-
-  .persona-pick-current small {
-    font-size: 10px;
-  }
-
-  .persona-pick-action {
-    min-height: 26px;
-    padding-inline: 8px;
-    font-size: 10px;
-  }
-
-  .persona-pick-chevron {
+  .hero-cfg-route-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 26px;
     height: 26px;
-    font-size: 14px;
+    flex: none;
+    border-radius: 999px;
+    background: #8fe0b4;
+    color: #0f2a1c;
   }
 
-  .persona-pick[open] .persona-cards {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 0 7px 7px;
+  .hero-cfg-actions > .hero-cfg-levels {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
-  .persona-pick[open] .persona-card,
-  .persona-pick[open] .persona-card.is-active {
-    min-height: 46px;
-    padding: 7px 8px;
-    gap: 8px;
-    border-width: 1.4px;
-    border-radius: 11px;
+  .hero-cfg-levels-grid {
+    gap: 0.58rem;
   }
 
-  .persona-pick[open] .persona-card-ico,
-  .persona-pick[open] .persona-card.is-active .persona-card-ico {
-    width: 28px;
-    height: 28px;
-    border-radius: 9px;
+  .hero-cfg-level {
+    min-height: 52px;
+    padding-block: 0.55rem;
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.1);
   }
 
-  .persona-pick[open] .persona-card-body {
-    gap: 1px;
+  .hero-cfg-level .pc-persona-body small {
+    color: rgba(255, 255, 255, 0.76);
   }
 
-  .persona-pick[open] .persona-card-body b {
-    font-size: 12.5px;
-    line-height: 1.12;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .hero-cfg-catalog-link {
+    width: 100%;
+    justify-content: space-between;
+    text-align: left;
   }
 
-  .persona-pick[open] .persona-level-label,
-  .persona-pick[open] .persona-card-body small {
-    display: none;
-  }
-
-  .persona-pick[open] .persona-card-go {
-    width: 22px;
-    height: 22px;
-  }
-
-  .wizard-bar {
-    padding: 5px;
-    border-radius: 11px;
-  }
-
-  .wizard-step {
-    min-height: 42px;
-  }
-}
-
-/* Percorsi 2026: la serra resta il fulcro visivo, mentre i tre ingressi
-   diventano immediatamente leggibili senza un clic preliminare. */
-.hero-cfg-inner {
-  grid-template-columns: minmax(430px, 1.18fr) minmax(340px, 0.82fr);
-  gap: clamp(1.4rem, 2.5vw, 2.5rem);
-  padding: 1.55rem 1.75rem;
-}
-
-.hero-cfg-visual {
-  order: -1;
-}
-
-.hero-cfg-visual .hcg {
-  max-width: 430px;
-}
-
-.hero-content {
-  gap: 1rem;
-}
-
-.hero-headline {
-  font-size: clamp(2.3rem, 4.5vw, 3.5rem);
-  line-height: 1.13;
-}
-
-.hero-cfg-title {
-  min-height: 2.2em;
-  font-size: clamp(1.65rem, 2.15vw, 2rem);
-  line-height: 1.1;
-}
-
-.hero-cfg-route-intro {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  width: 100%;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-}
-
-.hero-cfg-route-step {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  flex: none;
-  border-radius: 999px;
-  background: #8fe0b4;
-  color: #0f2a1c;
-}
-
-.hero-cfg-actions > .hero-cfg-levels {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.hero-cfg-levels-grid {
-  gap: 0.58rem;
-}
-
-.hero-cfg-level {
-  min-height: 52px;
-  padding-block: 0.55rem;
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.hero-cfg-level .pc-persona-body small {
-  color: rgba(255, 255, 255, 0.76);
-}
-
-.hero-cfg-catalog-link {
-  width: 100%;
-  justify-content: space-between;
-  text-align: left;
-}
-
-/* Contesto di arrivo: gli scroll guidano ancora ogni profilo, ma non
+  /* Contesto di arrivo: gli scroll guidano ancora ogni profilo, ma non
    lasciano più l'utente davanti a una planimetria priva di spiegazione. */
-.journey-context {
-  --journey-accent: #c9962f;
-  position: sticky;
-  top: calc(var(--nav-h, 66px) + 8px);
-  z-index: 60;
-  display: grid;
-  grid-template-columns: auto minmax(160px, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 12px;
-  padding: 10px 12px;
-  border: 1px solid color-mix(in srgb, var(--journey-accent) 36%, transparent);
-  border-left: 5px solid var(--journey-accent);
-  border-radius: 13px;
-  background: color-mix(in srgb, var(--journey-accent) 9%, #fffdf6);
-  box-shadow: 0 8px 22px rgba(31, 58, 38, 0.08);
-}
-
-/* Il contesto è il ponte fra intestazione/impostazioni e lavoro operativo:
-   come figlio diretto della griglia deve occupare tutta la riga. */
-.app > .journey-context {
-  grid-column: 1 / -1;
-  width: 100%;
-}
-
-.journey-context--novizio {
-  --journey-accent: #4f9a3f;
-}
-
-.journey-context--intermedio {
-  --journey-accent: #c9962f;
-}
-
-.journey-context--esperto {
-  --journey-accent: #c0552f;
-}
-
-.journey-context-level {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: var(--journey-accent);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.journey-context-copy {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.journey-context-copy b {
-  color: var(--verde-scuro);
-  font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.12;
-}
-
-.journey-context-copy small {
-  color: #5f6f60;
-  font-size: 10.5px;
-  line-height: 1.3;
-}
-
-.journey-context-progress {
-  position: static;
-  top: auto;
-  left: auto;
-  right: auto;
-  z-index: auto;
-  display: flex;
-  align-items: center;
-  width: auto;
-  height: auto;
-  gap: 4px;
-  padding: 0;
-  grid-column: 1 / -1;
-  justify-content: center;
-  order: 4;
-}
-
-.journey-context-step {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 32px;
-  padding: 4px 7px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: rgba(31, 58, 38, 0.06);
-  color: #657165;
-  font-family: var(--sans);
-  font-size: 9px;
-  font-weight: 750;
-  white-space: nowrap;
-  cursor: pointer;
-  line-height: 1.15;
-  text-align: center;
-  transition:
-    background 0.16s ease,
-    border-color 0.16s ease,
-    transform 0.08s ease;
-}
-
-.journey-context-step:hover {
-  background: color-mix(in srgb, var(--journey-accent) 12%, #fff);
-}
-
-.journey-context-step:active {
-  transform: translateY(1px);
-}
-
-.journey-context-step:focus-visible {
-  outline: 2px solid var(--journey-accent);
-  outline-offset: 2px;
-}
-
-.journey-context-step.is-done,
-.journey-context-step.is-current {
-  background: color-mix(in srgb, var(--journey-accent) 16%, #fff);
-  color: #24382a;
-}
-
-.journey-context-step.is-current {
-  border-color: var(--journey-accent);
-  box-shadow: 0 2px 8px
-    color-mix(in srgb, var(--journey-accent) 18%, transparent);
-}
-
-.catalog-mobile-filter-toggle {
-  display: none;
-}
-
-html[data-theme="dark"] .journey-context {
-  background: color-mix(in srgb, var(--journey-accent) 13%, #15261d);
-  border-color: color-mix(in srgb, var(--journey-accent) 46%, #263a2f);
-}
-
-html[data-theme="dark"] .journey-context-copy b,
-html[data-theme="dark"] .journey-context-copy small {
-  color: var(--dark-text);
-}
-
-html[data-theme="dark"] .journey-context-step {
-  background: rgba(255, 255, 255, 0.06);
-  color: #bdcbbf;
-}
-
-html[data-theme="dark"] .journey-context-step.is-done,
-html[data-theme="dark"] .journey-context-step.is-current {
-  background: color-mix(in srgb, var(--journey-accent) 24%, #17271f);
-  color: #f2f7f3;
-}
-
-@media (min-width: 1101px) {
-  .col-left,
-  .col-right {
-    top: calc(var(--nav-h, 66px) + 18px);
-  }
-}
-
-@media (max-width: 1100px) {
-  .hero-cfg-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-cfg-visual .hcg {
-    max-width: 390px;
-  }
-
   .journey-context {
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    --journey-accent: #c9962f;
+    position: sticky;
+    top: calc(var(--nav-h, 66px) + 8px);
+    z-index: 60;
+    display: grid;
+    grid-template-columns: auto minmax(160px, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--journey-accent) 36%, transparent);
+    border-left: 5px solid var(--journey-accent);
+    border-radius: 13px;
+    background: color-mix(in srgb, var(--journey-accent) 9%, #fffdf6);
+    box-shadow: 0 8px 22px rgba(31, 58, 38, 0.08);
+  }
+
+  /* Il contesto è il ponte fra intestazione/impostazioni e lavoro operativo:
+   come figlio diretto della griglia deve occupare tutta la riga. */
+  .app > .journey-context {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .journey-context--novizio {
+    --journey-accent: #4f9a3f;
+  }
+
+  .journey-context--intermedio {
+    --journey-accent: #c9962f;
+  }
+
+  .journey-context--esperto {
+    --journey-accent: #c0552f;
+  }
+
+  .journey-context-level {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--journey-accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .journey-context-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .journey-context-copy b {
+    color: var(--verde-scuro);
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.12;
+  }
+
+  .journey-context-copy small {
+    color: #5f6f60;
+    font-size: 10.5px;
+    line-height: 1.3;
   }
 
   .journey-context-progress {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    z-index: auto;
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: auto;
+    gap: 4px;
+    padding: 0;
     grid-column: 1 / -1;
     justify-content: center;
     order: 4;
   }
-}
-
-@media (max-width: 660px) {
-  .catalog-clima-bar .hero-zone-btn {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .catalog-clima-bar .hero-zone-btn small {
-    flex-basis: 100%;
-    text-align: center;
-  }
-
-  .site-header .nav-menu-toggle,
-  .site-header .theme-toggle,
-  .site-header .nav-lang,
-  .site-header .cart-btn {
-    min-height: 44px;
-    height: 44px;
-  }
-
-  .site-header .nav-menu-toggle {
-    width: 44px;
-    min-width: 44px;
-    flex-basis: 44px;
-  }
-
-  .site-header .theme-toggle {
-    width: 44px;
-    min-width: 44px;
-    flex-basis: 44px;
-  }
-
-  .site-header .nav-lang {
-    width: 56px;
-    min-width: 56px;
-  }
-
-  .site-header .cart-btn {
-    width: 52px;
-    min-width: 52px;
-  }
-
-  .hero-immersive {
-    justify-content: flex-start;
-  }
-
-  .hero-content {
-    min-height: auto;
-    /* Safari iOS può sovrapporre la barra inferiore all'ultimo controllo.
-       Questa riserva permette di far scorrere la CTA completamente sopra la
-       toolbar e include anche l'area del gesto Home sui dispositivi con notch. */
-    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
-  }
-
-  .hero-cfg-inner {
-    padding: 0.9rem 0.9rem 1rem;
-    gap: 0.7rem;
-  }
-
-  .hero-cfg-visual .hcg {
-    max-width: 220px;
-  }
-
-  .hero-cfg-title {
-    font-size: clamp(1.65rem, 8vw, 2rem);
-  }
-
-  .hero-cfg-route-intro {
-    justify-content: center;
-  }
-
-  .hero-cfg-level {
-    min-height: 48px;
-    padding: 0.45rem 0.62rem;
-  }
-
-  .hero-cfg-level .pc-persona-body b {
-    font-size: 0.88rem;
-  }
-
-  .hero-cfg-level .pc-persona-body small {
-    font-size: 0.7rem;
-  }
-
-  .hero-cfg-catalog-link {
-    min-height: 48px;
-    padding: 0.62rem 0.8rem;
-    font-size: 0.75rem;
-    line-height: 1.25;
-  }
-
-  .journey-context {
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    padding: 9px;
-    border-radius: 11px;
-  }
-
-  .journey-context-level {
-    justify-self: start;
-    min-height: 25px;
-    font-size: 9px;
-  }
-
-  .journey-context-copy {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .journey-context-copy b {
-    font-size: 14px;
-  }
-
-  .journey-context-copy small {
-    font-size: 11px;
-    line-height: 1.3;
-  }
-
-  .journey-context-progress {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    justify-content: stretch;
-  }
 
   .journey-context-step {
-    flex: 1;
-    min-height: 38px;
-    padding-inline: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 4px 7px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: rgba(31, 58, 38, 0.06);
+    color: #657165;
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 750;
+    white-space: nowrap;
+    cursor: pointer;
+    line-height: 1.15;
     text-align: center;
+    transition:
+      background 0.16s ease,
+      border-color 0.16s ease,
+      transform 0.08s ease;
+  }
+
+  .journey-context-step:hover {
+    background: color-mix(in srgb, var(--journey-accent) 12%, #fff);
+  }
+
+  .journey-context-step:active {
+    transform: translateY(1px);
+  }
+
+  .journey-context-step:focus-visible {
+    outline: 2px solid var(--journey-accent);
+    outline-offset: 2px;
+  }
+
+  .journey-context-step.is-done,
+  .journey-context-step.is-current {
+    background: color-mix(in srgb, var(--journey-accent) 16%, #fff);
+    color: #24382a;
+  }
+
+  .journey-context-step.is-current {
+    border-color: var(--journey-accent);
+    box-shadow: 0 2px 8px
+      color-mix(in srgb, var(--journey-accent) 18%, transparent);
   }
 
   .catalog-mobile-filter-toggle {
-    position: sticky;
-    top: calc(var(--nav-h) + 8px);
-    z-index: 80;
-    display: flex;
-    width: 100%;
-    min-height: 54px;
-    margin: 0 0 0.65rem;
-    padding: 0.55rem 0.7rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
-    border: 1.5px solid rgba(45, 106, 79, 0.22);
-    border-radius: 13px;
-    background: rgba(255, 253, 246, 0.96);
-    color: var(--green-dk);
-    box-shadow: 0 8px 22px rgba(27, 67, 50, 0.12);
-    backdrop-filter: blur(14px);
-    transition:
-      background 0.18s ease,
-      border-color 0.18s ease,
-      box-shadow 0.18s ease;
-  }
-
-  .catalog-mobile-filter-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.15;
-  }
-
-  .catalog-mobile-filter-copy b {
-    font-size: 0.86rem;
-  }
-
-  .catalog-mobile-filter-copy small {
-    margin-top: 3px;
-    color: var(--muted);
-    font-size: 0.68rem;
-  }
-
-  .catalog-mobile-filter-action {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 56px;
-    gap: 0.28rem;
-    line-height: 1;
-    font-size: 0.76rem;
-    font-weight: 800;
-  }
-
-  .catalog-mobile-filter-toggle[aria-expanded="true"]
-    .catalog-mobile-filter-action
-    span {
-    display: inline-flex;
-    transform: rotate(180deg);
-  }
-
-  .catalog-mobile-filter-toggle[aria-expanded="true"] {
-    border-color: rgba(45, 106, 79, 0.52);
-    background: rgba(231, 246, 235, 0.98);
-    box-shadow:
-      0 0 0 3px rgba(82, 183, 136, 0.16),
-      0 10px 24px rgba(27, 67, 50, 0.14);
-  }
-
-  html[data-theme="dark"] .catalog-mobile-filter-toggle {
-    border-color: rgba(126, 211, 153, 0.34);
-    background: rgba(29, 48, 39, 0.96);
-    color: #edf7ee;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
-  }
-
-  html[data-theme="dark"] .catalog-mobile-filter-copy small {
-    color: #b9cdbd;
-  }
-
-  html[data-theme="dark"] .catalog-mobile-filter-toggle[aria-expanded="true"] {
-    border-color: rgba(126, 211, 153, 0.78);
-    background: rgba(43, 83, 61, 0.98);
-    box-shadow:
-      0 0 0 3px rgba(126, 211, 153, 0.16),
-      0 10px 26px rgba(0, 0, 0, 0.38);
-  }
-
-  .catalog-tools--advanced {
     display: none;
   }
 
-  .catalog-tools--advanced.is-mobile-open {
-    display: flex;
+  html[data-theme="dark"] .journey-context {
+    background: color-mix(in srgb, var(--journey-accent) 13%, #15261d);
+    border-color: color-mix(in srgb, var(--journey-accent) 46%, #263a2f);
   }
-}
 
-@media (max-width: 380px) {
-  .site-header .theme-toggle {
-    display: none;
+  html[data-theme="dark"] .journey-context-copy b,
+  html[data-theme="dark"] .journey-context-copy small {
+    color: var(--dark-text);
   }
-}
 
-/* Menu mobile: la testata conserva solo le azioni frequenti; tema e lingua
+  html[data-theme="dark"] .journey-context-step {
+    background: rgba(255, 255, 255, 0.06);
+    color: #bdcbbf;
+  }
+
+  html[data-theme="dark"] .journey-context-step.is-done,
+  html[data-theme="dark"] .journey-context-step.is-current {
+    background: color-mix(in srgb, var(--journey-accent) 24%, #17271f);
+    color: #f2f7f3;
+  }
+
+  @media (min-width: 1101px) {
+    .col-left,
+    .col-right {
+      top: calc(var(--nav-h, 66px) + 18px);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .hero-cfg-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-cfg-visual .hcg {
+      max-width: 390px;
+    }
+
+    .journey-context {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .journey-context-progress {
+      grid-column: 1 / -1;
+      justify-content: center;
+      order: 4;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .catalog-clima-bar .hero-zone-btn {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .catalog-clima-bar .hero-zone-btn small {
+      flex-basis: 100%;
+      text-align: center;
+    }
+
+    .site-header .nav-menu-toggle,
+    .site-header .theme-toggle,
+    .site-header .nav-lang,
+    .site-header .cart-btn {
+      min-height: 44px;
+      height: 44px;
+    }
+
+    .site-header .nav-menu-toggle {
+      width: 44px;
+      min-width: 44px;
+      flex-basis: 44px;
+    }
+
+    .site-header .theme-toggle {
+      width: 44px;
+      min-width: 44px;
+      flex-basis: 44px;
+    }
+
+    .site-header .nav-lang {
+      width: 56px;
+      min-width: 56px;
+    }
+
+    .site-header .cart-btn {
+      width: 52px;
+      min-width: 52px;
+    }
+
+    .hero-immersive {
+      justify-content: flex-start;
+    }
+
+    .hero-content {
+      min-height: auto;
+      /* Safari iOS può sovrapporre la barra inferiore all'ultimo controllo.
+       Questa riserva permette di far scorrere la CTA completamente sopra la
+       toolbar e include anche l'area del gesto Home sui dispositivi con notch. */
+      padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .hero-cfg-inner {
+      padding: 0.9rem 0.9rem 1rem;
+      gap: 0.7rem;
+    }
+
+    .hero-cfg-visual .hcg {
+      max-width: 220px;
+    }
+
+    .hero-cfg-title {
+      font-size: clamp(1.65rem, 8vw, 2rem);
+    }
+
+    .hero-cfg-route-intro {
+      justify-content: center;
+    }
+
+    .hero-cfg-level {
+      min-height: 48px;
+      padding: 0.45rem 0.62rem;
+    }
+
+    .hero-cfg-level .pc-persona-body b {
+      font-size: 0.88rem;
+    }
+
+    .hero-cfg-level .pc-persona-body small {
+      font-size: 0.7rem;
+    }
+
+    .hero-cfg-catalog-link {
+      min-height: 48px;
+      padding: 0.62rem 0.8rem;
+      font-size: 0.75rem;
+      line-height: 1.25;
+    }
+
+    .journey-context {
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 9px;
+      border-radius: 11px;
+    }
+
+    .journey-context-level {
+      justify-self: start;
+      min-height: 25px;
+      font-size: 9px;
+    }
+
+    .journey-context-copy {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .journey-context-copy b {
+      font-size: 14px;
+    }
+
+    .journey-context-copy small {
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    .journey-context-progress {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      justify-content: stretch;
+    }
+
+    .journey-context-step {
+      flex: 1;
+      min-height: 38px;
+      padding-inline: 3px;
+      text-align: center;
+    }
+
+    .catalog-mobile-filter-toggle {
+      position: sticky;
+      top: calc(var(--nav-h) + 8px);
+      z-index: 80;
+      display: flex;
+      width: 100%;
+      min-height: 54px;
+      margin: 0 0 0.65rem;
+      padding: 0.55rem 0.7rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      border: 1.5px solid rgba(45, 106, 79, 0.22);
+      border-radius: 13px;
+      background: rgba(255, 253, 246, 0.96);
+      color: var(--green-dk);
+      box-shadow: 0 8px 22px rgba(27, 67, 50, 0.12);
+      backdrop-filter: blur(14px);
+      transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .catalog-mobile-filter-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.15;
+    }
+
+    .catalog-mobile-filter-copy b {
+      font-size: 0.86rem;
+    }
+
+    .catalog-mobile-filter-copy small {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .catalog-mobile-filter-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 56px;
+      gap: 0.28rem;
+      line-height: 1;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .catalog-mobile-filter-toggle[aria-expanded="true"]
+      .catalog-mobile-filter-action
+      span {
+      display: inline-flex;
+      transform: rotate(180deg);
+    }
+
+    .catalog-mobile-filter-toggle[aria-expanded="true"] {
+      border-color: rgba(45, 106, 79, 0.52);
+      background: rgba(231, 246, 235, 0.98);
+      box-shadow:
+        0 0 0 3px rgba(82, 183, 136, 0.16),
+        0 10px 24px rgba(27, 67, 50, 0.14);
+    }
+
+    html[data-theme="dark"] .catalog-mobile-filter-toggle {
+      border-color: rgba(126, 211, 153, 0.34);
+      background: rgba(29, 48, 39, 0.96);
+      color: #edf7ee;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+    }
+
+    html[data-theme="dark"] .catalog-mobile-filter-copy small {
+      color: #b9cdbd;
+    }
+
+    html[data-theme="dark"]
+      .catalog-mobile-filter-toggle[aria-expanded="true"] {
+      border-color: rgba(126, 211, 153, 0.78);
+      background: rgba(43, 83, 61, 0.98);
+      box-shadow:
+        0 0 0 3px rgba(126, 211, 153, 0.16),
+        0 10px 26px rgba(0, 0, 0, 0.38);
+    }
+
+    .catalog-tools--advanced {
+      display: none;
+    }
+
+    .catalog-tools--advanced.is-mobile-open {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .site-header .theme-toggle {
+      display: none;
+    }
+  }
+
+  /* Menu mobile: la testata conserva solo le azioni frequenti; tema e lingua
    diventano preferenze esplicite dentro al drawer. */
-.mobile-nav-section-title,
-.mobile-nav-preferences {
-  display: none;
-}
-
-@media (max-width: 660px) {
-  .site-header-inner {
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.65rem;
+  .mobile-nav-section-title,
+  .mobile-nav-preferences {
+    display: none;
   }
 
-  .site-header .nav-brand {
-    grid-column: 1;
-    width: auto;
-  }
+  @media (max-width: 660px) {
+    .site-header-inner {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.65rem;
+    }
 
-  .site-header .nav-actions {
-    grid-column: 2;
-    width: 100%;
-    /* Il toggle hamburger ora è centrato in modo indipendente (vedi sotto):
+    .site-header .nav-brand {
+      grid-column: 1;
+      width: auto;
+    }
+
+    .site-header .nav-actions {
+      grid-column: 2;
+      width: 100%;
+      /* Il toggle hamburger ora è centrato in modo indipendente (vedi sotto):
        quel che resta qui (il carrello) va tenuto sul bordo destro invece
        che appiccicato accanto al logo. */
-    justify-content: flex-end;
-  }
+      justify-content: flex-end;
+    }
 
-  /* Centrato nella pagina (rispetto a .site-header, che a questa larghezza
+    /* Centrato nella pagina (rispetto a .site-header, che a questa larghezza
      è position:fixed a tutta larghezza) invece che appiccicato al logo. */
-  .site-header .nav-menu-toggle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
-  }
+    .site-header .nav-menu-toggle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+    }
 
-  .site-header .nav-menu-toggle,
-  .site-header .nav-menu-toggle:hover,
-  .site-header .nav-menu-toggle:focus,
-  .site-header .nav-menu-toggle:focus-visible,
-  .site-header .nav-menu-toggle:active,
-  .site-header .nav-menu-toggle[aria-expanded="true"] {
-    border-color: #72c58a;
-    background: #2d6a4f;
-    color: #fff;
-    box-shadow: 0 6px 16px rgba(27, 67, 50, 0.24);
-    transform: translate(-50%, -50%);
-  }
+    .site-header .nav-menu-toggle,
+    .site-header .nav-menu-toggle:hover,
+    .site-header .nav-menu-toggle:focus,
+    .site-header .nav-menu-toggle:focus-visible,
+    .site-header .nav-menu-toggle:active,
+    .site-header .nav-menu-toggle[aria-expanded="true"] {
+      border-color: #72c58a;
+      background: #2d6a4f;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(27, 67, 50, 0.24);
+      transform: translate(-50%, -50%);
+    }
 
-  .site-header .nav-menu-toggle span {
-    background: #fff;
-  }
+    .site-header .nav-menu-toggle span {
+      background: #fff;
+    }
 
-  .site-header .nav-actions > .theme-toggle,
-  .site-header .nav-actions > .nav-lang {
-    display: none;
-  }
+    .site-header .nav-actions > .theme-toggle,
+    .site-header .nav-actions > .nav-lang {
+      display: none;
+    }
 
-  .site-header .cart-btn {
-    order: 2;
-    margin-left: auto;
-  }
+    .site-header .cart-btn {
+      order: 2;
+      margin-left: auto;
+    }
 
-  .site-header .nav-links {
-    left: 0.5rem;
-    right: 0.5rem;
-    top: calc(100% + 6px);
-    max-height: calc(100dvh - var(--nav-h, 60px) - 18px);
-    padding: 0.65rem;
-    gap: 0.28rem;
-    border-radius: 20px;
-  }
+    .site-header .nav-links {
+      left: 0.5rem;
+      right: 0.5rem;
+      top: calc(100% + 6px);
+      max-height: calc(100dvh - var(--nav-h, 60px) - 18px);
+      padding: 0.65rem;
+      gap: 0.28rem;
+      border-radius: 20px;
+    }
 
-  .site-header .mobile-nav-section-title {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.6rem 0.65rem 0.3rem;
-    color: #7c8a7e;
-    font-size: 0.66rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+    .site-header .mobile-nav-section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 0.65rem 0.3rem;
+      color: #7c8a7e;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
 
-  .site-header .mobile-nav-preferences > .mobile-nav-section-title {
-    padding-top: 0;
-  }
+    .site-header .mobile-nav-preferences > .mobile-nav-section-title {
+      padding-top: 0;
+    }
 
-  .site-header .nav-link,
-  .site-header .nav-link:not(.cart-btn) {
-    min-height: 50px;
-    padding: 0.74rem 0.8rem;
-    border: 1px solid transparent;
-    border-radius: 13px;
-    font-size: 0.93rem;
-    font-weight: 650;
-    transition:
-      background 0.14s ease,
-      border-color 0.14s ease,
-      transform 0.1s ease;
-  }
+    .site-header .nav-link,
+    .site-header .nav-link:not(.cart-btn) {
+      min-height: 50px;
+      padding: 0.74rem 0.8rem;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      font-size: 0.93rem;
+      font-weight: 650;
+      transition:
+        background 0.14s ease,
+        border-color 0.14s ease,
+        transform 0.1s ease;
+    }
 
-  .site-header .nav-link:active {
-    transform: scale(0.98);
-  }
+    .site-header .nav-link:active {
+      transform: scale(0.98);
+    }
 
-  .site-header .nav-link--current {
-    background: rgba(47, 107, 58, 0.09);
-    border-color: rgba(47, 107, 58, 0.16);
-    font-weight: 750;
-  }
+    .site-header .nav-link--current {
+      background: rgba(47, 107, 58, 0.09);
+      border-color: rgba(47, 107, 58, 0.16);
+      font-weight: 750;
+    }
 
-  .site-header .nav-link--configuratore {
-    margin-top: 0.2rem;
-    background: #2f6b3a;
-    border-color: #2f6b3a;
-    color: #fff;
-    box-shadow: 0 7px 18px rgba(47, 107, 58, 0.2);
-  }
+    .site-header .nav-link--configuratore {
+      margin-top: 0.2rem;
+      background: #2f6b3a;
+      border-color: #2f6b3a;
+      color: #fff;
+      box-shadow: 0 7px 18px rgba(47, 107, 58, 0.2);
+    }
 
-  .site-header .nav-link--account {
-    margin-top: 0.3rem;
-    padding-top: calc(0.74rem + 0.3rem);
-    border-top: 1px dashed rgba(107, 98, 84, 0.2);
-    border-radius: 13px;
-  }
+    .site-header .nav-link--account {
+      margin-top: 0.3rem;
+      padding-top: calc(0.74rem + 0.3rem);
+      border-top: 1px dashed rgba(107, 98, 84, 0.2);
+      border-radius: 13px;
+    }
 
-  /* Sezione preferenze: card distinta dai link di navigazione, con
+    /* Sezione preferenze: card distinta dai link di navigazione, con
      controlli "veri" (switch e selettore a pillola) invece di una freccia
      o di una <select> nativa poco leggibile. */
-  .site-header .mobile-nav-preferences {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-    padding: 0.55rem 0.5rem 0.6rem;
-    border-radius: 16px;
-    background: rgba(47, 107, 58, 0.045);
-    border: 1px solid rgba(47, 107, 58, 0.1);
-  }
+    .site-header .mobile-nav-preferences {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      padding: 0.55rem 0.5rem 0.6rem;
+      border-radius: 16px;
+      background: rgba(47, 107, 58, 0.045);
+      border: 1px solid rgba(47, 107, 58, 0.1);
+    }
 
-  .site-header .mobile-menu-theme,
-  .site-header .mobile-menu-language {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    /* .theme-toggle (classe condivisa col bottone tema) imposta altrove
+    .site-header .mobile-menu-theme,
+    .site-header .mobile-menu-language {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      /* .theme-toggle (classe condivisa col bottone tema) imposta altrove
        place-items:center: senza questo reset, il testo "Tema" finisce
        centrato nella sua colonna mentre "Lingua" (che non ha quella
        classe) resta a sinistra. */
-    justify-items: start;
-    gap: 0.6rem;
-    min-width: 0;
-    min-height: 56px;
-    margin: 0;
-    padding: 0.5rem 0.6rem;
-    border: 0;
-    border-radius: 13px;
-    background: transparent;
-    color: #26382c;
-    text-align: left;
-  }
+      justify-items: start;
+      gap: 0.6rem;
+      min-width: 0;
+      min-height: 56px;
+      margin: 0;
+      padding: 0.5rem 0.6rem;
+      border: 0;
+      border-radius: 13px;
+      background: transparent;
+      color: #26382c;
+      text-align: left;
+    }
 
-  .site-header .mobile-menu-theme {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-  }
+    .site-header .mobile-menu-theme {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
 
-  .site-header .mobile-menu-theme:hover,
-  .site-header .mobile-menu-language:hover {
-    background: rgba(47, 107, 58, 0.06);
-  }
+    .site-header .mobile-menu-theme:hover,
+    .site-header .mobile-menu-language:hover {
+      background: rgba(47, 107, 58, 0.06);
+    }
 
-  .mobile-menu-pref-icon {
-    display: inline-flex;
-    position: relative;
-    width: 32px;
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: #fff;
-    color: #2f6b3a;
-    font-size: 0.95rem;
-    box-shadow: 0 3px 8px rgba(27, 67, 50, 0.1);
-  }
+    .mobile-menu-pref-icon {
+      display: inline-flex;
+      position: relative;
+      width: 32px;
+      height: 32px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #fff;
+      color: #2f6b3a;
+      font-size: 0.95rem;
+      box-shadow: 0 3px 8px rgba(27, 67, 50, 0.1);
+    }
 
-  .mobile-menu-pref-copy {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 1px;
-  }
+    .mobile-menu-pref-copy {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 1px;
+    }
 
-  .mobile-menu-pref-copy b {
-    font-size: 0.8rem;
-    font-weight: 750;
-    line-height: 1.15;
-  }
+    .mobile-menu-pref-copy b {
+      font-size: 0.8rem;
+      font-weight: 750;
+      line-height: 1.15;
+    }
 
-  .mobile-menu-pref-copy small {
-    color: #6f7b72;
-    font-size: 0.64rem;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
+    .mobile-menu-pref-copy small {
+      color: #6f7b72;
+      font-size: 0.64rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
 
-  /* Interruttore tema: una vera "pillola" con pallino che scivola, lo
+    /* Interruttore tema: una vera "pillola" con pallino che scivola, lo
      stato riflette sempre html[data-theme] quindi resta sincronizzato
      con qualunque altro controllo tema in pagina. */
-  .mobile-menu-switch {
-    position: relative;
-    flex: none;
-    width: 42px;
-    height: 25px;
-    border-radius: 999px;
-    background: rgba(47, 107, 58, 0.22);
-    transition: background 0.2s ease;
-  }
+    .mobile-menu-switch {
+      position: relative;
+      flex: none;
+      width: 42px;
+      height: 25px;
+      border-radius: 999px;
+      background: rgba(47, 107, 58, 0.22);
+      transition: background 0.2s ease;
+    }
 
-  .mobile-menu-switch-knob {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 19px;
-    height: 19px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(27, 67, 50, 0.28);
-    transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
-  }
+    .mobile-menu-switch-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(27, 67, 50, 0.28);
+      transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
 
-  html[data-theme="dark"] .mobile-menu-switch {
-    background: #ffd778;
-  }
+    html[data-theme="dark"] .mobile-menu-switch {
+      background: #ffd778;
+    }
 
-  html[data-theme="dark"] .mobile-menu-switch-knob {
-    background: #1b3026;
-    transform: translateX(17px);
-  }
+    html[data-theme="dark"] .mobile-menu-switch-knob {
+      background: #1b3026;
+      transform: translateX(17px);
+    }
 
-  /* Selettore lingua a pillola: entrambe le opzioni sempre visibili,
+    /* Selettore lingua a pillola: entrambe le opzioni sempre visibili,
      quella attiva evidenziata leggendo html[lang] (già aggiornato da
      setLang/confSetLang su tutte le pagine, nessuna sincronizzazione
      extra necessaria). */
-  .lang-switch {
-    display: inline-flex;
-    flex: none;
-    padding: 3px;
-    gap: 2px;
-    border-radius: 11px;
-    background: #fff;
-    border: 1px solid rgba(47, 107, 58, 0.16);
+    .lang-switch {
+      display: inline-flex;
+      flex: none;
+      padding: 3px;
+      gap: 2px;
+      border-radius: 11px;
+      background: #fff;
+      border: 1px solid rgba(47, 107, 58, 0.16);
+    }
+
+    .lang-switch-opt {
+      min-width: 38px;
+      padding: 0.34rem 0.5rem;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #6f7b72;
+      font-family: "Outfit", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition:
+        background 0.16s ease,
+        color 0.16s ease,
+        box-shadow 0.16s ease;
+    }
+
+    html[lang="it"] .lang-switch-opt[data-lang="it"],
+    html[lang="ro"] .lang-switch-opt[data-lang="ro"] {
+      background: #2f6b3a;
+      color: #fff;
+      box-shadow: 0 3px 9px rgba(27, 67, 50, 0.22);
+    }
+
+    html[data-theme="dark"] .site-header .mobile-nav-preferences {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(173, 221, 190, 0.14);
+    }
+
+    html[data-theme="dark"] .site-header .mobile-menu-theme:hover,
+    html[data-theme="dark"] .site-header .mobile-menu-language:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    html[data-theme="dark"] .site-header .mobile-menu-theme,
+    html[data-theme="dark"] .site-header .mobile-menu-language {
+      color: #edf5ef;
+    }
+
+    html[data-theme="dark"] .mobile-menu-pref-icon {
+      background: #1d3327;
+      color: #edf5ef;
+    }
+
+    html[data-theme="dark"] .lang-switch {
+      background: #1d3327;
+      border-color: rgba(173, 221, 190, 0.18);
+    }
+
+    html[data-theme="dark"] .lang-switch-opt {
+      color: #aebdb2;
+    }
+
+    html[data-theme="dark"][lang="it"] .lang-switch-opt[data-lang="it"],
+    html[data-theme="dark"][lang="ro"] .lang-switch-opt[data-lang="ro"] {
+      background: #2d6a4f;
+      color: #fff;
+    }
+
+    html[data-theme="dark"] .mobile-menu-pref-copy small,
+    html[data-theme="dark"] .site-header .mobile-nav-section-title {
+      color: #aebdb2;
+    }
+
+    html[data-theme="dark"] .site-header .nav-link--account {
+      border-top-color: rgba(173, 221, 190, 0.16);
+    }
   }
 
-  .lang-switch-opt {
-    min-width: 38px;
-    padding: 0.34rem 0.5rem;
-    border: 0;
-    border-radius: 8px;
-    background: transparent;
-    color: #6f7b72;
-    font-family: "Outfit", sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    transition:
-      background 0.16s ease,
-      color 0.16s ease,
-      box-shadow 0.16s ease;
+  @media (min-width: 641px) and (max-width: 900px) {
+    .persona-pick[open] .persona-cards {
+      gap: 7px;
+      padding: 0 9px 9px;
+    }
+
+    .persona-pick[open] .persona-card,
+    .persona-pick[open] .persona-card.is-active {
+      min-height: 58px;
+      padding: 8px 10px;
+    }
+
+    .persona-pick[open] .persona-card-body small {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+      overflow: hidden;
+    }
   }
 
-  html[lang="it"] .lang-switch-opt[data-lang="it"],
-  html[lang="ro"] .lang-switch-opt[data-lang="ro"] {
-    background: #2f6b3a;
-    color: #fff;
-    box-shadow: 0 3px 9px rgba(27, 67, 50, 0.22);
-  }
-
-  html[data-theme="dark"] .site-header .mobile-nav-preferences {
-    background: rgba(255, 255, 255, 0.045);
-    border-color: rgba(173, 221, 190, 0.14);
-  }
-
-  html[data-theme="dark"] .site-header .mobile-menu-theme:hover,
-  html[data-theme="dark"] .site-header .mobile-menu-language:hover {
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  html[data-theme="dark"] .site-header .mobile-menu-theme,
-  html[data-theme="dark"] .site-header .mobile-menu-language {
-    color: #edf5ef;
-  }
-
-  html[data-theme="dark"] .mobile-menu-pref-icon {
-    background: #1d3327;
-    color: #edf5ef;
-  }
-
-  html[data-theme="dark"] .lang-switch {
-    background: #1d3327;
-    border-color: rgba(173, 221, 190, 0.18);
-  }
-
-  html[data-theme="dark"] .lang-switch-opt {
-    color: #aebdb2;
-  }
-
-  html[data-theme="dark"][lang="it"] .lang-switch-opt[data-lang="it"],
-  html[data-theme="dark"][lang="ro"] .lang-switch-opt[data-lang="ro"] {
-    background: #2d6a4f;
-    color: #fff;
-  }
-
-  html[data-theme="dark"] .mobile-menu-pref-copy small,
-  html[data-theme="dark"] .site-header .mobile-nav-section-title {
-    color: #aebdb2;
-  }
-
-  html[data-theme="dark"] .site-header .nav-link--account {
-    border-top-color: rgba(173, 221, 190, 0.16);
-  }
-}
-
-@media (min-width: 641px) and (max-width: 900px) {
-  .persona-pick[open] .persona-cards {
-    gap: 7px;
-    padding: 0 9px 9px;
-  }
-
-  .persona-pick[open] .persona-card,
-  .persona-pick[open] .persona-card.is-active {
-    min-height: 58px;
-    padding: 8px 10px;
-  }
-
-  .persona-pick[open] .persona-card-body small {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    overflow: hidden;
-  }
-}
-
-/* Tema scuro: gli elementi aggiunti in questo file (ingranaggio accanto al
+  /* Tema scuro: gli elementi aggiunti in questo file (ingranaggio accanto al
    titolo, riepilogo "Le tue scelte", riga misure/clima/mese) usavano sfondi
    bianco/verde chiaro pensati solo per tema chiaro. Essendo regole non
    "layerate" vincono comunque sulle regole scure di 02-dark-principale.css
    (i layer non "vincono" mai su stili fuori layer), quindi qui si
    riallineano esplicitamente ai toni scuri già usati da pannelli, barra
    guidata e selettore profilo. */
-html[data-theme="dark"] .guided-setup-gear,
-html[data-theme="dark"] .guided-setup-summary-icon {
-  border-color: var(--dark-border);
-  background: linear-gradient(155deg, var(--dark-raised), var(--dark-surface));
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.26);
-  color: var(--dark-green);
-}
+  html[data-theme="dark"] .guided-setup-gear,
+  html[data-theme="dark"] .guided-setup-summary-icon {
+    border-color: var(--dark-border);
+    background: linear-gradient(
+      155deg,
+      var(--dark-raised),
+      var(--dark-surface)
+    );
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.26);
+    color: var(--dark-green);
+  }
 
-html[data-theme="dark"] .guided-setup-gear:hover {
-  background: rgba(139, 212, 158, 0.16);
-}
+  html[data-theme="dark"] .guided-setup-gear:hover {
+    background: rgba(139, 212, 158, 0.16);
+  }
 
-html[data-theme="dark"] .guided-setup-gear:focus-visible,
-html[data-theme="dark"] .guided-setup-summary:focus-visible {
-  outline-color: var(--dark-gold);
-}
+  html[data-theme="dark"] .guided-setup-gear:focus-visible,
+  html[data-theme="dark"] .guided-setup-summary:focus-visible {
+    outline-color: var(--dark-gold);
+  }
 
-html[data-theme="dark"] .guided-setup-gear[aria-expanded="true"] {
-  background: rgba(139, 212, 158, 0.2);
-  box-shadow: inset 0 0 0 2px rgba(139, 212, 158, 0.34);
-}
+  html[data-theme="dark"] .guided-setup-gear[aria-expanded="true"] {
+    background: rgba(139, 212, 158, 0.2);
+    box-shadow: inset 0 0 0 2px rgba(139, 212, 158, 0.34);
+  }
 
-html[data-theme="dark"] .config-page-title .guided-brand-copy p {
-  color: var(--dark-muted);
-}
+  html[data-theme="dark"] .config-page-title .guided-brand-copy p {
+    color: var(--dark-muted);
+  }
 
-html[data-theme="dark"] .guided-setup-summary:hover {
-  background: rgba(139, 212, 158, 0.08);
-}
+  html[data-theme="dark"] .guided-setup-summary:hover {
+    background: rgba(139, 212, 158, 0.08);
+  }
 
-html[data-theme="dark"] .guided-setup-summary-copy small {
-  color: var(--dark-muted);
-}
+  html[data-theme="dark"] .guided-setup-summary-copy small {
+    color: var(--dark-muted);
+  }
 
-html[data-theme="dark"] .guided-setup-summary-action,
-html[data-theme="dark"] .stage-context-action {
-  border: 1px solid rgba(139, 212, 158, 0.4);
-  background: rgba(139, 212, 158, 0.2);
-  color: var(--dark-green);
-}
+  html[data-theme="dark"] .guided-setup-summary-action,
+  html[data-theme="dark"] .stage-context-action {
+    border: 1px solid rgba(139, 212, 158, 0.4);
+    background: rgba(139, 212, 158, 0.2);
+    color: var(--dark-green);
+  }
 
-html[data-theme="dark"]
-  .guided-setup-summary:hover
-  .guided-setup-summary-action {
-  background: rgba(139, 212, 158, 0.3);
-}
+  html[data-theme="dark"]
+    .guided-setup-summary:hover
+    .guided-setup-summary-action {
+    background: rgba(139, 212, 158, 0.3);
+  }
 
-html[data-theme="dark"] .guided-setup-toggle[open] .guided-setup-summary {
-  border-bottom-color: var(--dark-border);
-}
+  html[data-theme="dark"] .guided-setup-toggle[open] .guided-setup-summary {
+    border-bottom-color: var(--dark-border);
+  }
 
-/* Riga riepilogo misure/clima/mese: era una card bianca "a sé", la più
+  /* Riga riepilogo misure/clima/mese: era una card bianca "a sé", la più
    vistosa fuori posto col tema scuro attivo. */
-html[data-theme="dark"] .stage-context-row.guided-meta-row {
-  background: linear-gradient(135deg, var(--dark-raised), var(--dark-surface));
-  border-color: var(--dark-border);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
-}
+  html[data-theme="dark"] .stage-context-row.guided-meta-row {
+    background: linear-gradient(
+      135deg,
+      var(--dark-raised),
+      var(--dark-surface)
+    );
+    border-color: var(--dark-border);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+  }
 
-html[data-theme="dark"] .stage-context-row.guided-meta-row:hover {
-  border-color: var(--dark-border-strong);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-}
+  html[data-theme="dark"] .stage-context-row.guided-meta-row:hover {
+    border-color: var(--dark-border-strong);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  }
 
-html[data-theme="dark"] .stage-context-copy .guided-summary {
-  color: var(--dark-muted);
-}
+  html[data-theme="dark"] .stage-context-copy .guided-summary {
+    color: var(--dark-muted);
+  }
 
-/* Neutro anche a tema scuro, non verde: stessa distinzione informativo vs
+  /* Neutro anche a tema scuro, non verde: stessa distinzione informativo vs
    cliccabile del tema chiaro (vedi commento sulla regola chiara sopra). */
-html[data-theme="dark"] .stage-context-row .guided-tags .tag {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--dark-border);
-  color: var(--dark-muted);
-}
+  html[data-theme="dark"] .stage-context-row .guided-tags .tag {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--dark-border);
+    color: var(--dark-muted);
+  }
 
-/* Su smartphone (sotto i 640px) il selettore profilo aveva uno sfondo
+  /* Su smartphone (sotto i 640px) il selettore profilo aveva uno sfondo
    bianco semitrasparente fisso, sempre più chiaro dello sfondo scuro anche
    a tema scuro attivo. */
-html[data-theme="dark"] .persona-pick {
-  background: linear-gradient(135deg, var(--dark-raised), var(--dark-surface));
-}
-
-@media (max-width: 660px) {
-  /* Nascondi la pillola superiore per liberare spazio verticale */
-  .hero-season-kicker {
-    display: none;
+  html[data-theme="dark"] .persona-pick {
+    background: linear-gradient(
+      135deg,
+      var(--dark-raised),
+      var(--dark-surface)
+    );
   }
 
-  /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
-  .hero-content {
-    gap: 1rem;
-    padding-top: 0.75rem;
+  @media (max-width: 660px) {
+    /* Nascondi la pillola superiore per liberare spazio verticale */
+    .hero-season-kicker {
+      display: none;
+    }
+
+    /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
+    .hero-content {
+      gap: 1rem;
+      padding-top: 0.75rem;
+    }
+
+    .hero-headline {
+      max-width: 10.5ch;
+      font-size: clamp(2.05rem, 9vw, 2.25rem);
+      line-height: 1.13;
+    }
+
+    .hero-cfg-inner {
+      gap: 1rem;
+      padding: 1rem 0.9rem 1.25rem;
+    }
+
+    .hero-cfg-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.2em;
+      margin-top: 0;
+      font-size: clamp(1.5rem, 7vw, 1.75rem);
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .hero-cfg-actions {
+      gap: 0.9rem;
+      margin-top: 1.05rem;
+    }
+
+    .hero-cfg-route-intro {
+      min-height: 34px;
+    }
+
+    .hero-cfg {
+      margin-top: 0;
+    }
   }
 
-  .hero-headline {
-    max-width: 10.5ch;
-    font-size: clamp(2.05rem, 9vw, 2.25rem);
-    line-height: 1.13;
-  }
-
-  .hero-cfg-inner {
-    gap: 1rem;
-    padding: 1rem 0.9rem 1.25rem;
-  }
-
-  .hero-cfg-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.2em;
-    margin-top: 0;
-    font-size: clamp(1.5rem, 7vw, 1.75rem);
-    line-height: 1.1;
-    text-align: center;
-  }
-
-  .hero-cfg-actions {
-    gap: 0.9rem;
-    margin-top: 1.05rem;
-  }
-
-  .hero-cfg-route-intro {
-    min-height: 34px;
-  }
-
-  .hero-cfg {
-    margin-top: 0;
-  }
-}
-
-/* Impostazioni iniziali: il controllo chiuso mostra cosa contiene e i valori
+  /* Impostazioni iniziali: il controllo chiuso mostra cosa contiene e i valori
    correnti; il pannello aperto separa chiaramente dati serra e profilo. */
-.guided-setup-gear {
-  justify-content: flex-start;
-  width: min(430px, 42vw);
-  min-height: 56px;
-  height: auto;
-  padding: 7px 10px;
-  border-radius: 14px;
-  text-align: left;
-}
-
-.guided-setup-gear-copy {
-  display: flex;
-  min-width: 0;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.guided-setup-gear-copy b {
-  color: var(--verde-scuro);
-  font-family: var(--serif);
-  font-size: 14px;
-  line-height: 1.1;
-}
-
-.guided-setup-gear-copy small {
-  overflow: hidden;
-  color: #667564;
-  font-size: 10.5px;
-  font-weight: 650;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.guided-setup-gear-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 32px;
-  padding: 0 11px;
-  border: 1px solid rgba(47, 107, 58, 0.3);
-  border-radius: 999px;
-  background: rgba(47, 107, 58, 0.13);
-  color: var(--verde-scuro);
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 850;
-}
-
-.guided-setup-summary {
-  min-height: 62px;
-  padding: 8px 10px;
-}
-
-.guided-setup-toggle > .guided-intro-body {
-  gap: 14px;
-  padding: 12px 2px 2px;
-}
-
-.setup-context-row.stage-context-row {
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto auto;
-  align-content: start;
-  gap: 12px;
-  min-height: 100%;
-  padding: 14px;
-  cursor: pointer;
-}
-
-.setup-context-row .stage-context-copy {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.setup-context-row .stage-context-copy > span {
-  font-family: var(--serif);
-  font-size: 17px;
-}
-
-.setup-context-row .stage-context-copy .guided-summary {
-  max-width: 48ch;
-  margin-top: 3px;
-  font-size: 10.5px;
-  white-space: normal;
-}
-
-.setup-context-row .guided-tags {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-row: 2;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-  width: 100%;
-}
-
-.setup-context-row.stage-context-row .guided-tags .tag {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  min-width: 0;
-  min-height: 58px;
-  padding: 9px 10px;
-  flex-direction: column;
-  gap: 3px;
-  border-radius: 11px;
-  white-space: normal;
-}
-
-.setup-context-row .guided-tags .tag small {
-  color: #7a6b59;
-  font-size: 8.5px;
-  font-weight: 850;
-  letter-spacing: 0.06em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.setup-context-row .guided-tags .tag b {
-  overflow: hidden;
-  max-width: 100%;
-  color: #46392c;
-  font-size: 13px;
-  line-height: 1.15;
-  text-overflow: ellipsis;
-}
-
-.setup-context-row .stage-context-action {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: center;
-  justify-self: end;
-  min-width: 112px;
-}
-
-html[data-theme="dark"] .guided-setup-gear-copy b,
-html[data-theme="dark"] .setup-context-row .stage-context-copy > span {
-  color: var(--dark-text);
-}
-
-html[data-theme="dark"] .guided-setup-gear-copy small {
-  color: var(--dark-muted);
-}
-
-html[data-theme="dark"] .guided-setup-gear-action {
-  border-color: rgba(139, 212, 158, 0.4);
-  background: rgba(139, 212, 158, 0.18);
-  color: var(--dark-green);
-}
-
-html[data-theme="dark"] .setup-context-row .guided-tags .tag small,
-html[data-theme="dark"] .setup-context-row .guided-tags .tag b {
-  color: var(--dark-muted);
-}
-
-@media (max-width: 660px) {
-  .config-page-title {
-    flex-wrap: wrap;
-  }
-
-  .config-page-title .guided-brand-copy {
-    flex: 1 1 calc(100% - 48px);
-  }
-
   .guided-setup-gear {
-    width: 100%;
-    min-height: 54px;
-    margin-left: 0;
-    padding: 7px 9px;
-    flex-basis: 100%;
-    gap: 7px;
-    border-radius: 12px;
+    justify-content: flex-start;
+    width: min(430px, 42vw);
+    min-height: 56px;
+    height: auto;
+    padding: 7px 10px;
+    border-radius: 14px;
+    text-align: left;
+  }
+
+  .guided-setup-gear-copy {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 2px;
   }
 
   .guided-setup-gear-copy b {
-    font-size: 13.5px;
+    color: var(--verde-scuro);
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.1;
   }
 
   .guided-setup-gear-copy small {
-    font-size: 9.5px;
+    overflow: hidden;
+    color: #667564;
+    font-size: 10.5px;
+    font-weight: 650;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .guided-setup-gear-action {
-    min-height: 30px;
-    padding-inline: 9px;
-    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0 11px;
+    border: 1px solid rgba(47, 107, 58, 0.3);
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.13);
+    color: var(--verde-scuro);
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 850;
   }
 
   .guided-setup-summary {
-    min-height: 56px;
-    padding: 6px 4px;
+    min-height: 62px;
+    padding: 8px 10px;
   }
 
   .guided-setup-toggle > .guided-intro-body {
-    gap: 10px;
-    padding-top: 10px;
+    gap: 14px;
+    padding: 12px 2px 2px;
   }
 
   .setup-context-row.stage-context-row {
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 10px;
-    padding: 11px;
+    grid-template-rows: auto auto;
+    align-content: start;
+    gap: 12px;
+    min-height: 100%;
+    padding: 14px;
+    cursor: pointer;
   }
 
   .setup-context-row .stage-context-copy {
     grid-column: 1;
+    grid-row: 1;
   }
 
   .setup-context-row .stage-context-copy > span {
-    font-size: 16px;
+    font-family: var(--serif);
+    font-size: 17px;
+  }
+
+  .setup-context-row .stage-context-copy .guided-summary {
+    max-width: 48ch;
+    margin-top: 3px;
+    font-size: 10.5px;
+    white-space: normal;
   }
 
   .setup-context-row .guided-tags {
@@ -2041,1271 +1928,1446 @@ html[data-theme="dark"] .setup-context-row .guided-tags .tag b {
     grid-column: 1 / -1;
     grid-row: 2;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
+    gap: 7px;
+    width: 100%;
   }
 
   .setup-context-row.stage-context-row .guided-tags .tag {
-    min-height: 56px;
-    padding: 8px 7px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    min-height: 58px;
+    padding: 9px 10px;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 11px;
+    white-space: normal;
   }
 
   .setup-context-row .guided-tags .tag small {
-    font-size: 7.5px;
+    color: #7a6b59;
+    font-size: 8.5px;
+    font-weight: 850;
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    text-transform: uppercase;
   }
 
   .setup-context-row .guided-tags .tag b {
-    font-size: 11.5px;
+    overflow: hidden;
+    max-width: 100%;
+    color: #46392c;
+    font-size: 13px;
+    line-height: 1.15;
+    text-overflow: ellipsis;
   }
 
   .setup-context-row .stage-context-action {
     grid-column: 2;
     grid-row: 1;
-    min-width: 0;
-    min-height: 32px;
+    align-self: center;
+    justify-self: end;
+    min-width: 112px;
   }
 
-  .persona-pick-head {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+  html[data-theme="dark"] .guided-setup-gear-copy b,
+  html[data-theme="dark"] .setup-context-row .stage-context-copy > span {
+    color: var(--dark-text);
   }
 
-  .persona-pick-copy {
-    display: flex;
-    grid-column: 1 / -1;
+  html[data-theme="dark"] .guided-setup-gear-copy small {
+    color: var(--dark-muted);
   }
 
-  .persona-pick-copy .persona-pick-hint {
-    display: none;
+  html[data-theme="dark"] .guided-setup-gear-action {
+    border-color: rgba(139, 212, 158, 0.4);
+    background: rgba(139, 212, 158, 0.18);
+    color: var(--dark-green);
   }
 
-  .persona-pick-current {
-    grid-column: 1;
-  }
-}
-
-@media (max-width: 380px) {
-  .guided-setup-gear-action {
-    display: none;
+  html[data-theme="dark"] .setup-context-row .guided-tags .tag small,
+  html[data-theme="dark"] .setup-context-row .guided-tags .tag b {
+    color: var(--dark-muted);
   }
 
-  .setup-context-row .guided-tags {
-    grid-template-columns: 1fr;
+  @media (max-width: 660px) {
+    .config-page-title {
+      flex-wrap: wrap;
+    }
+
+    .config-page-title .guided-brand-copy {
+      flex: 1 1 calc(100% - 48px);
+    }
+
+    .guided-setup-gear {
+      width: 100%;
+      min-height: 54px;
+      margin-left: 0;
+      padding: 7px 9px;
+      flex-basis: 100%;
+      gap: 7px;
+      border-radius: 12px;
+    }
+
+    .guided-setup-gear-copy b {
+      font-size: 13.5px;
+    }
+
+    .guided-setup-gear-copy small {
+      font-size: 9.5px;
+    }
+
+    .guided-setup-gear-action {
+      min-height: 30px;
+      padding-inline: 9px;
+      font-size: 10px;
+    }
+
+    .guided-setup-summary {
+      min-height: 56px;
+      padding: 6px 4px;
+    }
+
+    .guided-setup-toggle > .guided-intro-body {
+      gap: 10px;
+      padding-top: 10px;
+    }
+
+    .setup-context-row.stage-context-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 11px;
+    }
+
+    .setup-context-row .stage-context-copy {
+      grid-column: 1;
+    }
+
+    .setup-context-row .stage-context-copy > span {
+      font-size: 16px;
+    }
+
+    .setup-context-row .guided-tags {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .setup-context-row.stage-context-row .guided-tags .tag {
+      min-height: 56px;
+      padding: 8px 7px;
+    }
+
+    .setup-context-row .guided-tags .tag small {
+      font-size: 7.5px;
+    }
+
+    .setup-context-row .guided-tags .tag b {
+      font-size: 11.5px;
+    }
+
+    .setup-context-row .stage-context-action {
+      grid-column: 2;
+      grid-row: 1;
+      min-width: 0;
+      min-height: 32px;
+    }
+
+    .persona-pick-head {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    .persona-pick-copy {
+      display: flex;
+      grid-column: 1 / -1;
+    }
+
+    .persona-pick-copy .persona-pick-hint {
+      display: none;
+    }
+
+    .persona-pick-current {
+      grid-column: 1;
+    }
   }
 
-  .setup-context-row.stage-context-row .guided-tags .tag {
-    min-height: 48px;
-  }
-}
+  @media (max-width: 380px) {
+    .guided-setup-gear-action {
+      display: none;
+    }
 
-/* Persona card della hero: ogni livello è una scelta primaria leggibile,
+    .setup-context-row .guided-tags {
+      grid-template-columns: 1fr;
+    }
+
+    .setup-context-row.stage-context-row .guided-tags .tag {
+      min-height: 48px;
+    }
+  }
+
+  /* Persona card della hero: ogni livello è una scelta primaria leggibile,
    non una riga trasparente sopra il verde della serra. */
-.hero-cfg-route-intro {
-  color: rgba(255, 255, 255, 0.96);
-  font-size: 0.82rem;
-}
-
-.hero-cfg-route-step {
-  width: 30px;
-  height: 30px;
-  box-shadow: 0 0 0 4px rgba(143, 224, 180, 0.12);
-}
-
-.hero-cfg-actions > .hero-cfg-levels {
-  padding: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
-  background: rgba(7, 31, 21, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-.hero-cfg-levels-grid {
-  gap: 8px;
-}
-
-.hero-cfg-level {
-  --accent-text: #245b2a;
-  min-height: 66px;
-  padding: 6px 11px 6px 14px;
-  gap: 11px;
-  border-width: 1.5px;
-  border-color: color-mix(in srgb, var(--accent) 38%, #d6ddd2);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--accent) 7%, #fffdf7);
-  box-shadow:
-    0 5px 15px rgba(7, 31, 21, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.hero-cfg-level.pc-persona-card--intermedio {
-  --accent-text: #674b0d;
-}
-
-.hero-cfg-level.pc-persona-card--esperto {
-  --accent-text: #71311f;
-}
-
-.hero-cfg-level::before {
-  width: 5px;
-  opacity: 1;
-}
-
-.hero-cfg-level:hover {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 12%, #fffdf7);
-  box-shadow:
-    0 10px 24px rgba(7, 31, 21, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.94);
-  transform: translateY(-2px);
-}
-
-.hero-cfg-level:focus-visible {
-  outline: 3px solid #a8edc5;
-  outline-offset: 3px;
-}
-
-.hero-cfg-level .pc-persona-ico {
-  width: 44px;
-  height: 44px;
-  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--accent) 13%, #fff);
-  box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 16%, transparent);
-}
-
-.hero-cfg-level .pc-persona-ico .level-plant-ico {
-  width: 27px;
-  height: 27px;
-}
-
-.hero-cfg-level .pc-persona-body {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.hero-cfg-level .pc-persona-body b {
-  color: var(--accent-text);
-  font-family: var(--serif);
-  font-size: 1.08rem;
-  font-weight: 800;
-  letter-spacing: 0.005em;
-  line-height: 1.05;
-}
-
-.hero-cfg-level .pc-persona-body small {
-  margin: 0;
-  color: #425247;
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 1.28;
-}
-
-.hero-cfg-level .hero-cfg-level-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-height: 34px;
-  padding: 0 10px;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 11%, #fff);
-  color: var(--accent-text);
-  font-size: 0.7rem;
-  font-weight: 850;
-  opacity: 1;
-  transform: none;
-}
-
-.hero-cfg-level:hover .hero-cfg-level-action {
-  background: var(--accent);
-  color: #fff;
-  opacity: 1;
-  transform: translateX(2px);
-}
-
-html[data-theme="dark"] .hero-cfg-actions > .hero-cfg-levels {
-  border-color: rgba(173, 221, 190, 0.18);
-  background: rgba(2, 17, 11, 0.34);
-}
-
-html[data-theme="dark"] .hero-cfg-level {
-  border-color: color-mix(in srgb, var(--accent) 48%, #31463a);
-  background: color-mix(in srgb, var(--accent) 13%, #16271f);
-  box-shadow:
-    0 7px 18px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-html[data-theme="dark"] .hero-cfg-level:hover {
-  border-color: color-mix(in srgb, var(--accent) 78%, #fff);
-  background: color-mix(in srgb, var(--accent) 19%, #172a20);
-}
-
-html[data-theme="dark"] .hero-cfg-level .pc-persona-ico {
-  border-color: color-mix(in srgb, var(--accent) 50%, #31463a);
-  background: color-mix(in srgb, var(--accent) 20%, #20372a);
-}
-
-html[data-theme="dark"] .hero-cfg-level .pc-persona-body b {
-  color: #f2f7f3;
-}
-
-html[data-theme="dark"] .hero-cfg-level .pc-persona-body small {
-  color: #c1d0c5;
-}
-
-html[data-theme="dark"] .hero-cfg-level .hero-cfg-level-action {
-  border-color: color-mix(in srgb, var(--accent) 58%, #6f8577);
-  background: color-mix(in srgb, var(--accent) 23%, #20372a);
-  color: #f1f6f2;
-}
-
-@media (max-width: 660px) {
   .hero-cfg-route-intro {
-    font-size: 0.76rem;
+    color: rgba(255, 255, 255, 0.96);
+    font-size: 0.82rem;
+  }
+
+  .hero-cfg-route-step {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0 0 0 4px rgba(143, 224, 180, 0.12);
   }
 
   .hero-cfg-actions > .hero-cfg-levels {
-    padding: 6px;
-    border-radius: 16px;
+    padding: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    background: rgba(7, 31, 21, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .hero-cfg-levels-grid {
-    gap: 10px;
+    gap: 8px;
   }
 
   .hero-cfg-level {
+    --accent-text: #245b2a;
     min-height: 66px;
-    padding: 8px 10px 8px 12px;
-    gap: 9px;
+    padding: 6px 11px 6px 14px;
+    gap: 11px;
+    border-width: 1.5px;
+    border-color: color-mix(in srgb, var(--accent) 38%, #d6ddd2);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 7%, #fffdf7);
+    box-shadow:
+      0 5px 15px rgba(7, 31, 21, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .hero-cfg-level.pc-persona-card--intermedio {
+    --accent-text: #674b0d;
+  }
+
+  .hero-cfg-level.pc-persona-card--esperto {
+    --accent-text: #71311f;
+  }
+
+  .hero-cfg-level::before {
+    width: 5px;
+    opacity: 1;
+  }
+
+  .hero-cfg-level:hover {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, #fffdf7);
+    box-shadow:
+      0 10px 24px rgba(7, 31, 21, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    transform: translateY(-2px);
+  }
+
+  .hero-cfg-level:focus-visible {
+    outline: 3px solid #a8edc5;
+    outline-offset: 3px;
   }
 
   .hero-cfg-level .pc-persona-ico {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent) 13%, #fff);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 16%, transparent);
   }
 
   .hero-cfg-level .pc-persona-ico .level-plant-ico {
-    width: 25px;
-    height: 25px;
+    width: 27px;
+    height: 27px;
+  }
+
+  .hero-cfg-level .pc-persona-body {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
   }
 
   .hero-cfg-level .pc-persona-body b {
-    font-size: 1rem;
+    color: var(--accent-text);
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    font-weight: 800;
+    letter-spacing: 0.005em;
+    line-height: 1.05;
   }
 
   .hero-cfg-level .pc-persona-body small {
-    display: -webkit-box;
-    font-size: 0.73rem;
-    line-height: 1.22;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    margin: 0;
+    color: #425247;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.28;
   }
 
   .hero-cfg-level .hero-cfg-level-action {
-    min-height: 32px;
-    padding-inline: 9px;
-    font-size: 0.66rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 34px;
+    padding: 0 10px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 11%, #fff);
+    color: var(--accent-text);
+    font-size: 0.7rem;
+    font-weight: 850;
+    opacity: 1;
+    transform: none;
   }
-}
 
-@media (max-width: 380px) {
-  .hero-cfg-level .hero-cfg-level-action > span:first-child {
-    display: none;
+  .hero-cfg-level:hover .hero-cfg-level-action {
+    background: var(--accent);
+    color: #fff;
+    opacity: 1;
+    transform: translateX(2px);
   }
 
-  .hero-cfg-level .hero-cfg-level-action {
-    width: 32px;
-    padding: 0;
+  html[data-theme="dark"] .hero-cfg-actions > .hero-cfg-levels {
+    border-color: rgba(173, 221, 190, 0.18);
+    background: rgba(2, 17, 11, 0.34);
   }
-}
 
-/* Tendina delle impostazioni: uno stato aperto deve sembrare un pannello
+  html[data-theme="dark"] .hero-cfg-level {
+    border-color: color-mix(in srgb, var(--accent) 48%, #31463a);
+    background: color-mix(in srgb, var(--accent) 13%, #16271f);
+    box-shadow:
+      0 7px 18px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  html[data-theme="dark"] .hero-cfg-level:hover {
+    border-color: color-mix(in srgb, var(--accent) 78%, #fff);
+    background: color-mix(in srgb, var(--accent) 19%, #172a20);
+  }
+
+  html[data-theme="dark"] .hero-cfg-level .pc-persona-ico {
+    border-color: color-mix(in srgb, var(--accent) 50%, #31463a);
+    background: color-mix(in srgb, var(--accent) 20%, #20372a);
+  }
+
+  html[data-theme="dark"] .hero-cfg-level .pc-persona-body b {
+    color: #f2f7f3;
+  }
+
+  html[data-theme="dark"] .hero-cfg-level .pc-persona-body small {
+    color: #c1d0c5;
+  }
+
+  html[data-theme="dark"] .hero-cfg-level .hero-cfg-level-action {
+    border-color: color-mix(in srgb, var(--accent) 58%, #6f8577);
+    background: color-mix(in srgb, var(--accent) 23%, #20372a);
+    color: #f1f6f2;
+  }
+
+  @media (max-width: 660px) {
+    .hero-cfg-route-intro {
+      font-size: 0.76rem;
+    }
+
+    .hero-cfg-actions > .hero-cfg-levels {
+      padding: 6px;
+      border-radius: 16px;
+    }
+
+    .hero-cfg-levels-grid {
+      gap: 10px;
+    }
+
+    .hero-cfg-level {
+      min-height: 66px;
+      padding: 8px 10px 8px 12px;
+      gap: 9px;
+    }
+
+    .hero-cfg-level .pc-persona-ico {
+      width: 42px;
+      height: 42px;
+    }
+
+    .hero-cfg-level .pc-persona-ico .level-plant-ico {
+      width: 25px;
+      height: 25px;
+    }
+
+    .hero-cfg-level .pc-persona-body b {
+      font-size: 1rem;
+    }
+
+    .hero-cfg-level .pc-persona-body small {
+      display: -webkit-box;
+      font-size: 0.73rem;
+      line-height: 1.22;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .hero-cfg-level .hero-cfg-level-action {
+      min-height: 32px;
+      padding-inline: 9px;
+      font-size: 0.66rem;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .hero-cfg-level .hero-cfg-level-action > span:first-child {
+      display: none;
+    }
+
+    .hero-cfg-level .hero-cfg-level-action {
+      width: 32px;
+      padding: 0;
+    }
+  }
+
+  /* Tendina delle impostazioni: uno stato aperto deve sembrare un pannello
    espanso, non una normale sequenza di card. Il bordo, il controllo e la
    linea di separazione fanno leggere insieme sia l'apertura sia la chiusura. */
-.guided-setup-gear {
-  border: 1.5px solid rgba(47, 107, 58, 0.34);
-  background: linear-gradient(155deg, #fffef9, rgba(226, 242, 224, 0.96));
-  box-shadow:
-    0 4px 12px rgba(31, 58, 38, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.88);
-}
-
-.guided-setup-gear-icon {
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 9px;
-  background: rgba(47, 107, 58, 0.13);
-}
-
-.guided-setup-gear-chevron {
-  width: 24px;
-  height: 24px;
-  border: 1px solid rgba(47, 107, 58, 0.28);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.76);
-}
-
-.guided-setup-gear[aria-expanded="true"] {
-  border-color: var(--verde);
-  background: linear-gradient(155deg, #f8fff7, #d9efd9);
-  box-shadow:
-    0 7px 16px rgba(31, 58, 38, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
-}
-
-.guided-setup-gear[aria-expanded="true"] .guided-setup-gear-chevron {
-  border-color: var(--verde);
-  background: var(--verde);
-  color: #fff;
-}
-
-.guided-setup-toggle[open] {
-  padding: 10px 12px 12px;
-  border: 2px solid rgba(47, 107, 58, 0.46);
-  border-top-width: 5px;
-  border-radius: 16px;
-  background: linear-gradient(160deg, #fbfff9 0%, #e6f4e5 100%);
-  box-shadow:
-    0 18px 34px rgba(31, 58, 38, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.guided-setup-toggle[open] .guided-setup-summary {
-  min-height: 58px;
-  padding: 0 2px 10px;
-  border-bottom: 1px solid rgba(47, 107, 58, 0.24);
-  border-radius: 0;
-}
-
-.guided-setup-toggle[open] .guided-setup-summary-icon {
-  border-color: rgba(47, 107, 58, 0.34);
-  background: #fff;
-}
-
-.guided-setup-toggle[open] .guided-setup-summary-action {
-  border-color: var(--verde);
-  background: var(--verde);
-  color: #fff;
-  box-shadow: 0 3px 8px rgba(31, 58, 38, 0.16);
-}
-
-.guided-setup-toggle[open] > .guided-intro-body {
-  gap: 14px;
-  padding-top: 13px;
-}
-
-.guided-setup-toggle[open] .setup-context-row.stage-context-row,
-.guided-setup-toggle[open] .persona-pick {
-  border: 1px solid rgba(47, 107, 58, 0.22);
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 5px 12px rgba(31, 58, 38, 0.07);
-}
-
-html[data-theme="dark"] .guided-setup-gear {
-  border-color: rgba(139, 212, 158, 0.46);
-  background: rgba(25, 55, 35, 0.88);
-}
-
-html[data-theme="dark"] .guided-setup-gear-icon,
-html[data-theme="dark"] .guided-setup-gear-chevron {
-  border-color: rgba(139, 212, 158, 0.42);
-  background: rgba(139, 212, 158, 0.14);
-}
-
-html[data-theme="dark"] .guided-setup-toggle[open] {
-  border-color: rgba(139, 212, 158, 0.52);
-  border-top-color: var(--verde);
-  background: linear-gradient(160deg, #173322, #10291b);
-}
-
-html[data-theme="dark"] .guided-setup-toggle[open] .guided-setup-summary,
-html[data-theme="dark"] .guided-setup-toggle[open] .setup-context-row.stage-context-row,
-html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
-  border-color: var(--dark-border);
-}
-
-html[data-theme="dark"] .guided-setup-toggle[open] .setup-context-row.stage-context-row,
-html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
-  background: rgba(3, 21, 13, 0.52);
-}
-
-@media (max-width: 660px) {
   .guided-setup-gear {
-    min-height: 58px;
-    border-radius: 14px;
+    border: 1.5px solid rgba(47, 107, 58, 0.34);
+    background: linear-gradient(155deg, #fffef9, rgba(226, 242, 224, 0.96));
+    box-shadow:
+      0 4px 12px rgba(31, 58, 38, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
   }
 
   .guided-setup-gear-icon {
-    width: 30px;
-    height: 30px;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: rgba(47, 107, 58, 0.13);
   }
 
   .guided-setup-gear-chevron {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(47, 107, 58, 0.28);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.76);
+  }
+
+  .guided-setup-gear[aria-expanded="true"] {
+    border-color: var(--verde);
+    background: linear-gradient(155deg, #f8fff7, #d9efd9);
+    box-shadow:
+      0 7px 16px rgba(31, 58, 38, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  }
+
+  .guided-setup-gear[aria-expanded="true"] .guided-setup-gear-chevron {
+    border-color: var(--verde);
+    background: var(--verde);
+    color: #fff;
   }
 
   .guided-setup-toggle[open] {
-    padding: 8px 9px 10px;
-    border-top-width: 4px;
-    border-radius: 14px;
+    padding: 10px 12px 12px;
+    border: 2px solid rgba(47, 107, 58, 0.46);
+    border-top-width: 5px;
+    border-radius: 16px;
+    background: linear-gradient(160deg, #fbfff9 0%, #e6f4e5 100%);
+    box-shadow:
+      0 18px 34px rgba(31, 58, 38, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 
   .guided-setup-toggle[open] .guided-setup-summary {
-    min-height: 54px;
-    padding: 0 2px 8px;
+    min-height: 58px;
+    padding: 0 2px 10px;
+    border-bottom: 1px solid rgba(47, 107, 58, 0.24);
+    border-radius: 0;
+  }
+
+  .guided-setup-toggle[open] .guided-setup-summary-icon {
+    border-color: rgba(47, 107, 58, 0.34);
+    background: #fff;
+  }
+
+  .guided-setup-toggle[open] .guided-setup-summary-action {
+    border-color: var(--verde);
+    background: var(--verde);
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(31, 58, 38, 0.16);
   }
 
   .guided-setup-toggle[open] > .guided-intro-body {
-    gap: 10px;
-    padding-top: 10px;
+    gap: 14px;
+    padding-top: 13px;
   }
-}
-/* Accesso alla guida: vicino alle impostazioni, senza competere con l'azione primaria. */
-.guided-tutorial-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.38rem;
-  min-height: 34px;
-  padding: 0.38rem 0.65rem;
-  border: 1px solid rgba(47, 107, 58, 0.2);
-  border-radius: 999px;
-  color: var(--verde-scuro);
-  background: rgba(255, 253, 246, 0.84);
-  font-size: 0.76rem;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-}
-.guided-tutorial-link > span:first-child {
-  width: 16px;
-  height: 16px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #fff;
-  background: var(--verde);
-  font-size: 0.68rem;
-}
-.guided-tutorial-link:hover {
-  border-color: var(--verde);
-  background: rgba(79, 154, 63, 0.12);
-}
-.hero-guide-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.46rem;
-  min-height: 40px;
-  padding: 0.48rem 0.84rem;
-  border: 1px solid rgba(47, 107, 58, 0.22);
-  border-radius: 999px;
-  color: var(--verde-scuro);
-  background: rgba(255, 253, 246, 0.78);
-  box-shadow: 0 5px 14px rgba(31, 58, 38, 0.08);
-  font-size: 0.83rem;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-}
-.hero-guide-link-icon {
-  width: 17px;
-  height: 17px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #fff;
-  background: var(--verde);
-  font-size: 0.7rem;
-}
-.hero-guide-link:hover {
-  border-color: var(--verde);
-  background: #fffdf6;
-  transform: translateY(-1px);
-}
-html[data-theme="dark"] .guided-tutorial-link,
-html[data-theme="dark"] .hero-guide-link {
-  border-color: rgba(139, 212, 158, 0.34);
-  color: var(--dark-green);
-  background: rgba(20, 43, 30, 0.9);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
-}
-html[data-theme="dark"] .guided-tutorial-link > span:first-child,
-html[data-theme="dark"] .hero-guide-link-icon {
-  color: #0b1a13;
-  background: var(--dark-green);
-}
-html[data-theme="dark"] .guided-tutorial-link:hover,
-html[data-theme="dark"] .hero-guide-link:hover {
-  border-color: var(--dark-green);
-  background: rgba(139, 212, 158, 0.16);
-}
-@media (max-width: 640px) {
+
+  .guided-setup-toggle[open] .setup-context-row.stage-context-row,
+  .guided-setup-toggle[open] .persona-pick {
+    border: 1px solid rgba(47, 107, 58, 0.22);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 5px 12px rgba(31, 58, 38, 0.07);
+  }
+
+  html[data-theme="dark"] .guided-setup-gear {
+    border-color: rgba(139, 212, 158, 0.46);
+    background: rgba(25, 55, 35, 0.88);
+  }
+
+  html[data-theme="dark"] .guided-setup-gear-icon,
+  html[data-theme="dark"] .guided-setup-gear-chevron {
+    border-color: rgba(139, 212, 158, 0.42);
+    background: rgba(139, 212, 158, 0.14);
+  }
+
+  html[data-theme="dark"] .guided-setup-toggle[open] {
+    border-color: rgba(139, 212, 158, 0.52);
+    border-top-color: var(--verde);
+    background: linear-gradient(160deg, #173322, #10291b);
+  }
+
+  html[data-theme="dark"] .guided-setup-toggle[open] .guided-setup-summary,
+  html[data-theme="dark"]
+    .guided-setup-toggle[open]
+    .setup-context-row.stage-context-row,
+  html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
+    border-color: var(--dark-border);
+  }
+
+  html[data-theme="dark"]
+    .guided-setup-toggle[open]
+    .setup-context-row.stage-context-row,
+  html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
+    background: rgba(3, 21, 13, 0.52);
+  }
+
+  @media (max-width: 660px) {
+    .guided-setup-gear {
+      min-height: 58px;
+      border-radius: 14px;
+    }
+
+    .guided-setup-gear-icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .guided-setup-gear-chevron {
+      width: 25px;
+      height: 25px;
+    }
+
+    .guided-setup-toggle[open] {
+      padding: 8px 9px 10px;
+      border-top-width: 4px;
+      border-radius: 14px;
+    }
+
+    .guided-setup-toggle[open] .guided-setup-summary {
+      min-height: 54px;
+      padding: 0 2px 8px;
+    }
+
+    .guided-setup-toggle[open] > .guided-intro-body {
+      gap: 10px;
+      padding-top: 10px;
+    }
+  }
+  /* Accesso alla guida: vicino alle impostazioni, senza competere con l'azione primaria. */
   .guided-tutorial-link {
-    grid-column: 1 / -1;
-    justify-self: start;
-    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.38rem;
+    min-height: 34px;
+    padding: 0.38rem 0.65rem;
+    border: 1px solid rgba(47, 107, 58, 0.2);
+    border-radius: 999px;
+    color: var(--verde-scuro);
+    background: rgba(255, 253, 246, 0.84);
+    font-size: 0.76rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .guided-tutorial-link > span:first-child {
+    width: 16px;
+    height: 16px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--verde);
+    font-size: 0.68rem;
+  }
+  .guided-tutorial-link:hover {
+    border-color: var(--verde);
+    background: rgba(79, 154, 63, 0.12);
   }
   .hero-guide-link {
-    width: 100%;
-    max-width: 22rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.46rem;
+    min-height: 40px;
+    padding: 0.48rem 0.84rem;
+    border: 1px solid rgba(47, 107, 58, 0.22);
+    border-radius: 999px;
+    color: var(--verde-scuro);
+    background: rgba(255, 253, 246, 0.78);
+    box-shadow: 0 5px 14px rgba(31, 58, 38, 0.08);
+    font-size: 0.83rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
   }
-}
+  .hero-guide-link-icon {
+    width: 17px;
+    height: 17px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--verde);
+    font-size: 0.7rem;
+  }
+  .hero-guide-link:hover {
+    border-color: var(--verde);
+    background: #fffdf6;
+    transform: translateY(-1px);
+  }
+  html[data-theme="dark"] .guided-tutorial-link,
+  html[data-theme="dark"] .hero-guide-link {
+    border-color: rgba(139, 212, 158, 0.34);
+    color: var(--dark-green);
+    background: rgba(20, 43, 30, 0.9);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
+  }
+  html[data-theme="dark"] .guided-tutorial-link > span:first-child,
+  html[data-theme="dark"] .hero-guide-link-icon {
+    color: #0b1a13;
+    background: var(--dark-green);
+  }
+  html[data-theme="dark"] .guided-tutorial-link:hover,
+  html[data-theme="dark"] .hero-guide-link:hover {
+    border-color: var(--dark-green);
+    background: rgba(139, 212, 158, 0.16);
+  }
+  @media (max-width: 640px) {
+    .guided-tutorial-link {
+      grid-column: 1 / -1;
+      justify-self: start;
+      min-height: 32px;
+    }
+    .hero-guide-link {
+      width: 100%;
+      max-width: 22rem;
+    }
+  }
 
-/* Hub del percorso: sostituisce la sequenza di card indipendenti (contesto,
+  /* Hub del percorso: sostituisce la sequenza di card indipendenti (contesto,
    impostazioni e aiuto) con un solo blocco leggibile. La CTA cambia già con
    il livello scelto; qui la gerarchia rende evidente che tutto appartiene al
    medesimo percorso di acquisto. */
-.workflow-hub {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0;
-  overflow: hidden;
-  border: 1px solid rgba(47, 107, 58, 0.22);
-  border-top: 4px solid var(--verde);
-  border-radius: 16px;
-  background: linear-gradient(145deg, #fffef9, #eff7eb);
-  box-shadow: 0 10px 26px rgba(31, 58, 38, 0.1);
-}
-
-.workflow-hub .journey-context {
-  position: static;
-  display: grid;
-  grid-template-columns: auto minmax(180px, 1fr) auto;
-  gap: 9px 14px;
-  margin: 0;
-  padding: 14px 16px 12px;
-  border: 0;
-  border-left: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.workflow-hub .journey-context-progress {
-  grid-column: 2 / -1;
-  justify-content: flex-start;
-  order: initial;
-  gap: 6px;
-}
-
-.workflow-hub-utilities {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 12px 16px 12px 0;
-}
-
-.workflow-hub .guided-setup-gear {
-  width: min(315px, 27vw);
-  min-height: 46px;
-  margin: 0;
-  padding: 6px 9px;
-  border-radius: 12px;
-}
-
-.workflow-hub .guided-setup-gear-copy b {
-  font-size: 12px;
-}
-
-.workflow-hub .guided-setup-gear-copy small {
-  font-size: 9.5px;
-}
-
-.workflow-hub .guided-setup-gear-action {
-  min-height: 28px;
-  padding-inline: 8px;
-  font-size: 10px;
-}
-
-.workflow-hub .guided-setup-gear-icon {
-  width: 25px;
-  height: 25px;
-  font-size: 14px;
-}
-
-.workflow-hub .guided-tutorial-link {
-  flex: 0 0 auto;
-  min-height: 34px;
-  padding-inline: 0.58rem;
-  white-space: nowrap;
-}
-
-.workflow-hub .guided-tutorial-link-short {
-  display: none;
-}
-
-.workflow-hub .guided-setup-toggle {
-  grid-column: 1 / -1;
-  width: 100%;
-  border-radius: 0;
-}
-
-.workflow-hub .guided-setup-toggle[open] {
-  border-width: 1px 0 0;
-  border-top: 1px solid rgba(47, 107, 58, 0.3);
-  border-radius: 0;
-  box-shadow: inset 0 10px 24px rgba(31, 58, 38, 0.05);
-}
-
-.workflow-hub .guided-setup-toggle[open] .guided-setup-summary {
-  min-height: 52px;
-}
-
-html[data-theme="dark"] .workflow-hub {
-  border-color: rgba(139, 212, 158, 0.38);
-  border-top-color: var(--dark-green);
-  background: linear-gradient(145deg, #173322, #10291b);
-}
-
-@media (max-width: 900px) {
   .workflow-hub {
-    grid-template-columns: 1fr;
-  }
-
-  .workflow-hub .journey-context {
-    padding-bottom: 8px;
-  }
-
-  .workflow-hub-utilities {
-    padding: 0 16px 12px;
-  }
-
-  .workflow-hub .guided-setup-gear {
-    width: min(420px, 100%);
-  }
-}
-
-@media (max-width: 660px) {
-  .workflow-hub {
-    border-radius: 14px;
-  }
-
-  .workflow-hub .journey-context {
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    padding: 11px 11px 8px;
-  }
-
-  .workflow-hub .journey-context-copy {
     grid-column: 1 / -1;
-    grid-row: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0;
+    overflow: hidden;
+    border: 1px solid rgba(47, 107, 58, 0.22);
+    border-top: 4px solid var(--verde);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #fffef9, #eff7eb);
+    box-shadow: 0 10px 26px rgba(31, 58, 38, 0.1);
+  }
+
+  .workflow-hub .journey-context {
+    position: static;
+    display: grid;
+    grid-template-columns: auto minmax(180px, 1fr) auto;
+    gap: 9px 14px;
+    margin: 0;
+    padding: 14px 16px 12px;
+    border: 0;
+    border-left: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .workflow-hub .journey-context-progress {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    justify-content: stretch;
-  }
-
-  .workflow-hub .journey-context-step {
-    flex: 1;
-    min-height: 36px;
+    grid-column: 2 / -1;
+    justify-content: flex-start;
+    order: initial;
+    gap: 6px;
   }
 
   .workflow-hub-utilities {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    display: flex;
+    align-items: center;
     gap: 7px;
-    padding: 0 11px 11px;
+    padding: 12px 16px 12px 0;
   }
 
   .workflow-hub .guided-setup-gear {
-    width: 100%;
-    min-height: 54px;
-    padding: 7px 9px;
-  }
-
-  .workflow-hub .guided-tutorial-link {
-    grid-column: auto;
-    min-height: 48px;
-    min-width: 48px;
-    padding: 0;
-  }
-
-  .workflow-hub .guided-tutorial-link > span[data-guide-link-label] {
-    display: none;
-  }
-
-  .workflow-hub .guided-tutorial-link-short {
-    display: inline;
-    font-size: 11px;
-  }
-
-  .workflow-hub .guided-tutorial-link > span:first-child {
-    width: 21px;
-    height: 21px;
-    font-size: 0.78rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .workflow-hub .guided-tutorial-link-short {
-    display: none;
-  }
-
-  .workflow-hub .guided-tutorial-link {
-    min-width: 48px;
-  }
-}
-
-/* Il livello scelto è anche il controllo per cambiarlo: così il profilo
-   resta nel punto in cui spiega il flusso e non richiede un pannello extra. */
-.workflow-hub .journey-context {
-  grid-column: 1 / -1;
-  grid-template-columns: auto minmax(180px, 1fr) auto auto;
-}
-
-.workflow-hub .journey-context-level--chooser {
-  border: 0;
-  cursor: pointer;
-  gap: 6px;
-  transition: transform 0.14s ease, box-shadow 0.14s ease;
-}
-
-.workflow-hub .journey-context-level--chooser:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px color-mix(in srgb, var(--journey-accent) 26%, transparent);
-}
-
-.workflow-hub .journey-context-level--chooser:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--journey-accent) 48%, transparent);
-  outline-offset: 3px;
-}
-
-.workflow-hub .journey-context-level-edit {
-  display: inline-grid;
-  place-items: center;
-  width: 15px;
-  height: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  border-radius: 50%;
-  font-size: 10px;
-  line-height: 1;
-}
-
-.workflow-hub .journey-context-level--chooser.is-open .journey-context-level-edit {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.workflow-hub .journey-context-help {
-  align-self: center;
-  margin-left: -4px;
-  min-height: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: var(--verde-scuro);
-  font-size: 0.72rem;
-  font-weight: 750;
-}
-
-.workflow-hub .journey-context-help:hover {
-  border-color: transparent;
-  background: transparent;
-  color: var(--verde);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* La guida è un aiuto secondario: rimuoviamo l'aspetto da pulsante circolare
-   del punto interrogativo, mantenendo un link leggero ma accessibile. */
-.workflow-hub .journey-context-help > span:first-child {
-  width: auto;
-  height: auto;
-  border-radius: 0;
-  background: transparent;
-  color: var(--verde);
-  font-size: 0.9rem;
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-help > span:first-child {
-  background: transparent;
-  color: var(--dark-green);
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-help,
-html[data-theme="dark"] .workflow-hub .journey-context-help:hover {
-  border-color: transparent;
-  background: transparent;
-  color: var(--dark-green);
-  box-shadow: none;
-}
-
-.workflow-persona-panel {
-  grid-column: 1 / -1;
-  border-top: 1px solid rgba(47, 107, 58, 0.22);
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.workflow-persona-panel[hidden] {
-  display: none;
-}
-
-.workflow-persona-panel .persona-pick {
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.workflow-persona-panel .persona-pick-head {
-  display: none;
-}
-
-.workflow-persona-panel .persona-cards,
-.workflow-persona-panel .persona-pick[open] .persona-cards {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 12px 16px 16px;
-}
-
-.workflow-persona-panel .persona-pick[open] .persona-card {
-  min-height: 74px;
-}
-
-html[data-theme="dark"] .workflow-persona-panel {
-  border-top-color: rgba(139, 212, 158, 0.28);
-  background: rgba(0, 0, 0, 0.13);
-}
-
-@media (max-width: 900px) {
-  .workflow-hub .journey-context {
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
-  }
-}
-
-@media (max-width: 660px) {
-  .workflow-hub .journey-context {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .workflow-hub .journey-context-level--chooser {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .workflow-hub .journey-context-help {
-    grid-column: 3;
-    grid-row: 1;
+    width: min(315px, 27vw);
+    min-height: 46px;
     margin: 0;
-    min-width: 0;
+    padding: 6px 9px;
+    border-radius: 12px;
+  }
+
+  .workflow-hub .guided-setup-gear-copy b {
+    font-size: 12px;
+  }
+
+  .workflow-hub .guided-setup-gear-copy small {
+    font-size: 9.5px;
+  }
+
+  .workflow-hub .guided-setup-gear-action {
+    min-height: 28px;
+    padding-inline: 8px;
     font-size: 10px;
   }
 
-  .workflow-hub .journey-context-copy,
-  .workflow-hub .journey-context-progress {
+  .workflow-hub .guided-setup-gear-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+  }
+
+  .workflow-hub .guided-tutorial-link {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding-inline: 0.58rem;
+    white-space: nowrap;
+  }
+
+  .workflow-hub .guided-tutorial-link-short {
+    display: none;
+  }
+
+  .workflow-hub .guided-setup-toggle {
     grid-column: 1 / -1;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .workflow-hub .guided-setup-toggle[open] {
+    border-width: 1px 0 0;
+    border-top: 1px solid rgba(47, 107, 58, 0.3);
+    border-radius: 0;
+    box-shadow: inset 0 10px 24px rgba(31, 58, 38, 0.05);
+  }
+
+  .workflow-hub .guided-setup-toggle[open] .guided-setup-summary {
+    min-height: 52px;
+  }
+
+  html[data-theme="dark"] .workflow-hub {
+    border-color: rgba(139, 212, 158, 0.38);
+    border-top-color: var(--dark-green);
+    background: linear-gradient(145deg, #173322, #10291b);
+  }
+
+  @media (max-width: 900px) {
+    .workflow-hub {
+      grid-template-columns: 1fr;
+    }
+
+    .workflow-hub .journey-context {
+      padding-bottom: 8px;
+    }
+
+    .workflow-hub-utilities {
+      padding: 0 16px 12px;
+    }
+
+    .workflow-hub .guided-setup-gear {
+      width: min(420px, 100%);
+    }
+  }
+
+  @media (max-width: 660px) {
+    .workflow-hub {
+      border-radius: 14px;
+    }
+
+    .workflow-hub .journey-context {
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 11px 11px 8px;
+    }
+
+    .workflow-hub .journey-context-copy {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .workflow-hub .journey-context-progress {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      justify-content: stretch;
+    }
+
+    .workflow-hub .journey-context-step {
+      flex: 1;
+      min-height: 36px;
+    }
+
+    .workflow-hub-utilities {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 7px;
+      padding: 0 11px 11px;
+    }
+
+    .workflow-hub .guided-setup-gear {
+      width: 100%;
+      min-height: 54px;
+      padding: 7px 9px;
+    }
+
+    .workflow-hub .guided-tutorial-link {
+      grid-column: auto;
+      min-height: 48px;
+      min-width: 48px;
+      padding: 0;
+    }
+
+    .workflow-hub .guided-tutorial-link > span[data-guide-link-label] {
+      display: none;
+    }
+
+    .workflow-hub .guided-tutorial-link-short {
+      display: inline;
+      font-size: 11px;
+    }
+
+    .workflow-hub .guided-tutorial-link > span:first-child {
+      width: 21px;
+      height: 21px;
+      font-size: 0.78rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .workflow-hub .guided-tutorial-link-short {
+      display: none;
+    }
+
+    .workflow-hub .guided-tutorial-link {
+      min-width: 48px;
+    }
+  }
+
+  /* Il livello scelto è anche il controllo per cambiarlo: così il profilo
+   resta nel punto in cui spiega il flusso e non richiede un pannello extra. */
+  .workflow-hub .journey-context {
+    grid-column: 1 / -1;
+    grid-template-columns: auto minmax(180px, 1fr) auto auto;
+  }
+
+  .workflow-hub .journey-context-level--chooser {
+    border: 0;
+    cursor: pointer;
+    gap: 6px;
+    transition:
+      transform 0.14s ease,
+      box-shadow 0.14s ease;
+  }
+
+  .workflow-hub .journey-context-level--chooser:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px
+      color-mix(in srgb, var(--journey-accent) 26%, transparent);
+  }
+
+  .workflow-hub .journey-context-level--chooser:focus-visible {
+    outline: 3px solid
+      color-mix(in srgb, var(--journey-accent) 48%, transparent);
+    outline-offset: 3px;
+  }
+
+  .workflow-hub .journey-context-level-edit {
+    display: inline-grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 50%;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .workflow-hub
+    .journey-context-level--chooser.is-open
+    .journey-context-level-edit {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .workflow-hub .journey-context-help {
+    align-self: center;
+    margin-left: -4px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--verde-scuro);
+    font-size: 0.72rem;
+    font-weight: 750;
+  }
+
+  .workflow-hub .journey-context-help:hover {
+    border-color: transparent;
+    background: transparent;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* La guida è un aiuto secondario: rimuoviamo l'aspetto da pulsante circolare
+   del punto interrogativo, mantenendo un link leggero ma accessibile. */
+  .workflow-hub .journey-context-help > span:first-child {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent;
+    color: var(--verde);
+    font-size: 0.9rem;
+  }
+
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-help
+    > span:first-child {
+    background: transparent;
+    color: var(--dark-green);
+  }
+
+  html[data-theme="dark"] .workflow-hub .journey-context-help,
+  html[data-theme="dark"] .workflow-hub .journey-context-help:hover {
+    border-color: transparent;
+    background: transparent;
+    color: var(--dark-green);
+    box-shadow: none;
+  }
+
+  .workflow-persona-panel {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(47, 107, 58, 0.22);
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .workflow-persona-panel[hidden] {
+    display: none;
+  }
+
+  .workflow-persona-panel .persona-pick {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .workflow-persona-panel .persona-pick-head {
+    display: none;
   }
 
   .workflow-persona-panel .persona-cards,
   .workflow-persona-panel .persona-pick[open] .persona-cards {
-    grid-template-columns: 1fr;
-    padding: 10px 11px 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 12px 16px 16px;
   }
 
   .workflow-persona-panel .persona-pick[open] .persona-card {
-    min-height: 60px;
+    min-height: 74px;
   }
-}
 
-/* Azioni del percorso: una sola priorità per riga. Il controllo delle
+  html[data-theme="dark"] .workflow-persona-panel {
+    border-top-color: rgba(139, 212, 158, 0.28);
+    background: rgba(0, 0, 0, 0.13);
+  }
+
+  @media (max-width: 900px) {
+    .workflow-hub .journey-context {
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .workflow-hub .journey-context {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .workflow-hub .journey-context-level--chooser {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .workflow-hub .journey-context-help {
+      grid-column: 3;
+      grid-row: 1;
+      margin: 0;
+      min-width: 0;
+      font-size: 10px;
+    }
+
+    .workflow-hub .journey-context-copy,
+    .workflow-hub .journey-context-progress {
+      grid-column: 1 / -1;
+    }
+
+    .workflow-persona-panel .persona-cards,
+    .workflow-persona-panel .persona-pick[open] .persona-cards {
+      grid-template-columns: 1fr;
+      padding: 10px 11px 12px;
+    }
+
+    .workflow-persona-panel .persona-pick[open] .persona-card {
+      min-height: 60px;
+    }
+  }
+
+  /* Azioni del percorso: una sola priorità per riga. Il controllo delle
    impostazioni già scelte è un raccordo leggero; il passo attivo è la CTA. */
-.config-page-title .guided-brand-copy {
-  flex: 1 1 auto;
-}
-
-.config-page-title .config-guide-link {
-  flex: 0 0 auto;
-  margin-left: auto;
-  min-height: 36px;
-  padding-inline: 0.7rem;
-  box-shadow: 0 3px 10px rgba(31, 58, 38, 0.06);
-}
-
-.config-page-title .guided-tutorial-link-short {
-  display: none;
-}
-
-.workflow-hub .journey-context {
-  grid-template-columns: auto minmax(180px, 1fr) auto;
-}
-
-.workflow-hub .journey-context-progress {
-  grid-column: 2 / -1;
-  align-items: center;
-  gap: 7px;
-}
-
-.workflow-hub .journey-context-step[data-journey-step="settings"],
-.workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
-.workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
-  min-height: 28px;
-  padding: 2px 1px;
-  border-color: transparent;
-  background: transparent;
-  box-shadow: none;
-  color: #687568;
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.workflow-hub .journey-context-step[data-journey-step="settings"]::before {
-  content: "↺";
-  margin-right: 3px;
-  color: var(--journey-accent);
-  font-size: 12px;
-  font-weight: 900;
-}
-
-.workflow-hub .journey-context-step[data-journey-step="settings"]:hover {
-  background: transparent;
-  color: var(--verde-scuro);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
-
-.workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
-  min-height: 32px;
-  padding-inline: 10px;
-  border-color: color-mix(in srgb, var(--journey-accent) 28%, transparent);
-  background: rgba(255, 255, 255, 0.64);
-  color: #435544;
-}
-
-.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]) {
-  min-height: 36px;
-  padding-inline: 13px;
-  border-color: var(--journey-accent);
-  background: var(--journey-accent);
-  box-shadow: 0 5px 12px color-mix(in srgb, var(--journey-accent) 26%, transparent);
-  color: #fff;
-  font-weight: 850;
-}
-
-.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
-  background: color-mix(in srgb, var(--journey-accent) 88%, #000);
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-step[data-journey-step="settings"],
-html[data-theme="dark"] .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
-html[data-theme="dark"] .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
-  background: transparent;
-  color: var(--dark-muted);
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
-  border-color: rgba(139, 212, 158, 0.3);
-  background: rgba(8, 27, 17, 0.28);
-  color: var(--dark-text);
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]) {
-  border-color: var(--dark-green);
-  background: var(--dark-green);
-  color: #0b1a13;
-}
-
-@media (max-width: 660px) {
-  .config-page-title {
-    flex-wrap: nowrap;
-  }
-
   .config-page-title .guided-brand-copy {
     flex: 1 1 auto;
   }
 
   .config-page-title .config-guide-link {
-    min-height: 34px;
-    margin-left: 0;
-    padding: 0.35rem 0.54rem;
-    white-space: nowrap;
-  }
-
-  .config-page-title .config-guide-link > span[data-guide-link-label] {
-    display: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    min-height: 36px;
+    padding-inline: 0.7rem;
+    box-shadow: 0 3px 10px rgba(31, 58, 38, 0.06);
   }
 
   .config-page-title .guided-tutorial-link-short {
-    display: inline;
-    font-size: 10px;
+    display: none;
   }
 
-  .config-page-title .config-guide-link > span:first-child {
-    width: 17px;
-    height: 17px;
+  .workflow-hub .journey-context {
+    grid-template-columns: auto minmax(180px, 1fr) auto;
   }
 
   .workflow-hub .journey-context-progress {
-    display: flex;
-    grid-column: 1 / -1;
-    flex-wrap: wrap;
+    grid-column: 2 / -1;
     align-items: center;
-    justify-content: space-between;
-    gap: 4px 6px;
+    gap: 7px;
   }
 
   .workflow-hub .journey-context-step[data-journey-step="settings"],
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
-    flex: 1 1 0;
-    min-width: 0;
-    justify-content: center;
-    min-height: 36px;
+    min-height: 28px;
+    padding: 2px 1px;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    color: #687568;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .workflow-hub .journey-context-step[data-journey-step="settings"]::before {
+    content: "↺";
+    margin-right: 3px;
+    color: var(--journey-accent);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .workflow-hub .journey-context-step[data-journey-step="settings"]:hover {
+    background: transparent;
+    color: var(--verde-scuro);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 
   .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
-    flex: 1 1 0;
-    min-width: 0;
-    min-height: 36px;
-    padding-inline: 7px;
+    min-height: 32px;
+    padding-inline: 10px;
+    border-color: color-mix(in srgb, var(--journey-accent) 28%, transparent);
+    background: rgba(255, 255, 255, 0.64);
+    color: #435544;
   }
-}
 
-/* Desktop: il riepilogo e i tre passi condividono la stessa riga. I due
+  .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]) {
+    min-height: 36px;
+    padding-inline: 13px;
+    border-color: var(--journey-accent);
+    background: var(--journey-accent);
+    box-shadow: 0 5px 12px
+      color-mix(in srgb, var(--journey-accent) 26%, transparent);
+    color: #fff;
+    font-weight: 850;
+  }
+
+  .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
+    background: color-mix(in srgb, var(--journey-accent) 88%, #000);
+  }
+
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step[data-journey-step="settings"],
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step[data-journey-step="settings"].is-done,
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step[data-journey-step="settings"].is-current {
+    background: transparent;
+    color: var(--dark-muted);
+  }
+
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step:not([data-journey-step="settings"]) {
+    border-color: rgba(139, 212, 158, 0.3);
+    background: rgba(8, 27, 17, 0.28);
+    color: var(--dark-text);
+  }
+
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]) {
+    border-color: var(--dark-green);
+    background: var(--dark-green);
+    color: #0b1a13;
+  }
+
+  @media (max-width: 660px) {
+    .config-page-title {
+      flex-wrap: nowrap;
+    }
+
+    .config-page-title .guided-brand-copy {
+      flex: 1 1 auto;
+    }
+
+    .config-page-title .config-guide-link {
+      min-height: 34px;
+      margin-left: 0;
+      padding: 0.35rem 0.54rem;
+      white-space: nowrap;
+    }
+
+    .config-page-title .config-guide-link > span[data-guide-link-label] {
+      display: none;
+    }
+
+    .config-page-title .guided-tutorial-link-short {
+      display: inline;
+      font-size: 10px;
+    }
+
+    .config-page-title .config-guide-link > span:first-child {
+      width: 17px;
+      height: 17px;
+    }
+
+    .workflow-hub .journey-context-progress {
+      display: flex;
+      grid-column: 1 / -1;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px 6px;
+    }
+
+    .workflow-hub .journey-context-step[data-journey-step="settings"],
+    .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+    .workflow-hub
+      .journey-context-step[data-journey-step="settings"].is-current {
+      flex: 1 1 0;
+      min-width: 0;
+      justify-content: center;
+      min-height: 36px;
+    }
+
+    .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 36px;
+      padding-inline: 7px;
+    }
+  }
+
+  /* Desktop: il riepilogo e i tre passi condividono la stessa riga. I due
    passi operativi ricevono spazio equivalente; il controllo di revisione
    resta leggero, senza creare una fila di elementi ammassati a sinistra. */
-@media (min-width: 1101px) {
-  .workflow-hub .journey-context {
-    grid-template-columns: auto minmax(260px, 1fr) minmax(430px, 0.85fr);
-    align-items: center;
+  @media (min-width: 1101px) {
+    .workflow-hub .journey-context {
+      grid-template-columns: auto minmax(260px, 1fr) minmax(430px, 0.85fr);
+      align-items: center;
+    }
+
+    .workflow-hub .journey-context-progress {
+      display: grid;
+      grid-column: 3;
+      grid-row: 1;
+      grid-template-columns: auto repeat(2, minmax(132px, 1fr));
+      align-items: center;
+      width: 100%;
+      justify-content: normal;
+      gap: 8px;
+    }
+
+    .workflow-hub .journey-context-step[data-journey-step="settings"] {
+      justify-self: start;
+    }
+
+    .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
+      width: 100%;
+    }
   }
 
-  .workflow-hub .journey-context-progress {
-    display: grid;
-    grid-column: 3;
-    grid-row: 1;
-    grid-template-columns: auto repeat(2, minmax(132px, 1fr));
-    align-items: center;
-    width: 100%;
-    justify-content: normal;
-    gap: 8px;
+  /* I passi sono l'unica azione del percorso: colori e contrasto identificano
+   il profilo, senza replicare un CTA sopra la planimetria. */
+  .workflow-hub .journey-context--novizio {
+    --journey-action: #347a3b;
+    --journey-soft: #e7f4e4;
+    --journey-line: #a9cfaa;
   }
 
-  .workflow-hub .journey-context-step[data-journey-step="settings"] {
-    justify-self: start;
+  .workflow-hub .journey-context--intermedio {
+    --journey-action: #986811;
+    --journey-soft: #fff0d0;
+    --journey-line: #dfc17a;
+  }
+
+  .workflow-hub .journey-context--esperto {
+    --journey-action: #a8472b;
+    --journey-soft: #fae1d7;
+    --journey-line: #dfad9b;
   }
 
   .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
-    width: 100%;
+    position: relative;
+    gap: 6px;
+    border-color: var(--journey-line);
+    background: rgba(255, 255, 255, 0.78);
+    color: color-mix(in srgb, var(--journey-action) 72%, #1d3022);
+    font-weight: 780;
   }
-}
 
-/* I passi sono l'unica azione del percorso: colori e contrasto identificano
-   il profilo, senza replicare un CTA sopra la planimetria. */
-.workflow-hub .journey-context--novizio {
-  --journey-action: #347a3b;
-  --journey-soft: #e7f4e4;
-  --journey-line: #a9cfaa;
-}
+  .workflow-hub
+    .journey-context-step:not([data-journey-step="settings"])::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    opacity: 0.62;
+  }
 
-.workflow-hub .journey-context--intermedio {
-  --journey-action: #986811;
-  --journey-soft: #fff0d0;
-  --journey-line: #dfc17a;
-}
+  .workflow-hub
+    .journey-context-step.is-done:not(.is-current):not(
+      [data-journey-step="settings"]
+    ) {
+    border-color: color-mix(in srgb, var(--journey-action) 36%, transparent);
+    background: var(--journey-soft);
+    color: var(--journey-action);
+  }
 
-.workflow-hub .journey-context--esperto {
-  --journey-action: #a8472b;
-  --journey-soft: #fae1d7;
-  --journey-line: #dfad9b;
-}
+  .workflow-hub
+    .journey-context-step.is-done:not(.is-current):not(
+      [data-journey-step="settings"]
+    )::before {
+    width: 8px;
+    height: 8px;
+    border: 0;
+    background: currentColor;
+    opacity: 1;
+  }
 
-.workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
-  position: relative;
-  gap: 6px;
-  border-color: var(--journey-line);
-  background: rgba(255, 255, 255, 0.78);
-  color: color-mix(in srgb, var(--journey-action) 72%, #1d3022);
-  font-weight: 780;
-}
+  .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]) {
+    border-color: var(--journey-action);
+    background: var(--journey-action);
+    box-shadow: 0 6px 14px
+      color-mix(in srgb, var(--journey-action) 30%, transparent);
+    color: #fff;
+  }
 
-.workflow-hub .journey-context-step:not([data-journey-step="settings"])::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  flex: 0 0 auto;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  opacity: 0.62;
-}
+  .workflow-hub
+    .journey-context-step.is-current:not(
+      [data-journey-step="settings"]
+    )::before {
+    width: 8px;
+    height: 8px;
+    border: 2px solid currentColor;
+    opacity: 0.96;
+  }
 
-.workflow-hub .journey-context-step.is-done:not(.is-current):not([data-journey-step="settings"]) {
-  border-color: color-mix(in srgb, var(--journey-action) 36%, transparent);
-  background: var(--journey-soft);
-  color: var(--journey-action);
-}
+  .workflow-hub
+    .journey-context-step:not([data-journey-step="settings"]):hover {
+    border-color: var(--journey-action);
+    background: var(--journey-soft);
+    color: var(--journey-action);
+  }
 
-.workflow-hub .journey-context-step.is-done:not(.is-current):not([data-journey-step="settings"])::before {
-  width: 8px;
-  height: 8px;
-  border: 0;
-  background: currentColor;
-  opacity: 1;
-}
+  .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
+    background: color-mix(in srgb, var(--journey-action) 88%, #000);
+    color: #fff;
+  }
 
-.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]) {
-  border-color: var(--journey-action);
-  background: var(--journey-action);
-  box-shadow: 0 6px 14px color-mix(in srgb, var(--journey-action) 30%, transparent);
-  color: #fff;
-}
+  html[data-theme="dark"] .workflow-hub .journey-context--novizio {
+    --journey-action: #8bd49e;
+    --journey-soft: rgba(139, 212, 158, 0.16);
+    --journey-line: rgba(139, 212, 158, 0.5);
+    --journey-action-text: #0b1a13;
+  }
 
-.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"])::before {
-  width: 8px;
-  height: 8px;
-  border: 2px solid currentColor;
-  opacity: 0.96;
-}
+  html[data-theme="dark"] .workflow-hub .journey-context--intermedio {
+    --journey-action: #f1ca72;
+    --journey-soft: rgba(241, 202, 114, 0.15);
+    --journey-line: rgba(241, 202, 114, 0.48);
+    --journey-action-text: #2a1d05;
+  }
 
-.workflow-hub .journey-context-step:not([data-journey-step="settings"]):hover {
-  border-color: var(--journey-action);
-  background: var(--journey-soft);
-  color: var(--journey-action);
-}
+  html[data-theme="dark"] .workflow-hub .journey-context--esperto {
+    --journey-action: #f0a087;
+    --journey-soft: rgba(240, 160, 135, 0.15);
+    --journey-line: rgba(240, 160, 135, 0.48);
+    --journey-action-text: #2e120b;
+  }
 
-.workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
-  background: color-mix(in srgb, var(--journey-action) 88%, #000);
-  color: #fff;
-}
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step:not([data-journey-step="settings"]) {
+    border-color: var(--journey-line);
+    background: rgba(7, 25, 15, 0.42);
+    color: var(--journey-action);
+  }
 
-html[data-theme="dark"] .workflow-hub .journey-context--novizio {
-  --journey-action: #8bd49e;
-  --journey-soft: rgba(139, 212, 158, 0.16);
-  --journey-line: rgba(139, 212, 158, 0.5);
-  --journey-action-text: #0b1a13;
-}
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step.is-done:not(.is-current):not(
+      [data-journey-step="settings"]
+    ) {
+    border-color: var(--journey-line);
+    background: var(--journey-soft);
+    color: var(--journey-action);
+  }
 
-html[data-theme="dark"] .workflow-hub .journey-context--intermedio {
-  --journey-action: #f1ca72;
-  --journey-soft: rgba(241, 202, 114, 0.15);
-  --journey-line: rgba(241, 202, 114, 0.48);
-  --journey-action-text: #2a1d05;
-}
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]),
+  html[data-theme="dark"]
+    .workflow-hub
+    .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
+    border-color: var(--journey-action);
+    background: var(--journey-action);
+    color: var(--journey-action-text);
+  }
 
-html[data-theme="dark"] .workflow-hub .journey-context--esperto {
-  --journey-action: #f0a087;
-  --journey-soft: rgba(240, 160, 135, 0.15);
-  --journey-line: rgba(240, 160, 135, 0.48);
-  --journey-action-text: #2e120b;
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
-  border-color: var(--journey-line);
-  background: rgba(7, 25, 15, 0.42);
-  color: var(--journey-action);
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-step.is-done:not(.is-current):not([data-journey-step="settings"]) {
-  border-color: var(--journey-line);
-  background: var(--journey-soft);
-  color: var(--journey-action);
-}
-
-html[data-theme="dark"] .workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]),
-html[data-theme="dark"] .workflow-hub .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
-  border-color: var(--journey-action);
-  background: var(--journey-action);
-  color: var(--journey-action-text);
-}
-
-/* Desktop: il confronto fra i tre percorsi deve restare immediato. Manteniamo
+  /* Desktop: il confronto fra i tre percorsi deve restare immediato. Manteniamo
    l'ordine naturale delle card e rendiamo attivo il profilo scelto, senza
    estrarlo in una riga separata. */
-@media (min-width: 901px) {
-  .workflow-persona-panel .persona-cards,
-  .workflow-persona-panel .persona-pick[open] .persona-cards {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: stretch;
-    gap: 12px;
-    padding: 14px 16px 16px;
+  @media (min-width: 901px) {
+    .workflow-persona-panel .persona-cards,
+    .workflow-persona-panel .persona-pick[open] .persona-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 12px;
+      padding: 14px 16px 16px;
+    }
+
+    .workflow-persona-panel .persona-card,
+    .workflow-persona-panel .persona-pick[open] .persona-card,
+    .workflow-persona-panel .persona-card.is-active,
+    .workflow-persona-panel .persona-pick[open] .persona-card.is-active,
+    body.livello-novizio .workflow-persona-panel .persona-card--novizio,
+    body.livello-intermedio .workflow-persona-panel .persona-card--intermedio,
+    body.livello-esperto .workflow-persona-panel .persona-card--esperto {
+      order: initial;
+      grid-column: auto;
+      min-height: 92px;
+      padding: 12px 13px 12px 15px;
+    }
+
+    .workflow-persona-panel .persona-card.is-active {
+      border: 2px solid var(--accent);
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--accent) 17%, #fff),
+        color-mix(in srgb, var(--accent) 7%, #fff)
+      );
+      box-shadow:
+        0 10px 22px color-mix(in srgb, var(--accent) 28%, transparent),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.62);
+      transform: translateY(-2px);
+    }
+
+    .workflow-persona-panel .persona-card.is-active::before {
+      width: 7px;
+    }
+
+    .workflow-persona-panel .persona-card.is-active .persona-card-go {
+      width: 28px;
+      height: 28px;
+      box-shadow: 0 3px 8px color-mix(in srgb, var(--accent) 32%, transparent);
+    }
+
+    html[data-theme="dark"] .workflow-persona-panel .persona-card {
+      border-color: rgba(139, 212, 158, 0.2);
+      background: rgba(6, 25, 15, 0.32);
+    }
+
+    html[data-theme="dark"] .workflow-persona-panel .persona-card.is-active {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 20%, #10271a);
+      box-shadow:
+        0 10px 24px color-mix(in srgb, var(--accent) 24%, transparent),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
   }
 
-  .workflow-persona-panel .persona-card,
-  .workflow-persona-panel .persona-pick[open] .persona-card,
-  .workflow-persona-panel .persona-card.is-active,
-  .workflow-persona-panel .persona-pick[open] .persona-card.is-active,
-  body.livello-novizio .workflow-persona-panel .persona-card--novizio,
-  body.livello-intermedio .workflow-persona-panel .persona-card--intermedio,
-  body.livello-esperto .workflow-persona-panel .persona-card--esperto {
-    order: initial;
-    grid-column: auto;
-    min-height: 92px;
-    padding: 12px 13px 12px 15px;
-  }
-
-  .workflow-persona-panel .persona-card.is-active {
-    border: 2px solid var(--accent);
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent) 17%, #fff),
-      color-mix(in srgb, var(--accent) 7%, #fff)
-    );
-    box-shadow:
-      0 10px 22px color-mix(in srgb, var(--accent) 28%, transparent),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.62);
-    transform: translateY(-2px);
-  }
-
-  .workflow-persona-panel .persona-card.is-active::before {
-    width: 7px;
-  }
-
-  .workflow-persona-panel .persona-card.is-active .persona-card-go {
-    width: 28px;
-    height: 28px;
-    box-shadow: 0 3px 8px color-mix(in srgb, var(--accent) 32%, transparent);
-  }
-
-  html[data-theme="dark"] .workflow-persona-panel .persona-card {
-    border-color: rgba(139, 212, 158, 0.2);
-    background: rgba(6, 25, 15, 0.32);
-  }
-
-  html[data-theme="dark"] .workflow-persona-panel .persona-card.is-active {
-    border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 20%, #10271a);
-    box-shadow:
-      0 10px 24px color-mix(in srgb, var(--accent) 24%, transparent),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  }
-}
-
-/* La guida rapida cambia contenuto con il percorso: l'accento riprende il
+  /* La guida rapida cambia contenuto con il percorso: l'accento riprende il
    profilo attivo senza dipendere dai colori chiari del tema. */
-body.livello-novizio #noviceGuidePanel {
-  border-top-color: var(--persona-nov);
-}
+  body.livello-novizio #noviceGuidePanel {
+    border-top-color: var(--persona-nov);
+  }
 
-body.livello-intermedio #noviceGuidePanel {
-  border-top-color: var(--persona-int);
-}
+  body.livello-intermedio #noviceGuidePanel {
+    border-top-color: var(--persona-int);
+  }
 
-body.livello-esperto #noviceGuidePanel {
-  border-top-color: var(--persona-exp);
-}
+  body.livello-esperto #noviceGuidePanel {
+    border-top-color: var(--persona-exp);
+  }
 
-html[data-theme="dark"] body.livello-novizio #noviceGuidePanel {
-  border-top-color: #8bd49e;
-}
+  html[data-theme="dark"] body.livello-novizio #noviceGuidePanel {
+    border-top-color: #8bd49e;
+  }
 
-html[data-theme="dark"] body.livello-intermedio #noviceGuidePanel {
-  border-top-color: #f1ca72;
-}
+  html[data-theme="dark"] body.livello-intermedio #noviceGuidePanel {
+    border-top-color: #f1ca72;
+  }
 
-html[data-theme="dark"] body.livello-esperto #noviceGuidePanel {
-  border-top-color: #f0a087;
-}
-
+  html[data-theme="dark"] body.livello-esperto #noviceGuidePanel {
+    border-top-color: #f0a087;
+  }
 } /* fine @layer polish */

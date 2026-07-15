@@ -1690,7 +1690,9 @@
     font-weight: 800;
     border-radius: 9px;
     cursor: pointer;
-    transition: background 0.14s, color 0.14s;
+    transition:
+      background 0.14s,
+      color 0.14s;
     flex-shrink: 0;
     align-self: center;
     touch-action: manipulation;

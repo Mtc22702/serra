@@ -284,8 +284,7 @@ function render() {
     caldo: tx("warm")
   };
   const zoneValue =
-    zoneNames[state.zona] +
-    (state.riscaldata ? ` · ${tx("heatedShort")}` : "");
+    zoneNames[state.zona] + (state.riscaldata ? ` · ${tx("heatedShort")}` : "");
   const monthValue = monthName(state.mese);
   const areaValue = `${state.larghezza}×${state.lunghezza} m`;
   const tagZonaValue = document.getElementById("tagZonaValue");
@@ -637,7 +636,8 @@ function syncColLeftLayout() {
   // .mode-section resterebbe nel flusso come contenitore vuoto. La togliamo
   // per evitare un gap fantasma sopra la guida; nell'intermedio resta invece
   // visibile, con la guida subito sotto ai piani pronti.
-  if (modeSection) modeSection.style.display = isNovice && showGuide ? "none" : "";
+  if (modeSection)
+    modeSection.style.display = isNovice && showGuide ? "none" : "";
   app.classList.toggle("col-left-collapsed", colEmpty && !showGuide);
 }
 

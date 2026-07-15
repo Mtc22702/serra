@@ -31,7 +31,10 @@
     document.body.style.top = `-${lockedScrollY}px`;
     document.body.classList.add("nav-menu-open");
     toggle.setAttribute("aria-expanded", "true");
-    toggle.setAttribute("aria-label", isRo() ? "Închide meniul" : "Chiudi menu");
+    toggle.setAttribute(
+      "aria-label",
+      isRo() ? "Închide meniul" : "Chiudi menu"
+    );
   };
 
   toggle.addEventListener("click", () => {
@@ -74,7 +77,13 @@
     const open = document.body.classList.contains("nav-menu-open");
     toggle.setAttribute(
       "aria-label",
-      isRo() ? (open ? "Închide meniul" : "Deschide meniul") : open ? "Chiudi menu" : "Apri menu"
+      isRo()
+        ? open
+          ? "Închide meniul"
+          : "Deschide meniul"
+        : open
+          ? "Chiudi menu"
+          : "Apri menu"
     );
   }).observe(document.documentElement, {
     attributes: true,

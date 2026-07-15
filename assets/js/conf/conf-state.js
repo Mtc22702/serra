@@ -193,47 +193,48 @@ function updateJourneyContext() {
   const desc = document.getElementById("journeyContextDesc");
   if (!root || !level || !title || !desc) return;
   const ro = state.lang === "ro";
-  const content = {
-    novizio: ro
-      ? {
-          level: "Traseu Începător",
-          title: "Grădina ta este deja pregătită",
-          desc: "Verifică planul de sus; când ești gata, mergi la lista de semințe.",
-          steps: ["1 · Verifică alegerile", "2 · Verifică", "3 · Cumpără"]
-        }
-      : {
-          level: "Percorso Principiante",
-          title: "Il tuo orto è già pronto",
-          desc: "Controlla il piano dall'alto; quando sei pronto, passa alla lista dei semi.",
-          steps: ["1 · Ricontrolla scelta", "2 · Controlla", "3 · Acquista"]
-        },
-    intermedio: ro
-      ? {
-          level: "Traseu Intermediar",
-          title: "Planul este gata: acum fă-l al tău",
-          desc: "Sera rămâne în centru; modifică plantele și cantitățile.",
-          steps: ["1 · Verifică alegerile", "2 · Proiectează", "3 · Cumpără"]
-        }
-      : {
-          level: "Percorso Intermedio",
-          title: "Il piano è pronto: ora fallo tuo",
-          desc: "La serra resta al centro; modifica colture e quantità quando vuoi.",
-          steps: ["1 · Ricontrolla scelta", "2 · Progetta", "3 · Acquista"]
-        },
-    esperto: ro
-      ? {
-          level: "Traseu Expert",
-          title: "Sera este goală: compune-o liber",
-          desc: "Alege din catalogul complet și așază culturile manual.",
-          steps: ["1 · Verifică alegerile", "2 · Compune", "3 · Cumpără"]
-        }
-      : {
-          level: "Percorso Esperto",
-          title: "La serra è vuota: componila liberamente",
-          desc: "Scegli dal catalogo completo e disponi le colture a mano.",
-          steps: ["1 · Ricontrolla scelta", "2 · Componi", "3 · Acquista"]
-        }
-  }[state.livello] || null;
+  const content =
+    {
+      novizio: ro
+        ? {
+            level: "Traseu Începător",
+            title: "Grădina ta este deja pregătită",
+            desc: "Verifică planul de sus; când ești gata, mergi la lista de semințe.",
+            steps: ["1 · Verifică alegerile", "2 · Verifică", "3 · Cumpără"]
+          }
+        : {
+            level: "Percorso Principiante",
+            title: "Il tuo orto è già pronto",
+            desc: "Controlla il piano dall'alto; quando sei pronto, passa alla lista dei semi.",
+            steps: ["1 · Ricontrolla scelta", "2 · Controlla", "3 · Acquista"]
+          },
+      intermedio: ro
+        ? {
+            level: "Traseu Intermediar",
+            title: "Planul este gata: acum fă-l al tău",
+            desc: "Sera rămâne în centru; modifică plantele și cantitățile.",
+            steps: ["1 · Verifică alegerile", "2 · Proiectează", "3 · Cumpără"]
+          }
+        : {
+            level: "Percorso Intermedio",
+            title: "Il piano è pronto: ora fallo tuo",
+            desc: "La serra resta al centro; modifica colture e quantità quando vuoi.",
+            steps: ["1 · Ricontrolla scelta", "2 · Progetta", "3 · Acquista"]
+          },
+      esperto: ro
+        ? {
+            level: "Traseu Expert",
+            title: "Sera este goală: compune-o liber",
+            desc: "Alege din catalogul complet și așază culturile manual.",
+            steps: ["1 · Verifică alegerile", "2 · Compune", "3 · Cumpără"]
+          }
+        : {
+            level: "Percorso Esperto",
+            title: "La serra è vuota: componila liberamente",
+            desc: "Scegli dal catalogo completo e disponi le colture a mano.",
+            steps: ["1 · Ricontrolla scelta", "2 · Componi", "3 · Acquista"]
+          }
+    }[state.livello] || null;
   if (!content) return;
   root.classList.remove(
     "journey-context--novizio",
@@ -493,11 +494,15 @@ function scrollToLivelloLanding(livello = state.livello, options = {}) {
       );
     }
     return (
-      document.getElementById("journeyContext") || document.querySelector(".stage")
+      document.getElementById("journeyContext") ||
+      document.querySelector(".stage")
     );
   };
   if (typeof scheduleElementBelowHeader === "function") {
-    scheduleElementBelowHeader(resolveTarget, behavior, { delay, waitForFonts });
+    scheduleElementBelowHeader(resolveTarget, behavior, {
+      delay,
+      waitForFonts
+    });
     return;
   }
   window.setTimeout(() => {

@@ -1553,8 +1553,10 @@
   @media (max-width: 480px) {
     .cart-drawer {
       width: 100vw;
-      padding: calc(1.1rem + env(safe-area-inset-top)) calc(1.1rem + env(safe-area-inset-right))
-        calc(1.1rem + env(safe-area-inset-bottom)) calc(1.1rem + env(safe-area-inset-left));
+      padding: calc(1.1rem + env(safe-area-inset-top))
+        calc(1.1rem + env(safe-area-inset-right))
+        calc(1.1rem + env(safe-area-inset-bottom))
+        calc(1.1rem + env(safe-area-inset-left));
     }
   }
 }

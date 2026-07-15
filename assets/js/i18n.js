@@ -769,10 +769,8 @@
         "hero.cfg_esperto": "Esperto",
         "hero.cfg_caption": "Anteprima · vista dall'alto",
         "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
-        "hero.cfg_nov_hint":
-          "Ti guido dalla prima scelta fino all'acquisto",
-        "hero.cfg_int_hint":
-          "Parti da un piano pronto e personalizzalo",
+        "hero.cfg_nov_hint": "Ti guido dalla prima scelta fino all'acquisto",
+        "hero.cfg_int_hint": "Parti da un piano pronto e personalizzalo",
         "hero.cfg_exp_hint":
           "Scegli un layout pronto oppure componi liberamente",
         "hero.cfg_choose": "Apri",
@@ -1201,10 +1199,8 @@
         "hero.cfg_esperto": "Expert",
         "hero.cfg_caption": "Previzualizare · vedere de sus",
         "hero.cfg_levels_title": "Ce fel de cultivator ești?",
-        "hero.cfg_nov_hint":
-          "Te ghidez de la prima alegere până la cumpărare",
-        "hero.cfg_int_hint":
-          "Pornești de la un plan gata și îl personalizezi",
+        "hero.cfg_nov_hint": "Te ghidez de la prima alegere până la cumpărare",
+        "hero.cfg_int_hint": "Pornești de la un plan gata și îl personalizezi",
         "hero.cfg_exp_hint": "Alege un plan gata sau compune liber",
         "hero.cfg_choose": "Deschide",
         "nav.brand_sub": "Cultivă cu un plan",
@@ -1278,7 +1274,8 @@
         "detail.sow_water": "Udare",
         "nav.aria_main": "Navigare principală",
         "nav.account": "👤 Contul Meu",
-        "footer.tip_default": "Udă la bază, niciodată pe frunze: previne oidiumul.",
+        "footer.tip_default":
+          "Udă la bază, niciodată pe frunze: previne oidiumul.",
         "cart.aria_open": "Deschide coșul",
         "hero.aria_levels": "Alege nivelul",
         "catalog.aria_filters": "Filtre catalog semințe",
@@ -1546,9 +1543,11 @@
         wizardStep3Hint: "Rivedi i semi e completa",
         noviceGoToYieldLabel: "Vai alla lista della spesa",
         noviceGoToYieldTitle: "Vai alla lista dei semi da acquistare",
-        guidedGearAria: "Apri le impostazioni iniziali e modifica dimensioni, clima o mese",
+        guidedGearAria:
+          "Apri le impostazioni iniziali e modifica dimensioni, clima o mese",
         guidedGearTitle: "Apri le impostazioni iniziali",
-        guidedMetaRowAria: "Modifica i dati iniziali della serra: dimensioni, clima e mese",
+        guidedMetaRowAria:
+          "Modifica i dati iniziali della serra: dimensioni, clima e mese",
         guidedTagsAria: "Dati attuali della serra",
         personaCardsAria: "Livello di esperienza",
         wizardBarAria: "Passi del configuratore",
@@ -1569,8 +1568,7 @@
         noviceRestartRowAria: "Ricomincia da capo",
         btnNoviceRestartTitle: "Ricrea l'orto di stagione da capo",
         cropsCustomizeFooterAria: "Azioni sulle colture inserite",
-        btnArrangeSelectedTitle:
-          "Riordina la mappa senza cambiare le quantità",
+        btnArrangeSelectedTitle: "Riordina la mappa senza cambiare le quantità",
         btnFillSelectedTitle:
           "Riempi gli spazi vuoti usando solo le piante già inserite",
         btnClearTitle: "Rimuove tutte le piante dalla serra",
@@ -1586,7 +1584,7 @@
         noviceGuideStep1:
           "Il badge in alto mostra il percorso attivo: toccalo solo se vuoi scegliere un livello diverso.",
         noviceGuideStep2:
-          "Usa \"Ricontrolla scelta\" per rivedere le dimensioni, la zona e il mese già scelti.",
+          'Usa "Ricontrolla scelta" per rivedere le dimensioni, la zona e il mese già scelti.',
         noviceGuideStep3:
           "Controlla il piano dall'alto: puoi aprire un'aiuola per vedere le colture e le quantità proposte.",
         noviceGuideStep4:
@@ -1598,9 +1596,9 @@
         intermediateGuideStep1:
           "Il badge in alto mostra il percorso attivo: toccalo quando vuoi passare a Principiante o Esperto.",
         intermediateGuideStep2:
-          "Usa \"Ricontrolla scelta\" per rivedere le dimensioni, la zona e il mese già scelti.",
+          'Usa "Ricontrolla scelta" per rivedere le dimensioni, la zona e il mese già scelti.',
         intermediateGuideStep3:
-          "Apri \"Colture nella serra\" per aggiungere, togliere o cambiare le quantità del piano.",
+          'Apri "Colture nella serra" per aggiungere, togliere o cambiare le quantità del piano.',
         intermediateGuideStep4:
           "Controlla la serra dall'alto: apri un'aiuola per verificare colture, spazio e dettagli.",
         intermediateGuideStep5:
@@ -1610,9 +1608,9 @@
         expertGuideStep1:
           "Il badge in alto mostra il percorso attivo: toccalo quando vuoi cambiare livello di autonomia.",
         expertGuideStep2:
-          "Usa \"Ricontrolla scelta\" per rivedere le dimensioni, la zona e il mese già scelti.",
+          'Usa "Ricontrolla scelta" per rivedere le dimensioni, la zona e il mese già scelti.',
         expertGuideStep3:
-          "La serra parte libera: apri \"Colture nella serra\" per cercare nel catalogo completo e aggiungere piante.",
+          'La serra parte libera: apri "Colture nella serra" per cercare nel catalogo completo e aggiungere piante.',
         expertGuideStep4:
           "Controlla la serra dall'alto e apri un'aiuola per modificare quantità, spazio e dettagli.",
         expertGuideStep5:
@@ -1627,11 +1625,13 @@
         noviceRestart: "Ricomincia",
         expertSeasonal: "Genera piano di stagione",
         arrangeSelected: "Riordina le aiuole",
-        arrangeSelectedHint: "Sistema la disposizione, le quantità restano uguali.",
+        arrangeSelectedHint:
+          "Sistema la disposizione, le quantità restano uguali.",
         arrangeSelectedTitle:
           "Riordina la mappa senza cambiare le quantità scelte",
         fillSelected: "Riempi spazi vuoti",
-        fillSelectedHint: "Aggiunge altre piante già scelte per non lasciare spazio libero.",
+        fillSelectedHint:
+          "Aggiunge altre piante già scelte per non lasciare spazio libero.",
         cropActionsTitle: "Azioni sulle colture inserite",
         cropActionsHint:
           "Prima regola le quantità, poi scegli se conservarle o riempire gli spazi vuoti.",
@@ -1974,8 +1974,7 @@
         workflowHelpAria: "Deschide ghidul de utilizare al configuratorului",
         workflowHelpShort: "Ghid",
         workflowEditTitle: "Personalizează traseul",
-        workflowEditHint:
-          "Actualizează datele serei sau nivelul de experiență",
+        workflowEditHint: "Actualizează datele serei sau nivelul de experiență",
         stageContextTitle: "Datele serei",
         guidedSetupOriginHint:
           "Aceste date au fost folosite pentru proiectul inițial",
@@ -2111,7 +2110,8 @@
         guidedGearAria:
           "Deschide setările inițiale și modifică dimensiunile, clima sau luna",
         guidedGearTitle: "Deschide setările inițiale",
-        guidedMetaRowAria: "Modifică datele inițiale ale serei: dimensiuni, climă și lună",
+        guidedMetaRowAria:
+          "Modifică datele inițiale ale serei: dimensiuni, climă și lună",
         guidedTagsAria: "Datele actuale ale serei",
         personaCardsAria: "Nivel de experiență",
         wizardBarAria: "Pașii configuratorului",
@@ -2132,8 +2132,7 @@
         noviceRestartRowAria: "Reia de la zero",
         btnNoviceRestartTitle: "Recreează grădina de sezon de la zero",
         cropsCustomizeFooterAria: "Acțiuni asupra culturilor adăugate",
-        btnArrangeSelectedTitle:
-          "Reordonează harta fără a schimba cantitățile",
+        btnArrangeSelectedTitle: "Reordonează harta fără a schimba cantitățile",
         btnFillSelectedTitle:
           "Umple spațiile goale folosind doar plantele deja adăugate",
         btnClearTitle: "Elimină toate plantele din seră",
@@ -2149,7 +2148,7 @@
         noviceGuideStep1:
           "Insigna de sus arată traseul activ: atinge-o doar dacă vrei să alegi un alt nivel.",
         noviceGuideStep2:
-          "Folosește \"Verifică alegerile\" pentru a revizui dimensiunile, zona și luna deja alese.",
+          'Folosește "Verifică alegerile" pentru a revizui dimensiunile, zona și luna deja alese.',
         noviceGuideStep3:
           "Verifică planul de sus: poți deschide o parcelă pentru a vedea plantele și cantitățile propuse.",
         noviceGuideStep4:
@@ -2161,9 +2160,9 @@
         intermediateGuideStep1:
           "Insigna de sus arată traseul activ: atinge-o când vrei să treci la Începător sau Expert.",
         intermediateGuideStep2:
-          "Folosește \"Verifică alegerile\" pentru a revizui dimensiunile, zona și luna deja alese.",
+          'Folosește "Verifică alegerile" pentru a revizui dimensiunile, zona și luna deja alese.',
         intermediateGuideStep3:
-          "Deschide \"Culturile din seră\" pentru a adăuga, elimina sau schimba cantitățile din plan.",
+          'Deschide "Culturile din seră" pentru a adăuga, elimina sau schimba cantitățile din plan.',
         intermediateGuideStep4:
           "Verifică sera de sus: deschide o parcelă pentru plante, spațiu și detalii.",
         intermediateGuideStep5:
@@ -2173,9 +2172,9 @@
         expertGuideStep1:
           "Insigna de sus arată traseul activ: atinge-o când vrei să schimbi nivelul de autonomie.",
         expertGuideStep2:
-          "Folosește \"Verifică alegerile\" pentru a revizui dimensiunile, zona și luna deja alese.",
+          'Folosește "Verifică alegerile" pentru a revizui dimensiunile, zona și luna deja alese.',
         expertGuideStep3:
-          "Sera pornește liberă: deschide \"Culturile din seră\" pentru catalogul complet și pentru a adăuga plante.",
+          'Sera pornește liberă: deschide "Culturile din seră" pentru catalogul complet și pentru a adăuga plante.',
         expertGuideStep4:
           "Verifică sera de sus și deschide o parcelă pentru a modifica cantitățile, spațiul și detaliile.",
         expertGuideStep5:
@@ -2190,11 +2189,13 @@
         noviceRestart: "Începe din nou",
         expertSeasonal: "Generează planul de sezon",
         arrangeSelected: "Reordonează parcelele",
-        arrangeSelectedHint: "Aranjează dispunerea, cantitățile rămân aceleași.",
+        arrangeSelectedHint:
+          "Aranjează dispunerea, cantitățile rămân aceleași.",
         arrangeSelectedTitle:
           "Reordonează harta fără să schimbe cantitățile alese",
         fillSelected: "Umple spațiile libere",
-        fillSelectedHint: "Adaugă alte plante deja alese ca să nu rămână spații libere.",
+        fillSelectedHint:
+          "Adaugă alte plante deja alese ca să nu rămână spații libere.",
         cropActionsTitle: "Acțiuni pentru culturile adăugate",
         cropActionsHint:
           "Mai întâi reglează cantitățile, apoi alege dacă le păstrezi sau umpli spațiile libere.",
@@ -2478,7 +2479,8 @@
       "cart.aria_open": "Apri carrello",
       "dash.tracking_label": "📦 Tracking:",
       "dash.loading_generic": "Caricamento...",
-      "admin.checking_connection": "Verifica dello stato della connessione in corso...",
+      "admin.checking_connection":
+        "Verifica dello stato della connessione in corso...",
       "admin.loading_stats": "Caricamento statistiche in corso...",
 
       // Auth Section

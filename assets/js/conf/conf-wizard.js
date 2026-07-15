@@ -64,7 +64,10 @@
 
       // Nei percorsi guidati su mobile le colture precedono la planimetria:
       // il secondo passo apre e mette a fuoco proprio questa card.
-      if (isGuidedResponsive && typeof openCustomizePanelAndFocus === "function") {
+      if (
+        isGuidedResponsive &&
+        typeof openCustomizePanelAndFocus === "function"
+      ) {
         openCustomizePanelAndFocus();
         return;
       }

@@ -515,26 +515,18 @@
     border-color: var(--dark-border);
   }
 
-  html[data-theme="dark"]
-    body
-    :where(
-      .panel--plant-detail .detail-tab
-    ) {
+  html[data-theme="dark"] body :where(.panel--plant-detail .detail-tab) {
     background: #263a30;
     color: var(--dark-muted);
     border-color: var(--dark-border);
   }
 
-  html[data-theme="dark"]
-    body
-    :where(.panel--plant-detail .detail-tab:hover) {
+  html[data-theme="dark"] body :where(.panel--plant-detail .detail-tab:hover) {
     background: #30483b;
     color: var(--dark-text);
   }
 
-  html[data-theme="dark"]
-    body
-    :where(.panel--plant-detail .detail-tab.active) {
+  html[data-theme="dark"] body :where(.panel--plant-detail .detail-tab.active) {
     color: #fff;
   }
 

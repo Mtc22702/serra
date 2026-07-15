@@ -307,7 +307,8 @@ function loadPrefs() {
         localStorage.getItem("serra.config.v1") || "null"
       );
       if (shared?.zona) state.zona = shared.zona;
-      if (shared?.riscaldata !== undefined) state.riscaldata = shared.riscaldata;
+      if (shared?.riscaldata !== undefined)
+        state.riscaldata = shared.riscaldata;
       // Il catalogo mostra sempre tutte le piante di default, indipendentemente
       // dal profilo scelto nel configuratore: il filtro "Facili per iniziare"
       // resta disattivato finché l'utente non lo attiva lui stesso.
@@ -1225,7 +1226,7 @@ if (catalogSearchLink) {
       "preconfig.sizes_label": "1. Dimensiuni interne",
       "preconfig.sizes_badge": "Esențial",
       "preconfig.sizes_note":
-          "Dimensiunile determină câte parcele și plante poți cultiva.",
+        "Dimensiunile determină câte parcele și plante poți cultiva.",
       "preconfig.width": "Lățime",
       "preconfig.length": "Lungime",
       "preconfig.path_label": "Cărare între parcele",
