@@ -1540,8 +1540,10 @@
         stageMonthKicker: "Semina in",
         stageTitle: "Vista dall'alto",
         stageSub: "Clicca un'aiuola per i dettagli di coltivazione.",
-        sceneAria: "Pianta della serra {width} per {length} metri, con {beds} aiuole.",
-        bedActionAria: "Aiuola di {plant}, {count} piante. Premi Invio o Spazio per aprire i dettagli.",
+        sceneAria:
+          "Pianta della serra {width} per {length} metri, con {beds} aiuole.",
+        bedActionAria:
+          "Aiuola di {plant}, {count} piante. Premi Invio o Spazio per aprire i dettagli.",
         wizardStep1Label: "Serra e clima",
         wizardStep1Hint: "Misure, zona, mese di semina",
         wizardStep2Label: "Le tue colture",
@@ -2112,8 +2114,10 @@
         stageMonthKicker: "Seamănă în",
         stageTitle: "Vedere de sus",
         stageSub: "Apasă pe o parcelă pentru detalii de cultivare.",
-        sceneAria: "Planul serei de {width} pe {length} metri, cu {beds} parcele.",
-        bedActionAria: "Parcela cu {plant}, {count} plante. Apasă Enter sau Spațiu pentru detalii.",
+        sceneAria:
+          "Planul serei de {width} pe {length} metri, cu {beds} parcele.",
+        bedActionAria:
+          "Parcela cu {plant}, {count} plante. Apasă Enter sau Spațiu pentru detalii.",
         wizardStep1Label: "Seră și climă",
         wizardStep1Hint: "Dimensiuni, zonă, luna de semănat",
         wizardStep2Label: "Culturile tale",

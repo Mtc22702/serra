@@ -227,7 +227,9 @@
       }
     });
     document.addEventListener("input", (event) => {
-      const control = event.target.closest('[data-account-action="filter-plants"]');
+      const control = event.target.closest(
+        '[data-account-action="filter-plants"]'
+      );
       if (control) window.filterAdminPlants();
     });
     document.addEventListener("change", (event) => {
@@ -239,7 +241,10 @@
         '[data-account-action="set-order-status"]'
       );
       if (orderStatus)
-        window.handleToggleOrderStatus(orderStatus.dataset.orderId, orderStatus.value);
+        window.handleToggleOrderStatus(
+          orderStatus.dataset.orderId,
+          orderStatus.value
+        );
     });
     document.addEventListener("submit", (event) => {
       const form = event.target.closest("[data-account-form]");

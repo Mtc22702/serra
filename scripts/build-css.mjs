@@ -37,30 +37,42 @@ async function inlineCss(file, outputFile) {
     /@import\s+url\((['"]?)([^'")]+)\1\)\s*;/g,
     async (_match, _quote, imported) => {
       const importedPath = imported.split("?")[0];
-      return inlineCss(path.resolve(path.dirname(file), importedPath), outputFile);
+      return inlineCss(
+        path.resolve(path.dirname(file), importedPath),
+        outputFile
+      );
     }
   );
 
-  return withImports.replace(/url\((['"]?)([^'")]+)\1\)/g, (_match, quote, rawUrl) => {
-    if (isExternalUrl(rawUrl)) return `url(${quote}${rawUrl}${quote})`;
-    const absoluteUrl = path.resolve(path.dirname(file), rawUrl);
-    const relativeUrl = path
-      .relative(path.dirname(outputFile), absoluteUrl)
-      .split(path.sep)
-      .join("/");
-    return `url(${quote}${relativeUrl}${quote})`;
-  });
+  return withImports.replace(
+    /url\((['"]?)([^'")]+)\1\)/g,
+    (_match, quote, rawUrl) => {
+      if (isExternalUrl(rawUrl)) return `url(${quote}${rawUrl}${quote})`;
+      const absoluteUrl = path.resolve(path.dirname(file), rawUrl);
+      const relativeUrl = path
+        .relative(path.dirname(outputFile), absoluteUrl)
+        .split(path.sep)
+        .join("/");
+      return `url(${quote}${relativeUrl}${quote})`;
+    }
+  );
 }
 
 async function replaceAsync(value, expression, callback) {
   const matches = [...value.matchAll(expression)];
-  const replacements = await Promise.all(matches.map((match) => callback(...match)));
+  const replacements = await Promise.all(
+    matches.map((match) => callback(...match))
+  );
   let offset = 0;
   return matches.reduce((result, match, index) => {
     const start = match.index + offset;
     const replacement = replacements[index];
     offset += replacement.length - match[0].length;
-    return result.slice(0, start) + replacement + result.slice(start + match[0].length);
+    return (
+      result.slice(0, start) +
+      replacement +
+      result.slice(start + match[0].length)
+    );
   }, value);
 }
 

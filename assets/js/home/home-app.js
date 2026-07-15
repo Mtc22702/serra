@@ -97,7 +97,11 @@ function bindHomeStaticActions() {
         loadMoreCatalogPlants();
         break;
       case "add-pair-to-cart":
-        addPairToCart(event, control.dataset.firstPlantId, control.dataset.secondPlantId);
+        addPairToCart(
+          event,
+          control.dataset.firstPlantId,
+          control.dataset.secondPlantId
+        );
         break;
     }
   });
@@ -113,7 +117,9 @@ function bindHomeStaticActions() {
   });
 
   document.addEventListener("input", (event) => {
-    const control = event.target.closest('[data-home-action="set-catalog-search"]');
+    const control = event.target.closest(
+      '[data-home-action="set-catalog-search"]'
+    );
     if (control) setCatalogSearch(control.value);
   });
 
@@ -125,7 +131,9 @@ function bindHomeStaticActions() {
   document.addEventListener(
     "error",
     (event) => {
-      const image = event.target.closest?.('[data-home-action="catalog-photo-fallback"]');
+      const image = event.target.closest?.(
+        '[data-home-action="catalog-photo-fallback"]'
+      );
       if (!image) return;
       image.parentElement.dataset.fallback = "1";
       image.style.display = "none";
@@ -1482,7 +1490,7 @@ if (catalogSearchLink) {
     overlay.addEventListener("transitionend", onEnd, { once: true });
   }
 
-function initHomeApp() {
+  function initHomeApp() {
     document
       .getElementById("catalogFilterToggle")
       ?.addEventListener("click", toggleCatalogFilters);

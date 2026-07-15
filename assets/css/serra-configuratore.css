@@ -10616,7 +10616,6 @@ html[data-theme="dark"]
   }
 }
 
-
 /* Moduli CSS del configuratore */
 /* Fondazioni e introduzione */
 @layer base {
@@ -12495,8 +12494,10 @@ html[data-theme="dark"]
   }
   .settings-visual-field--climate {
     display: grid;
-    grid-template-columns:
-      minmax(82px, 1fr) minmax(92px, 1.15fr) minmax(60px, 0.85fr);
+    grid-template-columns: minmax(82px, 1fr) minmax(92px, 1.15fr) minmax(
+        60px,
+        0.85fr
+      );
     gap: 6px;
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.5), rgba(249, 252, 247, 0.48)),
@@ -15541,42 +15542,42 @@ html[data-theme="dark"]
     line-height: 1;
     cursor: pointer;
   }
-.veg-search-clear:hover {
-  background: rgba(45, 106, 79, 0.14);
-  color: var(--green);
-}
+  .veg-search-clear:hover {
+    background: rgba(45, 106, 79, 0.14);
+    color: var(--green);
+  }
 
-/* Variante dark allineata alla ricerca principale della Home. */
-html[data-theme="dark"] .veg-search-box {
-  background: #dce8df;
-  border-color: rgba(139, 198, 154, 0.32);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-}
+  /* Variante dark allineata alla ricerca principale della Home. */
+  html[data-theme="dark"] .veg-search-box {
+    background: #dce8df;
+    border-color: rgba(139, 198, 154, 0.32);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  }
 
-html[data-theme="dark"] .veg-search-input {
-  background: transparent !important;
-  color: #0b2518 !important;
-  -webkit-text-fill-color: #0b2518;
-}
+  html[data-theme="dark"] .veg-search-input {
+    background: transparent !important;
+    color: #0b2518 !important;
+    -webkit-text-fill-color: #0b2518;
+  }
 
-html[data-theme="dark"] .veg-search-input::placeholder {
-  color: #617a6c;
-}
+  html[data-theme="dark"] .veg-search-input::placeholder {
+    color: #617a6c;
+  }
 
-html[data-theme="dark"] .veg-search-icon {
-  background: rgba(45, 106, 79, 0.06);
-  color: #466b54;
-}
+  html[data-theme="dark"] .veg-search-icon {
+    background: rgba(45, 106, 79, 0.06);
+    color: #466b54;
+  }
 
-html[data-theme="dark"] .veg-search-clear {
-  background: rgba(45, 106, 79, 0.15);
-  color: #0b2518;
-}
+  html[data-theme="dark"] .veg-search-clear {
+    background: rgba(45, 106, 79, 0.15);
+    color: #0b2518;
+  }
 
-html[data-theme="dark"] .veg-search-clear:hover {
-  background: #a03820;
-  color: #fff;
-}
+  html[data-theme="dark"] .veg-search-clear:hover {
+    background: #a03820;
+    color: #fff;
+  }
   .livello-novizio .veg-search-wrap {
     display: none;
   }
@@ -19709,7 +19710,6 @@ html[data-theme="dark"] .veg-search-clear:hover {
   }
 }
 
-
 /* Moduli CSS del tema globale */
 
 /* Fondazioni del tema */
@@ -22657,7 +22657,6 @@ html[data-theme="dark"] .veg-search-clear:hover {
     }
   }
 }
-
 
 /* Eccezioni visive temporanee. */
 @layer base, dark-theme, polish;

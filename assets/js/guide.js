@@ -182,25 +182,29 @@
   tabs.forEach((tab) =>
     tab.addEventListener("click", () => selectRoute(tab.dataset.guide, true))
   );
-  document.querySelector(".guide-tabs")?.addEventListener("keydown", (event) => {
-    const currentIndex = tabs.indexOf(document.activeElement);
-    if (currentIndex < 0) return;
+  document
+    .querySelector(".guide-tabs")
+    ?.addEventListener("keydown", (event) => {
+      const currentIndex = tabs.indexOf(document.activeElement);
+      if (currentIndex < 0) return;
 
-    const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
-    if (!keys.includes(event.key)) return;
-    event.preventDefault();
+      const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+      if (!keys.includes(event.key)) return;
+      event.preventDefault();
 
-    const nextIndex =
-      event.key === "Home"
-        ? 0
-        : event.key === "End"
-          ? tabs.length - 1
-          : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) %
-            tabs.length;
-    const nextTab = tabs[nextIndex];
-    selectRoute(nextTab.dataset.guide);
-    nextTab.focus();
-  });
+      const nextIndex =
+        event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? tabs.length - 1
+            : (currentIndex +
+                (event.key === "ArrowRight" ? 1 : -1) +
+                tabs.length) %
+              tabs.length;
+      const nextTab = tabs[nextIndex];
+      selectRoute(nextTab.dataset.guide);
+      nextTab.focus();
+    });
   document
     .getElementById("guideLangSelect")
     ?.addEventListener("change", (event) => applyLanguage(event.target.value));

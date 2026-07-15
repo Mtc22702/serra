@@ -4,7 +4,12 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectories = ["assets/js", "assets/css"];
-const sourceFiles = ["index.html", "configuratore.html", "account.html", "guida.html"];
+const sourceFiles = [
+  "index.html",
+  "configuratore.html",
+  "account.html",
+  "guida.html"
+];
 
 async function collectFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -32,9 +37,11 @@ const source = await Promise.all(
   sourceFiles.map(async (file) => readFile(path.resolve(root, file), "utf8"))
 );
 const referencedPhotos = new Set(
-  [...source.join("\n").matchAll(/assets\/img\/photo\/([\w-]+\.(?:webp|jpe?g|png))/gi)].map(
-    (match) => match[1]
-  )
+  [
+    ...source
+      .join("\n")
+      .matchAll(/assets\/img\/photo\/([\w-]+\.(?:webp|jpe?g|png))/gi)
+  ].map((match) => match[1])
 );
 const photoDirectory = path.join(root, "assets/img/photo");
 const photos = (await readdir(photoDirectory)).filter((file) =>

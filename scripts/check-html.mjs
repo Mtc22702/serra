@@ -30,13 +30,17 @@ const pageVersions = await Promise.all(
 );
 const uniqueVersions = [...new Set(pageVersions)];
 if (uniqueVersions.length !== 1) {
-  throw new Error(`Versioni applicazione non allineate: ${uniqueVersions.join(", ")}.`);
+  throw new Error(
+    `Versioni applicazione non allineate: ${uniqueVersions.join(", ")}.`
+  );
 }
 
 const serviceWorker = await readFile(path.join(root, "sw.js"), "utf8");
 const cacheVersion = serviceWorker.match(/CACHE_VERSION\s*=\s*"([^"]+)"/)?.[1];
 if (cacheVersion !== uniqueVersions[0]) {
-  throw new Error("Versione cache del service worker non allineata alle pagine.");
+  throw new Error(
+    "Versione cache del service worker non allineata alle pagine."
+  );
 }
 
 const home = await readFile(path.join(root, "index.html"), "utf8");
@@ -45,10 +49,15 @@ const account = await readFile(path.join(root, "account.html"), "utf8");
 
 const requiredLanguageBindings = [
   [home, 'data-home-action="set-language"', "home: selettore lingua"],
-  [config, 'data-conf-action="set-language"', "configuratore: selettore lingua"],
+  [
+    config,
+    'data-conf-action="set-language"',
+    "configuratore: selettore lingua"
+  ],
   [account, 'data-account-action="set-language"', "account: selettore lingua"]
 ];
 
 for (const [html, marker, label] of requiredLanguageBindings) {
-  if (!html.includes(marker)) throw new Error(`${label}: binding lingua mancante.`);
+  if (!html.includes(marker))
+    throw new Error(`${label}: binding lingua mancante.`);
 }

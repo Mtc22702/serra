@@ -238,7 +238,8 @@ main {
   border: 1px solid color-mix(in srgb, var(--guide-accent) 38%, transparent);
   border-radius: 12px;
   background: color-mix(in srgb, var(--guide-accent) 13%, #fff);
-  box-shadow: 0 4px 10px color-mix(in srgb, var(--guide-accent) 16%, transparent);
+  box-shadow: 0 4px 10px
+    color-mix(in srgb, var(--guide-accent) 16%, transparent);
   font-size: 1.2rem;
 }
 .guide-tab-body {
