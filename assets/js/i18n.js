@@ -641,8 +641,8 @@
         "catalog.show_all": "Mostra tutto il catalogo",
         "catalog.remove_filter": "Rimuovi filtro",
         "catalog.clear_search": "Cancella ricerca",
-        "catalog.hint_before": "Tocca una pianta per i dettagli · usa",
-        "catalog.hint_after": "per aggiungerla al carrello direttamente",
+        "catalog.hint_before": "Apri una scheda per i dettagli ·",
+        "catalog.hint_after": "aggiunge al carrello",
         "catalog.empty":
           "Nessun seme trovato con questi filtri. Prova a togliere un filtro o cambiare mese.",
         "catalog.search_all":
@@ -1070,8 +1070,8 @@
         "catalog.show_all": "Arată tot catalogul",
         "catalog.remove_filter": "Elimină filtrul",
         "catalog.clear_search": "Șterge căutarea",
-        "catalog.hint_before": "Atinge o plantă pentru detalii · folosește",
-        "catalog.hint_after": "pentru a o adăuga direct în coș",
+        "catalog.hint_before": "Deschide o fișă pentru detalii ·",
+        "catalog.hint_after": "o adaugă în coș",
         "catalog.empty":
           "Nu am găsit semințe cu aceste filtre. Scoate un filtru sau schimbă luna.",
         "catalog.search_all":

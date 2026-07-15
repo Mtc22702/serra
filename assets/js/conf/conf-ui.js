@@ -804,11 +804,11 @@ function setConfigDetailTab(tab, moveFocus = false) {
 }
 
 // Gestisce la navigazione da tastiera tra le tab dettaglio
-function handleConfigDetailTabKey(event) {
+function handleConfigDetailTabKey(event, control) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
   const current = CONFIG_DETAIL_TABS.indexOf(
-    event.currentTarget.dataset.detailTab
+    control.dataset.detailTab
   );
   let next = current;
   if (event.key === "ArrowRight")

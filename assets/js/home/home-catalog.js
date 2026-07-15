@@ -13,6 +13,9 @@ let catalog = {
   seasonOnly: false,
   easyOnly: false,
   easyOnlyTouched: false,
+  // Il riscaldamento parte sempre spento; viene ripristinato solo dopo una
+  // scelta esplicita dell'utente in questa pagina.
+  climatePreferenceTouched: false,
   sort: "season",
   layout: localStorage.getItem("serra.catalog.layout") || "grid",
   visibleCount: CATALOG_PAGE_SIZE,
@@ -634,17 +637,14 @@ function renderEditorialPlants() {
       pills.push({ kind: "easy", label: t("catalog.easy_only") });
     if (catalog.sort && catalog.sort !== "season")
       pills.push({ kind: "sort", label: t(`catalog.sort_${catalog.sort}`) });
-    const showFullCatalogAction = catalog.seasonOnly;
-    const showScopeState = !catalog.seasonOnly;
-    catalogStatus.hidden =
-      !pills.length && !showFullCatalogAction && !showScopeState;
+    // L'ambito è scelto esclusivamente dai tre pulsanti nel gruppo “Tipo”.
+    // Qui riepiloghiamo soltanto i filtri aggiuntivi, per non ripetere
+    // “Tutto il catalogo” in una seconda barra senza azione.
+    catalogStatus.hidden = !pills.length;
     if (!catalogStatus.hidden) {
       const remove = t("catalog.remove_filter");
       catalogStatus.innerHTML =
         `<span class="catalog-status-count">${plants.length} ${t("catalog.results")}</span>` +
-        (showScopeState
-          ? `<span class="catalog-filter-pill catalog-filter-pill--static">${t("catalog.filter_all_plants")}</span>`
-          : "") +
         `<span class="catalog-status-pills">` +
         pills
           .map(
@@ -652,13 +652,7 @@ function renderEditorialPlants() {
               `<button class="catalog-filter-pill" type="button" data-home-action="remove-catalog-filter" data-filter-kind="${p.kind}" aria-label="${remove}: ${p.label}"><span class="pill-text">${p.label}</span><span class="pill-x" aria-hidden="true">✕</span></button>`
           )
           .join("") +
-        `</span>` +
-        (showFullCatalogAction
-          ? `<button class="catalog-show-full" type="button" data-home-action="show-full-catalog">${t("catalog.show_all")}</button>`
-          : "") +
-        (pills.length
-          ? `<button class="catalog-clear-all" type="button" data-home-action="reset-catalog-filters">${t("catalog.reset_short")}</button>`
-          : "");
+        `</span>`;
     }
   }
   if (catalog.seasonOnly) {
@@ -730,7 +724,7 @@ function renderEditorialPlants() {
           const sunIcon = p.sole === "pieno" ? "☀️" : "🌤️";
           return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}">
           <span class="super-compact-thumb" aria-hidden="true">
-            <img src="${photoSrc(p.id)}" alt="" loading="lazy" data-home-action="catalog-photo-fallback" />
+            <img src="${photoSrc(p.id)}" alt="" loading="lazy" data-catalog-photo-fallback />
             <span class="super-compact-thumb-emoji">${emoji}</span>
           </span>
           <span class="super-compact-body">

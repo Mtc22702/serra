@@ -6,7 +6,10 @@ function bindHomeStaticActions() {
 
     switch (control.dataset.homeAction) {
       case "set-language":
-        setLang(control.dataset.lang);
+        // Il selettore desktop usa l'evento `change`: trattarlo anche al
+        // primo tap forza un render e chiude la tendina nativa su iPhone.
+        // I pulsanti IT/RO del menu mobile, invece, espongono `data-lang`.
+        if (control.tagName !== "SELECT") setLang(control.dataset.lang);
         break;
       case "open-cart":
         openCart();
@@ -125,14 +128,14 @@ function bindHomeStaticActions() {
 
   document.addEventListener("keydown", (event) => {
     const control = event.target.closest('[data-home-action="set-detail-tab"]');
-    if (control) handleDetailTabKey(event);
+    if (control) handleDetailTabKey(event, control);
   });
 
   document.addEventListener(
     "error",
     (event) => {
       const image = event.target.closest?.(
-        '[data-home-action="catalog-photo-fallback"]'
+        "[data-catalog-photo-fallback]"
       );
       if (!image) return;
       image.parentElement.dataset.fallback = "1";
@@ -151,6 +154,7 @@ function setZone(z) {
 // Alterna la serra riscaldata
 function toggleHeated() {
   state.riscaldata = !state.riscaldata;
+  catalog.climatePreferenceTouched = true;
   render();
 }
 // Imposta il mese attivo
@@ -409,6 +413,7 @@ function savePrefs() {
     JSON.stringify({
       zona: state.zona,
       riscaldata: state.riscaldata,
+      climatePreferenceTouched: catalog.climatePreferenceTouched,
       mese: state.mese,
       easyOnly: catalog.easyOnly,
       easyOnlyTouched: catalog.easyOnlyTouched
@@ -436,15 +441,20 @@ function loadPrefs() {
   try {
     const p = JSON.parse(localStorage.getItem("ois.prefs") || "{}");
     if (p.zona) state.zona = p.zona;
-    if (p.riscaldata !== undefined) state.riscaldata = p.riscaldata;
-    // Usa il clima della configurazione esistente.
+    // Le preferenze delle versioni precedenti non possono accendere il
+    // riscaldamento di default. Ripristiniamo il valore solo se l'utente lo
+    // ha scelto esplicitamente nel catalogo.
+    if (p.climatePreferenceTouched === true) {
+      state.riscaldata = Boolean(p.riscaldata);
+      catalog.climatePreferenceTouched = true;
+    }
+    // La configurazione condivisa non imposta più il filtro iniziale del
+    // catalogo: il comportamento predefinito resta sempre “spento”.
     try {
       const shared = JSON.parse(
         localStorage.getItem("serra.config.v1") || "null"
       );
       if (shared?.zona) state.zona = shared.zona;
-      if (shared?.riscaldata !== undefined)
-        state.riscaldata = shared.riscaldata;
       // Mantiene disattivato il filtro iniziale delle colture facili.
       if (p.easyOnlyTouched) {
         catalog.easyOnly = Boolean(p.easyOnly);
@@ -659,7 +669,9 @@ window.addEventListener(
   if (_initLang !== "it") {
     applyLang(_initLang);
   } else {
-    render();
+    // Applica prima le etichette statiche e poi lo stato dinamico. In caso
+    // contrario la traduzione iniziale riscriveva “Riscaldamento spento” dopo
+    // il rendering, anche quando le preferenze indicavano una serra riscaldata.
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       const val = t(key);
@@ -672,6 +684,7 @@ window.addEventListener(
         t(el.getAttribute("data-i18n-placeholder"))
       );
     });
+    render();
   }
   initCookieBanner();
   // Mostra il contenuto dopo la sincronizzazione della lingua.
@@ -1482,12 +1495,18 @@ if (catalogSearchLink) {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
     overlay.classList.remove("is-open");
+    // Su iOS il popup nativo di una select può interrompere una transizione:
+    // assicuriamo comunque la conclusione della chiusura del pannello.
+    let closed = false;
     const onEnd = () => {
+      if (closed) return;
+      closed = true;
       overlay.setAttribute("hidden", "");
       document.documentElement.classList.remove("preconfig-open");
       document.body.classList.remove("preconfig-open");
     };
     overlay.addEventListener("transitionend", onEnd, { once: true });
+    window.setTimeout(onEnd, 450);
   }
 
   function initHomeApp() {
@@ -1510,6 +1529,13 @@ if (catalogSearchLink) {
     document
       .getElementById("preconfigClose")
       ?.addEventListener("click", closePreconfigSheet);
+
+    // Il foglio non deve mai trasformare un tap su un controllo nativo in un
+    // tap sul backdrop: questo evita la chiusura immediata dei menu a tendina
+    // su Safari iOS.
+    document
+      .getElementById("preconfigSheet")
+      ?.addEventListener("click", (event) => event.stopPropagation());
 
     document
       .getElementById("pcZona")

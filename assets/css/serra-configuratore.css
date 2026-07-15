@@ -25932,3 +25932,15 @@ html[data-theme="dark"]
     border-top-color: #f0a087;
   }
 } /* fine @layer polish */
+
+/* Evita lo zoom automatico di Safari iOS sui campi piccoli, lasciando sempre
+   disponibile lo zoom volontario con pinch. */
+@media (max-width: 767px) {
+  :where(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]), textarea, select) {
+    font-size: 16px;
+  }
+
+  :where(button, [role="button"], .step-btn, .preconfig-step-btn, .count-ctl button, .pdp-count button, .veg-qty-ctl button, .guided-count button) {
+    touch-action: manipulation;
+  }
+}

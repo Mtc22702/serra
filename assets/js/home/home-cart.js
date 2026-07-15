@@ -339,11 +339,11 @@ function setDetailTab(tab, moveFocus = false) {
 }
 
 // Gestisce la tastiera nelle tab dettaglio
-function handleDetailTabKey(event) {
+function handleDetailTabKey(event, control) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
   const current = DETAIL_TAB_ORDER.indexOf(
-    event.currentTarget.dataset.detailTab
+    control.dataset.detailTab
   );
   let next = current;
   if (event.key === "ArrowRight")
@@ -1590,9 +1590,11 @@ function closeDetail(e) {
   unlockDetailPageScroll();
   currentDetail = null;
 }
-document
-  .getElementById("detailPanel")
-  .addEventListener("click", (e) => e.stopPropagation());
+// Le azioni della scheda sono gestite con delega sul documento. Non fermare
+// qui il click: su iOS (e su tutti i browser) impedirebbe ai pulsanti della
+// scheda, incluso “aggiungi al carrello”, di raggiungere il gestore comune.
+// La chiusura resta protetta da closeDetail(), che chiude solo quando il tap
+// avviene sullo sfondo dell'overlay.
 document.getElementById("detailOverlay")?.addEventListener(
   "touchmove",
   (e) => {

@@ -173,6 +173,11 @@
       if (!control) return;
 
       switch (control.dataset.accountAction) {
+        case "set-language":
+          // I pulsanti IT/RO sono usati nel menu mobile; il select desktop
+          // resta gestito dall'evento `change` qui sotto.
+          if (control.tagName !== "SELECT") window.setLang(control.dataset.lang);
+          break;
         case "open-cart":
           window.openCart();
           break;

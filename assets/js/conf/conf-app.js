@@ -6,7 +6,9 @@ function bindConfigStaticActions() {
 
     switch (control.dataset.confAction) {
       case "set-language":
-        confSetLang(control.dataset.lang);
+        // Il menu nativo dell'header deve cambiare solo a selezione conclusa:
+        // un render al primo tap chiuderebbe la tendina su Safari iOS.
+        if (control.tagName !== "SELECT") confSetLang(control.dataset.lang);
         break;
       case "open-cart":
         openConfCart();
@@ -86,7 +88,7 @@ function bindConfigStaticActions() {
   });
   document.addEventListener("keydown", (event) => {
     const control = event.target.closest('[data-conf-action="set-detail-tab"]');
-    if (control) handleConfigDetailTabKey(event);
+    if (control) handleConfigDetailTabKey(event, control);
   });
 }
 

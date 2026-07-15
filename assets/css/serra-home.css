@@ -7248,9 +7248,9 @@
   }
   .catalog-hint--pro {
     margin-top: -0.25rem;
-    background: rgba(255, 255, 255, 0.72);
-    border-color: rgba(45, 106, 79, 0.13);
-    box-shadow: 0 8px 24px rgba(27, 67, 50, 0.06);
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(45, 106, 79, 0.1);
+    box-shadow: none;
   }
   .catalog-pro-section .plant-catalog-top {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -8582,6 +8582,9 @@
     align-items: center;
     gap: 0.5rem;
     flex: 1;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 600;
   }
   .catalog-hint-controls {
     display: flex;
@@ -9675,6 +9678,7 @@ html[data-theme="dark"]
     max-height: min(84dvh, 720px);
     overflow: hidden;
     overscroll-behavior: contain;
+    touch-action: manipulation;
   }
   .preconfig-overlay.is-open .preconfig-sheet {
     transform: scale(1) translateY(0);
@@ -9825,6 +9829,7 @@ html[data-theme="dark"]
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     padding: 6px 14px 2px;
     display: flex;
     flex-direction: column;
@@ -16840,3 +16845,18 @@ html[data-theme="dark"]
     border-top-color: #f0a087;
   }
 } /* fine @layer polish */
+
+/* Safari iOS ingrandisce automaticamente i controlli testuali più piccoli di
+   16px. Manteniamo quindi una dimensione leggibile sui telefoni, senza
+   disabilitare il normale pinch-to-zoom della pagina. */
+@media (max-width: 767px) {
+  :where(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]), textarea, select) {
+    font-size: 16px;
+  }
+
+  /* Un doppio tap sui controlli di quantità deve restare una sequenza di tap,
+     non attivare lo zoom della pagina. */
+  :where(button, [role="button"], .step-btn, .preconfig-step-btn, .count-ctl button, .pdp-count button, .veg-qty-ctl button, .guided-count button) {
+    touch-action: manipulation;
+  }
+}
