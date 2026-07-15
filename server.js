@@ -5,12 +5,12 @@ const path = require("path");
 const PORT = 3000;
 const DB_DIR = path.join(__dirname, "db");
 
-// Assicura che la directory db esista
+// Crea la directory dei dati locali quando non è ancora presente.
 if (!fs.existsSync(DB_DIR)) {
   fs.mkdirSync(DB_DIR);
 }
 
-// Funzione di utilità per leggere file JSON
+// Legge un file JSON e restituisce un valore predefinito in caso di assenza o errore.
 function readJson(filename, defaultValue = []) {
   const filepath = path.join(DB_DIR, filename);
   if (!fs.existsSync(filepath)) {
@@ -25,19 +25,19 @@ function readJson(filename, defaultValue = []) {
   }
 }
 
-// Funzione di utilità per scrivere file JSON
+// Serializza e salva i dati JSON usati dalle API locali.
 function writeJson(filename, data) {
   const filepath = path.join(DB_DIR, filename);
   fs.writeFileSync(filepath, JSON.stringify(data, null, 2), "utf8");
 }
 
 const server = http.createServer((req, res) => {
-  // Configurazione CORS per consentire connessioni da PC e iPhone
+  // Imposta le intestazioni CORS per consentire richieste da dispositivi della rete locale.
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Gestione preflight request per CORS
+  // Risponde alle richieste preliminari CORS senza passare alle API applicative.
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
@@ -58,7 +58,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Gestione API Plants
+  // Espone le operazioni API per lettura e scrittura del catalogo piante.
   if (pathname === "/api/plants") {
     if (req.method === "GET") {
       const data = readJson("plants.json");
@@ -84,7 +84,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Gestione API Users
+  // Espone le operazioni API per lettura e scrittura degli utenti locali.
   if (pathname === "/api/users") {
     if (req.method === "GET") {
       const data = readJson("users.json");
@@ -110,7 +110,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Gestione API Orders
+  // Espone le operazioni API per lettura e scrittura degli ordini locali.
   if (pathname === "/api/orders") {
     if (req.method === "GET") {
       const data = readJson("orders.json");
@@ -136,12 +136,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Route non trovata
+  // Restituisce un errore JSON per gli endpoint non gestiti dal server.
   res.writeHead(404, { "Content-Type": "text/plain" });
   res.end("Not Found");
 });
 
-// Ascolto su 0.0.0.0 per consentire l'accesso sia da PC locale che da iPhone nella stessa rete Wi-Fi
+// Espone il server su tutte le interfacce per consentire test dai dispositivi della rete locale.
 server.listen(PORT, "0.0.0.0", () => {
   console.log("--------------------------------------------------");
   console.log(` Serra DB Server in esecuzione su:`);

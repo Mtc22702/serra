@@ -1061,8 +1061,7 @@
     flex-shrink: 0;
     overflow: hidden;
   }
-  /* Foto reale della pianta: quadrata, incollata al nome (stesso stile
-     usato per le foto nel pannello carrello) */
+  /* Foto quadrata della pianta nel riepilogo della lista di acquisto. */
   .shop-photo {
     width: 100%;
     height: 100%;
@@ -1145,8 +1144,7 @@
   .shop-total b {
     color: var(--verde-scuro);
   }
-  /* Tinta leggera, non un blocco pieno: deve distinguersi dal totale semi e
-     materiali ma senza competere visivamente con il pulsante verde sotto. */
+  /* Evidenziazione del riepilogo. */
   .order-grand-total {
     display: flex;
     align-items: center;

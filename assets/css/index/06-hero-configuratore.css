@@ -24,7 +24,7 @@
     overflow: hidden;
     animation: heroCfgIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes heroCfgIn {
     from {
       opacity: 0;
@@ -346,7 +346,7 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .hero-cfg-inner {
       grid-template-columns: 1fr;
@@ -368,7 +368,7 @@
       max-width: 300px;
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 520px) {
     .hero-cfg-inner {
       padding: 1.5rem 1.2rem;
@@ -407,7 +407,7 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     animation: cfgLevelsIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes cfgLevelsIn {
     from {
       opacity: 0;
@@ -512,7 +512,7 @@
     width: 100%;
     margin-top: 0;
   }
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .hero-cfg-actions {
       align-items: center;
@@ -561,7 +561,7 @@
     line-height: 1.2;
     white-space: nowrap;
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .conf-actions {
       align-items: stretch;
@@ -575,7 +575,7 @@
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .flow-section-head {
       align-items: flex-start;
@@ -596,7 +596,7 @@
       min-width: 0;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 620px) {
     .abbinamenti-section,
     .kit-section,
@@ -630,7 +630,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 860px) {
     .contatti-grid {
       grid-template-columns: 1fr;

@@ -1,4 +1,4 @@
-// Prezzi e calcoli
+// Definisce prezzi unitari e funzioni per calcolare i materiali dell'ordine.
 const MATERIAL_PRICES = {
   soilBagLiters: 50,
   soilBagPrice: 6.5,
@@ -8,11 +8,7 @@ const MATERIAL_PRICES = {
 };
 
 const shoppingQtyOverride = {};
-// I semi sono già gestiti dalla lista/carrello principale: qui restano solo i
-// materiali extra facoltativi (terriccio, concime, sostegni, etichette).
-// Selezione utente: quali materiali extra aggiungere all'ordine. Facoltativi
-// di default (nessuno pre-selezionato) e persistiti per non perderli tra un
-// ricaricamento e l'altro.
+// Memorizza selezione e quantità dei materiali extra opzionali dell'ordine.
 const MATERIALS_SELECTION_KEY = "ois.cartMaterials";
 const shoppingChecked = {};
 try {
@@ -51,8 +47,7 @@ function euro(v) {
   }).format(v);
 }
 
-// Calcolo materiali extra (facoltativi, non comprende i semi: quelli sono
-// nella lista/carrello principale sopra questa sezione)
+// Calcola quantità, costo e unità dei materiali extra necessari alla serra.
 function computeMaterialLines() {
   const lines = [];
   if (!state.beds.length) return lines;
@@ -116,9 +111,7 @@ function computeMaterialLines() {
   return lines;
 }
 
-// Calcola le righe materiali con quantità e totali.
-// Facoltativi di default: solo i materiali selezionati (checked = true)
-// contano nel totale e finiscono nell'ordine.
+// Costruisce le righe selezionate con quantità, prezzi unitari e subtotali.
 function materialsWithTotals() {
   const lines = computeMaterialLines().map((line) => {
     const qty =
@@ -133,8 +126,7 @@ function materialsWithTotals() {
   return { lines, total };
 }
 
-// Materiali extra selezionati dall'utente, pronti per finire nell'ordine
-// (usati sia dal pannello carrello che dalla creazione dell'ordine finale)
+// Restituisce i materiali extra selezionati nel formato usato per l'ordine.
 function selectedMaterialItems() {
   const { lines } = materialsWithTotals();
   return lines
@@ -204,9 +196,7 @@ function updateOrderGrandTotal() {
     <b>${euro(grand)}</b>`;
 }
 
-// Rendering lista spesa. La tendina "materiali extra" resta la stessa
-// istanza tra un render e l'altro, così non si richiude da sola mentre
-// l'utente ci sta lavorando dentro (spunta/quantità).
+// Aggiorna la lista della spesa senza modificare lo stato della tendina materiali.
 function renderMaterials() {
   const el = document.getElementById("materials");
   if (!el) return;
@@ -233,9 +223,7 @@ function renderMaterials() {
       </details>`;
     details = el.querySelector(".materials-accordion");
   }
-  // Chiusa di default: si apre solo se l'utente clicca. Non la tocchiamo mai
-  // qui, così un re-render (cambio quantità, spunta, ecc.) non la richiude
-  // né la riapre da sola.
+  // Mantiene lo stato di apertura della sezione.
 
   const badge = details.querySelector(".materials-summary-badge");
   if (badge) {
@@ -305,8 +293,7 @@ function renderMaterials() {
   updateOrderGrandTotal();
 }
 
-// Genera l'HTML della lista materiali per la stampa (solo quelli scelti,
-// visto che sono facoltativi)
+// HTML dei materiali selezionati per la stampa.
 function materialsPrintHtml() {
   if (!state.beds.length) return "";
   const { lines, total } = materialsWithTotals();

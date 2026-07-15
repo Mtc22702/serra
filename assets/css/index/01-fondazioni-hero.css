@@ -9,11 +9,7 @@
     padding: 0;
   }
   :root {
-    /* Palette unificata di "Orto in Serra": stessi valori usati anche dal
-       configuratore (assets/css/configuratore/01-fondazioni-intro.css), che
-       li richiama tramite alias in italiano (--verde, --terra, --oro...).
-       Questo file è il primo caricato su tutte e tre le pagine (home,
-       configuratore, area personale), quindi resta la fonte unica. */
+    /* Variabili cromatiche condivise. */
     --green: #2f6b3a;
     --green-dk: #1f3a26;
     --green-lt: #5b9c4a;
@@ -31,7 +27,7 @@
     --r: 16px;
     --nav-h: 76px;
 
-    /* Scala condivisa di raggi e ombre per i nuovi componenti unificati */
+    /* Raggi e ombre condivisi. */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -332,7 +328,7 @@
     flex-shrink: 0;
     animation: kickerPulse 2.4s ease-in-out infinite;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes kickerPulse {
     0%,
     100% {
@@ -1592,7 +1588,7 @@
     font-size: 0.8rem;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 680px) {
     .percorso-board--two {
       grid-template-columns: 1fr;
@@ -1652,7 +1648,7 @@
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (min-width: 601px) and (max-width: 900px) {
     .hero-immersive {
       justify-content: center;

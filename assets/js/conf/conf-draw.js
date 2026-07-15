@@ -94,8 +94,7 @@ function escapeSvg(value) {
     .replaceAll("'", "&#39;");
 }
 
-// Versione leggera per serre dense. Ogni famiglia mantiene una silhouette
-// botanica riconoscibile e resta contenuta entro il raggio assegnato al posto.
+// Disegna un glifo semplificato per mantenere leggibili le aiuole molto dense.
 function compactGlyph(plant, r, rng) {
   const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
   const shadow = `<ellipse cy="${r * 0.16}" rx="${r * 0.76}" ry="${r * 0.48}" fill="${shade}"/>`;
@@ -152,7 +151,8 @@ function compactGlyph(plant, r, rng) {
     case "foglia": {
       for (let i = 0; i < 6; i++)
         s += lobed(r * 0.72, r * 0.48, i % 2 ? c.l1 : c.l2, i * 60);
-      const head = c.head || (plant.id.includes("broccolo") ? "#86ad5e" : "#bed6a0");
+      const head =
+        c.head || (plant.id.includes("broccolo") ? "#86ad5e" : "#bed6a0");
       s += `<circle r="${r * 0.31}" fill="${head}"/>`;
       if (plant.id.includes("broccolo") || plant.id === "cavolfiore") {
         for (let i = 0; i < 6; i++) {
@@ -185,7 +185,12 @@ function compactGlyph(plant, r, rng) {
       break;
     }
     case "frutto": {
-      const pepperFamily = ["peperone", "peperoncino", "friggitello", "melanzana"].includes(plant.id);
+      const pepperFamily = [
+        "peperone",
+        "peperoncino",
+        "friggitello",
+        "melanzana"
+      ].includes(plant.id);
       for (let i = 0; i < 5; i++) {
         const angle = i * 72 + rng() * 9;
         s += pepperFamily
@@ -214,22 +219,25 @@ function compactGlyph(plant, r, rng) {
     case "rosetta":
     default: {
       for (let i = 0; i < 8; i++)
-        s += leaf(r * (i % 2 ? 0.58 : 0.7), r * 0.3, i % 2 ? c.l1 : c.l2, i * 45);
+        s += leaf(
+          r * (i % 2 ? 0.58 : 0.7),
+          r * 0.3,
+          i % 2 ? c.l1 : c.l2,
+          i * 45
+        );
       s += `<circle r="${r * 0.12}" fill="${c.fr || c.l1}"/>`;
     }
   }
   return s;
 }
 
-// Fallback nativo, mostrato soltanto se un asset SVG esterno non si carica.
+// Mostra il glifo nativo quando la risorsa SVG esterna non è disponibile.
 function assetFallbackGlyph(plant, r) {
   const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
   return `<g data-asset-fallback hidden pointer-events="none"><ellipse cy="${r * 0.16}" rx="${r * 0.72}" ry="${r * 0.42}" fill="${shade}"/><path d="${leafPath(r * 0.9, r * 0.34)}" fill="${c.l1}" transform="rotate(-42)"/><path d="${leafPath(r * 0.9, r * 0.34)}" fill="${c.l2}" transform="rotate(42)"/><circle r="${r * 0.18}" fill="${c.fr || c.l1}"/></g>`;
 }
 
-// Segni specifici della specie, applicati solo al glifo completo. Sono tutti
-// disegnati dentro 0,76×r: migliorano il riconoscimento senza toccare layout,
-// spaziatura o numero di piante previsto dall'aiuola.
+// Aggiunge dettagli visivi della specie senza alterare dimensioni e spaziature.
 function speciesAccent(plant, r, rng) {
   const c = plant.col || { l1: "#4f8f3a", l2: "#3d7a2c" };
   const id = plant.id;
@@ -277,7 +285,16 @@ function speciesAccent(plant, r, rng) {
     return s;
   }
 
-  if (["cipolla", "cipolla_rossa", "cipollotto", "porro", "aglio", "scalogno"].includes(id)) {
+  if (
+    [
+      "cipolla",
+      "cipolla_rossa",
+      "cipollotto",
+      "porro",
+      "aglio",
+      "scalogno"
+    ].includes(id)
+  ) {
     const blades = id === "porro" ? 6 : 5;
     for (let i = 0; i < blades; i++) {
       const spread = (i - (blades - 1) / 2) * r * 0.14;
@@ -289,7 +306,17 @@ function speciesAccent(plant, r, rng) {
     return s;
   }
 
-  if (["basilico", "menta", "melissa", "salvia", "origano", "maggiorana", "stevia_dolce"].includes(id)) {
+  if (
+    [
+      "basilico",
+      "menta",
+      "melissa",
+      "salvia",
+      "origano",
+      "maggiorana",
+      "stevia_dolce"
+    ].includes(id)
+  ) {
     for (let i = 0; i < 4; i++) {
       const angle = i * 90 + rng() * 8;
       s += `<g transform="rotate(${angle})"><path d="${leafPath(r * 0.52, r * (id === "salvia" ? 0.32 : 0.24))}" fill="${i % 2 ? c.l1 : c.l2}"/><path d="M0 0 L0 ${-r * 0.43}" stroke="rgba(255,255,235,.22)" stroke-width="${r * 0.025}"/></g>`;
@@ -308,7 +335,17 @@ function speciesAccent(plant, r, rng) {
     return s;
   }
 
-  if (["fagiolo", "fagiolino", "fava", "soia_edamame", "cece", "lenticchia", "fagiolo_borlotto"].includes(id)) {
+  if (
+    [
+      "fagiolo",
+      "fagiolino",
+      "fava",
+      "soia_edamame",
+      "cece",
+      "lenticchia",
+      "fagiolo_borlotto"
+    ].includes(id)
+  ) {
     for (let i = 0; i < 3; i++) {
       const angle = i * 120;
       s += `<g transform="rotate(${angle})"><ellipse cx="${r * 0.13}" cy="${-r * 0.31}" rx="${r * 0.13}" ry="${r * 0.23}" fill="${c.l1}" transform="rotate(34 ${r * 0.13} ${-r * 0.31})"/><ellipse cx="${-r * 0.13}" cy="${-r * 0.31}" rx="${r * 0.13}" ry="${r * 0.23}" fill="${c.l2}" transform="rotate(-34 ${-r * 0.13} ${-r * 0.31})"/><path d="M0 0 L0 ${-r * 0.53}" stroke="${c.l2}" stroke-width="${r * 0.04}"/></g>`;
@@ -625,7 +662,7 @@ function rebalanceColumnsFresh() {
   commitColumnAssignment();
 }
 
-// Calcolo layout
+// Calcola la struttura geometrica di aiuole, camminamenti e spazi della serra.
 function computeLayout() {
   const Wi = state.larghezza * 100,
     Li = state.lunghezza * 100;
@@ -1032,7 +1069,10 @@ function buildScene() {
       const dimBX = bx + bed.w / 2 - dimBW / 2;
       const dimBY = by + bed.h - dimBH - 4;
       if (dimBW >= 32) {
-        const dimTextFit = naturalDimBW > dimBW ? ` textLength="${Math.max(20, dimBW - 8)}" lengthAdjust="spacingAndGlyphs"` : "";
+        const dimTextFit =
+          naturalDimBW > dimBW
+            ? ` textLength="${Math.max(20, dimBW - 8)}" lengthAdjust="spacingAndGlyphs"`
+            : "";
         g += `<rect x="${dimBX}" y="${dimBY}" width="${dimBW}" height="${dimBH}" rx="3" fill="${qBg}" pointer-events="none"/>`;
         g += `<text x="${bx + bed.w / 2}" y="${dimBY + dimFs2 + 1}" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${dimFs2}" font-weight="700" fill="rgba(255,255,255,.97)" pointer-events="none"${dimTextFit}>${dimText}</text>`;
       }
@@ -1043,7 +1083,6 @@ function buildScene() {
     g += `<rect x="${labelCenterX - labelW / 2}" y="${labelTop}" width="${labelW}" height="${labelH}" rx="${Math.min(5, labelH / 2)}" fill="${nightMode ? "rgba(20,43,32,.68)" : "rgba(249,251,245,.62)"}" stroke="${nightMode ? "rgba(176,221,190,.3)" : "rgba(31,80,49,.24)"}" stroke-width=".6"/>`;
     g += `<text x="${labelCenterX}" y="${labelTop + labelH / 2}" dominant-baseline="middle" text-anchor="middle" font-family="Outfit,sans-serif" font-size="${labelSize}" font-weight="750" fill="${nightMode ? "#e8f4eb" : "#254331"}"${labelTextFit}>${label}</text>`;
     g += `</g>`;
-
   });
   g += `</g>`;
 
@@ -1197,8 +1236,7 @@ function grassSpecks() {
   return s;
 }
 
-// Overlay analitico
-// Restituisce stile colore per l'overlay analitico
+// Stile colore dell'overlay analitico.
 function overlayStyleForPlant(p, kind) {
   if (kind === "sole") {
     return p.sole === "pieno"

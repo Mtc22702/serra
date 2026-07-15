@@ -1,4 +1,4 @@
-// Dizionario traduzioni
+// Contiene i dizionari condivisi per tradurre contenuti e attributi dell'interfaccia.
 (function (global) {
   const shared = {
     months: {
@@ -2472,10 +2472,7 @@
   shared.index = shared.ui;
   shared.configurator = shared.ui;
 
-  // Dizionario dell'Area Personale (account.html), spostato qui da account.js
-  // per avere un'unica fonte di dati i18n. L'attributo HTML (data-i18n-acc*)
-  // e il motore di lookup (tAcc in account.js) restano invariati: cambia solo
-  // dove vivono le stringhe tradotte.
+  // Dizionario dell'area personale.
   shared.account = {
     it: {
       "page.title": "Orto in Serra · Area Riservata",
@@ -2499,7 +2496,7 @@
         "Verifica dello stato della connessione in corso...",
       "admin.loading_stats": "Caricamento statistiche in corso...",
 
-      // Auth Section
+      // Testi della sezione di accesso e registrazione.
       "auth.title_login": "Accedi",
       "auth.title_register": "Registrati",
       "auth.email": "Indirizzo Email",
@@ -2516,7 +2513,7 @@
       "auth.test_customer": "Cliente:",
       "auth.test_admin": "Amministratore:",
 
-      // User Dashboard
+      // Testi del cruscotto riservato all'utente autenticato.
       "dash.title": "Dati di Spedizione",
       "dash.projects_title": "Le mie serre progettate",
       "dash.project_name": "Progetto",
@@ -2542,7 +2539,7 @@
       "dash.notif_loading": "Caricamento avvisi...",
       "dash.profile_saved": "Modifiche salvate con successo!",
 
-      // Admin Dashboard Tabs
+      // Etichette delle schede disponibili nel cruscotto amministrativo.
       "admin.tab_plants": "Gestione Catalogo Piante",
       "admin.tab_orders": "Ordini Ricevuti",
       "admin.tab_users": "Gestione Utenti",
@@ -2601,7 +2598,7 @@
       "admin.users_address": "Indirizzo Spedizione",
       "admin.users_role": "Ruolo",
 
-      // Edit Plant Modal
+      // Testi della modale per creare o modificare una pianta.
       "modal.plant_id": "ID Pianta (univoco, minuscolo)",
       "modal.plant_name": "Nome Visualizzato",
       "modal.category": "Categoria",
@@ -2622,7 +2619,7 @@
       "modal.edit_title": "Modifica Coltura",
       "modal.new_title": "Aggiungi nuova pianta",
 
-      // Footer
+      // Testi condivisi nel piè di pagina dell'area riservata.
       "footer.motto": '"Pianta con cura, raccogli con gioia."',
       "footer.tip_title": "Consiglio del mese",
       "footer.tip_text":
@@ -2635,7 +2632,7 @@
       "footer.cookie": "Cookie Policy",
       "footer.terms": "Termini di Servizio",
 
-      // Kit & other keys
+      // Chiavi aggiuntive per kit, ordini e messaggi di servizio.
       "nav.kit": "📦 Kit del mese",
       "nav.contatti": "✉️ Contatti",
 
@@ -2730,7 +2727,7 @@
       "admin.checking_connection": "Se verifică starea conexiunii...",
       "admin.loading_stats": "Se încarcă statisticile...",
 
-      // Auth Section
+      // Testi della sezione di accesso e registrazione.
       "auth.title_login": "Autentificare",
       "auth.title_register": "Înregistrare",
       "auth.email": "Adresă Email",
@@ -2747,7 +2744,7 @@
       "auth.test_customer": "Client:",
       "auth.test_admin": "Administrator:",
 
-      // User Dashboard
+      // Testi del cruscotto riservato all'utente autenticato.
       "dash.title": "Date de Livrare",
       "dash.projects_title": "Serele mele proiectate",
       "dash.project_name": "Proiect",
@@ -2773,7 +2770,7 @@
       "dash.notif_loading": "Se încarcă alertele...",
       "dash.profile_saved": "Modificările au fost salvate cu succes!",
 
-      // Admin Dashboard Tabs
+      // Etichette delle schede disponibili nel cruscotto amministrativo.
       "admin.tab_plants": "Gestionare Catalog de Plante",
       "admin.tab_orders": "Comenzi Primite",
       "admin.tab_users": "Gestionare Utilizatori",
@@ -2825,7 +2822,7 @@
       "admin.orders_title": "Istoricul Comenzilor Tuturor Clienților",
       "admin.orders_client": "Client",
 
-      // Admin Users Tab
+      // Testi della scheda amministrativa dedicata agli utenti.
       "admin.users_title": "Listă Clienți Înregistrați",
       "admin.users_name": "Nume",
       "admin.users_email": "Email",
@@ -2833,7 +2830,7 @@
       "admin.users_address": "Adresă Livrare",
       "admin.users_role": "Rol",
 
-      // Edit Plant Modal
+      // Testi della modale per creare o modificare una pianta.
       "modal.plant_id": "ID Plantă (unic, minuscule)",
       "modal.plant_name": "Nume Afișat",
       "modal.category": "Categorie",
@@ -2854,7 +2851,7 @@
       "modal.edit_title": "Modifică cultura",
       "modal.new_title": "Adaugă plantă nouă",
 
-      // Footer
+      // Testi condivisi nel piè di pagina dell'area riservata.
       "footer.motto": '"Plantează cu grijă, culege cu bucurie."',
       "footer.tip_title": "Sfatul lunii",
       "footer.tip_text": "Udă la bază, niciodată pe frunze: previi făinarea.",
@@ -2866,7 +2863,7 @@
       "footer.cookie": "Politica privind cookie-urile",
       "footer.terms": "Termeni de utilizare",
 
-      // Kit & other keys
+      // Chiavi aggiuntive per kit, ordini e messaggi di servizio.
       "nav.kit": "📦 Kitul lunii",
       "nav.contatti": "✉️ Contact",
 

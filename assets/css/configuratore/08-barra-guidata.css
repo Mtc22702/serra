@@ -1,6 +1,5 @@
 /* Barra guidata a passi (wizard) */
-/* Aggiunge un percorso a 3 passi sempre visibile, per rispondere alla
-   difficoltà segnalata dagli utenti nel capire "cosa premere adesso". */
+/* Barra del percorso guidato. */
 @layer base {
   .wizard-bar {
     grid-column: 1/-1;
@@ -28,8 +27,7 @@
   .wizard-bar[hidden] {
     display: none;
   }
-  /* Rail di avanzamento: si riempie in base allo step corrente (1/3, 2/3,
-     3/3), rinforzo visivo aggregato oltre all'evidenza sul singolo passo. */
+  /* Mostra la porzione completata del percorso guidato tra i tre passaggi. */
   .wizard-progress-rail {
     position: absolute;
     left: 14px;
@@ -88,9 +86,7 @@
     z-index: 2;
     transition: border-color 0.2s ease;
   }
-  /* Una volta visitato un passo, la freccetta verso il successivo si accende
-     di verde: dà un senso di percorso "illuminato" via via che si avanza,
-     puro rinforzo visivo senza alcun blocco/sblocco funzionale. */
+  /* Colora il collegamento al passo successivo dopo la visita del passaggio. */
   .wizard-step.is-visited:not(:last-child)::after {
     border-color: rgba(47, 107, 58, 0.55);
   }
@@ -144,10 +140,7 @@
     color: #fff;
     box-shadow: 0 0 0 3px rgba(47, 107, 58, 0.16);
   }
-  /* Passo completato (non quello corrente): il numero diventa una spunta.
-     Per "Serra e clima" basta averlo visitato (valori sempre validi di
-     default); per colture/lista semi serve davvero avere almeno una varietà
-     in serra, così la spunta riflette uno stato reale, non solo lo scroll. */
+  /* Sostituisce il numero con una spunta per i passaggi completati. */
   .wizard-step.is-done:not(.is-current) .wizard-step-num {
     background: rgba(47, 107, 58, 0.16);
     color: var(--verde);
@@ -158,8 +151,7 @@
     font-size: 13px;
     font-weight: 900;
   }
-  /* Contatore live (varietà scelte): appare solo quando c'è qualcosa da
-     mostrare, in alto a destra del passo. */
+  /* Contatore live delle varietà selezionate. */
   .wizard-step-badge {
     position: absolute;
     top: 6px;
@@ -189,7 +181,7 @@
     outline-offset: 2px;
   }
 
-  /* Rialza leggermente i pannelli laterali sticky per non finire sotto la barra */
+  /* Offset dei pannelli sticky. */
   @media (min-width: 1101px) {
     .col-left,
     .col-right {
@@ -197,17 +189,12 @@
     }
   }
 
-  /* Riusa l'animazione di messa a fuoco già esistente anche per la lista semi */
+  /* Animazione di messa a fuoco della lista semi. */
   .panel--cart.is-focus-pulse {
     animation: focusPulse 1.35s ease-out 1;
   }
 
-  /* Etichetta/pulsante "strumenti extra" sopra la toolbar della vista, per
-     separare visivamente le azioni facoltative dal percorso guidato
-     principale. Su desktop resta un'etichetta inerte (gli strumenti sono
-     sempre visibili); su tablet/smartphone diventa un vero pulsante che
-     apre e chiude la toolbar, per non affollare lo schermo prima ancora
-     di arrivare alla vista della serra. */
+  /* Gestisce il controllo che apre gli strumenti aggiuntivi della scena. */
   .stage-tools-kicker {
     display: flex;
     align-items: center;
@@ -273,10 +260,7 @@
     .view-toolbar:not(.is-open) {
       display: none;
     }
-    /* Da elenco di controlli sciolti a vero e proprio "cassetto" visivo:
-       bordo, sfondo e ombra marcata così l'area aperta si stacca subito
-       dallo sfondo della scena, invece di sembrare parte del contenuto
-       circostante. */
+    /* Evidenzia la barra degli strumenti quando è aperta su schermi piccoli. */
     .view-toolbar.is-open {
       margin-top: 4px;
       padding: 10px;
@@ -329,16 +313,13 @@
       bottom: 3px;
     }
 
-    /* Meno testo descrittivo ripetuto prima della vista della serra: la
-       barra guidata e i titoli bastano a spiegare cosa fare. */
+    /* Riduzione del testo descrittivo su mobile. */
     #guidedAppSub,
     .stage-subtitle {
       display: none;
     }
 
-    /* Riepilogo serra (zona/mese/misure) compresso su una riga sola, con
-       matita per aprire le impostazioni, invece del blocco a griglia alto
-       che rubava spazio prima di arrivare alla barra guidata. */
+    /* Riepilogo compatto delle impostazioni. */
     .guided-intro-head {
       gap: 6px;
     }
@@ -398,8 +379,7 @@
       color: var(--verde);
     }
 
-    /* Selettore livello: già chiuso di default, qui solo un po' più basso
-       visto che il testo di aiuto (hint) è già nascosto sotto i 640px. */
+    /* Riduce l'altezza del selettore livello nelle viste mobile e tablet. */
     .persona-pick-head {
       min-height: 46px;
       padding: 8px 10px;
@@ -407,10 +387,7 @@
   }
 }
 
-/* Tema scuro: la barra guidata e "strumenti extra" usano tinte chiare
-   pensate per sfondo chiaro, che sul tema scuro restavano com'erano
-   (pillola chiara che stona sullo sfondo scuro). Qui si riallineano ai
-   toni scuri già usati per pannelli e card. */
+/* Adatta colori e contrasti della barra guidata al tema scuro. */
 @layer dark-theme {
   html[data-theme="dark"] .wizard-bar {
     border-color: rgba(173, 211, 186, 0.22);
@@ -475,8 +452,7 @@
 }
 
 @layer base {
-  /* Rifinitura UX profili: mantiene intatto il comportamento dei tre livelli,
-     ma riduce l'altezza della scelta guidata su mobile/tablet. */
+  /* Compatta il selettore profilo per ridurre l'ingombro su mobile e tablet. */
   @media (max-width: 900px) {
     .persona-pick[open] {
       box-shadow:

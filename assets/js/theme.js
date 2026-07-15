@@ -11,7 +11,7 @@
     return root.dataset.theme === "dark" ? "dark" : "light";
   }
 
-  // Allinea controls
+  // Allinea icona, testo e attributi dei controlli tema allo stato corrente.
   function syncControls() {
     const dark = currentTheme() === "dark";
     const ro = (root.lang || "it").toLowerCase().startsWith("ro");
@@ -38,7 +38,7 @@
     if (themeMeta) themeMeta.content = dark ? "#0b1814" : "#2f6b3a";
   }
 
-  // Imposta theme
+  // Applica il tema scelto al documento e lo salva nelle preferenze locali.
   function setTheme(theme, persist) {
     root.dataset.theme = theme === "dark" ? "dark" : "light";
     if (persist) localStorage.setItem("serra-theme", root.dataset.theme);

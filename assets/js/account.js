@@ -1,4 +1,4 @@
-// Logica interattiva per l'Area Riservata (Cliente & Admin)
+// Gestisce autenticazione, cruscotti e azioni dell'area riservata per utenti e amministratori.
 (function () {
   let currentUser = null;
   let allUsers = [];
@@ -7,9 +7,7 @@
   let currentLang = "it";
   let lastDbActive = null;
 
-  // Dizionario spostato in assets/js/i18n.js (shared.account), caricato
-  // prima di questo file: qui restano solo il motore di lookup (tAcc) e gli
-  // attributi data-i18n-acc*, invariati.
+  // Dizionario dell'area personale condiviso.
   const ACCOUNT_I18N = window.SERRA_I18N?.account || { it: {}, ro: {} };
 
   function tAcc(key, vars = {}) {
@@ -311,7 +309,7 @@
     initAccount();
   }
 
-  // Mostra lo stato di connessione al server locale o al fallback di GitHub Pages
+  // Mostra se la pagina usa il server locale oppure i dati statici pubblicati.
   async function checkDatabaseStatus() {
     lastDbActive = await window.SerraAPI.isServerActive();
     renderDatabaseStatus(lastDbActive);
@@ -373,8 +371,7 @@
 
     const userNameTitleEl = document.getElementById("userNameTitle");
     userNameTitleEl.textContent = currentUser.nome;
-    // Il nome reale sostituisce il placeholder "Caricamento...": l'attributo
-    // va rimosso, altrimenti un cambio lingua successivo lo sovrascriverebbe.
+    // Rimuove il placeholder localizzato dal nome utente.
     userNameTitleEl.removeAttribute("data-i18n-acc");
     document.getElementById("userEmailSub").textContent = currentUser.email;
 
@@ -398,15 +395,13 @@
       }
     }
 
-    // Renderizza ordini utente
+    // Genera le righe dello storico ordini dell'utente autenticato.
     renderUserOrders();
     // Renderizza le serre salvate nel configuratore
     renderUserProjects();
   }
 
-  // Elenco delle serre salvate dal configuratore (localStorage condiviso
-  // "serra.projects.v1"): l'area personale prima mostrava solo lo storico
-  // ordini, senza alcun accenno ai progetti di disposizione già creati.
+  // Elenco dei progetti salvati nel configuratore.
   function renderUserProjects() {
     const listContainer = document.getElementById("userProjectsList");
     const emptyNote = document.getElementById("emptyProjectsNote");
@@ -457,10 +452,7 @@
     return window.escapeHtml(s);
   }
 
-  // Attiva il progetto scelto e apre il configuratore già su quella serra:
-  // stessa logica di switchToProject() del configuratore (imposta l'id
-  // attivo nello store progetti e copia la sua config in "serra.config.v1"),
-  // ripetuta qui perché account.html non carica gli script del configuratore.
+  // Apertura del progetto selezionato nel configuratore.
   window.openUserProject = function (id) {
     try {
       const store = JSON.parse(
@@ -568,7 +560,7 @@
 
     filtered.forEach((p) => {
       const tr = document.createElement("tr");
-      // Cerca il prezzo e i semi del pacchetto per quella pianta (fallback se non definito)
+      // Recupera prezzo e semi del pacchetto, usando un valore predefinito se mancano.
       const spacing = p.d || p.dr || 50;
       const catLabel = categoryLabel(p.arch || "foglia");
       const packPrice =
@@ -702,8 +694,7 @@
   function updateAdminStats() {
     const statsText = document.getElementById("adminStatsText");
     if (!statsText) return;
-    // I dati reali sostituiscono il placeholder "Caricamento...": l'attributo
-    // va rimosso, altrimenti un cambio lingua successivo lo sovrascriverebbe.
+    // Rimuove i placeholder localizzati dai dati caricati.
     statsText.removeAttribute("data-i18n-acc");
     const clientsCount = allUsers.filter((u) => u.role !== "admin").length;
     statsText.innerHTML = `
@@ -731,8 +722,7 @@
     allOrders.forEach((order) => {
       if (order.status === "Annullato") return;
       order.items.forEach((it) => {
-        // I materiali extra (terriccio, concime, ecc.) non sono semi: non
-        // hanno una categoria coltura, li escludiamo da questo grafico.
+        // Esclude i materiali extra dal grafico delle colture.
         if (it.type === "material") return;
         const plant = allPlants.find((p) => p.id === it.id);
         const cat = (plant ? plant.arch : null) || "foglia";
@@ -741,7 +731,7 @@
         if (categoryRevenues[cat] !== undefined) {
           categoryRevenues[cat] += subtotal;
         } else {
-          categoryRevenues.foglia += subtotal; // fallback
+          categoryRevenues.foglia += subtotal; // Categoria predefinita.
         }
       });
     });
@@ -774,13 +764,13 @@
       const y = 15 + i * 40;
       const barWidth = maxRev > 0 ? (d.value / maxRev) * 160 : 0;
       revSvg += `
-        <!-- Label -->
+        <!-- Etichetta della categoria -->
         <text x="10" y="${y + 13}" class="chart-label" font-weight="500">${d.label}</text>
-        <!-- Background Bar -->
+        <!-- Barra di sfondo del grafico -->
         <rect x="110" y="${y}" width="160" height="18" rx="4" fill="rgba(0,0,0,0.04)" />
-        <!-- Value Bar -->
+        <!-- Barra proporzionale al valore -->
         <rect x="110" y="${y}" width="${barWidth}" height="18" rx="4" fill="${d.color}" class="chart-bar-rect" />
-        <!-- Value Text -->
+        <!-- Valore numerico visualizzato -->
         <text x="${115 + barWidth}" y="${y + 13}" class="chart-value">€${d.value.toFixed(1)}</text>
       `;
     });
@@ -817,13 +807,13 @@
       const shortLabel =
         d.label.length > 12 ? d.label.substring(0, 11) + ".." : d.label;
       topSvg += `
-        <!-- Label -->
+        <!-- Etichetta della coltura -->
         <text x="10" y="${y + 12}" class="chart-label" font-weight="500">${shortLabel}</text>
-        <!-- Background Bar -->
+        <!-- Barra di sfondo del grafico -->
         <rect x="110" y="${y}" width="150" height="16" rx="4" fill="rgba(0,0,0,0.04)" />
-        <!-- Value Bar -->
+        <!-- Barra proporzionale al valore -->
         <rect x="110" y="${y}" width="${barWidth}" height="16" rx="4" fill="#2f6b3a" class="chart-bar-rect" />
-        <!-- Value Text -->
+        <!-- Valore numerico visualizzato -->
         <text x="${115 + barWidth}" y="${y + 12}" class="chart-value">${d.value} ${currentLang === "ro" ? "plic." : "bust."}</text>
       `;
     });
@@ -1040,7 +1030,7 @@
     }
   };
 
-  // Modifica stato ordine (Admin)
+  // Aggiorna lo stato di un ordine dalla sezione amministrativa.
   window.handleToggleOrderStatus = async function (orderId, nextStatus) {
     const index = allOrders.findIndex((o) => o.id === orderId);
     if (index !== -1) {
@@ -1271,15 +1261,9 @@
 
       const serverActive = await window.SerraAPI.isServerActive();
       if (serverActive) {
-        // Se il server è attivo, sovrascriviamo plants.json con l'array iniziale
-        // Per farlo, possiamo ricaricare dal file plants-data.js (che è ancora in memoria)
-        // Ma per sicurezza, cancelliamo plants.json o inviamo il catalogo iniziale originale di plants-data.js
+        // Ripristina il catalogo del server.
         const originalPlants = window.PLANTS; // this was loaded inside index/configuratore but overridden.
-        // Wait, window.PLANTS was overridden at start! So let's load a default list
-        // Se window.PLANTS è già stato modificato all'avvio, possiamo fare un reload pulito
-        // Per evitare problemi, basta dire all'utente che il localStorage è stato ripulito e ricaricare la pagina.
-        // Se c'era un file sul Mac, per pulirlo basta inviare una richiesta per ripristinare.
-        // Scriviamo un array vuoto così rileverà il default
+        // Salva un catalogo vuoto per riattivare il catalogo predefinito.
         await window.SerraAPI.savePlants([]);
       }
 
@@ -1404,7 +1388,7 @@
     return emojis[plantId] || "🌿";
   }
 
-  // Logica di fallback condivisa: vedi assets/js/shared/plant-photo.js
+  // Risoluzione condivisa della foto: vedi assets/js/shared/plant-photo.js.
   function getPhotoSrc(id) {
     const plantObj = allPlants.find((p) => p.id === id);
     return window.resolvePlantPhoto(plantObj, id);

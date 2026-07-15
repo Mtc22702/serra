@@ -189,7 +189,7 @@
     display: none;
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 1100px) {
     .mobile-go-to-scene {
       display: inline-flex;
@@ -230,8 +230,7 @@
     body.mode-expert .stage {
       order: 3;
     }
-    /* Nei percorsi guidati la scelta delle colture precede la planimetria:
-       su schermi stretti l'utente configura prima, poi controlla il risultato. */
+    /* Ordine dei contenuti guidati su mobile. */
     body.livello-novizio [data-mode-section="expert"],
     body.livello-intermedio [data-mode-section="expert"] {
       order: 2;
@@ -350,7 +349,7 @@
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (min-width: 641px) and (max-width: 1100px) {
     .scene {
       max-width: 560px;
@@ -369,7 +368,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .btn-month-tag {
       display: none;
@@ -803,9 +802,7 @@
       display: none;
     }
 
-    /* Nel riepilogo acquisti il comando finiva da solo sotto al titolo e,
-       senza etichetta su mobile, sembrava un elemento schiacciato a sinistra.
-       Lo rendiamo una riga di controllo leggibile e facile da toccare. */
+    /* Riga di controllo del riepilogo acquisti. */
     #panelYield .yield-title-inner {
       flex: 1;
     }
@@ -995,8 +992,7 @@
       margin-top: 10px;
     }
 
-    /* Nelle liste mobili il nome è l'informazione primaria: non va mai
-       nascosto per fare spazio a quantità, badge o azioni secondarie. */
+    /* Nome prioritario nelle liste mobili. */
     .bedchip .t,
     .shop li b,
     .mat-name {
@@ -1100,14 +1096,14 @@
       display: none;
     }
 
-    /* Sul mobile il mese si vede via stageAutoPlanRow, non nel pannello */
+    /* Mese mostrato nel riepilogo mobile. */
     .panel--settings .crops-month-selector,
     #autoPlanSectionLabel {
       display: none;
     }
   }
 
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes guided-pulse {
     0% {
       box-shadow: 0 0 0 0px rgba(47, 107, 58, 0.65);

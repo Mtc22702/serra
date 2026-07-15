@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="it" data-theme="light">
   <head>
+    <!-- Metadati, preferenze iniziali e risorse condivise della pagina guida -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2f6b3a" />
@@ -26,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/serra-guida.css?v=2026-07-15-maintenance" />
   </head>
   <body>
+    <!-- Intestazione con collegamento alla home, tema e selettore lingua -->
     <header class="guide-header">
       <a class="guide-brand" href="index.html" aria-label="Orto in Serra, home">
         <img src="assets/img/svg/logo.svg" alt="" />
@@ -58,6 +60,7 @@
     </header>
 
     <main>
+      <!-- Introduzione e selettore dei tre percorsi disponibili -->
       <section class="guide-hero" aria-labelledby="guideTitle">
         <p class="guide-kicker" data-guide-key="hero.kicker">GUIDA ALL'APP</p>
         <h1 id="guideTitle" data-guide-key="hero.title">
@@ -116,6 +119,7 @@
         </div>
       </section>
 
+      <!-- Percorso guidato per chi configura una serra per la prima volta -->
       <section
         class="guide-route is-active"
         id="guide-novizio"
@@ -189,6 +193,7 @@
         >
       </section>
 
+      <!-- Percorso intermedio con piano iniziale e possibilità di personalizzazione -->
       <section
         class="guide-route"
         id="guide-intermedio"
@@ -269,6 +274,7 @@
         >
       </section>
 
+      <!-- Percorso esperto con controllo completo su colture e disposizione -->
       <section
         class="guide-route"
         id="guide-esperto"
@@ -353,6 +359,7 @@
         >
       </section>
 
+      <!-- Nota che chiarisce la possibilità di cambiare livello nel configuratore -->
       <aside class="guide-help">
         <span aria-hidden="true">💡</span>
         <p data-guide-key="help">
@@ -361,6 +368,7 @@
         </p>
       </aside>
     </main>
+    <!-- Script per tema, contenuto interattivo della guida e supporto offline -->
     <script src="assets/js/theme.js?v=2026-07-15-guide-nav" defer></script>
     <script src="assets/js/guide.js?v=2026-07-15-guide-preconfig" defer></script>
     <script src="assets/js/boot-sw.js?v=2026-07-15-maintenance" defer></script>

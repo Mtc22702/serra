@@ -1,4 +1,4 @@
-// Costanti e dizionari
+// Raccoglie costanti, dizionari e dati statici necessari al configuratore.
 const WALL = 7;
 const MARGIN = 18;
 const PATH = 34;
@@ -24,11 +24,11 @@ const MONTHS = window.SERRA_I18N?.months || { it: MESI, ro: MESI };
 const I18N = window.SERRA_I18N?.configurator || { it: {}, ro: {} };
 const SITE_I18N = window.SERRA_I18N?.index || { it: {}, ro: {} };
 
-// Catalogo colture
+// Definisce le colture disponibili con caratteristiche agronomiche e commerciali.
 const PLANTS = window.PLANTS;
 const BYID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 
-// Livelli di difficoltà
+// Associa a ogni coltura un livello di difficoltà mostrato nei percorsi guidati.
 const DIFFICULTY = {
   lattuga: 1,
   rucola: 1,
@@ -269,7 +269,7 @@ const CAT_ORDER = [
   }
 ];
 
-// Emoji e visualizzazioni
+// Mappa colture e categorie alle rappresentazioni visive usate nell'interfaccia.
 const FRUIT_EMOJI = {
   pomodoro: "🍅",
   peperone: "🫑",
@@ -371,7 +371,7 @@ const FRUIT_EMOJI = {
 };
 const PLANT_RO = window.SERRA_I18N?.plants?.ro || {};
 
-// Descrizioni piante
+// Contiene descrizioni localizzate per la scheda informativa delle piante.
 const PLANT_DESC = {
   it: {
     pomodoro:
@@ -686,7 +686,7 @@ const PLANT_DESC = {
   }
 };
 
-// Guide alla semina
+// Contiene istruzioni localizzate per semina, trapianto e raccolta delle colture.
 const SOWING_GUIDE = {
   pomodoro: {
     method:
@@ -1308,14 +1308,12 @@ const SOWING_GUIDE = {
   }
 };
 
-// Restituisce il percorso della foto reale di una pianta (con fallback a un
-// nome file ipotizzato dall'id), da usare al posto delle emoji nelle liste.
-// Logica condivisa con home.js e account.js: vedi assets/js/shared/plant-photo.js
+// Restituisce la foto della pianta usando il percorso salvato o il nome derivato dall'ID.
 function plantPhotoSrc(plant, id) {
   return window.resolvePlantPhoto(plant, id);
 }
 
-// Preset pronti
+// Definisce i piani precompilati selezionabili per avviare rapidamente una serra.
 const PRESETS = {
   insalate: [
     ["lattuga", 12],

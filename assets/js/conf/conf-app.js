@@ -1,4 +1,4 @@
-// Inizializzazione mesi
+// Popola i selettori dei mesi con etichette localizzate e valore corrente.
 function bindConfigStaticActions() {
   document.addEventListener("click", (event) => {
     const control = event.target.closest("[data-conf-action]");
@@ -73,12 +73,15 @@ function bindConfigStaticActions() {
   document.addEventListener("change", (event) => {
     const control = event.target.closest("[data-conf-action]");
     if (!control) return;
-    if (control.dataset.confAction === "set-language") confSetLang(control.value);
+    if (control.dataset.confAction === "set-language")
+      confSetLang(control.value);
     if (control.dataset.confAction === "set-calendar-category")
       setCalendarCategory(control.value);
   });
   document.addEventListener("input", (event) => {
-    const control = event.target.closest('[data-conf-action="set-calendar-search"]');
+    const control = event.target.closest(
+      '[data-conf-action="set-calendar-search"]'
+    );
     if (control) setCalendarSearch(control.value);
   });
   document.addEventListener("keydown", (event) => {
@@ -106,7 +109,7 @@ function fillMonths() {
   if (pillLabel) pillLabel.textContent = months[state.mese - 1] || "";
 }
 
-// Event listeners
+// Registra gli eventi statici dell'interfaccia del configuratore.
 function initEvents() {
   const backToTopButton = document.getElementById("backToTop");
   backToTopButton?.addEventListener("click", () => {
@@ -237,7 +240,7 @@ function initEvents() {
       e.target.value = "";
     }
   });
-  // Applica path
+  // Applica il percorso selezionato aggiornando profilo, pannelli e contenuto.
   function applyPath(val) {
     const v = Math.max(30, Math.min(120, Math.round(val / 5) * 5));
     state.path = v;
@@ -262,10 +265,10 @@ function initEvents() {
   document
     .getElementById("btnPresetSeasonal")
     ?.addEventListener("click", () => {
-    recordHistory();
-    saveConfig(true);
-    setMode("fit", false);
-    autoFill({ compactPaths: false });
+      recordHistory();
+      saveConfig(true);
+      setMode("fit", false);
+      autoFill({ compactPaths: false });
     });
   document
     .getElementById("btnArrangeSelected")
@@ -508,7 +511,7 @@ function initEvents() {
   });
 }
 
-// Inizializzazione stato
+// Carica e normalizza lo stato salvato prima del primo rendering.
 function applyConfigToState(saved) {
   if (!saved) return;
   if (saved.lang === "it" || saved.lang === "ro") state.lang = saved.lang;
@@ -536,7 +539,7 @@ function applyConfigToState(saved) {
   if (typeof resetHistory === "function") resetHistory();
 }
 
-// Avvio configuratore
+// Avvia catalogo, interfaccia e comportamenti necessari al configuratore.
 function initConfig() {
   if (typeof ensureProjectsStore === "function") ensureProjectsStore();
   const saved = readSavedConfig();
@@ -558,7 +561,7 @@ function initConfig() {
   );
 }
 
-// Dati semi e carrello
+// Gestisce i dati condivisi tra lista dei semi e carrello dell'ordine.
 const PACK_DATA = {
   pomodoro: { seeds: 20, price: 3.5 },
   peperone: { seeds: 15, price: 3.2 },
@@ -673,7 +676,7 @@ function formatMoney(value) {
 
 let confCart = [];
 
-// Gestione carrello
+// Gestisce righe, quantità e apertura del carrello del configuratore.
 function loadConfCart() {
   try {
     const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
@@ -695,8 +698,7 @@ function saveConfCart() {
 
 // Aggiorna la visualizzazione del carrello
 function updateConfCartUI() {
-  // Materiali extra facoltativi selezionati nella lista sopra (terriccio,
-  // concime, sostegni, etichette): sono parte dell'ordine solo se scelti qui.
+  // Materiali extra selezionati per l'ordine.
   const materials =
     typeof selectedMaterialItems === "function" ? selectedMaterialItems() : [];
 
@@ -938,8 +940,7 @@ function alertConfCheckout() {
   });
 }
 
-// Sincronizzazione lingua
-// Imposta la lingua e aggiorna il selettore
+// Sincronizzazione della lingua e del selettore.
 function confSetLang(val) {
   const inLang = document.getElementById("inLang");
   if (inLang) {
@@ -1011,15 +1012,11 @@ window.addEventListener("serra:themechange", () => render());
       else render();
       if (!_shouldFocusGuidedIntroOnBoot) scrollToScene();
     }
-    // Il markup iniziale usa Intermedio come fallback. La maschera impostata
-    // nel <head> per un arrivo da Principiante può sparire solo ora, dopo che
-    // setLivello ha sincronizzato testo, classi e selettore col profilo reale.
+    // Rimuove la schermatura iniziale dopo la sincronizzazione del profilo.
     document.documentElement.classList.remove("serra-boot-novizio");
     saveConfig(true);
     clearBootParams();
-    // Un arrivo dalla home parte sempre dalla testata del configuratore,
-    // su desktop, tablet e smartphone. Nessun profilo deve atterrare sopra
-    // il percorso o direttamente nel piano/catalago senza un'azione esplicita.
+    // Posiziona l'ingresso dalla home all'inizio del configuratore.
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -1056,8 +1053,7 @@ window.addEventListener("serra:themechange", () => render());
     setMode(state.autoPlan ? "fit" : "expert", false);
 
     setLivello(state.livello, { mapMode: false });
-    // Un refresh senza livello esplicito conserva l'ingresso compatto per
-    // tutti i profili, Esperto incluso, come al primo accesso.
+    // Mantiene l'ingresso compatto dopo un refresh.
     if (_bootCfg?.livello) setPanelCollapsed("panelSettings", true);
   }
   syncVegFilterTabs();
@@ -1068,7 +1064,6 @@ window.addEventListener("serra:themechange", () => render());
     scroll: !_shouldFocusGuidedIntroOnBoot
   });
 
-  // Il testo è già nella lingua corretta: si può mostrare il contenuto
-  // (vedi il guard "serra-i18n-pending" impostato in <head>).
+  // Mostra il contenuto dopo la sincronizzazione della lingua.
   document.documentElement.classList.remove("serra-i18n-pending");
 })();

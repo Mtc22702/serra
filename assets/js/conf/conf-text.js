@@ -1,5 +1,4 @@
-// Funzioni di traduzione
-// Traduce una chiave con sostituzione variabili
+// Traduce le chiavi del configuratore sostituendo le variabili dinamiche richieste.
 function tx(key, vars = {}) {
   const dict = I18N[state.lang] || I18N.it;
   let value = dict[key] || I18N.it[key] || key;
@@ -50,8 +49,7 @@ function spacingValue(plant) {
     : `${plant.d} cm`;
 }
 
-// Infografiche e diagrammi
-// Genera il diagramma SVG delle distanze tra piante
+// Genera un diagramma SVG che visualizza le distanze di semina consigliate.
 function spacingInfographicSvg(p) {
   const d = p.d;
   const dr = p.dr || p.d;
@@ -231,8 +229,7 @@ function monthName(index) {
   return (MONTHS[state.lang] || MONTHS.it)[index - 1];
 }
 
-// Aggiornamento UI
-// Aggiorna la barra del preset applicato
+// Aggiorna testo e visibilità della barra che indica il preset applicato.
 function updatePresetAppliedUI() {
   const box = document.getElementById("presetApplied");
   if (!box) return;
@@ -307,15 +304,13 @@ function updateAllPanelToggles() {
   document.querySelectorAll(".panel-toggle").forEach(updatePanelToggle);
 }
 
-// Applicazione lingua
+// Applica la lingua selezionata ai testi, attributi e controlli del configuratore.
 function applyLanguage() {
   document.documentElement.lang = state.lang;
   document.title = tx("title");
   document.querySelectorAll("[data-i18n-conf]").forEach((el) => {
     const key = el.dataset.i18nConf;
-    // Prova prima il dizionario del configuratore, poi quello condiviso
-    // dell'header/footer (copiato dalla home): alcune chiavi esistono solo
-    // nell'uno o nell'altro.
+    // Cerca la chiave nei dizionari locale e condiviso.
     const translated = I18N[state.lang]?.[key] ?? SITE_I18N[state.lang]?.[key];
     if (!translated) return;
     if (translated.includes("<") || translated.includes("&"))

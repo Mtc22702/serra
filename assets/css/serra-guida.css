@@ -1,4 +1,4 @@
-/* Generated with npm run build:css. Edit modular source files instead. */
+/* File generato con npm run build:css: modificare i moduli CSS sorgente. */
 @layer base, dark-theme, polish;
 
 /* Moduli CSS del tema globale */
@@ -57,9 +57,7 @@
     --terra-scuro: #d0b69e;
     --bordo: 1px solid rgba(173, 211, 186, 0.15);
     --ombra: 0 16px 42px rgba(0, 0, 0, 0.34);
-    /* Controparte scura di --ombra-aperta/--bordo-aperto (vedi
-       configuratore/01-fondazioni-intro.css): tendine/pannelli aperti
-       restano ben distinguibili dallo sfondo scuro. */
+    /* Varianti scure per pannelli e tendine aperti. */
     --ombra-aperta: 0 22px 50px rgba(0, 0, 0, 0.5);
     --bordo-aperto: 1.5px solid rgba(105, 183, 125, 0.4);
     --theme-surface: #13221b;
@@ -169,11 +167,7 @@
   html[data-theme="dark"] body::before {
     opacity: 0.22;
   }
-  /* Il body ha un solo ::before: la regola sopra (pensata per un dettaglio
-     decorativo di sfondo) intercetta per errore anche l'overlay sfocato
-     del menu mobile (definito in index/04-responsive-header-contatti.css),
-     abbassandone l'opacità al 22% e quindi rendendo il blur quasi
-     invisibile in dark mode. Qui lo riportiamo a piena intensità. */
+  /* Opacità dell'overlay mobile in tema scuro. */
   html[data-theme="dark"] body.nav-menu-open::before {
     opacity: 1;
   }
@@ -451,7 +445,7 @@
   }
 }
 @layer base {
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 720px) {
     .theme-toggle {
       width: 38px;
@@ -463,7 +457,7 @@
       font-size: 19px;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (prefers-reduced-motion: reduce) {
     .theme-toggle,
     .theme-toggle-icon {
@@ -509,10 +503,7 @@
     color: var(--dark-text);
   }
   html[data-theme="dark"] .site-header {
-    /* Come in chiaro (dove lo sfondo è solo ~90% opaco): un fondo quasi
-       opaco qui (era 0.96) copriva quasi del tutto il backdrop-filter
-       impostato in 01-fondazioni.css, rendendo il blur praticamente
-       invisibile in dark mode. */
+    /* Trasparenza del menu nel tema scuro. */
     background: rgba(15, 27, 22, 0.88);
   }
   html[data-theme="dark"] .nav-brand-mark {
@@ -2747,7 +2738,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
       display: none;
@@ -2757,7 +2748,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 340px) {
     :root {
       --nav-h: 108px;
@@ -2787,9 +2778,7 @@
     }
     .site-header .nav-menu-toggle {
       margin-right: 0;
-      /* Su questa larghezza l'header è su due righe: resta centrato in
-         orizzontale ma allineato alla seconda riga (quella delle azioni),
-         non a metà tra logo e azioni. */
+      /* Allineamento dell'header a due righe. */
       top: 74px;
     }
   }
@@ -2801,8 +2790,7 @@
   }
 }
 @layer base {
-  /* Rifinitura mobile: stesso set di controlli, meno peso visivo nel primo
-   viewport. Non nasconde funzioni come tema, lingua o carrello. */
+  /* Densità dei controlli nell'header mobile. */
   @media (max-width: 660px) {
     .site-header {
       --nav-h: 60px;
@@ -2952,7 +2940,7 @@
     word-spacing: 0.12em;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     :root {
       --icon-text-gap: 0.46rem;
@@ -2962,6 +2950,7 @@
 }
 
 
+/* Definisce colori e misure condivisi dalla pagina di guida ai percorsi. */
 :root {
   --guide-green: #245733;
   --guide-green-2: #4f9a3f;
@@ -2969,9 +2958,11 @@
   --guide-ink: #1f3428;
   --guide-muted: #617164;
 }
+/* Applica il modello box-sizing coerente a tutti gli elementi della pagina. */
 * {
   box-sizing: border-box;
 }
+/* Imposta tipografia, colori e sfondo generale della guida. */
 body {
   margin: 0;
   min-height: 100vh;
@@ -2979,6 +2970,7 @@ body {
   font-family: "Outfit", system-ui, sans-serif;
   background: linear-gradient(150deg, #eef4df 0%, #f9f4e9 62%, #eef5e9 100%);
 }
+/* Mantiene visibili marca, navigazione e preferenze durante lo scorrimento. */
 .guide-header {
   position: sticky;
   top: 0;
@@ -3086,11 +3078,13 @@ body {
   text-align-last: center;
   cursor: pointer;
 }
+/* Centra il contenuto della guida e limita la larghezza di lettura. */
 main {
   width: min(100% - 2rem, 900px);
   margin: 0 auto;
   padding: clamp(2rem, 7vw, 5rem) 0 3rem;
 }
+/* Presenta la guida e permette di scegliere il livello di esperienza. */
 .guide-hero {
   text-align: center;
 }
@@ -3116,12 +3110,14 @@ main {
   font-size: 1.02rem;
   line-height: 1.55;
 }
+/* Dispone i controlli che cambiano il percorso mostrato nella guida. */
 .guide-tabs {
   display: grid;
   gap: 0.5rem;
   max-width: 720px;
   margin: 2rem auto 0;
 }
+/* Amplia e affianca le scelte di percorso sulle schermate da tablet in su. */
 @media (min-width: 681px) {
   .guide-tabs {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3232,6 +3228,7 @@ main {
   outline: 3px solid var(--guide-green-2);
   outline-offset: 3px;
 }
+/* Contiene istruzioni, passaggi e azione finale del percorso selezionato. */
 .guide-route {
   margin-top: 2.1rem;
   padding: clamp(1rem, 3.4vw, 2rem);
@@ -3269,6 +3266,7 @@ main {
     700 clamp(1.32rem, 4vw, 2rem)/1.12 Fraunces,
     serif;
 }
+/* Organizza i passaggi operativi del percorso in un elenco numerato. */
 .guide-steps {
   display: grid;
   gap: 0.7rem;
@@ -3312,6 +3310,7 @@ main {
   text-align: center;
   font-size: 1.3rem;
 }
+/* Evidenzia il collegamento che avvia il configuratore nel livello scelto. */
 .guide-cta {
   min-height: 48px;
   display: flex;
@@ -3332,6 +3331,7 @@ main {
 .guide-cta span {
   font-size: 1.2rem;
 }
+/* Mostra una nota trasversale valida per tutti i livelli di esperienza. */
 .guide-help {
   display: flex;
   align-items: flex-start;
@@ -3351,6 +3351,7 @@ main {
 .guide-help span {
   font-size: 1.25rem;
 }
+/* Riduce spaziature e dimensioni per mantenere leggibile la guida su smartphone. */
 @media (max-width: 580px) {
   .guide-header {
     min-height: 62px;
@@ -3460,6 +3461,7 @@ main {
     font-size: 1.08rem;
   }
 }
+/* Applica animazioni leggere solo quando l'utente non richiede movimenti ridotti. */
 @media (prefers-reduced-motion: no-preference) {
   .guide-tab,
   .guide-cta {
@@ -3469,6 +3471,7 @@ main {
       box-shadow 0.18s ease;
   }
 }
+/* Adatta superfici, testi e controlli della guida al tema scuro. */
 html[data-theme="dark"] {
   color-scheme: dark;
 }

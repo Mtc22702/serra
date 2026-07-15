@@ -120,7 +120,7 @@
       box-shadow: 0 8px 24px rgba(27, 67, 50, 0.3);
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     :root {
       --nav-h: 62px;
@@ -191,7 +191,7 @@
       justify-content: center;
       min-height: calc(100svh - var(--nav-h));
     }
-    /* Regole responsive */
+    /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
     @media (max-height: 700px) {
       .hero-content {
         gap: 0.75rem;
@@ -1314,8 +1314,7 @@
     box-shadow: 0 10px 30px rgba(27, 67, 50, 0.08);
     backdrop-filter: blur(20px) saturate(1.15);
     -webkit-backdrop-filter: blur(20px) saturate(1.15);
-    /* Safari può perdere il backdrop-filter dopo un cambio di tema (mutazione
-       di html[data-theme]): un layer di compositing dedicato lo previene. */
+    /* Correzione Safari per lo sfondo sfocato del menu. */
     will-change: backdrop-filter;
   }
   .site-header-inner {
@@ -1437,10 +1436,7 @@
     color: #fff;
   }
 
-  /* Tra desktop compatto e desktop pieno la nav centrale aveva 62px in più
-     dello spazio disponibile: essendo centrata e con overflow nascosto,
-     tagliava proprio "Home" (il primo punto di ingresso). Riduciamo solo
-     ritmo e spaziatura in questa fascia, mantenendo tutte le voci visibili. */
+  /* Spaziatura della navigazione su desktop compatto. */
   @media (min-width: 901px) and (max-width: 1320px) {
     .site-header .nav-links {
       gap: 0;
@@ -1535,7 +1531,7 @@
     line-height: 1;
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (min-width: 661px) and (max-width: 900px) {
     .site-header .nav-links {
       overflow-x: auto;
@@ -1625,10 +1621,7 @@
     }
 
     body.nav-menu-open {
-      /* position:fixed (in coppia con lo scroll-lock in nav.js) invece del
-         solo overflow:hidden: su iOS Safari è l'unico modo per impedire
-         davvero lo scroll/rimbalzo della pagina dietro al menu aperto, e
-         per farla ripartire pulita alla chiusura. */
+      /* Posizionamento fisso del menu mobile. */
       position: fixed;
       top: 0;
       left: 0;
@@ -1644,10 +1637,7 @@
       background: rgba(19, 45, 34, 0.18);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      /* Safari a volte "perde" il backdrop-filter dopo un ricalcolo dello
-         stile (es. cambio di html[data-theme] mentre l'overlay è già
-         visibile): forzare un proprio layer di compositing evita che il
-         blur sparisca. */
+      /* Correzione Safari per lo sfondo sfocato del menu. */
       will-change: backdrop-filter;
       transform: translateZ(0);
     }
@@ -1721,9 +1711,7 @@
       transform: translateY(0);
     }
     html[data-theme="dark"] .site-header .nav-links {
-      /* Come per .site-header: uno sfondo quasi opaco nasconderebbe del
-         tutto il backdrop-filter, quindi qui restiamo semi-trasparenti
-         invece del pieno #13221b di prima. */
+      /* Sfondo traslucido della navigazione mobile. */
       background: rgba(19, 34, 27, 0.86);
       border-color: rgba(172, 214, 187, 0.16);
       box-shadow: 0 22px 52px rgba(0, 0, 0, 0.5);
@@ -1891,7 +1879,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .site-header .cart-btn {
       width: 52px;
@@ -1906,7 +1894,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .cookie-banner {
       bottom: 0.5rem;
@@ -2056,7 +2044,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .cookie-accept-btn,
     .cookie-reject-btn {
@@ -2066,7 +2054,7 @@
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .hero-path {
       margin-top: 1.3rem;
@@ -2152,7 +2140,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-height: 820px) and (min-width: 900px) {
     .hero-content {
       padding-top: 0.7rem;

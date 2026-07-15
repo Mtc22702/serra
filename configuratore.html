@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it">
   <head>
-    <!-- Intestazione del documento -->
+    <!-- Metadati principali e titolo del documento del configuratore -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
@@ -21,7 +21,7 @@
         return path + "?v=" + window.SERRA_ASSET_VERSION;
       };
     </script>
-    <!-- Caricamento dei font -->
+    <!-- Connessioni e risorse tipografiche usate dal configuratore -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Icone e manifest -->
@@ -43,25 +43,19 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
-    <!-- Applica subito la lingua salvata: evita che si veda il testo IT
-         di default e poi "scatti" in RO quando gli script differiti girano
-         (il flash percepito come un refresh su mobile). -->
+    <!-- Lingua iniziale -->
     <style>
       html.serra-i18n-pending body {
         visibility: hidden;
       }
 
-      /* Il configuratore viene completato dopo il caricamento asincrono del
-         catalogo. Per il percorso Principiante non mostriamo nel frattempo i
-         testi statici del profilo Intermedio presenti nell'HTML. */
+      /* Nasconde il contenuto provvisorio finché il profilo guidato non è pronto. */
       html.serra-boot-novizio .persona-pick-current,
       html.serra-boot-novizio .journey-context {
         visibility: hidden;
       }
 
-      /* Su mobile il catalogo viene completato in modo asincrono. Evitiamo
-         di mostrare per un istante l'inizio della pagina e poi spostarla al
-         punto di arrivo scelto dal profilo. */
+      /* Evita spostamenti visivi mentre il catalogo mobile viene inizializzato. */
       html.serra-boot-positioning body {
         visibility: hidden;
       }
@@ -75,8 +69,7 @@
           }
           if (lang === "ro") {
             document.documentElement.classList.add("serra-i18n-pending");
-            // Rete di sicurezza: se per qualsiasi motivo lo script di lingua
-            // non completa, il contenuto torna visibile comunque.
+            // Ripristina la visibilità se l'inizializzazione della lingua non termina.
             window.setTimeout(function () {
               document.documentElement.classList.remove("serra-i18n-pending");
             }, 1200);
@@ -86,8 +79,7 @@
     </script>
     <script>
       (function () {
-        // Questa informazione arriva nell'URL e va applicata prima del primo
-        // paint, non quando terminano gli script deferiti del configuratore.
+        // Applica il profilo prima del primo rendering.
         var livello = new URLSearchParams(window.location.search).get(
           "livello"
         );
@@ -101,8 +93,7 @@
           window.matchMedia("(max-width: 1100px)").matches
         ) {
           document.documentElement.classList.add("serra-boot-positioning");
-          // Se uno script esterno non riuscisse a completare il boot, la
-          // pagina non deve rimanere invisibile.
+          // Mantiene visibile la pagina in caso di errore di avvio.
           window.setTimeout(function () {
             document.documentElement.classList.remove("serra-boot-positioning");
           }, 2200);
@@ -117,7 +108,7 @@
     <link rel="stylesheet" href="assets/css/serra-configuratore.css?v=2026-07-15-maintenance" />
   </head>
   <body>
-    <!-- Header e navigazione -->
+    <!-- Intestazione con navigazione, preferenze e accesso alle funzioni condivise -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -274,7 +265,7 @@
       </div>
     </header>
 
-    <!-- Area di lavoro del configuratore -->
+    <!-- Area principale con impostazioni, scena della serra e lista delle colture -->
     <main class="app" id="configuratore">
       <!-- Controlli nascosti condivisi -->
       <div hidden aria-hidden="true">
@@ -311,8 +302,7 @@
         </a>
       </section>
 
-      <!-- Un solo punto d'ingresso per orientamento, impostazioni e aiuto.
-           Il contenuto e la CTA restano specifici del livello selezionato. -->
+      <!-- Area che riunisce contesto, impostazioni e azioni del percorso guidato -->
       <section
         class="workflow-hub"
         aria-label="Il tuo percorso di acquisto"
@@ -376,8 +366,7 @@
           </nav>
         </div>
 
-        <!-- Il profilo è modificabile dal badge del percorso, senza un
-             pannello impostazioni aggiuntivo. -->
+        <!-- Selettore del profilo collegato al percorso di configurazione -->
         <div class="workflow-persona-panel" id="guidedIntro" hidden>
           <details class="persona-pick" id="personaPickDetails">
             <summary class="persona-pick-head">
@@ -495,22 +484,13 @@
         </div>
       </section>
 
-      <!-- Impostazioni serra -->
+      <!-- Pannello per dimensioni, clima, mese e modalità della serra -->
       <div class="col-left">
         <div class="mode-section is-active" data-mode-section="fit">
           <div class="panel panel--settings" id="panelSettings">
             <script>
               (function () {
-                // Chi arriva dalla home ha già scelto misure, clima e mese
-                // nel pannello di preconfigurazione: per tutti i profili,
-                // Esperto incluso, si parte con il pannello "La tua serra"
-                // chiuso di default (l'Esperto può comunque riaprirlo per
-                // comporre liberamente la serra).
-                // Vale sia per il primo arrivo (livello in querystring) sia
-                // per un refresh/ritorno successivo, quando la querystring è
-                // già stata ripulita ma il profilo resta salvato in locale:
-                // altrimenti solo il primo arrivo restava collassato e un
-                // semplice refresh faceva ricomparire il pannello aperto.
+                // Mantiene chiuso il pannello iniziale dalla home.
                 var liv = new URLSearchParams(window.location.search).get(
                   "livello"
                 );
@@ -870,11 +850,7 @@
           </div>
         </div>
 
-        <!-- Guida rapida al posto della colonna, quando per un percorso
-             guidato non c'è altro da mostrare a sinistra (vedi syncColLeftLayout in
-             conf-ui.js): mantiene la larghezza della colonna costante, così
-             la scena della serra non cambia dimensione tra un profilo e
-             l'altro. -->
+        <!-- Guida rapida mostrata nella colonna laterale dei profili guidati -->
         <div class="panel panel--novice-guide" id="noviceGuidePanel" hidden>
           <div class="pad">
             <div class="panel-head panel-head--static">
@@ -926,21 +902,10 @@
           </div>
         </div>
         <script>
-          // Per il novizio "La tua serra" resta chiusa e i layout pronti
-          // nascosti: la colonna sinistra avrebbe altrimenti nulla da
-          // mostrare. Invece di farla sparire (e cambiare larghezza alla
-          // scena della serra), mostriamo qui la guida rapida, subito al
-          // parsing, così non "salta" dopo il boot JS (vedi syncColLeftLayout
-          // in conf-ui.js per il comportamento a runtime).
+          // Mostra la guida rapida nel profilo novizio.
           if (window.__ORTO_BOOT_LIVELLO__ === "novizio") {
             document.getElementById("noviceGuidePanel").hidden = false;
-            // .mode-section (che contiene "La tua serra" e i layout pronti,
-            // entrambi vuoti/nascosti per il novizio) va tolto dal flusso
-            // fin da subito: altrimenti il suo gap flessibile resterebbe
-            // sopra la guida per una frazione di secondo prima che
-            // syncColLeftLayout() lo corregga, causando un salto visibile
-            // e un margine superiore disallineato rispetto a scena e
-            // colonna destra.
+            // Rimuove le sezioni vuote dal layout iniziale.
             var bootModeSection = document.querySelector(
               "#panelSettings.is-collapsed"
             );
@@ -952,7 +917,7 @@
         </script>
       </div>
 
-      <!-- Vista dall'alto della serra -->
+      <!-- Scena SVG che rappresenta disposizione, aiuole e indicatori della serra -->
       <div class="stage">
         <div class="stage-head">
           <div class="stage-title-row">
@@ -1221,7 +1186,7 @@
         <div class="print-summary" id="printSummary"></div>
       </div>
 
-      <!-- Colture e lista semi -->
+      <!-- Catalogo colture selezionabili e lista dei semi necessari al progetto -->
       <div class="col-right">
         <div class="mode-section" data-mode-section="expert">
           <div class="panel panel--customize" id="panelCustomize">
@@ -1614,8 +1579,7 @@
       </div>
     </main>
 
-    <!-- Controlli flottanti e modali -->
-    <!-- Torna su -->
+    <!-- Controlli flottanti, modali e ritorno in alto -->
     <button
       class="back-to-top"
       id="backToTop"
@@ -1787,7 +1751,7 @@
       </div>
     </div>
 
-    <!-- Carrello -->
+    <!-- Cassetto carrello con semi, materiali extra e riepilogo dell'ordine -->
     <div class="cart-overlay" id="cartOverlay">
       <div class="cart-backdrop" data-conf-action="close-cart"></div>
       <div class="cart-drawer">
@@ -1876,7 +1840,7 @@
       </button>
     </div>
 
-    <!-- Footer -->
+    <!-- Piè di pagina condiviso con informazioni e collegamenti del sito -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
         <div class="footer-plant-row" id="footerPlantRow"></div>

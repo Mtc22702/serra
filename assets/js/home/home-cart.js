@@ -14,7 +14,7 @@ function toggleCart(e, id) {
   c.classList.add("bump");
   setTimeout(() => c.classList.remove("bump"), 250);
 }
-// Aggiunge pair to cart
+// Aggiunge entrambe le colture di un abbinamento al carrello della pagina.
 function addPairToCart(e, aId, bId) {
   e.stopPropagation();
   [aId, bId].forEach((id) => {
@@ -29,7 +29,7 @@ function addPairToCart(e, aId, bId) {
   c.classList.add("bump");
   setTimeout(() => c.classList.remove("bump"), 250);
 }
-// Aggiunge kit to cart
+// Aggiunge al carrello tutte le colture incluse nel kit selezionato.
 function addKitToCart() {
   const kit = KITS[state.mese];
   if (!kit) return;
@@ -46,7 +46,7 @@ function addKitToCart() {
   if (availableIds.length) showCartNudge(availableIds[0], true);
   openCart();
 }
-// Aggiunge kit and plan
+// Aggiunge il kit al carrello e avvia il passaggio alla pianificazione della serra.
 function addKitAndPlan() {
   const kit = KITS[state.mese];
   if (!kit) return;
@@ -67,7 +67,7 @@ function addKitAndPlan() {
     window.location.href = "configuratore.html?import=cart";
   }
 }
-// Rimuove from cart
+// Rimuove dal carrello la coltura identificata dall'azione dell'utente.
 function removeFromCart(id) {
   cart = cart.filter((i) => i.id !== id);
   updateCartUI();
@@ -76,7 +76,7 @@ function removeFromCart(id) {
   savePrefs();
   showCartNudge(id, false);
 }
-// Pulisce cart
+// Svuota il carrello e aggiorna il riepilogo visualizzato nella pagina.
 function clearCart() {
   cart = [];
   updateCartUI();
@@ -84,7 +84,7 @@ function clearCart() {
   renderAbbinamenti();
   savePrefs();
 }
-// Aggiorna cart ui
+// Sincronizza contatore, righe e totale del carrello con i dati correnti.
 function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.length;
   const speciesLine = document.getElementById("cartSpeciesLine");
@@ -180,7 +180,7 @@ function updateCartUI() {
     }
   }
 }
-// Mostra cart nudge
+// Mostra un suggerimento temporaneo per richiamare l'attenzione sul carrello.
 function showCartNudge(id, added = true) {
   const nudge = document.getElementById("cartNudge");
   const title = document.getElementById("cartNudgeTitle");
@@ -567,7 +567,7 @@ function technicalProfile(p, guide) {
   };
 }
 
-// Renderizza technical cards
+// Genera le schede tecniche con informazioni di coltivazione e cura della pianta.
 function renderTechnicalCards(items) {
   return items
     .map(
@@ -930,7 +930,7 @@ function diseasesForPlant(p) {
     .map(([name, symptoms, action]) => ({ name, symptoms, action }));
 }
 
-// Renderizza plant diseases
+// Genera la sezione con malattie, sintomi e rimedi della pianta selezionata.
 function renderPlantDiseases(p) {
   const diseases = diseasesForPlant(p);
   const count = document.getElementById("detailDiseasesCount");
@@ -1345,7 +1345,7 @@ function targetedPestProducts(p) {
   };
 }
 
-// Renderizza plant pests
+// Genera la sezione con parassiti e prodotti consigliati per la pianta selezionata.
 function renderPlantPests(p) {
   const pests = pestsForPlant(p);
   const products = targetedPestProducts(p);
@@ -1375,10 +1375,7 @@ function openDetail(id, preserveTab = false) {
   const guide = localizedSowingGuide(p);
   const profile = technicalProfile(p, guide);
 
-  // Nella foto grande della scheda si preferisce la versione ad alta
-  // risoluzione quando disponibile (cartella "large/"), tenendo quella
-  // leggera per le miniature ovunque altrove. Vale solo per le foto locali
-  // del catalogo: URL esterni o percorsi personalizzati restano invariati.
+  // Usa la versione ad alta risoluzione per la foto di dettaglio.
   const smallPhotoSrc = photoSrc(id);
   const heroMatch = /^assets\/img\/photo\/([^/]+)$/.exec(smallPhotoSrc);
   const detailPhotoEl = document.getElementById("detailPhoto");
@@ -1586,7 +1583,7 @@ function detailAddToCart() {
     btn.classList.toggle("added", added);
   }
 }
-// Chiude detail
+// Chiude il pannello dettaglio e ripristina lo stato di navigazione della pagina.
 function closeDetail(e) {
   if (e && e.target !== document.getElementById("detailOverlay")) return;
   document.getElementById("detailOverlay").classList.remove("open");

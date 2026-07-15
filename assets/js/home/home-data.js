@@ -302,7 +302,7 @@ const TIPO_STYLE = {
   aromatica:
     "background:var(--badge-aromatica-bg, rgba(116,198,157,.22));color:var(--badge-aromatica-color, #1b5438)"
 };
-// Risorse visive. Logica di fallback condivisa: vedi assets/js/shared/plant-photo.js
+// Risorse visive con risoluzione della foto condivisa: vedi assets/js/shared/plant-photo.js.
 function photoSrc(id) {
   const p = (window.PLANTS || []).find((x) => x.id === id);
   return window.resolvePlantPhoto(p, id);

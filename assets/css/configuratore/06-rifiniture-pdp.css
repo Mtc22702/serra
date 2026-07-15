@@ -416,7 +416,7 @@
   .panel--plant-detail .detail-tab-panel.active > * {
     flex-shrink: 0;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes pdpTabIn {
     from {
       opacity: 0;
@@ -900,8 +900,7 @@
       box-shadow 0.16s ease,
       border-color 0.16s ease;
   }
-  /* Aperta, l'ombra leggera di riposo non basta più a farla risaltare dal
-     resto della scheda pianta: qui si intensifica bordo e ombra. */
+  /* Stato aperto della sezione. */
   .pdp-accordion[open] {
     border: var(--bordo-aperto, 1.5px solid rgba(47, 107, 58, 0.32));
     box-shadow: var(--ombra-aperta, 0 20px 44px rgba(31, 58, 38, 0.22));
@@ -1408,7 +1407,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .site-header .cart-btn {
       width: 52px;
@@ -1423,7 +1422,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .guided-intro {
       padding: 14px;
@@ -1600,7 +1599,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 380px) {
     .guided-intro {
       padding: 12px;
@@ -1764,7 +1763,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 360px) {
     .guided-intro {
       gap: 10px;
@@ -1788,7 +1787,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 720px) {
     .panel--cart .panel-title-row {
       display: grid;
@@ -1815,7 +1814,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 390px) {
     .shop-pack {
       padding: 3px 7px;

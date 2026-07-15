@@ -52,9 +52,7 @@
     --terra-scuro: #d0b69e;
     --bordo: 1px solid rgba(173, 211, 186, 0.15);
     --ombra: 0 16px 42px rgba(0, 0, 0, 0.34);
-    /* Controparte scura di --ombra-aperta/--bordo-aperto (vedi
-       configuratore/01-fondazioni-intro.css): tendine/pannelli aperti
-       restano ben distinguibili dallo sfondo scuro. */
+    /* Varianti scure per pannelli e tendine aperti. */
     --ombra-aperta: 0 22px 50px rgba(0, 0, 0, 0.5);
     --bordo-aperto: 1.5px solid rgba(105, 183, 125, 0.4);
     --theme-surface: #13221b;
@@ -164,11 +162,7 @@
   html[data-theme="dark"] body::before {
     opacity: 0.22;
   }
-  /* Il body ha un solo ::before: la regola sopra (pensata per un dettaglio
-     decorativo di sfondo) intercetta per errore anche l'overlay sfocato
-     del menu mobile (definito in index/04-responsive-header-contatti.css),
-     abbassandone l'opacità al 22% e quindi rendendo il blur quasi
-     invisibile in dark mode. Qui lo riportiamo a piena intensità. */
+  /* Opacità dell'overlay mobile in tema scuro. */
   html[data-theme="dark"] body.nav-menu-open::before {
     opacity: 1;
   }
@@ -446,7 +440,7 @@
   }
 }
 @layer base {
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 720px) {
     .theme-toggle {
       width: 38px;
@@ -458,7 +452,7 @@
       font-size: 19px;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (prefers-reduced-motion: reduce) {
     .theme-toggle,
     .theme-toggle-icon {

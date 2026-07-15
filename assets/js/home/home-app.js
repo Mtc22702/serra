@@ -192,13 +192,13 @@ function syncCatalogControls() {
   const resetBtn = document.getElementById("catalogReset");
   if (resetBtn) resetBtn.hidden = !anyExtra;
 }
-// Imposta catalog search
+// Aggiorna il testo di ricerca usato per filtrare le colture del catalogo.
 function setCatalogSearch(value) {
   catalog.search = value;
   render();
   updateCatalogSearchSuggestions();
 }
-// Nasconde catalog search suggestions
+// Nasconde i suggerimenti della ricerca quando il campo non è più attivo.
 function hideCatalogSearchSuggestions() {
   const list = document.getElementById("catalogSearchSuggestions");
   const input = document.getElementById("catalogSearch");
@@ -208,7 +208,7 @@ function hideCatalogSearchSuggestions() {
   }
   if (input) input.setAttribute("aria-expanded", "false");
 }
-// Seleziona catalog search suggestion
+// Applica un suggerimento selezionato al campo di ricerca del catalogo.
 function selectCatalogSearchSuggestion(name) {
   catalog.search = name;
   const input = document.getElementById("catalogSearch");
@@ -216,7 +216,7 @@ function selectCatalogSearchSuggestion(name) {
   render();
   hideCatalogSearchSuggestions();
 }
-// Aggiorna catalog search suggestions
+// Genera i suggerimenti coerenti con il testo inserito nella ricerca catalogo.
 function updateCatalogSearchSuggestions() {
   const list = document.getElementById("catalogSearchSuggestions");
   const input = document.getElementById("catalogSearch");
@@ -264,7 +264,7 @@ function updateCatalogSearchSuggestions() {
     e.preventDefault();
   });
 })();
-// Pulisce catalog search
+// Cancella il testo di ricerca e ripristina i risultati del catalogo.
 function clearCatalogSearch() {
   catalog.search = "";
   const input = document.getElementById("catalogSearch");
@@ -274,7 +274,7 @@ function clearCatalogSearch() {
   }
   render();
 }
-// Rimuove catalog filter
+// Rimuove un filtro attivo dal catalogo e aggiorna l'elenco risultante.
 function removeCatalogFilter(kind) {
   if (kind === "scope") catalog.seasonOnly = true;
   else if (kind === "search") {
@@ -286,38 +286,38 @@ function removeCatalogFilter(kind) {
   else if (kind === "sort") catalog.sort = "season";
   render();
 }
-// Imposta catalog type
+// Imposta la categoria di colture usata come filtro del catalogo.
 function setCatalogType(value) {
   catalog.type = value;
   render();
 }
-// Alterna catalog season only
+// Attiva o disattiva il filtro delle colture adatte al mese selezionato.
 function toggleCatalogSeasonOnly() {
   catalog.seasonOnly = !catalog.seasonOnly;
   render();
 }
-// Alterna catalog full
+// Attiva o disattiva la visualizzazione completa delle colture disponibili.
 function toggleCatalogFull() {
   catalog.seasonOnly = false;
   render();
 }
-// Alterna catalog easy only
+// Attiva o disattiva il filtro delle colture consigliate ai principianti.
 function toggleCatalogEasyOnly() {
   catalog.easyOnly = !catalog.easyOnly;
   catalog.easyOnlyTouched = true;
   render();
 }
-// Imposta catalog sort
+// Imposta il criterio con cui ordinare le colture mostrate nel catalogo.
 function setCatalogSort(value) {
   catalog.sort = value || "season";
   render();
 }
-// Imposta catalog category
+// Imposta la categoria evidenziata nella barra rapida del catalogo.
 function setCatalogCategory(type) {
   catalog.type = type || "";
   render();
 }
-// Renderizza catalog category rail
+// Genera la barra orizzontale delle categorie disponibili nel catalogo.
 function renderCatalogCategoryRail(base) {
   const rail = document.getElementById("catalogCategoryRail");
   if (!rail) return;
@@ -350,7 +350,7 @@ function renderCatalogCategoryRail(base) {
     )
     .join("");
 }
-// Renderizza catalog insights
+// Aggiorna i dati di sintesi relativi ai risultati del catalogo filtrato.
 function renderCatalogInsights(plants, base) {
   const box = document.getElementById("catalogInsights");
   if (!box) return;
@@ -367,7 +367,7 @@ function renderCatalogInsights(plants, base) {
     <span><b>${compactCount}</b> ${t("catalog.insight_compact")}</span>
     <span><b>${cartCount}</b> ${t("catalog.insight_cart")}</span>`;
 }
-// Mostra full catalog
+// Passa alla visualizzazione completa del catalogo rimuovendo i limiti iniziali.
 function showFullCatalog() {
   catalog.search = "";
   catalog.type = "";
@@ -407,13 +407,7 @@ function savePrefs() {
     })
   );
 }
-// Riporta zona/riscaldamento del catalogo nella configurazione condivisa con
-// il drawer di preconfigurazione e il configuratore. Va richiamata solo nel
-// momento in cui l'utente porta davvero il carrello nel configuratore (link
-// "Pianifica la disposizione in serra" / "Aggiungi kit e pianifica"): così chi
-// ha filtrato il catalogo per un certo clima non se lo vede ignorato appena
-// entra nel configuratore, ma senza sovrascrivere in continuazione una serra
-// già configurata solo perché si sta sfogliando il catalogo per curiosità.
+// Trasferisce le preferenze del catalogo alla configurazione condivisa.
 function syncCatalogClimateToSharedConfig() {
   try {
     const existing =
@@ -429,16 +423,13 @@ function syncCatalogClimateToSharedConfig() {
   } catch (_) {}
 }
 
-// Carica prefs
+// Carica le preferenze di catalogo e configurazione salvate nel browser.
 function loadPrefs() {
   try {
     const p = JSON.parse(localStorage.getItem("ois.prefs") || "{}");
     if (p.zona) state.zona = p.zona;
     if (p.riscaldata !== undefined) state.riscaldata = p.riscaldata;
-    // Se esiste già una serra configurata (drawer/configuratore), il catalogo
-    // riparte dallo stesso clima invece che da un valore diverso salvato solo
-    // qui: evita di mostrare "adatto ora" calcolato su una zona che non è più
-    // quella della propria serra.
+    // Usa il clima della configurazione esistente.
     try {
       const shared = JSON.parse(
         localStorage.getItem("serra.config.v1") || "null"
@@ -446,9 +437,7 @@ function loadPrefs() {
       if (shared?.zona) state.zona = shared.zona;
       if (shared?.riscaldata !== undefined)
         state.riscaldata = shared.riscaldata;
-      // Il catalogo mostra sempre tutte le piante di default, indipendentemente
-      // dal profilo scelto nel configuratore: il filtro "Facili per iniziare"
-      // resta disattivato finché l'utente non lo attiva lui stesso.
+      // Mantiene disattivato il filtro iniziale delle colture facili.
       if (p.easyOnlyTouched) {
         catalog.easyOnly = Boolean(p.easyOnly);
       }
@@ -534,7 +523,7 @@ const T = window.SERRA_I18N?.index || { it: {}, ro: {} };
 
 let currentLang = "it";
 
-// Normalizza lang
+// Normalizza il codice della lingua prima di usarlo nei dizionari condivisi.
 function normalizeLang(lang) {
   return lang === "ro" || lang === "it" ? lang : "it";
 }
@@ -602,7 +591,7 @@ function applyLang(lang) {
   }
 }
 
-// Imposta lang
+// Applica la lingua scelta alla pagina e la memorizza nelle preferenze locali.
 function setLang(lang) {
   applyLang(normalizeLang(lang));
 }
@@ -677,8 +666,7 @@ window.addEventListener(
     });
   }
   initCookieBanner();
-  // Il testo è già nella lingua corretta: si può mostrare il contenuto
-  // (vedi il guard "serra-i18n-pending" impostato in <head>).
+  // Mostra il contenuto dopo la sincronizzazione della lingua.
   document.documentElement.classList.remove("serra-i18n-pending");
 })();
 
@@ -1409,9 +1397,7 @@ if (catalogSearchLink) {
     const l = saved?.lunghezza ?? 5;
     const zona = saved?.zona ?? "temperato";
     const riscaldata = Boolean(saved?.riscaldata);
-    // Come zona/misure/riscaldamento: ripristina il mese scelto in precedenza
-    // (utile per chi sta pianificando in anticipo una semina futura), e
-    // ripiega sul mese corrente reale solo se non c'è ancora nulla di salvato.
+    // Ripristina il mese salvato o usa quello corrente.
     const mese = saved?.mese ?? new Date().getMonth() + 1;
 
     const path = saved?.path ?? 60;

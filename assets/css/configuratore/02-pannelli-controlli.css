@@ -183,20 +183,14 @@
     min-height: 50px;
     box-shadow: 0 10px 22px rgba(47, 107, 58, 0.2);
   }
-  /* Aperta ("La tua serra" con i campi visibili), la stessa ombra di quando
-     è chiusa non basta a far percepire che il pannello è espanso: qui si
-     rinforzano i tre lati non verdi e l'ombra, lasciando intoccato
-     l'accento verde in alto. */
+  /* Rinforza bordo e ombra del pannello impostazioni quando è espanso. */
   .panel--settings:not(.is-collapsed) {
     border-left-color: rgba(47, 107, 58, 0.4);
     border-right-color: rgba(47, 107, 58, 0.4);
     border-bottom-color: rgba(47, 107, 58, 0.4);
     box-shadow: var(--ombra-aperta, 0 20px 44px rgba(31, 58, 38, 0.22));
   }
-  /* Guida rapida per il novizio: prende il posto della colonna sinistra
-     quando non c'è altro da mostrare (vedi syncColLeftLayout in
-     conf-ui.js), invece di far sparire la colonna e cambiare larghezza
-     alla scena della serra. */
+  /* Stili della guida che sostituisce i pannelli nascosti per il profilo novizio. */
   .panel--novice-guide {
     border-top: 4px solid var(--verde);
   }
@@ -809,8 +803,7 @@
   .novice-restart-btn:hover {
     background: rgba(47, 107, 58, 0.16);
   }
-  /* CTA principale del novizio verso la lista della spesa: unica azione
-     "in avanti" mostrata, per non offrire troppe scelte parallele. */
+  /* Evidenzia l'azione principale che porta il profilo novizio alla lista spesa. */
   .novice-yield-cta {
     display: none;
     order: 1;
@@ -1047,12 +1040,7 @@
   .panel.is-collapsed .panel-body {
     display: none;
   }
-  /* "La tua serra" (panelSettings) ripete gli stessi dati già riassunti in
-     "Parametri iniziali" più in alto: quando è chiuso non ha senso mostrare
-     comunque il suo header come secondo blocco identico, quindi lo si nasconde
-     del tutto. Il click su "Modifica"/riepilogo in "Parametri iniziali" lo
-     riapre comunque (openSettingsPanelAndFocusDimensions toglie la classe
-     is-collapsed), facendo ricomparire header e campi insieme. */
+  /* Nasconde il riepilogo duplicato quando le impostazioni della serra sono chiuse. */
   #panelSettings.is-collapsed {
     display: none;
   }
@@ -1151,9 +1139,7 @@
     padding-inline: 6px 18px;
     font-size: 11px;
   }
-  /* Nelle colonne laterali desktop il testo completo “Riscaldata” non deve
-     competere con gli altri due campi: manteniamo Zona e Serra affiancate,
-     poi portiamo Sole sulla riga successiva. */
+  /* Dispone l'indicatore di riscaldamento nella griglia delle impostazioni desktop. */
   @media (min-width: 901px) {
     .settings-visual-field--climate {
       grid-template-columns: repeat(2, minmax(0, 1fr));

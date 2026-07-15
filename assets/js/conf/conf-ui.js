@@ -1,5 +1,4 @@
-// Rendering lista colture
-// Genera la card HTML di una coltura nella lista
+// Genera le card delle colture con stato, quantità e azioni disponibili.
 function vegCardHTML(p, inb, outOfSeason = false, inConflict = false) {
   const diff = DIFFICULTY[p.id] || 2;
   const diffLabel =
@@ -275,8 +274,7 @@ function renderFooter() {
   }
 }
 
-// Render principale
-// Ridisegna l'intera interfaccia del configuratore
+// Aggiorna scena, pannelli e riepilogo in base allo stato della configurazione.
 function render() {
   const zoneNames = {
     freddo: tx("cold"),
@@ -389,12 +387,18 @@ function render() {
 
 // Attiva il glifo nativo solo se un file SVG esterno non è disponibile.
 function bindPlantAssetFallbacks() {
-  document.querySelectorAll("#scene image[data-plant-asset]").forEach((image) => {
-    image.addEventListener("error", () => {
-      image.previousElementSibling?.removeAttribute("hidden");
-      image.remove();
-    }, { once: true });
-  });
+  document
+    .querySelectorAll("#scene image[data-plant-asset]")
+    .forEach((image) => {
+      image.addEventListener(
+        "error",
+        () => {
+          image.previousElementSibling?.removeAttribute("hidden");
+          image.remove();
+        },
+        { once: true }
+      );
+    });
 }
 // Genera l'HTML della legenda overlay
 function legend(items) {
@@ -532,11 +536,7 @@ function scheduleElementBelowHeader(
     if (delay) pendingPageScrollTimer = window.setTimeout(run, delay);
     else run();
   };
-  // Se i webfont sono ancora in caricamento, il loro swap può cambiare
-  // altezza delle righe/andare a capo del testo e spostare il layout dopo
-  // che lo scroll è già stato calcolato. Si aspetta che siano pronti (con
-  // una rete di sicurezza) prima di partire, altrimenti la posizione finale
-  // può risultare sbagliata (percepito come "lo scroll salta storto").
+  // Attende i font prima di calcolare la posizione di scroll.
   if (
     options.waitForFonts !== false &&
     document.fonts &&
@@ -626,8 +626,7 @@ function scrollGreenhouseImageIntoView(behavior = "auto") {
   scrollElementBelowHeader(target, behavior);
 }
 
-// Riporta allo stage, non alla sola scena: su mobile la scena può cambiare
-// posizione quando il pannello dettaglio viene rimosso dal layout.
+// Destinazione di scroll dell'area di lavoro.
 function scrollStageIntoView(behavior = "auto") {
   const target =
     document.querySelector(".stage") ||
@@ -643,9 +642,7 @@ function collapseSettingsPanelAfterAutoPlan(options = {}) {
   // Esperto non usa autoPlan: non collassare e non scrollare
   if (!panel || !state.autoPlan) return;
   setPanelCollapsed(panel, true);
-  // L'opzione è esplicita su ogni viewport: l'ingresso dalla home e il
-  // cambio profilo restano in alto, le azioni avviate dall'utente possono
-  // invece richiedere lo scroll di default.
+  // Gestisce lo scroll in base al contesto dell'azione.
   if (!scroll) return;
   scheduleElementBelowHeader(
     () =>
@@ -670,14 +667,7 @@ function setPanelCollapsed(panelOrId, collapsed) {
   syncColLeftLayout();
 }
 
-// Su desktop, quando la colonna sinistra non ha davvero nulla da mostrare
-// ("La tua serra" chiusa e nessun layout pronto in evidenza, tipicamente per
-// il profilo novizio): per il novizio ci mettiamo la guida rapida al posto
-// del pannello, così la scena della serra mantiene sempre la stessa
-// larghezza; per gli altri profili la colonna sparisce e la scena recupera
-// lo spazio, invece di lasciare un vuoto fisso a sinistra. Richiamata ad
-// ogni cambio di pannello/profilo così resta sempre coerente con quello che
-// è davvero visibile in quel momento.
+// Sincronizza la colonna sinistra con il profilo e i pannelli visibili.
 function syncColLeftLayout() {
   const app = document.querySelector(".app");
   if (!app) return;
@@ -697,22 +687,16 @@ function syncColLeftLayout() {
   const isNovice = state.livello === "novizio";
   const isIntermediate = state.livello === "intermedio";
   const isExpert = state.livello === "esperto";
-  // Per il principiante la guida occupa la colonna al posto dei pannelli
-  // chiusi; per intermedio ed esperto resta sempre visibile.
+  // Posiziona la guida in base al profilo.
   const showGuide = (isNovice && colEmpty) || isIntermediate || isExpert;
   if (noviceGuide) noviceGuide.hidden = !showGuide;
-  // Solo per il principiante, con "La tua serra" e i layout pronti nascosti,
-  // .mode-section resterebbe nel flusso come contenitore vuoto. La togliamo
-  // per evitare un gap fantasma sopra la guida; nell'intermedio resta invece
-  // visibile, con la guida subito sotto ai piani pronti.
+  // Esclude dal layout le sezioni vuote del profilo guidato.
   if (modeSection)
     modeSection.style.display = isNovice && showGuide ? "none" : "";
   app.classList.toggle("col-left-collapsed", colEmpty && !showGuide);
 }
 
-// La guida rapida desktop accompagna ciascun percorso. Il testo viene
-// ricreato qui sia al cambio profilo sia al cambio lingua, così resta sempre
-// allineato alle preferenze già scelte dall'utente.
+// Ricrea la guida rapida quando cambiano profilo utente o lingua attiva.
 function syncQuickGuide() {
   const prefix =
     state.livello === "esperto"
@@ -733,10 +717,7 @@ function setCustomizePanelCollapsed(collapsed) {
   updateVegListScrollAffordance();
 }
 
-// Adatta il pannello personalizzazione al livello utente
-// Resta chiuso di default per novizio/intermedio (meno controlli in vista al
-// primo caricamento): si apre da sé quando l'utente segue il passo 2 della
-// barra guidata o quando sceglie esplicitamente un profilo guidato.
+// Adatta il pannello di personalizzazione al profilo utente.
 function syncCustomizePanelForLivello() {
   setCustomizePanelCollapsed(state.livello !== "esperto");
 }
@@ -1666,8 +1647,7 @@ function closePlantDetailPanel() {
   }
 }
 
-// Scheda pianta
-// Genera l'HTML completo della scheda dettaglio pianta
+// Costruisce la scheda dettagliata della pianta selezionata nel catalogo.
 function renderPlantDetailPanel() {
   const container = document.getElementById("pdpContent");
   if (!container) return;
@@ -1680,10 +1660,7 @@ function renderPlantDetailPanel() {
   const resaTot = b.count * p.resa;
   // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
   let photoSrc = window.resolvePlantPhoto(p, p.id);
-  // Nella foto grande della scheda si preferisce la versione ad alta
-  // risoluzione quando disponibile (cartella "large/"), tenendo quella
-  // leggera per le miniature ovunque altrove. Vale solo per le foto locali
-  // del catalogo: URL esterni o percorsi personalizzati restano invariati.
+  // Usa la versione ad alta risoluzione per la foto di dettaglio.
   let heroPhotoSrc = photoSrc;
   const heroMatch = /^assets\/img\/photo\/([^/]+)$/.exec(photoSrc);
   if (heroMatch) {
@@ -1831,8 +1808,7 @@ function renderPlantDetailPanel() {
   setConfigDetailTab("overview");
 }
 
-// Pulsanti annulla/ripristina
-// Aggiorna lo stato abilitato dei pulsanti undo/redo
+// Abilita annulla e ripristina in base agli snapshot disponibili nello storico.
 function updateUndoRedoButtons() {
   const undoBtn = document.getElementById("btnUndo");
   const redoBtn = document.getElementById("btnRedo");
@@ -1842,8 +1818,7 @@ function updateUndoRedoButtons() {
     redoBtn.disabled = typeof canRedo === "function" ? !canRedo() : true;
 }
 
-// Avvisi e riepilogo
-// Aggiorna il pannello avvisi consociazioni e overflow
+// Avvisi di consociazione e overflow.
 function renderWarnings(L) {
   const w = document.getElementById("warnings");
   if (!w) return;

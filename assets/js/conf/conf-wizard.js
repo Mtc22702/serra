@@ -1,6 +1,4 @@
-// La Journey Bar e' l'unica navigazione del percorso: collega le tre fasi
-// (Impostazioni -> Serra/colture -> Lista semi) e mette in evidenza quella
-// attiva durante lo scorrimento. Il testo cambia in base al profilo scelto.
+// Coordina i passi del percorso guidato e le relative destinazioni nella pagina.
 (function () {
   function ready(fn) {
     if (document.readyState !== "loading") fn();
@@ -39,9 +37,7 @@
       if (typeof openSettingsPanelAndFocusDimensions === "function") {
         openSettingsPanelAndFocusDimensions();
       }
-      // Anche il primo passo deve essere una vera destinazione su desktop:
-      // il pannello vive nella colonna sinistra e la sua apertura, da sola,
-      // non sposta la pagina quando l'utente arriva dal basso.
+      // Destinazione desktop del primo passo.
       if (
         typeof isResponsiveConfiguratorLayout === "function" &&
         !isResponsiveConfiguratorLayout() &&
@@ -62,8 +58,7 @@
         (document.body.classList.contains("livello-novizio") ||
           document.body.classList.contains("livello-intermedio"));
 
-      // Nei percorsi guidati su mobile le colture precedono la planimetria:
-      // il secondo passo apre e mette a fuoco proprio questa card.
+      // Destinazione mobile del secondo passo guidato.
       if (
         isGuidedResponsive &&
         typeof openCustomizePanelAndFocus === "function"
@@ -76,8 +71,7 @@
         openCustomizePanelAndFocus();
       }
 
-      // La seconda fase ha sempre la planimetria come destinazione visiva,
-      // in tutti i livelli utente e a ogni larghezza di schermo.
+      // Destinazione della planimetria.
       if (typeof scrollGreenhouseImageIntoView === "function") {
         scrollGreenhouseImageIntoView("smooth");
       }
@@ -93,10 +87,7 @@
     );
     if (!steps.length) return;
 
-    // Segna il passo come già visitato/attivo e aggiorna la rail di
-    // avanzamento in fondo alla barra. Richiamata sia dal click (per un
-    // riscontro immediato, prima ancora che lo scroll arrivi a destinazione)
-    // sia dall'IntersectionObserver mentre si scorre la pagina.
+    // Aggiorna lo stato di avanzamento del percorso.
     function setActive(step) {
       const idx = steps.indexOf(step);
       steps.forEach(function (s) {
@@ -104,12 +95,9 @@
         if (s === step) s.setAttribute("aria-current", "step");
         else s.removeAttribute("aria-current");
       });
-      // Segna il passo come già visitato scorrendo/cliccando: solo un
-      // rinforzo visivo di avanzamento, nessun blocco/sblocco funzionale.
+      // Registra il passo visitato.
       step.classList.add("is-visited");
-      // "Serra e clima" ha sempre valori validi di default: averlo visitato
-      // basta per considerarlo completato (spunta). Colture/lista semi usano
-      // invece uno stato reale, sincronizzato da syncWizardDoneState().
+      // Determina il completamento del passo.
       if (step.dataset.journeyStep === "settings") {
         step.classList.add("is-done");
       }
@@ -123,9 +111,7 @@
       });
     });
 
-    // Navigazione da tastiera fra i passi (frecce/Home/End), oltre al normale
-    // tab-stop per singolo bottone: comodo per chi scorre la barra senza
-    // mouse, senza cambiare il comportamento di clic/scroll già esistente.
+    // Navigazione da tastiera tra i passi.
     bar.addEventListener("keydown", function (e) {
       const idx = steps.indexOf(document.activeElement);
       if (idx === -1) return;
@@ -141,11 +127,7 @@
       }
     });
 
-    // Contatore live sui passi 2/3: mostra il numero di varietà già in serra
-    // rispecchiando lo stato reale (state.beds), non solo lo scroll/click.
-    // Osserva il badge del pannello "Lista semi" (già aggiornato dal motore
-    // ad ogni render) solo come segnale di "qualcosa è cambiato": il valore
-    // mostrato qui viene comunque letto direttamente da state.beds.length.
+    // Contatori live delle colture selezionate.
     function syncWizardDoneState() {
       const hasCrops =
         typeof state !== "undefined" &&
@@ -218,11 +200,7 @@
     setActive(greenhouseStep || targets[0].step);
   });
 
-  // Pulsante "Strumenti extra": su tablet/smartphone la toolbar della vista
-  // (selettore vista, progetti, calendario, esporta) resta chiusa finché
-  // l'utente non la apre esplicitamente, per non affollare lo schermo prima
-  // di arrivare alla vista della serra. Su desktop il pulsante è inerte e la
-  // toolbar resta sempre visibile (gestito via CSS).
+  // Attiva la barra degli strumenti su mobile.
   ready(function () {
     const toggle = document.getElementById("stageToolsToggle");
     const toolbar = document.getElementById("viewToolbar");
@@ -233,8 +211,7 @@
     });
   });
 
-  // Riga riepilogo (zona/mese/misure): tutta la riga apre le impostazioni,
-  // così su smartphone non serve tenere il blocco esteso sempre visibile.
+  // Apre le impostazioni dal riepilogo mobile.
   ready(function () {
     const row = document.getElementById("guidedMetaRow");
     if (!row) return;
@@ -252,18 +229,14 @@
     });
   });
 
-  // CTA unica del novizio verso la lista della spesa: stessa azione già
-  // usata dallo step 3 della barra guidata, richiamata da un solo bottone
-  // così il novizio ha un'unica azione "in avanti" da seguire.
+  // Azione del profilo novizio verso la lista della spesa.
   ready(function () {
     const cta = document.getElementById("btnNoviceGoToYield");
     if (!cta) return;
     cta.addEventListener("click", focusYieldPanel);
   });
 
-  // Il badge del percorso è l'unico ingresso per cambiare profilo: mantiene
-  // il selettore vicino al contesto che modifica e non aggiunge una card
-  // impostazioni concorrente.
+  // Apertura del selettore profilo dal badge.
   ready(function () {
     const trigger = document.getElementById("personaPickerTrigger");
     const panel = document.getElementById("guidedIntro");

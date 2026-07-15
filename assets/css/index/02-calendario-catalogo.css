@@ -1186,7 +1186,7 @@
     overflow-x: clip;
     contain: layout paint;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes plantsScroll {
     0% {
       transform: translateX(0);

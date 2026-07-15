@@ -589,7 +589,7 @@
     cursor: pointer;
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 680px) {
     #calendarModal {
       align-items: flex-end;
@@ -760,8 +760,7 @@
   .materials {
     margin-top: 12px;
   }
-  /* Tendina "Materiali extra": chiusa di default (sono facoltativi), si apre
-     cliccando o si riapre da sola se l'utente aveva già scelto qualcosa. */
+  /* Contenitore richiudibile per i materiali extra facoltativi dell'ordine. */
   .materials-accordion {
     border: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
     border-radius: var(--raggio, 8px);
@@ -771,8 +770,7 @@
       box-shadow 0.16s ease,
       border-color 0.16s ease;
   }
-  /* Aperta, si solleva dallo sfondo con un bordo più marcato e un'ombra
-     vera: da riquadro piatto a "cassetto" chiaramente riconoscibile. */
+  /* Aumenta il rilievo visivo della tendina materiali quando è aperta. */
   .materials-accordion[open] {
     border: var(--bordo-aperto, 1.5px solid rgba(47, 107, 58, 0.32));
     box-shadow: var(--ombra-aperta, 0 20px 44px rgba(31, 58, 38, 0.22));
@@ -837,10 +835,7 @@
     flex-direction: column;
     gap: 4px;
   }
-  /* Ogni materiale è una "card" a righe impilate: funziona anche nella
-     colonna laterale stretta (~300px), senza bisogno di media query legate
-     alla larghezza della finestra (qui il problema è lo spazio del
-     contenitore, non quello dello schermo). */
+  /* Organizza ogni materiale extra come riga compatta nella colonna laterale. */
   .mat-row {
     display: flex;
     flex-direction: column;
@@ -853,8 +848,7 @@
       background 0.14s ease,
       border-color 0.14s ease;
   }
-  /* Facoltativi di default: finché non sono aggiunti restano attenuati, per
-     lasciare capire subito che non fanno parte dell'ordine. */
+  /* Riduce l'enfasi dei materiali extra finché non vengono selezionati. */
   .mat-row:not(.is-checked) {
     opacity: 0.62;
   }
@@ -962,7 +956,7 @@
     opacity: 0.85;
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media print {
     html,
     body {

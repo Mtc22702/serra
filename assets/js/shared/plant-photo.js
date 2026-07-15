@@ -99,10 +99,7 @@ const PLANT_PHOTO_MAP = {
   cimbru: "assets/img/photo/cimbru.webp"
 };
 
-// Restituisce il percorso della foto reale di una pianta (con fallback a un
-// nome file ipotizzato dall'id), da usare al posto delle emoji nelle liste.
-// `plant` è l'oggetto pianta se già disponibile (usa il suo campo `foto` se
-// presente); `id` è l'id della coltura, sempre richiesto per il fallback.
+// Restituisce la foto della pianta usando il percorso salvato o il nome derivato dall'ID.
 function resolvePlantPhoto(plant, id) {
   const p = plant || {};
   if (p.foto) {

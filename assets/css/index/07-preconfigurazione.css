@@ -61,7 +61,7 @@
     display: none;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .preconfig-overlay {
       align-items: flex-end;
@@ -93,7 +93,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (min-width: 661px) {
     .preconfig-sheet {
       max-height: calc(100dvh - 32px);
@@ -258,9 +258,7 @@
     border-left: 3px solid rgba(47, 107, 58, 0.3);
   }
 
-  /* Rassicura che i dati inseriti qui non sono definitivi: si potranno
-     rivedere nel configuratore, per non dare la sensazione di ripetere
-     lo stesso lavoro due volte. */
+  /* Nota sulle impostazioni modificabili. */
   .preconfig-intro-note {
     font-size: 11.5px;
     color: #5c6b57;
@@ -624,7 +622,7 @@
     transform: translateX(0);
   }
 
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes preconfigShake {
     0%,
     100% {
@@ -649,9 +647,7 @@
     border: 1.5px dashed rgba(47, 107, 58, 0.25);
   }
 
-  /* Su tablet e desktop il pannello è abbastanza largo da mostrare tutti i
-     controlli insieme: il corpo usa la propria altezza naturale e non crea
-     una seconda area di scorrimento. */
+  /* Layout del pannello per tablet e desktop. */
   @media (min-width: 661px) {
     .preconfig-body {
       flex: 0 0 auto;

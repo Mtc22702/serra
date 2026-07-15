@@ -95,7 +95,7 @@
     position: static;
     margin-top: 0;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes slideUp {
     from {
       transform: translateY(60px);
@@ -375,7 +375,7 @@
   .detail-tab-panel.active {
     display: flex;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes detailTabIn {
     from {
       opacity: 0;
@@ -671,7 +671,7 @@
   details.detail-diseases .detail-treatment-note {
     animation: detailSecFadeIn 0.18s ease-out;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes detailSecFadeIn {
     from {
       opacity: 0;
@@ -1547,9 +1547,7 @@
     cursor: pointer;
   }
 
-  /* Mobile: il cassetto carrello occupa tutta la larghezza disponibile e
-     rispetta le aree sicure (notch, home-indicator) invece di avere un
-     padding fisso che può finire sotto gli angoli arrotondati dello schermo. */
+  /* Cassetto carrello a larghezza completa su mobile. */
   @media (max-width: 480px) {
     .cart-drawer {
       width: 100vw;

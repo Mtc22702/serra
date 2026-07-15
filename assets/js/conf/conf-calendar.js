@@ -1,4 +1,4 @@
-// Stato calendario
+// Mantiene mese, vista e filtri attivi nella modale del calendario colturale.
 const calendarUi = {
   view: "project",
   month: null,
@@ -85,7 +85,7 @@ function calendarHarvestOffsets(plant) {
   return [central, central + 1];
 }
 
-// Calcolo attività
+// Raccoglie le regole usate per derivare attività stagionali delle colture.
 function calendarPlantSchedule(plant) {
   const sow = new Set(calendarSowMonths(plant));
   const transplant = new Set();
@@ -179,7 +179,7 @@ function calendarFilteredEntries(plants, month) {
     });
 }
 
-// Rendering calendario
+// Ridisegna il calendario usando le piante, il mese e i filtri attivi della configurazione.
 function calendarRenderCategories() {
   const select = document.getElementById("calendarCategory");
   if (!select) return;
@@ -201,7 +201,7 @@ function calendarRenderCategories() {
   calendarUi.category = select.value;
 }
 
-// Renderizza calendar render tabs
+// Genera le schede per scegliere tra calendario del progetto e catalogo completo.
 function calendarRenderTabs() {
   document.querySelectorAll("[data-calendar-view]").forEach((button) => {
     const active = button.dataset.calendarView === calendarUi.view;
@@ -216,7 +216,7 @@ function calendarRenderTabs() {
   if (allTab) allTab.textContent = calendarText("calendar.view_all");
 }
 
-// Renderizza calendar render month strip
+// Genera il selettore orizzontale dei mesi disponibili nel calendario.
 function calendarRenderMonthStrip() {
   const strip = document.getElementById("calendarMonthStrip");
   if (!strip) return;
@@ -240,7 +240,7 @@ function calendarRenderMonthStrip() {
   }).join("");
 }
 
-// Renderizza calendar render summary
+// Genera il riepilogo delle attività previste per il mese selezionato.
 function calendarRenderSummary() {
   const summary = document.getElementById("calendarSummary");
   if (!summary) return;
@@ -327,7 +327,7 @@ function calendarPlantCard(entry) {
   </details>`;
 }
 
-// Renderizza calendar render content
+// Compone il contenuto principale della modale calendario in base alla vista attiva.
 function calendarRenderContent() {
   const grid = document.getElementById("calendarGrid");
   if (!grid) return;
@@ -424,7 +424,7 @@ function setCalendarCategory(value) {
   calendarRenderContent();
 }
 
-// Apertura e chiusura
+// Gestisce l'apertura e la chiusura della modale calendario con i relativi stati ARIA.
 function openCalendarModal() {
   calendarUi.month = state.mese;
   renderCalendarModal({ scrollMonth: true });
@@ -435,7 +435,7 @@ function openCalendarModal() {
   }
 }
 
-// Chiude calendar modal
+// Chiude la modale calendario e restituisce il focus al controllo di origine.
 function closeCalendarModal() {
   const modal = document.getElementById("calendarModal");
   if (modal) {

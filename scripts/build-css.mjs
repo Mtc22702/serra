@@ -72,6 +72,6 @@ for (const [bundleName, entries] of Object.entries(bundles)) {
   );
   await writeFile(
     outputFile,
-    `/* Generated with npm run build:css. Edit modular source files instead. */\n${layerOrder}${content.join("\n")}`
+    `/* File generato con npm run build:css: modificare i moduli CSS sorgente. */\n${layerOrder}${content.join("\n")}`
   );
 }

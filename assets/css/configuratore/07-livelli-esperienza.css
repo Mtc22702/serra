@@ -23,10 +23,7 @@
     letter-spacing: -0.01em;
   }
 
-  /* Sfondo più opaco e bordo più netto dell'originale: era troppo
-     trasparente rispetto alla card "Parametri progetto" a sinistra (stesso
-     sfondo crema del pannello sotto), e la colonna destra sembrava senza
-     un contenitore proprio invece di essere una card gemella. */
+  /* Contenitore del profilo utente. */
   .persona-pick {
     display: block;
     margin-top: 4px;
@@ -112,9 +109,7 @@
     font-size: 11px;
     line-height: 1.22;
   }
-  /* "Cambia": stesso trattamento a bordo proprio degli altri pulsanti della
-     tendina guidata, per leggersi subito come un controllo e non come
-     un'altra etichetta informativa accanto al livello attuale. */
+  /* Pulsante di modifica del profilo. */
   .persona-pick-action {
     display: inline-flex;
     align-items: center;
@@ -380,7 +375,7 @@
   .panel.guided-highlight {
     animation: guidedHighlightPulse 1.6s ease;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes guidedHighlightPulse {
     0%,
     100% {
@@ -392,7 +387,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 1080px) {
     .persona-cards {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -402,7 +397,7 @@
       transform: none;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .guided-intro {
       padding: 12px 13px;

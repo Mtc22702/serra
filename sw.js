@@ -1,4 +1,4 @@
-/* Configurazione e risorse in cache */
+/* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
 const CACHE_VERSION = "2026-07-15-maintenance";
 const CACHE = `serra-${CACHE_VERSION}`;
 
@@ -101,13 +101,13 @@ const PRECACHE = [
   "./assets/img/svg/zucchina.svg"
 ];
 
-/* Installazione del Service Worker */
+/* Installa il Service Worker e precarica le risorse necessarie al funzionamento offline. */
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
   self.skipWaiting();
 });
 
-/* Attivazione e pulizia cache */
+/* Attiva il nuovo worker e rimuove le cache create da versioni precedenti. */
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches
@@ -121,7 +121,7 @@ self.addEventListener("activate", (e) => {
   self.clients.claim();
 });
 
-/* Messaggi dalla pagina */
+/* Riceve i messaggi inviati dalla pagina, ad esempio per aggiornare il worker. */
 self.addEventListener("message", (e) => {
   if (!e.data) return;
   if (e.data.type === "GET_VERSION") {
@@ -131,7 +131,7 @@ self.addEventListener("message", (e) => {
   }
 });
 
-/* Gestione delle richieste di rete */
+/* Seleziona la strategia di cache per ogni richiesta intercettata dal worker. */
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
 
@@ -146,7 +146,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // Navigazione: strategia network-first
+  // Per le pagine HTML prova prima la rete e usa la cache in caso di errore.
   if (e.request.mode === "navigate") {
     e.respondWith(
       fetch(e.request)
@@ -168,7 +168,7 @@ self.addEventListener("fetch", (e) => {
     destination === "script" ||
     destination === "manifest";
 
-  // Script e stili: strategia cache-first
+  // Per script e fogli di stile usa la cache prima della rete per velocizzare l'avvio.
   if (needsFreshCopy) {
     e.respondWith(
       caches.match(e.request, { ignoreSearch: true }).then((cached) => {
@@ -183,7 +183,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // Immagini e font: strategia cache-first
+  // Per immagini e font usa la cache prima della rete per limitare richieste ripetute.
   e.respondWith(
     caches.match(e.request).then(
       (cached) =>

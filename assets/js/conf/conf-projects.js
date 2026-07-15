@@ -1,4 +1,4 @@
-// Store progetti
+// Gestisce lo store locale che contiene configurazioni e progetto attivo.
 const PROJECTS_KEY = "serra.projects.v1";
 
 // Legge lo store progetti dal localStorage
@@ -55,7 +55,7 @@ function defaultProjectConfig() {
   };
 }
 
-// Gestione store
+// Normalizza, aggiorna e sincronizza la struttura dei progetti salvati.
 function ensureProjectsStore() {
   let store = readProjectsStore();
   if (store && Array.isArray(store.projects) && store.projects.length) {
@@ -103,8 +103,7 @@ function syncActiveProjectConfig(payload) {
   writeProjectsStore(store);
 }
 
-// Operazioni progetto
-// Attiva il progetto selezionato e ricarica la configurazione
+// Carica il progetto selezionato nello stato corrente e aggiorna l'interfaccia.
 function switchToProject(id) {
   const store = ensureProjectsStore();
   const target = store.projects.find((p) => p.id === id);
@@ -194,8 +193,7 @@ function deleteProject(id) {
   else renderProjectsModal();
 }
 
-// Modale progetti
-// Apre la modale di gestione progetti
+// Apre la modale progetti e prepara elenco, pulsanti e stato di selezione.
 function openProjectsModal() {
   ensureProjectsStore();
   renderProjectsModal();

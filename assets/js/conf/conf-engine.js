@@ -1,5 +1,4 @@
-// Calcolo geometrico
-// Calcola il conteggio piante per un numero di file target
+// Calcola i conteggi di piante e file rispettando spaziatura e dimensioni dell'aiuola.
 function countForPlant(p, targetRows = 2) {
   const bedW = usableBedWidth();
   const Sc = p.dr || p.d;
@@ -130,8 +129,7 @@ function starterCountForAutoPlant(p, useFila = false) {
   );
 }
 
-// Selezione e snapshot
-// Memorizza l'ID della pianta selezionata
+// Gestisce la pianta selezionata e gli snapshot necessari alle modifiche reversibili.
 function rememberSelection() {
   return state.selected >= 0 && state.selected < state.beds.length
     ? state.beds[state.selected].plantId
@@ -172,8 +170,7 @@ function normalizeSavedBeds(beds) {
     });
 }
 
-// Ordinamento aiuole
-// Converte l'altezza in valore di ordinamento
+// Ordina le aiuole per altezza e compatibilità visiva nel piano della serra.
 function heightSortValue(h) {
   return state.sudInBasso ? 2 - H_RANK[h] : H_RANK[h];
 }
@@ -224,8 +221,7 @@ function sortBedsForLayout() {
   state.beds = ordered;
 }
 
-// Riduzione e fitting
-// Riduce i conteggi per eliminare l'overflow
+// Riduce le quantità quando il piano supera lo spazio disponibile della serra.
 function shrinkOverflowToFit(options = {}) {
   const preserveLockedCounts = options.preserveLockedCounts === true;
   const allowRemove = options.allowRemove !== false;
@@ -353,8 +349,7 @@ function rebalanceManualLayoutOnly() {
   restoreSelection(selectedPlant);
 }
 
-// Bilanciamento automatico
-// Individua le aiuole riducibili per fare spazio a una bloccata
+// Bilancia automaticamente le aiuole per rispettare blocchi e spazio disponibile.
 function flexibleCropReductionCandidates(layout, lockedPlantId) {
   return state.beds
     .map((bed, index) => {
@@ -485,7 +480,7 @@ function autoBalanceLayout(
   restoreSelection(selectedPlant);
 }
 
-// Modifiche manuali
+// Applica modifiche manuali alle colture preservando le scelte bloccate dall'utente.
 function addPlant(id) {
   if (state.beds.some((b) => b.plantId === id)) return;
   const p = BYID[id];
@@ -510,9 +505,7 @@ function addPlant(id) {
   state.manualPlanNotice = "";
   state.selected = state.beds.findIndex((b) => b.plantId === id);
 
-  // In esperto il catalogo può continuare a completare la serra in automatico,
-  // ma distribuisce l'espansione tra le colture e applica un tetto per specie:
-  // evita che una sola pianta minuta diventi un'aiuola enorme.
+  // Bilancia l'espansione automatica tra le colture.
   autoBalanceLayout(true, true, {
     preserveLockedCounts: true,
     expandLockedCounts: false,
@@ -623,9 +616,7 @@ function fillSelectedPlants() {
   const historyBefore = captureHistorySnapshot();
   state.autoPlan = false;
   state.manualPlanNotice = "";
-  // “Riempi spazi vuoti” può modificare solo le colture non bloccate.
-  // Conserviamo quindi esclusivamente le quantità che l'utente ha fissato:
-  // ripristinare anche quelle libere annullava il riempimento appena calcolato.
+  // Preserva le quantità bloccate durante il riempimento.
   const lockedCounts = new Map(
     state.beds
       .filter((bed) => bed.countLocked)
@@ -708,8 +699,7 @@ function setPlantCount(id, value) {
   finalizeManualCountChange(fitResult, selectedPlant);
 }
 
-// Utility piano automatico
-// Calcola il camminamento compatto per il piano automatico
+// Calcola larghezza e posizione del camminamento per il piano generato automaticamente.
 function compactPathForAutoFill() {
   if (state.larghezza >= 6 && state.lunghezza >= 7)
     return Math.min(state.path, 45);
@@ -781,7 +771,7 @@ function restoreBedsSnapshot(snapshot) {
   }));
 }
 
-// Storico modifiche
+// Gestisce snapshot e pile annulla-ripristina delle modifiche al progetto.
 const HISTORY_LIMIT = 60;
 let undoStack = [];
 let redoStack = [];
@@ -804,8 +794,7 @@ function applyHistorySnapshot(snap) {
   state.selected = snap.selected;
 }
 
-// Registra uno snapshot già acquisito: evita passi vuoti nello storico quando
-// un'azione viene rifiutata perché non entra nella serra.
+// Registra uno snapshot valido nello storico.
 function recordHistorySnapshot(snapshot) {
   undoStack.push(snapshot);
   if (undoStack.length > HISTORY_LIMIT) undoStack.shift();
@@ -859,8 +848,7 @@ function redoLastChange() {
   if (typeof updateUndoRedoButtons === "function") updateUndoRedoButtons();
 }
 
-// Riempimento stagionale
-// Ottimizza il baseline del piano automatico
+// Genera un piano stagionale privilegiando colture compatibili con i parametri scelti.
 function finalizeAutoFillWithOptimizeBaseline() {
   const original = cloneBedsSnapshot();
   const beforeLayout = computeLayout();
@@ -879,7 +867,7 @@ function finalizeAutoFillWithOptimizeBaseline() {
   restoreBedsSnapshot(original);
 }
 
-// Espansione spazio
+// Espande le aiuole idonee per utilizzare lo spazio residuo della serra.
 function expandAutoFillToSpace(options = {}) {
   const skipLockedCounts = options.skipLockedCounts === true;
   const respectDiversityLimit = options.respectDiversityLimit === true;
@@ -1028,7 +1016,7 @@ function fillVisualPaddingRows(options = {}) {
   });
 }
 
-// Colture tappabuchi
+// Seleziona colture compatte per riempire gli spazi residui tra le aiuole.
 const FILLER_CROPS = [
   "ravanello",
   "valerianella",
@@ -1074,8 +1062,7 @@ function pickFillerCrop(gap, excludeIds = null) {
   return fallback[0] || null;
 }
 
-// Riempie le code delle colonne con colture tappabuchi
-// excludeIds: piante da non riproporre come tappabuchi (es. appena rimossa dall'utente)
+// Riempie gli spazi residui delle colonne.
 function fillColumnTailsWithFiller(excludeIds = null) {
   let guard = 0;
   while (guard++ < 40) {
@@ -1348,8 +1335,7 @@ function autoFill(options = {}) {
   render();
 }
 
-// Preset e importazione
-// Carica un preset predefinito nel piano
+// Importa un preset nel piano sostituendo aiuole e impostazioni della configurazione.
 function loadPreset(key) {
   if (!PRESETS[key]) return;
   recordHistory();
@@ -1408,9 +1394,7 @@ function importCartToPlan(options = {}) {
     (id, index) => BYID[id] && ids.indexOf(id) === index
   );
   if (!uniqueIds.length) return false;
-  const historyBefore = options.recordHistory
-    ? captureHistorySnapshot()
-    : null;
+  const historyBefore = options.recordHistory ? captureHistorySnapshot() : null;
   state.beds = uniqueIds.map((id) => {
     const plant = BYID[id];
     return {

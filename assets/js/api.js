@@ -1,4 +1,4 @@
-// Modulo per la gestione del Database Locale e Fallback LocalStorage
+// Gestisce il database locale e l'archivio alternativo nel browser.
 (() => {
   const PORT = 3000;
   // Determina l'host per le chiamate API
@@ -65,7 +65,7 @@
         }
       }
 
-      // Se offline/fallback, controlla prima localStorage
+      // In assenza del server, controlla prima i dati salvati nel browser.
       try {
         const local = localStorage.getItem("serra.custom_plants");
         if (local) return JSON.parse(local);
@@ -88,10 +88,7 @@
       return null;
     },
 
-    // Carica il catalogo piante aggiornato e lo installa come window.PLANTS
-    // (con aggiornamento di window.TIPO per le nuove voci). Da chiamare una
-    // volta all'avvio di ogni pagina che usa il catalogo dinamico: prima era
-    // duplicato identico in conf-app.js e home-app.js.
+    // Sincronizza il catalogo globale e le relative categorie.
     async bootstrapPlants() {
       try {
         const customPlants = await this.getPlants();
@@ -138,7 +135,7 @@
         } catch (e) {}
       }
 
-      // Se offline/fallback, controlla prima localStorage
+      // In assenza del server, controlla prima i dati salvati nel browser.
       try {
         const local = localStorage.getItem("serra.users");
         if (local) return JSON.parse(local);
@@ -156,7 +153,7 @@
         }
       } catch (e) {}
 
-      // Fallback estremo di sicurezza
+      // Usa i dati predefiniti quando nessuna sorgente locale è disponibile.
       const defaultUsers = [
         {
           email: "admin@ortoinserra.it",
@@ -209,7 +206,7 @@
         } catch (e) {}
       }
 
-      // Se offline/fallback, controlla prima localStorage
+      // In assenza del server, controlla prima i dati salvati nel browser.
       try {
         const local = localStorage.getItem("serra.orders");
         if (local) return JSON.parse(local);

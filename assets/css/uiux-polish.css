@@ -422,7 +422,7 @@
       display: block;
     }
 
-    /* Ordine della guida per i percorsi avanzati. */
+    /* Ordine della guida nei percorsi avanzati. */
     body:is(.livello-intermedio, .livello-esperto) #noviceGuidePanel {
       order: -1;
     }
@@ -555,9 +555,7 @@
       height: 22px;
     }
 
-    /* Spazio ridotto: l'etichetta sparisce, resta l'icona con la freccetta
-     (più piccola) a segnalare comunque che è un apri/chiudi, non solo
-     un'icona decorativa. */
+    /* Riduce il controllo impostazioni mantenendo riconoscibile l'azione di apertura. */
     .guided-setup-gear {
       height: 34px;
       padding: 0 9px;
@@ -875,8 +873,7 @@
     box-shadow: 0 8px 22px rgba(31, 58, 38, 0.08);
   }
 
-  /* Il contesto è il ponte fra intestazione/impostazioni e lavoro operativo:
-   come figlio diretto della griglia deve occupare tutta la riga. */
+  /* Estende il contesto del percorso su tutta la riga della griglia principale. */
   .app > .journey-context {
     grid-column: 1 / -1;
     width: 100%;
@@ -1096,9 +1093,7 @@
 
     .hero-content {
       min-height: auto;
-      /* Safari iOS può sovrapporre la barra inferiore all'ultimo controllo.
-       Questa riserva permette di far scorrere la CTA completamente sopra la
-       toolbar e include anche l'area del gesto Home sui dispositivi con notch. */
+      /* Riserva spazio sotto la CTA per la barra di sistema dei dispositivi iOS. */
       padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
     }
 
@@ -1301,14 +1296,11 @@
     .site-header .nav-actions {
       grid-column: 2;
       width: 100%;
-      /* Il toggle hamburger ora è centrato in modo indipendente (vedi sotto):
-       quel che resta qui (il carrello) va tenuto sul bordo destro invece
-       che appiccicato accanto al logo. */
+      /* Mantiene il carrello sul bordo destro dell'header nelle viste mobili. */
       justify-content: flex-end;
     }
 
-    /* Centrato nella pagina (rispetto a .site-header, che a questa larghezza
-     è position:fixed a tutta larghezza) invece che appiccicato al logo. */
+    /* Centra il pulsante del menu rispetto all'header fisso su mobile. */
     .site-header .nav-menu-toggle {
       position: absolute;
       left: 50%;
@@ -1409,9 +1401,7 @@
       border-radius: 13px;
     }
 
-    /* Sezione preferenze: card distinta dai link di navigazione, con
-     controlli "veri" (switch e selettore a pillola) invece di una freccia
-     o di una <select> nativa poco leggibile. */
+    /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
     .site-header .mobile-nav-preferences {
       display: grid;
       grid-template-columns: 1fr;
@@ -1428,10 +1418,7 @@
       display: grid;
       grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      /* .theme-toggle (classe condivisa col bottone tema) imposta altrove
-       place-items:center: senza questo reset, il testo "Tema" finisce
-       centrato nella sua colonna mentre "Lingua" (che non ha quella
-       classe) resta a sinistra. */
+      /* Uniforma l'allineamento dei controlli tema e lingua nel menu mobile. */
       justify-items: start;
       gap: 0.6rem;
       min-width: 0;
@@ -1490,9 +1477,7 @@
       white-space: nowrap;
     }
 
-    /* Interruttore tema: una vera "pillola" con pallino che scivola, lo
-     stato riflette sempre html[data-theme] quindi resta sincronizzato
-     con qualunque altro controllo tema in pagina. */
+    /* Definisce l'interruttore visivo per cambiare il tema della pagina. */
     .mobile-menu-switch {
       position: relative;
       flex: none;
@@ -1524,10 +1509,7 @@
       transform: translateX(17px);
     }
 
-    /* Selettore lingua a pillola: entrambe le opzioni sempre visibili,
-     quella attiva evidenziata leggendo html[lang] (già aggiornato da
-     setLang/confSetLang su tutte le pagine, nessuna sincronizzazione
-     extra necessaria). */
+    /* Mostra le opzioni lingua con evidenza per quella attualmente attiva. */
     .lang-switch {
       display: inline-flex;
       flex: none;
@@ -1722,12 +1704,12 @@
   }
 
   @media (max-width: 660px) {
-    /* Nascondi la pillola superiore per liberare spazio verticale */
+    /* Pillola superiore nascosta su mobile. */
     .hero-season-kicker {
       display: none;
     }
 
-    /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
+    /* Allineamento verticale della card. */
     .hero-content {
       gap: 1rem;
       padding-top: 0.75rem;
@@ -1769,8 +1751,7 @@
     }
   }
 
-  /* Impostazioni iniziali: il controllo chiuso mostra cosa contiene e i valori
-   correnti; il pannello aperto separa chiaramente dati serra e profilo. */
+  /* Separa i parametri iniziali della serra dal selettore del profilo utente. */
   .guided-setup-gear {
     justify-content: flex-start;
     width: min(430px, 42vw);
@@ -2043,8 +2024,7 @@
     }
   }
 
-  /* Persona card della hero: ogni livello è una scelta primaria leggibile,
-   non una riga trasparente sopra il verde della serra. */
+  /* Rende ogni profilo della hero una scelta primaria chiaramente selezionabile. */
   .hero-cfg-route-intro {
     color: rgba(255, 255, 255, 0.96);
     font-size: 0.82rem;
@@ -2269,9 +2249,7 @@
     }
   }
 
-  /* Tendina delle impostazioni: uno stato aperto deve sembrare un pannello
-   espanso, non una normale sequenza di card. Il bordo, il controllo e la
-   linea di separazione fanno leggere insieme sia l'apertura sia la chiusura. */
+  /* Distingue la tendina impostazioni aperta dalle normali card della pagina. */
   .guided-setup-gear {
     border: 1.5px solid rgba(47, 107, 58, 0.34);
     background: linear-gradient(155deg, #fffef9, rgba(226, 242, 224, 0.96));
@@ -2509,10 +2487,7 @@
     }
   }
 
-  /* Hub del percorso: sostituisce la sequenza di card indipendenti (contesto,
-   impostazioni e aiuto) con un solo blocco leggibile. La CTA cambia già con
-   il livello scelto; qui la gerarchia rende evidente che tutto appartiene al
-   medesimo percorso di acquisto. */
+  /* Raggruppa contesto, impostazioni e guida nel blocco del percorso guidato. */
   .workflow-hub {
     grid-column: 1 / -1;
     display: grid;
@@ -2707,8 +2682,7 @@
     }
   }
 
-  /* Il livello scelto è anche il controllo per cambiarlo: così il profilo
-   resta nel punto in cui spiega il flusso e non richiede un pannello extra. */
+  /* Selettore del profilo corrente. */
   .workflow-hub .journey-context {
     grid-column: 1 / -1;
     grid-template-columns: auto minmax(180px, 1fr) auto auto;
@@ -2774,8 +2748,7 @@
     text-underline-offset: 3px;
   }
 
-  /* La guida è un aiuto secondario: rimuoviamo l'aspetto da pulsante circolare
-   del punto interrogativo, mantenendo un link leggero ma accessibile. */
+  /* Mantiene la guida come azione secondaria all'interno del percorso. */
   .workflow-hub .journey-context-help > span:first-child {
     width: auto;
     height: auto;
@@ -2878,8 +2851,7 @@
     }
   }
 
-  /* Azioni del percorso: una sola priorità per riga. Il controllo delle
-   impostazioni già scelte è un raccordo leggero; il passo attivo è la CTA. */
+  /* Azioni del percorso guidato. */
   .config-page-title .guided-brand-copy {
     flex: 1 1 auto;
   }
@@ -3046,9 +3018,7 @@
     }
   }
 
-  /* Desktop: il riepilogo e i tre passi condividono la stessa riga. I due
-   passi operativi ricevono spazio equivalente; il controllo di revisione
-   resta leggero, senza creare una fila di elementi ammassati a sinistra. */
+  /* Allinea riepilogo e passaggi del percorso sulla stessa riga desktop. */
   @media (min-width: 1101px) {
     .workflow-hub .journey-context {
       grid-template-columns: auto minmax(260px, 1fr) minmax(430px, 0.85fr);
@@ -3075,8 +3045,7 @@
     }
   }
 
-  /* I passi sono l'unica azione del percorso: colori e contrasto identificano
-   il profilo, senza replicare un CTA sopra la planimetria. */
+  /* Usa colori e contrasto per indicare il profilo e lo stato dei passaggi. */
   .workflow-hub .journey-context--novizio {
     --journey-action: #347a3b;
     --journey-soft: #e7f4e4;
@@ -3217,9 +3186,7 @@
     color: var(--journey-action-text);
   }
 
-  /* Desktop: il confronto fra i tre percorsi deve restare immediato. Manteniamo
-   l'ordine naturale delle card e rendiamo attivo il profilo scelto, senza
-   estrarlo in una riga separata. */
+  /* Mantiene affiancati i profili per facilitarne il confronto su desktop. */
   @media (min-width: 901px) {
     .workflow-persona-panel .persona-cards,
     .workflow-persona-panel .persona-pick[open] .persona-cards {
@@ -3280,8 +3247,7 @@
     }
   }
 
-  /* La guida rapida cambia contenuto con il percorso: l'accento riprende il
-   profilo attivo senza dipendere dai colori chiari del tema. */
+  /* Adatta l'accento della guida rapida al profilo attualmente selezionato. */
   body.livello-novizio #noviceGuidePanel {
     border-top-color: var(--persona-nov);
   }

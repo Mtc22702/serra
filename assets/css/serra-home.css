@@ -1,4 +1,4 @@
-/* Generated with npm run build:css. Edit modular source files instead. */
+/* File generato con npm run build:css: modificare i moduli CSS sorgente. */
 @layer base, dark-theme, polish;
 
 /* Moduli CSS della pagina principale */
@@ -14,11 +14,7 @@
     padding: 0;
   }
   :root {
-    /* Palette unificata di "Orto in Serra": stessi valori usati anche dal
-       configuratore (assets/css/configuratore/01-fondazioni-intro.css), che
-       li richiama tramite alias in italiano (--verde, --terra, --oro...).
-       Questo file è il primo caricato su tutte e tre le pagine (home,
-       configuratore, area personale), quindi resta la fonte unica. */
+    /* Variabili cromatiche condivise. */
     --green: #2f6b3a;
     --green-dk: #1f3a26;
     --green-lt: #5b9c4a;
@@ -36,7 +32,7 @@
     --r: 16px;
     --nav-h: 76px;
 
-    /* Scala condivisa di raggi e ombre per i nuovi componenti unificati */
+    /* Raggi e ombre condivisi. */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -337,7 +333,7 @@
     flex-shrink: 0;
     animation: kickerPulse 2.4s ease-in-out infinite;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes kickerPulse {
     0%,
     100% {
@@ -1597,7 +1593,7 @@
     font-size: 0.8rem;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 680px) {
     .percorso-board--two {
       grid-template-columns: 1fr;
@@ -1657,7 +1653,7 @@
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (min-width: 601px) and (max-width: 900px) {
     .hero-immersive {
       justify-content: center;
@@ -3320,7 +3316,7 @@
     overflow-x: clip;
     contain: layout paint;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes plantsScroll {
     0% {
       transform: translateX(0);
@@ -3561,7 +3557,7 @@
     position: static;
     margin-top: 0;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes slideUp {
     from {
       transform: translateY(60px);
@@ -3841,7 +3837,7 @@
   .detail-tab-panel.active {
     display: flex;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes detailTabIn {
     from {
       opacity: 0;
@@ -4137,7 +4133,7 @@
   details.detail-diseases .detail-treatment-note {
     animation: detailSecFadeIn 0.18s ease-out;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes detailSecFadeIn {
     from {
       opacity: 0;
@@ -5013,9 +5009,7 @@
     cursor: pointer;
   }
 
-  /* Mobile: il cassetto carrello occupa tutta la larghezza disponibile e
-     rispetta le aree sicure (notch, home-indicator) invece di avere un
-     padding fisso che può finire sotto gli angoli arrotondati dello schermo. */
+  /* Cassetto carrello a larghezza completa su mobile. */
   @media (max-width: 480px) {
     .cart-drawer {
       width: 100vw;
@@ -5149,7 +5143,7 @@
       box-shadow: 0 8px 24px rgba(27, 67, 50, 0.3);
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     :root {
       --nav-h: 62px;
@@ -5220,7 +5214,7 @@
       justify-content: center;
       min-height: calc(100svh - var(--nav-h));
     }
-    /* Regole responsive */
+    /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
     @media (max-height: 700px) {
       .hero-content {
         gap: 0.75rem;
@@ -6343,8 +6337,7 @@
     box-shadow: 0 10px 30px rgba(27, 67, 50, 0.08);
     backdrop-filter: blur(20px) saturate(1.15);
     -webkit-backdrop-filter: blur(20px) saturate(1.15);
-    /* Safari può perdere il backdrop-filter dopo un cambio di tema (mutazione
-       di html[data-theme]): un layer di compositing dedicato lo previene. */
+    /* Correzione Safari per lo sfondo sfocato del menu. */
     will-change: backdrop-filter;
   }
   .site-header-inner {
@@ -6466,10 +6459,7 @@
     color: #fff;
   }
 
-  /* Tra desktop compatto e desktop pieno la nav centrale aveva 62px in più
-     dello spazio disponibile: essendo centrata e con overflow nascosto,
-     tagliava proprio "Home" (il primo punto di ingresso). Riduciamo solo
-     ritmo e spaziatura in questa fascia, mantenendo tutte le voci visibili. */
+  /* Spaziatura della navigazione su desktop compatto. */
   @media (min-width: 901px) and (max-width: 1320px) {
     .site-header .nav-links {
       gap: 0;
@@ -6564,7 +6554,7 @@
     line-height: 1;
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (min-width: 661px) and (max-width: 900px) {
     .site-header .nav-links {
       overflow-x: auto;
@@ -6654,10 +6644,7 @@
     }
 
     body.nav-menu-open {
-      /* position:fixed (in coppia con lo scroll-lock in nav.js) invece del
-         solo overflow:hidden: su iOS Safari è l'unico modo per impedire
-         davvero lo scroll/rimbalzo della pagina dietro al menu aperto, e
-         per farla ripartire pulita alla chiusura. */
+      /* Posizionamento fisso del menu mobile. */
       position: fixed;
       top: 0;
       left: 0;
@@ -6673,10 +6660,7 @@
       background: rgba(19, 45, 34, 0.18);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      /* Safari a volte "perde" il backdrop-filter dopo un ricalcolo dello
-         stile (es. cambio di html[data-theme] mentre l'overlay è già
-         visibile): forzare un proprio layer di compositing evita che il
-         blur sparisca. */
+      /* Correzione Safari per lo sfondo sfocato del menu. */
       will-change: backdrop-filter;
       transform: translateZ(0);
     }
@@ -6750,9 +6734,7 @@
       transform: translateY(0);
     }
     html[data-theme="dark"] .site-header .nav-links {
-      /* Come per .site-header: uno sfondo quasi opaco nasconderebbe del
-         tutto il backdrop-filter, quindi qui restiamo semi-trasparenti
-         invece del pieno #13221b di prima. */
+      /* Sfondo traslucido della navigazione mobile. */
       background: rgba(19, 34, 27, 0.86);
       border-color: rgba(172, 214, 187, 0.16);
       box-shadow: 0 22px 52px rgba(0, 0, 0, 0.5);
@@ -6920,7 +6902,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .site-header .cart-btn {
       width: 52px;
@@ -6935,7 +6917,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .cookie-banner {
       bottom: 0.5rem;
@@ -7085,7 +7067,7 @@
     }
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .cookie-accept-btn,
     .cookie-reject-btn {
@@ -7095,7 +7077,7 @@
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .hero-path {
       margin-top: 1.3rem;
@@ -7181,7 +7163,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-height: 820px) and (min-width: 900px) {
     .hero-content {
       padding-top: 0.7rem;
@@ -7323,9 +7305,7 @@
     transform: translateY(-1px);
     box-shadow: 0 10px 22px rgba(27, 67, 50, 0.18);
   }
-  /* Griglia fissa a 2 colonne (non più auto-fill): tutte le card, incluse
-     le prime 3 che prima erano più grandi e "in evidenza", hanno ora la
-     stessa dimensione (vedi renderEditorialPlants in home-catalog.js). */
+  /* Griglia catalogo a due colonne. */
   .catalog-pro-section .plant-compact-list {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
@@ -7385,7 +7365,7 @@
       grid-template-columns: 1fr;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 760px) {
     .catalog-filter-group {
       padding: 0.66rem;
@@ -7398,7 +7378,7 @@
       margin-top: 0.08rem;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 680px) {
     .catalog-pro-section {
       padding-left: 0.75rem;
@@ -7408,9 +7388,7 @@
       font-size: clamp(1.78rem, 10vw, 2.4rem);
       line-height: 1.03;
     }
-    /* 2 colonne anche su smartphone: la card, troppo stretta per stare in
-       riga (foto+testo+prezzo affiancati), passa a un layout verticale che
-       usa lo spazio in basso invece di comprimere tutto in orizzontale. */
+    /* Griglia catalogo a due colonne su smartphone. */
     .catalog-pro-section .plant-compact-list {
       grid-template-columns: repeat(2, 1fr);
       gap: 0.6rem;
@@ -7455,7 +7433,7 @@
       margin-bottom: 1.1rem;
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 480px) {
     .catalog-search--pro .catalog-search-box {
       gap: 0.45rem;
@@ -7764,7 +7742,7 @@
     flex-shrink: 0;
     animation: searchBadgePulse 2.4s ease-in-out 1s 3;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes searchBadgePulse {
     0%,
     100% {
@@ -7817,7 +7795,7 @@
     transform: translateY(-1px);
   }
 
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes searchAttention {
     0% {
       box-shadow:
@@ -7920,7 +7898,7 @@
     padding-bottom: 0.1rem;
     scrollbar-width: thin;
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 600px) {
     .footer-plant-strip {
       display: none;
@@ -8183,7 +8161,7 @@
       grid-template-columns: 1fr;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 760px) {
     .catalog-filter-group {
       padding: 0.66rem;
@@ -8196,7 +8174,7 @@
       margin-top: 0.08rem;
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 480px) {
     .catalog-tools--advanced {
       padding: 0.66rem;
@@ -8514,21 +8492,14 @@
     box-shadow: 0 8px 20px rgba(27, 67, 50, 0.22);
   }
 
-  /* "Mostra altri N": in fondo alla lista/griglia, appare solo quando ci
-     sono più risultati di quelli già mostrati (vedi CATALOG_PAGE_SIZE in
-     home-catalog.js), per non far scrollare l'intero catalogo in un colpo
-     solo. Spanna tutta la larghezza della griglia sottostante. */
+  /* Pulsante di caricamento progressivo. */
   .catalog-load-more-wrap {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
     padding: 1.3rem 0 0.3rem;
   }
-  /* Colori (chiaro/scuro) affidati al sistema pulsanti condiviso: vedi
-     .catalog-load-more-btn aggiunto agli elenchi "secondary" in
-     tema/05-pulsanti-stati.css, così eredita lo stesso trattamento già
-     verificato per btn-soft/view-print-btn/ecc. invece di duplicare i
-     colori qui. */
+  /* Colori gestiti dal sistema pulsanti condiviso. */
   .catalog-load-more-btn {
     display: inline-flex;
     align-items: center;
@@ -8584,7 +8555,7 @@
     box-shadow: 0 4px 14px rgba(45, 106, 79, 0.22);
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .top-buy-row {
       flex-direction: column;
@@ -8684,7 +8655,7 @@
     box-shadow: 0 2px 6px rgba(27, 67, 50, 0.08);
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .catalog-hint {
       flex-direction: column;
@@ -8717,9 +8688,7 @@
     }
   }
 
-  /* #compactPlants (id, non solo classe) per battere in specificità
-     .catalog-pro-section .plant-compact-list senza forzare con importante:
-     l'elemento ha sempre quell'id (vedi index.html). */
+  /* Regole specifiche per la lista compatta. */
   #compactPlants.compact-list-view {
     display: grid;
     grid-template-columns: 1fr;
@@ -8774,7 +8743,7 @@
     border-radius: 10px;
   }
 
-  /* Fallback emoji quando la foto non esiste */
+  /* Emoji alternativa quando la foto non è disponibile */
   .super-compact-thumb-emoji {
     display: none;
     position: absolute;
@@ -8909,7 +8878,7 @@
     background: #b03020;
   }
 
-  /* Responsive mobile — la struttura a 2 righe si mantiene naturalmente */
+  /* Layout compatto a due righe su mobile. */
   @media (max-width: 400px) {
     .plant-card-super-compact {
       padding: 8px 11px;
@@ -9028,7 +8997,7 @@ html[data-theme="dark"]
     overflow: hidden;
     animation: heroCfgIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes heroCfgIn {
     from {
       opacity: 0;
@@ -9350,7 +9319,7 @@ html[data-theme="dark"]
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .hero-cfg-inner {
       grid-template-columns: 1fr;
@@ -9372,7 +9341,7 @@ html[data-theme="dark"]
       max-width: 300px;
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 520px) {
     .hero-cfg-inner {
       padding: 1.5rem 1.2rem;
@@ -9411,7 +9380,7 @@ html[data-theme="dark"]
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     animation: cfgLevelsIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes cfgLevelsIn {
     from {
       opacity: 0;
@@ -9516,7 +9485,7 @@ html[data-theme="dark"]
     width: 100%;
     margin-top: 0;
   }
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .hero-cfg-actions {
       align-items: center;
@@ -9565,7 +9534,7 @@ html[data-theme="dark"]
     line-height: 1.2;
     white-space: nowrap;
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .conf-actions {
       align-items: stretch;
@@ -9579,7 +9548,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Responsive tablet */
+  /* Adatta disposizione e dimensioni agli schermi tablet e intermedi. */
   @media (max-width: 900px) {
     .flow-section-head {
       align-items: flex-start;
@@ -9600,7 +9569,7 @@ html[data-theme="dark"]
       min-width: 0;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 620px) {
     .abbinamenti-section,
     .kit-section,
@@ -9634,7 +9603,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 860px) {
     .contatti-grid {
       grid-template-columns: 1fr;
@@ -9716,7 +9685,7 @@ html[data-theme="dark"]
     display: none;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .preconfig-overlay {
       align-items: flex-end;
@@ -9748,7 +9717,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (min-width: 661px) {
     .preconfig-sheet {
       max-height: calc(100dvh - 32px);
@@ -9913,9 +9882,7 @@ html[data-theme="dark"]
     border-left: 3px solid rgba(47, 107, 58, 0.3);
   }
 
-  /* Rassicura che i dati inseriti qui non sono definitivi: si potranno
-     rivedere nel configuratore, per non dare la sensazione di ripetere
-     lo stesso lavoro due volte. */
+  /* Nota sulle impostazioni modificabili. */
   .preconfig-intro-note {
     font-size: 11.5px;
     color: #5c6b57;
@@ -10279,7 +10246,7 @@ html[data-theme="dark"]
     transform: translateX(0);
   }
 
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes preconfigShake {
     0%,
     100% {
@@ -10304,9 +10271,7 @@ html[data-theme="dark"]
     border: 1.5px dashed rgba(47, 107, 58, 0.25);
   }
 
-  /* Su tablet e desktop il pannello è abbastanza largo da mostrare tutti i
-     controlli insieme: il corpo usa la propria altezza naturale e non crea
-     una seconda area di scorrimento. */
+  /* Layout del pannello per tablet e desktop. */
   @media (min-width: 661px) {
     .preconfig-body {
       flex: 0 0 auto;
@@ -10708,9 +10673,7 @@ html[data-theme="dark"]
     --terra-scuro: #d0b69e;
     --bordo: 1px solid rgba(173, 211, 186, 0.15);
     --ombra: 0 16px 42px rgba(0, 0, 0, 0.34);
-    /* Controparte scura di --ombra-aperta/--bordo-aperto (vedi
-       configuratore/01-fondazioni-intro.css): tendine/pannelli aperti
-       restano ben distinguibili dallo sfondo scuro. */
+    /* Varianti scure per pannelli e tendine aperti. */
     --ombra-aperta: 0 22px 50px rgba(0, 0, 0, 0.5);
     --bordo-aperto: 1.5px solid rgba(105, 183, 125, 0.4);
     --theme-surface: #13221b;
@@ -10820,11 +10783,7 @@ html[data-theme="dark"]
   html[data-theme="dark"] body::before {
     opacity: 0.22;
   }
-  /* Il body ha un solo ::before: la regola sopra (pensata per un dettaglio
-     decorativo di sfondo) intercetta per errore anche l'overlay sfocato
-     del menu mobile (definito in index/04-responsive-header-contatti.css),
-     abbassandone l'opacità al 22% e quindi rendendo il blur quasi
-     invisibile in dark mode. Qui lo riportiamo a piena intensità. */
+  /* Opacità dell'overlay mobile in tema scuro. */
   html[data-theme="dark"] body.nav-menu-open::before {
     opacity: 1;
   }
@@ -11102,7 +11061,7 @@ html[data-theme="dark"]
   }
 }
 @layer base {
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 720px) {
     .theme-toggle {
       width: 38px;
@@ -11114,7 +11073,7 @@ html[data-theme="dark"]
       font-size: 19px;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (prefers-reduced-motion: reduce) {
     .theme-toggle,
     .theme-toggle-icon {
@@ -11160,10 +11119,7 @@ html[data-theme="dark"]
     color: var(--dark-text);
   }
   html[data-theme="dark"] .site-header {
-    /* Come in chiaro (dove lo sfondo è solo ~90% opaco): un fondo quasi
-       opaco qui (era 0.96) copriva quasi del tutto il backdrop-filter
-       impostato in 01-fondazioni.css, rendendo il blur praticamente
-       invisibile in dark mode. */
+    /* Trasparenza del menu nel tema scuro. */
     background: rgba(15, 27, 22, 0.88);
   }
   html[data-theme="dark"] .nav-brand-mark {
@@ -13398,7 +13354,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
       display: none;
@@ -13408,7 +13364,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 340px) {
     :root {
       --nav-h: 108px;
@@ -13438,9 +13394,7 @@ html[data-theme="dark"]
     }
     .site-header .nav-menu-toggle {
       margin-right: 0;
-      /* Su questa larghezza l'header è su due righe: resta centrato in
-         orizzontale ma allineato alla seconda riga (quella delle azioni),
-         non a metà tra logo e azioni. */
+      /* Allineamento dell'header a due righe. */
       top: 74px;
     }
   }
@@ -13452,8 +13406,7 @@ html[data-theme="dark"]
   }
 }
 @layer base {
-  /* Rifinitura mobile: stesso set di controlli, meno peso visivo nel primo
-   viewport. Non nasconde funzioni come tema, lingua o carrello. */
+  /* Densità dei controlli nell'header mobile. */
   @media (max-width: 660px) {
     .site-header {
       --nav-h: 60px;
@@ -13603,7 +13556,7 @@ html[data-theme="dark"]
     word-spacing: 0.12em;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     :root {
       --icon-text-gap: 0.46rem;
@@ -14037,7 +13990,7 @@ html[data-theme="dark"]
       display: block;
     }
 
-    /* Ordine della guida per i percorsi avanzati. */
+    /* Ordine della guida nei percorsi avanzati. */
     body:is(.livello-intermedio, .livello-esperto) #noviceGuidePanel {
       order: -1;
     }
@@ -14170,9 +14123,7 @@ html[data-theme="dark"]
       height: 22px;
     }
 
-    /* Spazio ridotto: l'etichetta sparisce, resta l'icona con la freccetta
-     (più piccola) a segnalare comunque che è un apri/chiudi, non solo
-     un'icona decorativa. */
+    /* Riduce il controllo impostazioni mantenendo riconoscibile l'azione di apertura. */
     .guided-setup-gear {
       height: 34px;
       padding: 0 9px;
@@ -14490,8 +14441,7 @@ html[data-theme="dark"]
     box-shadow: 0 8px 22px rgba(31, 58, 38, 0.08);
   }
 
-  /* Il contesto è il ponte fra intestazione/impostazioni e lavoro operativo:
-   come figlio diretto della griglia deve occupare tutta la riga. */
+  /* Estende il contesto del percorso su tutta la riga della griglia principale. */
   .app > .journey-context {
     grid-column: 1 / -1;
     width: 100%;
@@ -14711,9 +14661,7 @@ html[data-theme="dark"]
 
     .hero-content {
       min-height: auto;
-      /* Safari iOS può sovrapporre la barra inferiore all'ultimo controllo.
-       Questa riserva permette di far scorrere la CTA completamente sopra la
-       toolbar e include anche l'area del gesto Home sui dispositivi con notch. */
+      /* Riserva spazio sotto la CTA per la barra di sistema dei dispositivi iOS. */
       padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
     }
 
@@ -14916,14 +14864,11 @@ html[data-theme="dark"]
     .site-header .nav-actions {
       grid-column: 2;
       width: 100%;
-      /* Il toggle hamburger ora è centrato in modo indipendente (vedi sotto):
-       quel che resta qui (il carrello) va tenuto sul bordo destro invece
-       che appiccicato accanto al logo. */
+      /* Mantiene il carrello sul bordo destro dell'header nelle viste mobili. */
       justify-content: flex-end;
     }
 
-    /* Centrato nella pagina (rispetto a .site-header, che a questa larghezza
-     è position:fixed a tutta larghezza) invece che appiccicato al logo. */
+    /* Centra il pulsante del menu rispetto all'header fisso su mobile. */
     .site-header .nav-menu-toggle {
       position: absolute;
       left: 50%;
@@ -15024,9 +14969,7 @@ html[data-theme="dark"]
       border-radius: 13px;
     }
 
-    /* Sezione preferenze: card distinta dai link di navigazione, con
-     controlli "veri" (switch e selettore a pillola) invece di una freccia
-     o di una <select> nativa poco leggibile. */
+    /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
     .site-header .mobile-nav-preferences {
       display: grid;
       grid-template-columns: 1fr;
@@ -15043,10 +14986,7 @@ html[data-theme="dark"]
       display: grid;
       grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      /* .theme-toggle (classe condivisa col bottone tema) imposta altrove
-       place-items:center: senza questo reset, il testo "Tema" finisce
-       centrato nella sua colonna mentre "Lingua" (che non ha quella
-       classe) resta a sinistra. */
+      /* Uniforma l'allineamento dei controlli tema e lingua nel menu mobile. */
       justify-items: start;
       gap: 0.6rem;
       min-width: 0;
@@ -15105,9 +15045,7 @@ html[data-theme="dark"]
       white-space: nowrap;
     }
 
-    /* Interruttore tema: una vera "pillola" con pallino che scivola, lo
-     stato riflette sempre html[data-theme] quindi resta sincronizzato
-     con qualunque altro controllo tema in pagina. */
+    /* Definisce l'interruttore visivo per cambiare il tema della pagina. */
     .mobile-menu-switch {
       position: relative;
       flex: none;
@@ -15139,10 +15077,7 @@ html[data-theme="dark"]
       transform: translateX(17px);
     }
 
-    /* Selettore lingua a pillola: entrambe le opzioni sempre visibili,
-     quella attiva evidenziata leggendo html[lang] (già aggiornato da
-     setLang/confSetLang su tutte le pagine, nessuna sincronizzazione
-     extra necessaria). */
+    /* Mostra le opzioni lingua con evidenza per quella attualmente attiva. */
     .lang-switch {
       display: inline-flex;
       flex: none;
@@ -15337,12 +15272,12 @@ html[data-theme="dark"]
   }
 
   @media (max-width: 660px) {
-    /* Nascondi la pillola superiore per liberare spazio verticale */
+    /* Pillola superiore nascosta su mobile. */
     .hero-season-kicker {
       display: none;
     }
 
-    /* Sposta la card verso l'alto per centrarla verticalmente ed equilibrare le distanze */
+    /* Allineamento verticale della card. */
     .hero-content {
       gap: 1rem;
       padding-top: 0.75rem;
@@ -15384,8 +15319,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Impostazioni iniziali: il controllo chiuso mostra cosa contiene e i valori
-   correnti; il pannello aperto separa chiaramente dati serra e profilo. */
+  /* Separa i parametri iniziali della serra dal selettore del profilo utente. */
   .guided-setup-gear {
     justify-content: flex-start;
     width: min(430px, 42vw);
@@ -15658,8 +15592,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Persona card della hero: ogni livello è una scelta primaria leggibile,
-   non una riga trasparente sopra il verde della serra. */
+  /* Rende ogni profilo della hero una scelta primaria chiaramente selezionabile. */
   .hero-cfg-route-intro {
     color: rgba(255, 255, 255, 0.96);
     font-size: 0.82rem;
@@ -15884,9 +15817,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Tendina delle impostazioni: uno stato aperto deve sembrare un pannello
-   espanso, non una normale sequenza di card. Il bordo, il controllo e la
-   linea di separazione fanno leggere insieme sia l'apertura sia la chiusura. */
+  /* Distingue la tendina impostazioni aperta dalle normali card della pagina. */
   .guided-setup-gear {
     border: 1.5px solid rgba(47, 107, 58, 0.34);
     background: linear-gradient(155deg, #fffef9, rgba(226, 242, 224, 0.96));
@@ -16124,10 +16055,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Hub del percorso: sostituisce la sequenza di card indipendenti (contesto,
-   impostazioni e aiuto) con un solo blocco leggibile. La CTA cambia già con
-   il livello scelto; qui la gerarchia rende evidente che tutto appartiene al
-   medesimo percorso di acquisto. */
+  /* Raggruppa contesto, impostazioni e guida nel blocco del percorso guidato. */
   .workflow-hub {
     grid-column: 1 / -1;
     display: grid;
@@ -16322,8 +16250,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Il livello scelto è anche il controllo per cambiarlo: così il profilo
-   resta nel punto in cui spiega il flusso e non richiede un pannello extra. */
+  /* Selettore del profilo corrente. */
   .workflow-hub .journey-context {
     grid-column: 1 / -1;
     grid-template-columns: auto minmax(180px, 1fr) auto auto;
@@ -16389,8 +16316,7 @@ html[data-theme="dark"]
     text-underline-offset: 3px;
   }
 
-  /* La guida è un aiuto secondario: rimuoviamo l'aspetto da pulsante circolare
-   del punto interrogativo, mantenendo un link leggero ma accessibile. */
+  /* Mantiene la guida come azione secondaria all'interno del percorso. */
   .workflow-hub .journey-context-help > span:first-child {
     width: auto;
     height: auto;
@@ -16493,8 +16419,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Azioni del percorso: una sola priorità per riga. Il controllo delle
-   impostazioni già scelte è un raccordo leggero; il passo attivo è la CTA. */
+  /* Azioni del percorso guidato. */
   .config-page-title .guided-brand-copy {
     flex: 1 1 auto;
   }
@@ -16661,9 +16586,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Desktop: il riepilogo e i tre passi condividono la stessa riga. I due
-   passi operativi ricevono spazio equivalente; il controllo di revisione
-   resta leggero, senza creare una fila di elementi ammassati a sinistra. */
+  /* Allinea riepilogo e passaggi del percorso sulla stessa riga desktop. */
   @media (min-width: 1101px) {
     .workflow-hub .journey-context {
       grid-template-columns: auto minmax(260px, 1fr) minmax(430px, 0.85fr);
@@ -16690,8 +16613,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* I passi sono l'unica azione del percorso: colori e contrasto identificano
-   il profilo, senza replicare un CTA sopra la planimetria. */
+  /* Usa colori e contrasto per indicare il profilo e lo stato dei passaggi. */
   .workflow-hub .journey-context--novizio {
     --journey-action: #347a3b;
     --journey-soft: #e7f4e4;
@@ -16832,9 +16754,7 @@ html[data-theme="dark"]
     color: var(--journey-action-text);
   }
 
-  /* Desktop: il confronto fra i tre percorsi deve restare immediato. Manteniamo
-   l'ordine naturale delle card e rendiamo attivo il profilo scelto, senza
-   estrarlo in una riga separata. */
+  /* Mantiene affiancati i profili per facilitarne il confronto su desktop. */
   @media (min-width: 901px) {
     .workflow-persona-panel .persona-cards,
     .workflow-persona-panel .persona-pick[open] .persona-cards {
@@ -16895,8 +16815,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* La guida rapida cambia contenuto con il percorso: l'accento riprende il
-   profilo attivo senza dipendere dai colori chiari del tema. */
+  /* Adatta l'accento della guida rapida al profilo attualmente selezionato. */
   body.livello-novizio #noviceGuidePanel {
     border-top-color: var(--persona-nov);
   }

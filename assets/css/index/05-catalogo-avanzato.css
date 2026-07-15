@@ -126,9 +126,7 @@
     transform: translateY(-1px);
     box-shadow: 0 10px 22px rgba(27, 67, 50, 0.18);
   }
-  /* Griglia fissa a 2 colonne (non più auto-fill): tutte le card, incluse
-     le prime 3 che prima erano più grandi e "in evidenza", hanno ora la
-     stessa dimensione (vedi renderEditorialPlants in home-catalog.js). */
+  /* Griglia catalogo a due colonne. */
   .catalog-pro-section .plant-compact-list {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
@@ -188,7 +186,7 @@
       grid-template-columns: 1fr;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 760px) {
     .catalog-filter-group {
       padding: 0.66rem;
@@ -201,7 +199,7 @@
       margin-top: 0.08rem;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 680px) {
     .catalog-pro-section {
       padding-left: 0.75rem;
@@ -211,9 +209,7 @@
       font-size: clamp(1.78rem, 10vw, 2.4rem);
       line-height: 1.03;
     }
-    /* 2 colonne anche su smartphone: la card, troppo stretta per stare in
-       riga (foto+testo+prezzo affiancati), passa a un layout verticale che
-       usa lo spazio in basso invece di comprimere tutto in orizzontale. */
+    /* Griglia catalogo a due colonne su smartphone. */
     .catalog-pro-section .plant-compact-list {
       grid-template-columns: repeat(2, 1fr);
       gap: 0.6rem;
@@ -258,7 +254,7 @@
       margin-bottom: 1.1rem;
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 480px) {
     .catalog-search--pro .catalog-search-box {
       gap: 0.45rem;
@@ -567,7 +563,7 @@
     flex-shrink: 0;
     animation: searchBadgePulse 2.4s ease-in-out 1s 3;
   }
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes searchBadgePulse {
     0%,
     100% {
@@ -620,7 +616,7 @@
     transform: translateY(-1px);
   }
 
-  /* Animazioni */
+  /* Definisce le animazioni e le transizioni applicate ai componenti della sezione. */
   @keyframes searchAttention {
     0% {
       box-shadow:
@@ -723,7 +719,7 @@
     padding-bottom: 0.1rem;
     scrollbar-width: thin;
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 600px) {
     .footer-plant-strip {
       display: none;
@@ -986,7 +982,7 @@
       grid-template-columns: 1fr;
     }
   }
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 760px) {
     .catalog-filter-group {
       padding: 0.66rem;
@@ -999,7 +995,7 @@
       margin-top: 0.08rem;
     }
   }
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 480px) {
     .catalog-tools--advanced {
       padding: 0.66rem;
@@ -1317,21 +1313,14 @@
     box-shadow: 0 8px 20px rgba(27, 67, 50, 0.22);
   }
 
-  /* "Mostra altri N": in fondo alla lista/griglia, appare solo quando ci
-     sono più risultati di quelli già mostrati (vedi CATALOG_PAGE_SIZE in
-     home-catalog.js), per non far scrollare l'intero catalogo in un colpo
-     solo. Spanna tutta la larghezza della griglia sottostante. */
+  /* Pulsante di caricamento progressivo. */
   .catalog-load-more-wrap {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
     padding: 1.3rem 0 0.3rem;
   }
-  /* Colori (chiaro/scuro) affidati al sistema pulsanti condiviso: vedi
-     .catalog-load-more-btn aggiunto agli elenchi "secondary" in
-     tema/05-pulsanti-stati.css, così eredita lo stesso trattamento già
-     verificato per btn-soft/view-print-btn/ecc. invece di duplicare i
-     colori qui. */
+  /* Colori gestiti dal sistema pulsanti condiviso. */
   .catalog-load-more-btn {
     display: inline-flex;
     align-items: center;
@@ -1387,7 +1376,7 @@
     box-shadow: 0 4px 14px rgba(45, 106, 79, 0.22);
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .top-buy-row {
       flex-direction: column;
@@ -1487,7 +1476,7 @@
     box-shadow: 0 2px 6px rgba(27, 67, 50, 0.08);
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .catalog-hint {
       flex-direction: column;
@@ -1520,9 +1509,7 @@
     }
   }
 
-  /* #compactPlants (id, non solo classe) per battere in specificità
-     .catalog-pro-section .plant-compact-list senza forzare con importante:
-     l'elemento ha sempre quell'id (vedi index.html). */
+  /* Regole specifiche per la lista compatta. */
   #compactPlants.compact-list-view {
     display: grid;
     grid-template-columns: 1fr;
@@ -1577,7 +1564,7 @@
     border-radius: 10px;
   }
 
-  /* Fallback emoji quando la foto non esiste */
+  /* Emoji alternativa quando la foto non è disponibile */
   .super-compact-thumb-emoji {
     display: none;
     position: absolute;
@@ -1712,7 +1699,7 @@
     background: #b03020;
   }
 
-  /* Responsive mobile — la struttura a 2 righe si mantiene naturalmente */
+  /* Layout compatto a due righe su mobile. */
   @media (max-width: 400px) {
     .plant-card-super-compact {
       padding: 8px 11px;

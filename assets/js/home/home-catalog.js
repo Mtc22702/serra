@@ -4,10 +4,7 @@ let state = {
   riscaldata: false,
   mese: new Date().getMonth() + 1
 };
-// Quante piante mostrare per "pagina" nella lista del catalogo (oltre alle
-// 3 in evidenza nella vista a griglia) e di quante farla crescere ogni
-// volta che si preme "Mostra altri", per evitare di renderizzare/scrollare
-// tutto il catalogo in un colpo solo.
+// Dimensione iniziale e incremento della paginazione del catalogo.
 const CATALOG_PAGE_SIZE = 12;
 const CATALOG_PAGE_STEP = 12;
 let catalog = {
@@ -464,7 +461,7 @@ function applyDynamicStaticText() {
   if (catalogNote) catalogNote.textContent = noteText;
 }
 
-// Rendering hero
+// Aggiorna il contenuto della sezione iniziale del catalogo.
 function renderHero() {
   const stag = getStagione(state.mese);
 
@@ -520,7 +517,7 @@ function renderHero() {
     .join("");
 }
 
-// Renderizza calendar strip
+// Genera la fascia dei mesi usata per filtrare le colture stagionali.
 function renderCalendarStrip() {
   const strip = document.getElementById("monthStrip");
   const help = document.getElementById("monthStripHelp");
@@ -567,8 +564,7 @@ function centerActiveMonth(strip) {
   });
 }
 
-// Pannello filtri compatto su smartphone: mantiene il catalogo raggiungibile
-// subito per l'esperto, senza togliere i controlli avanzati a chi li vuole.
+// Pannello filtri compatto per mobile.
 function updateCatalogFilterToggle() {
   const toggle = document.getElementById("catalogFilterToggle");
   const summary = document.getElementById("catalogFilterToggleSummary");
@@ -603,7 +599,7 @@ function toggleCatalogFilters() {
   }
 }
 
-// Rendering catalogo
+// Genera l'elenco delle piante in base a filtri, vista e paginazione.
 function renderEditorialPlants() {
   const seasonal = seminabili();
   const plants = filteredCatalogPlants();
@@ -611,10 +607,7 @@ function renderEditorialPlants() {
     Boolean(catalog.search || catalog.type || catalog.easyOnly) ||
     catalog.seasonOnly;
 
-  // Se filtri, ordinamento o vista sono cambiati dall'ultima volta, si
-  // riparte dalla prima pagina di risultati: altrimenti il "Mostra altri"
-  // di una ricerca precedente resterebbe applicato a un elenco diverso,
-  // mostrando o nascondendo piante in modo incoerente col conteggio.
+  // Reimposta la paginazione dopo una modifica ai filtri.
   const filterSignature = JSON.stringify([
     catalog.search,
     catalog.type,
@@ -758,10 +751,7 @@ function renderEditorialPlants() {
         })
         .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
   } else {
-    // Griglia uniforme a 2 colonne: tutte le piante (comprese le prime 3,
-    // prima mostrate più grandi come "in evidenza") usano la stessa card
-    // compatta, stessa dimensione per tutte. "editorialPlants" non viene
-    // più usato in questa vista.
+    // Griglia catalogo uniforme a due colonne.
     document
       .getElementById("compactPlants")
       .classList.remove("compact-list-view");
@@ -799,8 +789,7 @@ function renderEditorialPlants() {
   }
 }
 
-// Pulsante "Mostra altri N" in fondo alla lista, quando ci sono più
-// risultati di quanti mostrati finora (vedi CATALOG_PAGE_SIZE/STEP).
+// Pulsante per il caricamento progressivo dei risultati.
 function catalogLoadMoreHTML(remainingCount) {
   if (remainingCount <= 0) return "";
   const label = tv("catalog.load_more", {
@@ -820,7 +809,7 @@ function loadMoreCatalogPlants() {
   renderEditorialPlants();
 }
 
-// Imposta catalog layout
+// Applica la vista a griglia o elenco selezionata per il catalogo.
 function setCatalogLayout(layout) {
   catalog.layout = layout;
   localStorage.setItem("serra.catalog.layout", layout);

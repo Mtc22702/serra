@@ -14,9 +14,9 @@
       rel="stylesheet"
     />
     <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
-    <!-- Fogli di stile -->
+    <!-- Fogli di stile condivisi e specifici dell'area riservata -->
     <link rel="stylesheet" href="assets/css/serra-account.css?v=2026-07-15-maintenance" />
-    <!-- Script di gestione del tema -->
+    <!-- Script iniziale che applica il tema prima della visualizzazione della pagina -->
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
@@ -28,7 +28,7 @@
     </script>
   </head>
   <body>
-    <!-- Header e Navigazione -->
+    <!-- Intestazione con navigazione, preferenze e accesso alle sezioni principali -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -193,9 +193,9 @@
       </div>
     </header>
 
-    <!-- Contenuto Principale -->
+    <!-- Contenuto principale che alterna accesso, area utente e area amministrativa -->
     <main class="account-container">
-      <!-- SEZIONE 1: LOGIN E REGISTRAZIONE -->
+      <!-- Sezione di accesso e registrazione per utenti non autenticati -->
       <section id="authSection" class="auth-section card">
         <div class="auth-tabs">
           <button
@@ -360,7 +360,7 @@
         </form>
       </section>
 
-      <!-- SEZIONE 2: CRUSCOTTO UTENTE -->
+      <!-- Cruscotto dell'utente con profilo, progetti e storico degli ordini -->
       <section id="userDashboardSection" class="dashboard-section" hidden>
         <!-- Banner Notifiche Stato Ordine -->
         <div id="notificationBanner" class="notification-banner card" hidden>
@@ -514,7 +514,7 @@
         </div>
       </section>
 
-      <!-- SEZIONE 3: CRUSCOTTO AMMINISTRATORE -->
+      <!-- Cruscotto amministrativo per catalogo, utenti, ordini e manutenzione -->
       <section id="adminDashboardSection" class="dashboard-section" hidden>
         <div class="dashboard-header card admin-header">
           <div class="profile-info">
@@ -775,7 +775,7 @@
       </section>
     </main>
 
-    <!-- MODALE EDIT/CREATE PIANTA (ADMIN) -->
+    <!-- Modale amministrativa per creare o modificare i dati di una pianta -->
     <div id="plantModal" class="modal-overlay" hidden>
       <div class="modal-card card">
         <h3 id="plantModalTitle" data-i18n-acc="modal.edit_title">
@@ -967,7 +967,7 @@
       </div>
     </div>
 
-    <!-- Footer Botanico -->
+    <!-- Piè di pagina condiviso con informazioni e collegamenti del sito -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
         <div class="footer-plant-row" id="footerPlantRow">
@@ -1120,7 +1120,7 @@
     <!-- Contenitore Nascosto per Stampa Ricevuta (A4) -->
     <div id="invoicePrintContainer" class="invoice-print-section"></div>
 
-    <!-- Script della pagina -->
+    <!-- Script che inizializzano autenticazione, dati utente e azioni amministrative -->
     <script src="assets/js/i18n.js?v=2026-07-15-cleanup" defer></script>
     <script src="assets/js/theme.js?v=2026-07-15-cleanup" defer></script>
     <script src="assets/js/nav.js?v=2026-07-15-cleanup" defer></script>

@@ -1,4 +1,4 @@
-// Navigazione mobile
+// Gestisce apertura, chiusura e accessibilità del menu di navigazione mobile.
 (() => {
   const header = document.querySelector(".site-header");
   const toggle = document.querySelector(".nav-menu-toggle");
@@ -8,11 +8,7 @@
   const isRo = () =>
     (document.documentElement.lang || "it").toLowerCase().startsWith("ro");
 
-  // Su iOS Safari "overflow: hidden" sul body non basta a impedire lo
-  // scroll/rimbalzo della pagina dietro a un pannello aperto: si blocca il
-  // body con position:fixed nel punto esatto in cui si trovava, e alla
-  // chiusura si ripristina la stessa posizione di scroll, così la pagina
-  // torna a funzionare esattamente come prima.
+  // Blocca lo scorrimento della pagina mentre un pannello mobile è aperto.
   let lockedScrollY = 0;
 
   const closeMenu = () => {
@@ -61,7 +57,7 @@
     closeMenu();
   });
 
-  // Gestisce debounce
+  // Riduce le esecuzioni ripetute durante il ridimensionamento della finestra.
   function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -77,7 +73,7 @@
     }, 150)
   );
 
-  // Riallinea l'etichetta del bottone quando cambia la lingua della pagina
+  // Aggiorna l'etichetta del pulsante menu quando cambia la lingua della pagina.
   new MutationObserver(() => {
     const open = document.body.classList.contains("nav-menu-open");
     toggle.setAttribute(

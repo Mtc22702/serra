@@ -1,4 +1,4 @@
-// Stato globale
+// Definisce lo stato condiviso della serra, del profilo e dell'interfaccia configuratore.
 const state = {
   lang: "it",
   zona: "temperato",
@@ -25,8 +25,7 @@ let vegSearchQuery = "";
 const CONFIG_KEY = "serra.config.v1";
 const BOOT_PARAMS = new URLSearchParams(window.location.search);
 
-// Funzioni di stato
-// Normalizza il codice lingua accettato
+// Normalizzazione del codice lingua.
 function normalizeLang(lang) {
   return lang === "ro" || lang === "it" ? lang : "it";
 }
@@ -76,8 +75,7 @@ function saveConfig(done = true) {
   }
 }
 
-// Sincronizzazione controlli
-// Allinea i selettori lingua al valore corrente
+// Allinea tutti i selettori della lingua al valore memorizzato nello stato.
 function syncLanguageControls() {
   const main = document.getElementById("inLang");
   const modal = document.getElementById("startLang");
@@ -184,8 +182,7 @@ function updateGuidedIntroDynamic() {
   updateJourneyContext();
 }
 
-// Mantiene visibile il motivo dello scroll automatico: ogni profilo arriva
-// alla serra con un contesto e tre passi navigabili, senza CTA duplicata.
+// Determina la sezione iniziale da mostrare in base al profilo scelto.
 function updateJourneyContext() {
   const root = document.getElementById("journeyContext");
   const level = document.getElementById("journeyContextLevel");
@@ -286,7 +283,7 @@ function syncPersonaPickerDisclosure() {
   }
 }
 
-// Modalità configuratore
+// Applica le regole di interfaccia specifiche per ciascun livello di esperienza.
 function setMode(mode, scroll = false) {
   const allowed = new Set(["fit", "expert"]);
   const next = allowed.has(mode) ? mode : "fit";
@@ -331,8 +328,7 @@ function setMode(mode, scroll = false) {
   }
 }
 
-// Profili utente
-// Applica il livello utente alle classi CSS e ai pannelli
+// Applicazione del profilo utente all'interfaccia.
 function setLivello(liv, { mapMode = true } = {}) {
   const next = LIVELLI.has(liv) ? liv : "intermedio";
   state.livello = next;
@@ -356,8 +352,7 @@ function setLivello(liv, { mapMode = true } = {}) {
 // Cambia il livello utente con conferma se necessario
 function chooseLivello(liv) {
   const prev = state.livello;
-  // Dopo il cambio profilo si riparte dall'inizio del configuratore: evita
-  // atterraggi intermedi sopra il percorso o più in basso nella pagina.
+  // Riporta all'inizio dopo il cambio di profilo.
   const returnToConfiguratorStart = () => {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -366,11 +361,7 @@ function chooseLivello(liv) {
     });
   };
 
-  // Passare a "novizio" rigenera sempre il piano automatico (vedi ramo sotto),
-  // quindi qualunque aiuola già presente verrebbe sostituita: l'avviso deve
-  // comparire ogni volta che c'è qualcosa da perdere, non solo quando
-  // state.autoPlan risulta già false (altrimenti si perdono modifiche senza
-  // preavviso in alcuni percorsi).
+  // Richiede conferma prima di sostituire il piano esistente.
   if (
     liv === "novizio" &&
     prev !== "novizio" &&
@@ -474,10 +465,7 @@ function updateVegSearchUI() {
 function scrollToLivelloLanding(livello = state.livello, options = {}) {
   const { behavior = "smooth", delay = 120, waitForFonts = true } = options;
   const resolveTarget = () => {
-    // Per l'Esperto la barra dei layout pronti è il miglior ingresso: offre
-    // una scorciatoia per partire da un esempio, ma lascia subito sotto il
-    // percorso manuale e il catalogo completo per chi vuole comporre tutto
-    // da zero.
+    // Mostra i layout pronti come punto di ingresso esperto.
     if (livello === "esperto") {
       return (
         document.getElementById("presetBar") ||
@@ -518,8 +506,7 @@ function scrollToLivelloLanding(livello = state.livello, options = {}) {
   }, delay);
 }
 
-// Compatibilità con le azioni esistenti che intendono la scena/pannello
-// contestuale come destinazione.
+// Mantiene la compatibilità delle azioni che usano la destinazione contestuale.
 function scrollToScene() {
   scrollToLivelloLanding(state.livello);
 }

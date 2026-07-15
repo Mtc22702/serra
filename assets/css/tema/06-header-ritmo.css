@@ -103,7 +103,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
       display: none;
@@ -113,7 +113,7 @@
     }
   }
 
-  /* Regole responsive */
+  /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 340px) {
     :root {
       --nav-h: 108px;
@@ -143,9 +143,7 @@
     }
     .site-header .nav-menu-toggle {
       margin-right: 0;
-      /* Su questa larghezza l'header è su due righe: resta centrato in
-         orizzontale ma allineato alla seconda riga (quella delle azioni),
-         non a metà tra logo e azioni. */
+      /* Allineamento dell'header a due righe. */
       top: 74px;
     }
   }
@@ -157,8 +155,7 @@
   }
 }
 @layer base {
-  /* Rifinitura mobile: stesso set di controlli, meno peso visivo nel primo
-   viewport. Non nasconde funzioni come tema, lingua o carrello. */
+  /* Densità dei controlli nell'header mobile. */
   @media (max-width: 660px) {
     .site-header {
       --nav-h: 60px;
@@ -308,7 +305,7 @@
     word-spacing: 0.12em;
   }
 
-  /* Responsive mobile */
+  /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     :root {
       --icon-text-gap: 0.46rem;
