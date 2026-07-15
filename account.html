@@ -4,21 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Area Riservata · Orto in Serra</title>
-    <!-- Configurazione Asset e Versione -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-14-i18n-account";
-      window.SERRA_IS_LOCAL_DEV =
-        location.hostname === "localhost" ||
-        location.hostname === "127.0.0.1" ||
-        location.hostname === "0.0.0.0" ||
-        location.hostname === "::1" ||
-        location.hostname === "";
-      window.SERRA_ASSET_VERSION = window.SERRA_IS_LOCAL_DEV
-        ? String(Date.now())
-        : window.SERRA_APP_VERSION;
-      window.serraAsset = function (path) {
-        return path + "?v=" + window.SERRA_ASSET_VERSION;
-      };
+      window.SERRA_APP_VERSION = "2026-07-15-maintenance";
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,36 +13,9 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,600;9..144,0,800;9..144,1,300&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script>
-      document.write(
-        '<link rel="icon" href="' +
-          serraAsset("assets/img/icons/logo-192.png") +
-          '" type="image/png" />'
-      );
-    </script>
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
     <!-- Fogli di stile -->
-    <script>
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/index.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/theme.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/account.css") +
-          '" />'
-      );
-      document.write(
-        '<link rel="stylesheet" href="' +
-          serraAsset("assets/css/uiux-polish.css") +
-          '" />'
-      );
-    </script>
+    <link rel="stylesheet" href="assets/css/serra-account.css?v=2026-07-15-maintenance" />
     <!-- Script di gestione del tema -->
     <script>
       (function () {
@@ -164,7 +124,7 @@
                   type="button"
                   class="lang-switch-opt"
                   data-lang="it"
-                  onclick="setLang('it')"
+                  data-account-action="set-language"
                 >
                   IT
                 </button>
@@ -172,7 +132,7 @@
                   type="button"
                   class="lang-switch-opt"
                   data-lang="ro"
-                  onclick="setLang('ro')"
+                  data-account-action="set-language"
                 >
                   RO
                 </button>
@@ -210,7 +170,7 @@
           <div class="nav-lang">
             <select
               id="langSelect"
-              onchange="setLang(this.value)"
+              data-account-action="set-language"
               title="Lingua / Limbă"
             >
               <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
@@ -219,7 +179,7 @@
           </div>
           <button
             class="cart-btn"
-            onclick="openCart()"
+            data-account-action="open-cart"
             aria-label="Apri carrello"
             data-i18n-acc-aria="cart.aria_open"
           >
@@ -241,7 +201,8 @@
           <button
             id="tabLogin"
             class="auth-tab active"
-            onclick="switchAuthTab('login')"
+            data-account-action="switch-auth-tab"
+            data-tab="login"
             data-i18n-acc="auth.title_login"
           >
             Accedi
@@ -249,7 +210,8 @@
           <button
             id="tabRegister"
             class="auth-tab"
-            onclick="switchAuthTab('register')"
+            data-account-action="switch-auth-tab"
+            data-tab="register"
             data-i18n-acc="auth.title_register"
           >
             Registrati
@@ -257,7 +219,7 @@
         </div>
 
         <!-- Form Login -->
-        <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+        <form id="loginForm" class="auth-form" data-account-form="login">
           <div class="form-group">
             <label for="loginEmail" data-i18n-acc="auth.email">Email</label>
             <input
@@ -313,7 +275,7 @@
         <form
           id="registerForm"
           class="auth-form"
-          onsubmit="handleRegister(event)"
+          data-account-form="register"
           hidden
         >
           <div class="form-grid">
@@ -410,7 +372,7 @@
           </div>
           <button
             class="btn btn-small btn-outline"
-            onclick="handleDismissNotifications()"
+            data-account-action="dismiss-notifications"
             data-i18n-acc="dash.notif_dismiss"
           >
             Segna come lette
@@ -429,7 +391,7 @@
           </div>
           <button
             class="btn btn-outline"
-            onclick="window.SerraAPI.logout()"
+            data-account-action="logout"
             data-i18n-acc="dash.logout"
           >
             Esci
@@ -440,7 +402,7 @@
           <!-- Modulo Dati Profilo -->
           <div class="dashboard-card card">
             <h3 data-i18n-acc="dash.title">Dati di Spedizione</h3>
-            <form id="profileForm" onsubmit="handleUpdateProfile(event)">
+            <form id="profileForm" data-account-form="update-profile">
               <div class="form-group">
                 <label for="profNome" data-i18n-acc="auth.name"
                   >Nome Completo</label
@@ -566,7 +528,7 @@
           </div>
           <button
             class="btn btn-outline"
-            onclick="window.SerraAPI.logout()"
+            data-account-action="logout"
             data-i18n-acc="dash.logout"
           >
             Esci
@@ -577,7 +539,8 @@
           <button
             id="btnTabAdminPlants"
             class="admin-tab active"
-            onclick="switchAdminTab('plants')"
+            data-account-action="switch-admin-tab"
+            data-tab="plants"
             data-i18n-acc="admin.tab_plants"
           >
             Gestione Catalogo Piante
@@ -585,7 +548,8 @@
           <button
             id="btnTabAdminOrders"
             class="admin-tab"
-            onclick="switchAdminTab('orders')"
+            data-account-action="switch-admin-tab"
+            data-tab="orders"
             data-i18n-acc="admin.tab_orders"
           >
             Ordini Ricevuti
@@ -593,7 +557,8 @@
           <button
             id="btnTabAdminUsers"
             class="admin-tab"
-            onclick="switchAdminTab('users')"
+            data-account-action="switch-admin-tab"
+            data-tab="users"
             data-i18n-acc="admin.tab_users"
           >
             Gestione Utenti
@@ -601,7 +566,8 @@
           <button
             id="btnTabAdminBackup"
             class="admin-tab"
-            onclick="switchAdminTab('backup')"
+            data-account-action="switch-admin-tab"
+            data-tab="backup"
             data-i18n-acc="admin.tab_backup"
           >
             Manutenzione Database
@@ -620,11 +586,12 @@
                 id="adminPlantSearch"
                 placeholder="Cerca coltura..."
                 data-i18n-acc-placeholder="admin.search_placeholder"
-                oninput="filterAdminPlants()"
+                data-account-action="filter-plants"
               />
               <button
                 class="btn btn-primary"
-                onclick="openPlantModal('new')"
+                data-account-action="open-plant-modal"
+                data-mode="new"
                 data-i18n-acc="admin.add_plant_btn"
               >
                 ✚ Nuova Pianta
@@ -715,7 +682,7 @@
               </p>
               <button
                 class="btn btn-danger"
-                onclick="resetCatalogToDefault()"
+                data-account-action="reset-catalog"
                 data-i18n-acc="admin.reset_catalog"
               >
                 Ripristina piante di fabbrica
@@ -731,7 +698,7 @@
               </p>
               <button
                 class="btn btn-outline"
-                onclick="exportDatabaseJson()"
+                data-account-action="export-database"
                 data-i18n-acc="admin.export_db"
               >
                 Esporta JSON
@@ -758,14 +725,14 @@
               <div class="admin-danger-actions">
                 <button
                   class="btn btn-outline btn-danger btn-small"
-                  onclick="handleClearOrders()"
+                  data-account-action="clear-orders"
                   data-i18n-acc="admin.clear_orders"
                 >
                   Azzera Ordini
                 </button>
                 <button
                   class="btn btn-outline btn-danger btn-small"
-                  onclick="handleClearUsers()"
+                  data-account-action="clear-users"
                   data-i18n-acc="admin.clear_users"
                 >
                   Azzera Clienti
@@ -814,7 +781,7 @@
         <h3 id="plantModalTitle" data-i18n-acc="modal.edit_title">
           Modifica Coltura
         </h3>
-        <form id="plantForm" onsubmit="handleSavePlant(event)">
+        <form id="plantForm" data-account-form="save-plant">
           <input type="hidden" id="editPlantAction" />
           <div class="form-grid">
             <div class="form-group">
@@ -983,7 +950,7 @@
             <button
               type="button"
               class="btn btn-outline"
-              onclick="closePlantModal()"
+              data-account-action="close-plant-modal"
               data-i18n-acc="modal.cancel"
             >
               Annulla
@@ -1111,17 +1078,17 @@
           </div>
           <ul class="footer-legal-list">
             <li>
-              <a href="#" onclick="return false;" data-i18n-acc="footer.privacy"
+              <a href="#" data-placeholder-link data-i18n-acc="footer.privacy"
                 >Privacy Policy</a
               >
             </li>
             <li>
-              <a href="#" onclick="return false;" data-i18n-acc="footer.cookie"
+              <a href="#" data-placeholder-link data-i18n-acc="footer.cookie"
                 >Cookie Policy</a
               >
             </li>
             <li>
-              <a href="#" onclick="return false;" data-i18n-acc="footer.terms"
+              <a href="#" data-placeholder-link data-i18n-acc="footer.terms"
                 >Termini di Servizio</a
               >
             </li>
@@ -1154,35 +1121,14 @@
     <div id="invoicePrintContainer" class="invoice-print-section"></div>
 
     <!-- Script della pagina -->
-    <script>
-      document.write(
-        '<script src="' + serraAsset("assets/js/i18n.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/theme.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/nav.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/api.js") + '"><\/script>'
-      );
-      document.write(
-        '<script src="' +
-          serraAsset("assets/js/shared/plant-photo.js") +
-          '"><\/script>'
-      );
-      document.write(
-        '<script src="' +
-          serraAsset("assets/js/shared/escape-html.js") +
-          '"><\/script>'
-      );
-      document.write(
-        '<script src="' + serraAsset("assets/js/account.js") + '"><\/script>'
-      );
-    </script>
-    <!-- Service worker: prima mancante su questa pagina, ora allineata
-         a index.html/configuratore.html tramite assets/js/boot-sw.js -->
-    <script src="assets/js/boot-sw.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/i18n.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/theme.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/nav.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/api.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/shared/plant-photo.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/shared/escape-html.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/account.js?v=2026-07-15-cleanup" defer></script>
+    <!-- Service worker condiviso -->
+    <script src="assets/js/boot-sw.js?v=2026-07-15-maintenance" defer></script>
   </body>
 </html>

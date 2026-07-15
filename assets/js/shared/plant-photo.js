@@ -1,8 +1,4 @@
-// Utility condivisa per risolvere il percorso della foto di una pianta.
-// Prima di questa modifica la stessa logica esisteva in 3 copie divergenti
-// (home-data.js, account.js, conf/conf-data.js): la mappa di fallback più
-// completa (quella del configuratore, ~90 voci) è diventata l'unica fonte
-// di verità, usata ora da tutte e tre le pagine.
+// Mappa condivisa delle foto del catalogo.
 const PLANT_PHOTO_MAP = {
   pomodoro: "assets/img/photo/pomodoro.webp",
   peperone: "assets/img/photo/peperone.webp",

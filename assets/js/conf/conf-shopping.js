@@ -150,14 +150,6 @@ function selectedMaterialItems() {
     }));
 }
 
-// Costo totale dei materiali extra attualmente selezionati
-function selectedMaterialsTotal() {
-  return selectedMaterialItems().reduce(
-    (sum, item) => sum + item.bustine * item.prezzo,
-    0
-  );
-}
-
 // Toglie un materiale extra dalla selezione (es. dal pannello carrello)
 function unselectMaterial(rawId) {
   const id = rawId.startsWith("mat-") ? rawId.slice(4) : rawId;

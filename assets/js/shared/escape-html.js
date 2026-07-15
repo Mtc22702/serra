@@ -1,8 +1,4 @@
-// Utility condivisa per l'escape dei caratteri HTML speciali.
-// Prima di questa modifica la stessa logica esisteva in 3 copie identiche
-// rinominate apposta per evitare collisioni tra script (escapeHtml in
-// home-app.js, escapeHtmlProjects in conf-projects.js, escapeHtmlAccount
-// in account.js). Ora tutte e tre delegano a questa unica implementazione.
+// Escape HTML condiviso per i contenuti interpolati.
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")

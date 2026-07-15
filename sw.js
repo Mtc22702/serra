@@ -1,5 +1,5 @@
 /* Configurazione e risorse in cache */
-const CACHE_VERSION = "2026-07-14-i18n-account";
+const CACHE_VERSION = "2026-07-15-maintenance";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -8,32 +8,7 @@ const PRECACHE = [
   "./configuratore.html",
   "./guida.html",
   "./manifest.json",
-  "./assets/css/index.css",
-  "./assets/css/style.css",
-  "./assets/css/theme.css",
-  "./assets/css/uiux-polish.css",
-  "./assets/css/guida.css",
-  "./assets/css/index/01-fondazioni-hero.css",
-  "./assets/css/index/02-calendario-catalogo.css",
-  "./assets/css/index/03-pannelli-overlay.css",
-  "./assets/css/index/04-responsive-header-contatti.css",
-  "./assets/css/index/05-catalogo-avanzato.css",
-  "./assets/css/index/06-hero-configuratore.css",
-  "./assets/css/index/07-preconfigurazione.css",
-  "./assets/css/configuratore/01-fondazioni-intro.css",
-  "./assets/css/configuratore/02-pannelli-controlli.css",
-  "./assets/css/configuratore/03-scena-dettagli.css",
-  "./assets/css/configuratore/04-modali-responsive.css",
-  "./assets/css/configuratore/05-progetti-calendario.css",
-  "./assets/css/configuratore/06-rifiniture-pdp.css",
-  "./assets/css/configuratore/07-livelli-esperienza.css",
-  "./assets/css/configuratore/08-barra-guidata.css",
-  "./assets/css/tema/01-fondazioni.css",
-  "./assets/css/tema/02-dark-principale.css",
-  "./assets/css/tema/03-modali-calendario.css",
-  "./assets/css/tema/04-catalogo-footer.css",
-  "./assets/css/tema/05-pulsanti-stati.css",
-  "./assets/css/tema/06-header-ritmo.css",
+  "./assets/css/serra-home.css",
   "./assets/js/theme.js",
   "./assets/js/boot-sw.js",
   "./assets/js/nav.js",
@@ -196,7 +171,7 @@ self.addEventListener("fetch", (e) => {
   // Script e stili: strategia cache-first
   if (needsFreshCopy) {
     e.respondWith(
-      caches.match(e.request).then((cached) => {
+      caches.match(e.request, { ignoreSearch: true }).then((cached) => {
         if (cached) return cached;
         return fetch(e.request).then((response) => {
           const copy = response.clone();

@@ -7,7 +7,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "2026-07-14-i18n-account";
+      window.SERRA_APP_VERSION = "2026-07-15-maintenance";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -74,15 +74,7 @@
       })();
     </script>
     <!-- Fogli di stile principali -->
-    <link
-      rel="stylesheet"
-      href="assets/css/index.css?v=2026-07-13-guide-locale"
-    />
-    <link rel="stylesheet" href="assets/css/theme.css" />
-    <link
-      rel="stylesheet"
-      href="assets/css/uiux-polish.css?v=2026-07-14-i18n-account"
-    />
+    <link rel="stylesheet" href="assets/css/serra-home.css?v=2026-07-15-maintenance" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -117,14 +109,10 @@
             >Esplora</span
           >
           <a
-            href="#"
+            href="#hero"
             class="nav-link nav-link--current nav-link--home"
             aria-current="page"
             data-i18n="nav.home"
-            onclick="
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              return false;
-            "
             >🏠 Home</a
           >
           <a href="#stagione" class="nav-link" data-i18n="nav.stagione"
@@ -186,7 +174,7 @@
                   type="button"
                   class="lang-switch-opt"
                   data-lang="it"
-                  onclick="setLang('it')"
+                  data-home-action="set-language"
                 >
                   IT
                 </button>
@@ -194,7 +182,7 @@
                   type="button"
                   class="lang-switch-opt"
                   data-lang="ro"
-                  onclick="setLang('ro')"
+                  data-home-action="set-language"
                 >
                   RO
                 </button>
@@ -232,7 +220,7 @@
             <select
               id="langSelect"
               data-lang-select
-              onchange="setLang(this.value)"
+              data-home-action="set-language"
               title="Lingua / Limbă"
             >
               <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
@@ -241,7 +229,7 @@
           </div>
           <button
             class="cart-btn"
-            onclick="openCart()"
+            data-home-action="open-cart"
             aria-label="Apri carrello"
             data-i18n-aria="cart.aria_open"
           >
@@ -253,8 +241,9 @@
       </div>
     </header>
 
-    <!-- Sezione Hero -->
-    <section class="hero-immersive" id="hero">
+    <main>
+      <!-- Sezione Hero -->
+      <section class="hero-immersive" id="hero">
       <div class="hero-bg-plants" id="heroBgPlants"></div>
       <div class="hero-content">
         <!-- Contenuto testuale della sezione Hero -->
@@ -415,7 +404,7 @@
               autocomplete="off"
               data-i18n-placeholder="catalog.search_placeholder"
               placeholder="Pomodoro, basilico, lattuga..."
-              oninput="setCatalogSearch(this.value)"
+              data-home-action="set-catalog-search"
               onfocus="updateCatalogSearchSuggestions()"
               onblur="setTimeout(hideCatalogSearchSuggestions, 150)"
               role="combobox"
@@ -428,7 +417,7 @@
             <button
               type="button"
               class="catalog-search-clear"
-              onclick="clearCatalogSearch()"
+              data-home-action="clear-catalog-search"
               aria-label="Cancella ricerca"
               data-i18n-aria="search.aria_clear"
             >
@@ -489,7 +478,8 @@
                 <button
                   class="hero-zone-btn catalog-zona-btn"
                   data-zone="freddo"
-                  onclick="setZone('freddo')"
+                  data-home-action="set-zone"
+                  data-zone="freddo"
                   aria-pressed="false"
                 >
                   <span class="hero-zone-icon" aria-hidden="true">❄️</span>
@@ -501,7 +491,8 @@
                 <button
                   class="hero-zone-btn catalog-zona-btn active"
                   data-zone="temperato"
-                  onclick="setZone('temperato')"
+                  data-home-action="set-zone"
+                  data-zone="temperato"
                   aria-pressed="true"
                 >
                   <span class="hero-zone-icon" aria-hidden="true">🌤️</span>
@@ -515,7 +506,8 @@
                 <button
                   class="hero-zone-btn catalog-zona-btn"
                   data-zone="caldo"
-                  onclick="setZone('caldo')"
+                  data-home-action="set-zone"
+                  data-zone="caldo"
                   aria-pressed="false"
                 >
                   <span class="hero-zone-icon" aria-hidden="true">☀️</span>
@@ -529,7 +521,7 @@
               <button
                 class="catalog-heated-toggle"
                 id="catalogHeatedBtn"
-                onclick="toggleHeated()"
+                data-home-action="toggle-heated"
                 aria-pressed="false"
               >
                 <span class="catalog-heat-track" aria-hidden="true"
@@ -565,7 +557,7 @@
               <div class="catalog-category-rail" id="catalogCategoryRail"></div>
               <select
                 id="catalogType"
-                onchange="setCatalogType(this.value)"
+                data-home-action="set-catalog-type"
                 aria-hidden="true"
                 hidden
               >
@@ -585,7 +577,7 @@
                   class="catalog-chip active"
                   id="catalogSeasonOnly"
                   type="button"
-                  onclick="toggleCatalogSeasonOnly()"
+                  data-home-action="toggle-season-only"
                   aria-pressed="true"
                 >
                   <span class="chip-ico" aria-hidden="true">📅</span>
@@ -598,7 +590,7 @@
                   class="catalog-chip"
                   id="catalogAllToggle"
                   type="button"
-                  onclick="toggleCatalogFull()"
+                  data-home-action="toggle-full-catalog"
                   aria-pressed="false"
                 >
                   <span class="chip-ico" aria-hidden="true">🌿</span>
@@ -611,7 +603,7 @@
                   class="catalog-chip"
                   id="catalogEasyOnly"
                   type="button"
-                  onclick="toggleCatalogEasyOnly()"
+                  data-home-action="toggle-easy-only"
                   aria-pressed="false"
                 >
                   <span class="chip-ico" aria-hidden="true">⭐</span>
@@ -624,7 +616,7 @@
                   class="catalog-reset-btn"
                   id="catalogReset"
                   type="button"
-                  onclick="resetCatalogFilters()"
+                  data-home-action="reset-catalog-filters"
                   data-i18n="catalog.reset_short"
                   hidden
                 >
@@ -649,7 +641,7 @@
             <select
               id="catalogSort"
               class="cat-sort-select"
-              onchange="setCatalogSort(this.value)"
+              data-home-action="set-catalog-sort"
               aria-label="Ordina per"
               data-i18n-aria="catalog.aria_sort"
             >
@@ -682,7 +674,8 @@
                 type="button"
                 class="layout-toggle-btn layout-toggle-btn--grid active"
                 id="layoutBtnGrid"
-                onclick="setCatalogLayout('grid')"
+                data-home-action="set-catalog-layout"
+                data-layout="grid"
                 aria-pressed="true"
                 title="Vista griglia"
                 data-i18n-title="catalog.title_grid"
@@ -708,7 +701,8 @@
                 type="button"
                 class="layout-toggle-btn layout-toggle-btn--compact"
                 id="layoutBtnCompact"
-                onclick="setCatalogLayout('compact')"
+                data-home-action="set-catalog-layout"
+                data-layout="compact"
                 aria-pressed="false"
                 title="Vista compatta"
                 data-i18n-title="catalog.title_compact"
@@ -781,7 +775,7 @@
           <div class="kit-actions">
             <button
               class="kit-cta-btn"
-              onclick="addKitToCart()"
+              data-home-action="add-kit"
               data-i18n="kit.add_all"
             >
               + Aggiungi tutto al carrello
@@ -789,7 +783,7 @@
             <button
               class="kit-plan-link"
               type="button"
-              onclick="addKitAndPlan()"
+              data-home-action="add-kit-and-plan"
             >
               <span data-i18n="kit.plan_link">Aggiungi kit e pianifica</span>
               <span aria-hidden="true">→</span>
@@ -881,7 +875,8 @@
           <div id="map" class="contatti-map"></div>
         </div>
       </div>
-    </section>
+      </section>
+    </main>
 
     <!-- Footer del sito -->
     <footer class="footer-botanico">
@@ -964,17 +959,17 @@
           <div class="footer-legal-title" data-i18n="footer.legale">Legale</div>
           <ul class="footer-legal-list">
             <li>
-              <a href="#" onclick="return false;" data-i18n="footer.privacy"
+              <a href="#" data-placeholder-link data-i18n="footer.privacy"
                 >Privacy Policy</a
               >
             </li>
             <li>
-              <a href="#" onclick="return false;" data-i18n="footer.cookie"
+              <a href="#" data-placeholder-link data-i18n="footer.cookie"
                 >Cookie Policy</a
               >
             </li>
             <li>
-              <a href="#" onclick="return false;" data-i18n="footer.termini"
+              <a href="#" data-placeholder-link data-i18n="footer.termini"
                 >Termini di Servizio</a
               >
             </li>
@@ -1005,7 +1000,7 @@
     </footer>
 
     <!-- Pannello Dettaglio Pianta -->
-    <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+    <div class="detail-overlay" id="detailOverlay" data-home-action="close-detail">
       <div
         class="detail-panel"
         id="detailPanel"
@@ -1016,7 +1011,7 @@
         <button
           class="detail-close"
           type="button"
-          onclick="closeDetail()"
+          data-home-action="close-detail"
           aria-label="Chiudi scheda pianta"
           data-i18n-aria="detail.aria_close"
         >
@@ -1054,8 +1049,8 @@
                   aria-selected="true"
                   aria-controls="detailTabOverview"
                   data-detail-tab="overview"
-                  onclick="setDetailTab('overview')"
-                  onkeydown="handleDetailTabKey(event)"
+                  data-home-action="set-detail-tab"
+                  data-tab="overview"
                 >
                   <span class="detail-tab-icon" aria-hidden="true"
                     ><svg viewBox="0 0 24 24">
@@ -1071,8 +1066,8 @@
                   aria-selected="false"
                   aria-controls="detailTabCultivation"
                   data-detail-tab="cultivation"
-                  onclick="setDetailTab('cultivation')"
-                  onkeydown="handleDetailTabKey(event)"
+                  data-home-action="set-detail-tab"
+                  data-tab="cultivation"
                 >
                   <span class="detail-tab-icon" aria-hidden="true"
                     ><svg viewBox="0 0 24 24">
@@ -1088,8 +1083,8 @@
                   aria-selected="false"
                   aria-controls="detailTabCalendar"
                   data-detail-tab="calendar"
-                  onclick="setDetailTab('calendar')"
-                  onkeydown="handleDetailTabKey(event)"
+                  data-home-action="set-detail-tab"
+                  data-tab="calendar"
                 >
                   <span class="detail-tab-icon" aria-hidden="true"
                     ><svg viewBox="0 0 24 24">
@@ -1106,8 +1101,8 @@
                   aria-selected="false"
                   aria-controls="detailTabCare"
                   data-detail-tab="care"
-                  onclick="setDetailTab('care')"
-                  onkeydown="handleDetailTabKey(event)"
+                  data-home-action="set-detail-tab"
+                  data-tab="care"
                 >
                   <span class="detail-tab-icon" aria-hidden="true"
                     ><svg viewBox="0 0 24 24">
@@ -1123,8 +1118,8 @@
                   aria-selected="false"
                   aria-controls="detailTabHarvest"
                   data-detail-tab="harvest"
-                  onclick="setDetailTab('harvest')"
-                  onkeydown="handleDetailTabKey(event)"
+                  data-home-action="set-detail-tab"
+                  data-tab="harvest"
                 >
                   <span class="detail-tab-icon" aria-hidden="true"
                     ><svg viewBox="0 0 24 24">
@@ -1282,7 +1277,7 @@
           <button
             class="detail-add-btn"
             id="detailAddBtn"
-            onclick="detailAddToCart()"
+            data-home-action="detail-add-to-cart"
           ></button>
         </div>
       </div>
@@ -1290,7 +1285,7 @@
 
     <!-- Pannello Carrello -->
     <div class="cart-overlay" id="cartOverlay">
-      <div class="cart-backdrop" onclick="closeCart()"></div>
+      <div class="cart-backdrop" data-home-action="close-cart"></div>
       <div class="cart-drawer">
         <div class="cart-header">
           <div class="cart-title-area">
@@ -1301,13 +1296,13 @@
             <button
               class="cart-clear-btn"
               id="cartClearBtn"
-              onclick="clearCart()"
+              data-home-action="clear-cart"
               data-i18n="cart.clear"
               hidden
             >
               Svuota
             </button>
-            <button class="cart-close" onclick="closeCart()">✕</button>
+            <button class="cart-close" data-home-action="close-cart">✕</button>
           </div>
         </div>
         <div class="cart-empty" id="cartEmpty">
@@ -1326,10 +1321,7 @@
           <a
             href="configuratore.html?import=cart"
             class="cart-conf-link"
-            onclick="
-              syncCatalogClimateToSharedConfig();
-              closeCart();
-            "
+            data-home-action="prepare-cart-import"
           >
             <span aria-hidden="true">📐</span>
             <span class="cart-conf-link-inner">
@@ -1344,7 +1336,7 @@
           </a>
           <button
             class="cart-checkout-btn"
-            onclick="alertCheckout()"
+            data-home-action="checkout"
             data-i18n="cart.checkout"
           >
             Procedi all'acquisto
@@ -1359,7 +1351,7 @@
       id="backToTop"
       aria-label="Torna all'inizio della pagina"
       data-i18n-aria="backtotop.aria"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      data-home-action="back-to-top"
     >
       ↑
     </button>
@@ -1370,7 +1362,7 @@
         <b id="cartNudgeTitle">Aggiunto al carrello</b>
         <span id="cartNudgeMeta">1 seme selezionato</span>
       </div>
-      <button type="button" onclick="openCart()" data-i18n="cart.view">
+      <button type="button" data-home-action="open-cart" data-i18n="cart.view">
         Vedi carrello
       </button>
     </div>
@@ -1390,7 +1382,7 @@
         <a
           class="cookie-desktop-copy"
           href="#"
-          onclick="return false;"
+          data-placeholder-link
           data-i18n="cookie.policy"
         >
           Cookie Policy</a
@@ -1401,7 +1393,7 @@
         <a
           class="cookie-mobile-copy"
           href="#"
-          onclick="return false;"
+          data-placeholder-link
           data-i18n="cookie.mobile_link"
           >Cookie e privacy</a
         >
@@ -1409,14 +1401,14 @@
       <div class="cookie-banner-btns">
         <button
           class="cookie-reject-btn"
-          onclick="rejectCookies()"
+          data-home-action="reject-cookies"
           data-i18n="cookie.reject"
         >
           Solo essenziali
         </button>
         <button
           class="cookie-accept-btn"
-          onclick="acceptCookies()"
+          data-home-action="accept-cookies"
           data-i18n="cookie.accept"
         >
           Accetta
@@ -1789,7 +1781,7 @@
 
     <!-- Script di fine pagina -->
     <!-- Gestione del Service Worker: logica condivisa in assets/js/boot-sw.js -->
-    <script src="assets/js/boot-sw.js?v=2026-07-14-i18n-account" defer></script>
+    <script src="assets/js/boot-sw.js?v=2026-07-15-maintenance" defer></script>
 
     <!-- Caricamento degli script dell'applicazione (Caricamento parallelo nativo) -->
     <script src="assets/js/theme.js?v=2026-07-14-i18n-account" defer></script>
@@ -1828,7 +1820,7 @@
       defer
     ></script>
     <script
-      src="assets/js/home/home-app.js?v=2026-07-14-i18n-account"
+      src="assets/js/home/home-app.js?v=2026-07-15-guide-preconfig"
       defer
     ></script>
   </body>

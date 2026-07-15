@@ -2,14 +2,14 @@
   const copy = {
     it: {
       "nav.home": "Home",
-      "nav.config": "Configuratore",
       "hero.kicker": "GUIDA ALL'APP",
       "hero.title": "Impara a progettare la tua serra.",
-      "hero.copy":
-        "Segui il percorso adatto a te: ogni guida mostra solo le azioni che servono, nell’ordine giusto.",
-      "tab.novizio": "🌱 Principiante",
-      "tab.intermedio": "🌿 Intermedio",
-      "tab.esperto": "🧭 Esperto",
+      "tab.novizio": "Principiante",
+      "tab.novizio_hint": "Ti guido passo passo",
+      "tab.intermedio": "Intermedio",
+      "tab.intermedio_hint": "Parti da un piano pronto",
+      "tab.esperto": "Esperto",
+      "tab.esperto_hint": "Componi liberamente",
       "novice.kicker": "PER CHI INIZIA",
       "novice.title": "Principiante: un orto pronto, passo passo",
       "novice.s1t": "Inserisci le condizioni della serra",
@@ -62,14 +62,14 @@
     },
     ro: {
       "nav.home": "Acasă",
-      "nav.config": "Configurator",
       "hero.kicker": "GHIDUL APLICAȚIEI",
       "hero.title": "Învață să îți proiectezi sera.",
-      "hero.copy":
-        "Urmează traseul potrivit pentru tine: fiecare ghid îți arată doar acțiunile necesare, în ordinea corectă.",
-      "tab.novizio": "🌱 Începător",
-      "tab.intermedio": "🌿 Intermediar",
-      "tab.esperto": "🧭 Expert",
+      "tab.novizio": "Începător",
+      "tab.novizio_hint": "Te ghidez pas cu pas",
+      "tab.intermedio": "Intermediar",
+      "tab.intermedio_hint": "Pornește de la un plan pregătit",
+      "tab.esperto": "Expert",
+      "tab.esperto_hint": "Compune liber",
       "novice.kicker": "PENTRU CEI LA ÎNCEPUT",
       "novice.title": "Începător: o grădină gata, pas cu pas",
       "novice.s1t": "Introdu condițiile serei",
@@ -125,6 +125,26 @@
   const tabs = [...document.querySelectorAll(".guide-tab")];
   const routes = [...document.querySelectorAll(".guide-route")];
   const requested = new URLSearchParams(location.search).get("livello");
+  const tabMeta = {
+    novizio: { icon: "🌱", hint: "tab.novizio_hint" },
+    intermedio: { icon: "🌿", hint: "tab.intermedio_hint" },
+    esperto: { icon: "🧭", hint: "tab.esperto_hint" }
+  };
+
+  // Compatibilità con il markup memorizzato nella cache.
+  tabs.forEach((tab) => {
+    if (tab.querySelector(".guide-tab-icon")) return;
+    const meta = tabMeta[tab.dataset.guide];
+    if (!meta) return;
+    tab.removeAttribute("data-guide-key");
+    tab.innerHTML = `
+      <span class="guide-tab-icon" aria-hidden="true">${meta.icon}</span>
+      <span class="guide-tab-body">
+        <b data-guide-key="tab.${tab.dataset.guide}"></b>
+        <small data-guide-key="${meta.hint}"></small>
+      </span>
+    `;
+  });
 
   function applyLanguage(value) {
     const lang = value === "ro" ? "ro" : "it";
@@ -134,13 +154,8 @@
       const value = copy[lang][element.dataset.guideKey];
       if (value) element.innerHTML = value;
     });
-    document.querySelectorAll("[data-guide-lang]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.guideLang === lang);
-      button.setAttribute(
-        "aria-pressed",
-        String(button.dataset.guideLang === lang)
-      );
-    });
+    const languageSelect = document.getElementById("guideLangSelect");
+    if (languageSelect) languageSelect.value = lang;
   }
 
   function selectRoute(level, focus = false) {
@@ -167,11 +182,28 @@
   tabs.forEach((tab) =>
     tab.addEventListener("click", () => selectRoute(tab.dataset.guide, true))
   );
-  document.querySelectorAll("[data-guide-lang]").forEach((button) => {
-    button.addEventListener("click", () =>
-      applyLanguage(button.dataset.guideLang)
-    );
+  document.querySelector(".guide-tabs")?.addEventListener("keydown", (event) => {
+    const currentIndex = tabs.indexOf(document.activeElement);
+    if (currentIndex < 0) return;
+
+    const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+
+    const nextIndex =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? tabs.length - 1
+          : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) %
+            tabs.length;
+    const nextTab = tabs[nextIndex];
+    selectRoute(nextTab.dataset.guide);
+    nextTab.focus();
   });
+  document
+    .getElementById("guideLangSelect")
+    ?.addEventListener("change", (event) => applyLanguage(event.target.value));
   applyLanguage(localStorage.getItem("ois.lang"));
   selectRoute(requested || "novizio");
 })();

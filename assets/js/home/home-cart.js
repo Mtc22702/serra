@@ -162,7 +162,7 @@ function updateCartUI() {
             <b>${money(price)}${t("cart.per_pack")}</b>
           </span>
         </span>
-        <button class="cart-item-remove" onclick="removeFromCart('${id}')" title="${t("cart.remove")}">✕</button>
+        <button class="cart-item-remove" data-home-action="remove-from-cart" data-plant-id="${id}" title="${t("cart.remove")}">✕</button>
       </div>`;
         })
         .join("") +

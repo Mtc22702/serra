@@ -1,4 +1,94 @@
 // Inizializzazione mesi
+function bindConfigStaticActions() {
+  document.addEventListener("click", (event) => {
+    const control = event.target.closest("[data-conf-action]");
+    if (!control) return;
+
+    switch (control.dataset.confAction) {
+      case "set-language":
+        confSetLang(control.dataset.lang);
+        break;
+      case "open-cart":
+        openConfCart();
+        break;
+      case "open-projects":
+        openProjectsModal();
+        break;
+      case "open-calendar":
+        openCalendarModal();
+        break;
+      case "scroll-greenhouse":
+        scrollGreenhouseImageIntoView("smooth");
+        break;
+      case "close-projects":
+        closeProjectsModal();
+        break;
+      case "create-project":
+        createProject();
+        break;
+      case "close-calendar":
+        closeCalendarModal();
+        break;
+      case "set-calendar-view":
+        setCalendarView(control.dataset.view);
+        break;
+      case "close-cart":
+        closeConfCart();
+        break;
+      case "clear-cart":
+        clearConfCart();
+        break;
+      case "import-cart":
+        importCartAndClose();
+        break;
+      case "checkout":
+        alertConfCheckout();
+        break;
+      case "remove-from-cart":
+        removeFromConfCart(control.dataset.plantId);
+        break;
+      case "unselect-material":
+        unselectMaterial(control.dataset.materialId);
+        break;
+      case "switch-project":
+        switchToProject(control.dataset.projectId);
+        break;
+      case "rename-project":
+        renameProject(control.dataset.projectId);
+        break;
+      case "duplicate-project":
+        duplicateProject(control.dataset.projectId);
+        break;
+      case "delete-project":
+        deleteProject(control.dataset.projectId);
+        break;
+      case "set-calendar-month":
+        setCalendarMonth(Number(control.dataset.month));
+        break;
+      case "set-detail-tab":
+        setConfigDetailTab(control.dataset.detailTab);
+        break;
+    }
+  });
+  document.addEventListener("change", (event) => {
+    const control = event.target.closest("[data-conf-action]");
+    if (!control) return;
+    if (control.dataset.confAction === "set-language") confSetLang(control.value);
+    if (control.dataset.confAction === "set-calendar-category")
+      setCalendarCategory(control.value);
+  });
+  document.addEventListener("input", (event) => {
+    const control = event.target.closest('[data-conf-action="set-calendar-search"]');
+    if (control) setCalendarSearch(control.value);
+  });
+  document.addEventListener("keydown", (event) => {
+    const control = event.target.closest('[data-conf-action="set-detail-tab"]');
+    if (control) handleConfigDetailTabKey(event);
+  });
+}
+
+bindConfigStaticActions();
+
 function fillMonths() {
   const months = MONTHS[state.lang] || MONTHS.it;
   const monthHtml = months
@@ -18,6 +108,16 @@ function fillMonths() {
 
 // Event listeners
 function initEvents() {
+  const backToTopButton = document.getElementById("backToTop");
+  backToTopButton?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  window.addEventListener(
+    "scroll",
+    () => backToTopButton?.classList.toggle("visible", window.scrollY > 420),
+    { passive: true }
+  );
+
   syncPersonaPickerDisclosure();
 
   document.querySelectorAll(".mode-tab").forEach((tab) => {
@@ -671,7 +771,7 @@ function updateConfCartUI() {
             <b>${formatMoney(pd.price)}${priceLabel}</b>
           </span>
         </span>
-        <button class="cart-item-remove" onclick="removeFromConfCart('${id}')" title="${tx("remove")}">✕</button>
+        <button class="cart-item-remove" data-conf-action="remove-from-cart" data-plant-id="${id}" title="${tx("remove")}">✕</button>
       </div>`;
     })
     .join("");
@@ -691,7 +791,7 @@ function updateConfCartUI() {
             <b>${formatMoney(m.bustine * m.prezzo)}</b>
           </span>
         </span>
-        <button class="cart-item-remove" onclick="unselectMaterial('${m.id}')" title="${tx("remove")}">✕</button>
+        <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}">✕</button>
       </div>`;
     })
     .join("");

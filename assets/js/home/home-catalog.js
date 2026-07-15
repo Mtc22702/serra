@@ -543,7 +543,7 @@ function renderCalendarStrip() {
     const m = i + 1;
     const count = PLANTS.filter((p) => effectiveMonths(p).has(m)).length;
     const active = m === state.mese ? " active" : "";
-    return `<button class="month-tile${active}" onclick="setMese(${m})" aria-label="${NOMI_MESI[i]}: ${count} ${planteLabel} ${sowingLabel}" aria-pressed="${m === state.mese}">
+    return `<button class="month-tile${active}" data-home-action="set-month" data-month="${m}" aria-label="${NOMI_MESI[i]}: ${count} ${planteLabel} ${sowingLabel}" aria-pressed="${m === state.mese}">
       <span class="month-tile-name">${NOMI_MESI[i]}</span>
       <span class="month-tile-meta"><span class="month-tile-count">${count}</span> <span class="month-tile-label">${planteLabel} ${sowingLabel}</span></span>
       <span class="month-tile-action">${m === state.mese ? selectedLabel : chooseLabel}</span>
@@ -565,35 +565,6 @@ function centerActiveMonth(strip) {
       behavior: "auto"
     });
   });
-}
-
-// Alterna cfg levels
-function toggleCfgLevels() {
-  const panel = document.getElementById("cfgLevels");
-  const btn = document.getElementById("cfgOpenBtn");
-  if (!panel || !btn) return;
-  const willOpen = panel.hasAttribute("hidden");
-  if (willOpen) {
-    panel.removeAttribute("hidden");
-    btn.setAttribute("aria-expanded", "true");
-    const first = panel.querySelector(".hero-cfg-level");
-    if (first) first.focus({ preventScroll: true });
-
-    requestAnimationFrame(() => {
-      const navH =
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
-        ) || 66;
-      const card = document.querySelector(".hero-cfg");
-      const target = card || btn;
-      const top =
-        target.getBoundingClientRect().top + window.scrollY - navH - 16;
-      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-    });
-  } else {
-    panel.setAttribute("hidden", "");
-    btn.setAttribute("aria-expanded", "false");
-  }
 }
 
 // Pannello filtri compatto su smartphone: mantiene il catalogo raggiungibile
@@ -685,15 +656,15 @@ function renderEditorialPlants() {
         pills
           .map(
             (p) =>
-              `<button class="catalog-filter-pill" type="button" onclick="removeCatalogFilter('${p.kind}')" aria-label="${remove}: ${p.label}"><span class="pill-text">${p.label}</span><span class="pill-x" aria-hidden="true">✕</span></button>`
+              `<button class="catalog-filter-pill" type="button" data-home-action="remove-catalog-filter" data-filter-kind="${p.kind}" aria-label="${remove}: ${p.label}"><span class="pill-text">${p.label}</span><span class="pill-x" aria-hidden="true">✕</span></button>`
           )
           .join("") +
         `</span>` +
         (showFullCatalogAction
-          ? `<button class="catalog-show-full" type="button" onclick="showFullCatalog()">${t("catalog.show_all")}</button>`
+          ? `<button class="catalog-show-full" type="button" data-home-action="show-full-catalog">${t("catalog.show_all")}</button>`
           : "") +
         (pills.length
-          ? `<button class="catalog-clear-all" type="button" onclick="resetCatalogFilters()">${t("catalog.reset_short")}</button>`
+          ? `<button class="catalog-clear-all" type="button" data-home-action="reset-catalog-filters">${t("catalog.reset_short")}</button>`
           : "");
     }
   }
@@ -727,7 +698,7 @@ function renderEditorialPlants() {
 
   if (!plants.length) {
     document.getElementById("editorialPlants").innerHTML =
-      `<div class="empty-state"><div class="empty-icon">🌱</div><p>${filtersActive ? t("catalog.empty") : t("season.empty")}</p>${filtersActive ? `<button class="empty-cta" type="button" onclick="showFullCatalog()">${t("catalog.show_all")}</button>` : ""}</div>`;
+      `<div class="empty-state"><div class="empty-icon">🌱</div><p>${filtersActive ? t("catalog.empty") : t("season.empty")}</p>${filtersActive ? `<button class="empty-cta" type="button" data-home-action="show-full-catalog">${t("catalog.show_all")}</button>` : ""}</div>`;
     document.getElementById("compactPlants").innerHTML = "";
     return;
   }
@@ -764,9 +735,9 @@ function renderEditorialPlants() {
           const emoji = fruitEmoji(p.id);
           const waterIcon = ACQUA_ICON[p.acqua] || "💧";
           const sunIcon = p.sole === "pieno" ? "☀️" : "🌤️";
-          return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+          return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}">
           <span class="super-compact-thumb" aria-hidden="true">
-            <img src="${photoSrc(p.id)}" alt="" loading="lazy" onerror="this.parentElement.dataset.fallback='1';this.style.display='none'" />
+            <img src="${photoSrc(p.id)}" alt="" loading="lazy" data-home-action="catalog-photo-fallback" />
             <span class="super-compact-thumb-emoji">${emoji}</span>
           </span>
           <span class="super-compact-body">
@@ -782,7 +753,7 @@ function renderEditorialPlants() {
               ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
             </span>
           </span>
-          <button class="super-compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
+          <button class="super-compact-add-btn${inC ? " added" : ""}" data-home-action="toggle-cart" data-plant-id="${p.id}" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
         </div>`;
         })
         .join("") + catalogLoadMoreHTML(plants.length - visiblePlants.length);
@@ -803,7 +774,7 @@ function renderEditorialPlants() {
           const tipo = typeOfPlant(p);
           const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
           const inC = inCart(p.id);
-          return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+          return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}">
           <div class="compact-thumb"><img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" /></div>
           <div class="compact-info">
             <div class="compact-name-row">
@@ -820,7 +791,7 @@ function renderEditorialPlants() {
           </div>
           <div class="compact-buy">
             <span class="compact-price">${money(packPrice(p.id))}</span>
-            <button class="compact-add-btn${inC ? " added" : ""}" onclick="toggleCart(event,'${p.id}')" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
+            <button class="compact-add-btn${inC ? " added" : ""}" data-home-action="toggle-cart" data-plant-id="${p.id}" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
           </div>
         </div>`;
         })
@@ -836,7 +807,7 @@ function catalogLoadMoreHTML(remainingCount) {
     count: Math.min(remainingCount, CATALOG_PAGE_STEP)
   });
   return `<div class="catalog-load-more-wrap">
-    <button class="catalog-load-more-btn" type="button" onclick="loadMoreCatalogPlants()">
+    <button class="catalog-load-more-btn" type="button" data-home-action="load-more-catalog">
       <span>${label}</span>
       <span class="catalog-load-more-icon" aria-hidden="true">↓</span>
     </button>
@@ -905,7 +876,7 @@ function renderAbbinamenti() {
       <div class="abbin-names">${plantName(aId)} + ${plantName(bId)}</div>
       <div class="abbin-reason">${reason}</div>
       <div class="abbin-badge">${badge}</div>
-      <button class="abbin-add-btn${pairInCart ? " added" : ""}" onclick="addPairToCart(event,'${aId}','${bId}')">
+      <button class="abbin-add-btn${pairInCart ? " added" : ""}" data-home-action="add-pair-to-cart" data-first-plant-id="${aId}" data-second-plant-id="${bId}">
         ${pairInCart ? t("companions.in_cart_pair") : t("companions.add_pair")}
       </button>
     </div>`;

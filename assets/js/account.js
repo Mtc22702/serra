@@ -169,6 +169,94 @@
   });
 
   // --- INIZIALIZZAZIONE ---
+  function bindAccountEvents() {
+    document.addEventListener("click", (event) => {
+      const control = event.target.closest("[data-account-action]");
+      if (!control) return;
+
+      switch (control.dataset.accountAction) {
+        case "open-cart":
+          window.openCart();
+          break;
+        case "switch-auth-tab":
+          window.switchAuthTab(control.dataset.tab);
+          break;
+        case "dismiss-notifications":
+          window.handleDismissNotifications();
+          break;
+        case "logout":
+          window.SerraAPI.logout();
+          break;
+        case "switch-admin-tab":
+          window.switchAdminTab(control.dataset.tab);
+          break;
+        case "open-plant-modal":
+          window.openPlantModal(control.dataset.mode);
+          break;
+        case "reset-catalog":
+          window.resetCatalogToDefault();
+          break;
+        case "export-database":
+          window.exportDatabaseJson();
+          break;
+        case "clear-orders":
+          window.handleClearOrders();
+          break;
+        case "clear-users":
+          window.handleClearUsers();
+          break;
+        case "close-plant-modal":
+          window.closePlantModal();
+          break;
+        case "open-user-project":
+          window.openUserProject(control.dataset.projectId);
+          break;
+        case "print-invoice":
+          window.printInvoice(control.dataset.orderId);
+          break;
+        case "edit-plant":
+          window.openPlantModal("edit", control.dataset.plantId);
+          break;
+        case "delete-plant":
+          window.handleDeletePlant(control.dataset.plantId);
+          break;
+        case "delete-order":
+          window.handleDeleteOrder(control.dataset.orderId);
+          break;
+        case "delete-user":
+          window.handleDeleteUser(control.dataset.email);
+          break;
+      }
+    });
+    document.addEventListener("input", (event) => {
+      const control = event.target.closest('[data-account-action="filter-plants"]');
+      if (control) window.filterAdminPlants();
+    });
+    document.addEventListener("change", (event) => {
+      const control = event.target.closest(
+        '[data-account-action="set-language"]'
+      );
+      if (control) window.setLang(control.value);
+      const orderStatus = event.target.closest(
+        '[data-account-action="set-order-status"]'
+      );
+      if (orderStatus)
+        window.handleToggleOrderStatus(orderStatus.dataset.orderId, orderStatus.value);
+    });
+    document.addEventListener("submit", (event) => {
+      const form = event.target.closest("[data-account-form]");
+      if (!form) return;
+
+      const handlers = {
+        login: window.handleLogin,
+        register: window.handleRegister,
+        "update-profile": window.handleUpdateProfile,
+        "save-plant": window.handleSavePlant
+      };
+      handlers[form.dataset.accountForm]?.(event);
+    });
+  }
+
   async function initAccount() {
     // Inizializza la lingua prima di qualunque testo renderizzato via JS
     const savedLang = localStorage.getItem("ois.lang");
@@ -216,6 +304,7 @@
     }
   }
 
+  bindAccountEvents();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initAccount);
   } else {
@@ -356,7 +445,7 @@
         <td data-label="${tAcc("dash.project_beds")}">${bedsCount}</td>
         <td data-label="${tAcc("dash.project_updated")}">${formatDate(p.updatedAt || p.createdAt || Date.now())}</td>
         <td data-label="${tAcc("dash.order_actions")}">
-          <button class="btn btn-outline btn-small" onclick="openUserProject('${p.id}')">${tAcc("dash.project_open_btn")}</button>
+          <button class="btn btn-outline btn-small" data-account-action="open-user-project" data-project-id="${p.id}">${tAcc("dash.project_open_btn")}</button>
         </td>
       `;
       listContainer.appendChild(tr);
@@ -449,7 +538,7 @@
         <td data-label="${tAcc("dash.order_total")}">€ ${parseFloat(order.total).toFixed(2)}</td>
         <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(order.status)}</span>${trackingHtml}</td>
         <td data-label="${tAcc("dash.order_actions")}">
-          <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')">${tAcc("dash.print_btn")}</button>
+          <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}">${tAcc("dash.print_btn")}</button>
         </td>
       `;
       listContainer.appendChild(tr);
@@ -503,8 +592,8 @@
         <td data-label="${tAcc("admin.table_gg")}">${p.gg || 90} ${tAcc("admin.days")}</td>
         <td data-label="${tAcc("admin.table_actions")}">
           <div class="admin-table-actions">
-            <button class="btn btn-outline btn-small" onclick="openPlantModal('edit', '${p.id}')">${tAcc("admin.edit")}</button>
-            <button class="btn btn-danger btn-small" onclick="handleDeletePlant('${p.id}')">${tAcc("admin.delete")}</button>
+            <button class="btn btn-outline btn-small" data-account-action="edit-plant" data-plant-id="${p.id}">${tAcc("admin.edit")}</button>
+            <button class="btn btn-danger btn-small" data-account-action="delete-plant" data-plant-id="${p.id}">${tAcc("admin.delete")}</button>
           </div>
         </td>
       `;
@@ -555,7 +644,7 @@
         "Completato",
         "Annullato"
       ];
-      let selectHtml = `<select onchange="handleToggleOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-color, rgba(0,0,0,0.1)); background: var(--bg-input, #fff); color: var(--text-color, #333); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer;">`;
+      let selectHtml = `<select data-account-action="set-order-status" data-order-id="${order.id}" style="padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-color, rgba(0,0,0,0.1)); background: var(--bg-input, #fff); color: var(--text-color, #333); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer;">`;
       statusOptions.forEach((opt) => {
         const selected = order.status === opt ? "selected" : "";
         selectHtml += `<option value="${opt}" ${selected}>${statusLabel(opt)}</option>`;
@@ -579,8 +668,8 @@
         <td data-label="${tAcc("dash.order_actions")}">
           <div class="admin-order-actions">
             ${selectHtml}
-            <button class="btn btn-outline btn-small" onclick="printInvoice('${order.id}')" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("dash.print_btn")}</button>
-            <button class="btn btn-danger btn-small" onclick="handleDeleteOrder('${order.id}')" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("admin.delete")}</button>
+            <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("dash.print_btn")}</button>
+            <button class="btn btn-danger btn-small" data-account-action="delete-order" data-order-id="${order.id}" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("admin.delete")}</button>
           </div>
         </td>
       `;
@@ -773,7 +862,7 @@
       const isSelf = user.email === currentUser.email;
       const deleteBtnHtml = isSelf
         ? `<span class="text-muted" style="font-size: 0.85rem; font-style: italic;">${tAcc("admin.logged_in")}</span>`
-        : `<button class="btn btn-danger btn-small" onclick="handleDeleteUser('${user.email}')" style="padding: 6px 12px;">${tAcc("admin.delete")}</button>`;
+        : `<button class="btn btn-danger btn-small" data-account-action="delete-user" data-email="${user.email}" style="padding: 6px 12px;">${tAcc("admin.delete")}</button>`;
 
       const roleLabel =
         user.role === "admin"

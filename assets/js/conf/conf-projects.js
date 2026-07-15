@@ -235,7 +235,7 @@ function renderProjectsModal() {
       const active = p.id === store.activeId;
       const count = p.config?.beds?.length || 0;
       return `<li class="projects-item${active ? " is-active" : ""}">
-        <button type="button" class="projects-open-btn" onclick="switchToProject('${p.id}')">
+        <button type="button" class="projects-open-btn" data-conf-action="switch-project" data-project-id="${p.id}">
           <span class="projects-item-name">${escapeHtmlProjects(p.name)}${
             active
               ? ` <span class="projects-badge">${projectsText("projects.active")}</span>`
@@ -251,13 +251,13 @@ function renderProjectsModal() {
         <span class="projects-item-actions">
           <button type="button" class="projects-act" title="${projectsText(
             "projects.rename"
-          )}" aria-label="${projectsText("projects.rename")}" onclick="renameProject('${p.id}')">✎</button>
+          )}" aria-label="${projectsText("projects.rename")}" data-conf-action="rename-project" data-project-id="${p.id}">✎</button>
           <button type="button" class="projects-act" title="${projectsText(
             "projects.duplicate"
-          )}" aria-label="${projectsText("projects.duplicate")}" onclick="duplicateProject('${p.id}')">⧉</button>
+          )}" aria-label="${projectsText("projects.duplicate")}" data-conf-action="duplicate-project" data-project-id="${p.id}">⧉</button>
           <button type="button" class="projects-act projects-act--danger" title="${projectsText(
             "projects.delete"
-          )}" aria-label="${projectsText("projects.delete")}" onclick="deleteProject('${p.id}')">🗑</button>
+          )}" aria-label="${projectsText("projects.delete")}" data-conf-action="delete-project" data-project-id="${p.id}">🗑</button>
         </span>
       </li>`;
     })

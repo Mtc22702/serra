@@ -567,6 +567,16 @@ function scrollGreenhouseImageIntoView(behavior = "auto") {
   scrollElementBelowHeader(target, behavior);
 }
 
+// Riporta allo stage, non alla sola scena: su mobile la scena può cambiare
+// posizione quando il pannello dettaglio viene rimosso dal layout.
+function scrollStageIntoView(behavior = "auto") {
+  const target =
+    document.querySelector(".stage") ||
+    document.querySelector(".stage .scene-wrap") ||
+    document.getElementById("scene");
+  scrollElementBelowHeader(target, behavior);
+}
+
 // Chiude il pannello impostazioni dopo l'autocompletamento
 function collapseSettingsPanelAfterAutoPlan(options = {}) {
   const { scroll = true } = options;
@@ -1545,7 +1555,9 @@ function closePlantDetailPanel() {
   state.selected = -1;
   render();
   if (keepGreenhouseRow) {
-    requestAnimationFrame(() => scrollGreenhouseImageIntoView("auto"));
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => scrollStageIntoView("auto"))
+    );
   }
 }
 
@@ -1658,7 +1670,7 @@ function renderPlantDetailPanel() {
       <div class="detail-tabs-heading"><strong>${detailText("detail.tabs_title")}</strong><span>${detailText("detail.tabs_hint")}</span></div>
       <div class="detail-tabs" role="tablist" aria-label="${detailText("detail.tabs_title")}">
         ${CONFIG_DETAIL_TABS.map((tab, index) => {
-          return `<button class="detail-tab${index === 0 ? " active" : ""}" type="button" role="tab" aria-selected="${index === 0}" data-detail-tab="${tab}" onclick="setConfigDetailTab('${tab}')" onkeydown="handleConfigDetailTabKey(event)">${configDetailTabIcon(tab)}<span>${detailText(`detail.tab_${tab}`)}</span></button>`;
+          return `<button class="detail-tab${index === 0 ? " active" : ""}" type="button" role="tab" aria-selected="${index === 0}" data-detail-tab="${tab}" data-conf-action="set-detail-tab">${configDetailTabIcon(tab)}<span>${detailText(`detail.tab_${tab}`)}</span></button>`;
         }).join("")}
       </div>
       </div>

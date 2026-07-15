@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "build:css": "node scripts/build-css.mjs",
+    "audit:assets": "node scripts/audit-assets.mjs",
+    "check:js": "node scripts/check-js.mjs",
+    "check:html": "node scripts/check-html.mjs",
+    "check": "npm run build:css && npm run check:js && npm run check:html"
+  }
+}

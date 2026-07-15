@@ -1,44 +1,8 @@
-/* Rifiniture UI/UX finali: solo presentazione, nessuna logica applicativa. */
-
-/* Layer esplicito e dichiarato per ultimo: le regole di questo file
-   restano prioritarie sulle regole "normal" di base/dark-theme (come
-   già accadeva restando fuori da ogni layer), ma ora in modo esplicito
-   e prevedibile invece di dipendere da un dettaglio implicito della
-   cascata. Comportamento visivo invariato. */
+/* Eccezioni visive temporanee. */
 @layer base, dark-theme, polish;
 
 @layer polish {
-  .guided-setup-toggle {
-    display: block;
-    grid-column: 1 / -1;
-    padding: 8px 10px;
-  }
-
-  /* Chiuso (stato di default): nessuna barra visibile, resta solo l'ingranaggio
-   accanto al titolo. L'intro guidata è così chiaramente secondaria, non un
-   primo passo obbligato. */
-  .guided-setup-toggle:not([open]) {
-    padding: 0;
-  }
-
-  .guided-setup-toggle:not([open]) > .guided-setup-summary {
-    display: none;
-  }
-
-  .config-page-title {
-    display: flex;
-    grid-column: 1 / -1;
-    align-items: center;
-    gap: 11px;
-    min-width: 0;
-    padding: 12px 10px 2px;
-  }
-
-  /* Da icona muta a pillola con etichetta e freccetta: da sola una ruota
-   dentata non comunica "apri per rivedere/modificare le tue scelte", né dà
-   un indizio che sia un controllo apri/chiudi. Etichetta + chevron (che
-   ruota da aperto) sono lo stesso linguaggio già usato altrove nell'app
-   (es. .stage-tools-kicker, .persona-pick-chevron). */
+  /* Controllo del pannello guidato. */
   .guided-setup-gear {
     display: inline-flex;
     align-items: center;
@@ -382,10 +346,7 @@
     overflow: visible;
   }
 
-  /* Etichette informative (zona/mese/misure): tono caldo neutro, non verde,
-   per distinguerle a colpo d'occhio dai controlli cliccabili (verde) come
-   "Modifica" subito accanto — prima usavano la stessa famiglia di colori
-   e si confondevano tra loro. */
+  /* Etichette informative neutre. */
   .stage-context-row .guided-tags .tag {
     min-height: 30px;
     padding: 6px 9px;
@@ -399,9 +360,7 @@
     white-space: nowrap;
   }
 
-  /* Pulsante "Modifica": bordo proprio invece del solo sfondo tenue, così si
-   riconosce subito come un controllo cliccabile e non come un'altra
-   etichetta informativa. */
+  /* Azione di modifica. */
   .stage-context-action {
     display: inline-flex;
     align-items: center;
@@ -446,14 +405,7 @@
       grid-template-columns: minmax(0, 1fr) auto;
     }
 
-    /* Quando "La tua serra" è chiusa e non ci sono layout pronti in vista, la
-     colonna sinistra non ha più nulla da mostrare. Per i percorsi guidati ci
-     mettiamo la guida rapida (#noviceGuidePanel) al suo posto, così la
-     scena della serra mantiene sempre la stessa larghezza indipendentemente
-     dal profilo. Per gli altri profili la colonna sparisce e la scena
-     recupera lo spazio, come prima. Torna visibile non appena c'è di nuovo
-     qualcosa da mostrarci (es. si riapre "La tua serra" dallo step 1 della
-     barra guidata), gestito da syncColLeftLayout() in conf-ui.js. */
+    /* Desktop: guida rapida nella colonna laterale disponibile. */
     .app.col-left-collapsed {
       grid-template-columns: minmax(420px, 1fr) 330px;
     }
@@ -470,22 +422,18 @@
       display: block;
     }
 
-    /* In intermedio ed esperto la guida dà prima il contesto, poi propone i
-     layout e le impostazioni; nel principiante prende la sezione vuota. */
+    /* Ordine della guida per i percorsi avanzati. */
     body:is(.livello-intermedio, .livello-esperto) #noviceGuidePanel {
       order: -1;
     }
   }
 
-  /* Guida rapida dei percorsi guidati: solo desktop (vedi il blocco sopra), sempre
-   nascosta sotto i 1101px dove la colonna sinistra si comporta diversamente
-   (accordion mobile). */
+  /* Guida rapida desktop. */
   #noviceGuidePanel {
     display: none;
   }
 
-  /* Nell'esperto “La tua serra” deve restare raggiungibile: da chiusa si
-   nasconde solo il contenuto, non l'intestazione della card. */
+  /* Mantiene accessibili le impostazioni esperte. */
   body.livello-esperto #panelSettings.is-collapsed {
     display: block;
   }
@@ -826,8 +774,7 @@
     }
   }
 
-  /* Percorsi 2026: la serra resta il fulcro visivo, mentre i tre ingressi
-   diventano immediatamente leggibili senza un clic preliminare. */
+  /* Percorsi guidati. */
   .hero-cfg-inner {
     grid-template-columns: minmax(430px, 1.18fr) minmax(340px, 0.82fr);
     gap: clamp(1.4rem, 2.5vw, 2.5rem);
@@ -909,8 +856,7 @@
     text-align: left;
   }
 
-  /* Contesto di arrivo: gli scroll guidano ancora ogni profilo, ma non
-   lasciano più l'utente davanti a una planimetria priva di spiegazione. */
+  /* Contesto del percorso. */
   .journey-context {
     --journey-accent: #c9962f;
     position: sticky;
@@ -1335,8 +1281,7 @@
     }
   }
 
-  /* Menu mobile: la testata conserva solo le azioni frequenti; tema e lingua
-   diventano preferenze esplicite dentro al drawer. */
+  /* Preferenze nel menu mobile. */
   .mobile-nav-section-title,
   .mobile-nav-preferences {
     display: none;
@@ -1684,13 +1629,7 @@
     }
   }
 
-  /* Tema scuro: gli elementi aggiunti in questo file (ingranaggio accanto al
-   titolo, riepilogo "Le tue scelte", riga misure/clima/mese) usavano sfondi
-   bianco/verde chiaro pensati solo per tema chiaro. Essendo regole non
-   "layerate" vincono comunque sulle regole scure di 02-dark-principale.css
-   (i layer non "vincono" mai su stili fuori layer), quindi qui si
-   riallineano esplicitamente ai toni scuri già usati da pannelli, barra
-   guidata e selettore profilo. */
+  /* Varianti tema scuro. */
   html[data-theme="dark"] .guided-setup-gear,
   html[data-theme="dark"] .guided-setup-summary-icon {
     border-color: var(--dark-border);
@@ -1746,8 +1685,7 @@
     border-bottom-color: var(--dark-border);
   }
 
-  /* Riga riepilogo misure/clima/mese: era una card bianca "a sé", la più
-   vistosa fuori posto col tema scuro attivo. */
+  /* Riepilogo in tema scuro. */
   html[data-theme="dark"] .stage-context-row.guided-meta-row {
     background: linear-gradient(
       135deg,
@@ -1767,17 +1705,14 @@
     color: var(--dark-muted);
   }
 
-  /* Neutro anche a tema scuro, non verde: stessa distinzione informativo vs
-   cliccabile del tema chiaro (vedi commento sulla regola chiara sopra). */
+  /* Etichette informative in tema scuro. */
   html[data-theme="dark"] .stage-context-row .guided-tags .tag {
     background: rgba(255, 255, 255, 0.06);
     border-color: var(--dark-border);
     color: var(--dark-muted);
   }
 
-  /* Su smartphone (sotto i 640px) il selettore profilo aveva uno sfondo
-   bianco semitrasparente fisso, sempre più chiaro dello sfondo scuro anche
-   a tema scuro attivo. */
+  /* Selettore profilo in tema scuro. */
   html[data-theme="dark"] .persona-pick {
     background: linear-gradient(
       135deg,

@@ -1,4 +1,141 @@
 // Controlli catalogo
+function bindHomeStaticActions() {
+  document.addEventListener("click", (event) => {
+    const control = event.target.closest("[data-home-action]");
+    if (!control) return;
+
+    switch (control.dataset.homeAction) {
+      case "set-language":
+        setLang(control.dataset.lang);
+        break;
+      case "open-cart":
+        openCart();
+        break;
+      case "back-to-top":
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        break;
+      case "accept-cookies":
+        acceptCookies();
+        break;
+      case "reject-cookies":
+        rejectCookies();
+        break;
+      case "clear-catalog-search":
+        clearCatalogSearch();
+        break;
+      case "set-zone":
+        setZone(control.dataset.zone);
+        break;
+      case "toggle-heated":
+        toggleHeated();
+        break;
+      case "toggle-season-only":
+        toggleCatalogSeasonOnly();
+        break;
+      case "toggle-full-catalog":
+        toggleCatalogFull();
+        break;
+      case "toggle-easy-only":
+        toggleCatalogEasyOnly();
+        break;
+      case "reset-catalog-filters":
+        resetCatalogFilters();
+        break;
+      case "set-catalog-layout":
+        setCatalogLayout(control.dataset.layout);
+        break;
+      case "add-kit":
+        addKitToCart();
+        break;
+      case "add-kit-and-plan":
+        addKitAndPlan();
+        break;
+      case "close-detail":
+        closeDetail(control.id === "detailOverlay" ? event : undefined);
+        break;
+      case "set-detail-tab":
+        setDetailTab(control.dataset.tab);
+        break;
+      case "detail-add-to-cart":
+        detailAddToCart();
+        break;
+      case "close-cart":
+        closeCart();
+        break;
+      case "clear-cart":
+        clearCart();
+        break;
+      case "prepare-cart-import":
+        syncCatalogClimateToSharedConfig();
+        closeCart();
+        break;
+      case "checkout":
+        alertCheckout();
+        break;
+      case "set-catalog-category":
+        setCatalogCategory(control.dataset.category);
+        break;
+      case "set-month":
+        setMese(Number(control.dataset.month));
+        break;
+      case "remove-catalog-filter":
+        removeCatalogFilter(control.dataset.filterKind);
+        break;
+      case "show-full-catalog":
+        showFullCatalog();
+        break;
+      case "open-detail":
+        openDetail(control.dataset.plantId);
+        break;
+      case "toggle-cart":
+        toggleCart(event, control.dataset.plantId);
+        break;
+      case "remove-from-cart":
+        removeFromCart(control.dataset.plantId);
+        break;
+      case "load-more-catalog":
+        loadMoreCatalogPlants();
+        break;
+      case "add-pair-to-cart":
+        addPairToCart(event, control.dataset.firstPlantId, control.dataset.secondPlantId);
+        break;
+    }
+  });
+
+  document.addEventListener("change", (event) => {
+    const control = event.target.closest("[data-home-action]");
+    if (!control) return;
+    if (control.dataset.homeAction === "set-language") setLang(control.value);
+    if (control.dataset.homeAction === "set-catalog-type")
+      setCatalogType(control.value);
+    if (control.dataset.homeAction === "set-catalog-sort")
+      setCatalogSort(control.value);
+  });
+
+  document.addEventListener("input", (event) => {
+    const control = event.target.closest('[data-home-action="set-catalog-search"]');
+    if (control) setCatalogSearch(control.value);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const control = event.target.closest('[data-home-action="set-detail-tab"]');
+    if (control) handleDetailTabKey(event);
+  });
+
+  document.addEventListener(
+    "error",
+    (event) => {
+      const image = event.target.closest?.('[data-home-action="catalog-photo-fallback"]');
+      if (!image) return;
+      image.parentElement.dataset.fallback = "1";
+      image.style.display = "none";
+    },
+    true
+  );
+}
+
+bindHomeStaticActions();
+
 function setZone(z) {
   state.zona = z;
   render();
@@ -205,7 +342,7 @@ function renderCatalogCategoryRail(base) {
     .map(
       (
         cat
-      ) => `<button class="catalog-category-chip${catalog.type === cat.type ? " active" : ""}" type="button" onclick="setCatalogCategory('${cat.type}')" aria-pressed="${catalog.type === cat.type}">
+      ) => `<button class="catalog-category-chip${catalog.type === cat.type ? " active" : ""}" type="button" data-home-action="set-catalog-category" data-category="${cat.type}" aria-pressed="${catalog.type === cat.type}">
     <span class="category-ico" aria-hidden="true">${cat.icon}</span>
     <span class="category-label">${cat.label}</span>
     <span class="category-count">${cat.count}</span>
@@ -715,24 +852,6 @@ if (catalogSearchLink) {
     "cerfoglio",
     "cimbru"
   ]);
-  // Disegna l'icona di raccolta
-  function harvestVector(plant, size) {
-    const s = size,
-      c = plant.col || {};
-    const finish = (content) =>
-      `<g style="pointer-events:none;filter:drop-shadow(0 ${s * 0.13}px ${s * 0.1}px rgba(18,28,15,.5))"><ellipse cy="${s * 0.34}" rx="${s * 0.36}" ry="${s * 0.11}" fill="#10190d" opacity=".32"/><g transform="translate(0 ${s * 0.075})" opacity=".48" style="filter:brightness(.42) saturate(1.15)">${content}</g><g>${content}</g><ellipse cx="${-s * 0.13}" cy="${-s * 0.16}" rx="${s * 0.052}" ry="${s * 0.11}" fill="#fff" opacity=".5"/><ellipse cx="${s * 0.12}" cy="${s * 0.17}" rx="${s * 0.11}" ry="${s * 0.055}" fill="#10190d" opacity=".18"/></g>`;
-    if (plant.id === "carota")
-      return finish(
-        `<path d="M0 ${-s * 0.3} C${s * 0.3} ${-s * 0.23} ${s * 0.23} ${s * 0.2} 0 ${s * 0.48} C${-s * 0.23} ${s * 0.2} ${-s * 0.3} ${-s * 0.23} 0 ${-s * 0.3}Z" fill="url(#harvestOrange)" stroke="#854c35" stroke-width="${s * 0.045}"/><path d="M0 ${-s * 0.27} q${s * 0.08} ${-s * 0.2} ${s * 0.25} ${-s * 0.22} M0 ${-s * 0.27} q${-s * 0.08} ${-s * 0.2} ${-s * 0.25} ${-s * 0.22}" fill="none" stroke="#4b843f" stroke-width="${s * 0.1}" stroke-linecap="round"/>`
-      );
-    if (plant.id === "pomodoro")
-      return finish(
-        `<circle r="${s * 0.36}" fill="url(#harvestRed)" stroke="#893a31" stroke-width="${s * 0.05}"/><ellipse cx="${-s * 0.11}" cy="${-s * 0.12}" rx="${s * 0.07}" ry="${s * 0.12}" fill="#fff" opacity=".42"/><path d="M0 ${-s * 0.31} l${s * 0.2} ${-s * 0.1} l${-s * 0.16} ${s * 0.2} l${-s * 0.18} ${-s * 0.18}Z" fill="#356c35"/>`
-      );
-    return finish(
-      `<g transform="rotate(-32)"><ellipse cy="${-s * 0.14}" rx="${s * 0.17}" ry="${s * 0.38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * 0.045}"/></g><g transform="rotate(32)"><ellipse cy="${-s * 0.14}" rx="${s * 0.17}" ry="${s * 0.38}" fill="url(#harvestGreen)" stroke="#3d6f3a" stroke-width="${s * 0.045}"/></g>`
-    );
-  }
   // Verifica se mostrare l'icona di raccolta
   function shouldShowHarvestVector(plant) {
     if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
@@ -757,17 +876,6 @@ if (catalogSearchLink) {
   // Genera la forma foglia lobata
   function _lobedLeafPath(len, wid) {
     return `M0 0 Q ${wid * 0.4} ${-len * 0.1} ${wid * 0.5} ${-len * 0.25} Q ${wid * 0.15} ${-len * 0.3} ${wid * 0.55} ${-len * 0.45} Q ${wid * 0.1} ${-len * 0.5} ${wid * 0.45} ${-len * 0.7} Q ${wid * 0.05} ${-len * 0.75} 0 ${-len} Q ${-wid * 0.05} ${-len * 0.75} ${-wid * 0.45} ${-len * 0.7} Q ${-wid * 0.1} ${-len * 0.5} ${-wid * 0.55} ${-len * 0.45} Q ${-wid * 0.15} ${-len * 0.3} ${-wid * 0.5} ${-len * 0.25} Q ${-wid * 0.4} ${-len * 0.1} 0 0 Z`;
-  }
-  // Genera la forma foglia palmata
-  function _palmatePath(r) {
-    let d = "M0 0 ";
-    for (let k = -2; k <= 2; k++) {
-      const a = k * 0.5,
-        lx = Math.sin(a) * r,
-        ly = -Math.cos(a) * r;
-      d += `Q ${Math.sin(a - 0.2) * r * 0.6} ${-Math.cos(a - 0.2) * r * 0.6} ${lx} ${ly} Q ${Math.sin(a + 0.2) * r * 0.6} ${-Math.cos(a + 0.2) * r * 0.6} 0 0 `;
-    }
-    return d + "Z";
   }
   // Disegna il glifo vegetale
   function glyph(plant, r, rng) {
@@ -1131,11 +1239,6 @@ if (catalogSearchLink) {
     if (sel) sel.value = heated ? "si" : "no";
   }
 
-  // Imposta la serra riscaldata
-  function setPcHeated(active) {
-    syncPcRiscSelect(active);
-  }
-
   var PC_MONTHS = {
     it: [
       "Gennaio",
@@ -1393,7 +1496,7 @@ if (catalogSearchLink) {
     overlay.addEventListener("transitionend", onEnd, { once: true });
   }
 
-  function initHomeApp() {
+function initHomeApp() {
     document
       .getElementById("catalogFilterToggle")
       ?.addEventListener("click", toggleCatalogFilters);
@@ -1514,6 +1617,20 @@ if (catalogSearchLink) {
       attributes: true,
       attributeFilter: ["lang"]
     });
+
+    const requestedPreconfig = new URLSearchParams(location.search).get(
+      "preconfig"
+    );
+    const guidePreconfigTargets = {
+      novizio: "configuratore.html?livello=novizio&guided=1",
+      intermedio: "configuratore.html?livello=intermedio&guided=1",
+      esperto: "configuratore.html?livello=esperto&mode=expert&empty=1"
+    };
+    const guidePreconfigTarget = guidePreconfigTargets[requestedPreconfig];
+    if (guidePreconfigTarget) {
+      history.replaceState(null, "", location.pathname);
+      requestAnimationFrame(() => openPreconfigSheet(guidePreconfigTarget));
+    }
 
     if (document.getElementById("map") && typeof L !== "undefined") {
       try {

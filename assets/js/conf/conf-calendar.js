@@ -233,7 +233,7 @@ function calendarRenderMonthStrip() {
       current ? " is-current" : ""
     }" type="button" role="tab" aria-selected="${selected}" aria-label="${escapeHtmlProjects(
       `${label}: ${harvestCount} ${calendarText("calendar.harvestable_short")}`
-    )}" data-calendar-month="${month}" onclick="setCalendarMonth(${month})">
+    )}" data-calendar-month="${month}" data-conf-action="set-calendar-month" data-month="${month}">
       <span class="calendar-month-abbr">${escapeHtmlProjects(label.slice(0, 3))}</span>
       <span class="calendar-month-count">${harvestCount}</span>
     </button>`;
@@ -336,7 +336,7 @@ function calendarRenderContent() {
   if (!source.length && calendarUi.view === "project") {
     grid.innerHTML = `<div class="cal-empty-state"><b>${calendarText(
       "calendar.empty_title"
-    )}</b><span>${calendarText("calendar.empty")}</span><button type="button" onclick="setCalendarView('all')">${calendarText(
+    )}</b><span>${calendarText("calendar.empty")}</span><button type="button" data-conf-action="set-calendar-view" data-view="all">${calendarText(
       "calendar.explore_all"
     )}</button></div>`;
     return;

@@ -1,14 +1,4 @@
-// Registrazione del Service Worker, condivisa da tutte le pagine.
-// Prima di questa modifica questa stessa logica era duplicata identica in
-// index.html e configuratore.html, e mancava del tutto in account.html e
-// guida.html (quindi chi visitava solo quelle due pagine non riceveva mai
-// gli aggiornamenti della cache offline). Ora è un unico file caricato da
-// tutte e 4 le pagine.
-//
-// Nota: la logica di rilevamento tema e lingua salvata resta invece inline
-// in ogni pagina (non qui) perché deve girare in modo sincrono PRIMA del
-// primo paint per evitare il flash di tema/lingua sbagliati — spostarla in
-// un file esterno reintrodurrebbe esattamente quel problema.
+// Registrazione e aggiornamento del Service Worker.
 if ("serviceWorker" in navigator) {
   const isLocalDev =
     location.hostname === "localhost" ||
@@ -59,11 +49,7 @@ if ("serviceWorker" in navigator) {
       })
       .then((registration) => {
         registration.update();
-        // sw.js chiama self.skipWaiting() senza condizioni: il nuovo
-        // worker si attiva da sé, non serve chiederglielo da qui. Ci
-        // limitiamo a "sbloccare" il listener sopra quando arriva
-        // davvero una nuova versione, così un secondo aggiornamento
-        // nella stessa sessione può ricaricare di nuovo la pagina.
+        // Consente il refresh alla prossima attivazione del worker.
         registration.addEventListener("updatefound", () => {
           sessionStorage.removeItem("serra.sw-reloaded");
         });

@@ -46,6 +46,11 @@
     link.addEventListener("click", closeMenu);
   });
 
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[data-placeholder-link]");
+    if (link) event.preventDefault();
+  });
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeMenu();
   });
