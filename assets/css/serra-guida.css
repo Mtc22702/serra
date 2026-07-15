@@ -7,9 +7,9 @@
 @layer base {
   :root {
     color-scheme: light;
-    --theme-surface: #fffdf8;
-    --theme-surface-2: #f3f6ed;
-    --theme-surface-3: #e8eee2;
+    --theme-surface: #fcfdf9;
+    --theme-surface-2: #f1f7f0;
+    --theme-surface-3: #e4eee3;
     --theme-line: rgba(31, 67, 50, 0.15);
     --theme-text: #1f3428;
     --theme-muted: #667168;
@@ -469,11 +469,11 @@
 /* Tema scuro principale */
 @layer dark-theme {
   html[data-theme="dark"] {
-    --dark-page: #121f19;
-    --dark-section: #17271f;
-    --dark-surface: #1d3027;
-    --dark-raised: #263c31;
-    --dark-soft: #30483b;
+    --dark-page: #102019;
+    --dark-section: #162b20;
+    --dark-surface: #1c3428;
+    --dark-raised: #264336;
+    --dark-soft: #315044;
     --dark-border: rgba(181, 218, 193, 0.17);
     --dark-border-strong: rgba(181, 218, 193, 0.27);
     --dark-text: #f0f4ef;
@@ -2968,7 +2968,7 @@ body {
   min-height: 100vh;
   color: var(--guide-ink);
   font-family: "Outfit", system-ui, sans-serif;
-  background: linear-gradient(150deg, #eef4df 0%, #f9f4e9 62%, #eef5e9 100%);
+  background: linear-gradient(150deg, #e4efe2 0%, #f5f9f3 55%, #e7f1e5 100%);
 }
 /* Mantiene visibili marca, navigazione e preferenze durante lo scorrimento. */
 .guide-header {
@@ -3190,7 +3190,8 @@ main {
   border: 1px solid color-mix(in srgb, var(--guide-accent) 38%, transparent);
   border-radius: 12px;
   background: color-mix(in srgb, var(--guide-accent) 13%, #fff);
-  box-shadow: 0 4px 10px color-mix(in srgb, var(--guide-accent) 16%, transparent);
+  box-shadow: 0 4px 10px
+    color-mix(in srgb, var(--guide-accent) 16%, transparent);
   font-size: 1.2rem;
 }
 .guide-tab-body {
@@ -3478,8 +3479,8 @@ html[data-theme="dark"] {
 html[data-theme="dark"] body {
   color: #edf5ef;
   background:
-    radial-gradient(circle at 20% 0%, #1e3a29 0%, transparent 37%),
-    linear-gradient(150deg, #0c1913, #13251a 64%, #102016);
+    radial-gradient(circle at 20% 0%, #254b34 0%, transparent 37%),
+    linear-gradient(150deg, #102019, #162c20 64%, #10251a);
 }
 html[data-theme="dark"] .guide-header {
   background: rgba(11, 24, 20, 0.88);

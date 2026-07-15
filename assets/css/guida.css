@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
   color: var(--guide-ink);
   font-family: "Outfit", system-ui, sans-serif;
-  background: linear-gradient(150deg, #eef4df 0%, #f9f4e9 62%, #eef5e9 100%);
+  background: linear-gradient(150deg, #e4efe2 0%, #f5f9f3 55%, #e7f1e5 100%);
 }
 /* Mantiene visibili marca, navigazione e preferenze durante lo scorrimento. */
 .guide-header {
@@ -527,8 +527,8 @@ html[data-theme="dark"] {
 html[data-theme="dark"] body {
   color: #edf5ef;
   background:
-    radial-gradient(circle at 20% 0%, #1e3a29 0%, transparent 37%),
-    linear-gradient(150deg, #0c1913, #13251a 64%, #102016);
+    radial-gradient(circle at 20% 0%, #254b34 0%, transparent 37%),
+    linear-gradient(150deg, #102019, #162c20 64%, #10251a);
 }
 html[data-theme="dark"] .guide-header {
   background: rgba(11, 24, 20, 0.88);

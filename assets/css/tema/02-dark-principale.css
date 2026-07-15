@@ -1,11 +1,11 @@
 /* Tema scuro principale */
 @layer dark-theme {
   html[data-theme="dark"] {
-    --dark-page: #121f19;
-    --dark-section: #17271f;
-    --dark-surface: #1d3027;
-    --dark-raised: #263c31;
-    --dark-soft: #30483b;
+    --dark-page: #102019;
+    --dark-section: #162b20;
+    --dark-surface: #1c3428;
+    --dark-raised: #264336;
+    --dark-soft: #315044;
     --dark-border: rgba(181, 218, 193, 0.17);
     --dark-border-strong: rgba(181, 218, 193, 0.27);
     --dark-text: #f0f4ef;

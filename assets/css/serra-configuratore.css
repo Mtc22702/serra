@@ -20,15 +20,15 @@
     --green-lt: #5b9c4a;
     --lime: #74c69d;
     --earth: #6b5440;
-    --sand: #eef0df;
-    --sand-lt: #f6f8f0;
-    --bg: #eef0df;
+    --sand: #e5eee3;
+    --sand-lt: #f2f7f0;
+    --bg: #e2ede2;
     --text: #26342a;
     --muted: #5f6f60;
-    --border: #d7ddd2;
+    --border: #d0ddd1;
     --accent: #c8643c;
     --yellow: #d9a441;
-    --white: #fffdf6;
+    --white: #fcfdf9;
     --r: 16px;
     --nav-h: 76px;
 
@@ -8986,13 +8986,13 @@ html[data-theme="dark"]
     background:
       radial-gradient(
         120% 140% at 85% 10%,
-        rgba(116, 198, 157, 0.28) 0%,
+        rgba(157, 201, 166, 0.28) 0%,
         transparent 55%
       ),
-      linear-gradient(135deg, #163a29 0%, #235640 58%, #2d6a4f 100%);
+      linear-gradient(135deg, #1f4b35 0%, #2f6548 58%, #467b59 100%);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
-      0 30px 70px rgba(13, 34, 24, 0.42),
+      0 24px 56px rgba(16, 48, 31, 0.24),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
     overflow: hidden;
     animation: heroCfgIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -9003,6 +9003,20 @@ html[data-theme="dark"]
       opacity: 0;
       transform: translateY(14px);
     }
+  }
+
+  html[data-theme="dark"] .hero-cfg-inner {
+    background:
+      radial-gradient(
+        120% 140% at 85% 10%,
+        rgba(122, 179, 139, 0.16) 0%,
+        transparent 55%
+      ),
+      linear-gradient(135deg, #133824 0%, #1e4b34 58%, #2d6045 100%);
+    border-color: rgba(201, 232, 210, 0.16);
+    box-shadow:
+      0 26px 62px rgba(2, 15, 9, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
   }
 
   .hero-cfg-text {
@@ -10114,6 +10128,22 @@ html[data-theme="dark"]
     border-color: #2f6b3a;
   }
 
+  /* Stato selezionato per il menu “Serra” della modale. */
+  #pcRisc.is-heated {
+    border-color: #d99613;
+    background-color: #fff5d8;
+    color: #7a4600;
+    box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.18);
+    font-weight: 750;
+  }
+
+  html[data-theme="dark"] #pcRisc.is-heated {
+    border-color: #e4a72d;
+    background-color: rgba(113, 75, 14, 0.58);
+    color: #ffe3a3;
+    box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.2);
+  }
+
   :root {
     --pc-nov: #4f9a3f;
     --pc-int: #c9962f;
@@ -10616,6 +10646,7 @@ html[data-theme="dark"]
   }
 }
 
+
 /* Moduli CSS del configuratore */
 /* Fondazioni e introduzione */
 @layer base {
@@ -10655,7 +10686,7 @@ html[data-theme="dark"]
     font-family: var(--sans);
     color: var(--inchiostro);
     background:
-      linear-gradient(rgba(238, 240, 223, 0.92), rgba(238, 240, 223, 0.92)),
+      linear-gradient(rgba(226, 237, 226, 0.93), rgba(226, 237, 226, 0.93)),
       repeating-linear-gradient(
         92deg,
         rgba(71, 112, 58, 0.16) 0 1px,
@@ -19710,15 +19741,16 @@ html[data-theme="dark"]
   }
 }
 
+
 /* Moduli CSS del tema globale */
 
 /* Fondazioni del tema */
 @layer base {
   :root {
     color-scheme: light;
-    --theme-surface: #fffdf8;
-    --theme-surface-2: #f3f6ed;
-    --theme-surface-3: #e8eee2;
+    --theme-surface: #fcfdf9;
+    --theme-surface-2: #f1f7f0;
+    --theme-surface-3: #e4eee3;
     --theme-line: rgba(31, 67, 50, 0.15);
     --theme-text: #1f3428;
     --theme-muted: #667168;
@@ -20178,11 +20210,11 @@ html[data-theme="dark"]
 /* Tema scuro principale */
 @layer dark-theme {
   html[data-theme="dark"] {
-    --dark-page: #121f19;
-    --dark-section: #17271f;
-    --dark-surface: #1d3027;
-    --dark-raised: #263c31;
-    --dark-soft: #30483b;
+    --dark-page: #102019;
+    --dark-section: #162b20;
+    --dark-surface: #1c3428;
+    --dark-raised: #264336;
+    --dark-soft: #315044;
     --dark-border: rgba(181, 218, 193, 0.17);
     --dark-border-strong: rgba(181, 218, 193, 0.27);
     --dark-text: #f0f4ef;
@@ -22658,6 +22690,7 @@ html[data-theme="dark"]
   }
 }
 
+
 /* Eccezioni visive temporanee. */
 @layer base, dark-theme, polish;
 
@@ -24697,11 +24730,11 @@ html[data-theme="dark"]
   }
 
   .hero-cfg-actions > .hero-cfg-levels {
-    padding: 7px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 18px;
-    background: rgba(7, 31, 21, 0.18);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .hero-cfg-levels-grid {
@@ -24812,8 +24845,8 @@ html[data-theme="dark"]
   }
 
   html[data-theme="dark"] .hero-cfg-actions > .hero-cfg-levels {
-    border-color: rgba(173, 221, 190, 0.18);
-    background: rgba(2, 17, 11, 0.34);
+    border: 0;
+    background: transparent;
   }
 
   html[data-theme="dark"] .hero-cfg-level {
@@ -24854,8 +24887,8 @@ html[data-theme="dark"]
     }
 
     .hero-cfg-actions > .hero-cfg-levels {
-      padding: 6px;
-      border-radius: 16px;
+      padding: 0;
+      border-radius: 0;
     }
 
     .hero-cfg-levels-grid {
@@ -25931,16 +25964,25 @@ html[data-theme="dark"]
   html[data-theme="dark"] body.livello-esperto #noviceGuidePanel {
     border-top-color: #f0a087;
   }
+
+  /* Dà un ritmo verticale più leggibile ai tre blocchi principali della hero. */
+  @media (min-width: 901px) {
+    .hero-content {
+      gap: 0;
+      padding-top: clamp(2.25rem, 4.4vh, 3.65rem);
+      padding-bottom: clamp(3rem, 5.5vh, 4.5rem);
+    }
+
+    .hero-headline {
+      margin-bottom: clamp(0.95rem, 1.8vh, 1.45rem);
+    }
+
+    .hero-guide-link {
+      margin-bottom: clamp(1.45rem, 3.1vh, 2.35rem);
+    }
+
+    .hero-cfg {
+      margin-top: 0;
+    }
+  }
 } /* fine @layer polish */
-
-/* Evita lo zoom automatico di Safari iOS sui campi piccoli, lasciando sempre
-   disponibile lo zoom volontario con pinch. */
-@media (max-width: 767px) {
-  :where(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]), textarea, select) {
-    font-size: 16px;
-  }
-
-  :where(button, [role="button"], .step-btn, .preconfig-step-btn, .count-ctl button, .pdp-count button, .veg-qty-ctl button, .guided-count button) {
-    touch-action: manipulation;
-  }
-}

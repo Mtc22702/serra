@@ -2,9 +2,9 @@
 @layer base {
   :root {
     color-scheme: light;
-    --theme-surface: #fffdf8;
-    --theme-surface-2: #f3f6ed;
-    --theme-surface-3: #e8eee2;
+    --theme-surface: #fcfdf9;
+    --theme-surface-2: #f1f7f0;
+    --theme-surface-3: #e4eee3;
     --theme-line: rgba(31, 67, 50, 0.15);
     --theme-text: #1f3428;
     --theme-muted: #667168;
