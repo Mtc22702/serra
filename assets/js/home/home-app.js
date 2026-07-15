@@ -644,7 +644,12 @@ window.addEventListener(
   "scroll",
   function () {
     const btn = document.getElementById("backToTop");
-    if (btn) btn.classList.toggle("visible", window.scrollY > 420);
+    if (!btn) return;
+    // Su telefono il pulsante fluttuante non deve coprire le prime card del
+    // catalogo: compare solo quando il ritorno in cima è davvero utile.
+    const mobile = window.matchMedia("(max-width: 660px)").matches;
+    btn.classList.toggle("visible", window.scrollY > (mobile ? 1800 : 420));
+    syncMobileCatalogDock();
   },
   { passive: true }
 );

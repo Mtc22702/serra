@@ -2,8 +2,8 @@
 (() => {
   // Etichette localizzate usate dai collegamenti che rimandano alla guida.
   const labels = {
-    it: "Scopri come usare l'app",
-    ro: "Descoperă cum se folosește aplicația"
+    it: "Non sai da dove iniziare? Guarda la guida",
+    ro: "Nu știi de unde să începi? Vezi ghidul"
   };
   // Applica l'etichetta corrispondente alla lingua italiana o romena attiva.
   function apply() {

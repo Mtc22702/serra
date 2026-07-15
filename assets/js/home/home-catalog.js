@@ -582,6 +582,23 @@ function updateCatalogFilterToggle() {
     : `${count} ${count === 1 ? "filtro attivo" : "filtri attivi"}`;
 }
 
+// Mantiene raggiungibili filtri e ordinamento durante lo scorrimento del
+// catalogo mobile, senza renderli flottanti nell'hero o nelle sezioni finali.
+function syncMobileCatalogDock() {
+  const section = document.getElementById("stagione");
+  if (!section) return;
+  const mobile = window.matchMedia("(max-width: 660px)").matches;
+  const navHeight = parseInt(
+    getComputedStyle(document.documentElement).getPropertyValue("--nav-h") ||
+      "62",
+    10
+  );
+  const rect = section.getBoundingClientRect();
+  const shouldDock =
+    mobile && rect.top < navHeight && rect.bottom > navHeight + 150;
+  document.body.classList.toggle("catalog-mobile-docked", shouldDock);
+}
+
 function toggleCatalogFilters() {
   const toggle = document.getElementById("catalogFilterToggle");
   const tools = document.getElementById("catalogFilterTools");
@@ -600,6 +617,7 @@ function toggleCatalogFilters() {
         ? "Deschide "
         : "Apri ";
   }
+  syncMobileCatalogDock();
 }
 
 // Genera l'elenco delle piante in base a filtri, vista e paginazione.

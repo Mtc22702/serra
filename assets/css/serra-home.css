@@ -16860,3 +16860,581 @@ html[data-theme="dark"]
     touch-action: manipulation;
   }
 }
+
+/* Rifinitura della home: priorità al percorso e al catalogo, senza cambiare
+   il linguaggio visivo della serra. */
+.hero-immersive {
+  min-height: min(94.9svh, 932px);
+}
+
+.hero-content {
+  min-height: min(76svh, 740px);
+  padding-top: clamp(1.6rem, 4.5vh, 3.5rem);
+  padding-bottom: clamp(4.25rem, 8vh, 6.5rem);
+  gap: clamp(0.9rem, 1.8vh, 1.35rem);
+}
+
+.hero-cfg {
+  margin-top: clamp(0.3rem, 1.2vh, 0.85rem);
+}
+
+.hero-guide-link {
+  min-height: 40px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.78rem;
+  opacity: 1;
+}
+
+.hero-guide-link--secondary {
+  gap: 0.45rem;
+  border-color: rgba(27, 67, 50, 0.22);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.1);
+  color: var(--green-dk);
+  font-size: 0.77rem;
+  font-weight: 750;
+}
+
+.hero-guide-link--secondary .hero-guide-link-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 0.68rem;
+}
+
+.hero-guide-link--secondary .hero-guide-link-arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+html[data-theme="dark"] .hero-guide-link--secondary {
+  border-color: rgba(139, 212, 158, 0.46);
+  background: #1b3025;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+  color: #f1f8f2;
+}
+
+html[data-theme="dark"] .hero-guide-link--secondary .hero-guide-link-icon {
+  background: #8bd49e;
+  color: #102217;
+}
+
+html[data-theme="dark"] .hero-guide-link--secondary .hero-guide-link-arrow {
+  color: #8bd49e;
+}
+
+html[data-theme="dark"] .hero-guide-link--secondary:hover {
+  border-color: #8bd49e;
+  background: #243d2e;
+}
+
+.hero-cfg-inner {
+  gap: 1.35rem;
+  padding: 1.2rem 1.5rem;
+}
+
+.hero-cfg-visual .hcg {
+  max-width: 360px;
+}
+
+.hero-cfg-level:first-child {
+  border-color: #8fe0b4;
+  background: #f7fff9;
+  box-shadow:
+    0 0 0 2px rgba(143, 224, 180, 0.24),
+    0 6px 16px rgba(7, 31, 21, 0.16);
+}
+
+.hero-cfg-level:first-child .pc-persona-body b {
+  color: #173823;
+}
+
+.hero-cfg-level:first-child .pc-persona-body small {
+  color: #31513c;
+}
+
+.hero-cfg-level:first-child .hero-cfg-level-action {
+  min-width: 76px;
+  background: #27724e;
+  border-color: #27724e;
+  color: #fff;
+}
+
+.hero-cfg-recommendation {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: #dff6e6;
+  color: #1d5a36;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.hero-cfg-level.pc-persona-card--intermedio .hero-cfg-level-action {
+  min-width: 76px;
+  border-color: #956408;
+  background: #956408;
+  color: #fff;
+}
+
+.hero-cfg-level.pc-persona-card--esperto .hero-cfg-level-action {
+  min-width: 76px;
+  border-color: #a34b31;
+  background: #a34b31;
+  color: #fff;
+}
+
+.hero-cfg-level:hover .hero-cfg-level-action {
+  filter: brightness(0.92);
+}
+
+html[data-theme="dark"] .hero-cfg-level:first-child {
+  border-color: #5dbf87;
+  background: #172b20;
+}
+
+html[data-theme="dark"] .hero-cfg-level:first-child .pc-persona-body b {
+  color: #f5fff7;
+}
+
+html[data-theme="dark"] .hero-cfg-level:first-child .pc-persona-body small {
+  color: #d1e5d6;
+}
+
+html[data-theme="dark"] .hero-cfg-level.pc-persona-card--intermedio {
+  border-color: #c99637;
+  background: #172b20;
+}
+
+html[data-theme="dark"] .hero-cfg-level.pc-persona-card--esperto {
+  border-color: #d67a61;
+  background: #172b20;
+}
+
+html[data-theme="dark"] .hero-cfg-level:first-child .hero-cfg-level-action {
+  border-color: #31845a;
+  background: #216d49;
+}
+
+html[data-theme="dark"] .hero-cfg-level.pc-persona-card--intermedio .hero-cfg-level-action {
+  border-color: #a46f10;
+  background: #825708;
+}
+
+html[data-theme="dark"] .hero-cfg-level.pc-persona-card--esperto .hero-cfg-level-action {
+  border-color: #b9553b;
+  background: #8e402d;
+}
+
+html[data-theme="dark"] .hero-cfg-recommendation {
+  background: #bcebc9;
+  color: #123f28;
+}
+
+/* I profili sono tre card interamente cliccabili: l'indicatore a freccia
+   conferma l'azione senza aggiungere tre CTA testuali concorrenti. */
+.hero-cfg-level .hero-cfg-level-action,
+.hero-cfg-level:first-child .hero-cfg-level-action,
+.hero-cfg-level.pc-persona-card--intermedio .hero-cfg-level-action,
+.hero-cfg-level.pc-persona-card--esperto .hero-cfg-level-action {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 11px;
+}
+
+.hero-cfg-level .hero-cfg-level-action > span:first-child {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.hero-cfg-level .hero-cfg-level-action > span:last-child {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.hero-cfg-catalog-link {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 0.3rem;
+  padding: 0.55rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 13px;
+  background: rgba(7, 31, 21, 0.16);
+  color: #f4fbf5;
+  text-decoration: none;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.hero-cfg-catalog-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.9rem;
+}
+
+.hero-cfg-catalog-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.06rem;
+  text-align: left;
+}
+
+.hero-cfg-catalog-copy strong {
+  color: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.hero-cfg-catalog-copy small {
+  color: rgba(244, 251, 245, 0.72);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+.hero-cfg-catalog-arrow {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.95rem;
+}
+
+.hero-cfg-catalog-link:hover {
+  border-color: rgba(197, 244, 208, 0.62);
+  background: rgba(255, 255, 255, 0.13);
+  transform: translateY(-1px);
+}
+
+html[data-theme="dark"] .hero-cfg-catalog-link {
+  border-color: rgba(139, 212, 158, 0.32);
+  background: rgba(2, 17, 11, 0.3);
+}
+
+html[data-theme="dark"] .hero-cfg-catalog-link:hover {
+  border-color: #8bd49e;
+  background: rgba(139, 212, 158, 0.12);
+}
+
+/* La hero conserva il proprio fondale illustrato anche nel tema scuro. */
+html[data-theme="dark"] .hero-immersive {
+  background: linear-gradient(160deg, #182b22 0%, #14231d 48%, #111a16 100%);
+}
+
+/* Dopo la hero la palette resta quella della serra: leggere variazioni di
+   foglia, germoglio e terra distinguono le sezioni senza spezzare la pagina. */
+main {
+  background: #f6f7f1;
+}
+
+.catalog-pro-section {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(82, 183, 136, 0.14), transparent 30%),
+    linear-gradient(180deg, #f1f7ef 0%, #f5f7f0 100%);
+}
+
+.abbinamenti-section {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(130, 195, 100, 0.12), transparent 32%),
+    linear-gradient(180deg, #f6f9f1 0%, #f2f7f0 100%);
+}
+
+.contatti-section {
+  background:
+    radial-gradient(circle at 10% 12%, rgba(82, 183, 136, 0.1), transparent 28%),
+    linear-gradient(180deg, #f6f7f0 0%, #eef5ed 100%);
+}
+
+.catalog-pro-section,
+.abbinamenti-section,
+.kit-section,
+.conf-section,
+.contatti-section {
+  border-top: 1px solid rgba(45, 106, 79, 0.1);
+}
+
+html[data-theme="dark"] main {
+  background: #0f1b16;
+}
+
+html[data-theme="dark"] .catalog-pro-section {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(82, 183, 136, 0.12), transparent 30%),
+    linear-gradient(180deg, #102019 0%, #0f1b16 100%);
+}
+
+html[data-theme="dark"] .abbinamenti-section {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(130, 195, 100, 0.1), transparent 32%),
+    linear-gradient(180deg, #11241b 0%, #102019 100%);
+}
+
+html[data-theme="dark"] .contatti-section {
+  background:
+    radial-gradient(circle at 10% 12%, rgba(82, 183, 136, 0.08), transparent 28%),
+    linear-gradient(180deg, #102019 0%, #0e1b15 100%);
+}
+
+html[data-theme="dark"] .catalog-pro-section,
+html[data-theme="dark"] .abbinamenti-section,
+html[data-theme="dark"] .kit-section,
+html[data-theme="dark"] .conf-section,
+html[data-theme="dark"] .contatti-section {
+  border-top-color: rgba(139, 212, 158, 0.14);
+}
+
+.catalog-filter-group--type {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.catalog-filter-group--type .catalog-filter-group-head,
+.catalog-filter-group--type .catalog-category-rail,
+.catalog-filter-group--type .catalog-scope-block {
+  grid-column: 1;
+}
+
+.catalog-scope-block {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(45, 106, 79, 0.13);
+}
+
+.catalog-scope-title {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-scope-block .catalog-scope {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.catalog-hint--pro {
+  margin-top: 0.45rem;
+  padding: 0.45rem 0.7rem;
+  border-color: transparent;
+  background: transparent;
+}
+
+.catalog-hint-text {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.catalog-hint-plus {
+  width: 18px;
+  height: 18px;
+}
+
+.catalog-pro-section .compact-add-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+}
+
+.compact-name-row::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  opacity: 0.5;
+  transform: rotate(45deg);
+}
+
+html[data-theme="dark"] .catalog-filter-group,
+html[data-theme="dark"] .catalog-tools--advanced {
+  border-color: rgba(139, 212, 158, 0.24);
+}
+
+html[data-theme="dark"] .catalog-filter-group,
+html[data-theme="dark"] .catalog-hint--pro {
+  color: #dbe9de;
+}
+
+html[data-theme="dark"] .catalog-filter-label,
+html[data-theme="dark"] .catalog-scope-title,
+html[data-theme="dark"] .catalog-filter-note,
+html[data-theme="dark"] .catalog-hint-text,
+html[data-theme="dark"] .compact-note,
+html[data-theme="dark"] .compact-facts-row {
+  color: #c5d8c9;
+}
+
+html[data-theme="dark"] .catalog-filter-group-head strong,
+html[data-theme="dark"] .catalog-clima-bar .hero-zone-text,
+html[data-theme="dark"] .catalog-clima-bar .hero-zone-btn small {
+  color: #edf7ee;
+}
+
+@media (max-width: 660px) {
+  .hero-immersive {
+    min-height: min(119.6svh, 834px);
+  }
+
+  .hero-content {
+    min-height: min(98svh, 710px);
+    padding: 1.6rem 1.1rem 4.5rem;
+    gap: 1rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(2rem, 8.6vw, 2.5rem);
+  }
+
+  .hero-cfg-visual {
+    display: none;
+  }
+
+  .hero-cfg-inner {
+    padding: 0.8rem;
+  }
+
+  .hero-cfg {
+    margin-top: 0.45rem;
+  }
+
+  .hero-cfg-level {
+    min-height: 54px;
+  }
+
+  .hero-cfg-recommendation {
+    display: none;
+  }
+
+  .hero-cfg-catalog-link {
+    min-height: 50px;
+    margin-top: 0.15rem;
+  }
+
+  .catalog-scope-block {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .catalog-scope-block .catalog-scope {
+    width: 100%;
+  }
+
+  .catalog-hint--pro {
+    margin: 0.2rem 0 0.45rem;
+    padding-inline: 0.1rem;
+  }
+
+  .catalog-hint-text {
+    font-size: 0.7rem;
+  }
+
+  .catalog-hint--pro {
+    padding: 0.45rem 0.55rem;
+    border: 1px solid rgba(45, 106, 79, 0.16);
+    border-radius: 12px;
+    background: rgba(255, 253, 246, 0.96);
+    box-shadow: 0 8px 18px rgba(27, 67, 50, 0.1);
+    backdrop-filter: blur(12px);
+  }
+
+  .catalog-hint--pro .catalog-hint-text {
+    display: none;
+  }
+
+  .catalog-hint--pro .catalog-hint-controls {
+    width: 100%;
+  }
+
+  html[data-theme="dark"] .catalog-hint--pro {
+    border-color: rgba(139, 212, 158, 0.28);
+    background: rgba(24, 43, 33, 0.96);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+  }
+
+  body.catalog-mobile-docked .catalog-mobile-filter-toggle,
+  body.catalog-mobile-docked .catalog-hint--pro {
+    position: fixed;
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+    z-index: 84;
+  }
+
+  body.catalog-mobile-docked .catalog-mobile-filter-toggle {
+    top: calc(var(--nav-h) + 8px);
+  }
+
+  body.catalog-mobile-docked .catalog-hint--pro {
+    top: calc(var(--nav-h) + 70px);
+  }
+
+  body.catalog-mobile-docked .catalog-tools--advanced.is-mobile-open {
+    position: fixed;
+    top: calc(var(--nav-h) + 126px);
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 83;
+    max-height: calc(100svh - var(--nav-h) - 144px);
+    overflow-y: auto;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+  }
+
+  .catalog-pro-section .plant-card-compact {
+    min-height: 0;
+  }
+
+  .catalog-pro-section .compact-note,
+  .catalog-pro-section .compact-facts-row--pro {
+    display: none;
+  }
+
+  .catalog-pro-section .compact-info {
+    padding: 0.55rem 0.65rem 0.25rem;
+  }
+
+  .catalog-pro-section .compact-name {
+    font-size: 0.92rem;
+  }
+
+  .catalog-pro-section .compact-buy {
+    padding: 0.35rem 0.65rem 0.65rem;
+  }
+
+  .catalog-pro-section .compact-add-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .back-to-top {
+    right: max(1rem, env(safe-area-inset-right));
+    left: auto;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+}
