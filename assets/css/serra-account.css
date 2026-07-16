@@ -13662,6 +13662,10 @@ html[data-theme="dark"]
   --font-serif: "Fraunces", Georgia, serif;
   --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --text-muted: #617164;
+}
+html[data-theme="dark"] {
+  --text-muted: #b6c8b9;
 }
 
 body {
@@ -16288,6 +16292,14 @@ html[data-theme="dark"] .notification-content {
     display: none;
   }
 
+  /* Icona ed etichetta dei link "Esplora": separate a runtime da nav.js così
+     la vista mobile può dare all'icona un trattamento a riquadro coerente con
+     le righe Tema/Lingua e le tab della guida. Su desktop resta solo lo
+     spazio tra icona e testo, invariato rispetto a prima. */
+  .nav-link-icon {
+    margin-right: 0.4em;
+  }
+
   @media (max-width: 660px) {
     .site-header-inner {
       grid-template-columns: auto minmax(0, 1fr);
@@ -16370,8 +16382,11 @@ html[data-theme="dark"] .notification-content {
 
     .site-header .nav-link,
     .site-header .nav-link:not(.cart-btn) {
+      display: flex;
+      align-items: center;
       min-height: 50px;
       padding: 0.74rem 0.8rem;
+      gap: 0.65rem;
       border: 1px solid transparent;
       border-radius: 13px;
       font-size: 0.93rem;
@@ -16386,18 +16401,52 @@ html[data-theme="dark"] .notification-content {
       transform: scale(0.98);
     }
 
+    /* Riquadro icona coerente con le righe Tema/Lingua e le tab della guida. */
+    .site-header .nav-link-icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-right: 0;
+      border-radius: 10px;
+      background: #fff;
+      color: #2f6b3a;
+      font-size: 1rem;
+      box-shadow: 0 3px 8px rgba(27, 67, 50, 0.1);
+    }
+
+    .site-header .nav-link-label {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .site-header .nav-link--current {
+      position: relative;
       background: rgba(47, 107, 58, 0.09);
       border-color: rgba(47, 107, 58, 0.16);
       font-weight: 750;
     }
 
-    .site-header .nav-link--configuratore {
-      margin-top: 0.2rem;
+    /* Barra di accento ben visibile per segnalare la voce attiva. */
+    .site-header .nav-link--current::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      width: 4px;
+      border-radius: 0 3px 3px 0;
+      background: var(--green-dk, #2f6b3a);
+    }
+
+    .site-header .nav-link--current .nav-link-icon {
       background: #2f6b3a;
-      border-color: #2f6b3a;
       color: #fff;
-      box-shadow: 0 7px 18px rgba(47, 107, 58, 0.2);
+      box-shadow: 0 3px 9px rgba(27, 67, 50, 0.22);
     }
 
     .site-header .nav-link--account {
@@ -16593,6 +16642,20 @@ html[data-theme="dark"] .notification-content {
 
     html[data-theme="dark"] .site-header .nav-link--account {
       border-top-color: rgba(173, 221, 190, 0.16);
+    }
+
+    html[data-theme="dark"] .site-header .nav-link-icon {
+      background: #1d3327;
+      color: #edf5ef;
+    }
+
+    html[data-theme="dark"] .site-header .nav-link--current .nav-link-icon {
+      background: #2d6a4f;
+      color: #fff;
+    }
+
+    html[data-theme="dark"] .site-header .nav-link--current::before {
+      background: var(--dark-green, #7ed399);
     }
   }
 
@@ -17492,54 +17555,108 @@ html[data-theme="dark"] .notification-content {
     border-color: var(--verde);
     background: rgba(79, 154, 63, 0.12);
   }
+  /* Invito alla guida: più presente della semplice pillola precedente (le
+     cui variabili colore --verde/--verde-scuro non erano mai definite in
+     tema chiaro, rendendo icona e testo praticamente invisibili). */
   .hero-guide-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.46rem;
-    min-height: 40px;
-    padding: 0.48rem 0.84rem;
-    border: 1px solid rgba(47, 107, 58, 0.22);
+    gap: 0.6rem;
+    min-height: 46px;
+    padding: 0.4rem 1.05rem 0.4rem 0.4rem;
+    border: 1.5px solid rgba(79, 154, 63, 0.26);
     border-radius: 999px;
-    color: var(--verde-scuro);
-    background: rgba(255, 253, 246, 0.78);
-    box-shadow: 0 5px 14px rgba(31, 58, 38, 0.08);
-    font-size: 0.83rem;
-    font-weight: 800;
-    line-height: 1;
+    color: var(--green-dk);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 253, 246, 0.95),
+      rgba(224, 240, 220, 0.88)
+    );
+    box-shadow: 0 6px 16px rgba(31, 58, 38, 0.1);
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.25;
     text-decoration: none;
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.16s ease,
+      border-color 0.16s ease,
+      background 0.16s ease;
   }
   .hero-guide-link-icon {
-    width: 17px;
-    height: 17px;
+    width: 28px;
+    height: 28px;
+    flex: none;
     display: inline-grid;
     place-items: center;
     border-radius: 50%;
     color: #fff;
-    background: var(--verde);
-    font-size: 0.7rem;
+    background: linear-gradient(155deg, var(--green-lt), var(--green));
+    box-shadow: 0 3px 9px rgba(31, 58, 38, 0.22);
+    font-size: 0.94rem;
+    font-weight: 800;
+  }
+  .hero-guide-link-arrow {
+    transition: transform 0.16s ease;
   }
   .hero-guide-link:hover {
-    border-color: var(--verde);
-    background: #fffdf6;
-    transform: translateY(-1px);
+    border-color: var(--lime);
+    background: linear-gradient(
+      135deg,
+      #fffdf6,
+      rgba(224, 240, 220, 0.98)
+    );
+    box-shadow: 0 10px 22px rgba(31, 58, 38, 0.16);
+    transform: translateY(-2px);
   }
-  html[data-theme="dark"] .guided-tutorial-link,
-  html[data-theme="dark"] .hero-guide-link {
+  .hero-guide-link:hover .hero-guide-link-arrow {
+    transform: translateX(3px);
+  }
+  .hero-guide-link:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(31, 58, 38, 0.12);
+  }
+  .hero-guide-link:focus-visible {
+    outline: 3px solid rgba(191, 151, 67, 0.4);
+    outline-offset: 3px;
+  }
+  html[data-theme="dark"] .guided-tutorial-link {
     border-color: rgba(139, 212, 158, 0.34);
     color: var(--dark-green);
     background: rgba(20, 43, 30, 0.9);
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
   }
-  html[data-theme="dark"] .guided-tutorial-link > span:first-child,
-  html[data-theme="dark"] .hero-guide-link-icon {
+  html[data-theme="dark"] .hero-guide-link {
+    border-color: rgba(139, 212, 158, 0.3);
+    color: var(--dark-text);
+    background: linear-gradient(
+      135deg,
+      rgba(20, 43, 30, 0.94),
+      rgba(29, 51, 39, 0.86)
+    );
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+  }
+  html[data-theme="dark"] .guided-tutorial-link > span:first-child {
     color: #0b1a13;
     background: var(--dark-green);
   }
-  html[data-theme="dark"] .guided-tutorial-link:hover,
-  html[data-theme="dark"] .hero-guide-link:hover {
+  html[data-theme="dark"] .hero-guide-link-icon {
+    color: #0b1a13;
+    background: linear-gradient(155deg, var(--dark-green), #4f9a6e);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.3);
+  }
+  html[data-theme="dark"] .guided-tutorial-link:hover {
     border-color: var(--dark-green);
     background: rgba(139, 212, 158, 0.16);
+  }
+  html[data-theme="dark"] .hero-guide-link:hover {
+    border-color: var(--dark-green);
+    background: linear-gradient(
+      135deg,
+      rgba(139, 212, 158, 0.16),
+      rgba(20, 43, 30, 0.96)
+    );
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.36);
   }
   @media (max-width: 640px) {
     .guided-tutorial-link {
@@ -17549,7 +17666,15 @@ html[data-theme="dark"] .notification-content {
     }
     .hero-guide-link {
       width: 100%;
-      max-width: 22rem;
+      max-width: 24rem;
+      min-height: 48px;
+      padding: 0.4rem 0.95rem 0.4rem 0.4rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-guide-link,
+    .hero-guide-link-arrow {
+      transition: none;
     }
   }
 

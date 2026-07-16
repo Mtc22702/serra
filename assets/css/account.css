@@ -4,6 +4,10 @@
   --font-serif: "Fraunces", Georgia, serif;
   --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --text-muted: #617164;
+}
+html[data-theme="dark"] {
+  --text-muted: #b6c8b9;
 }
 
 body {

@@ -20,7 +20,7 @@ const bundles = {
     "account.css",
     "uiux-polish.css"
   ],
-  "serra-guida.css": ["theme.css", "guida.css"]
+  "serra-guida.css": ["index.css", "theme.css", "uiux-polish.css", "guida.css"]
 };
 
 const isExternalUrl = (value) =>

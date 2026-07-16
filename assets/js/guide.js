@@ -2,6 +2,10 @@
   const copy = {
     it: {
       "nav.home": "Home",
+      "nav.brand_sub": "Coltiva con un piano",
+      "nav.theme": "Tema",
+      "nav.theme_hint": "Chiaro / scuro",
+      "nav.language": "Lingua",
       "hero.kicker": "GUIDA ALL'APP",
       "hero.title": "Impara a progettare la tua serra.",
       "tab.novizio": "Principiante",
@@ -62,6 +66,10 @@
     },
     ro: {
       "nav.home": "Acasă",
+      "nav.brand_sub": "Cultivă cu un plan",
+      "nav.theme": "Temă",
+      "nav.theme_hint": "Luminos / întunecat",
+      "nav.language": "Limbă",
       "hero.kicker": "GHIDUL APLICAȚIEI",
       "hero.title": "Învață să îți proiectezi sera.",
       "tab.novizio": "Începător",

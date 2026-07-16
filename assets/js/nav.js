@@ -90,4 +90,65 @@
     attributes: true,
     attributeFilter: ["lang"]
   });
+
+  // Separa l'icona iniziale dall'etichetta nelle voci "Esplora" del menu, cosi'
+  // il CSS puo' dare all'icona un trattamento a riquadro coerente col resto
+  // dell'app (senza toccare i dizionari di traduzione ne' i link del footer,
+  // che restano fuori da #mainNav). La funzione e' idempotente: puo' essere
+  // rieseguita ogni volta che il cambio lingua riscrive il testo dei link.
+  function splitIconLabel(raw) {
+    const trimmed = raw.trim();
+    const spaceIndex = trimmed.indexOf(" ");
+    if (spaceIndex <= 0) return null;
+    return {
+      icon: trimmed.slice(0, spaceIndex),
+      label: trimmed.slice(spaceIndex + 1)
+    };
+  }
+
+  function enhanceNavIcons() {
+    menu.querySelectorAll(":scope > a.nav-link").forEach((link) => {
+      // Se è già stato diviso in icona+etichetta e nessuno l'ha riscritto nel
+      // frattempo (il cambio lingua sostituisce sempre l'intero testo,
+      // svuotando questi span), non rielaborarlo: leggere di nuovo il testo
+      // da due span già separati (senza lo spazio originale) spezzerebbe la
+      // divisione in un punto sbagliato.
+      const alreadySplit =
+        link.children.length === 2 &&
+        link.children[0].classList.contains("nav-link-icon") &&
+        link.children[1].classList.contains("nav-link-label");
+      if (alreadySplit) return;
+
+      const parts = splitIconLabel(link.textContent);
+      if (!parts) return;
+      link.textContent = "";
+      const iconSpan = document.createElement("span");
+      iconSpan.className = "nav-link-icon";
+      iconSpan.setAttribute("aria-hidden", "true");
+      iconSpan.textContent = parts.icon;
+      const labelSpan = document.createElement("span");
+      labelSpan.className = "nav-link-label";
+      labelSpan.textContent = parts.label;
+      link.append(iconSpan, labelSpan);
+    });
+  }
+
+  enhanceNavIcons();
+
+  // Ripete la separazione ogni volta che il cambio lingua riscrive il testo
+  // (si disconnette durante la propria modifica per evitare un loop).
+  const navIconObserver = new MutationObserver(() => {
+    navIconObserver.disconnect();
+    enhanceNavIcons();
+    navIconObserver.observe(menu, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  });
+  navIconObserver.observe(menu, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
 })();
