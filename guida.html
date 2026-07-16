@@ -203,10 +203,10 @@
             <span class="step-icon">🔄</span>
           </li>
         </ol>
-        <button class="guide-cta" type="button" data-guide-start="novizio">
+        <a class="guide-cta" href="index.html?preconfig=novizio">
           <span data-guide-key="novice.cta">Inizia il percorso guidato</span>
           <span aria-hidden="true">→</span>
-        </button>
+        </a>
       </section>
 
       <!-- Percorso intermedio con piano iniziale e possibilità di personalizzazione -->
@@ -282,10 +282,10 @@
             <span class="step-icon">🛒</span>
           </li>
         </ol>
-        <button class="guide-cta" type="button" data-guide-start="intermedio">
+        <a class="guide-cta" href="index.html?preconfig=intermedio">
           <span data-guide-key="intermediate.cta">Personalizza un piano</span>
           <span aria-hidden="true">→</span>
-        </button>
+        </a>
       </section>
 
       <!-- Percorso esperto con controllo completo su colture e disposizione -->
@@ -365,10 +365,10 @@
             <span class="step-icon">✓</span>
           </li>
         </ol>
-        <button class="guide-cta" type="button" data-guide-start="esperto">
+        <a class="guide-cta" href="index.html?preconfig=esperto">
           <span data-guide-key="expert.cta">Apri modalità esperto</span>
           <span aria-hidden="true">→</span>
-        </button>
+        </a>
       </section>
 
       <!-- Nota che chiarisce la possibilità di cambiare livello nel configuratore -->
@@ -381,44 +381,6 @@
       </aside>
     </main>
 
-    <!-- Modale esclusiva della guida: conferma il percorso senza transitare dalla home. -->
-    <div
-      class="guide-start-modal"
-      id="guideStartModal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="guideStartModalTitle"
-      hidden
-    >
-      <div class="guide-start-modal-backdrop" data-guide-modal-close></div>
-      <section class="guide-start-modal-card" role="document">
-        <button
-          class="guide-start-modal-close"
-          type="button"
-          data-guide-modal-close
-          aria-label="Chiudi"
-        >
-          ×
-        </button>
-        <span class="guide-start-modal-icon" aria-hidden="true">🌱</span>
-        <p class="guide-start-modal-kicker" data-guide-key="modal.kicker">
-          PERCORSO SELEZIONATO
-        </p>
-        <h2 id="guideStartModalTitle" data-guide-key="modal.title">
-          Pronto a iniziare?
-        </h2>
-        <p id="guideStartModalCopy"></p>
-        <div class="guide-start-modal-actions">
-          <button class="guide-start-modal-cancel" type="button" data-guide-modal-close data-guide-key="modal.cancel">
-            Torna alla guida
-          </button>
-          <a class="guide-start-modal-confirm" id="guideStartModalConfirm" href="configuratore.html">
-            <span data-guide-key="modal.confirm">Apri il configuratore</span>
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </section>
-    </div>
     <!-- Script per tema, contenuto interattivo della guida e supporto offline -->
     <script src="assets/js/theme.js?v=2026-07-15-guide-nav" defer></script>
     <script

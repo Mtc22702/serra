@@ -3391,46 +3391,6 @@ main {
 .guide-cta span:last-child {
   font-size: 1.05rem;
 }
-/* Mantiene il passaggio dalla guida isolato dalle modali della home. */
-.guide-start-modal[hidden] {
-  display: none;
-}
-.guide-start-modal {
-  position: fixed;
-  z-index: 100;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-}
-.guide-start-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(12, 32, 20, 0.58);
-  backdrop-filter: blur(5px);
-}
-.guide-start-modal-card {
-  position: relative;
-  width: min(100%, 470px);
-  padding: clamp(1.5rem, 5vw, 2.25rem);
-  border: 1px solid rgba(36, 87, 51, 0.2);
-  border-top: 4px solid var(--guide-green);
-  border-radius: 20px;
-  background: var(--guide-paper);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-  text-align: center;
-}
-.guide-start-modal-icon { font-size: 2rem; }
-.guide-start-modal-kicker { margin: 0.8rem 0 0.25rem; color: var(--guide-green); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; }
-.guide-start-modal-card h2 { margin: 0; font: 600 clamp(1.55rem, 5vw, 2rem)/1.18 Fraunces, serif; }
-.guide-start-modal-card p:not(.guide-start-modal-kicker) { margin: 0.75rem auto 0; max-width: 360px; color: var(--guide-muted); line-height: 1.45; }
-.guide-start-modal-close { position: absolute; top: 0.65rem; right: 0.75rem; width: 34px; height: 34px; border: 0; border-radius: 50%; color: var(--guide-green); background: rgba(36, 87, 51, 0.1); cursor: pointer; font-size: 1.5rem; line-height: 1; }
-.guide-start-modal-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.65rem; margin-top: 1.4rem; }
-.guide-start-modal-cancel, .guide-start-modal-confirm { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 11px; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; }
-.guide-start-modal-cancel { border: 1px solid rgba(36, 87, 51, 0.25); color: var(--guide-green); background: transparent; }
-.guide-start-modal-confirm { color: #fff; background: var(--guide-green); box-shadow: 0 7px 14px rgba(36, 87, 51, 0.2); }
-.guide-start-modal-close:focus-visible, .guide-start-modal-cancel:focus-visible, .guide-start-modal-confirm:focus-visible { outline: 3px solid var(--guide-green-2); outline-offset: 3px; }
-html.guide-modal-open, body.guide-modal-open { overflow: hidden; }
 /* Mostra una nota trasversale valida per tutti i livelli di esperienza. */
 .guide-help {
   display: flex;
@@ -3576,7 +3536,6 @@ html.guide-modal-open, body.guide-modal-open { overflow: hidden; }
   .step-icon {
     font-size: 1.08rem;
   }
-  .guide-start-modal-actions { grid-template-columns: 1fr; }
 }
 /* Applica animazioni leggere solo quando l'utente non richiede movimenti ridotti. */
 @media (prefers-reduced-motion: no-preference) {
@@ -3695,8 +3654,3 @@ html[data-theme="dark"] .guide-help {
 html[data-theme="dark"] .guide-cta:hover {
   background: #a7e6b4;
 }
-html[data-theme="dark"] .guide-start-modal-card { border-color: rgba(155, 215, 169, 0.22); background: #162c20; }
-html[data-theme="dark"] .guide-start-modal-card p:not(.guide-start-modal-kicker) { color: #b6c8b9; }
-html[data-theme="dark"] .guide-start-modal-close { color: #d8efdc; background: rgba(255, 255, 255, 0.1); }
-html[data-theme="dark"] .guide-start-modal-cancel { border-color: rgba(155, 215, 169, 0.35); color: #d8efdc; }
-html[data-theme="dark"] .guide-start-modal-confirm { color: #0b1a13; background: #8bd49e; }
