@@ -1,5 +1,5 @@
 /* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
-const CACHE_VERSION = "2026-07-15-full-text-audit-2";
+const CACHE_VERSION = "2026-07-16-sw-cache-fix";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -156,7 +156,9 @@ self.addEventListener("fetch", (e) => {
           return response;
         })
         .catch(() =>
-          caches.match(e.request).then((cached) => cached || caches.match("./"))
+          caches
+            .match(e.request, { ignoreSearch: true })
+            .then((cached) => cached || caches.match("./"))
         )
     );
     return;
@@ -168,17 +170,17 @@ self.addEventListener("fetch", (e) => {
     destination === "script" ||
     destination === "manifest";
 
-  // Per script e fogli di stile usa la cache prima della rete per velocizzare l'avvio.
+  // Per script e fogli di stile prova prima la rete, cosi' gli aggiornamenti
+  // arrivano subito; usa la cache (ignorando la query di versione) solo se offline.
   if (needsFreshCopy) {
     e.respondWith(
-      caches.match(e.request, { ignoreSearch: true }).then((cached) => {
-        if (cached) return cached;
-        return fetch(e.request).then((response) => {
+      fetch(e.request)
+        .then((response) => {
           const copy = response.clone();
           caches.open(CACHE).then((cache) => cache.put(e.request, copy));
           return response;
-        });
-      })
+        })
+        .catch(() => caches.match(e.request, { ignoreSearch: true }))
     );
     return;
   }
