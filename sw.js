@@ -1,5 +1,5 @@
 /* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
-const CACHE_VERSION = "2026-07-16-sw-cache-fix";
+const CACHE_VERSION = "2026-07-16-sw-hardening";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -9,12 +9,17 @@ const PRECACHE = [
   "./guida.html",
   "./manifest.json",
   "./assets/css/serra-home.css",
+  "./assets/css/serra-configuratore.css",
+  "./assets/css/serra-guida.css",
+  "./assets/css/serra-account.css",
   "./assets/js/theme.js",
   "./assets/js/boot-sw.js",
   "./assets/js/nav.js",
   "./assets/js/guide.js",
   "./assets/js/guide-link-i18n.js",
   "./assets/js/i18n.js",
+  "./assets/js/api.js",
+  "./assets/js/account.js",
   "./assets/js/plants-data.js",
   "./assets/js/shared/plant-photo.js",
   "./assets/js/shared/escape-html.js",
@@ -101,9 +106,26 @@ const PRECACHE = [
   "./assets/img/svg/zucchina.svg"
 ];
 
-/* Installa il Service Worker e precarica le risorse necessarie al funzionamento offline. */
+/* Installa il Service Worker e precarica le risorse necessarie al funzionamento offline.
+   Usa cache.add() singolarmente invece di cache.addAll(): con addAll(), se
+   anche una sola URL della lista fallisce (file rinominato, non ancora
+   generato, 404 momentaneo), l'INTERA installazione viene rifiutata e il
+   nuovo worker resta bloccato in stato "waiting" per sempre — l'utente
+   rimane sulla versione vecchia a tempo indeterminato, esattamente il
+   sintomo di "a volte resta la cache vecchia". Con singoli cache.add() una
+   risorsa mancante viene solo segnalata in console, senza bloccare le altre. */
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
+  e.waitUntil(
+    caches.open(CACHE).then((cache) =>
+      Promise.allSettled(
+        PRECACHE.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn("[sw] precache fallita per", url, err);
+          })
+        )
+      )
+    )
+  );
   self.skipWaiting();
 });
 
@@ -147,12 +169,26 @@ self.addEventListener("fetch", (e) => {
   }
 
   // Per le pagine HTML prova prima la rete e usa la cache in caso di errore.
+  // { cache: "no-store" } forza il bypass della cache HTTP del browser: senza
+  // questa opzione, fetch() può restituire silenziosamente una risposta HTTP
+  // già in cache (per via di intestazioni cache-control o euristiche del
+  // browser), vanificando la strategia "prima la rete" in modo imprevedibile
+  // — è la causa più probabile del "a volte resta la cache vecchia, a volte
+  // no" segnalato: dipendeva da quando la cache HTTP del browser, non quella
+  // del Service Worker, decideva di rispondere lei senza andare in rete.
   if (e.request.mode === "navigate") {
     e.respondWith(
-      fetch(e.request)
+      fetch(e.request, { cache: "no-store" })
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(e.request, copy));
+          // e.waitUntil() mantiene vivo il worker finché la scrittura in
+          // cache non è completata: senza, il browser può terminare il
+          // worker subito dopo aver restituito la risposta e la promise
+          // "orfana" di cache.put() viene interrotta a metà, lasciando la
+          // cache non aggiornata in modo incostante.
+          e.waitUntil(
+            caches.open(CACHE).then((cache) => cache.put(e.request, copy))
+          );
           return response;
         })
         .catch(() =>
@@ -174,10 +210,12 @@ self.addEventListener("fetch", (e) => {
   // arrivano subito; usa la cache (ignorando la query di versione) solo se offline.
   if (needsFreshCopy) {
     e.respondWith(
-      fetch(e.request)
+      fetch(e.request, { cache: "no-store" })
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(e.request, copy));
+          e.waitUntil(
+            caches.open(CACHE).then((cache) => cache.put(e.request, copy))
+          );
           return response;
         })
         .catch(() => caches.match(e.request, { ignoreSearch: true }))
@@ -192,7 +230,9 @@ self.addEventListener("fetch", (e) => {
         cached ||
         fetch(e.request).then((res) => {
           const clone = res.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, clone));
+          e.waitUntil(
+            caches.open(CACHE).then((c) => c.put(e.request, clone))
+          );
           return res;
         })
     )

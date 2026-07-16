@@ -35,24 +35,22 @@ if ("serviceWorker" in navigator) {
       })
       .catch(() => {});
   } else {
-    const hadControllerAtBoot = Boolean(navigator.serviceWorker.controller);
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      if (!hadControllerAtBoot) return;
-      if (sessionStorage.getItem("serra.sw-reloaded")) return;
-      sessionStorage.setItem("serra.sw-reloaded", "1");
-      location.reload();
-    });
-
+    // Non forziamo più un location.reload() quando il nuovo worker prende
+    // il controllo (evento "controllerchange"): sw.js chiama skipWaiting()
+    // e clients.claim(), quindi l'attivazione può avvenire in QUALSIASI
+    // momento, anche a metà di una navigazione o mentre si apre una modale
+    // (es. il CTA di guida.html che porta a index.html?preconfig=...). Un
+    // reload forzato in quel momento interrompe il flusso: la modale si
+    // apre e "sparisce" subito dopo, dando l'impressione di un refresh
+    // improvviso (perché è letteralmente un refresh). Le navigazioni sono
+    // già network-first, quindi il prossimo caricamento prende comunque
+    // l'HTML aggiornato senza bisogno di forzare un reload qui.
     navigator.serviceWorker
       .register(window.serraAsset ? serraAsset("./sw.js") : "./sw.js", {
         updateViaCache: "none"
       })
       .then((registration) => {
         registration.update();
-        // Consente il refresh alla prossima attivazione del worker.
-        registration.addEventListener("updatefound", () => {
-          sessionStorage.removeItem("serra.sw-reloaded");
-        });
       })
       .catch(() => {});
   }
