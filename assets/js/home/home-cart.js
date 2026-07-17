@@ -5,6 +5,7 @@ function toggleCart(e, id) {
   cart = added
     ? [...cart, { id, bustine: 1 }]
     : cart.filter((i) => i.id !== id);
+  if (added) window.preloadPlantPhoto?.(BYID[id], id);
   updateCartUI();
   renderEditorialPlants();
   renderAbbinamenti();
@@ -18,7 +19,10 @@ function toggleCart(e, id) {
 function addPairToCart(e, aId, bId) {
   e.stopPropagation();
   [aId, bId].forEach((id) => {
-    if (BYID[id] && !inCart(id)) cart.push({ id, bustine: 1 });
+    if (BYID[id] && !inCart(id)) {
+      cart.push({ id, bustine: 1 });
+      window.preloadPlantPhoto?.(BYID[id], id);
+    }
   });
   updateCartUI();
   renderEditorialPlants();
@@ -37,7 +41,10 @@ function addKitToCart() {
     (id) => BYID[id] && effectiveMonths(BYID[id]).has(state.mese)
   );
   availableIds.forEach((id) => {
-    if (!inCart(id)) cart.push({ id, bustine: 1 });
+    if (!inCart(id)) {
+      cart.push({ id, bustine: 1 });
+      window.preloadPlantPhoto?.(BYID[id], id);
+    }
   });
   updateCartUI();
   renderEditorialPlants();
@@ -54,7 +61,10 @@ function addKitAndPlan() {
     (id) => BYID[id] && effectiveMonths(BYID[id]).has(state.mese)
   );
   availableIds.forEach((id) => {
-    if (!inCart(id)) cart.push({ id, bustine: 1 });
+    if (!inCart(id)) {
+      cart.push({ id, bustine: 1 });
+      window.preloadPlantPhoto?.(BYID[id], id);
+    }
   });
   updateCartUI();
   renderEditorialPlants();

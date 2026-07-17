@@ -753,6 +753,7 @@ function updateConfCartUI() {
       if (!p) return "";
       // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
       let photo = window.resolvePlantPhoto(p, id);
+      window.preloadPlantPhoto?.(p, id);
       const emoji = FRUIT_EMOJI[id] || "🌱";
       const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
       const bustLabel =
@@ -764,7 +765,7 @@ function updateConfCartUI() {
       return `<div class="cart-item">
         ${
           photo
-            ? `<img src="${photo}" alt="${plantText(p, "nome")}" loading="lazy" />`
+            ? `<img src="${photo}" alt="${plantText(p, "nome")}" decoding="async" />`
             : `<span style="font-size:2rem;line-height:1;flex-shrink:0">${emoji}</span>`
         }
         <span class="cart-item-copy">

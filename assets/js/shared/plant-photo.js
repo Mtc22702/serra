@@ -98,6 +98,7 @@ const PLANT_PHOTO_MAP = {
   cerfoglio: "assets/img/photo/cerfoglio.webp",
   cimbru: "assets/img/photo/cimbru.webp"
 };
+const preloadedPlantPhotos = new Set();
 
 // Restituisce la foto della pianta usando il percorso salvato o il nome derivato dall'ID.
 function resolvePlantPhoto(plant, id) {
@@ -117,6 +118,20 @@ function resolvePlantPhoto(plant, id) {
   return `assets/img/photo/${id}.webp`;
 }
 
+// Avvia il download di una miniatura prima che il pannello che la usa diventi
+// visibile. Il browser riutilizza poi la stessa risorsa per catalogo e carrello.
+function preloadPlantPhoto(plant, id) {
+  const src = resolvePlantPhoto(plant, id);
+  if (!src || preloadedPlantPhotos.has(src) || typeof Image === "undefined")
+    return;
+
+  preloadedPlantPhotos.add(src);
+  const image = new Image();
+  image.decoding = "async";
+  image.src = src;
+}
+
 if (typeof window !== "undefined") {
   window.resolvePlantPhoto = resolvePlantPhoto;
+  window.preloadPlantPhoto = preloadPlantPhoto;
 }

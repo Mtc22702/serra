@@ -1947,11 +1947,12 @@ function renderSummary() {
           ? tx("cart.pack_one")
           : tx("cart.pack_many", { count: packs });
       const photoSrc = plantPhotoSrc(p, p.id);
+      window.preloadPlantPhoto?.(p, p.id);
       const rowSubtotal = packs * pd.price;
       seedsTotalForShop += rowSubtotal;
       return `<li>
         <span class="shop-emoji" role="img" aria-label="${plantText(p, "nome")}">
-          <img class="shop-photo" src="${photoSrc}" alt="" loading="lazy"
+          <img class="shop-photo" src="${photoSrc}" alt="" decoding="async"
             onerror="this.onerror=null;this.src='assets/img/svg/leaf.svg';this.classList.add('shop-photo--fallback');">
         </span>
         <span class="shop-plant">
