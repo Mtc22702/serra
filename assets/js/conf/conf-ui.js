@@ -807,9 +807,7 @@ function setConfigDetailTab(tab, moveFocus = false) {
 function handleConfigDetailTabKey(event, control) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
-  const current = CONFIG_DETAIL_TABS.indexOf(
-    control.dataset.detailTab
-  );
+  const current = CONFIG_DETAIL_TABS.indexOf(control.dataset.detailTab);
   let next = current;
   if (event.key === "ArrowRight")
     next = (current + 1) % CONFIG_DETAIL_TABS.length;
