@@ -16249,11 +16249,7 @@ html[data-theme="dark"]
   }
   .hero-guide-link:hover {
     border-color: var(--lime);
-    background: linear-gradient(
-      135deg,
-      #fffdf6,
-      rgba(224, 240, 220, 0.98)
-    );
+    background: linear-gradient(135deg, #fffdf6, rgba(224, 240, 220, 0.98));
     box-shadow: 0 10px 22px rgba(31, 58, 38, 0.16);
     transform: translateY(-2px);
   }
@@ -17200,20 +17196,21 @@ html[data-theme="dark"]
   }
 
   :where(
-    button,
-    [role="button"],
-    .btn,
-    .nav-link,
-    .hero-cfg-level,
-    .hero-cfg-catalog-link,
-    .guide-cta,
-    .guide-start-modal-confirm,
-    .preconfig-cta,
-    .conf-btn,
-    .kit-cta-btn,
-    .empty-cta,
-    .catalog-import-btn
-  ) :where(span, b, strong) {
+      button,
+      [role="button"],
+      .btn,
+      .nav-link,
+      .hero-cfg-level,
+      .hero-cfg-catalog-link,
+      .guide-cta,
+      .guide-start-modal-confirm,
+      .preconfig-cta,
+      .conf-btn,
+      .kit-cta-btn,
+      .empty-cta,
+      .catalog-import-btn
+    )
+    :where(span, b, strong) {
     font-weight: inherit;
     letter-spacing: inherit;
   }
@@ -17274,7 +17271,8 @@ html[data-theme="dark"]
 
     .workflow-hub .journey-context-step[data-journey-step="settings"],
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
-    .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+    .workflow-hub
+      .journey-context-step[data-journey-step="settings"].is-current {
       flex: 1.45 1 0;
       min-height: 40px;
       padding: 0.38rem 0.16rem;
@@ -17309,7 +17307,8 @@ html[data-theme="dark"]
   @media (max-width: 660px) {
     .workflow-hub .journey-context-step[data-journey-step="settings"],
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
-    .workflow-hub .journey-context-step[data-journey-step="settings"].is-current,
+    .workflow-hub
+      .journey-context-step[data-journey-step="settings"].is-current,
     .workflow-hub .journey-context-step:not([data-journey-step="settings"]),
     .workflow-hub
       .journey-context-step.is-current:not([data-journey-step="settings"]) {
@@ -17332,7 +17331,7 @@ html[data-theme="dark"]
   }
 } /* fine @layer polish */
 
-/* Definisce colori e misure condivisi dalla pagina di guida ai percorsi. */
+/* Variabili grafiche della pagina guida. */
 :root {
   --guide-green: #245733;
   --guide-green-2: #4f9a3f;
@@ -17340,11 +17339,11 @@ html[data-theme="dark"]
   --guide-ink: #1f3428;
   --guide-muted: #617164;
 }
-/* Applica il modello box-sizing coerente a tutti gli elementi della pagina. */
+/* Modello di dimensionamento condiviso. */
 * {
   box-sizing: border-box;
 }
-/* Imposta tipografia, colori e sfondo generale della guida. */
+/* Stile generale della pagina. */
 body {
   margin: 0;
   min-height: 100vh;
@@ -17352,10 +17351,7 @@ body {
   font-family: "DM Sans", system-ui, sans-serif;
   background: linear-gradient(150deg, #e4efe2 0%, #f5f9f3 55%, #e7f1e5 100%);
 }
-/* Header minimale della guida: solo marchio + azioni (Home, tema, lingua),
-   niente link di navigazione né menu hamburger. Riduce la griglia
-   dell'header condiviso da 3 colonne (marchio/nav/azioni) a 2
-   (marchio/azioni), dato che qui non esiste una nav centrale. */
+/* Header desktop senza navigazione centrale. */
 @media (min-width: 901px) {
   .guide-page-header .site-header-inner {
     grid-template-columns: minmax(190px, auto) auto;
@@ -17364,11 +17360,7 @@ body {
 .guide-page-header .nav-link--home {
   border-radius: 13px;
 }
-/* Sotto i 901px le regole condivise presuppongono un menu hamburger accanto
-   alle azioni (nav-actions a larghezza piena, colonna 2 della griglia).
-   Qui non esiste: ridefiniamo una griglia a 2 colonne semplice (marchio
-   flessibile + azioni della loro larghezza naturale) e teniamo tema/lingua
-   sempre visibili dato che non c'è un cassetto in cui spostarli. */
+/* Header compatto con azioni sempre visibili. */
 @media (max-width: 900px) {
   .guide-page-header .site-header-inner {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -17382,21 +17374,14 @@ body {
   .guide-page-header .nav-actions > .nav-lang {
     display: flex;
   }
-  /* Il display va allineato a quello nativo (inline-grid): la regola
-     condivisa lo cambia in inline-flex per l'uso nel cassetto, ma così
-     il "place-items: center" della base non ha più effetto sulla griglia
-     e l'icona luna/sole smette di essere centrata nel pulsante. */
+  /* Mantiene centrata l'icona del tema. */
   .guide-page-header .nav-actions > .theme-toggle {
     display: inline-grid;
   }
 }
-/* Sotto i 660px, come sulle altre pagine il marchio resta centrato in
-   assoluto (regola condivisa, non la tocchiamo). Il pulsante Home prende
-   il posto che avrebbe l'hamburger, sul bordo sinistro, invece di stare
-   ammassato tra tema e lingua a destra. */
+/* Header mobile con Home sul lato sinistro. */
 @media (max-width: 660px) {
-  /* Icona soltanto, come l'hamburger che sostituisce: con l'etichetta di
-     testo non ci sarebbe spazio per il marchio centrato. */
+  /* Nasconde l'etichetta Home per lasciare spazio al marchio. */
   .guide-page-header .nav-link--home {
     position: absolute;
     top: 50%;
@@ -17420,15 +17405,13 @@ body {
     font-size: 1.1rem;
   }
 }
-/* Centra il contenuto della guida e limita la larghezza di lettura.
-   L'header condiviso (.site-header) è fixed, quindi il padding-top
-   riserva lo spazio della sua altezza (--nav-h) sopra il contenuto. */
+/* Contenitore principale con spazio per l'header fisso. */
 main {
   width: min(100% - 2rem, 900px);
   margin: 0 auto;
   padding: calc(var(--nav-h, 76px) + clamp(2rem, 7vw, 5rem)) 0 3rem;
 }
-/* Presenta la guida e permette di scegliere il livello di esperienza. */
+/* Introduzione e selezione del livello. */
 .guide-hero {
   text-align: center;
 }
@@ -17454,8 +17437,7 @@ main {
   font-size: 1.02rem;
   line-height: 1.55;
 }
-/* Dispone i controlli che cambiano il percorso mostrato nella guida: una
-   barra unica "a segmenti" cosi' si riconosce chiaramente che sono tab. */
+/* Barra delle opzioni di percorso. */
 .guide-tabs {
   display: grid;
   gap: 0.3rem;
@@ -17469,7 +17451,7 @@ main {
     inset 0 1px 0 rgba(255, 255, 255, 0.7),
     0 8px 20px rgba(7, 31, 21, 0.07);
 }
-/* Amplia e affianca le scelte di percorso sulle schermate da tablet in su. */
+/* Opzioni affiancate da tablet in su. */
 @media (min-width: 681px) {
   .guide-tabs {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -17510,7 +17492,9 @@ main {
   color: #5b6b5e;
   background: transparent;
   box-shadow: none;
-  font-family: DM Sans, sans-serif;
+  font-family:
+    DM Sans,
+    sans-serif;
   text-align: left;
   cursor: pointer;
 }
@@ -17596,7 +17580,7 @@ main {
   outline: 3px solid var(--guide-green-2);
   outline-offset: 3px;
 }
-/* Contiene istruzioni, passaggi e azione finale del percorso selezionato. */
+/* Pannello del percorso selezionato. */
 .guide-route {
   margin-top: 2.1rem;
   padding: clamp(1rem, 3.4vw, 2rem);
@@ -17634,7 +17618,7 @@ main {
     700 clamp(1.32rem, 4vw, 2rem)/1.12 Fraunces,
     serif;
 }
-/* Organizza i passaggi operativi del percorso in un elenco numerato. */
+/* Elenco numerato dei passaggi. */
 .guide-steps {
   display: grid;
   gap: 0.7rem;
@@ -17678,8 +17662,7 @@ main {
   text-align: center;
   font-size: 1.3rem;
 }
-/* Evidenzia il collegamento che avvia il configuratore nel livello scelto,
-   con lo stesso stile "a pillola" del bottone di conferma nella modale. */
+/* Azione di apertura del configuratore. */
 .guide-cta {
   min-height: 48px;
   display: flex;
@@ -17709,7 +17692,7 @@ main {
 .guide-cta span:last-child {
   font-size: 1.05rem;
 }
-/* Mostra una nota trasversale valida per tutti i livelli di esperienza. */
+/* Nota comune a tutti i livelli. */
 .guide-help {
   display: flex;
   align-items: flex-start;
@@ -17729,13 +17712,13 @@ main {
 .guide-help span {
   font-size: 1.25rem;
 }
-/* Riduce spaziature e dimensioni per mantenere leggibile la guida su smartphone. */
+/* Adattamenti per smartphone. */
 @media (max-width: 580px) {
   main {
     width: min(100% - 1.2rem, 900px);
     padding-top: calc(var(--nav-h, 60px) + 1.53rem);
   }
-  /* Compatta l'hero del 10% senza ridurre la leggibilità di titoli e testi. */
+  /* Hero compatto su schermi piccoli. */
   .guide-hero h1 {
     margin-top: 0.36rem;
     margin-bottom: 0.68rem;
@@ -17801,7 +17784,7 @@ main {
     font-size: 1.08rem;
   }
 }
-/* Applica animazioni leggere solo quando l'utente non richiede movimenti ridotti. */
+/* Animazioni secondo le preferenze utente. */
 @media (prefers-reduced-motion: no-preference) {
   .guide-tab,
   .guide-cta {
@@ -17811,7 +17794,7 @@ main {
       box-shadow 0.18s ease;
   }
 }
-/* Adatta superfici, testi e controlli della guida al tema scuro. */
+/* Tema scuro. */
 html[data-theme="dark"] {
   color-scheme: dark;
 }

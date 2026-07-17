@@ -17601,11 +17601,7 @@ html[data-theme="dark"] .notification-content {
   }
   .hero-guide-link:hover {
     border-color: var(--lime);
-    background: linear-gradient(
-      135deg,
-      #fffdf6,
-      rgba(224, 240, 220, 0.98)
-    );
+    background: linear-gradient(135deg, #fffdf6, rgba(224, 240, 220, 0.98));
     box-shadow: 0 10px 22px rgba(31, 58, 38, 0.16);
     transform: translateY(-2px);
   }
@@ -18552,20 +18548,21 @@ html[data-theme="dark"] .notification-content {
   }
 
   :where(
-    button,
-    [role="button"],
-    .btn,
-    .nav-link,
-    .hero-cfg-level,
-    .hero-cfg-catalog-link,
-    .guide-cta,
-    .guide-start-modal-confirm,
-    .preconfig-cta,
-    .conf-btn,
-    .kit-cta-btn,
-    .empty-cta,
-    .catalog-import-btn
-  ) :where(span, b, strong) {
+      button,
+      [role="button"],
+      .btn,
+      .nav-link,
+      .hero-cfg-level,
+      .hero-cfg-catalog-link,
+      .guide-cta,
+      .guide-start-modal-confirm,
+      .preconfig-cta,
+      .conf-btn,
+      .kit-cta-btn,
+      .empty-cta,
+      .catalog-import-btn
+    )
+    :where(span, b, strong) {
     font-weight: inherit;
     letter-spacing: inherit;
   }
@@ -18626,7 +18623,8 @@ html[data-theme="dark"] .notification-content {
 
     .workflow-hub .journey-context-step[data-journey-step="settings"],
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
-    .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
+    .workflow-hub
+      .journey-context-step[data-journey-step="settings"].is-current {
       flex: 1.45 1 0;
       min-height: 40px;
       padding: 0.38rem 0.16rem;
@@ -18661,7 +18659,8 @@ html[data-theme="dark"] .notification-content {
   @media (max-width: 660px) {
     .workflow-hub .journey-context-step[data-journey-step="settings"],
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
-    .workflow-hub .journey-context-step[data-journey-step="settings"].is-current,
+    .workflow-hub
+      .journey-context-step[data-journey-step="settings"].is-current,
     .workflow-hub .journey-context-step:not([data-journey-step="settings"]),
     .workflow-hub
       .journey-context-step.is-current:not([data-journey-step="settings"]) {

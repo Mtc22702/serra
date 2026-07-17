@@ -1,14 +1,7 @@
 // Aggiorna automaticamente SERRA_APP_VERSION (nelle 4 pagine) e CACHE_VERSION
-// (in sw.js) in base a un hash del contenuto reale dei file precaricati
-// (CSS compilati, script, immagini). Se nulla di sostanziale è cambiato dalla
-// versione già scritta nei file, non tocca nulla.
-//
-// Volutamente NON include le pagine .html nell'hash: contengono loro stesse la
-// stringa di versione che questo script scrive, quindi includerle
-// creerebbe un riferimento circolare (l'hash cambierebbe ad ogni esecuzione
-// anche senza modifiche reali, perché il testo appena scritto farebbe parte
-// del prossimo calcolo).
-import { readFile, writeFile } from "node:fs/promises";
+// (in sw.js) in base a un hash degli asset e dell'HTML. I riferimenti alla
+// versione vengono normalizzati prima dell'hash, evitando cicli di versioning.
+import { readFile, readdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,25 +20,54 @@ async function readText(relPath) {
   return readFile(path.join(root, relPath), "utf8");
 }
 
-async function computeContentHash() {
-  const swSource = await readText(SW_FILE);
-  const match = swSource.match(/const PRECACHE = \[([\s\S]*?)\];/);
-  if (!match) throw new Error("PRECACHE non trovato in sw.js");
-  const urls = [...match[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+async function collectFiles(relativeDir) {
+  const entries = await readdir(path.join(root, relativeDir), {
+    withFileTypes: true
+  });
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const relativePath = path.join(relativeDir, entry.name);
+      if (entry.isDirectory()) return collectFiles(relativePath);
+      return [relativePath];
+    })
+  );
+  return nested.flat();
+}
 
+async function computeContentHash() {
   const hash = createHash("sha256");
-  for (const url of [...urls].sort()) {
-    const rel = url.replace(/^\.\//, "");
-    if (rel === "" || rel.endsWith(".html")) continue;
-    try {
-      const buf = await readFile(path.join(root, rel));
-      hash.update(rel);
-      hash.update(buf);
-    } catch {
-      // File mancante: lo segnala già il service worker in console
-      // all'installazione, qui non blocchiamo il calcolo della versione.
-    }
+  const files = (
+    await Promise.all(
+      ["assets/css", "assets/js", "assets/img"].map(collectFiles)
+    )
+  )
+    .flat()
+    .concat("manifest.json")
+    .sort();
+
+  for (const rel of files) {
+    hash.update(rel);
+    hash.update(await readFile(path.join(root, rel)));
   }
+
+  for (const page of HTML_PAGES) {
+    const normalized = (await readText(page))
+      .replace(
+        /SERRA_APP_VERSION\s*=\s*"[^"]+"/g,
+        'SERRA_APP_VERSION = "<version>"'
+      )
+      .replace(/\?v=[^"'\s)]+/g, "?v=<version>");
+    hash.update(page);
+    hash.update(normalized);
+  }
+
+  const normalizedWorker = (await readText(SW_FILE)).replace(
+    /CACHE_VERSION\s*=\s*"[^"]+"/,
+    'CACHE_VERSION = "<version>"'
+  );
+  hash.update(SW_FILE);
+  hash.update(normalizedWorker);
+
   return hash.digest("hex").slice(0, 12);
 }
 

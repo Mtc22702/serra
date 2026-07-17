@@ -10706,6 +10706,7 @@ html[data-theme="dark"]
   }
 }
 
+
 /* Moduli CSS del tema globale */
 
 /* Fondazioni del tema */
@@ -13653,6 +13654,7 @@ html[data-theme="dark"]
     }
   }
 }
+
 
 /* Eccezioni visive temporanee. */
 @layer base, dark-theme, polish;

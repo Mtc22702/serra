@@ -1665,26 +1665,87 @@ if (catalogSearchLink) {
       requestAnimationFrame(() => openPreconfigSheet(guidePreconfigTarget));
     }
 
-    if (document.getElementById("map") && typeof L !== "undefined") {
-      try {
-        const map = L.map("map", { scrollWheelZoom: false }).setView(
-          [43.6853, 11.2547],
-          15
-        );
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        L.marker([43.6853, 11.2547])
-          .addTo(map)
-          .bindPopup(
-            "<b>Orto in Serra</b><br>Via delle Serre, 42<br>50023 Impruneta (FI)"
-          )
-          .openPopup();
-      } catch (err) {
-        console.error("Errore nel caricamento della mappa Leaflet:", err);
-      }
+    setupLazyContactMap();
+  }
+
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve();
+    if (window.__serraLeafletPromise) return window.__serraLeafletPromise;
+
+    window.__serraLeafletPromise = new Promise((resolve, reject) => {
+      const stylesheet = document.createElement("link");
+      stylesheet.rel = "stylesheet";
+      stylesheet.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      const script = document.createElement("script");
+      script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+
+      let stylesheetReady = false;
+      let scriptReady = false;
+      const finish = () => {
+        if (!stylesheetReady || !scriptReady) return;
+        if (window.L) resolve();
+        else reject(new Error("Leaflet non disponibile"));
+      };
+      stylesheet.onload = () => {
+        stylesheetReady = true;
+        finish();
+      };
+      stylesheet.onerror = reject;
+      script.onload = () => {
+        scriptReady = true;
+        finish();
+      };
+      script.onerror = reject;
+
+      document.head.append(stylesheet);
+      document.head.append(script);
+    });
+    return window.__serraLeafletPromise;
+  }
+
+  function setupLazyContactMap() {
+    const mapElement = document.getElementById("map");
+    if (!mapElement) return;
+
+    const createMap = () => {
+      if (mapElement.dataset.leafletReady) return;
+      mapElement.dataset.leafletReady = "true";
+      loadLeaflet()
+        .then(() => {
+          const map = L.map(mapElement, { scrollWheelZoom: false }).setView(
+            [43.6853, 11.2547],
+            15
+          );
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+          L.marker([43.6853, 11.2547])
+            .addTo(map)
+            .bindPopup(
+              "<b>Orto in Serra</b><br>Via delle Serre, 42<br>50023 Impruneta (FI)"
+            )
+            .openPopup();
+        })
+        .catch((err) => {
+          mapElement.dataset.leafletReady = "";
+          console.error("Errore nel caricamento della mappa Leaflet:", err);
+        });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      createMap();
+      return;
     }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        createMap();
+      },
+      { rootMargin: "240px 0px" }
+    );
+    observer.observe(mapElement);
   }
 
   if (document.readyState === "loading") {
