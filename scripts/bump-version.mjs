@@ -56,7 +56,8 @@ async function computeContentHash() {
         /SERRA_APP_VERSION\s*=\s*"[^"]+"/g,
         'SERRA_APP_VERSION = "<version>"'
       )
-      .replace(/\?v=[^"'\s)]+/g, "?v=<version>");
+      .replace(/\?v=[^"'\s)]+/g, "?v=<version>")
+      .replace(/\d{8}-[a-f0-9]{12}/g, "<version>");
     hash.update(page);
     hash.update(normalized);
   }
