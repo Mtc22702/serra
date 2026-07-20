@@ -339,16 +339,14 @@
   .bedhit {
     cursor: pointer;
   }
-  .bedhit:hover .bed-border {
-    stroke: var(--oro);
+  .bedhit:hover .bed-soil {
+    filter: brightness(1.08) saturate(1.05);
   }
   .bedhit:focus {
     outline: none;
   }
-  .bedhit:focus .bed-border {
-    stroke: #fff4a8;
-    stroke-width: 3.5px;
-    filter: url(#bedLift) drop-shadow(0 0 5px rgba(255, 224, 86, 0.9));
+  .bedhit:focus .bed-soil {
+    filter: brightness(1.14) saturate(1.12);
   }
   .plant-glyph--growing {
     transform-box: fill-box;
@@ -440,11 +438,11 @@
   }
   @keyframes scene-glass-glint {
     from {
-      opacity: 0.08;
+      opacity: 0.04;
       transform: translateX(-8%);
     }
     to {
-      opacity: 0.24;
+      opacity: 0.13;
       transform: translateX(12%);
     }
   }

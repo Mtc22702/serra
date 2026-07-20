@@ -860,11 +860,11 @@ function buildScene({ animatePlants = false } = {}) {
       <path d="M8 7 C18 4 25 10 34 7" fill="none" stroke="rgba(255,220,166,.18)" stroke-width=".8"/>
     </pattern>
     <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#dff5f7" stop-opacity=".02"/>
-      <stop offset="30%" stop-color="#ffffff" stop-opacity=".06"/>
-      <stop offset="44%" stop-color="#ffffff" stop-opacity=".01"/>
-      <stop offset="76%" stop-color="#b7d8df" stop-opacity=".025"/>
-      <stop offset="100%" stop-color="#7eabb5" stop-opacity=".035"/>
+      <stop offset="0%" stop-color="#dff5f7" stop-opacity=".01"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity=".03"/>
+      <stop offset="44%" stop-color="#ffffff" stop-opacity=".006"/>
+      <stop offset="76%" stop-color="#b7d8df" stop-opacity=".012"/>
+      <stop offset="100%" stop-color="#7eabb5" stop-opacity=".018"/>
     </linearGradient>
     <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffffff"/><stop offset="32%" stop-color="#e8eeee"/><stop offset="62%" stop-color="#aebbbb"/><stop offset="100%" stop-color="#758585"/>
@@ -932,11 +932,12 @@ function buildScene({ animatePlants = false } = {}) {
 
   g += `<g clip-path="url(#interiorClip)">`;
 
-  g += `<rect x="${ox}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#gravel)"/>`;
-  g += `<rect x="${ox + Wi - MARGIN}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#gravel)"/>`;
+  // Perimetro in terra battuta: naturale e distinto dai camminamenti interni.
+  g += `<rect x="${ox}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#dirtPath)"/>`;
+  g += `<rect x="${ox + Wi - MARGIN}" y="${oy}" width="${MARGIN}" height="${Li}" fill="url(#dirtPath)"/>`;
 
-  g += `<rect x="${ox + MARGIN}" y="${oy}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#gravel)"/>`;
-  g += `<rect x="${ox + MARGIN}" y="${oy + Li - MARGIN}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#gravel)"/>`;
+  g += `<rect x="${ox + MARGIN}" y="${oy}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#dirtPath)"/>`;
+  g += `<rect x="${ox + MARGIN}" y="${oy + Li - MARGIN}" width="${Wi - 2 * MARGIN}" height="${MARGIN}" fill="url(#dirtPath)"/>`;
 
   for (let i = 0; i < L.columnCount - 1; i++) {
     const pX = MARGIN + (i + 1) * L.bedW + i * state.path;
@@ -955,7 +956,7 @@ function buildScene({ animatePlants = false } = {}) {
       const gapY = sorted[i].y + sorted[i].h;
       const gapH = sorted[i + 1].y - gapY;
       if (gapH > 0)
-        g += `<rect x="${ox + sorted[i].x}" y="${oy + gapY}" width="${sorted[i].w}" height="${gapH}" fill="url(#gravel)"/>`;
+        g += `<rect x="${ox + sorted[i].x}" y="${oy + gapY}" width="${sorted[i].w}" height="${gapH}" fill="url(#soil)"/>`;
     }
   });
 
@@ -988,9 +989,9 @@ function buildScene({ animatePlants = false } = {}) {
     });
 
     g += `<g class="bedhit" data-bed="${bed.idx}" role="button" tabindex="0" aria-label="${escapeSvg(bedActionLabel)}"><title>${escapeSvg(bedActionLabel)}</title>`;
-    g += `<rect class="bed-border" x="${bx - 6}" y="${by - 6}" width="${bed.w + 12}" height="${bed.h + 12}" rx="7" fill="url(#woodGrain)" stroke="rgba(42,22,10,.55)" stroke-width="2" filter="url(#bedLift)"/>`;
-    g += `<rect x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" rx="3" fill="url(#soil)" stroke="rgba(255,221,169,.16)" stroke-width="1.2"/>`;
-    g += `<rect x="${bx + 2}" y="${by + 2}" width="${Math.max(0, bed.w - 4)}" height="${Math.max(0, bed.h - 4)}" rx="2" fill="none" stroke="rgba(30,15,7,.3)" stroke-width="1" pointer-events="none"/>`;
+    // Terreno aperto: le aiuole sono delimitate naturalmente dai camminamenti,
+    // senza assi o contorni che simulino un recinto.
+    g += `<rect class="bed-soil" x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" fill="url(#soil)"/>`;
 
     // Overlay sotto a piante ed etichette: i dettagli restano sempre leggibili.
     if (state.overlay) g += overlayShape(bed, bx, by);
@@ -1090,11 +1091,14 @@ function buildScene({ animatePlants = false } = {}) {
         );
       }
     });
+    const wM = `${(bed.w / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
+    const hM = `${(bed.h / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
+    // Il nome resta separato dalle quote: ogni misura segue il lato reale
+    // dell'aiuola, con righelli fini appoggiati sul bordo e non sulle piante.
     const label = plantLabel;
     const labelSize = fitLabelSize(label, bed.w, bed.h, vbW, vbH);
-    const labelReserve = bed.w >= 70 && bed.h >= 55 ? 17 : 0;
     const labelCenterX = bx + bed.w / 2;
-    const labelMaxW = Math.max(24, bed.w - labelReserve * 2 - 8);
+    const labelMaxW = Math.max(24, bed.w - 8);
     const labelH = labelSize + 5;
     const labelTop = by + 4;
     const labelW = Math.min(
@@ -1106,61 +1110,36 @@ function buildScene({ animatePlants = false } = {}) {
       naturalLabelTextW > labelW - 6
         ? ` textLength="${Math.max(18, labelW - 6)}" lengthAdjust="spacingAndGlyphs"`
         : "";
+    const dimensionSize = Math.max(
+      5.6,
+      Math.min(8.6, Math.min(bed.w, bed.h) * 0.115)
+    );
+    const dimensionStroke = nightMode
+      ? "rgba(233,244,235,.78)"
+      : "rgba(246,249,241,.8)";
+    const dimensionText = nightMode ? "#f0f8ef" : "#f8fbf2";
+    const horizontalY = by + bed.h - 3.5;
+    const horizontalX1 = bx + 3.5;
+    const horizontalX2 = bx + bed.w - 3.5;
+    const verticalX = bx + bed.w - 3.5;
+    const verticalY1 = by + 3.5;
+    const verticalY2 = by + bed.h - 3.5;
 
-    const wM = `${(bed.w / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
-    const hM = `${(bed.h / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
-    const STRIP = 17;
-    const dimFs = 10;
-    const qBg = "rgba(20,40,20,.52)";
-    const qLine = "rgba(255,255,255,.78)";
-    const qText =
-      'font-family="DM Sans,sans-serif" font-size="' +
-      dimFs +
-      '" font-weight="700" fill="rgba(255,255,255,.97)" stroke="rgba(0,0,0,.55)" stroke-width="2.5" paint-order="stroke" pointer-events="none"';
-    if (bed.w >= 70 && bed.h >= 55) {
-      const sy = by + bed.h - STRIP;
-      const sx = bx + bed.w - STRIP;
-      const vertH = bed.h - STRIP;
-
-      g += `<rect x="${bx}" y="${sy}" width="${bed.w}" height="${STRIP}" rx="0" fill="${qBg}" pointer-events="none"/>`;
-      g += `<line x1="${bx + 7}" y1="${sy + STRIP / 2}" x2="${bx + bed.w - 7}" y2="${sy + STRIP / 2}" stroke="${qLine}" stroke-width="1" pointer-events="none"/>`;
-
-      g += `<line x1="${bx + 7}" y1="${sy + 3}" x2="${bx + 7}" y2="${sy + STRIP - 3}" stroke="${qLine}" stroke-width="1.8" pointer-events="none"/>`;
-      g += `<line x1="${bx + bed.w - 7}" y1="${sy + 3}" x2="${bx + bed.w - 7}" y2="${sy + STRIP - 3}" stroke="${qLine}" stroke-width="1.8" pointer-events="none"/>`;
-
-      g += `<text x="${bx + bed.w / 2}" y="${sy + STRIP - 3}" text-anchor="middle" ${qText}>${wM}</text>`;
-
-      g += `<rect x="${sx}" y="${by}" width="${STRIP}" height="${vertH}" rx="0" fill="${qBg}" pointer-events="none"/>`;
-      const cx = sx + STRIP / 2,
-        cy = by + vertH / 2;
-      g += `<line x1="${cx}" y1="${by + 7}" x2="${cx}" y2="${by + vertH - 7}" stroke="${qLine}" stroke-width="1" pointer-events="none"/>`;
-
-      g += `<line x1="${sx + 3}" y1="${by + 7}" x2="${sx + STRIP - 3}" y2="${by + 7}" stroke="${qLine}" stroke-width="1.8" pointer-events="none"/>`;
-      g += `<line x1="${sx + 3}" y1="${by + vertH - 7}" x2="${sx + STRIP - 3}" y2="${by + vertH - 7}" stroke="${qLine}" stroke-width="1.8" pointer-events="none"/>`;
-
-      g += `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="middle" ${qText} transform="rotate(-90 ${cx} ${cy})">${hM}</text>`;
-    } else {
-      const dimText = `${wM} × ${hM}`;
-      const dimFs2 = Math.max(9, Math.min(11, bed.w * 0.055));
-      const naturalDimBW = dimText.length * dimFs2 * 0.56 + 12;
-      const dimBW = Math.min(naturalDimBW, Math.max(0, bed.w - 10));
-      const dimBH = dimFs2 + 8;
-      const dimBX = bx + bed.w / 2 - dimBW / 2;
-      const dimBY = by + bed.h - dimBH - 4;
-      if (dimBW >= 32) {
-        const dimTextFit =
-          naturalDimBW > dimBW
-            ? ` textLength="${Math.max(20, dimBW - 8)}" lengthAdjust="spacingAndGlyphs"`
-            : "";
-        g += `<rect x="${dimBX}" y="${dimBY}" width="${dimBW}" height="${dimBH}" rx="3" fill="${qBg}" pointer-events="none"/>`;
-        g += `<text x="${bx + bed.w / 2}" y="${dimBY + dimFs2 + 1}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${dimFs2}" font-weight="700" fill="rgba(255,255,255,.97)" pointer-events="none"${dimTextFit}>${dimText}</text>`;
-      }
-    }
     g += `</g>`;
     g += pendingEmoji.join("");
     g += `<g pointer-events="none">`;
     g += `<rect x="${labelCenterX - labelW / 2}" y="${labelTop}" width="${labelW}" height="${labelH}" rx="${Math.min(5, labelH / 2)}" fill="${nightMode ? "rgba(20,43,32,.68)" : "rgba(249,251,245,.62)"}" stroke="${nightMode ? "rgba(176,221,190,.3)" : "rgba(31,80,49,.24)"}" stroke-width=".6"/>`;
     g += `<text x="${labelCenterX}" y="${labelTop + labelH / 2}" dominant-baseline="middle" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${labelSize}" font-weight="750" fill="${nightMode ? "#e8f4eb" : "#254331"}"${labelTextFit}>${label}</text>`;
+    // Larghezza: quota orizzontale sul lato orizzontale dell'aiuola.
+    g += `<line x1="${horizontalX1}" y1="${horizontalY}" x2="${horizontalX2}" y2="${horizontalY}" stroke="${dimensionStroke}" stroke-width=".7"/>`;
+    g += `<line x1="${horizontalX1}" y1="${horizontalY - 2.7}" x2="${horizontalX1}" y2="${horizontalY + 2.7}" stroke="${dimensionStroke}" stroke-width=".7"/>`;
+    g += `<line x1="${horizontalX2}" y1="${horizontalY - 2.7}" x2="${horizontalX2}" y2="${horizontalY + 2.7}" stroke="${dimensionStroke}" stroke-width=".7"/>`;
+    g += `<text x="${labelCenterX}" y="${horizontalY - 2.1}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${dimensionSize}" font-weight="800" fill="${dimensionText}" paint-order="stroke" stroke="rgba(24,43,29,.55)" stroke-width="1.8" stroke-linejoin="round">${wM}</text>`;
+    // Lunghezza: quota verticale sul lato verticale dell'aiuola.
+    g += `<line x1="${verticalX}" y1="${verticalY1}" x2="${verticalX}" y2="${verticalY2}" stroke="${dimensionStroke}" stroke-width=".7"/>`;
+    g += `<line x1="${verticalX - 2.7}" y1="${verticalY1}" x2="${verticalX + 2.7}" y2="${verticalY1}" stroke="${dimensionStroke}" stroke-width=".7"/>`;
+    g += `<line x1="${verticalX - 2.7}" y1="${verticalY2}" x2="${verticalX + 2.7}" y2="${verticalY2}" stroke="${dimensionStroke}" stroke-width=".7"/>`;
+    g += `<text x="${verticalX - 2.1}" y="${by + bed.h / 2}" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 ${verticalX - 2.1} ${by + bed.h / 2})" font-family="DM Sans,sans-serif" font-size="${dimensionSize}" font-weight="800" fill="${dimensionText}" paint-order="stroke" stroke="rgba(24,43,29,.55)" stroke-width="1.8" stroke-linejoin="round">${hM}</text>`;
     g += `</g>`;
   });
   g += `</g>`;
@@ -1219,7 +1198,7 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   let s = "";
 
   s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="url(#glass)" pointer-events="none"/>`;
-  s += `<g clip-path="url(#interiorClip)" pointer-events="none"><g transform="rotate(-18 ${ox + Wi / 2} ${oy + Li / 2})"><rect class="scene-glass-glint" x="${ox - Wi * 0.34}" y="${oy - Li * 0.1}" width="${Wi * 0.42}" height="${Li * 1.24}" rx="${Math.max(10, Wi * 0.06)}" fill="rgba(255,255,235,.13)"/></g></g>`;
+  s += `<g clip-path="url(#interiorClip)" pointer-events="none"><g transform="rotate(-18 ${ox + Wi / 2} ${oy + Li / 2})"><rect class="scene-glass-glint" x="${ox - Wi * 0.34}" y="${oy - Li * 0.1}" width="${Wi * 0.42}" height="${Li * 1.24}" rx="${Math.max(10, Wi * 0.06)}" fill="rgba(255,255,235,.075)"/></g></g>`;
 
   const bars = Math.max(2, Math.round(Wi / 60));
   for (let i = 1; i < bars; i++) {
@@ -1236,9 +1215,9 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   }
 
   const ridgeX = ox + Wi / 2;
-  s += `<polygon points="${ox + 5},${oy + 5} ${ridgeX - 7},${oy + 5} ${ridgeX - 30},${oy + Li - 5} ${ox + 5},${oy + Li - 5}" fill="rgba(224,249,252,.035)" pointer-events="none"/>`;
-  s += `<polygon points="${ox + Wi * 0.08},${oy + 5} ${ox + Wi * 0.24},${oy + 5} ${ox + Wi * 0.12},${oy + Li - 5} ${ox + Wi * 0.02},${oy + Li - 5}" fill="rgba(255,255,255,.085)" pointer-events="none"/>`;
-  s += `<polygon points="${ridgeX + Wi * 0.09},${oy + 5} ${ridgeX + Wi * 0.2},${oy + 5} ${ridgeX + Wi * 0.33},${oy + Li - 5} ${ridgeX + Wi * 0.22},${oy + Li - 5}" fill="rgba(255,255,255,.05)" pointer-events="none"/>`;
+  s += `<polygon points="${ox + 5},${oy + 5} ${ridgeX - 7},${oy + 5} ${ridgeX - 30},${oy + Li - 5} ${ox + 5},${oy + Li - 5}" fill="rgba(224,249,252,.018)" pointer-events="none"/>`;
+  s += `<polygon points="${ox + Wi * 0.08},${oy + 5} ${ox + Wi * 0.24},${oy + 5} ${ox + Wi * 0.12},${oy + Li - 5} ${ox + Wi * 0.02},${oy + Li - 5}" fill="rgba(255,255,255,.04)" pointer-events="none"/>`;
+  s += `<polygon points="${ridgeX + Wi * 0.09},${oy + 5} ${ridgeX + Wi * 0.2},${oy + 5} ${ridgeX + Wi * 0.33},${oy + Li - 5} ${ridgeX + Wi * 0.22},${oy + Li - 5}" fill="rgba(255,255,255,.025)" pointer-events="none"/>`;
 
   const brace = Math.min(25, Wi * 0.1, Li * 0.1);
   s += `<path d="M${ox + 3} ${oy + brace} L${ox + brace} ${oy + 3} M${ox + Wi - 3} ${oy + brace} L${ox + Wi - brace} ${oy + 3} M${ox + 3} ${oy + Li - brace} L${ox + brace} ${oy + Li - 3} M${ox + Wi - 3} ${oy + Li - brace} L${ox + Wi - brace} ${oy + Li - 3}" fill="none" stroke="rgba(80,101,103,.72)" stroke-width="1.6" pointer-events="none"/>`;

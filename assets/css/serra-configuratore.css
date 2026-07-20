@@ -9315,6 +9315,55 @@ html[data-theme="dark"]
     width: 100%;
     height: 100%;
   }
+  .hcg-svg .hcg-plant-grow {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: hcg-plant-grow 0.738s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hcg-svg .hcg-plant-soil-bloom {
+    fill: rgba(214, 179, 116, 0.5);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hcg-soil-bloom 0.558s ease-out both;
+  }
+  .hcg-svg .hcg-plant-leaf-sheen {
+    fill: none;
+    stroke: rgba(255, 255, 224, 0.76);
+    stroke-linecap: round;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hcg-leaf-sheen 0.306s ease-out 0.432s both;
+  }
+  .hcg-svg .hcg-harvest-reveal {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hcg-harvest-reveal 0.306s ease-out 0.594s both;
+  }
+  @keyframes hcg-plant-grow {
+    from { opacity: 0; transform: scale(0.08); }
+    78% { opacity: 1; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes hcg-soil-bloom {
+    from { opacity: 0; transform: scale(0.25); }
+    48% { opacity: 0.75; transform: scale(1); }
+    to { opacity: 0; transform: scale(1.28); }
+  }
+  @keyframes hcg-leaf-sheen {
+    from { opacity: 0; transform: scale(0.62); }
+    55% { opacity: 0.86; transform: scale(1); }
+    to { opacity: 0; transform: scale(1.12); }
+  }
+  @keyframes hcg-harvest-reveal {
+    from { opacity: 0; transform: scale(0.55) translateY(3px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hcg-svg .hcg-plant-grow,
+    .hcg-svg .hcg-plant-soil-bloom,
+    .hcg-svg .hcg-plant-leaf-sheen,
+    .hcg-svg .hcg-harvest-reveal { animation: none; }
+  }
 
   .hcg-peek {
     position: absolute;
@@ -13467,16 +13516,14 @@ html[data-theme="dark"]
   .bedhit {
     cursor: pointer;
   }
-  .bedhit:hover .bed-border {
-    stroke: var(--oro);
+  .bedhit:hover .bed-soil {
+    filter: brightness(1.08) saturate(1.05);
   }
   .bedhit:focus {
     outline: none;
   }
-  .bedhit:focus .bed-border {
-    stroke: #fff4a8;
-    stroke-width: 3.5px;
-    filter: url(#bedLift) drop-shadow(0 0 5px rgba(255, 224, 86, 0.9));
+  .bedhit:focus .bed-soil {
+    filter: brightness(1.14) saturate(1.12);
   }
   .plant-glyph--growing {
     transform-box: fill-box;
@@ -13568,11 +13615,11 @@ html[data-theme="dark"]
   }
   @keyframes scene-glass-glint {
     from {
-      opacity: 0.08;
+      opacity: 0.04;
       transform: translateX(-8%);
     }
     to {
-      opacity: 0.24;
+      opacity: 0.13;
       transform: translateX(12%);
     }
   }
@@ -17729,6 +17776,42 @@ html[data-theme="dark"]
       rgba(235, 247, 224, 0.96),
       rgba(255, 255, 255, 0.9)
     );
+  }
+  .panel--plant-detail .detail-tile--dimensions {
+    grid-column: 1 / -1;
+    border-top: 3px solid #7cae8d;
+    background: linear-gradient(
+      135deg,
+      rgba(230, 243, 235, 0.96),
+      rgba(255, 255, 255, 0.9)
+    );
+  }
+  .panel--plant-detail .detail-bed-measures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .panel--plant-detail .detail-bed-measures span {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 5px;
+    align-items: baseline;
+  }
+  .panel--plant-detail .detail-bed-measures b {
+    grid-row: span 2;
+    color: #417853;
+    font-size: 15px;
+  }
+  .panel--plant-detail .detail-bed-measures small {
+    color: #617763;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .panel--plant-detail .detail-bed-measures strong {
+    color: var(--verde-scuro);
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    line-height: 1.1;
   }
   .pdp-header {
     flex: 0 0 auto;

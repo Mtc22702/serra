@@ -663,6 +663,42 @@
       rgba(255, 255, 255, 0.9)
     );
   }
+  .panel--plant-detail .detail-tile--dimensions {
+    grid-column: 1 / -1;
+    border-top: 3px solid #7cae8d;
+    background: linear-gradient(
+      135deg,
+      rgba(230, 243, 235, 0.96),
+      rgba(255, 255, 255, 0.9)
+    );
+  }
+  .panel--plant-detail .detail-bed-measures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .panel--plant-detail .detail-bed-measures span {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 5px;
+    align-items: baseline;
+  }
+  .panel--plant-detail .detail-bed-measures b {
+    grid-row: span 2;
+    color: #417853;
+    font-size: 15px;
+  }
+  .panel--plant-detail .detail-bed-measures small {
+    color: #617763;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .panel--plant-detail .detail-bed-measures strong {
+    color: var(--verde-scuro);
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    line-height: 1.1;
+  }
   .pdp-header {
     flex: 0 0 auto;
     display: flex;

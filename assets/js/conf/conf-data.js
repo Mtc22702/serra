@@ -1,6 +1,8 @@
 // Raccoglie costanti, dizionari e dati statici necessari al configuratore.
 const WALL = 7;
-const MARGIN = 18;
+// Bordo libero tra pareti e terreno: compatto, ma sufficiente a mantenere
+// leggibile il perimetro della serra senza sottrarre troppo spazio coltivabile.
+const MARGIN = 7;
 const PATH = 34;
 const BED_GAP = 6;
 const BEDPAD = 9;

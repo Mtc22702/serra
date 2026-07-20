@@ -1673,6 +1673,13 @@ function renderPlantDetailPanel() {
   const b = state.beds[state.selected];
   const p = BYID[b.plantId];
   const resaTot = b.count * p.resa;
+  // Le dimensioni appartengono al layout calcolato, non al record della coltura:
+  // in questo modo seguono sempre il motore di riempimento corrente.
+  const bedGeometry = computeLayout().beds[state.selected];
+  const formatBedMeasure = (centimetres) =>
+    `${(centimetres / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
+  const bedWidth = formatBedMeasure(bedGeometry.w);
+  const bedLength = formatBedMeasure(bedGeometry.h);
   // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
   let photoSrc = window.resolvePlantPhoto(p, p.id);
   // Usa la versione ad alta risoluzione per la foto di dettaglio.
@@ -1781,6 +1788,7 @@ function renderPlantDetailPanel() {
           <div class="detail-tile detail-tile--height"><div class="detail-tile-icon">↕</div><div class="detail-tile-label">${tx("height")}</div><div class="detail-tile-value">${heightLabel(p.h || "media")}</div></div>
           <div class="detail-tile"><div class="detail-tile-icon">💧</div><div class="detail-tile-label">${tx("water")}</div><div class="detail-tile-value">${waterLabel(p.acqua)}</div></div>
           <div class="detail-tile detail-tile--quantity"><div class="detail-tile-label">${detailText("detail.quantity_bed")}</div><div class="detail-tile-value">${detailText("detail.plants_count", { count: b.count })}</div></div>
+          <div class="detail-tile detail-tile--dimensions"><div class="detail-tile-label">${detailText("detail.bed_dimensions")}</div><div class="detail-bed-measures"><span><b aria-hidden="true">↔</b><small>${detailText("detail.bed_width")}</small><strong>${bedWidth}</strong></span><span><b aria-hidden="true">↕</b><small>${detailText("detail.bed_length")}</small><strong>${bedLength}</strong></span></div></div>
         </div>
       </div>
 

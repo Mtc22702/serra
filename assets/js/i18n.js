@@ -831,6 +831,9 @@
           "Prima di usare un prodotto fitosanitario, verifica che sia autorizzato per la coltura e segui sempre l'etichetta.",
         "detail.quantity_bed": "Quantità nell'aiuola",
         "detail.plants_count": "{count} piante",
+        "detail.bed_dimensions": "Dimensioni dell'aiuola",
+        "detail.bed_width": "Larghezza",
+        "detail.bed_length": "Lunghezza",
         "detail.pests_title": "Insetti e parassiti",
         "detail.pests_subtitle":
           "Riconosci il danno prima di scegliere l'intervento",
@@ -1263,6 +1266,9 @@
           "Înainte de a folosi un produs fitosanitar, verifică dacă este autorizat pentru cultură și respectă întotdeauna eticheta.",
         "detail.quantity_bed": "Cantitate în parcelă",
         "detail.plants_count": "{count} plante",
+        "detail.bed_dimensions": "Dimensiunile parcelei",
+        "detail.bed_width": "Lățime",
+        "detail.bed_length": "Lungime",
         "detail.pests_title": "Insecte și dăunători",
         "detail.pests_subtitle":
           "Recunoaște paguba înainte de a alege intervenția",

@@ -825,20 +825,33 @@ if (catalogSearchLink) {
   })).filter((p) => p.id);
 
   const BEDS = [
-    { p: PLANTS[0], x: 5, y: 5, w: 92, h: 68, cols: 2, rows: 2, r: 11 },
-    { p: PLANTS[1], x: 5, y: 81, w: 92, h: 74, cols: 2, rows: 3, r: 9 },
-    { p: PLANTS[2], x: 105, y: 5, w: 110, h: 50, cols: 3, rows: 2, r: 8 },
-    { p: PLANTS[3], x: 105, y: 63, w: 110, h: 92, cols: 3, rows: 4, r: 7 }
+    { p: PLANTS[0], x: 20, y: 19, w: 75, h: 56, cols: 2, rows: 2, r: 11 },
+    { p: PLANTS[1], x: 20, y: 82, w: 75, h: 59, cols: 2, rows: 3, r: 9 },
+    { p: PLANTS[2], x: 111, y: 19, w: 89, h: 43, cols: 3, rows: 2, r: 8 },
+    { p: PLANTS[3], x: 111, y: 69, w: 89, h: 72, cols: 3, rows: 4, r: 7 }
   ];
 
   // Calcola le posizioni delle piante nell'aiuola
   function bedPlantPositions(bed) {
     const pts = [];
+    // I punti non sono più compressi al centro: mantengono un margine sicuro
+    // dal bordo, ma sfruttano più superficie dell'aiuola tra una pianta e l'altra.
+    const insetX = Math.min(12, bed.w * 0.16);
+    const insetY = Math.min(11, bed.h * 0.17);
+    const usableW = Math.max(0, bed.w - insetX * 2);
+    const usableH = Math.max(0, bed.h - insetY * 2);
+    const spacingBoost = 0.35;
     for (let row = 0; row < bed.rows; row++) {
       for (let col = 0; col < bed.cols; col++) {
+        const baseX = (bed.w * (col + 1)) / (bed.cols + 1);
+        const baseY = (bed.h * (row + 1)) / (bed.rows + 1);
+        const expandedX =
+          bed.cols === 1 ? bed.w / 2 : insetX + (usableW * col) / (bed.cols - 1);
+        const expandedY =
+          bed.rows === 1 ? bed.h / 2 : insetY + (usableH * row) / (bed.rows - 1);
         pts.push({
-          cx: bed.x + (bed.w / (bed.cols + 1)) * (col + 1),
-          cy: bed.y + (bed.h / (bed.rows + 1)) * (row + 1)
+          cx: bed.x + baseX + (expandedX - baseX) * spacingBoost,
+          cy: bed.y + baseY + (expandedY - baseY) * spacingBoost
         });
       }
     }
@@ -1004,44 +1017,60 @@ if (catalogSearchLink) {
     let defs = `<defs>
       <radialGradient id="harvestRed" cx="30%" cy="24%" r="78%"><stop offset="0" stop-color="#ff9a82"/><stop offset=".28" stop-color="#e84e3d"/><stop offset=".72" stop-color="#b52e2b"/><stop offset="1" stop-color="#651f25"/></radialGradient>
       <radialGradient id="harvestGreen" cx="28%" cy="22%" r="82%"><stop offset="0" stop-color="#b9db75"/><stop offset=".3" stop-color="#6fa34d"/><stop offset=".72" stop-color="#3f743b"/><stop offset="1" stop-color="#21472d"/></radialGradient>
-      <radialGradient id="harvestOrange" cx="30%" cy="22%" r="80%"><stop offset="0" stop-color="#ffd06c"/><stop offset=".32" stop-color="#ed8a35"/><stop offset=".74" stop-color="#bd5528"/><stop offset="1" stop-color="#74301f"/></radialGradient>`;
-    BEDS.forEach((_, i) => {
-      defs += `<linearGradient id="hbg${i}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="rgba(98,74,52,0.58)"/>
-        <stop offset="65%"  stop-color="rgba(78,58,40,0.84)"/>
-        <stop offset="100%" stop-color="rgba(58,43,28,0.94)"/>
-      </linearGradient>`;
-    });
+      <radialGradient id="harvestOrange" cx="30%" cy="22%" r="80%"><stop offset="0" stop-color="#ffd06c"/><stop offset=".32" stop-color="#ed8a35"/><stop offset=".74" stop-color="#bd5528"/><stop offset="1" stop-color="#74301f"/></radialGradient>
+      <linearGradient id="hcgSoil" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#795b3e"/><stop offset=".62" stop-color="#5d422d"/><stop offset="1" stop-color="#442d1e"/></linearGradient>
+      <linearGradient id="hcgDirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9a7446"/><stop offset="1" stop-color="#684827"/></linearGradient>
+      <linearGradient id="hcgPathBase" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#817866"/><stop offset=".16" stop-color="#c9c0a7"/><stop offset=".52" stop-color="#e0d7bd"/><stop offset=".84" stop-color="#b8af97"/><stop offset="1" stop-color="#756c5a"/></linearGradient>
+      <clipPath id="hcgInteriorClip"><rect x="14" y="12" width="192" height="136" rx="5.5"/></clipPath>
+      <pattern id="hcgGrass" width="15" height="15" patternUnits="userSpaceOnUse"><rect width="15" height="15" fill="#1d4d30"/><path d="M2 14L4 8M9 14l1-5M13 14l-2-3" stroke="#4f843c" stroke-width=".7" opacity=".7"/></pattern>
+      <pattern id="hcgGravel" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#aaa28d"/><circle cx="3" cy="3" r="1.2" fill="#ded7c2"/><circle cx="9" cy="7" r="1.3" fill="#817967"/><circle cx="5" cy="10" r=".9" fill="#c3bba4"/></pattern>
+      <pattern id="hcgSoilSpecks" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="3" cy="5" r=".9" fill="rgba(230,202,158,.2)"/><circle cx="12" cy="9" r="1.15" fill="rgba(31,20,12,.22)"/><circle cx="8" cy="15" r=".65" fill="rgba(238,214,170,.14)"/></pattern>`;
     defs += `</defs>`;
-    let s = "";
-
-    s += `<rect x="100" y="5" width="5" height="150" rx="2" fill="rgba(210,200,180,0.18)"/>`;
-    BEDS.forEach((b, i) => {
-      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="7"
-              fill="url(#hbg${i})" stroke="rgba(255,255,255,0.17)" stroke-width="0.8"/>`;
+    let s = `<rect width="220" height="160" fill="url(#hcgGrass)"/>`;
+    s += `<rect x="13" y="14" width="194" height="137" rx="10" fill="#102719" opacity=".3"/>`;
+    s += `<rect x="10" y="8" width="200" height="144" rx="10" fill="#657779" stroke="#183b3e" stroke-width="3.4"/>`;
+    s += `<rect x="11.6" y="9.6" width="196.8" height="140.8" rx="8.4" fill="none" stroke="rgba(244,253,252,.9)" stroke-width="1.15"/>`;
+    s += `<rect x="13.5" y="11.5" width="193" height="137" rx="6.5" fill="#3a2710" stroke="rgba(35,66,67,.88)" stroke-width="1.2"/>`;
+    s += `<g clip-path="url(#hcgInteriorClip)">`;
+    s += `<rect x="14" y="12" width="192" height="136" fill="url(#hcgDirt)"/>`;
+    // Camminamento: bordo leggermente incassato, ghiaia con profondità e
+    // ciottoli irregolari, distinto dal terreno senza creare recinti.
+    s += `<rect x="95.8" y="12" width="14.4" height="136" fill="rgba(47,33,19,.3)"/>`;
+    s += `<rect x="97" y="12" width="12" height="136" fill="url(#hcgPathBase)"/>`;
+    s += `<rect x="97.7" y="12" width="10.6" height="136" fill="url(#hcgGravel)" opacity=".8"/>`;
+    s += `<path d="M98.2 13V147 M107.8 13V147" fill="none" stroke="rgba(255,255,242,.42)" stroke-width=".55"/>`;
+    BEDS.forEach((b) => {
+      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="url(#hcgSoil)"/>`;
+      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="url(#hcgSoilSpecks)" opacity=".62"/>`;
     });
+    s += `</g>`;
     svg.innerHTML = defs + s;
   }
 
   // Aggiunge una pianta alla mappa
   function addPlant(cx, cy, plant, r, seed) {
     const rng = makeRng(seed);
+    const visualR = r;
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    // Il punto resta fissato nello spazio della serra: a crescere è soltanto
+    // il contenuto interno, mai la posizione della pianta.
+    g.setAttribute("transform", `translate(${cx} ${cy})`);
     g.style.opacity = "0";
-    g.style.transition =
-      "opacity 0.4s ease, transform 0.48s cubic-bezier(0.34,1.56,0.64,1)";
-    g.style.transformOrigin = "center";
-    g.style.transform = `translate(${cx}px,${cy}px) scale(0)`;
+    g.style.transition = "opacity 0.22s ease";
     const label =
       r >= 9 && shouldShowHarvestVector(plant)
-        ? `<text y="0" text-anchor="middle" dominant-baseline="central" font-size="${Math.max(r * 1.2, 8) * 0.8}" style="pointer-events:none;user-select:none;font-family:system-ui">${plant.emoji}</text>`
+        ? `<text class="hcg-harvest-reveal" y="${-visualR * 0.28}" text-anchor="middle" dominant-baseline="central" font-size="${Math.max(visualR * 1.2, 8) * 0.8}" style="pointer-events:none;user-select:none;font-family:system-ui">${plant.emoji}</text>`
         : "";
-    g.innerHTML = glyph(plant, r, rng) + label;
+    g.innerHTML = `<g class="hcg-plant-grow">
+      <ellipse class="hcg-plant-soil-bloom" cx="0" cy="${visualR * 0.1}" rx="${visualR * 0.64}" ry="${visualR * 0.24}"/>
+      ${glyph(plant, visualR, rng)}
+      <path class="hcg-plant-leaf-sheen" d="M${-visualR * 0.3} ${-visualR * 0.08} Q0 ${-visualR * 0.42} ${visualR * 0.28} ${-visualR * 0.2}" stroke-width="${Math.max(0.45, visualR * 0.04)}"/>
+      ${label}
+    </g>`;
     svg.appendChild(g);
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         g.style.opacity = "1";
-        g.style.transform = `translate(${cx}px,${cy}px) scale(1)`;
       })
     );
   }
