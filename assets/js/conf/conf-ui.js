@@ -275,6 +275,16 @@ function renderFooter() {
 }
 
 // Aggiorna scena, pannelli e riepilogo in base allo stato della configurazione.
+let lastRenderedCropSignature = null;
+const animateInitialCropsFromHome = BOOT_PARAMS.get("source") === "index";
+
+function cropSignature() {
+  return state.beds
+    .map((bed) => `${bed.plantId}:${bed.count}`)
+    .sort()
+    .join("|");
+}
+
 function render() {
   const zoneNames = {
     freddo: tx("cold"),
@@ -303,7 +313,14 @@ function render() {
   renderVegList();
   updateCropActionControls();
 
-  const built = buildScene();
+  const currentCropSignature = cropSignature();
+  const animatePlantGrowth =
+    (lastRenderedCropSignature === null && animateInitialCropsFromHome) ||
+    (lastRenderedCropSignature !== null &&
+      currentCropSignature !== lastRenderedCropSignature);
+  lastRenderedCropSignature = currentCropSignature;
+
+  const built = buildScene({ animatePlants: animatePlantGrowth });
   document.getElementById("scene").innerHTML = built.svg;
   bindPlantAssetFallbacks();
   const L = built.layout;

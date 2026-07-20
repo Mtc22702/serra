@@ -13478,6 +13478,211 @@ html[data-theme="dark"]
     stroke-width: 3.5px;
     filter: url(#bedLift) drop-shadow(0 0 5px rgba(255, 224, 86, 0.9));
   }
+  .plant-glyph--growing {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: plant-grow-in 720ms cubic-bezier(0.22, 0.9, 0.32, 1)
+      var(--plant-growth-delay, 0ms) both;
+  }
+  .plant-glyph-shell--alive {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: plant-soft-sway var(--plant-sway-duration, 7.4s) ease-in-out
+      var(--plant-sway-delay, 0s) infinite alternate;
+  }
+  .plant-soil-bloom {
+    fill: rgba(235, 200, 112, 0.42);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: plant-soil-bloom 340ms ease-out var(--plant-growth-delay, 0ms)
+      both;
+  }
+  .plant-soil-particle {
+    fill: rgba(238, 215, 157, 0.72);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: plant-soil-particle 230ms ease-out var(--plant-growth-delay, 0ms)
+      both;
+  }
+  .plant-leaf-sheen {
+    fill: none;
+    stroke: rgba(255, 255, 226, 0.6);
+    stroke-linecap: round;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: plant-leaf-sheen 200ms ease-out
+      calc(var(--plant-growth-delay, 0ms) + 560ms) both;
+  }
+  .plant-harvest-emoji--reveal {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: plant-harvest-reveal 240ms ease-out
+      calc(var(--plant-growth-delay, 0ms) + 700ms) both;
+  }
+  .scene-glass-glint {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: scene-glass-glint 14s ease-in-out infinite alternate;
+  }
+  .scene-path-mote {
+    fill: rgba(255, 248, 203, 0.74);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: scene-path-mote var(--mote-duration, 7s) ease-in-out
+      var(--mote-delay, 0s) infinite;
+  }
+  .scene-lamp-pool,
+  .scene-lamp-bloom,
+  .scene-lamp-bulb {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: scene-lamp-pulse 3.8s ease-in-out infinite alternate;
+  }
+  .scene-lamp-bloom {
+    animation-delay: -1.2s;
+  }
+  .scene-lamp-bulb {
+    animation-delay: -0.5s;
+  }
+  .water-overlay-ripple {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.56);
+    stroke-width: 1.1;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: water-overlay-ripple 3.4s ease-in-out infinite;
+  }
+  @keyframes plant-grow-in {
+    from {
+      opacity: 0;
+      transform: scale(0.08);
+    }
+    78% {
+      opacity: 1;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes scene-glass-glint {
+    from {
+      opacity: 0.08;
+      transform: translateX(-8%);
+    }
+    to {
+      opacity: 0.24;
+      transform: translateX(12%);
+    }
+  }
+  @keyframes scene-path-mote {
+    0%,
+    100% {
+      opacity: 0.08;
+      transform: translateY(2px) scale(0.7);
+    }
+    48% {
+      opacity: 0.64;
+      transform: translateY(-3px) scale(1);
+    }
+  }
+  @keyframes scene-lamp-pulse {
+    from {
+      opacity: 0.58;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes water-overlay-ripple {
+    0%,
+    100% {
+      opacity: 0.16;
+      transform: scale(0.72);
+    }
+    50% {
+      opacity: 0.76;
+      transform: scale(1);
+    }
+  }
+  /* La scala 0.91 compensa l'inclinazione: il glifo non supera mai lo slot. */
+  @keyframes plant-soft-sway {
+    from {
+      transform: scale(0.91) rotate(-3.6deg);
+    }
+    to {
+      transform: scale(0.91) rotate(3.6deg);
+    }
+  }
+  @keyframes plant-soil-bloom {
+    from {
+      opacity: 0;
+      transform: scale(0.25);
+    }
+    45% {
+      opacity: 0.58;
+      transform: scale(0.82);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  @keyframes plant-soil-particle {
+    from {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+    45% {
+      opacity: 0.82;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+  }
+  @keyframes plant-leaf-sheen {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    45% {
+      opacity: 0.72;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  @keyframes plant-harvest-reveal {
+    from {
+      opacity: 0;
+      transform: scale(0.55);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plant-glyph--growing,
+    .plant-glyph-shell--alive,
+    .plant-soil-bloom,
+    .plant-soil-particle,
+    .plant-leaf-sheen,
+    .plant-harvest-emoji--reveal,
+    .scene-glass-glint,
+    .scene-path-mote,
+    .scene-lamp-pool,
+    .scene-lamp-bloom,
+    .scene-lamp-bulb,
+    .water-overlay-ripple {
+      animation: none;
+    }
+  }
   .scale-note {
     font-size: 12px;
     color: #7b857b;

@@ -74,7 +74,7 @@ function addKitAndPlan() {
     if (typeof syncCatalogClimateToSharedConfig === "function") {
       syncCatalogClimateToSharedConfig();
     }
-    window.location.href = "configuratore.html?import=cart";
+    window.location.href = "configuratore.html?import=cart&source=index";
   }
 }
 // Rimuove dal carrello la coltura identificata dall'azione dell'utente.
@@ -119,7 +119,7 @@ function updateCartUI() {
     confImportBtn.setAttribute("aria-disabled", String(!hasSeeds));
     confImportBtn.tabIndex = hasSeeds ? 0 : -1;
     if (hasSeeds) {
-      confImportBtn.href = "configuratore.html?import=cart";
+      confImportBtn.href = "configuratore.html?import=cart&source=index";
     } else {
       confImportBtn.removeAttribute("href");
     }

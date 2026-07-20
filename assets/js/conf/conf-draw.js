@@ -814,7 +814,7 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
 }
 
 // Costruzione scena
-function buildScene() {
+function buildScene({ animatePlants = false } = {}) {
   const nightMode = document.documentElement.dataset.theme === "dark";
   const L = computeLayout();
   const Wi = L.Wi,
@@ -959,6 +959,21 @@ function buildScene() {
     }
   });
 
+  // Piccoli punti di luce esclusivamente sui camminamenti laterali: decorativi,
+  // dietro alle aiuole e senza alcun legame con la disposizione delle piante.
+  const pathMoteRng = rngFrom(4781);
+  for (let moteIndex = 0; moteIndex < 6; moteIndex++) {
+    const onLeft = moteIndex % 2 === 0;
+    const moteX = onLeft
+      ? ox + MARGIN * (0.24 + pathMoteRng() * 0.42)
+      : ox + Wi - MARGIN * (0.24 + pathMoteRng() * 0.42);
+    const moteY = oy + Li * (0.12 + pathMoteRng() * 0.76);
+    const moteR = 0.9 + pathMoteRng() * 0.9;
+    const moteDuration = (5.8 + pathMoteRng() * 3.4).toFixed(2);
+    const moteDelay = (-pathMoteRng() * 6).toFixed(2);
+    g += `<circle class="scene-path-mote" cx="${moteX}" cy="${moteY}" r="${moteR}" style="--mote-duration:${moteDuration}s;--mote-delay:${moteDelay}s" pointer-events="none"/>`;
+  }
+
   if (L.beds.length === 0) {
     g += `<text x="${ox + Wi / 2}" y="${oy + Li / 2}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${Math.min(Wi, Li) * 0.06}" fill="#8c8470">${tx("emptyGreenhouse")}</text>`;
   }
@@ -997,17 +1012,81 @@ function buildScene() {
       bed.cols,
       emojiCount
     );
+    // Nelle serre molto dense animiamo un campione distribuito: l'effetto resta
+    // chiaro senza chiedere al browser di animare centinaia di SVG insieme.
+    const denseSceneLimit = Math.max(
+      1,
+      Math.round((bedItems.length / Math.max(1, totalPlants)) * 36)
+    );
+    const growthIndexes = animatePlants
+      ? emojiSpreadIndexes(
+          bedItems.length,
+          bed.cols,
+          Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 120)
+        )
+      : new Set();
+    // Il movimento ambientale è distribuito e limitato nelle serre molto dense.
+    // La trasformazione resta sempre più piccola dell'ingombro finale del glifo.
+    const aliveIndexes = emojiSpreadIndexes(
+      bedItems.length,
+      bed.cols,
+      Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 90)
+    );
     const pendingEmoji = [];
     bedItems.forEach(({ pos, sourceIndex }, i) => {
       const rng = rngFrom((bed.idx + 1) * 7919 + sourceIndex * 131);
       const rr = r * (0.92 + rng() * 0.16);
       const rot = Math.floor(rng() * 360);
-      g += `<g class="plant-glyph" transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})">${glyph(bed.plant, rr, rng, glyphDetail)}</g>`;
+      const animateGlyph = growthIndexes.has(i);
+      const isAlive = aliveIndexes.has(i);
+      const delay = Math.min(260, i * 22);
+      // Tutti i valori restano entro il raggio grafico già calcolato per lo slot.
+      // Il terreno pulsa sotto la pianta, senza influenzare geometria o riempimento.
+      const particleRng = rngFrom(
+        (bed.idx + 1) * 12983 + sourceIndex * 271 + 17
+      );
+      const swayRng = rngFrom(
+        (bed.idx + 1) * 16127 + sourceIndex * 389 + 31
+      );
+      const swayDuration = (2.8 + swayRng() * 1.1).toFixed(2);
+      const swayDelay = (-swayRng() * 2.8).toFixed(2);
+      const soilParticles = animateGlyph
+        ? Array.from({ length: 3 }, (_, particleIndex) => {
+            const px = (particleRng() - 0.5) * rr * 0.62;
+            const py = rr * (0.08 + particleRng() * 0.3);
+            const pr = rr * (0.028 + particleRng() * 0.018);
+            return `<circle class="plant-soil-particle" cx="${px}" cy="${py}" r="${pr}" style="--plant-growth-delay:${delay + particleIndex * 42}ms"/>`;
+          }).join("")
+        : "";
+      const soilBloom = animateGlyph
+        ? `<ellipse class="plant-soil-bloom" cx="0" cy="${rr * 0.1}" rx="${rr * 0.64}" ry="${rr * 0.24}" style="--plant-growth-delay:${delay}ms"/>`
+        : "";
+      const leafSheen = animateGlyph
+        ? `<path class="plant-leaf-sheen" d="M${-rr * 0.3} ${-rr * 0.08} Q0 ${-rr * 0.42} ${rr * 0.28} ${-rr * 0.2}" stroke-width="${rr * 0.04}" style="--plant-growth-delay:${delay}ms"/>`
+        : "";
+      g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})"><g class="plant-glyph-shell${
+        isAlive ? " plant-glyph-shell--alive" : ""
+      }"${
+        isAlive
+          ? ` style="--plant-sway-duration:${swayDuration}s;--plant-sway-delay:${swayDelay}s"`
+          : ""
+      }>${soilParticles}${soilBloom}<g class="plant-glyph${
+        animateGlyph ? " plant-glyph--growing" : ""
+      }"${
+        animateGlyph ? ` style="--plant-growth-delay:${delay}ms"` : ""
+      }>${glyph(bed.plant, rr, rng, glyphDetail)}</g>${leafSheen}</g></g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
-        const fs = Math.max(rr * 1.2, 8) * 0.8;
+        // L'emoji resta nel raggio allocato: è sopra alla pianta, ma mai oltre
+        // l'ingombro finale usato dal motore per distribuire gli slot.
+        const fs = Math.max(rr * 0.72, 6);
+        const emojiY = oy + pos.y - rr * 0.28;
         pendingEmoji.push(
-          `<text x="${ox + pos.x}" y="${oy + pos.y}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" style="pointer-events:none;user-select:none">${fe}</text>`
+          `<text class="plant-harvest-emoji${
+            animateGlyph ? " plant-harvest-emoji--reveal" : ""
+          }" x="${ox + pos.x}" y="${emojiY}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" style="pointer-events:none;user-select:none${
+            animateGlyph ? `;--plant-growth-delay:${delay}ms` : ""
+          }">${fe}</text>`
         );
       }
     });
@@ -1094,7 +1173,7 @@ function buildScene() {
     g += `<g clip-path="url(#interiorClip)" pointer-events="none">`;
     g += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="url(#nightGlass)"/>`;
     lampYs.forEach((lampY) => {
-      g += `<ellipse cx="${lampX}" cy="${lampY}" rx="${poolRx}" ry="${poolRy}" fill="url(#lampPool)" style="mix-blend-mode:screen"/>`;
+      g += `<ellipse class="scene-lamp-pool" cx="${lampX}" cy="${lampY}" rx="${poolRx}" ry="${poolRy}" fill="url(#lampPool)" style="mix-blend-mode:screen"/>`;
     });
     g += `</g>`;
   }
@@ -1108,9 +1187,9 @@ function buildScene() {
   if (nightMode) {
     lampYs.forEach((lampY) => {
       g += `<g transform="translate(${lampX} ${lampY})" pointer-events="none">`;
-      g += `<circle r="14" fill="#ffe37a" opacity=".24" filter="url(#lampBloom)"/>`;
+      g += `<circle class="scene-lamp-bloom" r="14" fill="#ffe37a" opacity=".24" filter="url(#lampBloom)"/>`;
       g += `<circle r="7.2" fill="#34413d" stroke="#aab5ae" stroke-width="1.3"/>`;
-      g += `<circle r="4.6" fill="url(#lampBulb)" stroke="#fff8ce" stroke-width=".8"/>`;
+      g += `<circle class="scene-lamp-bulb" r="4.6" fill="url(#lampBulb)" stroke="#fff8ce" stroke-width=".8"/>`;
       g += `<circle cx="-1.4" cy="-1.5" r="1.4" fill="#fff" opacity=".92"/>`;
       g += `</g>`;
     });
@@ -1140,6 +1219,7 @@ function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
   let s = "";
 
   s += `<rect x="${ox}" y="${oy}" width="${Wi}" height="${Li}" fill="url(#glass)" pointer-events="none"/>`;
+  s += `<g clip-path="url(#interiorClip)" pointer-events="none"><g transform="rotate(-18 ${ox + Wi / 2} ${oy + Li / 2})"><rect class="scene-glass-glint" x="${ox - Wi * 0.34}" y="${oy - Li * 0.1}" width="${Wi * 0.42}" height="${Li * 1.24}" rx="${Math.max(10, Wi * 0.06)}" fill="rgba(255,255,235,.13)"/></g></g>`;
 
   const bars = Math.max(2, Math.round(Wi / 60));
   for (let i = 1; i < bars; i++) {
@@ -1287,6 +1367,13 @@ function overlayShape(bed, bx, by) {
   let s = `<rect x="${bx + 1}" y="${by + 1}" width="${Math.max(0, bed.w - 2)}" height="${Math.max(0, bed.h - 2)}" rx="3" fill="${style.fill}" pointer-events="none"/>`;
   if (style.pattern) {
     s += `<rect x="${bx + 1}" y="${by + 1}" width="${Math.max(0, bed.w - 2)}" height="${Math.max(0, bed.h - 2)}" rx="3" fill="${style.pattern}" pointer-events="none"/>`;
+  }
+  if (state.overlay === "acqua" && style.pattern) {
+    const rippleRx = Math.max(4, Math.min(bed.w * 0.14, 16));
+    const rippleRy = rippleRx * 0.32;
+    const rippleX = bx + bed.w * 0.48;
+    const rippleY = by + bed.h * 0.54;
+    s += `<g transform="translate(${rippleX} ${rippleY})" pointer-events="none"><g class="water-overlay-ripple"><ellipse rx="${rippleRx}" ry="${rippleRy}"/><ellipse rx="${rippleRx * 0.56}" ry="${rippleRy * 0.56}"/></g></g>`;
   }
   s += `<rect x="${bx + 1.5}" y="${by + 1.5}" width="${Math.max(0, bed.w - 3)}" height="${Math.max(0, bed.h - 3)}" rx="3" fill="none" stroke="${style.stroke}" stroke-width="2" stroke-opacity=".78" pointer-events="none"/>`;
   return s;

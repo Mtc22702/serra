@@ -1655,9 +1655,10 @@ if (catalogSearchLink) {
       "preconfig"
     );
     const guidePreconfigTargets = {
-      novizio: "configuratore.html?livello=novizio&guided=1",
-      intermedio: "configuratore.html?livello=intermedio&guided=1",
-      esperto: "configuratore.html?livello=esperto&mode=expert&empty=1"
+      novizio: "configuratore.html?livello=novizio&guided=1&source=index",
+      intermedio: "configuratore.html?livello=intermedio&guided=1&source=index",
+      esperto:
+        "configuratore.html?livello=esperto&mode=expert&empty=1&source=index"
     };
     const guidePreconfigTarget = guidePreconfigTargets[requestedPreconfig];
     if (guidePreconfigTarget) {
