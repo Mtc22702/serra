@@ -455,6 +455,7 @@
     :where(
       .detail-tile--quantity,
       .panel--plant-detail .detail-tile--quantity,
+      .panel--plant-detail .detail-tile--dimensions,
       .stage-empty-banner,
       .empty-state,
       .empty-helper,
@@ -468,6 +469,33 @@
     background: var(--dark-raised);
     color: var(--dark-text);
     border-color: var(--dark-border);
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-tile--dimensions {
+    border-top-color: #5f9f75;
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-bed-measures
+    b {
+    color: #8fc9a2;
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-bed-measures
+    small {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-bed-measures
+    strong {
+    color: var(--dark-text);
   }
   html[data-theme="dark"]
     body

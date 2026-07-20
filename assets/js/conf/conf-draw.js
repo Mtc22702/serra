@@ -859,6 +859,14 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
 function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
   const plantGrowthDuration = 1400;
   const harvestRevealDuration = 320;
+  // Il numero di glifi resta sempre identico alle piante reali. Limitiamo
+  // soltanto le animazioni simultanee, che aggiungono particelle, keyframe e
+  // trasformazioni SVG e possono saturare la memoria nelle grandi monoculture.
+  const compactDevice =
+    window.matchMedia?.("(max-width: 760px), (pointer: coarse)")?.matches ===
+    true;
+  const maxAnimatedPlantsPerBed = compactDevice ? 220 : 400;
+  const maxAnimatedPlantsPerScene = compactDevice ? 800 : 1600;
   const nightMode = document.documentElement.dataset.theme === "dark";
   // Safari iOS può ignorare le animazioni CSS applicate ai gruppi SVG. In quel
   // caso usiamo animateTransform, nativo SVG, per mantenere viva la scena.
@@ -1032,6 +1040,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
     g += `<text x="${ox + Wi / 2}" y="${oy + Li / 2}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${Math.min(Wi, Li) * 0.06}" fill="#8c8470">${tx("emptyGreenhouse")}</text>`;
   }
   const totalPlants = L.beds.reduce((sum, b) => sum + b.count, 0);
+  let animatedPlantTotal = 0;
   L.beds.forEach((bed) => {
     const bx = ox + bed.x,
       by = oy + bed.y;
@@ -1062,22 +1071,29 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       bedItems.length
     );
     const emojiIndexes = spatialEmojiIndexes(bedItems, emojiCount);
+    const animateThisBed =
+      animatePlants &&
+      totalPlants <= maxAnimatedPlantsPerScene &&
+      bedItems.length <= maxAnimatedPlantsPerBed;
     // Ogni pianta parte da zero e raggiunge esclusivamente la dimensione finale
     // già calcolata dal motore di riempimento per il proprio slot.
     const denseSceneLimit = Math.max(
       1,
       Math.round((bedItems.length / Math.max(1, totalPlants)) * 36)
     );
-    const growthIndexes = animatePlants
+    const growthIndexes = animateThisBed
       ? new Set(bedItems.map((_, index) => index))
       : new Set();
+    animatedPlantTotal += growthIndexes.size;
     // Il movimento ambientale è distribuito e limitato nelle serre molto dense.
     // La trasformazione resta sempre più piccola dell'ingombro finale del glifo.
-    const aliveIndexes = emojiSpreadIndexes(
-      bedItems.length,
-      bed.cols,
-      Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 90)
-    );
+    const aliveIndexes = animateThisBed
+      ? emojiSpreadIndexes(
+          bedItems.length,
+          bed.cols,
+          Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 90)
+        )
+      : new Set();
     const pendingEmoji = [];
     bedItems.forEach(({ pos, sourceIndex }, i) => {
       const rng = rngFrom((bed.idx + 1) * 7919 + sourceIndex * 131);
@@ -1255,7 +1271,9 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
   });
   return {
     svg: `<svg viewBox="0 0 ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sceneTitle"><title id="sceneTitle">${escapeSvg(sceneLabel)}</title>${g}</svg>`,
-    layout: L
+    layout: L,
+    plantAnimationSuppressed:
+      animatePlants && totalPlants > 0 && animatedPlantTotal < totalPlants
   };
 }
 

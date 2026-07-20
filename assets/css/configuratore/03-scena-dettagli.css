@@ -336,6 +336,11 @@
       inset 0 0 0 1px rgba(31, 58, 38, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.55);
   }
+  /* Le serre molto dense mantengono tutti i glifi, ma usano una sola
+     dissolvenza composita al posto di migliaia di animazioni SVG. */
+  .scene.scene--dense-reveal svg {
+    animation: scene-dense-reveal 520ms ease-out both;
+  }
   .bedhit {
     cursor: pointer;
   }
@@ -421,6 +426,14 @@
     transform-box: fill-box;
     transform-origin: center;
     animation: water-overlay-ripple 3.4s ease-in-out infinite;
+  }
+  @keyframes scene-dense-reveal {
+    from {
+      opacity: 0.72;
+    }
+    to {
+      opacity: 1;
+    }
   }
   @keyframes plant-grow-in {
     from {
@@ -550,7 +563,8 @@
     .scene-lamp-pool,
     .scene-lamp-bloom,
     .scene-lamp-bulb,
-    .water-overlay-ripple {
+    .water-overlay-ripple,
+    .scene.scene--dense-reveal svg {
       animation: none;
     }
   }

@@ -13513,6 +13513,11 @@ html[data-theme="dark"]
       inset 0 0 0 1px rgba(31, 58, 38, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.55);
   }
+  /* Le serre molto dense mantengono tutti i glifi, ma usano una sola
+     dissolvenza composita al posto di migliaia di animazioni SVG. */
+  .scene.scene--dense-reveal svg {
+    animation: scene-dense-reveal 520ms ease-out both;
+  }
   .bedhit {
     cursor: pointer;
   }
@@ -13598,6 +13603,14 @@ html[data-theme="dark"]
     transform-box: fill-box;
     transform-origin: center;
     animation: water-overlay-ripple 3.4s ease-in-out infinite;
+  }
+  @keyframes scene-dense-reveal {
+    from {
+      opacity: 0.72;
+    }
+    to {
+      opacity: 1;
+    }
   }
   @keyframes plant-grow-in {
     from {
@@ -13727,7 +13740,8 @@ html[data-theme="dark"]
     .scene-lamp-pool,
     .scene-lamp-bloom,
     .scene-lamp-bulb,
-    .water-overlay-ripple {
+    .water-overlay-ripple,
+    .scene.scene--dense-reveal svg {
       animation: none;
     }
   }
@@ -21997,6 +22011,7 @@ html[data-theme="dark"]
     :where(
       .detail-tile--quantity,
       .panel--plant-detail .detail-tile--quantity,
+      .panel--plant-detail .detail-tile--dimensions,
       .stage-empty-banner,
       .empty-state,
       .empty-helper,
@@ -22010,6 +22025,33 @@ html[data-theme="dark"]
     background: var(--dark-raised);
     color: var(--dark-text);
     border-color: var(--dark-border);
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-tile--dimensions {
+    border-top-color: #5f9f75;
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-bed-measures
+    b {
+    color: #8fc9a2;
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-bed-measures
+    small {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"]
+    body
+    .panel--plant-detail
+    .detail-bed-measures
+    strong {
+    color: var(--dark-text);
   }
   html[data-theme="dark"]
     body

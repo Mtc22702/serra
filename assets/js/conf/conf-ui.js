@@ -331,7 +331,12 @@ function render() {
     // soltanto per le modifiche successive, quando rende leggibile il cambiamento.
     staggerPlants: !isInitialPlantRender
   });
-  document.getElementById("scene").innerHTML = built.svg;
+  const scene = document.getElementById("scene");
+  scene.classList.toggle(
+    "scene--dense-reveal",
+    built.plantAnimationSuppressed
+  );
+  scene.innerHTML = built.svg;
   bindPlantAssetFallbacks();
   const L = built.layout;
   const used = (L.usedH / 100).toFixed(1);
@@ -387,6 +392,21 @@ function render() {
   renderWarnings(L);
   renderSummary();
   renderFooter();
+
+  // Se la scheda pianta e aperta, riallinea anche i suoi contenuti dinamici.
+  // Serve in particolare al cambio lingua, perche le etichette della scheda
+  // non fanno parte dei nodi statici aggiornati da applyLanguage().
+  const plantDetailPanelElement = document.getElementById("panelPlantDetail");
+  if (
+    plantDetailPanelElement &&
+    !plantDetailPanelElement.hidden &&
+    state.selected >= 0
+  ) {
+    const activeDetailTab =
+      document.querySelector("#pdpContent [data-detail-tab].active")?.dataset
+        .detailTab || "overview";
+    renderPlantDetailPanel(activeDetailTab);
+  }
 
   document.querySelectorAll(".bedhit").forEach((el) => {
     const openBedDetail = () => {
@@ -1673,7 +1693,7 @@ function closePlantDetailPanel() {
 }
 
 // Costruisce la scheda dettagliata della pianta selezionata nel catalogo.
-function renderPlantDetailPanel() {
+function renderPlantDetailPanel(initialTab = "overview") {
   const container = document.getElementById("pdpContent");
   if (!container) return;
   if (state.selected < 0 || state.selected >= state.beds.length) {
@@ -1686,8 +1706,12 @@ function renderPlantDetailPanel() {
   // Le dimensioni appartengono al layout calcolato, non al record della coltura:
   // in questo modo seguono sempre il motore di riempimento corrente.
   const bedGeometry = computeLayout().beds[state.selected];
+  const bedMeasureFormatter = new Intl.NumberFormat(
+    state.lang === "ro" ? "ro-RO" : "it-IT",
+    { maximumFractionDigits: 2 }
+  );
   const formatBedMeasure = (centimetres) =>
-    `${(centimetres / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
+    `${bedMeasureFormatter.format(centimetres / 100)} m`;
   const bedWidth = formatBedMeasure(bedGeometry.w);
   const bedLength = formatBedMeasure(bedGeometry.h);
   // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
@@ -1838,7 +1862,7 @@ function renderPlantDetailPanel() {
       </div>
     </div>
   `;
-  setConfigDetailTab("overview");
+  setConfigDetailTab(initialTab);
 }
 
 // Abilita annulla e ripristina in base agli snapshot disponibili nello storico.
