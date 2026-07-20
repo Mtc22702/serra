@@ -782,6 +782,68 @@ function emojiSpreadIndexes(itemCount, cols, targetCount) {
   return result;
 }
 
+// Distribuisce le emoji in base alle coordinate reali delle piante. La scelta
+// progressiva del punto più lontano evita concentrazioni sulla stessa fila o
+// colonna e funziona anche con ultime righe incomplete.
+function spatialEmojiIndexes(items, targetCount) {
+  const count = items.length;
+  if (!targetCount || count === 0) return new Set();
+  if (count <= targetCount)
+    return new Set(Array.from({ length: count }, (_, index) => index));
+
+  const xs = items.map((item) => item.pos.x);
+  const ys = items.map((item) => item.pos.y);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const spanX = Math.max(1, maxX - minX);
+  const spanY = Math.max(1, maxY - minY);
+  const points = items.map((item, index) => ({
+    index,
+    x: (item.pos.x - minX) / spanX,
+    y: (item.pos.y - minY) / spanY
+  }));
+
+  // Un solo simbolo resta centrale; con più simboli partiamo da un estremo e
+  // copriamo progressivamente gli altri quadranti dell'aiuola.
+  if (targetCount === 1) {
+    const center = points.reduce((best, point) => {
+      const distance = (point.x - 0.5) ** 2 + (point.y - 0.5) ** 2;
+      return !best || distance < best.distance
+        ? { index: point.index, distance }
+        : best;
+    }, null);
+    return new Set([center.index]);
+  }
+
+  const selected = [points[0]];
+  const selectedIds = new Set([points[0].index]);
+  while (selected.length < Math.min(targetCount, count)) {
+    let best = null;
+    points.forEach((point) => {
+      if (selectedIds.has(point.index)) return;
+      const nearest = Math.min(
+        ...selected.map(
+          (chosen) => (point.x - chosen.x) ** 2 + (point.y - chosen.y) ** 2
+        )
+      );
+      if (
+        !best ||
+        nearest > best.nearest + 1e-9 ||
+        (Math.abs(nearest - best.nearest) <= 1e-9 &&
+          point.index < best.point.index)
+      ) {
+        best = { point, nearest };
+      }
+    });
+    if (!best) break;
+    selected.push(best.point);
+    selectedIds.add(best.point.index);
+  }
+  return selectedIds;
+}
+
 // Calcola la dimensione ottimale del testo etichetta
 function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
   const greenhouseScale = Math.min(sceneWidth, sceneHeight) * 0.016;
@@ -999,11 +1061,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       Math.max(1, Math.round(Math.sqrt(bed.count) * 1.3)),
       bedItems.length
     );
-    const emojiIndexes = emojiSpreadIndexes(
-      bedItems.length,
-      bed.cols,
-      emojiCount
-    );
+    const emojiIndexes = spatialEmojiIndexes(bedItems, emojiCount);
     // Ogni pianta parte da zero e raggiunge esclusivamente la dimensione finale
     // già calcolata dal motore di riempimento per il proprio slot.
     const denseSceneLimit = Math.max(
