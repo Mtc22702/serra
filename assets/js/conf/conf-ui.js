@@ -276,7 +276,9 @@ function renderFooter() {
 
 // Aggiorna scena, pannelli e riepilogo in base allo stato della configurazione.
 let lastRenderedCropSignature = null;
-const animateInitialCropsFromHome = BOOT_PARAMS.get("source") === "index";
+// La prima scena coltivata deve crescere indipendentemente dal punto di
+// ingresso: su mobile spesso il configuratore viene riaperto direttamente.
+const animateInitialCrops = true;
 
 function cropSignature() {
   return state.beds
@@ -315,7 +317,9 @@ function render() {
 
   const currentCropSignature = cropSignature();
   const animatePlantGrowth =
-    (lastRenderedCropSignature === null && animateInitialCropsFromHome) ||
+    (lastRenderedCropSignature === null &&
+      animateInitialCrops &&
+      state.beds.length > 0) ||
     (lastRenderedCropSignature !== null &&
       currentCropSignature !== lastRenderedCropSignature);
   lastRenderedCropSignature = currentCropSignature;

@@ -816,6 +816,15 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
 // Costruzione scena
 function buildScene({ animatePlants = false } = {}) {
   const nightMode = document.documentElement.dataset.theme === "dark";
+  // Safari iOS può ignorare le animazioni CSS applicate ai gruppi SVG. In quel
+  // caso usiamo animateTransform, nativo SVG, per mantenere viva la scena.
+  const platform = navigator.platform || "";
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")
+    ?.matches;
+  const useSvgMotionFallback =
+    !reduceMotion &&
+    (/iP(ad|hone|od)/.test(navigator.userAgent) ||
+      (platform === "MacIntel" && navigator.maxTouchPoints > 1));
   const L = computeLayout();
   const Wi = L.Wi,
     Li = L.Li;
@@ -1040,6 +1049,8 @@ function buildScene({ animatePlants = false } = {}) {
       const rot = Math.floor(rng() * 360);
       const animateGlyph = growthIndexes.has(i);
       const isAlive = aliveIndexes.has(i);
+      const usesNativeGrowth = animateGlyph && useSvgMotionFallback;
+      const usesNativeSway = isAlive && useSvgMotionFallback;
       const delay = Math.min(260, i * 22);
       // Tutti i valori restano entro il raggio grafico già calcolato per lo slot.
       // Il terreno pulsa sotto la pianta, senza influenzare geometria o riempimento.
@@ -1065,17 +1076,25 @@ function buildScene({ animatePlants = false } = {}) {
       const leafSheen = animateGlyph
         ? `<path class="plant-leaf-sheen" d="M${-rr * 0.3} ${-rr * 0.08} Q0 ${-rr * 0.42} ${rr * 0.28} ${-rr * 0.2}" stroke-width="${rr * 0.04}" style="--plant-growth-delay:${delay}ms"/>`
         : "";
+      const nativeSway = usesNativeSway
+        ? `<animateTransform attributeName="transform" type="rotate" values="-2.5 0 0;2.5 0 0;-2.5 0 0" dur="${swayDuration}s" begin="${swayDelay}s" repeatCount="indefinite"/>`
+        : "";
+      const nativeGrowth = usesNativeGrowth
+        ? `<animateTransform attributeName="transform" type="scale" values="0.08;0.9;1" keyTimes="0;.78;1" dur="720ms" begin="${delay}ms" fill="freeze"/>`
+        : "";
       g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})"><g class="plant-glyph-shell${
-        isAlive ? " plant-glyph-shell--alive" : ""
+        isAlive && !usesNativeSway ? " plant-glyph-shell--alive" : ""
       }"${
-        isAlive
+        isAlive && !usesNativeSway
           ? ` style="--plant-sway-duration:${swayDuration}s;--plant-sway-delay:${swayDelay}s"`
           : ""
-      }>${soilParticles}${soilBloom}<g class="plant-glyph${
-        animateGlyph ? " plant-glyph--growing" : ""
+      }>${nativeSway}${soilParticles}${soilBloom}<g class="plant-glyph${
+        animateGlyph && !usesNativeGrowth ? " plant-glyph--growing" : ""
       }"${
-        animateGlyph ? ` style="--plant-growth-delay:${delay}ms"` : ""
-      }>${glyph(bed.plant, rr, rng, glyphDetail)}</g>${leafSheen}</g></g>`;
+        animateGlyph && !usesNativeGrowth
+          ? ` style="--plant-growth-delay:${delay}ms"`
+          : ""
+      }>${nativeGrowth}${glyph(bed.plant, rr, rng, glyphDetail)}</g>${leafSheen}</g></g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
         // L'emoji resta nel raggio allocato: è sopra alla pianta, ma mai oltre
