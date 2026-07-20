@@ -1,5 +1,5 @@
 /* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
-const CACHE_VERSION = "20260717-c84b9b30b515";
+const CACHE_VERSION = "20260720-20ebfeab321c";
 const CACHE = `serra-${CACHE_VERSION}`;
 
 const PRECACHE = [

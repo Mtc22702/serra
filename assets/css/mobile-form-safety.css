@@ -1,0 +1,15 @@
+/* Protezioni trasversali per l'uso su smartphone. */
+@media (max-width: 660px) {
+  html,
+  body {
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+
+  /* iOS effettua lo zoom automatico sui campi editabili sotto i 16 px. */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}

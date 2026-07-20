@@ -7,20 +7,33 @@ const cssDir = path.join(root, "assets/css");
 const layerOrder = "@layer base, dark-theme, polish;\n\n";
 
 const bundles = {
-  "serra-home.css": ["index.css", "theme.css", "uiux-polish.css"],
+  "serra-home.css": [
+    "index.css",
+    "theme.css",
+    "uiux-polish.css",
+    "mobile-form-safety.css"
+  ],
   "serra-configuratore.css": [
     "index.css",
     "style.css",
     "theme.css",
-    "uiux-polish.css"
+    "uiux-polish.css",
+    "mobile-form-safety.css"
   ],
   "serra-account.css": [
     "index.css",
     "theme.css",
     "account.css",
-    "uiux-polish.css"
+    "uiux-polish.css",
+    "mobile-form-safety.css"
   ],
-  "serra-guida.css": ["index.css", "theme.css", "uiux-polish.css", "guida.css"]
+  "serra-guida.css": [
+    "index.css",
+    "theme.css",
+    "uiux-polish.css",
+    "guida.css",
+    "mobile-form-safety.css"
+  ]
 };
 
 const isExternalUrl = (value) =>
