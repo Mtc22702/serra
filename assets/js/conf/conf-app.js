@@ -237,8 +237,7 @@ function initEvents() {
   });
   document.getElementById("inPreset").addEventListener("change", (e) => {
     if (e.target.value) {
-      loadPreset(e.target.value);
-      setMode("fit", false);
+      if (loadPreset(e.target.value)) setMode("fit", false);
       e.target.value = "";
     }
   });
@@ -536,7 +535,16 @@ function applyConfigToState(saved) {
   state.activePreset = PRESETS[saved.activePreset] ? saved.activePreset : "";
   if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
   state.beds = normalizeSavedBeds(saved.beds);
-  autoBalanceLayout(true, false);
+
+  // Riproduce esattamente il piano salvato, comprese le colonne assegnate ai
+  // riempitori. Ribilancia soltanto salvataggi obsoleti o non più compatibili
+  // con la geometria corrente.
+  if (computeLayout().overflow) {
+    clearColumnAssignment();
+    autoBalanceLayout(true, false);
+  } else {
+    commitColumnAssignment();
+  }
 
   if (typeof resetHistory === "function") resetHistory();
 }
@@ -548,6 +556,9 @@ function initConfig() {
   const sharedLang = localStorage.getItem("ois.lang");
   const hasSharedLang = sharedLang === "it" || sharedLang === "ro";
   if (saved) applyConfigToState(saved);
+  if (typeof rememberAcceptedGeometry === "function") {
+    rememberAcceptedGeometry();
+  }
   if (hasSharedLang) state.lang = sharedLang;
   applyLanguage();
   syncSizeControls();
@@ -965,8 +976,10 @@ window.addEventListener("storage", (event) => {
 window.addEventListener("serra:themechange", () => render());
 
 (async () => {
-  // Bootstrap del catalogo piante: logica condivisa in assets/js/api.js
-  await window.SerraAPI.bootstrapPlants();
+  // Il catalogo necessario al configuratore è già incluso in plants-data.js.
+  // La sincronizzazione con eventuali sorgenti esterne prosegue in background,
+  // senza trattenere il primo disegno della serra dietro a un timeout di rete.
+  window.SerraAPI.bootstrapPlants();
 
   initConfig();
   initEvents();

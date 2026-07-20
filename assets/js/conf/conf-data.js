@@ -1391,7 +1391,7 @@ const PRESETS = {
   autunnale: [
     ["spinaci", 18],
     ["valerianella", 30],
-    ["finocchio", 8],
+    ["indivia", 8],
     ["porro", 16],
     ["bietola", 8],
     ["ravanello", 30]
@@ -1405,7 +1405,7 @@ const PRESETS = {
     ["pomodoro", 6],
     ["peperone", 6],
     ["melanzana", 3],
-    ["cetriolo", 4]
+    ["zucchina", 2]
   ],
   cucurbitacee: [
     ["zucchina", 2],

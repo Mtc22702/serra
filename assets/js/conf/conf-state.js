@@ -57,7 +57,10 @@ function buildConfigPayload(done = true) {
       plantId: bed.plantId,
       count: bed.count,
       layout: bed.layout || "blocco",
-      countLocked: Boolean(bed.countLocked)
+      countLocked: Boolean(bed.countLocked),
+      // I tappabuchi dipendono dalla colonna scelta dal motore: senza questo
+      // dato un refresh può ricomporre le stesse quantità lasciando dei vuoti.
+      col: Number.isInteger(bed.col) ? bed.col : undefined
     })),
     done
   };
@@ -382,7 +385,11 @@ function chooseLivello(liv) {
     openCustomizePanelAndFocus({ scroll: false });
   } else if (liv === "intermedio") {
     vegFilter = "all";
-    state.autoPlan = true;
+    const keepsExpertPlan = prev === "esperto" && state.beds.length > 0;
+    state.autoPlan = !keepsExpertPlan;
+    state.manualPlanNotice = keepsExpertPlan
+      ? "manualPlanKeptIntermediate"
+      : "";
     if (!state.beds.length) autoFill();
     else render();
     syncVegFilterTabs();

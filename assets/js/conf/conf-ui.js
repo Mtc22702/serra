@@ -316,15 +316,21 @@ function render() {
   updateCropActionControls();
 
   const currentCropSignature = cropSignature();
+  const isInitialPlantRender = lastRenderedCropSignature === null;
   const animatePlantGrowth =
-    (lastRenderedCropSignature === null &&
+    (isInitialPlantRender &&
       animateInitialCrops &&
       state.beds.length > 0) ||
-    (lastRenderedCropSignature !== null &&
+    (!isInitialPlantRender &&
       currentCropSignature !== lastRenderedCropSignature);
   lastRenderedCropSignature = currentCropSignature;
 
-  const built = buildScene({ animatePlants: animatePlantGrowth });
+  const built = buildScene({
+    animatePlants: animatePlantGrowth,
+    // All'ingresso tutte le piante iniziano subito a crescere: lo stagger resta
+    // soltanto per le modifiche successive, quando rende leggibile il cambiamento.
+    staggerPlants: !isInitialPlantRender
+  });
   document.getElementById("scene").innerHTML = built.svg;
   bindPlantAssetFallbacks();
   const L = built.layout;
@@ -1893,10 +1899,11 @@ function renderWarnings(L) {
   if (state.manualPlanNotice) {
     const manualBad =
       state.manualPlanNotice === "addNoSpace" ||
-      state.manualPlanNotice === "manualCountRejected";
+      state.manualPlanNotice === "manualCountRejected" ||
+      state.manualPlanNotice === "presetDoesNotFit" ||
+      state.manualPlanNotice === "lockedGeometryRejected";
     out += `<div class="warn ${manualBad ? "bad" : "tip"}"><span class="i">${manualBad ? "⚠️" : "ℹ️"}</span><div>${tx(state.manualPlanNotice)}</div></div>`;
   }
-
   if (analysis.goodPairs.length) {
     const ex = analysis.goodPairs
       .slice(0, 2)

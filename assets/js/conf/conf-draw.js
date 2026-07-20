@@ -51,26 +51,6 @@ function palmatePath(r) {
 }
 const shade = "rgba(0,0,0,.13)";
 
-// Verifica se la pianta mostra l'icona raccolta
-function shouldShowHarvestVector(plant) {
-  if (["frutto", "radice", "legume"].includes(plant.tipo)) return true;
-  return new Set([
-    "broccolo",
-    "cavolfiore",
-    "cavolo",
-    "verza",
-    "cavolorapa",
-    "cavoletti",
-    "cavolo_rosso",
-    "cavolo_navone",
-    "carciofo",
-    "asparago",
-    "finocchio",
-    "broccolo_romanesco",
-    "catalogna"
-  ]).has(plant.id);
-}
-
 const LATER_PLANT_SVG_IDS = new Set([
   "broccolo_romanesco",
   "friggitello",
@@ -814,7 +794,9 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
 }
 
 // Costruzione scena
-function buildScene({ animatePlants = false } = {}) {
+function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
+  const plantGrowthDuration = 1400;
+  const harvestRevealDuration = 320;
   const nightMode = document.documentElement.dataset.theme === "dark";
   // Safari iOS può ignorare le animazioni CSS applicate ai gruppi SVG. In quel
   // caso usiamo animateTransform, nativo SVG, per mantenere viva la scena.
@@ -1022,18 +1004,14 @@ function buildScene({ animatePlants = false } = {}) {
       bed.cols,
       emojiCount
     );
-    // Nelle serre molto dense animiamo un campione distribuito: l'effetto resta
-    // chiaro senza chiedere al browser di animare centinaia di SVG insieme.
+    // Ogni pianta parte da zero e raggiunge esclusivamente la dimensione finale
+    // già calcolata dal motore di riempimento per il proprio slot.
     const denseSceneLimit = Math.max(
       1,
       Math.round((bedItems.length / Math.max(1, totalPlants)) * 36)
     );
     const growthIndexes = animatePlants
-      ? emojiSpreadIndexes(
-          bedItems.length,
-          bed.cols,
-          Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 120)
-        )
+      ? new Set(bedItems.map((_, index) => index))
       : new Set();
     // Il movimento ambientale è distribuito e limitato nelle serre molto dense.
     // La trasformazione resta sempre più piccola dell'ingombro finale del glifo.
@@ -1051,7 +1029,7 @@ function buildScene({ animatePlants = false } = {}) {
       const isAlive = aliveIndexes.has(i);
       const usesNativeGrowth = animateGlyph && useSvgMotionFallback;
       const usesNativeSway = isAlive && useSvgMotionFallback;
-      const delay = Math.min(260, i * 22);
+      const delay = staggerPlants ? Math.min(420, i * 28) : 0;
       // Tutti i valori restano entro il raggio grafico già calcolato per lo slot.
       // Il terreno pulsa sotto la pianta, senza influenzare geometria o riempimento.
       const particleRng = rngFrom(
@@ -1080,7 +1058,7 @@ function buildScene({ animatePlants = false } = {}) {
         ? `<animateTransform attributeName="transform" type="rotate" values="-2.5 0 0;2.5 0 0;-2.5 0 0" dur="${swayDuration}s" begin="${swayDelay}s" repeatCount="indefinite"/>`
         : "";
       const nativeGrowth = usesNativeGrowth
-        ? `<animateTransform attributeName="transform" type="scale" values="0.08;0.9;1" keyTimes="0;.78;1" dur="720ms" begin="${delay}ms" fill="freeze"/>`
+        ? `<animateTransform attributeName="transform" type="scale" values="0.001;0.86;1" keyTimes="0;.72;1" dur="${plantGrowthDuration}ms" begin="${delay}ms" fill="freeze"/>`
         : "";
       g += `<g transform="translate(${ox + pos.x} ${oy + pos.y}) rotate(${rot})"><g class="plant-glyph-shell${
         isAlive && !usesNativeSway ? " plant-glyph-shell--alive" : ""
@@ -1091,22 +1069,33 @@ function buildScene({ animatePlants = false } = {}) {
       }>${nativeSway}${soilParticles}${soilBloom}<g class="plant-glyph${
         animateGlyph && !usesNativeGrowth ? " plant-glyph--growing" : ""
       }"${
-        animateGlyph && !usesNativeGrowth
+        usesNativeGrowth
+          ? ` transform="scale(0.001)"`
+          : animateGlyph
           ? ` style="--plant-growth-delay:${delay}ms"`
           : ""
       }>${nativeGrowth}${glyph(bed.plant, rr, rng, glyphDetail)}</g>${leafSheen}</g></g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
-      if (fe && emojiIndexes.has(i) && shouldShowHarvestVector(bed.plant)) {
-        // L'emoji resta nel raggio allocato: è sopra alla pianta, ma mai oltre
-        // l'ingombro finale usato dal motore per distribuire gli slot.
+      if (fe && emojiIndexes.has(i)) {
+        // Posizionamento e animazione vivono in due gruppi SVG distinti. In
+        // questo modo Safari iOS non può ricalcolare la trasformazione rispetto
+        // all'intera serra e spingere l'emoji da fuori scena.
         const fs = Math.max(rr * 0.72, 6);
         const emojiY = oy + pos.y - rr * 0.28;
+        const emojiDelay = delay + plantGrowthDuration;
+        const nativeEmojiReveal = usesNativeGrowth
+          ? `<animate attributeName="opacity" values="0;1" dur="${harvestRevealDuration}ms" begin="${emojiDelay}ms" fill="freeze"/><animateTransform attributeName="transform" type="scale" values="0.001;1" dur="${harvestRevealDuration}ms" begin="${emojiDelay}ms" fill="freeze"/>`
+          : "";
         pendingEmoji.push(
-          `<text class="plant-harvest-emoji${
-            animateGlyph ? " plant-harvest-emoji--reveal" : ""
-          }" x="${ox + pos.x}" y="${emojiY}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" style="pointer-events:none;user-select:none${
-            animateGlyph ? `;--plant-growth-delay:${delay}ms` : ""
-          }">${fe}</text>`
+          `<g transform="translate(${ox + pos.x} ${emojiY})"><g class="plant-harvest-anchor${
+            animateGlyph && !usesNativeGrowth
+              ? " plant-harvest-anchor--reveal"
+              : ""
+          }"${usesNativeGrowth ? ` transform="scale(0.001)" opacity="0"` : ""} style="pointer-events:none;user-select:none${
+            animateGlyph && !usesNativeGrowth
+              ? `;--plant-growth-delay:${delay}ms`
+              : ""
+          }">${nativeEmojiReveal}<text class="plant-harvest-emoji" x="0" y="0" text-anchor="middle" dominant-baseline="central" font-size="${fs}">${fe}</text></g></g>`
         );
       }
     });

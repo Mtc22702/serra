@@ -1834,6 +1834,14 @@
           "Ho fatto spazio alla quantità scelta riducendo alcune colture automatiche.",
         manualCountBelowMin:
           "Ho fatto spazio alla quantità scelta, ma per riuscirci ho ridotto qualche altra coltura sotto la sua quantità consigliata. Valuta se ingrandire la serra.",
+        lockedGeometryRejected:
+          "Le nuove misure non possono contenere le quantità bloccate: ho ripristinato le ultime dimensioni valide.",
+        presetAdapted:
+          "Il preset è stato adattato allo spazio disponibile modificando soltanto le quantità: tutte le colture previste sono rimaste nel piano.",
+        presetDoesNotFit:
+          "Questo preset non entra nella serra neppure con una sola pianta per varietà. Aumenta le dimensioni e riprova.",
+        manualPlanKeptIntermediate:
+          "Il piano creato in modalità Esperto è stato mantenuto. Mese e clima non lo sostituiranno automaticamente.",
         addNoSpace:
           "Non c'è spazio per questa coltura: riduci o rimuovi altre piante, oppure ingrandisci la serra.",
         badCompanion:
@@ -2407,6 +2415,14 @@
           "Am făcut loc pentru cantitatea aleasă reducând câteva culturi automate.",
         manualCountBelowMin:
           "Am făcut loc pentru cantitatea aleasă, dar pentru asta am redus câteva culturi sub cantitatea recomandată. Ia în calcul mărirea serei.",
+        lockedGeometryRejected:
+          "Noile dimensiuni nu pot conține cantitățile blocate: am restabilit ultimele dimensiuni valide.",
+        presetAdapted:
+          "Planul a fost adaptat la spațiul disponibil schimbând numai cantitățile: toate culturile prevăzute au rămas.",
+        presetDoesNotFit:
+          "Acest plan nu încape în seră nici măcar cu o plantă din fiecare soi. Mărește dimensiunile și încearcă din nou.",
+        manualPlanKeptIntermediate:
+          "Planul creat în modul Expert a fost păstrat. Luna și clima nu îl vor înlocui automat.",
         addNoSpace:
           "Nu este loc pentru această cultură: redu sau elimină alte plante ori mărește sera.",
         badCompanion:

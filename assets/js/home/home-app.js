@@ -1110,20 +1110,20 @@ if (catalogSearchLink) {
       .querySelectorAll(".hcg-card")
       .forEach((c) => c.classList.remove("hcg-card--in"));
 
-    let delay = 180;
+    let delay = 120;
     BEDS.forEach((bed, bi) => {
       const pts = bedPlantPositions(bed);
 
-      const step = bed.p.name === "Basilico" ? 140 : 260;
+      const step = bed.p.id === "basilico" ? 75 : 120;
       pts.forEach((pt, pi) => {
         const d = delay;
         t(() => addPlant(pt.cx, pt.cy, bed.p, bed.r, bi * 100 + pi), d);
         delay += step;
       });
-      delay += 100;
+      delay += 60;
     });
 
-    const panelIn = delay + 300;
+    const panelIn = delay + 180;
     t(() => {
       peek.classList.add("hcg-peek--in");
       inner

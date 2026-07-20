@@ -160,7 +160,9 @@ function normalizeSavedBeds(beds) {
         plantId: bed?.plantId,
         count: Math.max(1, Math.round(parseInt(bed?.count) || 1)),
         layout,
-        countLocked: Boolean(bed?.countLocked)
+        countLocked: Boolean(bed?.countLocked),
+        col:
+          Number.isInteger(bed?.col) && bed.col >= 0 ? bed.col : undefined
       };
     })
     .filter((bed) => {
@@ -372,7 +374,8 @@ function flexibleCropReductionCandidates(layout, lockedPlantId) {
     .filter(Boolean)
     .sort(
       (a, b) =>
-        Number(b.bed.count > b.minCount) - Number(a.bed.count > a.minCount) ||
+        Number(b.bed.count > b.floorCount) -
+          Number(a.bed.count > a.floorCount) ||
         b.surplus - a.surplus ||
         b.bed.count - a.bed.count ||
         b.layoutBed.h - a.layoutBed.h ||
@@ -459,7 +462,8 @@ function autoBalanceLayout(
   sortBedsForLayout();
   rebalanceColumnsFresh();
   shrinkOverflowToFit({
-    preserveLockedCounts: options.preserveLockedCounts === true
+    preserveLockedCounts: options.preserveLockedCounts === true,
+    allowRemove: options.allowRemove !== false
   });
   if (expandToSpace)
     expandAutoFillToSpace({
@@ -475,7 +479,8 @@ function autoBalanceLayout(
       respectDiversityLimit
     });
   shrinkOverflowToFit({
-    preserveLockedCounts: options.preserveLockedCounts === true
+    preserveLockedCounts: options.preserveLockedCounts === true,
+    allowRemove: options.allowRemove !== false
   });
   restoreSelection(selectedPlant);
 }
@@ -653,11 +658,9 @@ function finalizeManualCountChange(fitResult, selectedPlant) {
   state.manualPlanNotice =
     fitResult === "rejected"
       ? "manualCountRejected"
-      : fitResult === "adjustedBelowMin"
-        ? "manualCountBelowMin"
-        : fitResult === "adjusted"
-          ? "manualCountAdjusted"
-          : "";
+      : fitResult === "adjusted"
+        ? "manualCountAdjusted"
+        : "";
   restoreSelection(selectedPlant);
   commitColumnAssignment();
   saveConfig(true);
@@ -708,19 +711,58 @@ function compactPathForAutoFill() {
   return state.path;
 }
 
+// Conserva l'ultima geometria manuale valida per poter rifiutare un
+// ridimensionamento che non può contenere le quantità bloccate dall'utente.
+let lastAcceptedGeometry = {
+  larghezza: state.larghezza,
+  lunghezza: state.lunghezza,
+  path: state.path
+};
+
+function rememberAcceptedGeometry() {
+  lastAcceptedGeometry = {
+    larghezza: state.larghezza,
+    lunghezza: state.lunghezza,
+    path: state.path
+  };
+}
+
+function restoreAcceptedGeometry() {
+  state.larghezza = lastAcceptedGeometry.larghezza;
+  state.lunghezza = lastAcceptedGeometry.lunghezza;
+  state.path = lastAcceptedGeometry.path;
+  syncSizeControls();
+}
+
 // Rigenera il piano automatico dopo un cambio di dimensioni
 function refreshAutoPlanForGeometry(compactPaths = true) {
   resetHistory();
 
   if (state.autoPlan || state.livello === "novizio") {
     autoFill({ compactPaths });
+    rememberAcceptedGeometry();
     return;
   }
-  saveConfig(true);
 
+  const bedsBeforeResize = cloneBedsSnapshot();
   clearColumnAssignment();
-  autoBalanceLayout(true, true);
+  autoBalanceLayout(true, true, {
+    preserveLockedCounts: true,
+    expandLockedCounts: false
+  });
+  if (computeLayout().overflow) {
+    restoreBedsSnapshot(bedsBeforeResize);
+    restoreAcceptedGeometry();
+    state.manualPlanNotice = "lockedGeometryRejected";
+    commitColumnAssignment();
+    saveConfig(true);
+    render();
+    return;
+  }
+  state.manualPlanNotice = "";
   commitColumnAssignment();
+  rememberAcceptedGeometry();
+  saveConfig(true);
   render();
 }
 
@@ -1335,10 +1377,32 @@ function autoFill(options = {}) {
   render();
 }
 
-// Importa un preset nel piano sostituendo aiuole e impostazioni della configurazione.
+// Riduce un preset fino a una pianta per varietà, senza cancellare colture.
+function shrinkPresetPreservingCrops() {
+  let guard = 0;
+  while (computeLayout().overflow && guard++ < 1200) {
+    const candidates = state.beds
+      .map((bed, index) => ({ bed, index, plant: BYID[bed.plantId] }))
+      .filter((item) => item.plant && item.bed.count > 1)
+      .sort(
+        (a, b) =>
+          b.bed.count - a.bed.count ||
+          b.plant.d - a.plant.d ||
+          a.index - b.index
+      );
+    if (!candidates.length) break;
+    candidates[0].bed.count -= 1;
+    sortBedsForLayout();
+    rebalanceColumnsFresh();
+  }
+  return !computeLayout().overflow;
+}
+
+// Importa un preset senza eliminare silenziosamente le varietà previste.
 function loadPreset(key) {
   if (!PRESETS[key]) return;
-  recordHistory();
+  const historyBefore = captureHistorySnapshot();
+  const requestedCounts = new Map(PRESETS[key]);
   state.beds = PRESETS[key].map(([id, cnt]) => ({
     plantId: id,
     count: cnt,
@@ -1347,13 +1411,30 @@ function loadPreset(key) {
   }));
   state.autoPlan = false;
   state.activePreset = key;
-  autoBalanceLayout(false, true);
+  state.selected = -1;
+  state.autoPlanNotice = "";
+  state.manualPlanNotice = "";
+  autoBalanceLayout(false, false, { allowRemove: false });
+
+  if (!shrinkPresetPreservingCrops()) {
+    applyHistorySnapshot(historyBefore);
+    state.manualPlanNotice = "presetDoesNotFit";
+    commitColumnAssignment();
+    saveConfig(true);
+    render();
+    return false;
+  }
 
   expandAutoFillToSpace({ respectDiversityLimit: false });
-  fillColumnTailsWithFiller();
   commitColumnAssignment();
+  const adapted = state.beds.some(
+    (bed) => bed.count !== requestedCounts.get(bed.plantId)
+  );
+  state.manualPlanNotice = adapted ? "presetAdapted" : "";
+  recordHistorySnapshot(historyBefore);
   saveConfig(true);
   render();
+  return true;
 }
 
 // Esporta il piano corrente nel carrello semi

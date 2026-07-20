@@ -9318,13 +9318,13 @@ html[data-theme="dark"]
   .hcg-svg .hcg-plant-grow {
     transform-box: fill-box;
     transform-origin: center bottom;
-    animation: hcg-plant-grow 0.615s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: hcg-plant-grow 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   .hcg-svg .hcg-plant-soil-bloom {
     fill: rgba(214, 179, 116, 0.5);
     transform-box: fill-box;
     transform-origin: center;
-    animation: hcg-soil-bloom 0.465s ease-out both;
+    animation: hcg-soil-bloom 0.31s ease-out both;
   }
   .hcg-svg .hcg-plant-leaf-sheen {
     fill: none;
@@ -9332,12 +9332,12 @@ html[data-theme="dark"]
     stroke-linecap: round;
     transform-box: fill-box;
     transform-origin: center;
-    animation: hcg-leaf-sheen 0.255s ease-out 0.36s both;
+    animation: hcg-leaf-sheen 0.18s ease-out 0.25s both;
   }
   .hcg-svg .hcg-harvest-reveal {
     transform-box: fill-box;
     transform-origin: center;
-    animation: hcg-harvest-reveal 0.255s ease-out 0.495s both;
+    animation: hcg-harvest-reveal 0.18s ease-out 0.38s both;
   }
   @keyframes hcg-plant-grow {
     from { opacity: 0; transform: scale(0.08); }
@@ -13528,7 +13528,7 @@ html[data-theme="dark"]
   .plant-glyph--growing {
     transform-box: fill-box;
     transform-origin: center bottom;
-    animation: plant-grow-in 720ms cubic-bezier(0.22, 0.9, 0.32, 1)
+    animation: plant-grow-in 1400ms cubic-bezier(0.22, 0.78, 0.28, 1)
       var(--plant-growth-delay, 0ms) both;
   }
   .plant-glyph-shell--alive {
@@ -13560,11 +13560,11 @@ html[data-theme="dark"]
     animation: plant-leaf-sheen 200ms ease-out
       calc(var(--plant-growth-delay, 0ms) + 560ms) both;
   }
-  .plant-harvest-emoji--reveal {
+  .plant-harvest-anchor--reveal {
     transform-box: fill-box;
     transform-origin: center;
-    animation: plant-harvest-reveal 240ms ease-out
-      calc(var(--plant-growth-delay, 0ms) + 700ms) both;
+    animation: plant-harvest-reveal 320ms ease-out
+      calc(var(--plant-growth-delay, 0ms) + 1400ms) both;
   }
   .scene-glass-glint {
     transform-box: fill-box;
@@ -13602,11 +13602,11 @@ html[data-theme="dark"]
   @keyframes plant-grow-in {
     from {
       opacity: 0;
-      transform: scale(0.08);
+      transform: scale(0);
     }
-    78% {
+    72% {
       opacity: 1;
-      transform: scale(0.9);
+      transform: scale(0.86);
     }
     to {
       opacity: 1;
@@ -13715,12 +13715,13 @@ html[data-theme="dark"]
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .plant-glyph--growing,
+    /* La crescita e la comparsa del raccolto comunicano il riempimento della
+       serra e restano transizioni singole. Riduciamo soltanto il movimento
+       decorativo o continuo, anche quando Chrome eredita questa preferenza. */
     .plant-glyph-shell--alive,
     .plant-soil-bloom,
     .plant-soil-particle,
     .plant-leaf-sheen,
-    .plant-harvest-emoji--reveal,
     .scene-glass-glint,
     .scene-path-mote,
     .scene-lamp-pool,
