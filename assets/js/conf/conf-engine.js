@@ -1491,6 +1491,9 @@ function importCartToPlan(options = {}) {
   state.autoPlan = false;
   state.selected = state.beds.length ? 0 : -1;
   vegFilter = "in";
+  // Un carrello già composto corrisponde al percorso Intermedio: il piano è
+  // pronto, ma l'utente può personalizzare disposizione e quantità.
+  setLivello("intermedio", { mapMode: false });
   autoBalanceLayout(true, true);
   if (historyBefore) recordHistorySnapshot(historyBefore);
   saveConfig(true);

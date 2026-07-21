@@ -1031,7 +1031,11 @@
   }
   .veg-qty-ctl {
     display: grid;
-    grid-template-columns: 30px 48px 30px;
+    grid-template-columns: 30px 52px 30px;
+    width: 115px;
+    min-width: 115px;
+    flex-shrink: 0;
+    justify-self: end;
     align-items: center;
     gap: 0;
     background: #fff;
@@ -1059,8 +1063,9 @@
     background: rgba(47, 107, 58, 0.08);
   }
   .veg-qty-input {
-    width: 48px;
+    width: 52px;
     height: 30px;
+    box-sizing: border-box;
     border: 0;
     border-left: 1px solid rgba(47, 107, 58, 0.14);
     border-right: 1px solid rgba(47, 107, 58, 0.14);
@@ -1071,6 +1076,9 @@
     font-weight: 850;
     color: var(--inchiostro);
     appearance: textfield;
+  }
+  input.veg-qty-input {
+    padding-inline: 2px;
   }
   .veg-qty-input::-webkit-outer-spin-button,
   .veg-qty-input::-webkit-inner-spin-button {

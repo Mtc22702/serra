@@ -13096,10 +13096,10 @@ html[data-theme="dark"]
     font-size: 13.5px;
   }
   .veg-qty-panel {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 115px;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    gap: 5px;
     margin-top: 7px;
     padding: 0 40px 0 0;
     border: 0;
@@ -13107,6 +13107,8 @@ html[data-theme="dark"]
   }
   .veg-qty-topline {
     display: flex;
+    min-width: 0;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
     gap: 6px;
@@ -18176,7 +18178,11 @@ html[data-theme="dark"]
   }
   .veg-qty-ctl {
     display: grid;
-    grid-template-columns: 30px 48px 30px;
+    grid-template-columns: 30px 52px 30px;
+    width: 115px;
+    min-width: 115px;
+    flex-shrink: 0;
+    justify-self: end;
     align-items: center;
     gap: 0;
     background: #fff;
@@ -18204,8 +18210,9 @@ html[data-theme="dark"]
     background: rgba(47, 107, 58, 0.08);
   }
   .veg-qty-input {
-    width: 48px;
+    width: 52px;
     height: 30px;
+    box-sizing: border-box;
     border: 0;
     border-left: 1px solid rgba(47, 107, 58, 0.14);
     border-right: 1px solid rgba(47, 107, 58, 0.14);
@@ -18216,6 +18223,9 @@ html[data-theme="dark"]
     font-weight: 850;
     color: var(--inchiostro);
     appearance: textfield;
+  }
+  input.veg-qty-input {
+    padding-inline: 2px;
   }
   .veg-qty-input::-webkit-outer-spin-button,
   .veg-qty-input::-webkit-inner-spin-button {
