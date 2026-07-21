@@ -1216,6 +1216,22 @@ if (catalogSearchLink) {
     return { w, l, path, zona, riscaldata, mese };
   }
 
+  // Inserisce la pre-configurazione anche nell'URL di ingresso. Il
+  // localStorage resta la memoria persistente, mentre questi parametri
+  // garantiscono il passaggio alla pagina successiva anche quando il browser
+  // blocca, svuota o isola la memoria locale durante la navigazione.
+  function buildPreconfigTargetUrl(targetUrl, config) {
+    const url = new URL(targetUrl, location.href);
+    url.searchParams.set("preconfig", "1");
+    url.searchParams.set("w", String(config.w));
+    url.searchParams.set("l", String(config.l));
+    url.searchParams.set("path", String(config.path));
+    url.searchParams.set("zona", config.zona);
+    url.searchParams.set("risc", config.riscaldata ? "1" : "0");
+    url.searchParams.set("mese", String(config.mese));
+    return url.href;
+  }
+
   // Allinea lo slider della pre-configurazione
   function syncPcSlider(inputId, sliderId) {
     const input = document.getElementById(inputId);
@@ -1660,7 +1676,10 @@ if (catalogSearchLink) {
           );
           return;
         }
-        savePreconfigToStorage();
+        const config = savePreconfigToStorage();
+        // Aggiornando l'href prima dell'azione predefinita conserviamo anche
+        // apertura in una nuova scheda e comandi standard del browser.
+        this.href = buildPreconfigTargetUrl(this.href, config);
       });
 
     document.addEventListener("keydown", (e) => {

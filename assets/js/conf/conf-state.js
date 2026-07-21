@@ -39,6 +39,57 @@ function readSavedConfig() {
   }
 }
 
+// Applica i valori consegnati direttamente dalla pre-configurazione della
+// home. Sono un fallback di navigazione: hanno precedenza sul salvataggio
+// locale soltanto quando l'URL dichiara esplicitamente preconfig=1.
+function applyBootPreconfigToState() {
+  if (BOOT_PARAMS.get("preconfig") !== "1") return false;
+
+  const boundedNumber = (name, min, max) => {
+    const raw = BOOT_PARAMS.get(name);
+    if (raw === null || raw.trim() === "") return null;
+    const value = Number(raw);
+    return Number.isFinite(value) && value >= min && value <= max
+      ? value
+      : null;
+  };
+
+  const width = boundedNumber("w", 1, 12);
+  const length = boundedNumber("l", 1, 30);
+  const path = boundedNumber("path", 30, 120);
+  const month = boundedNumber("mese", 1, 12);
+  const zone = BOOT_PARAMS.get("zona");
+  const heated = BOOT_PARAMS.get("risc");
+
+  let applied = false;
+  if (width !== null) {
+    state.larghezza = width;
+    applied = true;
+  }
+  if (length !== null) {
+    state.lunghezza = length;
+    applied = true;
+  }
+  if (path !== null) {
+    state.path = Math.round(path / 5) * 5;
+    applied = true;
+  }
+  if (Number.isInteger(month)) {
+    state.mese = month;
+    applied = true;
+  }
+  if (["freddo", "temperato", "caldo"].includes(zone)) {
+    state.zona = zone;
+    applied = true;
+  }
+  if (heated === "1" || heated === "0") {
+    state.riscaldata = heated === "1";
+    applied = true;
+  }
+
+  return applied;
+}
+
 // Costruisce l'oggetto da salvare nel localStorage
 function buildConfigPayload(done = true) {
   return {

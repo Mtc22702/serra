@@ -553,9 +553,13 @@ function applyConfigToState(saved) {
 function initConfig() {
   if (typeof ensureProjectsStore === "function") ensureProjectsStore();
   const saved = readSavedConfig();
-  const sharedLang = localStorage.getItem("ois.lang");
+  let sharedLang = null;
+  try {
+    sharedLang = localStorage.getItem("ois.lang");
+  } catch {}
   const hasSharedLang = sharedLang === "it" || sharedLang === "ro";
   if (saved) applyConfigToState(saved);
+  const hasBootPreconfig = applyBootPreconfigToState();
   if (typeof rememberAcceptedGeometry === "function") {
     rememberAcceptedGeometry();
   }
@@ -568,6 +572,7 @@ function initConfig() {
 
   setStartModalVisible(
     !saved?.done &&
+      !hasBootPreconfig &&
       !isGuidedBoot() &&
       !isFreeProjectBoot() &&
       !shouldImportCart()
