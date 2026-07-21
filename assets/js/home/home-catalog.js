@@ -194,6 +194,10 @@ function plantNote(p) {
     ? PLANT_RO[p.id].nota
     : p.nota;
 }
+// Restituisce la descrizione editoriale breve, separata dai consigli tecnici.
+function plantCompactDescription(p) {
+  return window.SERRA_PLANT_CONTENT?.compactDescription(p, currentLang) || "";
+}
 // Restituisce la guida di semina localizzata
 function localizedSowingGuide(plant) {
   if (currentLang !== "ro") return SOWING_GUIDE[plant.id];
@@ -784,7 +788,7 @@ function renderEditorialPlants() {
               <span class="compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
               ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
             </div>
-            <p class="compact-note">${plantNote(p)}</p>
+            <p class="compact-note">${plantCompactDescription(p)}</p>
             <div class="compact-facts-row compact-facts-row--pro">
               <span>⏱&nbsp;${daysLabel(p)}</span>
               <span>↔&nbsp;${spacingLabel(p)}</span>

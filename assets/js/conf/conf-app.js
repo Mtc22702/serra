@@ -929,7 +929,34 @@ function alertConfCheckout() {
       date: new Date().toISOString(),
       items: orderItems,
       total: totalVal,
-      status: "In elaborazione"
+      status: "In elaborazione",
+      billing: {
+        accountType: user.accountType || "private",
+        name: user.ragioneSociale || user.nome,
+        address: user.billingIndirizzo || user.indirizzo || "",
+        city: user.billingCitta || user.citta || "",
+        cap: user.billingCap || user.cap || "",
+        country:
+          user.billingPaese ||
+          ((document.documentElement.lang || "it").startsWith("ro")
+            ? "România"
+            : "Italia"),
+        vatNumber: user.partitaIva || "",
+        taxCode: user.codiceFiscale || ""
+      },
+      shipping: {
+        name: user.nome,
+        phone: user.telefono || "",
+        address: user.shippingIndirizzo || user.indirizzo || "",
+        city: user.shippingCitta || user.citta || "",
+        cap: user.shippingCap || user.cap || "",
+        country:
+          user.shippingPaese ||
+          user.billingPaese ||
+          ((document.documentElement.lang || "it").startsWith("ro")
+            ? "România"
+            : "Italia")
+      }
     };
     orders.push(newOrder);
     window.SerraAPI.saveOrders(orders).then(() => {
@@ -948,8 +975,15 @@ function alertConfCheckout() {
       if (typeof updateConfCartUI === "function") {
         updateConfCartUI();
       }
-      alert(tx("cart.order_success", { id: newOrder.id }));
-      window.location.href = "account.html";
+      try {
+        sessionStorage.setItem(
+          "ois.order_confirmation",
+          JSON.stringify({ ...newOrder, source: "configurator" })
+        );
+      } catch (error) {
+        // Il numero ordine nell'URL permette comunque di recuperare i dati.
+      }
+      window.location.href = `ordine-confermato.html?order=${encodeURIComponent(newOrder.id)}`;
     });
   });
 }

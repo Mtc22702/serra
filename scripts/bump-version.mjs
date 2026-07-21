@@ -1,4 +1,4 @@
-// Aggiorna automaticamente SERRA_APP_VERSION (nelle 4 pagine) e CACHE_VERSION
+// Aggiorna automaticamente SERRA_APP_VERSION nelle pagine e CACHE_VERSION
 // (in sw.js) in base a un hash degli asset e dell'HTML. I riferimenti alla
 // versione vengono normalizzati prima dell'hash, evitando cicli di versioning.
 import { readFile, readdir, writeFile } from "node:fs/promises";
@@ -12,7 +12,8 @@ const HTML_PAGES = [
   "index.html",
   "configuratore.html",
   "account.html",
-  "guida.html"
+  "guida.html",
+  "ordine-confermato.html"
 ];
 const SW_FILE = "sw.js";
 

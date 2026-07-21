@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Area Riservata · Orto in Serra</title>
     <script>
-      window.SERRA_APP_VERSION = "20260721-c4a76f9bf04d";
+      window.SERRA_APP_VERSION = "20260721-9bf42cd2612b";
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,7 @@
     <!-- Fogli di stile condivisi e specifici dell'area riservata -->
     <link
       rel="stylesheet"
-      href="assets/css/serra-account.css?v=20260721-c4a76f9bf04d"
+      href="assets/css/serra-account.css?v=20260721-9bf42cd2612b"
     />
     <!-- Script iniziale che applica il tema prima della visualizzazione della pagina -->
     <script>
@@ -382,18 +382,35 @@
           </button>
         </div>
 
-        <div class="dashboard-header card">
+        <div class="dashboard-header account-hero card">
           <div class="profile-info">
-            <div class="profile-avatar">👤</div>
-            <div>
+            <div class="profile-avatar" aria-hidden="true">👤</div>
+            <div class="profile-copy">
+              <span class="account-eyebrow" data-i18n-acc="dash.account_eyebrow"
+                >Il tuo spazio</span
+              >
               <h2 id="userNameTitle" data-i18n-acc="dash.loading_generic">
                 Caricamento...
               </h2>
               <p id="userEmailSub">utente@ortoinserra.it</p>
             </div>
           </div>
+          <div class="account-summary" aria-label="Riepilogo account" data-i18n-acc-aria="dash.summary_aria">
+            <div class="account-summary-item">
+              <strong id="accountProjectsCount">0</strong>
+              <span data-i18n-acc="dash.summary_projects">Serre salvate</span>
+            </div>
+            <div class="account-summary-item">
+              <strong id="accountOrdersCount">0</strong>
+              <span data-i18n-acc="dash.summary_orders">Ordini</span>
+            </div>
+            <div class="account-summary-item">
+              <strong id="accountVarietiesCount">0</strong>
+              <span data-i18n-acc="dash.summary_varieties">Varietà acquistate</span>
+            </div>
+          </div>
           <button
-            class="btn btn-outline"
+            class="btn btn-outline account-logout"
             data-account-action="logout"
             data-i18n-acc="dash.logout"
           >
@@ -401,39 +418,122 @@
           </button>
         </div>
 
+        <nav class="account-section-nav" aria-label="Sezioni dell'account" data-i18n-acc-aria="dash.sections_aria">
+          <a href="#accountProfile" data-i18n-acc="dash.nav_profile">Fatturazione e spedizione</a>
+          <a href="#accountProjects" data-i18n-acc="dash.nav_projects">Le mie serre</a>
+          <a href="#accountOrders" data-i18n-acc="dash.nav_orders">Ordini e manuali</a>
+        </nav>
+
         <div class="dashboard-grid">
           <!-- Modulo Dati Profilo -->
-          <div class="dashboard-card card">
-            <h3 data-i18n-acc="dash.title">Dati di Spedizione</h3>
+          <div class="dashboard-card dashboard-card--profile card span-2-large" id="accountProfile">
+            <div class="dashboard-card-heading">
+              <span class="account-section-kicker" data-i18n-acc="dash.profile_kicker">Dati ordine</span>
+              <h3 data-i18n-acc="dash.title">Fatturazione e spedizione</h3>
+              <p data-i18n-acc="dash.profile_hint">Gestisci separatamente i dati fiscali e l’indirizzo in cui vuoi ricevere gli ordini.</p>
+            </div>
             <form id="profileForm" data-account-form="update-profile">
-              <div class="form-group">
-                <label for="profNome" data-i18n-acc="auth.name"
-                  >Nome Completo</label
-                >
-                <input type="text" id="profNome" required />
-              </div>
-              <div class="form-group">
-                <label for="profTelefono" data-i18n-acc="auth.phone"
-                  >Telefono</label
-                >
-                <input type="tel" id="profTelefono" required />
-              </div>
-              <div class="form-group">
-                <label for="profIndirizzo" data-i18n-acc="auth.address"
-                  >Indirizzo</label
-                >
-                <input type="text" id="profIndirizzo" required />
-              </div>
-              <div class="form-grid-small">
-                <div class="form-group">
-                  <label for="profCitta" data-i18n-acc="auth.city">Città</label>
-                  <input type="text" id="profCitta" required />
+              <section class="profile-form-section">
+                <div class="profile-form-section-heading">
+                  <span class="profile-form-section-icon" aria-hidden="true">👤</span>
+                  <div>
+                    <h4 data-i18n-acc="profile.contact_title">Referente</h4>
+                    <p data-i18n-acc="profile.contact_hint">Contatti usati per comunicazioni e consegna.</p>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="profCap" data-i18n-acc="auth.cap">CAP</label>
-                  <input type="text" id="profCap" maxlength="5" required />
+                <div class="profile-fields-grid">
+                  <div class="form-group">
+                    <label for="profNome" data-i18n-acc="auth.name">Nome Completo</label>
+                    <input type="text" id="profNome" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="profTelefono" data-i18n-acc="auth.phone">Telefono</label>
+                    <input type="tel" id="profTelefono" required />
+                  </div>
                 </div>
-              </div>
+              </section>
+
+              <section class="profile-form-section">
+                <div class="profile-form-section-heading">
+                  <span class="profile-form-section-icon" aria-hidden="true">▤</span>
+                  <div>
+                    <h4 data-i18n-acc="profile.billing_title">Dati di fatturazione</h4>
+                    <p data-i18n-acc="profile.billing_hint">Intestatario e indirizzo fiscale riportati sulla ricevuta.</p>
+                  </div>
+                </div>
+                <div class="profile-fields-grid profile-fields-grid--three">
+                  <div class="form-group">
+                    <label for="profAccountType" data-i18n-acc="profile.account_type">Tipo cliente</label>
+                    <select id="profAccountType">
+                      <option value="private" data-i18n-acc="profile.private">Privato</option>
+                      <option value="company" data-i18n-acc="profile.company">Azienda</option>
+                    </select>
+                  </div>
+                  <div class="form-group company-profile-field">
+                    <label for="profRagioneSociale" data-i18n-acc="profile.company_name">Ragione sociale</label>
+                    <input type="text" id="profRagioneSociale" />
+                  </div>
+                  <div class="form-group company-profile-field">
+                    <label for="profPartitaIva" data-i18n-acc="profile.vat_number">Partita IVA</label>
+                    <input type="text" id="profPartitaIva" autocomplete="off" />
+                  </div>
+                  <div class="form-group">
+                    <label for="profCodiceFiscale" data-i18n-acc="profile.tax_code">Codice fiscale</label>
+                    <input type="text" id="profCodiceFiscale" autocomplete="off" />
+                  </div>
+                  <div class="form-group profile-field-span-2">
+                    <label for="profBillingAddress" data-i18n-acc="profile.billing_address">Indirizzo fiscale</label>
+                    <input type="text" id="profBillingAddress" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="profBillingCity" data-i18n-acc="auth.city">Città</label>
+                    <input type="text" id="profBillingCity" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="profBillingCap" data-i18n-acc="auth.cap">CAP</label>
+                    <input type="text" id="profBillingCap" maxlength="10" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="profBillingCountry" data-i18n-acc="profile.country">Paese</label>
+                    <input type="text" id="profBillingCountry" required />
+                  </div>
+                </div>
+              </section>
+
+              <section class="profile-form-section">
+                <div class="profile-form-section-heading profile-form-section-heading--shipping">
+                  <span class="profile-form-section-icon" aria-hidden="true">⌂</span>
+                  <div>
+                    <h4 data-i18n-acc="profile.shipping_title">Indirizzo di spedizione</h4>
+                    <p data-i18n-acc="profile.shipping_hint">Dove vuoi ricevere fisicamente il tuo ordine.</p>
+                  </div>
+                </div>
+                <label class="profile-same-address" for="profShippingSame">
+                  <input type="checkbox" id="profShippingSame" />
+                  <span>
+                    <strong data-i18n-acc="profile.same_address">Usa l’indirizzo di fatturazione</strong>
+                    <small data-i18n-acc="profile.same_address_hint">Deseleziona per indicare un luogo di consegna diverso.</small>
+                  </span>
+                </label>
+                <div id="shippingAddressFields" class="profile-fields-grid profile-fields-grid--shipping">
+                  <div class="form-group profile-field-span-2">
+                    <label for="profShippingAddress" data-i18n-acc="auth.address">Indirizzo di spedizione</label>
+                    <input type="text" id="profShippingAddress" />
+                  </div>
+                  <div class="form-group">
+                    <label for="profShippingCity" data-i18n-acc="auth.city">Città</label>
+                    <input type="text" id="profShippingCity" />
+                  </div>
+                  <div class="form-group">
+                    <label for="profShippingCap" data-i18n-acc="auth.cap">CAP</label>
+                    <input type="text" id="profShippingCap" maxlength="10" />
+                  </div>
+                  <div class="form-group">
+                    <label for="profShippingCountry" data-i18n-acc="profile.country">Paese</label>
+                    <input type="text" id="profShippingCountry" />
+                  </div>
+                </div>
+              </section>
               <div
                 class="form-feedback success"
                 id="profileSuccess"
@@ -453,8 +553,15 @@
           </div>
 
           <!-- Progetti serra salvati nel configuratore -->
-          <div class="dashboard-card card span-2-large">
-            <h3 data-i18n-acc="dash.projects_title">Le mie serre progettate</h3>
+          <div class="dashboard-card dashboard-card--projects card span-2-large" id="accountProjects">
+            <div class="dashboard-card-heading dashboard-card-heading--row">
+              <div>
+                <span class="account-section-kicker" data-i18n-acc="dash.projects_kicker">Progettazione</span>
+                <h3 data-i18n-acc="dash.projects_title">Le mie serre progettate</h3>
+                <p data-i18n-acc="dash.projects_hint">Riprendi un progetto e continua dal configuratore.</p>
+              </div>
+              <a class="btn btn-outline btn-small account-card-link" href="configuratore.html" data-i18n-acc="dash.projects_new">Nuova serra</a>
+            </div>
             <div class="table-responsive">
               <table class="data-table" id="userProjectsTable">
                 <thead>
@@ -483,8 +590,15 @@
           </div>
 
           <!-- Modulo Storico Ordini -->
-          <div class="dashboard-card card span-2-large">
-            <h3 data-i18n-acc="dash.orders_title">I miei ordini di semi</h3>
+          <div class="dashboard-card dashboard-card--orders card span-2-large" id="accountOrders">
+            <div class="dashboard-card-heading dashboard-card-heading--row">
+              <div>
+                <span class="account-section-kicker" data-i18n-acc="dash.orders_kicker">Acquisti</span>
+                <h3 data-i18n-acc="dash.orders_title">I miei ordini di semi</h3>
+                <p data-i18n-acc="dash.orders_hint">Controlla lo stato e apri solo quando serve l’elenco dei prodotti, il manuale o la ricevuta.</p>
+              </div>
+              <a class="btn btn-outline btn-small account-card-link" href="index.html#stagione" data-i18n-acc="dash.orders_shop">Vai al catalogo</a>
+            </div>
             <div class="table-responsive">
               <table class="data-table" id="userOrdersTable">
                 <thead>
@@ -777,6 +891,32 @@
         </div>
       </section>
     </main>
+
+    <!-- Modale utente per modificare un ordine ancora in elaborazione -->
+    <div id="orderEditModal" class="modal-overlay order-edit-modal" hidden>
+      <div class="modal-card card" role="dialog" aria-modal="true" aria-labelledby="orderEditTitle">
+        <div class="order-edit-heading">
+          <div>
+            <span class="account-section-kicker" data-i18n-acc="order.edit_kicker">Ordine modificabile</span>
+            <h3 id="orderEditTitle" data-i18n-acc="order.edit_title">Modifica il tuo ordine</h3>
+            <p data-i18n-acc="order.edit_hint">Aggiorna le quantità o rimuovi un prodotto. Il nuovo totale viene calcolato prima del salvataggio.</p>
+          </div>
+          <button type="button" class="modal-close-button" data-account-action="close-order-edit" data-i18n-acc-aria="order.close" aria-label="Chiudi">×</button>
+        </div>
+        <form data-account-form="update-order">
+          <div id="orderEditItems" class="order-edit-items"></div>
+          <div class="order-edit-total">
+            <span data-i18n-acc="dash.order_total">Totale</span>
+            <strong id="orderEditTotal">€ 0,00</strong>
+          </div>
+          <p id="orderEditError" class="form-feedback error" hidden></p>
+          <div class="modal-actions order-edit-actions">
+            <button type="button" class="btn btn-outline" data-account-action="close-order-edit" data-i18n-acc="order.keep_original">Mantieni ordine originale</button>
+            <button type="submit" class="btn btn-primary" data-i18n-acc="order.save_changes">Salva modifiche all’ordine</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- Modale amministrativa per creare o modificare i dati di una pianta -->
     <div id="plantModal" class="modal-overlay" hidden>
@@ -1118,7 +1258,7 @@
           © 2026 Orto in Serra · Tutti i diritti riservati
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260721-c4a76f9bf04d</span
+          >v20260721-9bf42cd2612b</span
         >
       </div>
     </footer>
@@ -1127,7 +1267,7 @@
     <div id="invoicePrintContainer" class="invoice-print-section"></div>
 
     <!-- Script che inizializzano autenticazione, dati utente e azioni amministrative -->
-    <script src="assets/js/i18n.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/i18n.js?v=20260721-9bf42cd2612b" defer></script>
     <script src="assets/js/theme.js?v=2026-07-15-cleanup" defer></script>
     <script src="assets/js/nav.js?v=2026-07-15-cleanup" defer></script>
     <script src="assets/js/api.js?v=2026-07-15-cleanup" defer></script>
@@ -1139,8 +1279,16 @@
       src="assets/js/shared/escape-html.js?v=2026-07-15-cleanup"
       defer
     ></script>
-    <script src="assets/js/account.js?v=2026-07-15-cleanup" defer></script>
+    <script
+      src="assets/js/shared/plant-content.js?v=20260721-9bf42cd2612b"
+      defer
+    ></script>
+    <script
+      src="assets/js/shared/plant-manual-pdf.js?v=20260721-9bf42cd2612b"
+      defer
+    ></script>
+    <script src="assets/js/account.js?v=20260721-9bf42cd2612b" defer></script>
     <!-- Service worker condiviso -->
-    <script src="assets/js/boot-sw.js?v=20260721-c4a76f9bf04d" defer></script>
+    <script src="assets/js/boot-sw.js?v=20260721-9bf42cd2612b" defer></script>
   </body>
 </html>

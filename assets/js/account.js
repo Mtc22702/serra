@@ -6,6 +6,8 @@
   let allPlants = [];
   let currentLang = "it";
   let lastDbActive = null;
+  let editingOrderId = null;
+  let editingOrderItems = [];
 
   // Dizionario dell'area personale condiviso.
   const ACCOUNT_I18N = window.SERRA_I18N?.account || { it: {}, ro: {} };
@@ -218,6 +220,27 @@
         case "print-invoice":
           window.printInvoice(control.dataset.orderId);
           break;
+        case "download-plant-manual":
+          window.downloadOrderPlantManual(control.dataset.orderId, control);
+          break;
+        case "edit-order":
+          window.openOrderEditModal(control.dataset.orderId);
+          break;
+        case "cancel-order":
+          window.cancelUserOrder(control.dataset.orderId);
+          break;
+        case "close-order-edit":
+          window.closeOrderEditModal();
+          break;
+        case "order-edit-step":
+          window.stepOrderEditQuantity(
+            Number(control.dataset.itemIndex),
+            Number(control.dataset.delta)
+          );
+          break;
+        case "order-edit-remove":
+          window.removeOrderEditItem(Number(control.dataset.itemIndex));
+          break;
         case "edit-plant":
           window.openPlantModal("edit", control.dataset.plantId);
           break;
@@ -237,12 +260,25 @@
         '[data-account-action="filter-plants"]'
       );
       if (control) window.filterAdminPlants();
+      const orderQuantity = event.target.closest("[data-order-edit-quantity]");
+      if (orderQuantity) {
+        window.setOrderEditQuantity(
+          Number(orderQuantity.dataset.itemIndex),
+          Number(orderQuantity.value)
+        );
+      }
     });
     document.addEventListener("change", (event) => {
       const control = event.target.closest(
         '[data-account-action="set-language"]'
       );
       if (control) window.setLang(control.value);
+      if (
+        event.target.id === "profAccountType" ||
+        event.target.id === "profShippingSame"
+      ) {
+        syncProfileFieldVisibility();
+      }
       const orderStatus = event.target.closest(
         '[data-account-action="set-order-status"]'
       );
@@ -260,6 +296,7 @@
         login: window.handleLogin,
         register: window.handleRegister,
         "update-profile": window.handleUpdateProfile,
+        "update-order": window.handleOrderUpdate,
         "save-plant": window.handleSavePlant
       };
       handlers[form.dataset.accountForm]?.(event);
@@ -373,6 +410,24 @@
   }
 
   // --- INTERFACCIA UTENTE NORMALE ---
+  function localizedNotificationMessage(notification) {
+    const storedMessage = String(notification?.message || "");
+    const orderId =
+      notification?.orderId || storedMessage.match(/ORD-[A-Z0-9-]+/i)?.[0];
+    const order = orderId
+      ? allOrders.find((entry) => entry.id === orderId)
+      : null;
+    if (!order) return storedMessage;
+    const tracking = order.tracking
+      ? tAcc("notification.tracking", { code: order.tracking })
+      : "";
+    return tAcc("notification.order_status", {
+      id: order.id,
+      status: statusLabel(order.status),
+      tracking
+    });
+  }
+
   function renderUserDashboard() {
     // Aggiorna currentUser con i dati più freschi dal DB per le notifiche
     const freshUser = allUsers.find((u) => u.email === currentUser.email);
@@ -387,11 +442,45 @@
     document.getElementById("userEmailSub").textContent = currentUser.email;
 
     // Popola campi profilo
-    document.getElementById("profNome").value = currentUser.nome;
-    document.getElementById("profTelefono").value = currentUser.telefono;
-    document.getElementById("profIndirizzo").value = currentUser.indirizzo;
-    document.getElementById("profCitta").value = currentUser.citta;
-    document.getElementById("profCap").value = currentUser.cap;
+    const billingAddress =
+      currentUser.billingIndirizzo || currentUser.indirizzo || "";
+    const billingCity = currentUser.billingCitta || currentUser.citta || "";
+    const billingCap = currentUser.billingCap || currentUser.cap || "";
+    const billingCountry = currentUser.billingPaese || "Italia";
+    const shippingAddress =
+      currentUser.shippingIndirizzo || currentUser.indirizzo || billingAddress;
+    const shippingCity =
+      currentUser.shippingCitta || currentUser.citta || billingCity;
+    const shippingCap = currentUser.shippingCap || currentUser.cap || billingCap;
+    const shippingCountry = currentUser.shippingPaese || billingCountry;
+    const shippingSame =
+      typeof currentUser.shippingSame === "boolean"
+        ? currentUser.shippingSame
+        : !currentUser.shippingIndirizzo ||
+          (shippingAddress === billingAddress &&
+            shippingCity === billingCity &&
+            shippingCap === billingCap);
+
+    document.getElementById("profNome").value = currentUser.nome || "";
+    document.getElementById("profTelefono").value = currentUser.telefono || "";
+    document.getElementById("profAccountType").value =
+      currentUser.accountType === "company" ? "company" : "private";
+    document.getElementById("profRagioneSociale").value =
+      currentUser.ragioneSociale || "";
+    document.getElementById("profPartitaIva").value =
+      currentUser.partitaIva || "";
+    document.getElementById("profCodiceFiscale").value =
+      currentUser.codiceFiscale || "";
+    document.getElementById("profBillingAddress").value = billingAddress;
+    document.getElementById("profBillingCity").value = billingCity;
+    document.getElementById("profBillingCap").value = billingCap;
+    document.getElementById("profBillingCountry").value = billingCountry;
+    document.getElementById("profShippingSame").checked = shippingSame;
+    document.getElementById("profShippingAddress").value = shippingAddress;
+    document.getElementById("profShippingCity").value = shippingCity;
+    document.getElementById("profShippingCap").value = shippingCap;
+    document.getElementById("profShippingCountry").value = shippingCountry;
+    syncProfileFieldVisibility();
 
     // Gestione banner notifiche
     const unread = (currentUser.notifications || []).filter((n) => !n.read);
@@ -399,7 +488,7 @@
     const msgEl = document.getElementById("notificationMessage");
     if (banner && msgEl) {
       if (unread.length > 0) {
-        msgEl.innerHTML = unread.map((n) => n.message).join("<br>");
+        msgEl.innerHTML = unread.map(localizedNotificationMessage).join("<br>");
         banner.hidden = false;
       } else {
         banner.hidden = true;
@@ -427,6 +516,8 @@
     }
     const projects =
       store && Array.isArray(store.projects) ? store.projects : [];
+    const projectsCount = document.getElementById("accountProjectsCount");
+    if (projectsCount) projectsCount.textContent = String(projects.length);
 
     if (!projects.length) {
       emptyNote.hidden = false;
@@ -494,6 +585,19 @@
 
     // Filtra ordini dell'utente corrente
     const myOrders = allOrders.filter((o) => o.email === currentUser.email);
+    const ordersCount = document.getElementById("accountOrdersCount");
+    const varietiesCount = document.getElementById("accountVarietiesCount");
+    if (ordersCount) ordersCount.textContent = String(myOrders.length);
+    if (varietiesCount) {
+      const varieties = new Set(
+        myOrders.flatMap((order) =>
+          (order.items || [])
+            .filter((item) => item.type !== "material")
+            .map((item) => item.id)
+        )
+      );
+      varietiesCount.textContent = String(varieties.size);
+    }
 
     if (myOrders.length === 0) {
       emptyNote.hidden = false;
@@ -513,26 +617,59 @@
       const dateStr = formatDate(order.date);
       const statusClass = order.status.toLowerCase().replace(" ", "-");
 
-      let itemsListHtml = '<div class="order-items-flex">';
       // Ordina la lista dei prodotti alfabeticamente
-      const sortedItems = [...order.items].sort((a, b) =>
+      const sortedItems = [...(order.items || [])].sort((a, b) =>
         plantLabel(a).localeCompare(plantLabel(b), locale())
       );
+      const totalUnits = sortedItems.reduce(
+        (sum, item) => sum + (Number(item.bustine) || 0),
+        0
+      );
+      const productsSummaryKey = `dash.products_summary_${
+        sortedItems.length === 1 ? "one" : "many"
+      }_${totalUnits === 1 ? "one" : "many"}`;
+      let itemsListHtml = `
+        <details class="order-items-disclosure">
+          <summary>
+            <span class="order-items-summary-icon" aria-hidden="true">⌄</span>
+            <span>${tAcc(productsSummaryKey, {
+              count: sortedItems.length,
+              units: totalUnits
+            })}</span>
+          </summary>
+          <div class="order-items-flex">
+      `;
       sortedItems.forEach((it) => {
         const itemName = plantLabel(it);
+        const safeItemName = escapeHtmlAccount(itemName);
         itemsListHtml += `
-          <span class="order-item-pill" title="${itemName}">
-            <img src="${getPhotoSrc(it.id)}" class="order-item-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
-            <span class="order-item-name">${itemName}</span>
+          <span class="order-item-pill" title="${safeItemName}">
+            <img src="${escapeHtmlAccount(getPhotoSrc(it.id))}" class="order-item-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
+            <span class="order-item-name">${safeItemName}</span>
             <span class="order-item-qty">×${it.bustine}</span>
           </span>
         `;
       });
-      itemsListHtml += "</div>";
+      itemsListHtml += "</div></details>";
 
       const trackingHtml = order.tracking
         ? `<br><small class="order-tracking-note">${tAcc("dash.tracking_label")} <a href="https://www.google.com/search?q=${encodeURIComponent(order.tracking)}" target="_blank" class="order-tracking-link">${order.tracking}</a></small>`
         : "";
+      const managementHtml =
+        order.status === "In elaborazione"
+          ? `
+            <button class="order-compact-action order-compact-action--edit" data-account-action="edit-order" data-order-id="${order.id}">
+              <span class="order-compact-action-icon" aria-hidden="true">✎</span>
+              <span>${tAcc("order.edit_button")}</span>
+            </button>
+            <div class="order-cancel-zone">
+              <button class="order-cancel-button" data-account-action="cancel-order" data-order-id="${order.id}">
+                <span aria-hidden="true">×</span>
+                <span>${tAcc("order.cancel_button")}</span>
+              </button>
+            </div>
+          `
+          : "";
 
       tr.innerHTML = `
         <td data-label="${tAcc("dash.order_id")}"><strong>${order.id}</strong></td>
@@ -540,13 +677,161 @@
         <td data-label="${tAcc("dash.order_items")}">${itemsListHtml}</td>
         <td data-label="${tAcc("dash.order_total")}">€ ${parseFloat(order.total).toFixed(2)}</td>
         <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(order.status)}</span>${trackingHtml}</td>
-        <td data-label="${tAcc("dash.order_actions")}">
-          <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}">${tAcc("dash.print_btn")}</button>
+        <td class="order-actions-cell" data-label="${tAcc("dash.order_actions")}">
+          <div class="order-actions-panel">
+            <div class="order-quick-actions">
+              <button class="order-compact-action order-compact-action--manual" data-account-action="download-plant-manual" data-order-id="${order.id}" title="${tAcc("dash.manual_btn_hint")}" aria-label="${tAcc("dash.manual_btn")}">
+                <span class="order-compact-action-icon" aria-hidden="true">↓</span>
+                <span>${tAcc("dash.manual_btn")}</span>
+              </button>
+              <button class="order-compact-action order-compact-action--receipt" data-account-action="print-invoice" data-order-id="${order.id}" title="${tAcc("dash.print_btn_hint")}" aria-label="${tAcc("dash.print_btn")}">
+                <span class="order-compact-action-icon" aria-hidden="true">▤</span>
+                <span>${tAcc("dash.print_btn")}</span>
+              </button>
+              ${managementHtml}
+            </div>
+          </div>
         </td>
       `;
       listContainer.appendChild(tr);
     });
   }
+
+  function orderEditMoney(value) {
+    return new Intl.NumberFormat(locale(), {
+      style: "currency",
+      currency: "EUR"
+    }).format(Number(value) || 0);
+  }
+
+  function orderEditTotal() {
+    return editingOrderItems.reduce(
+      (sum, item) =>
+        sum + (Number(item.prezzo) || 2.5) * (Number(item.bustine) || 0),
+      0
+    );
+  }
+
+  function renderOrderEditItems() {
+    const container = document.getElementById("orderEditItems");
+    const total = document.getElementById("orderEditTotal");
+    if (!container || !total) return;
+    container.innerHTML = editingOrderItems
+      .map((item, index) => {
+        const name = escapeHtmlAccount(plantLabel(item));
+        return `
+          <div class="order-edit-item">
+            <img src="${escapeHtmlAccount(getPhotoSrc(item.id))}" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
+            <div class="order-edit-item-copy">
+              <strong>${name}</strong>
+              <small>${orderEditMoney(item.prezzo || 2.5)} · ${tAcc("order.unit_price")}</small>
+            </div>
+            <div class="order-edit-stepper" aria-label="${tAcc("order.quantity_for", { name })}">
+              <button type="button" data-account-action="order-edit-step" data-item-index="${index}" data-delta="-1" aria-label="${tAcc("order.decrease")}">−</button>
+              <input type="number" min="1" max="99" value="${item.bustine}" data-order-edit-quantity data-item-index="${index}" aria-label="${tAcc("order.quantity_for", { name })}" />
+              <button type="button" data-account-action="order-edit-step" data-item-index="${index}" data-delta="1" aria-label="${tAcc("order.increase")}">+</button>
+            </div>
+            <button type="button" class="order-edit-remove" data-account-action="order-edit-remove" data-item-index="${index}" aria-label="${tAcc("order.remove", { name })}">×</button>
+          </div>
+        `;
+      })
+      .join("");
+    total.textContent = orderEditMoney(orderEditTotal());
+  }
+
+  window.openOrderEditModal = function (orderId) {
+    const order = allOrders.find(
+      (entry) => entry.id === orderId && entry.email === currentUser?.email
+    );
+    if (!order || order.status !== "In elaborazione") {
+      alert(tAcc("order.not_editable"));
+      renderUserOrders();
+      return;
+    }
+    editingOrderId = order.id;
+    editingOrderItems = (order.items || []).map((item) => ({ ...item }));
+    document.getElementById("orderEditError").hidden = true;
+    renderOrderEditItems();
+    document.getElementById("orderEditModal").hidden = false;
+    document.body.classList.add("modal-open");
+  };
+
+  window.closeOrderEditModal = function () {
+    const modal = document.getElementById("orderEditModal");
+    if (modal) modal.hidden = true;
+    editingOrderId = null;
+    editingOrderItems = [];
+    document.body.classList.remove("modal-open");
+  };
+
+  window.setOrderEditQuantity = function (index, value) {
+    if (!editingOrderItems[index]) return;
+    editingOrderItems[index].bustine = Math.min(
+      99,
+      Math.max(1, Math.round(Number(value) || 1))
+    );
+    renderOrderEditItems();
+  };
+
+  window.stepOrderEditQuantity = function (index, delta) {
+    const item = editingOrderItems[index];
+    if (!item) return;
+    window.setOrderEditQuantity(index, Number(item.bustine) + delta);
+  };
+
+  window.removeOrderEditItem = function (index) {
+    if (editingOrderItems.length <= 1) {
+      const error = document.getElementById("orderEditError");
+      error.textContent = tAcc("order.last_item_error");
+      error.hidden = false;
+      return;
+    }
+    editingOrderItems.splice(index, 1);
+    document.getElementById("orderEditError").hidden = true;
+    renderOrderEditItems();
+  };
+
+  window.handleOrderUpdate = async function (event) {
+    event.preventDefault();
+    const latestOrders = await window.SerraAPI.getOrders();
+    const order = latestOrders.find(
+      (entry) =>
+        entry.id === editingOrderId && entry.email === currentUser?.email
+    );
+    if (!order || order.status !== "In elaborazione") {
+      alert(tAcc("order.not_editable"));
+      window.closeOrderEditModal();
+      renderUserOrders();
+      return;
+    }
+    order.items = editingOrderItems.map((item) => ({ ...item }));
+    order.total = orderEditTotal();
+    order.updatedAt = new Date().toISOString();
+    allOrders = latestOrders;
+    await window.SerraAPI.saveOrders(allOrders);
+    window.closeOrderEditModal();
+    renderUserOrders();
+    alert(tAcc("order.updated_success"));
+  };
+
+  window.cancelUserOrder = async function (orderId) {
+    const latestOrders = await window.SerraAPI.getOrders();
+    const order = latestOrders.find(
+      (entry) => entry.id === orderId && entry.email === currentUser?.email
+    );
+    if (!order || order.status !== "In elaborazione") {
+      alert(tAcc("order.not_editable"));
+      renderUserOrders();
+      return;
+    }
+    if (!confirm(tAcc("order.cancel_confirm", { id: order.id }))) return;
+    order.status = "Annullato";
+    order.cancelledAt = new Date().toISOString();
+    allOrders = latestOrders;
+    await window.SerraAPI.saveOrders(allOrders);
+    renderUserOrders();
+    alert(tAcc("order.cancelled_success"));
+  };
 
   // --- INTERFACCIA AMMINISTRATORE ---
   function renderAdminDashboard() {
@@ -966,6 +1251,19 @@
       indirizzo,
       citta,
       cap,
+      accountType: "private",
+      ragioneSociale: "",
+      partitaIva: "",
+      codiceFiscale: "",
+      billingIndirizzo: indirizzo,
+      billingCitta: citta,
+      billingCap: cap,
+      billingPaese: currentLang === "ro" ? "România" : "Italia",
+      shippingSame: true,
+      shippingIndirizzo: indirizzo,
+      shippingCitta: citta,
+      shippingCap: cap,
+      shippingPaese: currentLang === "ro" ? "România" : "Italia",
       role: "user"
     };
 
@@ -988,9 +1286,37 @@
     e.preventDefault();
     const nome = document.getElementById("profNome").value.trim();
     const telefono = document.getElementById("profTelefono").value.trim();
-    const indirizzo = document.getElementById("profIndirizzo").value.trim();
-    const citta = document.getElementById("profCitta").value.trim();
-    const cap = document.getElementById("profCap").value.trim();
+    const accountType = document.getElementById("profAccountType").value;
+    const ragioneSociale = document
+      .getElementById("profRagioneSociale")
+      .value.trim();
+    const partitaIva = document.getElementById("profPartitaIva").value.trim();
+    const codiceFiscale = document
+      .getElementById("profCodiceFiscale")
+      .value.trim();
+    const billingIndirizzo = document
+      .getElementById("profBillingAddress")
+      .value.trim();
+    const billingCitta = document
+      .getElementById("profBillingCity")
+      .value.trim();
+    const billingCap = document.getElementById("profBillingCap").value.trim();
+    const billingPaese = document
+      .getElementById("profBillingCountry")
+      .value.trim();
+    const shippingSame = document.getElementById("profShippingSame").checked;
+    const shippingIndirizzo = shippingSame
+      ? billingIndirizzo
+      : document.getElementById("profShippingAddress").value.trim();
+    const shippingCitta = shippingSame
+      ? billingCitta
+      : document.getElementById("profShippingCity").value.trim();
+    const shippingCap = shippingSame
+      ? billingCap
+      : document.getElementById("profShippingCap").value.trim();
+    const shippingPaese = shippingSame
+      ? billingPaese
+      : document.getElementById("profShippingCountry").value.trim();
     const successEl = document.getElementById("profileSuccess");
 
     successEl.hidden = true;
@@ -1000,9 +1326,23 @@
     if (index !== -1) {
       allUsers[index].nome = nome;
       allUsers[index].telefono = telefono;
-      allUsers[index].indirizzo = indirizzo;
-      allUsers[index].citta = citta;
-      allUsers[index].cap = cap;
+      allUsers[index].accountType = accountType;
+      allUsers[index].ragioneSociale = ragioneSociale;
+      allUsers[index].partitaIva = partitaIva;
+      allUsers[index].codiceFiscale = codiceFiscale;
+      allUsers[index].billingIndirizzo = billingIndirizzo;
+      allUsers[index].billingCitta = billingCitta;
+      allUsers[index].billingCap = billingCap;
+      allUsers[index].billingPaese = billingPaese;
+      allUsers[index].shippingSame = shippingSame;
+      allUsers[index].shippingIndirizzo = shippingIndirizzo;
+      allUsers[index].shippingCitta = shippingCitta;
+      allUsers[index].shippingCap = shippingCap;
+      allUsers[index].shippingPaese = shippingPaese;
+      // I campi storici continuano a rappresentare l'indirizzo di consegna.
+      allUsers[index].indirizzo = shippingIndirizzo;
+      allUsers[index].citta = shippingCitta;
+      allUsers[index].cap = shippingCap;
 
       const success = await window.SerraAPI.saveUsers(allUsers);
       if (success) {
@@ -1015,6 +1355,29 @@
       }
     }
   };
+
+  function syncProfileFieldVisibility() {
+    const company =
+      document.getElementById("profAccountType")?.value === "company";
+    document.querySelectorAll(".company-profile-field").forEach((field) => {
+      field.hidden = !company;
+      const input = field.querySelector("input");
+      if (input) input.required = company;
+    });
+
+    const same = document.getElementById("profShippingSame")?.checked ?? true;
+    const shippingFields = document.getElementById("shippingAddressFields");
+    if (shippingFields) shippingFields.hidden = same;
+    [
+      "profShippingAddress",
+      "profShippingCity",
+      "profShippingCap",
+      "profShippingCountry"
+    ].forEach((id) => {
+      const input = document.getElementById(id);
+      if (input) input.required = !same;
+    });
+  }
 
   // --- AZIONI ADMIN TAB ---
   window.switchAdminTab = function (tab) {
@@ -1065,6 +1428,8 @@
         if (!customer.notifications) customer.notifications = [];
         customer.notifications.push({
           id: Date.now(),
+          type: "order_status",
+          orderId: order.id,
           message: tAcc("notification.order_status", {
             id: order.id,
             status: statusLabel(nextStatus),
@@ -1427,6 +1792,39 @@
     previewImg.src = src;
   }
 
+  window.downloadOrderPlantManual = async function (orderId, button) {
+    const order = allOrders.find((entry) => entry.id === orderId);
+    if (!order) {
+      alert(tAcc("alert.order_not_found"));
+      return;
+    }
+    const plantIds = new Set(allPlants.map((plant) => plant.id));
+    const hasPlants = (order.items || []).some((item) => plantIds.has(item.id));
+    if (!hasPlants || !window.SERRA_PLANT_MANUAL) {
+      alert(tAcc("manual.no_plants"));
+      return;
+    }
+    const user = allUsers.find((entry) => entry.email === order.email) || currentUser;
+    const label = button?.querySelector(".order-action-copy strong");
+    const previous = label?.textContent;
+    if (button) button.disabled = true;
+    if (label) label.textContent = tAcc("manual.preparing");
+    try {
+      await window.SERRA_PLANT_MANUAL.download({
+        order,
+        user,
+        plants: allPlants,
+        lang: currentLang
+      });
+    } catch (error) {
+      console.error("Manual PDF generation failed", error);
+      alert(tAcc("manual.error"));
+    } finally {
+      if (button) button.disabled = false;
+      if (label) label.textContent = previous || tAcc("dash.manual_btn");
+    }
+  };
+
   window.printInvoice = function (orderId) {
     const order = allOrders.find((o) => o.id === orderId);
     if (!order) {
@@ -1441,6 +1839,29 @@
       phone: "-",
       indirizzo: "-"
     };
+    const billing = order.billing || {
+      accountType: user.accountType || "private",
+      name: user.ragioneSociale || user.nome,
+      address: user.billingIndirizzo || user.indirizzo || "-",
+      city: user.billingCitta || user.citta || "",
+      cap: user.billingCap || user.cap || "",
+      country: user.billingPaese || "Italia",
+      vatNumber: user.partitaIva || "",
+      taxCode: user.codiceFiscale || ""
+    };
+    const shipping = order.shipping || {
+      name: user.nome,
+      phone: user.telefono || "",
+      address: user.shippingIndirizzo || user.indirizzo || "-",
+      city: user.shippingCitta || user.citta || "",
+      cap: user.shippingCap || user.cap || "",
+      country: user.shippingPaese || user.billingPaese || "Italia"
+    };
+    const addressLine = (data) =>
+      [data.address, data.cap, data.city, data.country]
+        .filter(Boolean)
+        .map(escapeHtmlAccount)
+        .join(", ");
 
     const dateStr = formatDate(order.date);
 
@@ -1463,9 +1884,12 @@
 
     printContainer.innerHTML = `
       <div class="invoice-header">
-        <div>
-          <h1 class="invoice-title">Orto in Serra</h1>
-          <p style="margin: 4px 0; color: #777;">${tAcc("invoice.subtitle")}</p>
+        <div class="invoice-brand">
+          <img class="invoice-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra">
+          <div>
+            <h1 class="invoice-title">Orto in Serra</h1>
+            <p class="invoice-subtitle">${tAcc("invoice.subtitle")}</p>
+          </div>
         </div>
         <div class="invoice-meta">
           <strong>${tAcc("invoice.title")}</strong><br>
@@ -1485,11 +1909,19 @@
           <p>${tAcc("invoice.email")}: info@ortoinserra.it</p>
         </div>
         <div class="invoice-block">
-          <h4>${tAcc("invoice.recipient")}</h4>
-          <p><strong>${user.nome}</strong></p>
-          <p>${tAcc("invoice.email")}: ${user.email}</p>
-          <p>${tAcc("invoice.phone")}: ${user.phone || "-"}</p>
-          <p>${tAcc("invoice.address")}: ${user.indirizzo || "-"}</p>
+          <h4>${tAcc("invoice.billing")}</h4>
+          ${billing.accountType === "company" ? `<div class="invoice-customer-type">${tAcc("invoice.company_customer")}</div>` : ""}
+          <p><strong>${escapeHtmlAccount(billing.name || user.nome)}</strong></p>
+          <p>${addressLine(billing)}</p>
+          ${billing.vatNumber ? `<p>${tAcc("invoice.vat_number")}: ${escapeHtmlAccount(billing.vatNumber)}</p>` : ""}
+          ${billing.taxCode ? `<p>${tAcc("invoice.tax_code")}: ${escapeHtmlAccount(billing.taxCode)}</p>` : ""}
+          <p>${tAcc("invoice.email")}: ${escapeHtmlAccount(user.email)}</p>
+        </div>
+        <div class="invoice-block">
+          <h4>${tAcc("invoice.shipping")}</h4>
+          <p><strong>${escapeHtmlAccount(shipping.name || user.nome)}</strong></p>
+          <p>${addressLine(shipping)}</p>
+          <p>${tAcc("invoice.phone")}: ${escapeHtmlAccount(shipping.phone || user.telefono || "-")}</p>
         </div>
       </div>
 

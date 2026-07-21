@@ -33,6 +33,12 @@ const bundles = {
     "uiux-polish.css",
     "guida.css",
     "mobile-form-safety.css"
+  ],
+  "serra-order-confirmation.css": [
+    "index.css",
+    "theme.css",
+    "order-confirmation.css",
+    "mobile-form-safety.css"
   ]
 };
 

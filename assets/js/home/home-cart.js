@@ -283,7 +283,34 @@ function alertCheckout() {
       date: new Date().toISOString(),
       items: orderItems,
       total: totalVal,
-      status: "In elaborazione"
+      status: "In elaborazione",
+      billing: {
+        accountType: user.accountType || "private",
+        name: user.ragioneSociale || user.nome,
+        address: user.billingIndirizzo || user.indirizzo || "",
+        city: user.billingCitta || user.citta || "",
+        cap: user.billingCap || user.cap || "",
+        country:
+          user.billingPaese ||
+          ((document.documentElement.lang || "it").startsWith("ro")
+            ? "România"
+            : "Italia"),
+        vatNumber: user.partitaIva || "",
+        taxCode: user.codiceFiscale || ""
+      },
+      shipping: {
+        name: user.nome,
+        phone: user.telefono || "",
+        address: user.shippingIndirizzo || user.indirizzo || "",
+        city: user.shippingCitta || user.citta || "",
+        cap: user.shippingCap || user.cap || "",
+        country:
+          user.shippingPaese ||
+          user.billingPaese ||
+          ((document.documentElement.lang || "it").startsWith("ro")
+            ? "România"
+            : "Italia")
+      }
     };
     orders.push(newOrder);
     window.SerraAPI.saveOrders(orders).then(() => {
@@ -293,8 +320,16 @@ function alertCheckout() {
       updateCartUI();
       closeCart();
 
-      alert(t("cart.order_success").replace("{id}", newOrder.id));
-      window.location.href = "account.html";
+      try {
+        sessionStorage.setItem(
+          "ois.order_confirmation",
+          JSON.stringify({ ...newOrder, source: "catalog" })
+        );
+      } catch (error) {
+        // Il numero ordine nell'URL mantiene disponibile la conferma anche
+        // quando il browser non consente l'uso di sessionStorage.
+      }
+      window.location.href = `ordine-confermato.html?order=${encodeURIComponent(newOrder.id)}`;
     });
   });
 }
@@ -371,6 +406,38 @@ function technicalProfile(p, guide) {
   const name = plantName(p.id);
   const note = plantNote(p) || "";
   const ro = currentLang === "ro";
+  const shared = window.SERRA_PLANT_CONTENT?.detailProfile(
+    p,
+    guide,
+    currentLang
+  );
+  if (shared) {
+    return {
+      description: shared.description,
+      cultivation: [
+        [t("detail.tech_soil"), shared.soil],
+        [t("detail.tech_exposure"), shared.exposure || sunLabel(p)],
+        [t("detail.tech_irrigation"), shared.irrigation],
+        [t("detail.tech_feeding"), shared.feeding]
+      ],
+      care: [
+        [t("detail.tech_maintenance"), shared.maintenance],
+        [t("detail.tech_prevention"), shared.prevention]
+      ],
+      harvest: [
+        [
+          t("detail.tech_maturity"),
+          ro
+            ? `În medie ${daysLabel(p, true).toLowerCase()}, în funcție de soi, temperatură și lumină.`
+            : `In media ${daysLabel(p, true).toLowerCase()}, in base a varietà, temperatura e luce.`
+        ],
+        [t("detail.tech_harvest_method"), shared.harvestMethod],
+        [t("detail.tech_yield"), yieldLabel(p)],
+        [t("detail.tech_storage"), shared.storage],
+        [t("detail.tech_rotation"), shared.rotation]
+      ]
+    };
+  }
   const data = ro
     ? {
         soil: {
@@ -1423,8 +1490,7 @@ function openDetail(id, preserveTab = false) {
 
   document.getElementById("detailBadges").innerHTML =
     `<span class="badge badge--sun">${SOLE_ICON[p.sole]} ${sunLabel(p)}</span>
-     <span class="badge badge--water">${ACQUA_ICON[p.acqua]} ${t("plant.water")} ${t(`water.${p.acqua}`)}</span>
-     <span class="badge badge--type" style="${TIPO_STYLE[tipo] || ""}">${typeLabel(tipo)}</span>`;
+     <span class="badge badge--water">${ACQUA_ICON[p.acqua]} ${t("plant.water")} ${t(`water.${p.acqua}`)}</span>`;
 
   const nota = plantNote(p);
   const notaEl = document.getElementById("detailNota");
@@ -1436,7 +1502,7 @@ function openDetail(id, preserveTab = false) {
   const spacingValStr = spacingLabel(p);
   document.getElementById("detailSpacing").innerHTML = sp.d
     ? `<div class="detail-spacing-header">
-         <span class="detail-tile-label">${t("detail.spacing_label")}</span>
+         <span class="detail-tile-label">${window.SERRA_PLANT_CONTENT?.spacingLabel(p, currentLang) || t("detail.spacing_label")}</span>
          <b class="detail-spacing-val">${spacingValStr}</b>
        </div>
        <div class="detail-spacing-diagram">${svgDiagram}</div>`
@@ -1548,15 +1614,10 @@ function openDetail(id, preserveTab = false) {
       sowHtml += sowRow("📅", t("detail.sow_period"), guide.periodo);
     if (guide.depth)
       sowHtml += sowRow("📏", t("detail.sow_depth"), guide.depth);
-    if (guide.thin) sowHtml += sowRow("📐", t("detail.sow_thin"), guide.thin);
     if (guide.tempGerm && guide.tempGerm !== "—")
       sowHtml += sowRow("🌡️", t("detail.sow_temp"), guide.tempGerm);
     if (guide.giorniGerm && guide.giorniGerm !== "—")
       sowHtml += sowRow("⏳", t("detail.sow_germ"), guide.giorniGerm);
-    if (guide.esposizione)
-      sowHtml += sowRow("☀️", t("detail.sow_exposure"), guide.esposizione);
-    if (guide.annaffiatura)
-      sowHtml += sowRow("💧", t("detail.sow_water"), guide.annaffiatura);
     if (guide.tip || nota) sowHtml += sowTip(guide.tip || nota);
   } else if (nota) {
     sowHtml += sowTip(nota);

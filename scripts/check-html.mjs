@@ -7,7 +7,8 @@ const pages = {
   "index.html": "serra-home.css",
   "configuratore.html": "serra-configuratore.css",
   "account.html": "serra-account.css",
-  "guida.html": "serra-guida.css"
+  "guida.html": "serra-guida.css",
+  "ordine-confermato.html": "serra-order-confirmation.css"
 };
 
 for (const [page, bundle] of Object.entries(pages)) {
@@ -54,7 +55,12 @@ const requiredLanguageBindings = [
     'data-conf-action="set-language"',
     "configuratore: selettore lingua"
   ],
-  [account, 'data-account-action="set-language"', "account: selettore lingua"]
+  [account, 'data-account-action="set-language"', "account: selettore lingua"],
+  [
+    await readFile(path.join(root, "ordine-confermato.html"), "utf8"),
+    'data-confirm-action="set-language"',
+    "conferma ordine: selettore lingua"
+  ]
 ];
 
 for (const [html, marker, label] of requiredLanguageBindings) {

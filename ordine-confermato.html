@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ordine confermato · Orto in Serra</title>
+    <script>
+      window.SERRA_APP_VERSION = "20260721-9bf42cd2612b";
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icons/logo-180.png" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <script>
+      (function () {
+        var saved = localStorage.getItem("serra-theme");
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+        var lang = localStorage.getItem("ois.lang");
+        document.documentElement.lang = lang === "ro" ? "ro" : "it";
+      })();
+    </script>
+    <link
+      rel="stylesheet"
+      href="assets/css/serra-order-confirmation.css?v=20260721-9bf42cd2612b"
+    />
+  </head>
+  <body class="order-confirmation-page confirmation-loading">
+    <header class="confirmation-header">
+      <div class="confirmation-shell confirmation-header-inner">
+        <a class="confirmation-brand" href="index.html" aria-label="Orto in Serra, home">
+          <img src="assets/img/svg/logo.svg" alt="" />
+          <span class="confirmation-brand-copy">
+            <strong>Orto in Serra</strong>
+            <small data-confirm-i18n="brand_sub">Coltiva con un piano</small>
+          </span>
+        </a>
+        <div class="confirmation-preferences">
+          <div class="confirmation-lang" role="group" aria-label="Lingua / Limbă">
+            <button
+              type="button"
+              data-lang="it"
+              data-confirm-action="set-language"
+              aria-pressed="true"
+            >IT</button>
+            <button
+              type="button"
+              data-lang="ro"
+              data-confirm-action="set-language"
+              aria-pressed="false"
+            >RO</button>
+          </div>
+          <button class="theme-toggle confirmation-theme" type="button">
+            <span class="theme-toggle-moon" aria-hidden="true">☾</span>
+            <span class="theme-toggle-sun" aria-hidden="true">☀</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="confirmation-main">
+      <div class="confirmation-shell">
+        <div class="confirmation-layout">
+          <section class="confirmation-hero" aria-labelledby="confirmationTitle">
+            <div class="confirmation-check" aria-hidden="true">✓</div>
+            <p class="confirmation-eyebrow" data-confirm-i18n="eyebrow">Ordine ricevuto</p>
+            <h1 id="confirmationTitle" data-confirm-i18n="title">
+              Grazie, il tuo orto può iniziare.
+            </h1>
+            <p class="confirmation-lead" data-confirm-i18n="lead">
+              Abbiamo ricevuto il tuo ordine e lo stiamo preparando con cura.
+            </p>
+            <div class="confirmation-number">
+              <span data-confirm-i18n="order_number">Numero ordine</span>
+              <strong id="confirmationOrderId" class="confirmation-dynamic">—</strong>
+            </div>
+            <div class="confirmation-actions">
+              <a class="confirmation-action confirmation-action--primary" href="account.html#accountOrders">
+                <span data-confirm-i18n="account_cta">Vai alla tua area personale</span>
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="confirmation-action" href="index.html#stagione" data-confirm-i18n="catalog_cta">
+                Torna al catalogo
+              </a>
+            </div>
+          </section>
+
+          <aside class="confirmation-summary" aria-labelledby="summaryTitle">
+            <div class="confirmation-summary-head">
+              <h2 id="summaryTitle" data-confirm-i18n="summary_title">Riepilogo ordine</h2>
+              <span class="confirmation-status" data-confirm-i18n="status">In elaborazione</span>
+            </div>
+            <div class="confirmation-meta">
+              <div>
+                <span data-confirm-i18n="date">Data</span>
+                <strong id="confirmationDate" class="confirmation-dynamic">—</strong>
+              </div>
+              <div>
+                <span data-confirm-i18n="articles">Articoli</span>
+                <strong id="confirmationItemCount" class="confirmation-dynamic">—</strong>
+              </div>
+            </div>
+            <ul id="confirmationItems" class="confirmation-items confirmation-dynamic" aria-live="polite"></ul>
+            <div class="confirmation-total">
+              <span data-confirm-i18n="total">Totale</span>
+              <strong id="confirmationTotal" class="confirmation-dynamic">—</strong>
+            </div>
+          </aside>
+        </div>
+
+        <section class="confirmation-next" aria-labelledby="nextTitle">
+          <div class="confirmation-next-mark" aria-hidden="true">↗</div>
+          <h2 id="nextTitle" data-confirm-i18n="next_title">Cosa succede adesso?</h2>
+          <p data-confirm-i18n="next_text">
+            Puoi seguire l’ordine dalla tua area personale e scaricare il manuale di coltivazione.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="confirmation-footer">
+      <div class="confirmation-shell" data-confirm-i18n="footer">
+        Orto in Serra · Dalla pianificazione al raccolto
+      </div>
+    </footer>
+
+    <script src="assets/js/theme.js?v=20260721-9bf42cd2612b" defer></script>
+    <script src="assets/js/api.js?v=20260721-9bf42cd2612b" defer></script>
+    <script src="assets/js/order-confirmation.js?v=20260721-9bf42cd2612b" defer></script>
+    <script src="assets/js/boot-sw.js?v=20260721-9bf42cd2612b" defer></script>
+  </body>
+</html>

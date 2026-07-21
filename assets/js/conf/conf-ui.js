@@ -900,6 +900,31 @@ function configDetailTabIcon(tab) {
 // Costruisce il profilo tecnico per le schede coltivazione e cura
 function configDetailProfile(p, sow) {
   const ro = state.lang === "ro";
+  const shared = window.SERRA_PLANT_CONTENT?.detailProfile(p, sow, state.lang);
+  if (shared) {
+    return {
+      cultivation: [
+        [detailText("detail.tech_soil"), shared.soil],
+        [
+          detailText("detail.tech_exposure"),
+          shared.exposure || (p.sole === "pieno" ? tx("fullSun") : tx("halfShade"))
+        ],
+        [detailText("detail.tech_irrigation"), shared.irrigation],
+        [detailText("detail.tech_feeding"), shared.feeding]
+      ],
+      care: [
+        [detailText("detail.tech_maintenance"), shared.maintenance],
+        [detailText("detail.tech_prevention"), shared.prevention]
+      ],
+      harvest: [
+        [detailText("detail.tech_maturity"), harvestValue(p)],
+        [detailText("detail.tech_harvest_method"), shared.harvestMethod],
+        [detailText("detail.tech_yield"), yieldLabel(p.resa)],
+        [detailText("detail.tech_storage"), shared.storage],
+        [detailText("detail.tech_rotation"), shared.rotation]
+      ]
+    };
+  }
   const type =
     p.tipo || p.arch || (typeof TIPO !== "undefined" && TIPO[p.id]) || "foglia";
   const soil = ro
@@ -1738,14 +1763,18 @@ function renderPlantDetailPanel(initialTab = "overview") {
   if (heroMatch) {
     heroPhotoSrc = `assets/img/photo/large/${heroMatch[1]}`;
   }
-  const desc = (PLANT_DESC[state.lang] || PLANT_DESC.it)[p.id] || "";
+  const desc =
+    window.SERRA_PLANT_CONTENT?.compactDescription(p, state.lang) ||
+    (PLANT_DESC[state.lang] || PLANT_DESC.it)[p.id] ||
+    "";
   const months = [...effectiveMonths(p)]
     .sort((a, b) => a - b)
     .map((m) => monthName(m).slice(0, 3))
     .join(", ");
   const amiche = p.amiche.map(plantNameById).filter(Boolean);
   const sow = localizedSowingGuide(p);
-  const nota = p.nota || "";
+  const nota =
+    window.SERRA_PLANT_CONTENT?.cultivationNote(p, state.lang) || p.nota || "";
   const distRow = p.d;
   const distBetween = p.dr || p.d;
 
@@ -1830,13 +1859,12 @@ function renderPlantDetailPanel(initialTab = "overview") {
       </div>
 
       <div class="detail-tab-panel active" data-detail-panel="overview">
-        <div class="detail-badges"><span class="badge badge--sun">${soleIcon} ${soleLabel}</span><span class="badge badge--water">${acquaIcon} ${waterLabel(p.acqua)}</span>${tipoLabel ? `<span class="badge badge--type">${tipoLabel}</span>` : ""}</div>
+        <div class="detail-badges"><span class="badge badge--sun">${soleIcon} ${soleLabel}</span><span class="badge badge--water">${acquaIcon} ${waterLabel(p.acqua)}</span></div>
         ${desc ? `<div class="detail-nota">${desc}</div>` : nota ? `<div class="detail-nota">${nota}</div>` : ""}
         <div class="detail-stats">
           <div class="detail-tile detail-tile--harvest"><div class="detail-tile-icon">⏱</div><div class="detail-tile-label">${tx("harvest")}</div><div class="detail-tile-value">${harvestValue(p)}</div></div>
           <div class="detail-tile detail-tile--yield"><div class="detail-tile-icon">⚖</div><div class="detail-tile-label">${tx("yieldPlant")}</div><div class="detail-tile-value">${yieldLabel(p.resa)}</div></div>
           <div class="detail-tile detail-tile--height"><div class="detail-tile-icon">↕</div><div class="detail-tile-label">${tx("height")}</div><div class="detail-tile-value">${heightLabel(p.h || "media")}</div></div>
-          <div class="detail-tile"><div class="detail-tile-icon">💧</div><div class="detail-tile-label">${tx("water")}</div><div class="detail-tile-value">${waterLabel(p.acqua)}</div></div>
           <div class="detail-tile detail-tile--quantity"><div class="detail-tile-label">${detailText("detail.quantity_bed")}</div><div class="detail-tile-value">${detailText("detail.plants_count", { count: b.count })}</div></div>
           <div class="detail-tile detail-tile--dimensions"><div class="detail-tile-label">${detailText("detail.bed_dimensions")}</div><div class="detail-bed-measures"><span><b aria-hidden="true">↔</b><small>${detailText("detail.bed_width")}</small><strong>${bedWidth}</strong></span><span><b aria-hidden="true">↕</b><small>${detailText("detail.bed_length")}</small><strong>${bedLength}</strong></span></div></div>
         </div>
@@ -1844,8 +1872,8 @@ function renderPlantDetailPanel(initialTab = "overview") {
 
       <div class="detail-tab-panel" data-detail-panel="cultivation" hidden>
         <div class="detail-section-heading"><span>${detailText("detail.cultivation_title")}</span><small>${detailText("detail.cultivation_subtitle")}</small></div>
-        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? sowRow("🌱", tx("sowMethod"), sow.method) : ""}${sow.periodo ? sowRow("📅", detailText("detail.sow_period"), sow.periodo) : ""}${sow.depth ? sowRow("📏", tx("sowDepth"), sow.depth) : ""}${sow.thin ? sowRow("📐", tx("sowThin"), sow.thin) : ""}${sow.tip ? sowTip(sow.tip) : ""}</div></div>` : ""}
-        <div class="detail-spacing"><div class="detail-spacing-header"><span class="detail-tile-label">${tx("distance")}</span><b class="detail-spacing-val">${spacingValue(p)}</b></div>${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}</div>
+        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? sowRow("🌱", tx("sowMethod"), sow.method) : ""}${sow.periodo ? sowRow("📅", detailText("detail.sow_period"), sow.periodo) : ""}${sow.depth ? sowRow("📏", tx("sowDepth"), sow.depth) : ""}${sow.tip || nota ? sowTip(sow.tip || nota) : ""}</div></div>` : ""}
+        <div class="detail-spacing"><div class="detail-spacing-header"><span class="detail-tile-label">${window.SERRA_PLANT_CONTENT?.spacingLabel(p, state.lang) || tx("distance")}</span><b class="detail-spacing-val">${spacingValue(p)}</b></div>${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}</div>
         <div class="detail-tech-grid">${renderConfigTechCards(profile.cultivation)}</div>
       </div>
 
