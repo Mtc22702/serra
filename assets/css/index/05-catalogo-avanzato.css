@@ -61,8 +61,7 @@
   }
 
   .catalog-tools--pro {
-    position: sticky;
-    top: calc(var(--nav-h) + 10px);
+    position: relative;
     z-index: 20;
     margin: 0 0 1rem;
     border-radius: 18px;

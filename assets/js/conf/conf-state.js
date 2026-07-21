@@ -164,8 +164,22 @@ function isFreeProjectBoot() {
 // Rimuove i parametri di boot dall'URL
 function clearBootParams() {
   if (!window.history?.replaceState) return;
+  const currentHistoryState =
+    window.history.state && typeof window.history.state === "object"
+      ? window.history.state
+      : {};
+  const livello = BOOT_PARAMS.get("livello") || "";
+  const source = BOOT_PARAMS.get("source") || "";
+  const guided = BOOT_PARAMS.get("guided") === "1";
+  const nextHistoryState =
+    LIVELLI.has(livello) || source || guided
+      ? {
+          ...currentHistoryState,
+          serraConfiguratorBoot: { livello, source, guided }
+        }
+      : currentHistoryState;
   window.history.replaceState(
-    {},
+    nextHistoryState,
     document.title,
     window.location.pathname + window.location.hash
   );

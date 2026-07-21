@@ -975,6 +975,27 @@ window.addEventListener("storage", (event) => {
 
 window.addEventListener("serra:themechange", () => render());
 
+// Safari iOS può ripristinare il configuratore dalla page cache senza
+// rieseguire il bootstrap. In quel caso riallinea l'ingresso guidato dalla
+// home allo stato compatto previsto per il profilo Principiante.
+window.addEventListener("pageshow", (event) => {
+  const bootContext = window.history.state?.serraConfiguratorBoot;
+  const navigationType = window.performance
+    ?.getEntriesByType?.("navigation")?.[0]?.type;
+  const restored = event.persisted || navigationType === "back_forward";
+  if (
+    !restored ||
+    bootContext?.source !== "index" ||
+    bootContext?.livello !== "novizio"
+  ) {
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    setPanelCollapsed("panelSettings", true);
+    syncPersonaPickerDisclosure();
+  });
+});
+
 (async () => {
   // Il catalogo necessario al configuratore è già incluso in plants-data.js.
   // La sincronizzazione con eventuali sorgenti esterne prosegue in background,
