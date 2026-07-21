@@ -1369,6 +1369,11 @@ if (catalogSearchLink) {
       "preconfig.serra_heated": "Riscaldata",
       "preconfig.month_label": "3. Mese di semina",
       "preconfig.cta": "Vai al configuratore",
+      "preconfig.account_choice_title": "Vuoi riprendere la tua configurazione?",
+      "preconfig.account_choice_text":
+        "La configurazione attuale è già al sicuro. Puoi continuare senza modifiche oppure aggiornare i parametri della serra.",
+      "preconfig.account_choice_continue": "Riprendi configurazione",
+      "preconfig.account_choice_edit": "Modifica i parametri",
       "preconfig.choose_persona_alert":
         "Scegli prima che tipo di coltivatore sei.",
       "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
@@ -1402,6 +1407,11 @@ if (catalogSearchLink) {
       "preconfig.serra_heated": "Încălzită",
       "preconfig.month_label": "3. Luna de semănat",
       "preconfig.cta": "Mergi la configurator",
+      "preconfig.account_choice_title": "Vrei să reiei configurarea?",
+      "preconfig.account_choice_text":
+        "Configurarea actuală este deja în siguranță. Poți continua fără modificări sau poți actualiza parametrii serei.",
+      "preconfig.account_choice_continue": "Reia configurarea",
+      "preconfig.account_choice_edit": "Modifică parametrii",
       "preconfig.choose_persona_alert":
         "Alege mai întâi ce tip de cultivator ești.",
       "hero.cfg_levels_title": "Ce fel de cultivator ești?",
@@ -1449,7 +1459,10 @@ if (catalogSearchLink) {
     const cta = document.getElementById("preconfigCta");
     if (!cta) return;
     if (active) {
-      cta.href = active.dataset.url;
+      const target = new URL(active.dataset.url, location.href);
+      const source = document.getElementById("preconfigOverlay")?.dataset.source;
+      if (source) target.searchParams.set("source", source);
+      cta.href = target.href;
       cta.classList.remove("preconfig-cta--disabled");
       cta.removeAttribute("aria-disabled");
     } else {
@@ -1491,7 +1504,23 @@ if (catalogSearchLink) {
     if (pcMese) pcMese.value = mese;
     updatePreconfigSummary();
 
-    const urlParams = new URL(targetUrl, location.href).searchParams;
+    const target = new URL(targetUrl, location.href);
+    const urlParams = target.searchParams;
+    // Il pannello può essere aperto anche dall'area personale: conserva la
+    // provenienza senza duplicare la UI della home.
+    overlay.dataset.source = urlParams.get("source") || "index";
+    const isSafeResumeEntry =
+      overlay.dataset.source === "account" || urlParams.get("resume") === "1";
+    const accountChoice = document.getElementById("preconfigAccountChoice");
+    const preconfigBody = overlay.querySelector(".preconfig-body");
+    const preconfigFooter = overlay.querySelector(".preconfig-footer");
+    if (accountChoice) accountChoice.hidden = !isSafeResumeEntry;
+    if (preconfigBody) preconfigBody.hidden = isSafeResumeEntry;
+    if (preconfigFooter) preconfigFooter.hidden = isSafeResumeEntry;
+    const continueLink = document.getElementById("preconfigAccountContinue");
+    if (continueLink) {
+      continueLink.href = `configuratore.html?source=${encodeURIComponent(overlay.dataset.source)}`;
+    }
     const livello = urlParams.get("livello");
     const validLevels = ["novizio", "intermedio", "esperto"];
     const selectedLivello = validLevels.includes(livello) ? livello : null;
@@ -1510,7 +1539,7 @@ if (catalogSearchLink) {
 
     const cta = document.getElementById("preconfigCta");
     if (cta && hasLivello) {
-      cta.href = targetUrl;
+      cta.href = target.href;
       cta.classList.remove("preconfig-cta--disabled");
       cta.removeAttribute("aria-disabled");
     } else {
@@ -1581,6 +1610,18 @@ if (catalogSearchLink) {
     document
       .getElementById("preconfigClose")
       ?.addEventListener("click", closePreconfigSheet);
+
+    document
+      .getElementById("preconfigAccountEdit")
+      ?.addEventListener("click", () => {
+        const overlay = document.getElementById("preconfigOverlay");
+        if (!overlay) return;
+        document.getElementById("preconfigAccountChoice")?.setAttribute("hidden", "");
+        overlay.querySelector(".preconfig-body")?.removeAttribute("hidden");
+        overlay.querySelector(".preconfig-footer")?.removeAttribute("hidden");
+        overlay.dataset.source = "account";
+        updatePreconfigSummary();
+      });
 
     // Il foglio non deve mai trasformare un tap su un controllo nativo in un
     // tap sul backdrop: questo evita la chiusura immediata dei menu a tendina
@@ -1699,16 +1740,16 @@ if (catalogSearchLink) {
       attributeFilter: ["lang"]
     });
 
-    const requestedPreconfig = new URLSearchParams(location.search).get(
-      "preconfig"
-    );
+    const requestedPreconfig = new URLSearchParams(location.search).get("preconfig");
     const guidePreconfigTargets = {
       novizio: "configuratore.html?livello=novizio&guided=1&source=index",
       intermedio: "configuratore.html?livello=intermedio&guided=1&source=index",
       esperto:
         "configuratore.html?livello=esperto&mode=expert&empty=1&source=index"
     };
-    const guidePreconfigTarget = guidePreconfigTargets[requestedPreconfig];
+    const guidePreconfigTarget =
+      guidePreconfigTargets[requestedPreconfig] ||
+      (requestedPreconfig === "account" ? "configuratore.html?source=account" : null);
     if (guidePreconfigTarget) {
       history.replaceState(null, "", location.pathname);
       requestAnimationFrame(() => openPreconfigSheet(guidePreconfigTarget));

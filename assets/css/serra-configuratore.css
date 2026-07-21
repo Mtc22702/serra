@@ -9828,6 +9828,55 @@ html[data-theme="dark"]
     display: none;
   }
 
+  .preconfig-account-choice {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    padding: 34px 28px 30px;
+    text-align: center;
+  }
+  .preconfig-account-choice-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: rgba(116, 198, 157, 0.18);
+    font-size: 26px;
+  }
+  .preconfig-account-choice h3 {
+    margin: 2px 0 0;
+    color: #1f3a26;
+    font-family: Fraunces, serif;
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+  .preconfig-account-choice p {
+    max-width: 385px;
+    margin: 0;
+    color: #5a6a5a;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .preconfig-account-choice-actions {
+    width: 100%;
+    display: grid;
+    gap: 9px;
+    margin-top: 6px;
+  }
+  .preconfig-account-edit {
+    min-height: 42px;
+    border: 0;
+    border-radius: 12px;
+    color: #2f6b3a;
+    background: transparent;
+    font: 700 0.88rem/1 "DM Sans", sans-serif;
+    cursor: pointer;
+  }
+  .preconfig-account-edit:hover {
+    background: rgba(116, 198, 157, 0.13);
+  }
+
   /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .preconfig-overlay {
@@ -10611,6 +10660,18 @@ html[data-theme="dark"]
     background: linear-gradient(155deg, #1a2d1e, #162518);
     border-color: rgba(82, 183, 136, 0.22);
     border-top-color: #52b788;
+  }
+  html[data-theme="dark"] .preconfig-account-choice h3 {
+    color: #d0ecd0;
+  }
+  html[data-theme="dark"] .preconfig-account-choice p {
+    color: #a0c0a0;
+  }
+  html[data-theme="dark"] .preconfig-account-edit {
+    color: #88dca0;
+  }
+  html[data-theme="dark"] .preconfig-account-edit:hover {
+    background: rgba(82, 183, 136, 0.14);
   }
   html[data-theme="dark"] .preconfig-panel-head {
     border-color: rgba(255, 255, 255, 0.08);

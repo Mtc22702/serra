@@ -9828,6 +9828,55 @@ html[data-theme="dark"]
     display: none;
   }
 
+  .preconfig-account-choice {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    padding: 34px 28px 30px;
+    text-align: center;
+  }
+  .preconfig-account-choice-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: rgba(116, 198, 157, 0.18);
+    font-size: 26px;
+  }
+  .preconfig-account-choice h3 {
+    margin: 2px 0 0;
+    color: #1f3a26;
+    font-family: Fraunces, serif;
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+  .preconfig-account-choice p {
+    max-width: 385px;
+    margin: 0;
+    color: #5a6a5a;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .preconfig-account-choice-actions {
+    width: 100%;
+    display: grid;
+    gap: 9px;
+    margin-top: 6px;
+  }
+  .preconfig-account-edit {
+    min-height: 42px;
+    border: 0;
+    border-radius: 12px;
+    color: #2f6b3a;
+    background: transparent;
+    font: 700 0.88rem/1 "DM Sans", sans-serif;
+    cursor: pointer;
+  }
+  .preconfig-account-edit:hover {
+    background: rgba(116, 198, 157, 0.13);
+  }
+
   /* Adatta disposizione, dimensioni e spaziature ai dispositivi mobili. */
   @media (max-width: 660px) {
     .preconfig-overlay {
@@ -10611,6 +10660,18 @@ html[data-theme="dark"]
     background: linear-gradient(155deg, #1a2d1e, #162518);
     border-color: rgba(82, 183, 136, 0.22);
     border-top-color: #52b788;
+  }
+  html[data-theme="dark"] .preconfig-account-choice h3 {
+    color: #d0ecd0;
+  }
+  html[data-theme="dark"] .preconfig-account-choice p {
+    color: #a0c0a0;
+  }
+  html[data-theme="dark"] .preconfig-account-edit {
+    color: #88dca0;
+  }
+  html[data-theme="dark"] .preconfig-account-edit:hover {
+    background: rgba(82, 183, 136, 0.14);
   }
   html[data-theme="dark"] .preconfig-panel-head {
     border-color: rgba(255, 255, 255, 0.08);
@@ -13793,10 +13854,10 @@ html[data-theme="dark"]
     justify-content: space-between;
     gap: 24px;
     padding: 10px 14px 10px 12px;
-    border: 1px solid var(--confirmation-line);
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.76);
-    box-shadow: 0 14px 36px rgba(32, 61, 47, 0.08);
+    border: 1px solid rgba(45, 106, 79, 0.14);
+    border-radius: 16px;
+    background: rgba(252, 250, 244, 0.9);
+    box-shadow: 0 10px 30px rgba(27, 67, 50, 0.08);
     backdrop-filter: blur(18px);
   }
 
@@ -13808,9 +13869,21 @@ html[data-theme="dark"]
     text-decoration: none;
   }
 
+  .confirmation-brand-mark {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    flex: none;
+    border: 1px solid rgba(45, 106, 79, 0.14);
+    border-radius: 13px;
+    background: linear-gradient(145deg, #fff, #edf5e9);
+    box-shadow: 0 8px 18px rgba(27, 67, 50, 0.1);
+  }
+
   .confirmation-brand img {
-    width: 44px;
-    height: 44px;
+    width: 31px;
+    height: 31px;
     display: block;
   }
 
@@ -13841,8 +13914,9 @@ html[data-theme="dark"]
     gap: 3px;
     padding: 4px;
     border: 1px solid var(--confirmation-line);
-    border-radius: 999px;
-    background: rgba(244, 247, 241, 0.8);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 5px 15px rgba(31, 67, 50, 0.07);
   }
 
   .confirmation-lang button,
@@ -13856,7 +13930,7 @@ html[data-theme="dark"]
   .confirmation-lang button {
     min-width: 38px;
     min-height: 34px;
-    border-radius: 999px;
+    border-radius: 9px;
     font: 700 12px/1 "DM Sans", sans-serif;
   }
 
@@ -13867,22 +13941,7 @@ html[data-theme="dark"]
   }
 
   .confirmation-theme {
-    width: 42px;
-    height: 42px;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--confirmation-line);
-    border-radius: 50%;
-    font-size: 20px;
-  }
-
-  .confirmation-theme .theme-toggle-sun,
-  html[data-theme="dark"] .confirmation-theme .theme-toggle-moon {
-    display: none;
-  }
-
-  html[data-theme="dark"] .confirmation-theme .theme-toggle-sun {
-    display: inline;
+    border-radius: 13px;
   }
 
   .confirmation-main {
@@ -14183,9 +14242,14 @@ html[data-theme="dark"]
       border-radius: 17px;
     }
 
-    .confirmation-brand img {
+    .confirmation-brand-mark {
       width: 38px;
       height: 38px;
+    }
+
+    .confirmation-brand img {
+      width: 28px;
+      height: 28px;
     }
 
     .confirmation-brand-copy small {
