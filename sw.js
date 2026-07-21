@@ -1,5 +1,5 @@
 /* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
-const CACHE_VERSION = "20260720-2ac0e4293146";
+const CACHE_VERSION = "20260721-78af67f70b7d";
 // Incrementato a ogni rilascio forzato: assicura una nuova impronta della
 // cache anche quando la modifica è principalmente grafica o di distribuzione.
 const RELEASE_EPOCH = 2;
@@ -105,6 +105,34 @@ self.addEventListener("fetch", (e) => {
             .then((cached) => cached || caches.match("./"))
         )
     );
+    return;
+  }
+
+  const requestUrl = new URL(e.request.url);
+  const isCurrentReleaseAsset =
+    requestUrl.origin === self.location.origin &&
+    requestUrl.searchParams.get("v") === CACHE_VERSION &&
+    /\.(?:css|js)$/i.test(requestUrl.pathname);
+
+  // CSS e JavaScript con l'impronta della release sono immutabili: la stessa
+  // URL identifica sempre lo stesso contenuto. Riutilizzarli evita che ogni
+  // ingresso nel configuratore debba attendere di nuovo tutta la rete.
+  if (isCurrentReleaseAsset) {
+    let cacheWrite = Promise.resolve();
+    const releaseResponse = caches.match(e.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(e.request).then((response) => {
+        if (response.ok) {
+          const copy = response.clone();
+          cacheWrite = caches
+            .open(CACHE)
+            .then((cache) => cache.put(e.request, copy));
+        }
+        return response;
+      });
+    });
+    e.respondWith(releaseResponse);
+    e.waitUntil(releaseResponse.then(() => cacheWrite).catch(() => {}));
     return;
   }
 

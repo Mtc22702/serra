@@ -324,6 +324,7 @@
   .scene {
     width: 100%;
     max-width: 760px;
+    --plant-growth-duration: 1400ms;
   }
   .scene svg {
     width: 100%;
@@ -356,8 +357,8 @@
   .plant-glyph--growing {
     transform-box: fill-box;
     transform-origin: center bottom;
-    animation: plant-grow-in 1400ms cubic-bezier(0.22, 0.78, 0.28, 1)
-      var(--plant-growth-delay, 0ms) both;
+    animation: plant-grow-in var(--plant-growth-duration)
+      cubic-bezier(0.22, 0.78, 0.28, 1) var(--plant-growth-delay, 0ms) both;
   }
   .plant-glyph-shell--alive {
     transform-box: fill-box;
@@ -392,7 +393,7 @@
     transform-box: fill-box;
     transform-origin: center;
     animation: plant-harvest-reveal 320ms ease-out
-      calc(var(--plant-growth-delay, 0ms) + 1400ms) both;
+      calc(var(--plant-growth-delay, 0ms) + var(--plant-growth-duration)) both;
   }
   .scene-glass-glint {
     transform-box: fill-box;
@@ -548,6 +549,19 @@
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+  @media (max-width: 760px), (pointer: coarse) {
+    .scene {
+      --plant-growth-duration: 1540ms;
+    }
+    .scene.scene--dense-reveal svg {
+      animation-duration: 572ms;
+    }
+    /* Sui display compatti il dondolio e quasi impercettibile e mantiene
+       trasformazioni SVG continue: conserviamo soltanto la crescita. */
+    .plant-glyph-shell--alive {
+      animation: none;
     }
   }
   @media (prefers-reduced-motion: reduce) {

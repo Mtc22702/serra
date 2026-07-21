@@ -857,7 +857,6 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
 
 // Costruzione scena
 function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
-  const plantGrowthDuration = 1400;
   const harvestRevealDuration = 320;
   // Il numero di glifi resta sempre identico alle piante reali. Limitiamo
   // soltanto le animazioni simultanee, che aggiungono particelle, keyframe e
@@ -865,6 +864,9 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
   const compactDevice =
     window.matchMedia?.("(max-width: 760px), (pointer: coarse)")?.matches ===
     true;
+  // Su smartphone la crescita resta ben leggibile ma leggermente piu lenta;
+  // il movimento continuo delle singole piante viene invece disattivato.
+  const plantGrowthDuration = compactDevice ? 1540 : 1400;
   const maxAnimatedPlantsPerBed = compactDevice ? 220 : 400;
   const maxAnimatedPlantsPerScene = compactDevice ? 800 : 1600;
   const nightMode = document.documentElement.dataset.theme === "dark";
@@ -1087,7 +1089,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
     animatedPlantTotal += growthIndexes.size;
     // Il movimento ambientale è distribuito e limitato nelle serre molto dense.
     // La trasformazione resta sempre più piccola dell'ingombro finale del glifo.
-    const aliveIndexes = animateThisBed
+    const aliveIndexes = animateThisBed && !compactDevice
       ? emojiSpreadIndexes(
           bedItems.length,
           bed.cols,

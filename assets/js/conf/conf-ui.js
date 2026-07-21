@@ -276,6 +276,7 @@ function renderFooter() {
 
 // Aggiorna scena, pannelli e riepilogo in base allo stato della configurazione.
 let lastRenderedCropSignature = null;
+let renderGeneration = 0;
 // La prima scena coltivata deve crescere indipendentemente dal punto di
 // ingresso: su mobile spesso il configuratore viene riaperto direttamente.
 const animateInitialCrops = true;
@@ -288,6 +289,7 @@ function cropSignature() {
 }
 
 function render() {
+  const currentRenderGeneration = ++renderGeneration;
   const zoneNames = {
     freddo: tx("cold"),
     temperato: tx("temperate"),
@@ -311,9 +313,6 @@ function render() {
   const bmt = document.getElementById("btnMonthTag");
   if (bmt) bmt.textContent = monthName(state.mese);
   updatePresetAppliedUI();
-
-  renderVegList();
-  updateCropActionControls();
 
   const currentCropSignature = cropSignature();
   const isInitialPlantRender = lastRenderedCropSignature === null;
@@ -388,24 +387,41 @@ function render() {
     emptyBanner.hidden = state.beds.length > 0;
   }
 
-  renderBeds();
-  renderWarnings(L);
-  renderSummary();
-  renderFooter();
+  const renderSecondaryInterface = () => {
+    if (currentRenderGeneration !== renderGeneration) return;
+    renderVegList();
+    updateCropActionControls();
+    renderBeds();
+    renderWarnings(L);
+    renderSummary();
+    renderFooter();
 
-  // Se la scheda pianta e aperta, riallinea anche i suoi contenuti dinamici.
-  // Serve in particolare al cambio lingua, perche le etichette della scheda
-  // non fanno parte dei nodi statici aggiornati da applyLanguage().
-  const plantDetailPanelElement = document.getElementById("panelPlantDetail");
-  if (
-    plantDetailPanelElement &&
-    !plantDetailPanelElement.hidden &&
-    state.selected >= 0
-  ) {
-    const activeDetailTab =
-      document.querySelector("#pdpContent [data-detail-tab].active")?.dataset
-        .detailTab || "overview";
-    renderPlantDetailPanel(activeDetailTab);
+    // Se la scheda pianta e aperta, riallinea anche i suoi contenuti dinamici.
+    // Serve in particolare al cambio lingua, perche le etichette della scheda
+    // non fanno parte dei nodi statici aggiornati da applyLanguage().
+    const plantDetailPanelElement =
+      document.getElementById("panelPlantDetail");
+    if (
+      plantDetailPanelElement &&
+      !plantDetailPanelElement.hidden &&
+      state.selected >= 0
+    ) {
+      const activeDetailTab =
+        document.querySelector("#pdpContent [data-detail-tab].active")?.dataset
+          .detailTab || "overview";
+      renderPlantDetailPanel(activeDetailTab);
+    }
+  };
+
+  if (isInitialPlantRender) {
+    // La prima immagine della serra deve arrivare al browser prima dei pannelli
+    // non essenziali. Il timer dentro requestAnimationFrame lascia avvenire un
+    // paint completo e riprende subito dopo con catalogo, riepilogo e footer.
+    window.requestAnimationFrame(() =>
+      window.setTimeout(renderSecondaryInterface, 0)
+    );
+  } else {
+    renderSecondaryInterface();
   }
 
   document.querySelectorAll(".bedhit").forEach((el) => {
