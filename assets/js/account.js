@@ -220,6 +220,9 @@
         case "print-invoice":
           window.printInvoice(control.dataset.orderId);
           break;
+        case "export-packing-sheet":
+          window.exportPackingSheet(control.dataset.orderId);
+          break;
         case "download-plant-manual":
           window.downloadOrderPlantManual(control.dataset.orderId, control);
           break;
@@ -909,22 +912,40 @@
       const dateStr = formatDate(order.date);
       const statusClass = order.status.toLowerCase().replace(" ", "-");
 
-      let itemsListHtml = '<div class="order-items-flex">';
       // Ordina la lista dei prodotti alfabeticamente
       const sortedItems = [...order.items].sort((a, b) =>
         plantLabel(a).localeCompare(plantLabel(b), locale())
       );
+      const totalUnits = sortedItems.reduce(
+        (sum, item) => sum + (Number(item.bustine) || 0),
+        0
+      );
+      const productsSummaryKey = `dash.products_summary_${
+        sortedItems.length === 1 ? "one" : "many"
+      }_${totalUnits === 1 ? "one" : "many"}`;
+      let itemsListHtml = `
+        <details class="order-items-disclosure order-items-disclosure--admin">
+          <summary>
+            <span class="order-items-summary-icon" aria-hidden="true">⌄</span>
+            <span>${tAcc(productsSummaryKey, {
+              count: sortedItems.length,
+              units: totalUnits
+            })}</span>
+          </summary>
+          <div class="order-items-flex">
+      `;
       sortedItems.forEach((it) => {
         const itemName = plantLabel(it);
+        const safeItemName = escapeHtmlAccount(itemName);
         itemsListHtml += `
-          <span class="order-item-pill" title="${itemName}">
-            <img src="${getPhotoSrc(it.id)}" class="order-item-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
-            <span class="order-item-name">${itemName}</span>
+          <span class="order-item-pill" title="${safeItemName}">
+            <img src="${escapeHtmlAccount(getPhotoSrc(it.id))}" class="order-item-photo" alt="" onerror="this.src='assets/img/svg/logo.svg'" />
+            <span class="order-item-name">${safeItemName}</span>
             <span class="order-item-qty">×${it.bustine}</span>
           </span>
         `;
       });
-      itemsListHtml += "</div>";
+      itemsListHtml += "</div></details>";
 
       const statusOptions = [
         "In elaborazione",
@@ -956,6 +977,7 @@
         <td data-label="${tAcc("dash.order_actions")}">
           <div class="admin-order-actions">
             ${selectHtml}
+            ${order.status !== "Annullato" ? `<button class="btn btn-small admin-packing-btn" data-account-action="export-packing-sheet" data-order-id="${order.id}" title="${tAcc("admin.packing_btn_hint")}"><span aria-hidden="true">▣</span> ${tAcc("admin.packing_btn")}</button>` : ""}
             <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("dash.print_btn")}</button>
             <button class="btn btn-danger btn-small" data-account-action="delete-order" data-order-id="${order.id}" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("admin.delete")}</button>
           </div>
@@ -1823,6 +1845,128 @@
       if (button) button.disabled = false;
       if (label) label.textContent = previous || tAcc("dash.manual_btn");
     }
+  };
+
+  window.exportPackingSheet = function (orderId) {
+    const order = allOrders.find((entry) => entry.id === orderId);
+    if (!order) {
+      alert(tAcc("alert.order_not_found"));
+      return;
+    }
+
+    const user = allUsers.find((entry) => entry.email === order.email) || {
+      nome: tAcc("customer.guest"),
+      email: order.email,
+      telefono: "",
+      indirizzo: "-"
+    };
+    const shipping = order.shipping || {
+      name: user.nome,
+      phone: user.telefono || "",
+      address: user.shippingIndirizzo || user.indirizzo || "-",
+      city: user.shippingCitta || user.citta || "",
+      cap: user.shippingCap || user.cap || "",
+      country: user.shippingPaese || user.billingPaese || "Italia"
+    };
+    const shippingAddress = [
+      shipping.address,
+      shipping.cap,
+      shipping.city,
+      shipping.country
+    ]
+      .filter(Boolean)
+      .map(escapeHtmlAccount)
+      .join(", ");
+    const sortedItems = [...(order.items || [])].sort((a, b) =>
+      plantLabel(a).localeCompare(plantLabel(b), locale())
+    );
+    const totalUnits = sortedItems.reduce(
+      (sum, item) => sum + (Number(item.bustine) || 0),
+      0
+    );
+    const rowsHtml = sortedItems
+      .map((item) => {
+        const itemName = escapeHtmlAccount(plantLabel(item));
+        const itemCode = escapeHtmlAccount(item.id || "-");
+        const quantity = Number(item.bustine) || 0;
+        return `
+          <tr>
+            <td class="packing-check-cell"><span class="packing-check-box" aria-hidden="true"></span></td>
+            <td><strong>${itemName}</strong></td>
+            <td><code>${itemCode}</code></td>
+            <td class="packing-quantity">${quantity}</td>
+            <td class="packing-check-cell"><span class="packing-check-box" aria-hidden="true"></span></td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    const printContainer = document.getElementById("invoicePrintContainer");
+    if (!printContainer) return;
+
+    printContainer.innerHTML = `
+      <div class="packing-sheet">
+        <header class="packing-header">
+          <div class="packing-brand">
+            <img class="packing-logo" src="assets/img/svg/logo.svg" alt="Orto in Serra">
+            <div>
+              <span class="packing-eyebrow">${tAcc("packing.eyebrow")}</span>
+              <h1>${tAcc("packing.title")}</h1>
+            </div>
+          </div>
+          <div class="packing-order-meta">
+            <span>${tAcc("invoice.number")}</span>
+            <strong>${escapeHtmlAccount(order.id)}</strong>
+            <small>${formatDate(order.date)} · ${statusLabel(order.status)}</small>
+          </div>
+        </header>
+
+        <div class="packing-workflow" aria-label="${tAcc("packing.workflow")}">
+          <span>1 · ${tAcc("packing.pick")}</span>
+          <i aria-hidden="true">→</i>
+          <span>2 · ${tAcc("packing.verify")}</span>
+          <i aria-hidden="true">→</i>
+          <span>3 · ${tAcc("packing.pack")}</span>
+        </div>
+
+        <section class="packing-overview">
+          <div class="packing-destination">
+            <span class="packing-section-label">${tAcc("invoice.shipping")}</span>
+            <strong>${escapeHtmlAccount(shipping.name || user.nome)}</strong>
+            <p>${shippingAddress}</p>
+            <p>${tAcc("invoice.phone")}: ${escapeHtmlAccount(shipping.phone || user.telefono || "-")}</p>
+            <p>${tAcc("invoice.email")}: ${escapeHtmlAccount(user.email || order.email || "-")}</p>
+          </div>
+          <div class="packing-counts">
+            <div><strong>${sortedItems.length}</strong><span>${tAcc("packing.products")}</span></div>
+            <div><strong>${totalUnits}</strong><span>${tAcc("packing.units")}</span></div>
+          </div>
+        </section>
+
+        <table class="packing-table">
+          <thead>
+            <tr>
+              <th class="packing-check-cell">${tAcc("packing.picked")}</th>
+              <th>${tAcc("invoice.product")}</th>
+              <th>${tAcc("invoice.code")}</th>
+              <th class="packing-quantity">${tAcc("invoice.qty")}</th>
+              <th class="packing-check-cell">${tAcc("packing.packed")}</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+
+        <footer class="packing-footer">
+          <div class="packing-field"><span>${tAcc("packing.operator")}</span><i></i></div>
+          <div class="packing-field"><span>${tAcc("packing.prepared_on")}</span><i></i></div>
+          <div class="packing-field packing-field--short"><span>${tAcc("packing.parcels")}</span><i></i></div>
+          <div class="packing-notes"><span>${tAcc("packing.notes")}</span><i></i><i></i></div>
+          <p>${tAcc("packing.internal_note")}</p>
+        </footer>
+      </div>
+    `;
+
+    window.print();
   };
 
   window.printInvoice = function (orderId) {

@@ -14765,6 +14765,20 @@ html[data-theme="dark"] .admin-tab.active {
   flex-wrap: wrap;
   gap: 6px;
 }
+.admin-packing-btn {
+  color: #fff;
+  border: 1px solid #2f6b3a;
+  background: linear-gradient(135deg, #2f6b3a, #43804d);
+  box-shadow: 0 4px 12px rgba(35, 82, 44, 0.14);
+}
+.admin-packing-btn:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #285f33, #397243);
+  transform: translateY(-1px);
+}
+html[data-theme="dark"] .admin-packing-btn {
+  border-color: rgba(145, 210, 157, 0.34);
+}
 
 /* Griglia delle operazioni di backup e manutenzione amministrativa. */
 .admin-backup-grid {
@@ -15072,6 +15086,10 @@ html[data-theme="dark"] .order-edit-stepper {
   width: min(100%, 440px);
   min-width: 190px;
 }
+.order-items-disclosure--admin {
+  width: min(100%, 320px);
+  min-width: 172px;
+}
 .order-items-disclosure summary {
   min-height: 42px;
   display: flex;
@@ -15365,6 +15383,222 @@ html[data-theme="dark"] .order-item-qty {
     color: #777;
     border-top: 1px solid #eee;
     padding-top: 20px;
+  }
+
+  /* Scheda operativa destinata a preparazione e imballaggio. */
+  .packing-sheet {
+    color: #203127;
+    font-family: "DM Sans", Arial, sans-serif;
+  }
+  .packing-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid #2f6b3a;
+  }
+  .packing-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+  .packing-logo {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    object-fit: contain;
+  }
+  .packing-eyebrow,
+  .packing-section-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #2f6b3a;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .packing-brand h1 {
+    margin: 0;
+    color: #173d25;
+    font: 700 1.7rem/1.1 "Fraunces", Georgia, serif;
+  }
+  .packing-order-meta {
+    display: grid;
+    justify-items: end;
+    gap: 2px;
+    text-align: right;
+  }
+  .packing-order-meta span {
+    color: #66736a;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .packing-order-meta strong {
+    color: #173d25;
+    font-size: 1.05rem;
+  }
+  .packing-order-meta small {
+    color: #66736a;
+    font-size: 0.75rem;
+  }
+  .packing-workflow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    margin: 18px 0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #245b36;
+    background: #edf6ee;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .packing-workflow i {
+    color: #79a482;
+    font-style: normal;
+  }
+  .packing-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: stretch;
+    margin-bottom: 20px;
+  }
+  .packing-destination {
+    padding: 14px 16px;
+    border: 1px solid #dbe6dd;
+    border-radius: 10px;
+    background: #fbfcfa;
+  }
+  .packing-destination strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+  }
+  .packing-destination p {
+    margin: 2px 0;
+    color: #526158;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+  .packing-counts {
+    display: grid;
+    grid-template-columns: repeat(2, 92px);
+    gap: 8px;
+  }
+  .packing-counts div {
+    display: grid;
+    place-content: center;
+    text-align: center;
+    border: 1px solid #cddfce;
+    border-radius: 10px;
+    background: #f4f8f2;
+  }
+  .packing-counts strong {
+    color: #245b36;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  .packing-counts span {
+    margin-top: 5px;
+    color: #637167;
+    font-size: 0.65rem;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+  .packing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  .packing-table thead {
+    display: table-header-group;
+  }
+  .packing-table tr {
+    break-inside: avoid;
+  }
+  .packing-table th,
+  .packing-table td {
+    padding: 10px 9px;
+    border-bottom: 1px solid #dfe6e0;
+    text-align: left;
+    font-size: 0.78rem;
+  }
+  .packing-table th {
+    color: #526158;
+    background: #f4f7f3;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .packing-table code {
+    color: #66736a;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+  }
+  .packing-check-cell {
+    width: 70px;
+    text-align: center !important;
+  }
+  .packing-check-box {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid #69806f;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .packing-quantity {
+    width: 64px;
+    text-align: center !important;
+    font-size: 0.94rem !important;
+    font-weight: 800;
+  }
+  .packing-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.7fr;
+    gap: 16px;
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 2px solid #dfe7e0;
+    break-inside: avoid;
+  }
+  .packing-field,
+  .packing-notes {
+    display: grid;
+    gap: 10px;
+    color: #526158;
+    font-size: 0.68rem;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+  .packing-field i,
+  .packing-notes i {
+    display: block;
+    height: 1px;
+    border-bottom: 1px solid #9baaa0;
+  }
+  .packing-notes {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+  }
+  .packing-footer > p {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    color: #879188;
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: none;
   }
 }
 
