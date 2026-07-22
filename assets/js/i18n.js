@@ -867,6 +867,11 @@
         "preconfig.serra_heated": "Riscaldata",
         "preconfig.month_label": "3. Mese di semina",
         "preconfig.cta": "Vai al configuratore",
+        "preconfig.account_choice_title": "Vuoi riprendere la tua configurazione?",
+        "preconfig.account_choice_text":
+          "La configurazione attuale è già al sicuro. Puoi continuare senza modifiche oppure aggiornare i parametri della serra.",
+        "preconfig.account_choice_continue": "Riprendi configurazione",
+        "preconfig.account_choice_edit": "Modifica i parametri",
         "nav.aria_main": "Navigazione principale",
         "nav.account": "👤 Area Personale",
         "footer.tip_default":
@@ -2493,7 +2498,12 @@
         "preconfig.serra_cold": "Rece",
         "preconfig.serra_heated": "Încălzită",
         "preconfig.month_label": "3. Luna de semănat",
-        "preconfig.cta": "Mergi la configurator"
+        "preconfig.cta": "Mergi la configurator",
+        "preconfig.account_choice_title": "Vrei să reiei configurarea?",
+        "preconfig.account_choice_text":
+          "Configurarea actuală este deja în siguranță. Poți continua fără modificări sau poți actualiza parametrii serei.",
+        "preconfig.account_choice_continue": "Reia configurarea",
+        "preconfig.account_choice_edit": "Modifică parametrii"
       }
     }
   };
