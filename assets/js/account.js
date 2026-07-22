@@ -350,6 +350,9 @@
         case "delete-order":
           window.cancelAdminOrder(control.dataset.orderId);
           break;
+        case "purge-cancelled-order":
+          window.deleteCancelledOrder(control.dataset.orderId);
+          break;
         case "open-order-detail":
           window.openAdminOrderDetail(control.dataset.orderId);
           break;
@@ -1122,7 +1125,7 @@
               <button class="btn btn-outline btn-small" data-account-action="open-order-detail" data-order-id="${order.id}">${tAcc("admin.view")}</button>
               <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}">${tAcc("dash.print_btn")}</button>
               ${displayStatus === "Spedito" ? `<button class="btn btn-outline btn-small" data-account-action="update-order-tracking" data-order-id="${order.id}">${tAcc(order.tracking ? "admin.edit_tracking" : "admin.add_tracking")}</button>` : ""}
-              ${order.status !== "Annullato" ? `<button class="btn btn-danger btn-small" data-account-action="delete-order" data-order-id="${order.id}">${tAcc("admin.cancel_order")}</button>` : ""}
+              ${displayStatus !== "Annullato" ? `<button class="btn btn-danger btn-small" data-account-action="delete-order" data-order-id="${order.id}">${tAcc("admin.cancel_order")}</button>` : `<button class="btn btn-danger btn-small" data-account-action="purge-cancelled-order" data-order-id="${order.id}">${tAcc("admin.delete_cancelled_order")}</button>`}
             </div>
           </div>
         </td>
@@ -1141,6 +1144,23 @@
       renderAdminOrdersList();
       updateAdminStats();
     }
+  };
+
+  // Un ordine può essere eliminato in modo permanente solo dopo essere stato
+  // annullato, e solo dall'area amministrativa.
+  window.deleteCancelledOrder = async function (orderId) {
+    if (currentUser?.role !== "admin") return;
+
+    const latestOrders = await window.SerraAPI.getOrders();
+    const order = latestOrders.find((entry) => entry.id === orderId);
+    if (!order || normalizedOrderStatus(order.status) !== "Annullato") return;
+    if (!confirm(tAcc("confirm.delete_order", { id: orderId }))) return;
+
+    allOrders = latestOrders.filter((entry) => entry.id !== orderId);
+    await window.SerraAPI.saveOrders(allOrders);
+    renderAdminOrdersList();
+    updateAdminStats();
+    alert(tAcc("admin.delete_cancelled_order_success"));
   };
 
   window.updateOrderTracking = async function (orderId) {
