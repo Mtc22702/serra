@@ -289,6 +289,13 @@
     return root.SERRA_PLANT_CONTENT?.localizedName(plant, lang) || plant.nome || plant.id;
   }
 
+  function fullUserName(user) {
+    const firstName = String(user?.nome || "").trim();
+    const lastName = String(user?.cognome || "").trim();
+    if (lastName || !firstName) return [firstName, lastName].filter(Boolean).join(" ");
+    return firstName;
+  }
+
   function drawCover(ctx, logo, data, c, totalPages) {
     paintBackground(ctx);
     drawBrand(ctx, logo, false);
@@ -313,7 +320,7 @@
     ctx.fillStyle = INK;
     font(ctx, 700, 29);
     ctx.fillText(data.order.id || "-", MARGIN + 42, metaY + 43);
-    ctx.fillText(data.user?.nome || data.order.email || "-", MARGIN + 440, metaY + 43);
+    ctx.fillText(fullUserName(data.user) || data.order.email || "-", MARGIN + 440, metaY + 43);
     ctx.fillStyle = MUTED;
     font(ctx, 500, 21);
     ctx.fillText(formatDate(data.order.date, data.lang), MARGIN + 42, metaY + 82);

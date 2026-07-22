@@ -7,7 +7,25 @@
     "citta": "Milano",
     "cap": "20100",
     "telefono": "02000000",
-    "role": "admin"
+    "role": "admin",
+    "notifications": [
+      {
+        "id": 1784716133845,
+        "type": "order_status",
+        "orderId": "ORD-86500",
+        "message": "Il tuo ordine <strong>ORD-86500</strong> è ora nello stato <strong>Imballato</strong>!",
+        "read": false,
+        "date": "2026-07-22T10:28:53.845Z"
+      },
+      {
+        "id": 1784716139404,
+        "type": "order_status",
+        "orderId": "ORD-86500",
+        "message": "Il tuo ordine <strong>ORD-86500</strong> è ora nello stato <strong>Spedito</strong>!",
+        "read": false,
+        "date": "2026-07-22T10:28:59.404Z"
+      }
+    ]
   },
   {
     "email": "user@ortoinserra.it",

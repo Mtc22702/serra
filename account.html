@@ -17,7 +17,11 @@
     <!-- Fogli di stile condivisi e specifici dell'area riservata -->
     <link
       rel="stylesheet"
+<<<<<<< HEAD
       href="assets/css/serra-account.css?v=20260721-173d11f1a638"
+=======
+      href="assets/css/serra-account.css?v=20260722-order-statuses"
+>>>>>>> 9d3bedd (miglioramento pagina account admin)
     />
     <!-- Script iniziale che applica il tema prima della visualizzazione della pagina -->
     <script>
@@ -283,13 +287,24 @@
         >
           <div class="form-grid">
             <div class="form-group">
-              <label for="regNome" data-i18n-acc="auth.name"
-                >Nome Completo</label
-              >
+              <label for="regNome" data-i18n-acc="auth.first_name">Nome</label>
               <input
                 type="text"
                 id="regNome"
-                placeholder="Mario Rossi"
+                placeholder="Mario"
+                data-i18n-acc-placeholder="auth.first_name_placeholder"
+                autocomplete="given-name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="regCognome" data-i18n-acc="auth.last_name">Cognome</label>
+              <input
+                type="text"
+                id="regCognome"
+                placeholder="Rossi"
+                data-i18n-acc-placeholder="auth.last_name_placeholder"
+                autocomplete="family-name"
                 required
               />
             </div>
@@ -441,10 +456,14 @@
                     <p data-i18n-acc="profile.contact_hint">Contatti usati per comunicazioni e consegna.</p>
                   </div>
                 </div>
-                <div class="profile-fields-grid">
+                <div class="profile-fields-grid profile-fields-grid--contact">
                   <div class="form-group">
-                    <label for="profNome" data-i18n-acc="auth.name">Nome Completo</label>
+                    <label for="profNome" data-i18n-acc="auth.first_name">Nome</label>
                     <input type="text" id="profNome" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="profCognome" data-i18n-acc="auth.last_name">Cognome</label>
+                    <input type="text" id="profCognome" required />
                   </div>
                   <div class="form-group">
                     <label for="profTelefono" data-i18n-acc="auth.phone">Telefono</label>
@@ -639,7 +658,7 @@
             <div>
               <h2 data-i18n-acc="admin.panel_title">Pannello Amministratore</h2>
               <p data-i18n-acc="admin.panel_sub">
-                Gestione Prodotti, Ordini e Listino prezzi
+                Ordini, clienti e catalogo sempre sotto controllo
               </p>
             </div>
           </div>
@@ -654,17 +673,8 @@
 
         <div class="admin-tabs">
           <button
-            id="btnTabAdminPlants"
-            class="admin-tab active"
-            data-account-action="switch-admin-tab"
-            data-tab="plants"
-            data-i18n-acc="admin.tab_plants"
-          >
-            Gestione Catalogo Piante
-          </button>
-          <button
             id="btnTabAdminOrders"
-            class="admin-tab"
+            class="admin-tab admin-tab--orders active"
             data-account-action="switch-admin-tab"
             data-tab="orders"
             data-i18n-acc="admin.tab_orders"
@@ -681,6 +691,15 @@
             Gestione Utenti
           </button>
           <button
+            id="btnTabAdminPlants"
+            class="admin-tab"
+            data-account-action="switch-admin-tab"
+            data-tab="plants"
+            data-i18n-acc="admin.tab_plants"
+          >
+            Gestione Catalogo Piante
+          </button>
+          <button
             id="btnTabAdminBackup"
             class="admin-tab"
             data-account-action="switch-admin-tab"
@@ -691,8 +710,77 @@
           </button>
         </div>
 
-        <!-- Sotto-scheda 1: Gestione Piante -->
-        <div id="adminTabPlants" class="admin-tab-content">
+        <!-- Sotto-scheda 1: Ordini Ricevuti -->
+        <div id="adminTabOrders" class="admin-tab-content">
+          <div class="admin-orders-heading">
+            <div>
+              <span class="account-section-kicker" data-i18n-acc="admin.orders_kicker">Operatività</span>
+              <h3 data-i18n-acc="admin.orders_title">Storico Ordini di tutti i Clienti</h3>
+              <p data-i18n-acc="admin.orders_hint">Aggiorna lo stato, prepara la spedizione e stampa i documenti da un unico punto.</p>
+            </div>
+            <div id="adminOrderCount" class="admin-orders-count" aria-live="polite"></div>
+          </div>
+          <div class="admin-order-insights" aria-label="Riepilogo ordini">
+            <button type="button" class="admin-order-insight active" data-account-action="filter-orders" data-filter-scope="active"><strong id="adminOrdersActiveCount">0</strong><span data-i18n-acc="admin.orders_active">Da gestire</span></button>
+            <button type="button" class="admin-order-insight" data-account-action="filter-orders" data-filter-scope="shipped-today"><strong id="adminOrdersShippedTodayCount">0</strong><span data-i18n-acc="admin.orders_shipped_today">Spediti oggi</span></button>
+            <button type="button" class="admin-order-insight" data-account-action="filter-orders" data-filter-scope="cancelled"><strong id="adminOrdersArchivedCount">0</strong><span data-i18n-acc="admin.orders_cancelled">Annullati</span></button>
+          </div>
+          <div class="admin-orders-toolbar">
+            <input type="search" id="adminOrderSearch" data-account-action="filter-orders" data-i18n-acc-placeholder="admin.orders_search" placeholder="Cerca ID, cliente o email" />
+            <select id="adminOrderStatusFilter" data-account-action="filter-orders" aria-label="Filtra per stato">
+              <option value="all" data-i18n-acc="admin.orders_all_statuses">Tutti gli stati</option>
+              <option value="In elaborazione" data-i18n-acc="status.processing">In elaborazione</option>
+              <option value="Imballato" data-i18n-acc="status.packed">Imballato</option>
+              <option value="Spedito" data-i18n-acc="status.shipped">Spedito</option>
+              <option value="Annullato" data-i18n-acc="status.cancelled">Annullato</option>
+            </select>
+          </div>
+          <div class="table-responsive card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-i18n-acc="dash.order_id">ID Ordine</th>
+                  <th data-i18n-acc="admin.orders_client">Cliente</th>
+                  <th data-i18n-acc="dash.order_date">Data</th>
+                  <th data-i18n-acc="dash.order_items">Elementi Ordinati</th>
+                  <th data-i18n-acc="dash.order_total">Totale</th>
+                  <th data-i18n-acc="dash.order_status">Stato Spedizione</th>
+                  <th data-i18n-acc="dash.order_actions">Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersList">
+                <!-- Caricato via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sotto-scheda 2: Gestione Utenti -->
+        <div id="adminTabUsers" class="admin-tab-content" hidden>
+          <h3 data-i18n-acc="admin.users_title">Elenco Clienti Registrati</h3>
+          <div class="table-responsive card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-i18n-acc="admin.users_name">Nome</th>
+                  <th data-i18n-acc="admin.users_email">Email</th>
+                  <th data-i18n-acc="admin.users_phone">Telefono</th>
+                  <th data-i18n-acc="admin.users_address">Indirizzo Spedizione</th>
+                  <th data-i18n-acc="admin.users_orders">Ordini</th>
+                  <th data-i18n-acc="admin.users_last_order">Ultimo acquisto</th>
+                  <th data-i18n-acc="admin.users_role">Ruolo</th>
+                  <th data-i18n-acc="admin.table_actions">Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersList">
+                <!-- Caricato via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sotto-scheda 3: Gestione Piante -->
+        <div id="adminTabPlants" class="admin-tab-content" hidden>
           <div class="admin-action-row">
             <h3 data-i18n-acc="admin.catalog_list_title">
               Elenco Colture in Catalogo
@@ -736,55 +824,6 @@
           </div>
         </div>
 
-        <!-- Sotto-scheda 2: Ordini Ricevuti -->
-        <div id="adminTabOrders" class="admin-tab-content" hidden>
-          <h3 data-i18n-acc="admin.orders_title">
-            Storico Ordini di tutti i Clienti
-          </h3>
-          <div class="table-responsive card">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th data-i18n-acc="dash.order_id">ID Ordine</th>
-                  <th data-i18n-acc="admin.orders_client">Cliente</th>
-                  <th data-i18n-acc="dash.order_date">Data</th>
-                  <th data-i18n-acc="dash.order_items">Elementi Ordinati</th>
-                  <th data-i18n-acc="dash.order_total">Totale</th>
-                  <th data-i18n-acc="dash.order_status">Stato Spedizione</th>
-                  <th data-i18n-acc="dash.order_actions">Azioni</th>
-                </tr>
-              </thead>
-              <tbody id="adminOrdersList">
-                <!-- Caricato via JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Sotto-scheda 2b: Gestione Utenti -->
-        <div id="adminTabUsers" class="admin-tab-content" hidden>
-          <h3 data-i18n-acc="admin.users_title">Elenco Clienti Registrati</h3>
-          <div class="table-responsive card">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th data-i18n-acc="admin.users_name">Nome</th>
-                  <th data-i18n-acc="admin.users_email">Email</th>
-                  <th data-i18n-acc="admin.users_phone">Telefono</th>
-                  <th data-i18n-acc="admin.users_address">
-                    Indirizzo Spedizione
-                  </th>
-                  <th data-i18n-acc="admin.users_role">Ruolo</th>
-                  <th data-i18n-acc="admin.table_actions">Azioni</th>
-                </tr>
-              </thead>
-              <tbody id="adminUsersList">
-                <!-- Caricato via JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
         <!-- Sotto-scheda 3: Backup & Resets -->
         <div id="adminTabBackup" class="admin-tab-content" hidden>
           <h3 data-i18n-acc="admin.stats_title">
@@ -810,9 +849,9 @@
                 Esporta backup database
               </h4>
               <p data-i18n-acc="admin.export_desc">
-                Scarica un file JSON contenente lo stato completo del tuo
-                catalogo piante locale.
+                Scarica un file JSON con catalogo, clienti e ordini.
               </p>
+              <p id="adminBackupDetails" class="admin-backup-details"></p>
               <button
                 class="btn btn-outline"
                 data-account-action="export-database"
@@ -1110,6 +1149,16 @@
       </div>
     </div>
 
+    <div id="adminOrderDetailModal" class="modal-overlay" hidden>
+      <div class="modal-card card admin-order-detail" role="dialog" aria-modal="true" aria-labelledby="adminOrderDetailTitle">
+        <div class="order-edit-heading">
+          <div><span class="account-section-kicker" data-i18n-acc="admin.orders_kicker">Operatività</span><h3 id="adminOrderDetailTitle" data-i18n-acc="admin.order_detail_title">Dettaglio ordine</h3></div>
+          <button type="button" class="modal-close-button" data-account-action="close-order-detail" aria-label="Chiudi">×</button>
+        </div>
+        <div id="adminOrderDetailContent"></div>
+      </div>
+    </div>
+
     <!-- Piè di pagina condiviso con informazioni e collegamenti del sito -->
     <footer class="footer-botanico">
       <div class="footer-plant-strip">
@@ -1267,9 +1316,14 @@
     <div id="invoicePrintContainer" class="invoice-print-section"></div>
 
     <!-- Script che inizializzano autenticazione, dati utente e azioni amministrative -->
+<<<<<<< HEAD
     <script src="assets/js/i18n.js?v=20260721-173d11f1a638" defer></script>
+=======
+    <script src="assets/js/i18n.js?v=20260722-tracking-action" defer></script>
+>>>>>>> 9d3bedd (miglioramento pagina account admin)
     <script src="assets/js/theme.js?v=2026-07-15-cleanup" defer></script>
     <script src="assets/js/nav.js?v=2026-07-15-cleanup" defer></script>
+    <script src="assets/js/plants-data.js?v=20260721-5ea3fd33604d" defer></script>
     <script src="assets/js/api.js?v=2026-07-15-cleanup" defer></script>
     <script
       src="assets/js/shared/plant-photo.js?v=2026-07-15-cleanup"
@@ -1284,10 +1338,17 @@
       defer
     ></script>
     <script
+<<<<<<< HEAD
       src="assets/js/shared/plant-manual-pdf.js?v=20260721-173d11f1a638"
       defer
     ></script>
     <script src="assets/js/account.js?v=20260721-173d11f1a638" defer></script>
+=======
+      src="assets/js/shared/plant-manual-pdf.js?v=20260722-account-admin-receipt"
+      defer
+    ></script>
+    <script src="assets/js/account.js?v=20260722-tracking-action" defer></script>
+>>>>>>> 9d3bedd (miglioramento pagina account admin)
     <!-- Service worker condiviso -->
     <script src="assets/js/boot-sw.js?v=20260721-173d11f1a638" defer></script>
   </body>

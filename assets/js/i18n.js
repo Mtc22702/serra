@@ -2537,7 +2537,11 @@
       "auth.password": "Password",
       "auth.password_min_chars": "Minimo 6 caratteri",
       "auth.login_btn": "Accedi all'Area Riservata",
-      "auth.name": "Nome e Cognome",
+      "auth.name": "Nome e cognome",
+      "auth.first_name": "Nome",
+      "auth.last_name": "Cognome",
+      "auth.first_name_placeholder": "Mario",
+      "auth.last_name_placeholder": "Rossi",
       "auth.phone": "Numero di Telefono",
       "auth.address": "Indirizzo di Spedizione",
       "auth.city": "Città",
@@ -2642,9 +2646,25 @@
       "admin.tab_orders": "Ordini Ricevuti",
       "admin.tab_users": "Gestione Utenti",
       "admin.tab_backup": "Manutenzione Database",
+      "admin.orders_kicker": "Operatività",
+      "admin.orders_hint": "Aggiorna lo stato, prepara la spedizione e stampa i documenti da un unico punto.",
+      "admin.orders_count": "{count} ordini",
+      "admin.orders_active": "Da gestire",
+      "admin.orders_shipped_today": "Spediti oggi",
+      "admin.orders_archived": "Archiviati",
+      "admin.orders_cancelled": "Annullati",
+      "admin.orders_search": "Cerca ID, cliente o email",
+      "admin.orders_all_statuses": "Tutti gli stati",
+      "admin.order_detail_title": "Dettaglio ordine",
+      "admin.view": "Dettagli",
+      "admin.cancel_order": "Annulla ordine",
+      "admin.add_tracking": "Aggiungi tracking",
+      "admin.edit_tracking": "Modifica tracking",
+      "admin.users_orders": "Ordini",
+      "admin.users_last_order": "Ultimo acquisto",
 
       "admin.panel_title": "Pannello Amministratore",
-      "admin.panel_sub": "Gestione Prodotti, Ordini e Listino prezzi",
+      "admin.panel_sub": "Ordini, clienti e catalogo sempre sotto controllo",
       "admin.catalog_list_title": "Elenco Colture in Catalogo",
       "admin.search_placeholder": "Cerca coltura...",
       "admin.add_plant_btn": "✚ Nuova Pianta",
@@ -2664,8 +2684,10 @@
       "admin.reset_catalog": "Ripristina piante di fabbrica",
       "admin.export_title": "Esporta backup database",
       "admin.export_desc":
-        "Scarica un file JSON contenente lo stato completo del tuo catalogo piante locale.",
-      "admin.export_db": "Esporta JSON",
+        "Scarica un file JSON completo con catalogo, clienti e ordini.",
+      "admin.export_db": "Scarica backup completo",
+      "admin.backup_never": "Nessun backup esportato da questo browser.",
+      "admin.backup_last": "Ultimo backup: {date}",
       "admin.server_status": "Stato del Server Locale",
       "admin.stats_reset": "Statistiche Database & Reset",
       "admin.clear_orders": "Azzera Ordini",
@@ -2679,6 +2701,8 @@
       "admin.stats_plants": "Piante in catalogo",
       "admin.stats_clients": "Clienti registrati",
       "admin.stats_orders": "Ordini totali ricevuti",
+      "admin.stats_orders_active": "Ordini attivi",
+      "admin.stats_orders_cancelled": "Ordini annullati",
       "admin.no_sales": "Nessun dato di vendita disponibile.",
       "admin.logged_in": "Loggato",
       "admin.delete": "Elimina",
@@ -2761,6 +2785,7 @@
         "🟡 <strong>Server locale non raggiungibile o protetto (Modalità statica)</strong>.<br>L'app è ospitata online. Le modifiche effettuate sono temporanee sul browser corrente tramite <code>localStorage</code>.",
 
       "status.processing": "In elaborazione",
+      "status.packed": "Imballato",
       "status.shipped": "Spedito",
       "status.completed": "Completato",
       "status.cancelled": "Annullato",
@@ -2772,10 +2797,16 @@
 
       "confirm.delete_order":
         "Sei sicuro di voler eliminare definitivamente l'ordine '{id}' dal database?",
+      "confirm.cancel_admin_order":
+        "Vuoi annullare l'ordine '{id}'? Rimarrà nello storico come annullato.",
       "confirm.clear_orders":
         "Attenzione! Stai per eliminare TUTTI gli ordini presenti nel database. Questa azione non è reversibile. Procedere?",
+      "confirm.clear_orders_typed":
+        "Prima verrà scaricato un backup completo. Per eliminare definitivamente tutti gli ordini, digita esattamente: {value}",
       "confirm.clear_users":
         "Attenzione! Stai per eliminare tutti i clienti registrati. Rimarrà attivo solo l'account amministratore di default. Procedere?",
+      "confirm.clear_users_typed":
+        "Prima verrà scaricato un backup completo. Per eliminare definitivamente tutti i clienti, digita esattamente: {value}",
       "confirm.delete_user":
         "Sei sicuro di voler eliminare definitivamente l'utente con email '{email}'?\nI suoi ordini rimarranno associati al suo indirizzo come Cliente Occasionale.",
       "confirm.delete_plant":
@@ -2787,10 +2818,17 @@
       "alert.plant_exists": "Una pianta con questo ID esiste già!",
       "alert.catalog_reset":
         "Catalogo ripristinato. La pagina verrà ricaricata.",
+      "alert.catalog_reset_unavailable":
+        "Il catalogo di fabbrica non è disponibile. Nessuna modifica è stata applicata.",
+      "alert.tracking_required": "Inserisci un codice di tracking valido.",
+      "admin.clear_orders_confirm_value": "AZZERA ORDINI",
+      "admin.clear_users_confirm_value": "AZZERA CLIENTI",
       "alert.order_not_found": "Ordine non trovato!",
       "prompt.tracking":
         "Inserisci il codice di tracciamento della spedizione (opzionale):",
       "notification.tracking": " (Codice tracking: {code})",
+      "notification.tracking_updated":
+        "Il tracking per l'ordine <strong>{id}</strong> è stato aggiornato: <strong>{code}</strong>.",
       "notification.order_status":
         "Il tuo ordine <strong>{id}</strong> è ora nello stato <strong>{status}</strong>!{tracking}",
       "auth.login_error": "Email o Password non corrette.",
@@ -2804,6 +2842,8 @@
       "invoice.date": "Data",
       "invoice.status": "Stato",
       "invoice.sender": "Mittente",
+      "invoice.client": "Cliente",
+      "invoice.delivery_address": "Indirizzo di consegna",
       "invoice.recipient": "Destinatario Spedizione",
       "invoice.billing": "Intestatario fatturazione",
       "invoice.shipping": "Destinatario spedizione",
@@ -2854,7 +2894,11 @@
       "auth.password": "Parolă",
       "auth.password_min_chars": "Minim 6 caractere",
       "auth.login_btn": "Conectează-te la Zona Rezervată",
-      "auth.name": "Nume și Prenume",
+      "auth.name": "Nume și prenume",
+      "auth.first_name": "Prenume",
+      "auth.last_name": "Nume de familie",
+      "auth.first_name_placeholder": "Ion",
+      "auth.last_name_placeholder": "Popescu",
       "auth.phone": "Număr de Telefon",
       "auth.address": "Adresă de Livrare",
       "auth.city": "Oraș",
@@ -2959,9 +3003,25 @@
       "admin.tab_orders": "Comenzi Primite",
       "admin.tab_users": "Gestionare Utilizatori",
       "admin.tab_backup": "Mentenanță Bază de Date",
+      "admin.orders_kicker": "Operațiuni",
+      "admin.orders_hint": "Actualizează starea, pregătește livrarea și tipărește documentele dintr-un singur loc.",
+      "admin.orders_count": "{count} comenzi",
+      "admin.orders_active": "De gestionat",
+      "admin.orders_shipped_today": "Expediate azi",
+      "admin.orders_archived": "Arhivate",
+      "admin.orders_cancelled": "Anulate",
+      "admin.orders_search": "Caută ID, client sau email",
+      "admin.orders_all_statuses": "Toate stările",
+      "admin.order_detail_title": "Detalii comandă",
+      "admin.view": "Detalii",
+      "admin.cancel_order": "Anulează comanda",
+      "admin.add_tracking": "Adaugă tracking",
+      "admin.edit_tracking": "Modifică tracking",
+      "admin.users_orders": "Comenzi",
+      "admin.users_last_order": "Ultima achiziție",
 
       "admin.panel_title": "Panou Administrator",
-      "admin.panel_sub": "Administrare Produse, Comenzi și Listă de Prețuri",
+      "admin.panel_sub": "Comenzi, clienți și catalog sub control",
       "admin.catalog_list_title": "Listă Culturi în Catalog",
       "admin.search_placeholder": "Caută cultură...",
       "admin.add_plant_btn": "✚ Plantă Nouă",
@@ -2981,8 +3041,10 @@
       "admin.reset_catalog": "Restabilește plantele implicite",
       "admin.export_title": "Exportă backup bază de date",
       "admin.export_desc":
-        "Descarcă un fișier JSON care conține starea completă a catalogului tău local de plante.",
-      "admin.export_db": "Exportă JSON",
+        "Descarcă un fișier JSON complet cu catalogul, clienții și comenzile.",
+      "admin.export_db": "Descarcă backup complet",
+      "admin.backup_never": "Niciun backup exportat din acest browser.",
+      "admin.backup_last": "Ultimul backup: {date}",
       "admin.server_status": "Stare Server Local",
       "admin.stats_reset": "Statistici și Resetare Bază de Date",
       "admin.clear_orders": "Șterge Comenzile",
@@ -2996,6 +3058,8 @@
       "admin.stats_plants": "Plante în catalog",
       "admin.stats_clients": "Clienți înregistrați",
       "admin.stats_orders": "Comenzi totale primite",
+      "admin.stats_orders_active": "Comenzi active",
+      "admin.stats_orders_cancelled": "Comenzi anulate",
       "admin.no_sales": "Nu există date de vânzări disponibile.",
       "admin.logged_in": "Conectat",
       "admin.delete": "Șterge",
@@ -3078,6 +3142,7 @@
         "🟡 <strong>Serverul local nu este accesibil sau este protejat (Mod static)</strong>.<br>Aplicația este găzduită online. Modificările făcute sunt temporare în browserul curent prin <code>localStorage</code>.",
 
       "status.processing": "În procesare",
+      "status.packed": "Ambalată",
       "status.shipped": "Expediat",
       "status.completed": "Finalizat",
       "status.cancelled": "Anulat",
@@ -3089,10 +3154,16 @@
 
       "confirm.delete_order":
         "Sigur vrei să ștergi definitiv comanda '{id}' din baza de date?",
+      "confirm.cancel_admin_order":
+        "Vrei să anulezi comanda '{id}'? Va rămâne în istoric ca anulată.",
       "confirm.clear_orders":
         "Atenție! Urmează să ștergi TOATE comenzile din baza de date. Această acțiune nu este reversibilă. Continui?",
+      "confirm.clear_orders_typed":
+        "Mai întâi va fi descărcat un backup complet. Pentru a șterge definitiv toate comenzile, scrie exact: {value}",
       "confirm.clear_users":
         "Atenție! Urmează să ștergi toți clienții înregistrați. Va rămâne activ doar contul implicit de administrator. Continui?",
+      "confirm.clear_users_typed":
+        "Mai întâi va fi descărcat un backup complet. Pentru a șterge definitiv toți clienții, scrie exact: {value}",
       "confirm.delete_user":
         "Sigur vrei să ștergi definitiv utilizatorul cu emailul '{email}'?\nComenzile lui vor rămâne asociate adresei ca Client Ocazional.",
       "confirm.delete_plant": "Sigur vrei să ștergi planta '{id}' din catalog?",
@@ -3103,9 +3174,16 @@
       "alert.plant_exists": "Există deja o plantă cu acest ID!",
       "alert.catalog_reset":
         "Catalogul a fost resetat. Pagina se va reîncărca.",
+      "alert.catalog_reset_unavailable":
+        "Catalogul implicit nu este disponibil. Nu a fost aplicată nicio modificare.",
+      "alert.tracking_required": "Introdu un cod de tracking valid.",
+      "admin.clear_orders_confirm_value": "ȘTERGE COMENZILE",
+      "admin.clear_users_confirm_value": "ȘTERGE CLIENȚII",
       "alert.order_not_found": "Comanda nu a fost găsită!",
       "prompt.tracking": "Introdu codul de urmărire al expedierii (opțional):",
       "notification.tracking": " (Cod tracking: {code})",
+      "notification.tracking_updated":
+        "Trackingul pentru comanda <strong>{id}</strong> a fost actualizat: <strong>{code}</strong>.",
       "notification.order_status":
         "Comanda ta <strong>{id}</strong> este acum în starea <strong>{status}</strong>!{tracking}",
       "auth.login_error": "Emailul sau parola nu sunt corecte.",
@@ -3119,6 +3197,8 @@
       "invoice.date": "Dată",
       "invoice.status": "Stare",
       "invoice.sender": "Expeditor",
+      "invoice.client": "Client",
+      "invoice.delivery_address": "Adresa de livrare",
       "invoice.recipient": "Destinatar Livrare",
       "invoice.billing": "Titular facturare",
       "invoice.shipping": "Destinatar livrare",

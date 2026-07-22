@@ -8,9 +8,11 @@
   let lastDbActive = null;
   let editingOrderId = null;
   let editingOrderItems = [];
+  let adminOrderScope = "active";
 
   // Dizionario dell'area personale condiviso.
   const ACCOUNT_I18N = window.SERRA_I18N?.account || { it: {}, ro: {} };
+  const LAST_BACKUP_KEY = "serra.last_backup_metadata";
 
   function tAcc(key, vars = {}) {
     const dict = ACCOUNT_I18N[currentLang] || ACCOUNT_I18N.it;
@@ -25,6 +27,83 @@
     return currentLang === "ro" ? "ro-RO" : "it-IT";
   }
 
+  function cloneData(data) {
+    return JSON.parse(JSON.stringify(data));
+  }
+
+  function getBackupPayload() {
+    return {
+      format: "orto-in-serra-backup",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data: {
+        plants: cloneData(allPlants),
+        users: cloneData(allUsers),
+        orders: cloneData(allOrders)
+      }
+    };
+  }
+
+  function renderBackupStatus() {
+    const details = document.getElementById("adminBackupDetails");
+    if (!details) return;
+
+    try {
+      const metadata = JSON.parse(localStorage.getItem(LAST_BACKUP_KEY) || "null");
+      if (!metadata?.exportedAt) {
+        details.textContent = tAcc("admin.backup_never");
+        return;
+      }
+      const exportedAt = new Date(metadata.exportedAt).toLocaleString(locale(), {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+      details.textContent = tAcc("admin.backup_last", { date: exportedAt });
+    } catch (_) {
+      details.textContent = tAcc("admin.backup_never");
+    }
+  }
+
+  function downloadJson(data, filename) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json;charset=utf-8"
+    });
+    const downloadUrl = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = downloadUrl;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
+  }
+
+  function confirmIrreversibleAction(kind) {
+    const confirmationValue = tAcc(`admin.clear_${kind}_confirm_value`);
+    const typedValue = prompt(
+      tAcc(`confirm.clear_${kind}_typed`, { value: confirmationValue })
+    );
+    return typedValue?.trim().toLocaleUpperCase(locale()) === confirmationValue;
+  }
+
+  // I profili creati prima della separazione dei campi conservano il nome completo
+  // in `nome`: lo dividiamo solo per popolare l'interfaccia, senza perdere dati.
+  function splitUserName(user) {
+    const firstName = String(user?.nome || "").trim();
+    const lastName = String(user?.cognome || "").trim();
+    if (lastName || !firstName) return { firstName, lastName };
+    const parts = firstName.split(/\s+/);
+    return {
+      firstName: parts.shift() || "",
+      lastName: parts.join(" ")
+    };
+  }
+
+  function fullUserName(user) {
+    const { firstName, lastName } = splitUserName(user);
+    return [firstName, lastName].filter(Boolean).join(" ");
+  }
+
   function formatDate(value) {
     return new Date(value).toLocaleDateString(locale(), {
       day: "2-digit",
@@ -37,10 +116,23 @@
 
   const STATUS_KEY = {
     "In elaborazione": "status.processing",
+    Imballato: "status.packed",
     Spedito: "status.shipped",
-    Completato: "status.completed",
     Annullato: "status.cancelled"
   };
+
+  const ADMIN_ORDER_STATUSES = [
+    "In elaborazione",
+    "Imballato",
+    "Spedito",
+    "Annullato"
+  ];
+
+  // Gli eventuali vecchi ordini "Completato" restano leggibili e vengono
+  // presentati come spediti, senza alterare automaticamente lo storico.
+  function normalizedOrderStatus(status) {
+    return status === "Completato" ? "Spedito" : status || "In elaborazione";
+  }
 
   const CATEGORY_KEY = {
     foglia: "category.leaf",
@@ -51,7 +143,8 @@
   };
 
   function statusLabel(status) {
-    return tAcc(STATUS_KEY[status] || status);
+    const normalizedStatus = normalizedOrderStatus(status);
+    return tAcc(STATUS_KEY[normalizedStatus] || normalizedStatus);
   }
 
   function categoryLabel(category) {
@@ -146,6 +239,7 @@
     updateAccountCartCount();
 
     if (lastDbActive !== null) renderDatabaseStatus(lastDbActive);
+    renderBackupStatus();
 
     // Aggiorna le viste dinamiche se l'utente è loggato
     if (currentUser) {
@@ -223,6 +317,9 @@
         case "export-packing-sheet":
           window.exportPackingSheet(control.dataset.orderId);
           break;
+        case "update-order-tracking":
+          window.updateOrderTracking(control.dataset.orderId);
+          break;
         case "download-plant-manual":
           window.downloadOrderPlantManual(control.dataset.orderId, control);
           break;
@@ -251,7 +348,19 @@
           window.handleDeletePlant(control.dataset.plantId);
           break;
         case "delete-order":
-          window.handleDeleteOrder(control.dataset.orderId);
+          window.cancelAdminOrder(control.dataset.orderId);
+          break;
+        case "open-order-detail":
+          window.openAdminOrderDetail(control.dataset.orderId);
+          break;
+        case "close-order-detail":
+          window.closeAdminOrderDetail();
+          break;
+        case "filter-orders":
+          if (control.dataset.filterScope) {
+            adminOrderScope = control.dataset.filterScope;
+            renderAdminOrdersList();
+          }
           break;
         case "delete-user":
           window.handleDeleteUser(control.dataset.email);
@@ -263,6 +372,8 @@
         '[data-account-action="filter-plants"]'
       );
       if (control) window.filterAdminPlants();
+      if (event.target.closest('[data-account-action="filter-orders"]'))
+        renderAdminOrdersList();
       const orderQuantity = event.target.closest("[data-order-edit-quantity]");
       if (orderQuantity) {
         window.setOrderEditQuantity(
@@ -290,6 +401,8 @@
           orderStatus.dataset.orderId,
           orderStatus.value
         );
+      if (event.target.closest('[data-account-action="filter-orders"]'))
+        renderAdminOrdersList();
     });
     document.addEventListener("submit", (event) => {
       const form = event.target.closest("[data-account-form]");
@@ -439,7 +552,7 @@
     }
 
     const userNameTitleEl = document.getElementById("userNameTitle");
-    userNameTitleEl.textContent = currentUser.nome;
+    userNameTitleEl.textContent = fullUserName(currentUser);
     // Rimuove il placeholder localizzato dal nome utente.
     userNameTitleEl.removeAttribute("data-i18n-acc");
     document.getElementById("userEmailSub").textContent = currentUser.email;
@@ -464,7 +577,9 @@
             shippingCity === billingCity &&
             shippingCap === billingCap);
 
-    document.getElementById("profNome").value = currentUser.nome || "";
+    const { firstName, lastName } = splitUserName(currentUser);
+    document.getElementById("profNome").value = firstName;
+    document.getElementById("profCognome").value = lastName;
     document.getElementById("profTelefono").value = currentUser.telefono || "";
     document.getElementById("profAccountType").value =
       currentUser.accountType === "company" ? "company" : "private";
@@ -838,10 +953,11 @@
 
   // --- INTERFACCIA AMMINISTRATORE ---
   function renderAdminDashboard() {
-    renderAdminPlantsList();
     renderAdminOrdersList();
     renderAdminUsersList();
+    renderAdminPlantsList();
     updateAdminStats();
+    renderBackupStatus();
   }
 
   function renderAdminPlantsList(filterText = "") {
@@ -906,11 +1022,41 @@
     const sorted = [...allOrders].sort(
       (a, b) => new Date(b.date) - new Date(a.date)
     );
+    const search = String(document.getElementById("adminOrderSearch")?.value || "").trim().toLocaleLowerCase(currentLang);
+    const statusFilter = document.getElementById("adminOrderStatusFilter")?.value || "all";
+    const today = new Date().toDateString();
+    const active = sorted.filter(
+      (order) => !order.archived && normalizedOrderStatus(order.status) !== "Annullato"
+    );
+    const shippedToday = active.filter((order) => normalizedOrderStatus(order.status) === "Spedito" && new Date(order.date).toDateString() === today);
+    const cancelled = sorted.filter((order) => normalizedOrderStatus(order.status) === "Annullato");
+    const scopeOrders = adminOrderScope === "cancelled" ? cancelled : adminOrderScope === "shipped-today" ? shippedToday : active;
+    const filtered = scopeOrders.filter((order) => {
+      const customer = getUserNameByEmail(order.email).toLocaleLowerCase(currentLang);
+      const haystack = `${order.id} ${order.email} ${customer}`.toLocaleLowerCase(currentLang);
+      return (!search || haystack.includes(search)) && (statusFilter === "all" || normalizedOrderStatus(order.status) === statusFilter);
+    });
+    [
+      ["adminOrdersActiveCount", active.length],
+      ["adminOrdersShippedTodayCount", shippedToday.length],
+      ["adminOrdersArchivedCount", cancelled.length]
+    ].forEach(([id, count]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = String(count);
+    });
+    document.querySelectorAll(".admin-order-insight").forEach((button) => {
+      button.classList.toggle("active", button.dataset.filterScope === adminOrderScope);
+    });
+    const countEl = document.getElementById("adminOrderCount");
+    if (countEl) {
+      countEl.textContent = tAcc("admin.orders_count", { count: filtered.length });
+    }
 
-    sorted.forEach((order) => {
+    filtered.forEach((order) => {
       const tr = document.createElement("tr");
       const dateStr = formatDate(order.date);
-      const statusClass = order.status.toLowerCase().replace(" ", "-");
+      const displayStatus = normalizedOrderStatus(order.status);
+      const statusClass = displayStatus.toLowerCase().replace(" ", "-");
 
       // Ordina la lista dei prodotti alfabeticamente
       const sortedItems = [...order.items].sort((a, b) =>
@@ -947,15 +1093,9 @@
       });
       itemsListHtml += "</div></details>";
 
-      const statusOptions = [
-        "In elaborazione",
-        "Spedito",
-        "Completato",
-        "Annullato"
-      ];
-      let selectHtml = `<select data-account-action="set-order-status" data-order-id="${order.id}" style="padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-color, rgba(0,0,0,0.1)); background: var(--bg-input, #fff); color: var(--text-color, #333); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer;">`;
-      statusOptions.forEach((opt) => {
-        const selected = order.status === opt ? "selected" : "";
+      let selectHtml = `<select class="admin-order-status-select" data-account-action="set-order-status" data-order-id="${order.id}" aria-label="${tAcc("dash.order_status")}">`;
+      ADMIN_ORDER_STATUSES.forEach((opt) => {
+        const selected = displayStatus === opt ? "selected" : "";
         selectHtml += `<option value="${opt}" ${selected}>${statusLabel(opt)}</option>`;
       });
       selectHtml += `</select>`;
@@ -973,13 +1113,17 @@
         <td data-label="${tAcc("dash.order_date")}">${dateStr}</td>
         <td data-label="${tAcc("dash.order_items")}">${itemsListHtml}</td>
         <td data-label="${tAcc("dash.order_total")}">€ ${parseFloat(order.total).toFixed(2)}</td>
-        <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(order.status)}</span>${trackingHtml}</td>
+        <td data-label="${tAcc("dash.order_status")}"><span class="status-badge ${statusClass}">${statusLabel(displayStatus)}</span>${trackingHtml}</td>
         <td data-label="${tAcc("dash.order_actions")}">
           <div class="admin-order-actions">
             ${selectHtml}
             ${order.status !== "Annullato" ? `<button class="btn btn-small admin-packing-btn" data-account-action="export-packing-sheet" data-order-id="${order.id}" title="${tAcc("admin.packing_btn_hint")}"><span aria-hidden="true">▣</span> ${tAcc("admin.packing_btn")}</button>` : ""}
-            <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("dash.print_btn")}</button>
-            <button class="btn btn-danger btn-small" data-account-action="delete-order" data-order-id="${order.id}" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">${tAcc("admin.delete")}</button>
+            <div class="admin-order-secondary-actions">
+              <button class="btn btn-outline btn-small" data-account-action="open-order-detail" data-order-id="${order.id}">${tAcc("admin.view")}</button>
+              <button class="btn btn-outline btn-small" data-account-action="print-invoice" data-order-id="${order.id}">${tAcc("dash.print_btn")}</button>
+              ${displayStatus === "Spedito" ? `<button class="btn btn-outline btn-small" data-account-action="update-order-tracking" data-order-id="${order.id}">${tAcc(order.tracking ? "admin.edit_tracking" : "admin.add_tracking")}</button>` : ""}
+              ${order.status !== "Annullato" ? `<button class="btn btn-danger btn-small" data-account-action="delete-order" data-order-id="${order.id}">${tAcc("admin.cancel_order")}</button>` : ""}
+            </div>
           </div>
         </td>
       `;
@@ -987,13 +1131,52 @@
     });
   }
 
-  window.handleDeleteOrder = async function (orderId) {
-    if (confirm(tAcc("confirm.delete_order", { id: orderId }))) {
-      allOrders = allOrders.filter((o) => o.id !== orderId);
+  window.cancelAdminOrder = async function (orderId) {
+    if (confirm(tAcc("confirm.cancel_admin_order", { id: orderId }))) {
+      const order = allOrders.find((entry) => entry.id === orderId);
+      if (!order) return;
+      order.status = "Annullato";
+      order.cancelledAt = new Date().toISOString();
       await window.SerraAPI.saveOrders(allOrders);
       renderAdminOrdersList();
       updateAdminStats();
     }
+  };
+
+  window.updateOrderTracking = async function (orderId) {
+    const order = allOrders.find((entry) => entry.id === orderId);
+    if (!order || normalizedOrderStatus(order.status) !== "Spedito") return;
+
+    const trackingCode = prompt(tAcc("prompt.tracking"), order.tracking || "");
+    if (trackingCode === null) return;
+    const tracking = trackingCode.trim();
+    if (!tracking) {
+      alert(tAcc("alert.tracking_required"));
+      return;
+    }
+
+    order.tracking = tracking;
+    order.trackingUpdatedAt = new Date().toISOString();
+    await window.SerraAPI.saveOrders(allOrders);
+
+    const customer = allUsers.find((user) => user.email === order.email);
+    if (customer) {
+      if (!customer.notifications) customer.notifications = [];
+      customer.notifications.push({
+        id: Date.now(),
+        type: "tracking_updated",
+        orderId: order.id,
+        message: tAcc("notification.tracking_updated", {
+          id: order.id,
+          code: tracking
+        }),
+        read: false,
+        date: new Date().toISOString()
+      });
+      await window.SerraAPI.saveUsers(allUsers);
+    }
+
+    renderAdminOrdersList();
   };
 
   window.handleDismissNotifications = async function () {
@@ -1015,10 +1198,16 @@
     // Rimuove i placeholder localizzati dai dati caricati.
     statsText.removeAttribute("data-i18n-acc");
     const clientsCount = allUsers.filter((u) => u.role !== "admin").length;
+    const cancelledOrders = allOrders.filter(
+      (order) => order.status === "Annullato"
+    ).length;
+    const activeOrders = allOrders.length - cancelledOrders;
     statsText.innerHTML = `
       • <strong>${tAcc("admin.stats_plants")}:</strong> ${allPlants.length}<br>
       • <strong>${tAcc("admin.stats_clients")}:</strong> ${clientsCount}<br>
-      • <strong>${tAcc("admin.stats_orders")}:</strong> ${allOrders.length}
+      • <strong>${tAcc("admin.stats_orders")}:</strong> ${allOrders.length}<br>
+      • <strong>${tAcc("admin.stats_orders_active")}:</strong> ${activeOrders}<br>
+      • <strong>${tAcc("admin.stats_orders_cancelled")}:</strong> ${cancelledOrders}
     `;
 
     renderAdminCharts();
@@ -1140,23 +1329,24 @@
   }
 
   window.handleClearOrders = async function () {
-    if (confirm(tAcc("confirm.clear_orders"))) {
-      allOrders = [];
-      await window.SerraAPI.saveOrders([]);
-      renderAdminOrdersList();
-      updateAdminStats();
-      alert(tAcc("alert.orders_cleared"));
-    }
+    if (!confirmIrreversibleAction("orders")) return;
+    window.exportDatabaseJson();
+    allOrders = [];
+    await window.SerraAPI.saveOrders([]);
+    renderAdminOrdersList();
+    updateAdminStats();
+    alert(tAcc("alert.orders_cleared"));
   };
 
   window.handleClearUsers = async function () {
-    if (confirm(tAcc("confirm.clear_users"))) {
-      const adminOnly = allUsers.filter((u) => u.role === "admin");
-      allUsers = adminOnly;
-      await window.SerraAPI.saveUsers(adminOnly);
-      updateAdminStats();
-      alert(tAcc("alert.users_cleared"));
-    }
+    if (!confirmIrreversibleAction("users")) return;
+    window.exportDatabaseJson();
+    const adminOnly = allUsers.filter((u) => u.role === "admin");
+    allUsers = adminOnly;
+    await window.SerraAPI.saveUsers(adminOnly);
+    renderAdminUsersList();
+    updateAdminStats();
+    alert(tAcc("alert.users_cleared"));
   };
 
   function renderAdminUsersList() {
@@ -1177,12 +1367,16 @@
           ? tAcc("auth.test_admin").replace(":", "")
           : tAcc("auth.test_customer").replace(":", "");
       const roleClass = user.role === "admin" ? "admin" : "user";
+      const orders = allOrders.filter((order) => order.email === user.email && order.status !== "Annullato");
+      const lastOrder = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date))[0];
 
       tr.innerHTML = `
-        <td data-label="${tAcc("admin.users_name")}"><strong>${user.nome}</strong></td>
+        <td data-label="${tAcc("admin.users_name")}"><strong>${fullUserName(user)}</strong></td>
         <td data-label="${tAcc("admin.users_email")}"><code>${user.email}</code></td>
         <td data-label="${tAcc("admin.users_phone")}">${user.telefono || "-"}</td>
         <td data-label="${tAcc("admin.users_address")}">${user.indirizzo ? `${user.indirizzo}, ${user.cap} ${user.citta}` : "-"}</td>
+        <td data-label="${tAcc("admin.users_orders")}"><strong>${orders.length}</strong></td>
+        <td data-label="${tAcc("admin.users_last_order")}">${lastOrder ? formatDate(lastOrder.date) : "-"}</td>
         <td data-label="${tAcc("admin.users_role")}"><span class="status-badge ${roleClass}">${roleLabel}</span></td>
         <td data-label="${tAcc("admin.table_actions")}">${deleteBtnHtml}</td>
       `;
@@ -1201,8 +1395,24 @@
 
   function getUserNameByEmail(email) {
     const u = allUsers.find((user) => user.email === email);
-    return u ? u.nome : tAcc("customer.guest");
+    return u ? fullUserName(u) : tAcc("customer.guest");
   }
+
+  window.openAdminOrderDetail = function (orderId) {
+    const order = allOrders.find((entry) => entry.id === orderId);
+    const modal = document.getElementById("adminOrderDetailModal");
+    const content = document.getElementById("adminOrderDetailContent");
+    if (!order || !modal || !content) return;
+    const user = allUsers.find((entry) => entry.email === order.email);
+    const items = (order.items || []).map((item) => `<li><strong>${escapeHtmlAccount(plantLabel(item))}</strong><span>×${Number(item.bustine) || 0}</span></li>`).join("");
+    content.innerHTML = `<div class="admin-order-detail-meta"><p><strong>${tAcc("admin.orders_client")}</strong><br>${escapeHtmlAccount(fullUserName(user) || tAcc("customer.guest"))}<br><small>${escapeHtmlAccount(order.email)}</small></p><p><strong>${tAcc("dash.order_status")}</strong><br><span class="status-badge ${order.status.toLowerCase().replace(" ", "-")}">${statusLabel(order.status)}</span></p><p><strong>${tAcc("dash.order_total")}</strong><br>€ ${Number(order.total || 0).toFixed(2)}</p></div><div class="admin-order-detail-list"><strong>${tAcc("dash.order_items")}</strong><ul>${items}</ul></div>`;
+    modal.hidden = false;
+  };
+
+  window.closeAdminOrderDetail = function () {
+    const modal = document.getElementById("adminOrderDetailModal");
+    if (modal) modal.hidden = true;
+  };
 
   // --- AZIONI LOGIN / REGISTRAZIONE ---
   window.switchAuthTab = function (tab) {
@@ -1245,6 +1455,7 @@
   window.handleRegister = async function (e) {
     e.preventDefault();
     const nome = document.getElementById("regNome").value.trim();
+    const cognome = document.getElementById("regCognome").value.trim();
     const email = document
       .getElementById("regEmail")
       .value.trim()
@@ -1269,6 +1480,7 @@
       email,
       password,
       nome,
+      cognome,
       telefono,
       indirizzo,
       citta,
@@ -1307,6 +1519,7 @@
   window.handleUpdateProfile = async function (e) {
     e.preventDefault();
     const nome = document.getElementById("profNome").value.trim();
+    const cognome = document.getElementById("profCognome").value.trim();
     const telefono = document.getElementById("profTelefono").value.trim();
     const accountType = document.getElementById("profAccountType").value;
     const ragioneSociale = document
@@ -1347,6 +1560,7 @@
     const index = allUsers.findIndex((u) => u.email === currentUser.email);
     if (index !== -1) {
       allUsers[index].nome = nome;
+      allUsers[index].cognome = cognome;
       allUsers[index].telefono = telefono;
       allUsers[index].accountType = accountType;
       allUsers[index].ragioneSociale = ragioneSociale;
@@ -1654,16 +1868,14 @@
   // --- OPERAZIONI BACKUP (ADMIN) ---
   window.resetCatalogToDefault = async function () {
     if (confirm(tAcc("confirm.reset_catalog"))) {
-      // Invia array vuoto o resetta tramite rimozione
-      localStorage.removeItem("serra.custom_plants");
-
-      const serverActive = await window.SerraAPI.isServerActive();
-      if (serverActive) {
-        // Ripristina il catalogo del server.
-        const originalPlants = window.PLANTS; // this was loaded inside index/configuratore but overridden.
-        // Salva un catalogo vuoto per riattivare il catalogo predefinito.
-        await window.SerraAPI.savePlants([]);
+      const factoryPlants = cloneData(window.PLANTS || []);
+      if (!factoryPlants.length) {
+        alert(tAcc("alert.catalog_reset_unavailable"));
+        return;
       }
+      localStorage.removeItem("serra.custom_plants");
+      window.exportDatabaseJson();
+      await window.SerraAPI.savePlants(factoryPlants);
 
       alert(tAcc("alert.catalog_reset"));
       window.location.reload();
@@ -1671,15 +1883,19 @@
   };
 
   window.exportDatabaseJson = function () {
-    const dataStr =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(allPlants, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "orto_in_serra_catalogo.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+    const backup = getBackupPayload();
+    const datePart = backup.exportedAt.slice(0, 10);
+    downloadJson(backup, `orto_in_serra_backup_${datePart}.json`);
+    localStorage.setItem(
+      LAST_BACKUP_KEY,
+      JSON.stringify({
+        exportedAt: backup.exportedAt,
+        plants: backup.data.plants.length,
+        users: backup.data.users.length,
+        orders: backup.data.orders.length
+      })
+    );
+    renderBackupStatus();
   };
 
   // Helper per emoji frutti di backup se manca
@@ -1861,7 +2077,7 @@
       indirizzo: "-"
     };
     const shipping = order.shipping || {
-      name: user.nome,
+      name: fullUserName(user),
       phone: user.telefono || "",
       address: user.shippingIndirizzo || user.indirizzo || "-",
       city: user.shippingCitta || user.citta || "",
@@ -1932,7 +2148,7 @@
         <section class="packing-overview">
           <div class="packing-destination">
             <span class="packing-section-label">${tAcc("invoice.shipping")}</span>
-            <strong>${escapeHtmlAccount(shipping.name || user.nome)}</strong>
+            <strong>${escapeHtmlAccount(shipping.name || fullUserName(user))}</strong>
             <p>${shippingAddress}</p>
             <p>${tAcc("invoice.phone")}: ${escapeHtmlAccount(shipping.phone || user.telefono || "-")}</p>
             <p>${tAcc("invoice.email")}: ${escapeHtmlAccount(user.email || order.email || "-")}</p>
@@ -1985,7 +2201,7 @@
     };
     const billing = order.billing || {
       accountType: user.accountType || "private",
-      name: user.ragioneSociale || user.nome,
+      name: user.ragioneSociale || fullUserName(user),
       address: user.billingIndirizzo || user.indirizzo || "-",
       city: user.billingCitta || user.citta || "",
       cap: user.billingCap || user.cap || "",
@@ -1994,7 +2210,7 @@
       taxCode: user.codiceFiscale || ""
     };
     const shipping = order.shipping || {
-      name: user.nome,
+      name: fullUserName(user),
       phone: user.telefono || "",
       address: user.shippingIndirizzo || user.indirizzo || "-",
       city: user.shippingCitta || user.citta || "",
@@ -2053,19 +2269,19 @@
           <p>${tAcc("invoice.email")}: info@ortoinserra.it</p>
         </div>
         <div class="invoice-block">
-          <h4>${tAcc("invoice.billing")}</h4>
+          <h4>${tAcc("invoice.client")}</h4>
           ${billing.accountType === "company" ? `<div class="invoice-customer-type">${tAcc("invoice.company_customer")}</div>` : ""}
-          <p><strong>${escapeHtmlAccount(billing.name || user.nome)}</strong></p>
+          <p><strong>${escapeHtmlAccount(billing.name || fullUserName(user))}</strong></p>
           <p>${addressLine(billing)}</p>
           ${billing.vatNumber ? `<p>${tAcc("invoice.vat_number")}: ${escapeHtmlAccount(billing.vatNumber)}</p>` : ""}
           ${billing.taxCode ? `<p>${tAcc("invoice.tax_code")}: ${escapeHtmlAccount(billing.taxCode)}</p>` : ""}
           <p>${tAcc("invoice.email")}: ${escapeHtmlAccount(user.email)}</p>
-        </div>
-        <div class="invoice-block">
-          <h4>${tAcc("invoice.shipping")}</h4>
-          <p><strong>${escapeHtmlAccount(shipping.name || user.nome)}</strong></p>
-          <p>${addressLine(shipping)}</p>
-          <p>${tAcc("invoice.phone")}: ${escapeHtmlAccount(shipping.phone || user.telefono || "-")}</p>
+          <div class="invoice-delivery">
+            <span>${tAcc("invoice.delivery_address")}</span>
+            <p><strong>${escapeHtmlAccount(shipping.name || fullUserName(user))}</strong></p>
+            <p>${addressLine(shipping)}</p>
+            <p>${tAcc("invoice.phone")}: ${escapeHtmlAccount(shipping.phone || user.telefono || "-")}</p>
+          </div>
         </div>
       </div>
 
