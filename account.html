@@ -17,7 +17,7 @@
     <!-- Fogli di stile condivisi e specifici dell'area riservata -->
     <link
       rel="stylesheet"
-      href="assets/css/serra-account.css?v=20260722-order-statuses"
+      href="assets/css/serra-account.css?v=20260722-order-insights-ui"
     />
     <!-- Script iniziale che applica il tema prima della visualizzazione della pagina -->
     <script>
@@ -717,9 +717,9 @@
             <div id="adminOrderCount" class="admin-orders-count" aria-live="polite"></div>
           </div>
           <div class="admin-order-insights" aria-label="Riepilogo ordini">
-            <button type="button" class="admin-order-insight active" data-account-action="filter-orders" data-filter-scope="active"><strong id="adminOrdersActiveCount">0</strong><span data-i18n-acc="admin.orders_active">Da gestire</span></button>
-            <button type="button" class="admin-order-insight" data-account-action="filter-orders" data-filter-scope="shipped-today"><strong id="adminOrdersShippedTodayCount">0</strong><span data-i18n-acc="admin.orders_shipped_today">Spediti oggi</span></button>
-            <button type="button" class="admin-order-insight" data-account-action="filter-orders" data-filter-scope="cancelled"><strong id="adminOrdersArchivedCount">0</strong><span data-i18n-acc="admin.orders_cancelled">Annullati</span></button>
+            <button type="button" class="admin-order-insight admin-order-insight--active active" data-account-action="filter-orders" data-filter-scope="active"><strong id="adminOrdersActiveCount">0</strong><span data-i18n-acc="admin.orders_active">Da gestire</span></button>
+            <button type="button" class="admin-order-insight admin-order-insight--shipped" data-account-action="filter-orders" data-filter-scope="shipped-today"><strong id="adminOrdersShippedTodayCount">0</strong><span data-i18n-acc="admin.orders_shipped_today">Spediti oggi</span></button>
+            <button type="button" class="admin-order-insight admin-order-insight--cancelled" data-account-action="filter-orders" data-filter-scope="cancelled"><strong id="adminOrdersArchivedCount">0</strong><span data-i18n-acc="admin.orders_cancelled">Annullati</span></button>
           </div>
           <div class="admin-orders-toolbar">
             <input type="search" id="adminOrderSearch" data-account-action="filter-orders" data-i18n-acc-placeholder="admin.orders_search" placeholder="Cerca ID, cliente o email" />
