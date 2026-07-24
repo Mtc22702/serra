@@ -3690,4 +3690,10 @@
       font-weight: 600;
     }
   }
+
+  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
+     mentre la ricerca è in corso. */
+  #catalogFilterToggle[hidden] {
+    display: none !important;
+  }
 } /* fine @layer polish */

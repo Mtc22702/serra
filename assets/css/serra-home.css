@@ -8624,6 +8624,15 @@
     box-shadow: 0 4px 14px rgba(45, 106, 79, 0.22);
   }
 
+  /* Durante la ricerca, lascia spazio ai risultati sopra la tastiera mobile. */
+  @media (max-width: 760px) {
+    .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
+    .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogFilterToggle,
+    .catalog-mobile-hidden-while-searching {
+      display: none;
+    }
+  }
+
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 640px) {
     .top-buy-row {
@@ -8730,9 +8739,6 @@
       flex-direction: column;
       align-items: stretch;
       gap: 0.6rem;
-    }
-    .catalog-mobile-hidden-while-searching {
-      display: none;
     }
     .catalog-hint-controls {
       justify-content: space-between;
@@ -17508,6 +17514,12 @@ html[data-theme="dark"]
       font-size: 0.7rem;
       font-weight: 600;
     }
+  }
+
+  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
+     mentre la ricerca è in corso. */
+  #catalogFilterToggle[hidden] {
+    display: none !important;
   }
 } /* fine @layer polish */
 

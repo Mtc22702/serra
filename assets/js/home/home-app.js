@@ -179,11 +179,13 @@ function syncCatalogControls() {
   const hasSearchTerm = Boolean(catalog.search.trim());
   if (hint)
     hint.classList.toggle("catalog-mobile-hidden-while-searching", hasSearchTerm);
-  if (filterToggle)
+  if (filterToggle) {
     filterToggle.classList.toggle(
       "catalog-mobile-hidden-while-searching",
       hasSearchTerm
     );
+    filterToggle.hidden = hasSearchTerm;
+  }
   if (type && type !== document.activeElement) type.value = catalog.type;
   if (sort && sort !== document.activeElement) sort.value = catalog.sort;
   if (season) {
