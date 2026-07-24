@@ -1427,13 +1427,11 @@
     box-shadow: 0 4px 14px rgba(45, 106, 79, 0.22);
   }
 
-  /* Durante la ricerca, lascia spazio ai risultati sopra la tastiera mobile. */
-  @media (max-width: 760px) {
-    .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
-    .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogFilterToggle,
-    .catalog-mobile-hidden-while-searching {
-      display: none;
-    }
+  /* Durante la ricerca, lascia spazio ai risultati a ogni larghezza. */
+  .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
+  .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogFilterToggle,
+  .catalog-mobile-hidden-while-searching {
+    display: none;
   }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */

@@ -167,6 +167,7 @@ function syncCatalogControls() {
   const search = document.getElementById("catalogSearch");
   const hint = document.getElementById("catalogHint");
   const filterToggle = document.getElementById("catalogFilterToggle");
+  const filterTools = document.getElementById("catalogFilterTools");
   const type = document.getElementById("catalogType");
   const sort = document.getElementById("catalogSort");
   const season = document.getElementById("catalogSeasonOnly");
@@ -185,6 +186,13 @@ function syncCatalogControls() {
       hasSearchTerm
     );
     filterToggle.hidden = hasSearchTerm;
+  }
+  if (filterTools) {
+    filterTools.classList.toggle(
+      "catalog-mobile-hidden-while-searching",
+      hasSearchTerm
+    );
+    filterTools.hidden = hasSearchTerm;
   }
   if (type && type !== document.activeElement) type.value = catalog.type;
   if (sort && sort !== document.activeElement) sort.value = catalog.sort;

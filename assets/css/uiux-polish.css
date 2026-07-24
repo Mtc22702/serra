@@ -1175,9 +1175,7 @@
     }
 
     .catalog-mobile-filter-toggle {
-      position: sticky;
-      top: calc(var(--nav-h) + 8px);
-      z-index: 80;
+      position: static;
       display: flex;
       width: 100%;
       min-height: 54px;
@@ -1269,24 +1267,6 @@
       display: flex;
     }
 
-    /* Quando il comando filtri e agganciato durante lo scroll, il pannello
-       non deve riaprirsi nella sua vecchia posizione dentro la pagina. */
-    body.catalog-mobile-docked .catalog-tools--advanced.is-mobile-open {
-      position: fixed;
-      z-index: 79;
-      top: calc(var(--nav-h, 62px) + 70px);
-      right: 12px;
-      bottom: 14px;
-      left: 12px;
-      width: auto;
-      max-height: calc(100dvh - var(--nav-h, 62px) - 84px);
-      margin: 0;
-      overflow-x: hidden;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      box-shadow: 0 18px 48px rgba(20, 47, 29, 0.24);
-      -webkit-overflow-scrolling: touch;
-    }
   }
 
   @media (max-width: 380px) {
@@ -3694,6 +3674,18 @@
   /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
      mentre la ricerca è in corso. */
   #catalogFilterToggle[hidden] {
+    display: none !important;
+  }
+
+  /* Questo layer viene caricato dopo gli stili base del catalogo: qui la
+     ricerca deve prevalere anche sulle regole che rendono visibili i controlli. */
+  .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
+  .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogFilterToggle,
+  .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogFilterTools,
+  #catalogHint.catalog-mobile-hidden-while-searching,
+  #catalogFilterToggle.catalog-mobile-hidden-while-searching,
+  #catalogFilterTools.catalog-mobile-hidden-while-searching,
+  #catalogFilterTools[hidden] {
     display: none !important;
   }
 } /* fine @layer polish */
