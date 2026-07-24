@@ -25,7 +25,8 @@
       extra_items: "+ altri {count}",
       total: "Totale",
       next_title: "Cosa succede adesso?",
-      next_text: "Puoi seguire l’ordine dalla tua area personale. Quando sarà disponibile, troverai anche il manuale personalizzato con indicazioni per semina, trapianto e cura delle piante acquistate.",
+      next_text:
+        "Puoi seguire l’ordine dalla tua area personale. Quando sarà disponibile, troverai anche il manuale personalizzato con indicazioni per semina, trapianto e cura delle piante acquistate.",
       footer: "Orto in Serra · Dalla pianificazione al raccolto",
       generic_id: "Confermato",
       no_items: "Il riepilogo completo è disponibile nella tua area personale."
@@ -51,7 +52,8 @@
       extra_items: "+ încă {count}",
       total: "Total",
       next_title: "Ce urmează?",
-      next_text: "Poți urmări comanda din contul personal. Când va fi disponibil, vei găsi și ghidul personalizat pentru semănarea, transplantarea și îngrijirea plantelor cumpărate.",
+      next_text:
+        "Poți urmări comanda din contul personal. Când va fi disponibil, vei găsi și ghidul personalizat pentru semănarea, transplantarea și îngrijirea plantelor cumpărate.",
       footer: "Orto in Serra · De la planificare la recoltă",
       generic_id: "Confirmată",
       no_items: "Rezumatul complet este disponibil în contul tău personal."

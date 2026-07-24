@@ -387,9 +387,7 @@ function setDetailTab(tab, moveFocus = false) {
 function handleDetailTabKey(event, control) {
   if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
   event.preventDefault();
-  const current = DETAIL_TAB_ORDER.indexOf(
-    control.dataset.detailTab
-  );
+  const current = DETAIL_TAB_ORDER.indexOf(control.dataset.detailTab);
   let next = current;
   if (event.key === "ArrowRight")
     next = (current + 1) % DETAIL_TAB_ORDER.length;

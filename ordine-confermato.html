@@ -14,7 +14,11 @@
       rel="stylesheet"
     />
     <link rel="icon" href="assets/img/icons/logo-192.png" type="image/png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icons/logo-180.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/icons/logo-180.png"
+    />
     <meta name="theme-color" content="#2f6b3a" />
     <script>
       (function () {
@@ -35,31 +39,49 @@
   <body class="order-confirmation-page confirmation-loading">
     <header class="confirmation-header">
       <div class="confirmation-shell confirmation-header-inner">
-        <a class="confirmation-brand" href="index.html" aria-label="Orto in Serra, home">
-          <span class="confirmation-brand-mark"><img src="assets/img/svg/logo.svg" alt="" /></span>
+        <a
+          class="confirmation-brand"
+          href="index.html"
+          aria-label="Orto in Serra, home"
+        >
+          <span class="confirmation-brand-mark"
+            ><img src="assets/img/svg/logo.svg" alt=""
+          /></span>
           <span class="confirmation-brand-copy">
             <strong>Orto in Serra</strong>
             <small data-confirm-i18n="brand_sub">Coltiva con un piano</small>
           </span>
         </a>
         <div class="confirmation-preferences">
-          <div class="confirmation-lang" role="group" aria-label="Lingua / Limbă">
+          <div
+            class="confirmation-lang"
+            role="group"
+            aria-label="Lingua / Limbă"
+          >
             <button
               type="button"
               data-lang="it"
               data-confirm-action="set-language"
               aria-pressed="true"
-            >IT</button>
+            >
+              IT
+            </button>
             <button
               type="button"
               data-lang="ro"
               data-confirm-action="set-language"
               aria-pressed="false"
-            >RO</button>
+            >
+              RO
+            </button>
           </div>
           <button class="theme-toggle confirmation-theme" type="button">
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
+              >☾</span
+            >
+            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
+              >☀</span
+            >
           </button>
         </div>
       </div>
@@ -68,9 +90,14 @@
     <main class="confirmation-main">
       <div class="confirmation-shell">
         <div class="confirmation-layout">
-          <section class="confirmation-hero" aria-labelledby="confirmationTitle">
+          <section
+            class="confirmation-hero"
+            aria-labelledby="confirmationTitle"
+          >
             <div class="confirmation-check" aria-hidden="true">✓</div>
-            <p class="confirmation-eyebrow" data-confirm-i18n="eyebrow">Ordine ricevuto</p>
+            <p class="confirmation-eyebrow" data-confirm-i18n="eyebrow">
+              Ordine ricevuto
+            </p>
             <h1 id="confirmationTitle" data-confirm-i18n="title">
               Grazie, il tuo orto può iniziare.
             </h1>
@@ -79,14 +106,25 @@
             </p>
             <div class="confirmation-number">
               <span data-confirm-i18n="order_number">Numero ordine</span>
-              <strong id="confirmationOrderId" class="confirmation-dynamic">—</strong>
+              <strong id="confirmationOrderId" class="confirmation-dynamic"
+                >—</strong
+              >
             </div>
             <div class="confirmation-actions">
-              <a class="confirmation-action confirmation-action--primary" href="account.html#accountOrders">
-                <span data-confirm-i18n="account_cta">Vai alla tua area personale</span>
+              <a
+                class="confirmation-action confirmation-action--primary"
+                href="account.html#accountOrders"
+              >
+                <span data-confirm-i18n="account_cta"
+                  >Vai alla tua area personale</span
+                >
                 <span aria-hidden="true">→</span>
               </a>
-              <a class="confirmation-action" href="index.html#stagione" data-confirm-i18n="catalog_cta">
+              <a
+                class="confirmation-action"
+                href="index.html#stagione"
+                data-confirm-i18n="catalog_cta"
+              >
                 Torna al catalogo
               </a>
             </div>
@@ -94,32 +132,49 @@
 
           <aside class="confirmation-summary" aria-labelledby="summaryTitle">
             <div class="confirmation-summary-head">
-              <h2 id="summaryTitle" data-confirm-i18n="summary_title">Riepilogo ordine</h2>
-              <span class="confirmation-status" data-confirm-i18n="status">In elaborazione</span>
+              <h2 id="summaryTitle" data-confirm-i18n="summary_title">
+                Riepilogo ordine
+              </h2>
+              <span class="confirmation-status" data-confirm-i18n="status"
+                >In elaborazione</span
+              >
             </div>
             <div class="confirmation-meta">
               <div>
                 <span data-confirm-i18n="date">Data</span>
-                <strong id="confirmationDate" class="confirmation-dynamic">—</strong>
+                <strong id="confirmationDate" class="confirmation-dynamic"
+                  >—</strong
+                >
               </div>
               <div>
                 <span data-confirm-i18n="articles">Articoli</span>
-                <strong id="confirmationItemCount" class="confirmation-dynamic">—</strong>
+                <strong id="confirmationItemCount" class="confirmation-dynamic"
+                  >—</strong
+                >
               </div>
             </div>
-            <ul id="confirmationItems" class="confirmation-items confirmation-dynamic" aria-live="polite"></ul>
+            <ul
+              id="confirmationItems"
+              class="confirmation-items confirmation-dynamic"
+              aria-live="polite"
+            ></ul>
             <div class="confirmation-total">
               <span data-confirm-i18n="total">Totale</span>
-              <strong id="confirmationTotal" class="confirmation-dynamic">—</strong>
+              <strong id="confirmationTotal" class="confirmation-dynamic"
+                >—</strong
+              >
             </div>
           </aside>
         </div>
 
         <section class="confirmation-next" aria-labelledby="nextTitle">
           <div class="confirmation-next-mark" aria-hidden="true">↗</div>
-          <h2 id="nextTitle" data-confirm-i18n="next_title">Cosa succede adesso?</h2>
+          <h2 id="nextTitle" data-confirm-i18n="next_title">
+            Cosa succede adesso?
+          </h2>
           <p data-confirm-i18n="next_text">
-            Puoi seguire l’ordine dalla tua area personale e scaricare il manuale di coltivazione.
+            Puoi seguire l’ordine dalla tua area personale e scaricare il
+            manuale di coltivazione.
           </p>
         </section>
       </div>
@@ -133,7 +188,10 @@
 
     <script src="assets/js/theme.js?v=20260724-7eec0de04052" defer></script>
     <script src="assets/js/api.js?v=20260724-7eec0de04052" defer></script>
-    <script src="assets/js/order-confirmation.js?v=20260724-7eec0de04052" defer></script>
+    <script
+      src="assets/js/order-confirmation.js?v=20260724-7eec0de04052"
+      defer
+    ></script>
     <script src="assets/js/boot-sw.js?v=20260724-7eec0de04052" defer></script>
   </body>
 </html>

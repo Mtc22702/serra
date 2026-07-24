@@ -134,9 +134,7 @@ function bindHomeStaticActions() {
   document.addEventListener(
     "error",
     (event) => {
-      const image = event.target.closest?.(
-        "[data-catalog-photo-fallback]"
-      );
+      const image = event.target.closest?.("[data-catalog-photo-fallback]");
       if (!image) return;
       image.parentElement.dataset.fallback = "1";
       image.style.display = "none";
@@ -179,7 +177,10 @@ function syncCatalogControls() {
   // i risultati restano così raggiungibili anche con la tastiera aperta.
   const hasSearchTerm = Boolean(catalog.search.trim());
   if (hint)
-    hint.classList.toggle("catalog-mobile-hidden-while-searching", hasSearchTerm);
+    hint.classList.toggle(
+      "catalog-mobile-hidden-while-searching",
+      hasSearchTerm
+    );
   if (filterToggle) {
     filterToggle.classList.toggle(
       "catalog-mobile-hidden-while-searching",
@@ -868,9 +869,13 @@ if (catalogSearchLink) {
         const baseX = (bed.w * (col + 1)) / (bed.cols + 1);
         const baseY = (bed.h * (row + 1)) / (bed.rows + 1);
         const expandedX =
-          bed.cols === 1 ? bed.w / 2 : insetX + (usableW * col) / (bed.cols - 1);
+          bed.cols === 1
+            ? bed.w / 2
+            : insetX + (usableW * col) / (bed.cols - 1);
         const expandedY =
-          bed.rows === 1 ? bed.h / 2 : insetY + (usableH * row) / (bed.rows - 1);
+          bed.rows === 1
+            ? bed.h / 2
+            : insetY + (usableH * row) / (bed.rows - 1);
         pts.push({
           cx: bed.x + baseX + (expandedX - baseX) * spacingBoost,
           cy: bed.y + baseY + (expandedY - baseY) * spacingBoost
@@ -1391,7 +1396,8 @@ if (catalogSearchLink) {
       "preconfig.serra_heated": "Riscaldata",
       "preconfig.month_label": "3. Mese di semina",
       "preconfig.cta": "Vai al configuratore",
-      "preconfig.account_choice_title": "Vuoi riprendere la tua configurazione?",
+      "preconfig.account_choice_title":
+        "Vuoi riprendere la tua configurazione?",
       "preconfig.account_choice_text":
         "La configurazione attuale è già al sicuro. Puoi continuare senza modifiche oppure aggiornare i parametri della serra.",
       "preconfig.account_choice_continue": "Riprendi configurazione",
@@ -1482,7 +1488,8 @@ if (catalogSearchLink) {
     if (!cta) return;
     if (active) {
       const target = new URL(active.dataset.url, location.href);
-      const source = document.getElementById("preconfigOverlay")?.dataset.source;
+      const source =
+        document.getElementById("preconfigOverlay")?.dataset.source;
       if (source) target.searchParams.set("source", source);
       cta.href = target.href;
       cta.classList.remove("preconfig-cta--disabled");
@@ -1638,7 +1645,9 @@ if (catalogSearchLink) {
       ?.addEventListener("click", () => {
         const overlay = document.getElementById("preconfigOverlay");
         if (!overlay) return;
-        document.getElementById("preconfigAccountChoice")?.setAttribute("hidden", "");
+        document
+          .getElementById("preconfigAccountChoice")
+          ?.setAttribute("hidden", "");
         overlay.querySelector(".preconfig-body")?.removeAttribute("hidden");
         overlay.querySelector(".preconfig-footer")?.removeAttribute("hidden");
         overlay.dataset.source = "account";
@@ -1655,15 +1664,13 @@ if (catalogSearchLink) {
     document
       .getElementById("pcZona")
       ?.addEventListener("change", updatePreconfigSummary);
-    document
-      .getElementById("pcRisc")
-      ?.addEventListener("change", (event) => {
-        event.currentTarget.classList.toggle(
-          "is-heated",
-          event.currentTarget.value === "si"
-        );
-        updatePreconfigSummary();
-      });
+    document.getElementById("pcRisc")?.addEventListener("change", (event) => {
+      event.currentTarget.classList.toggle(
+        "is-heated",
+        event.currentTarget.value === "si"
+      );
+      updatePreconfigSummary();
+    });
 
     document
       .querySelectorAll("#preconfigPersonaSection .pc-persona-card")
@@ -1762,7 +1769,9 @@ if (catalogSearchLink) {
       attributeFilter: ["lang"]
     });
 
-    const requestedPreconfig = new URLSearchParams(location.search).get("preconfig");
+    const requestedPreconfig = new URLSearchParams(location.search).get(
+      "preconfig"
+    );
     const guidePreconfigTargets = {
       novizio: "configuratore.html?livello=novizio&guided=1&source=index",
       intermedio: "configuratore.html?livello=intermedio&guided=1&source=index",
@@ -1771,7 +1780,9 @@ if (catalogSearchLink) {
     };
     const guidePreconfigTarget =
       guidePreconfigTargets[requestedPreconfig] ||
-      (requestedPreconfig === "account" ? "configuratore.html?source=account" : null);
+      (requestedPreconfig === "account"
+        ? "configuratore.html?source=account"
+        : null);
     if (guidePreconfigTarget) {
       history.replaceState(null, "", location.pathname);
       requestAnimationFrame(() => openPreconfigSheet(guidePreconfigTarget));

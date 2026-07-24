@@ -873,8 +873,9 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
   // Safari iOS può ignorare le animazioni CSS applicate ai gruppi SVG. In quel
   // caso usiamo animateTransform, nativo SVG, per mantenere viva la scena.
   const platform = navigator.platform || "";
-  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")
-    ?.matches;
+  const reduceMotion = window.matchMedia?.(
+    "(prefers-reduced-motion: reduce)"
+  )?.matches;
   const useSvgMotionFallback =
     !reduceMotion &&
     (/iP(ad|hone|od)/.test(navigator.userAgent) ||
@@ -1089,13 +1090,14 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
     animatedPlantTotal += growthIndexes.size;
     // Il movimento ambientale è distribuito e limitato nelle serre molto dense.
     // La trasformazione resta sempre più piccola dell'ingombro finale del glifo.
-    const aliveIndexes = animateThisBed && !compactDevice
-      ? emojiSpreadIndexes(
-          bedItems.length,
-          bed.cols,
-          Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 90)
-        )
-      : new Set();
+    const aliveIndexes =
+      animateThisBed && !compactDevice
+        ? emojiSpreadIndexes(
+            bedItems.length,
+            bed.cols,
+            Math.min(bedItems.length, totalPlants > 120 ? denseSceneLimit : 90)
+          )
+        : new Set();
     const pendingEmoji = [];
     bedItems.forEach(({ pos, sourceIndex }, i) => {
       const rng = rngFrom((bed.idx + 1) * 7919 + sourceIndex * 131);
@@ -1111,9 +1113,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       const particleRng = rngFrom(
         (bed.idx + 1) * 12983 + sourceIndex * 271 + 17
       );
-      const swayRng = rngFrom(
-        (bed.idx + 1) * 16127 + sourceIndex * 389 + 31
-      );
+      const swayRng = rngFrom((bed.idx + 1) * 16127 + sourceIndex * 389 + 31);
       const swayDuration = (2.8 + swayRng() * 1.1).toFixed(2);
       const swayDelay = (-swayRng() * 2.8).toFixed(2);
       const soilParticles = animateGlyph
@@ -1148,8 +1148,8 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
         usesNativeGrowth
           ? ` transform="scale(0.001)"`
           : animateGlyph
-          ? ` style="--plant-growth-delay:${delay}ms"`
-          : ""
+            ? ` style="--plant-growth-delay:${delay}ms"`
+            : ""
       }>${nativeGrowth}${glyph(bed.plant, rr, rng, glyphDetail)}</g>${leafSheen}</g></g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i)) {

@@ -49,15 +49,20 @@
     if (!details) return;
 
     try {
-      const metadata = JSON.parse(localStorage.getItem(LAST_BACKUP_KEY) || "null");
+      const metadata = JSON.parse(
+        localStorage.getItem(LAST_BACKUP_KEY) || "null"
+      );
       if (!metadata?.exportedAt) {
         details.textContent = tAcc("admin.backup_never");
         return;
       }
-      const exportedAt = new Date(metadata.exportedAt).toLocaleString(locale(), {
-        dateStyle: "medium",
-        timeStyle: "short"
-      });
+      const exportedAt = new Date(metadata.exportedAt).toLocaleString(
+        locale(),
+        {
+          dateStyle: "medium",
+          timeStyle: "short"
+        }
+      );
       details.textContent = tAcc("admin.backup_last", { date: exportedAt });
     } catch (_) {
       details.textContent = tAcc("admin.backup_never");
@@ -570,7 +575,8 @@
       currentUser.shippingIndirizzo || currentUser.indirizzo || billingAddress;
     const shippingCity =
       currentUser.shippingCitta || currentUser.citta || billingCity;
-    const shippingCap = currentUser.shippingCap || currentUser.cap || billingCap;
+    const shippingCap =
+      currentUser.shippingCap || currentUser.cap || billingCap;
     const shippingCountry = currentUser.shippingPaese || billingCountry;
     const shippingSame =
       typeof currentUser.shippingSame === "boolean"
@@ -1025,19 +1031,43 @@
     const sorted = [...allOrders].sort(
       (a, b) => new Date(b.date) - new Date(a.date)
     );
-    const search = String(document.getElementById("adminOrderSearch")?.value || "").trim().toLocaleLowerCase(currentLang);
-    const statusFilter = document.getElementById("adminOrderStatusFilter")?.value || "all";
+    const search = String(
+      document.getElementById("adminOrderSearch")?.value || ""
+    )
+      .trim()
+      .toLocaleLowerCase(currentLang);
+    const statusFilter =
+      document.getElementById("adminOrderStatusFilter")?.value || "all";
     const today = new Date().toDateString();
     const active = sorted.filter(
-      (order) => !order.archived && normalizedOrderStatus(order.status) !== "Annullato"
+      (order) =>
+        !order.archived && normalizedOrderStatus(order.status) !== "Annullato"
     );
-    const shippedToday = active.filter((order) => normalizedOrderStatus(order.status) === "Spedito" && new Date(order.date).toDateString() === today);
-    const cancelled = sorted.filter((order) => normalizedOrderStatus(order.status) === "Annullato");
-    const scopeOrders = adminOrderScope === "cancelled" ? cancelled : adminOrderScope === "shipped-today" ? shippedToday : active;
+    const shippedToday = active.filter(
+      (order) =>
+        normalizedOrderStatus(order.status) === "Spedito" &&
+        new Date(order.date).toDateString() === today
+    );
+    const cancelled = sorted.filter(
+      (order) => normalizedOrderStatus(order.status) === "Annullato"
+    );
+    const scopeOrders =
+      adminOrderScope === "cancelled"
+        ? cancelled
+        : adminOrderScope === "shipped-today"
+          ? shippedToday
+          : active;
     const filtered = scopeOrders.filter((order) => {
-      const customer = getUserNameByEmail(order.email).toLocaleLowerCase(currentLang);
-      const haystack = `${order.id} ${order.email} ${customer}`.toLocaleLowerCase(currentLang);
-      return (!search || haystack.includes(search)) && (statusFilter === "all" || normalizedOrderStatus(order.status) === statusFilter);
+      const customer = getUserNameByEmail(order.email).toLocaleLowerCase(
+        currentLang
+      );
+      const haystack =
+        `${order.id} ${order.email} ${customer}`.toLocaleLowerCase(currentLang);
+      return (
+        (!search || haystack.includes(search)) &&
+        (statusFilter === "all" ||
+          normalizedOrderStatus(order.status) === statusFilter)
+      );
     });
     [
       ["adminOrdersActiveCount", active.length],
@@ -1048,11 +1078,16 @@
       if (el) el.textContent = String(count);
     });
     document.querySelectorAll(".admin-order-insight").forEach((button) => {
-      button.classList.toggle("active", button.dataset.filterScope === adminOrderScope);
+      button.classList.toggle(
+        "active",
+        button.dataset.filterScope === adminOrderScope
+      );
     });
     const countEl = document.getElementById("adminOrderCount");
     if (countEl) {
-      countEl.textContent = tAcc("admin.orders_count", { count: filtered.length });
+      countEl.textContent = tAcc("admin.orders_count", {
+        count: filtered.length
+      });
     }
 
     filtered.forEach((order) => {
@@ -1387,8 +1422,12 @@
           ? tAcc("auth.test_admin").replace(":", "")
           : tAcc("auth.test_customer").replace(":", "");
       const roleClass = user.role === "admin" ? "admin" : "user";
-      const orders = allOrders.filter((order) => order.email === user.email && order.status !== "Annullato");
-      const lastOrder = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+      const orders = allOrders.filter(
+        (order) => order.email === user.email && order.status !== "Annullato"
+      );
+      const lastOrder = [...orders].sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      )[0];
 
       tr.innerHTML = `
         <td data-label="${tAcc("admin.users_name")}"><strong>${fullUserName(user)}</strong></td>
@@ -1424,7 +1463,12 @@
     const content = document.getElementById("adminOrderDetailContent");
     if (!order || !modal || !content) return;
     const user = allUsers.find((entry) => entry.email === order.email);
-    const items = (order.items || []).map((item) => `<li><strong>${escapeHtmlAccount(plantLabel(item))}</strong><span>×${Number(item.bustine) || 0}</span></li>`).join("");
+    const items = (order.items || [])
+      .map(
+        (item) =>
+          `<li><strong>${escapeHtmlAccount(plantLabel(item))}</strong><span>×${Number(item.bustine) || 0}</span></li>`
+      )
+      .join("");
     content.innerHTML = `<div class="admin-order-detail-meta"><p><strong>${tAcc("admin.orders_client")}</strong><br>${escapeHtmlAccount(fullUserName(user) || tAcc("customer.guest"))}<br><small>${escapeHtmlAccount(order.email)}</small></p><p><strong>${tAcc("dash.order_status")}</strong><br><span class="status-badge ${order.status.toLowerCase().replace(" ", "-")}">${statusLabel(order.status)}</span></p><p><strong>${tAcc("dash.order_total")}</strong><br>€ ${Number(order.total || 0).toFixed(2)}</p></div><div class="admin-order-detail-list"><strong>${tAcc("dash.order_items")}</strong><ul>${items}</ul></div>`;
     modal.hidden = false;
   };
@@ -2062,7 +2106,8 @@
       alert(tAcc("manual.no_plants"));
       return;
     }
-    const user = allUsers.find((entry) => entry.email === order.email) || currentUser;
+    const user =
+      allUsers.find((entry) => entry.email === order.email) || currentUser;
     const label = button?.querySelector(".order-action-copy strong");
     const previous = label?.textContent;
     if (button) button.disabled = true;

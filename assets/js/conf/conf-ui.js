@@ -317,9 +317,7 @@ function render() {
   const currentCropSignature = cropSignature();
   const isInitialPlantRender = lastRenderedCropSignature === null;
   const animatePlantGrowth =
-    (isInitialPlantRender &&
-      animateInitialCrops &&
-      state.beds.length > 0) ||
+    (isInitialPlantRender && animateInitialCrops && state.beds.length > 0) ||
     (!isInitialPlantRender &&
       currentCropSignature !== lastRenderedCropSignature);
   lastRenderedCropSignature = currentCropSignature;
@@ -331,10 +329,7 @@ function render() {
     staggerPlants: !isInitialPlantRender
   });
   const scene = document.getElementById("scene");
-  scene.classList.toggle(
-    "scene--dense-reveal",
-    built.plantAnimationSuppressed
-  );
+  scene.classList.toggle("scene--dense-reveal", built.plantAnimationSuppressed);
   scene.innerHTML = built.svg;
   bindPlantAssetFallbacks();
   const L = built.layout;
@@ -399,8 +394,7 @@ function render() {
     // Se la scheda pianta e aperta, riallinea anche i suoi contenuti dinamici.
     // Serve in particolare al cambio lingua, perche le etichette della scheda
     // non fanno parte dei nodi statici aggiornati da applyLanguage().
-    const plantDetailPanelElement =
-      document.getElementById("panelPlantDetail");
+    const plantDetailPanelElement = document.getElementById("panelPlantDetail");
     if (
       plantDetailPanelElement &&
       !plantDetailPanelElement.hidden &&
@@ -907,7 +901,8 @@ function configDetailProfile(p, sow) {
         [detailText("detail.tech_soil"), shared.soil],
         [
           detailText("detail.tech_exposure"),
-          shared.exposure || (p.sole === "pieno" ? tx("fullSun") : tx("halfShade"))
+          shared.exposure ||
+            (p.sole === "pieno" ? tx("fullSun") : tx("halfShade"))
         ],
         [detailText("detail.tech_irrigation"), shared.irrigation],
         [detailText("detail.tech_feeding"), shared.feeding]

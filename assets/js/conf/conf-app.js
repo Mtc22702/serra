@@ -1019,8 +1019,8 @@ window.addEventListener("serra:themechange", () => render());
 // home allo stato compatto previsto per il profilo Principiante.
 window.addEventListener("pageshow", (event) => {
   const bootContext = window.history.state?.serraConfiguratorBoot;
-  const navigationType = window.performance
-    ?.getEntriesByType?.("navigation")?.[0]?.type;
+  const navigationType =
+    window.performance?.getEntriesByType?.("navigation")?.[0]?.type;
   const restored = event.persisted || navigationType === "back_forward";
   if (
     !restored ||

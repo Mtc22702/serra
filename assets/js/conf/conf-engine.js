@@ -161,8 +161,7 @@ function normalizeSavedBeds(beds) {
         count: Math.max(1, Math.round(parseInt(bed?.count) || 1)),
         layout,
         countLocked: Boolean(bed?.countLocked),
-        col:
-          Number.isInteger(bed?.col) && bed.col >= 0 ? bed.col : undefined
+        col: Number.isInteger(bed?.col) && bed.col >= 0 ? bed.col : undefined
       };
     })
     .filter((bed) => {

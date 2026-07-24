@@ -110,18 +110,49 @@
   };
 
   const DIRECT_IDS = new Set([
-    "carota", "ravanello", "barbabietola", "rapa", "pastinaca",
-    "radice_prezemolo", "daikon", "scorzonera", "rucola", "spinaci",
-    "coriandolo", "aneto", "fagiolino", "fagiolo", "fava", "cece",
-    "lenticchia", "pisello", "soia_edamame", "mais_dolce"
+    "carota",
+    "ravanello",
+    "barbabietola",
+    "rapa",
+    "pastinaca",
+    "radice_prezemolo",
+    "daikon",
+    "scorzonera",
+    "rucola",
+    "spinaci",
+    "coriandolo",
+    "aneto",
+    "fagiolino",
+    "fagiolo",
+    "fava",
+    "cece",
+    "lenticchia",
+    "pisello",
+    "soia_edamame",
+    "mais_dolce"
   ]);
   const BULB_IDS = new Set([
-    "aglio", "cipolla", "cipolla_rossa", "cipollotto", "scalogno",
-    "patata", "patata_dolce", "topinambur"
+    "aglio",
+    "cipolla",
+    "cipolla_rossa",
+    "cipollotto",
+    "scalogno",
+    "patata",
+    "patata_dolce",
+    "topinambur"
   ]);
   const PERENNIAL_IDS = new Set([
-    "asparago", "carciofo", "fragola", "rosmarino", "salvia", "timo",
-    "origano", "menta", "melissa", "erba_cipollina", "leustean"
+    "asparago",
+    "carciofo",
+    "fragola",
+    "rosmarino",
+    "salvia",
+    "timo",
+    "origano",
+    "menta",
+    "melissa",
+    "erba_cipollina",
+    "leustean"
   ]);
 
   function langCode(lang) {
@@ -138,12 +169,15 @@
   }
 
   function wrapLines(ctx, text, maxWidth) {
-    const words = String(text || "").split(/\s+/).filter(Boolean);
+    const words = String(text || "")
+      .split(/\s+/)
+      .filter(Boolean);
     const lines = [];
     let line = "";
     words.forEach((word) => {
       const candidate = line ? `${line} ${word}` : word;
-      if (ctx.measureText(candidate).width <= maxWidth || !line) line = candidate;
+      if (ctx.measureText(candidate).width <= maxWidth || !line)
+        line = candidate;
       else {
         lines.push(line);
         line = word;
@@ -163,7 +197,9 @@
       }
       lines[maxLines - 1] = `${last.trim()}…`;
     }
-    lines.forEach((line, index) => ctx.fillText(line, x, y + index * lineHeight));
+    lines.forEach((line, index) =>
+      ctx.fillText(line, x, y + index * lineHeight)
+    );
     return y + lines.length * lineHeight;
   }
 
@@ -204,7 +240,11 @@
     drawLogo(ctx, logo, MARGIN, compact ? 58 : 74, size);
     ctx.fillStyle = GREEN_DARK;
     font(ctx, 700, compact ? 27 : 34, "Fraunces, Georgia, serif");
-    ctx.fillText("Orto in Serra", MARGIN + size + 20, (compact ? 58 : 74) + size * 0.63);
+    ctx.fillText(
+      "Orto in Serra",
+      MARGIN + size + 20,
+      (compact ? 58 : 74) + size * 0.63
+    );
   }
 
   // Ritaglia la fotografia senza deformarla e la inserisce in una cornice
@@ -255,7 +295,9 @@
     return Number.isNaN(date.getTime())
       ? "-"
       : date.toLocaleDateString(lang === "ro" ? "ro-RO" : "it-IT", {
-          day: "2-digit", month: "long", year: "numeric"
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
         });
   }
 
@@ -282,17 +324,25 @@
 
   function monthsLabel(plant, lang) {
     const months = root.SERRA_I18N?.months?.[lang] || [];
-    return (plant.mesi || []).map((m) => months[m - 1] || String(m)).join(" · ") || "-";
+    return (
+      (plant.mesi || []).map((m) => months[m - 1] || String(m)).join(" · ") ||
+      "-"
+    );
   }
 
   function localizedName(plant, lang) {
-    return root.SERRA_PLANT_CONTENT?.localizedName(plant, lang) || plant.nome || plant.id;
+    return (
+      root.SERRA_PLANT_CONTENT?.localizedName(plant, lang) ||
+      plant.nome ||
+      plant.id
+    );
   }
 
   function fullUserName(user) {
     const firstName = String(user?.nome || "").trim();
     const lastName = String(user?.cognome || "").trim();
-    if (lastName || !firstName) return [firstName, lastName].filter(Boolean).join(" ");
+    if (lastName || !firstName)
+      return [firstName, lastName].filter(Boolean).join(" ");
     return firstName;
   }
 
@@ -320,10 +370,18 @@
     ctx.fillStyle = INK;
     font(ctx, 700, 29);
     ctx.fillText(data.order.id || "-", MARGIN + 42, metaY + 43);
-    ctx.fillText(fullUserName(data.user) || data.order.email || "-", MARGIN + 440, metaY + 43);
+    ctx.fillText(
+      fullUserName(data.user) || data.order.email || "-",
+      MARGIN + 440,
+      metaY + 43
+    );
     ctx.fillStyle = MUTED;
     font(ctx, 500, 21);
-    ctx.fillText(formatDate(data.order.date, data.lang), MARGIN + 42, metaY + 82);
+    ctx.fillText(
+      formatDate(data.order.date, data.lang),
+      MARGIN + 42,
+      metaY + 82
+    );
 
     const countY = y + 390;
     ctx.fillStyle = GREEN_SOFT;
@@ -339,7 +397,11 @@
     ctx.fill();
     ctx.fillStyle = GREEN_DARK;
     font(ctx, 700, 48, "Fraunces, Georgia, serif");
-    ctx.fillText(String(data.items.reduce((sum, item) => sum + item.quantity, 0)), MARGIN + 425, countY + 62);
+    ctx.fillText(
+      String(data.items.reduce((sum, item) => sum + item.quantity, 0)),
+      MARGIN + 425,
+      countY + 62
+    );
     font(ctx, 600, 22);
     ctx.fillText(c.packs, MARGIN + 425, countY + 101);
     drawFooter(ctx, c, data.order.id || "-", 1, totalPages);
@@ -374,29 +436,51 @@
     drawPhotoCover(ctx, item.photo, photoX, 214, photoSize, photoSize, 34);
     ctx.fillStyle = GREEN_DARK;
     font(ctx, 700, 64, "Fraunces, Georgia, serif");
-    let y = drawWrapped(
-      ctx,
-      name,
-      MARGIN,
-      286,
-      photoX - MARGIN - 34,
-      72,
-      2
-    );
+    let y = drawWrapped(ctx, name, MARGIN, 286, photoX - MARGIN - 34, 72, 2);
     ctx.fillStyle = MUTED;
     font(ctx, 400, 27);
-    const desc = root.SERRA_PLANT_CONTENT?.compactDescription(plant, data.lang) || "";
-    y = drawWrapped(ctx, desc, MARGIN, y + 20, photoX - MARGIN - 34, 39, 3) + 30;
+    const desc =
+      root.SERRA_PLANT_CONTENT?.compactDescription(plant, data.lang) || "";
+    y =
+      drawWrapped(ctx, desc, MARGIN, y + 20, photoX - MARGIN - 34, 39, 3) + 30;
 
     const gap = 18;
     const factW = (PAGE_W - MARGIN * 2 - gap * 2) / 3;
     drawFact(ctx, MARGIN, y, factW, c.sowing, monthsLabel(plant, data.lang));
-    drawFact(ctx, MARGIN + factW + gap, y, factW, c.spacing, `${plant.d || "-"} cm ${c.row} · ${plant.dr || plant.d || "-"} cm ${c.rows}`);
-    drawFact(ctx, MARGIN + (factW + gap) * 2, y, factW, c.light, valueLabel(plant.sole, c));
+    drawFact(
+      ctx,
+      MARGIN + factW + gap,
+      y,
+      factW,
+      c.spacing,
+      `${plant.d || "-"} cm ${c.row} · ${plant.dr || plant.d || "-"} cm ${c.rows}`
+    );
+    drawFact(
+      ctx,
+      MARGIN + (factW + gap) * 2,
+      y,
+      factW,
+      c.light,
+      valueLabel(plant.sole, c)
+    );
     y += 144;
     drawFact(ctx, MARGIN, y, factW, c.water, valueLabel(plant.acqua, c));
-    drawFact(ctx, MARGIN + factW + gap, y, factW, c.harvest, `${plant.gg || "-"} ${c.days}`);
-    drawFact(ctx, MARGIN + (factW + gap) * 2, y, factW, c.yield, `${plant.resa || "-"} ${c.kg}`);
+    drawFact(
+      ctx,
+      MARGIN + factW + gap,
+      y,
+      factW,
+      c.harvest,
+      `${plant.gg || "-"} ${c.days}`
+    );
+    drawFact(
+      ctx,
+      MARGIN + (factW + gap) * 2,
+      y,
+      factW,
+      c.yield,
+      `${plant.resa || "-"} ${c.kg}`
+    );
     y += 184;
 
     ctx.fillStyle = GREEN_DARK;
@@ -404,15 +488,34 @@
     ctx.fillText(c.start, MARGIN, y);
     ctx.fillStyle = INK;
     font(ctx, 400, 24);
-    y = drawWrapped(ctx, getStartText(plant, c), MARGIN, y + 43, PAGE_W - MARGIN * 2, 35, 4) + 45;
+    y =
+      drawWrapped(
+        ctx,
+        getStartText(plant, c),
+        MARGIN,
+        y + 43,
+        PAGE_W - MARGIN * 2,
+        35,
+        4
+      ) + 45;
 
     ctx.fillStyle = GREEN_DARK;
     font(ctx, 700, 31, "Fraunces, Georgia, serif");
     ctx.fillText(c.care, MARGIN, y);
-    const localizedNote = root.SERRA_PLANT_CONTENT?.cultivationNote(plant, data.lang) || "";
+    const localizedNote =
+      root.SERRA_PLANT_CONTENT?.cultivationNote(plant, data.lang) || "";
     ctx.fillStyle = INK;
     font(ctx, 400, 24);
-    y = drawWrapped(ctx, `${waterText(plant, c)} ${localizedNote}`, MARGIN, y + 43, PAGE_W - MARGIN * 2, 35, 5) + 44;
+    y =
+      drawWrapped(
+        ctx,
+        `${waterText(plant, c)} ${localizedNote}`,
+        MARGIN,
+        y + 43,
+        PAGE_W - MARGIN * 2,
+        35,
+        5
+      ) + 44;
 
     ctx.fillStyle = GREEN_SOFT;
     roundedRect(ctx, MARGIN, y, PAGE_W - MARGIN * 2, 112, 22);
@@ -427,11 +530,27 @@
       .filter(Boolean)
       .slice(0, 6)
       .map((friend) => localizedName(friend, data.lang));
-    drawWrapped(ctx, friends.join(" · ") || c.noCompanions, MARGIN + 28, y + 76, PAGE_W - MARGIN * 2 - 56, 28, 1);
+    drawWrapped(
+      ctx,
+      friends.join(" · ") || c.noCompanions,
+      MARGIN + 28,
+      y + 76,
+      PAGE_W - MARGIN * 2 - 56,
+      28,
+      1
+    );
 
     ctx.fillStyle = MUTED;
     font(ctx, 400, 18);
-    drawWrapped(ctx, c.disclaimer, MARGIN, PAGE_H - 142, PAGE_W - MARGIN * 2, 26, 2);
+    drawWrapped(
+      ctx,
+      c.disclaimer,
+      MARGIN,
+      PAGE_H - 142,
+      PAGE_W - MARGIN * 2,
+      26,
+      2
+    );
     drawFooter(ctx, c, data.order.id || "-", page, total);
   }
 
@@ -480,7 +599,9 @@
       add("\nendobj\n");
     };
     addObject(1, [`<< /Type /Catalog /Pages 2 0 R >>`]);
-    addObject(2, [`<< /Type /Pages /Count ${jpegs.length} /Kids [${pageIds.map((id) => `${id} 0 R`).join(" ")}] >>`]);
+    addObject(2, [
+      `<< /Type /Pages /Count ${jpegs.length} /Kids [${pageIds.map((id) => `${id} 0 R`).join(" ")}] >>`
+    ]);
     jpegs.forEach((jpeg, index) => {
       const imageId = 3 + index * 3;
       const contentId = imageId + 1;
@@ -491,7 +612,9 @@
         jpeg,
         "\nendstream"
       ]);
-      addObject(contentId, [`<< /Length ${encoder.encode(stream).length} >>\nstream\n${stream}endstream`]);
+      addObject(contentId, [
+        `<< /Length ${encoder.encode(stream).length} >>\nstream\n${stream}endstream`
+      ]);
       addObject(pageId, [
         `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /XObject << /Im0 ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`
       ]);
@@ -502,7 +625,9 @@
     for (let id = 1; id <= objectCount; id += 1) {
       add(`${String(offsets[id]).padStart(10, "0")} 00000 n \n`);
     }
-    add(`trailer\n<< /Size ${objectCount + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`);
+    add(
+      `trailer\n<< /Size ${objectCount + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`
+    );
     return new Blob(chunks, { type: "application/pdf" });
   }
 
@@ -517,7 +642,9 @@
   async function create(options) {
     const lang = langCode(options.lang);
     const c = COPY[lang];
-    const byId = Object.fromEntries((options.plants || []).map((plant) => [plant.id, plant]));
+    const byId = Object.fromEntries(
+      (options.plants || []).map((plant) => [plant.id, plant])
+    );
     const merged = new Map();
     (options.order.items || []).forEach((orderItem) => {
       const plant = byId[orderItem.id];
@@ -527,7 +654,10 @@
       merged.set(plant.id, current);
     });
     const items = [...merged.values()].sort((a, b) =>
-      localizedName(a.plant, lang).localeCompare(localizedName(b.plant, lang), lang === "ro" ? "ro" : "it")
+      localizedName(a.plant, lang).localeCompare(
+        localizedName(b.plant, lang),
+        lang === "ro" ? "ro" : "it"
+      )
     );
     if (!items.length) throw new Error("No plants in order");
     const itemsWithPhotos = await Promise.all(
@@ -540,7 +670,13 @@
     const logo = await loadImage("assets/img/svg/logo.svg");
     const canvases = [];
     const cover = newCanvas();
-    drawCover(cover.getContext("2d"), logo, data, c, itemsWithPhotos.length + 1);
+    drawCover(
+      cover.getContext("2d"),
+      logo,
+      data,
+      c,
+      itemsWithPhotos.length + 1
+    );
     canvases.push(cover);
     itemsWithPhotos.forEach((item, index) => {
       const canvas = newCanvas();
@@ -555,7 +691,9 @@
       );
       canvases.push(canvas);
     });
-    const jpegs = canvases.map((canvas) => dataUrlBytes(canvas.toDataURL("image/jpeg", 0.88)));
+    const jpegs = canvases.map((canvas) =>
+      dataUrlBytes(canvas.toDataURL("image/jpeg", 0.88))
+    );
     return makePdf(jpegs);
   }
 

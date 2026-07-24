@@ -867,7 +867,8 @@
         "preconfig.serra_heated": "Riscaldata",
         "preconfig.month_label": "3. Mese di semina",
         "preconfig.cta": "Vai al configuratore",
-        "preconfig.account_choice_title": "Vuoi riprendere la tua configurazione?",
+        "preconfig.account_choice_title":
+          "Vuoi riprendere la tua configurazione?",
         "preconfig.account_choice_text":
           "La configurazione attuale è già al sicuro. Puoi continuare senza modifiche oppure aggiornare i parametri della serra.",
         "preconfig.account_choice_continue": "Riprendi configurazione",
@@ -2573,11 +2574,13 @@
       "dash.nav_orders": "Ordini e manuali",
       "dash.title": "Fatturazione e spedizione",
       "dash.profile_kicker": "Dati ordine",
-      "dash.profile_hint": "Gestisci separatamente i dati fiscali e l’indirizzo in cui vuoi ricevere gli ordini.",
+      "dash.profile_hint":
+        "Gestisci separatamente i dati fiscali e l’indirizzo in cui vuoi ricevere gli ordini.",
       "profile.contact_title": "Referente",
       "profile.contact_hint": "Contatti usati per comunicazioni e consegna.",
       "profile.billing_title": "Dati di fatturazione",
-      "profile.billing_hint": "Intestatario e indirizzo fiscale riportati sulla ricevuta.",
+      "profile.billing_hint":
+        "Intestatario e indirizzo fiscale riportati sulla ricevuta.",
       "profile.shipping_title": "Indirizzo di spedizione",
       "profile.shipping_hint": "Dove vuoi ricevere fisicamente il tuo ordine.",
       "profile.account_type": "Tipo cliente",
@@ -2589,10 +2592,12 @@
       "profile.billing_address": "Indirizzo fiscale",
       "profile.country": "Paese",
       "profile.same_address": "Usa l’indirizzo di fatturazione",
-      "profile.same_address_hint": "Deseleziona per indicare un luogo di consegna diverso.",
+      "profile.same_address_hint":
+        "Deseleziona per indicare un luogo di consegna diverso.",
       "dash.projects_title": "Le mie serre progettate",
       "dash.projects_kicker": "Progettazione",
-      "dash.projects_hint": "Riprendi un progetto e continua dal configuratore.",
+      "dash.projects_hint":
+        "Riprendi un progetto e continua dal configuratore.",
       "dash.projects_new": "Nuova serra",
       "dash.project_name": "Progetto",
       "dash.project_beds": "Aiuole",
@@ -2603,7 +2608,8 @@
         'Non hai ancora salvato una serra. Apri il <a href="configuratore.html">Configuratore</a> per iniziare a progettarne una!',
       "dash.orders_title": "I miei ordini di semi",
       "dash.orders_kicker": "Acquisti",
-      "dash.orders_hint": "Controlla lo stato e apri solo quando serve l’elenco dei prodotti, il manuale o la ricevuta.",
+      "dash.orders_hint":
+        "Controlla lo stato e apri solo quando serve l’elenco dei prodotti, il manuale o la ricevuta.",
       "dash.orders_shop": "Vai al catalogo",
       "dash.save_btn": "Salva modifiche",
       "dash.logout": "Esci",
@@ -2618,7 +2624,8 @@
       "dash.products_summary_one_one": "{count} prodotto · {units} confezione",
       "dash.products_summary_one_many": "{count} prodotto · {units} confezioni",
       "dash.products_summary_many_one": "{count} prodotti · {units} confezione",
-      "dash.products_summary_many_many": "{count} prodotti · {units} confezioni",
+      "dash.products_summary_many_many":
+        "{count} prodotti · {units} confezioni",
       "dash.print_btn": "Stampa ricevuta",
       "dash.print_btn_hint": "Riepilogo dell’acquisto",
       "dash.manual_btn": "Manuale di coltivazione",
@@ -2627,10 +2634,12 @@
       "order.cancel_button": "Annulla ordine",
       "order.documents_label": "Documenti dell’ordine",
       "order.management_label": "Gestione ordine",
-      "order.management_hint": "Disponibile solo finché l’ordine è in elaborazione.",
+      "order.management_hint":
+        "Disponibile solo finché l’ordine è in elaborazione.",
       "order.edit_kicker": "Ordine modificabile",
       "order.edit_title": "Modifica il tuo ordine",
-      "order.edit_hint": "Aggiorna le quantità o rimuovi un prodotto. Il nuovo totale viene calcolato prima del salvataggio.",
+      "order.edit_hint":
+        "Aggiorna le quantità o rimuovi un prodotto. Il nuovo totale viene calcolato prima del salvataggio.",
       "order.close": "Chiudi",
       "order.keep_original": "Mantieni ordine originale",
       "order.save_changes": "Salva modifiche all’ordine",
@@ -2639,14 +2648,19 @@
       "order.decrease": "Diminuisci quantità",
       "order.increase": "Aumenta quantità",
       "order.remove": "Rimuovi {name}",
-      "order.last_item_error": "Non puoi rimuovere l’ultimo prodotto: per eliminare tutto usa “Annulla ordine”.",
-      "order.not_editable": "Questo ordine non è più modificabile perché non è in elaborazione.",
+      "order.last_item_error":
+        "Non puoi rimuovere l’ultimo prodotto: per eliminare tutto usa “Annulla ordine”.",
+      "order.not_editable":
+        "Questo ordine non è più modificabile perché non è in elaborazione.",
       "order.updated_success": "Ordine aggiornato correttamente.",
-      "order.cancel_confirm": "Vuoi annullare l’ordine {id}? L’ordine resterà visibile nello storico come annullato.",
+      "order.cancel_confirm":
+        "Vuoi annullare l’ordine {id}? L’ordine resterà visibile nello storico come annullato.",
       "order.cancelled_success": "Ordine annullato correttamente.",
       "manual.preparing": "Creo il PDF…",
-      "manual.no_plants": "Questo ordine non contiene colture per cui creare il manuale.",
-      "manual.error": "Non è stato possibile creare il manuale. Riprova tra poco.",
+      "manual.no_plants":
+        "Questo ordine non contiene colture per cui creare il manuale.",
+      "manual.error":
+        "Non è stato possibile creare il manuale. Riprova tra poco.",
       "dash.notif_dismiss": "Segna come lette",
       "dash.notif_loading": "Caricamento avvisi...",
       "dash.profile_saved": "Modifiche salvate con successo!",
@@ -2657,7 +2671,8 @@
       "admin.tab_users": "Gestione Utenti",
       "admin.tab_backup": "Manutenzione Database",
       "admin.orders_kicker": "Operatività",
-      "admin.orders_hint": "Aggiorna lo stato, prepara la spedizione e stampa i documenti da un unico punto.",
+      "admin.orders_hint":
+        "Aggiorna lo stato, prepara la spedizione e stampa i documenti da un unico punto.",
       "admin.orders_count": "{count} ordini",
       "admin.orders_active": "Da gestire",
       "admin.orders_shipped_today": "Spediti oggi",
@@ -2669,7 +2684,8 @@
       "admin.view": "Dettagli",
       "admin.cancel_order": "Annulla ordine",
       "admin.delete_cancelled_order": "Elimina definitivamente",
-      "admin.delete_cancelled_order_success": "Ordine annullato eliminato definitivamente.",
+      "admin.delete_cancelled_order_success":
+        "Ordine annullato eliminato definitivamente.",
       "admin.add_tracking": "Aggiungi tracking",
       "admin.edit_tracking": "Modifica tracking",
       "admin.users_orders": "Ordini",
@@ -2725,7 +2741,8 @@
       "admin.orders_title": "Storico Ordini di tutti i Clienti",
       "admin.orders_client": "Cliente",
       "admin.packing_btn": "Scheda preparazione",
-      "admin.packing_btn_hint": "Stampa o salva in PDF la scheda operativa per il magazzino",
+      "admin.packing_btn_hint":
+        "Stampa o salva in PDF la scheda operativa per il magazzino",
       "packing.eyebrow": "Uso interno · Magazzino",
       "packing.title": "Scheda preparazione ordine",
       "packing.workflow": "Preleva, verifica e imballa",
@@ -2740,7 +2757,8 @@
       "packing.prepared_on": "Data preparazione",
       "packing.parcels": "Numero colli",
       "packing.notes": "Note di preparazione",
-      "packing.internal_note": "Documento operativo interno · Verificare quantità, integrità dei prodotti e indirizzo prima della chiusura dei colli.",
+      "packing.internal_note":
+        "Documento operativo interno · Verificare quantità, integrità dei prodotti e indirizzo prima della chiusura dei colli.",
 
       "admin.users_title": "Elenco Clienti Registrati",
       "admin.users_name": "Nome",
@@ -2932,13 +2950,16 @@
       "dash.nav_orders": "Comenzi și manuale",
       "dash.title": "Facturare și livrare",
       "dash.profile_kicker": "Datele comenzii",
-      "dash.profile_hint": "Gestionează separat datele fiscale și adresa la care dorești să primești comenzile.",
+      "dash.profile_hint":
+        "Gestionează separat datele fiscale și adresa la care dorești să primești comenzile.",
       "profile.contact_title": "Persoană de contact",
       "profile.contact_hint": "Date folosite pentru comunicări și livrare.",
       "profile.billing_title": "Date de facturare",
-      "profile.billing_hint": "Titularul și adresa fiscală afișate pe chitanță.",
+      "profile.billing_hint":
+        "Titularul și adresa fiscală afișate pe chitanță.",
       "profile.shipping_title": "Adresa de livrare",
-      "profile.shipping_hint": "Locul în care dorești să primești fizic comanda.",
+      "profile.shipping_hint":
+        "Locul în care dorești să primești fizic comanda.",
       "profile.account_type": "Tip client",
       "profile.private": "Persoană fizică",
       "profile.company": "Companie",
@@ -2948,7 +2969,8 @@
       "profile.billing_address": "Adresa fiscală",
       "profile.country": "Țară",
       "profile.same_address": "Folosește adresa de facturare",
-      "profile.same_address_hint": "Debifează pentru a indica un loc de livrare diferit.",
+      "profile.same_address_hint":
+        "Debifează pentru a indica un loc de livrare diferit.",
       "dash.projects_title": "Serele mele proiectate",
       "dash.projects_kicker": "Proiectare",
       "dash.projects_hint": "Reia un proiect și continuă-l în configurator.",
@@ -2962,7 +2984,8 @@
         'Nu ai salvat încă o seră. Deschide <a href="configuratore.html">Configuratorul</a> pentru a începe să proiectezi una!',
       "dash.orders_title": "Comenzile mele de semințe",
       "dash.orders_kicker": "Cumpărături",
-      "dash.orders_hint": "Verifică starea și deschide lista produselor, manualul sau chitanța numai când ai nevoie.",
+      "dash.orders_hint":
+        "Verifică starea și deschide lista produselor, manualul sau chitanța numai când ai nevoie.",
       "dash.orders_shop": "Vezi catalogul",
       "dash.save_btn": "Salvează modificările",
       "dash.logout": "Deconectare",
@@ -2986,10 +3009,12 @@
       "order.cancel_button": "Anulează comanda",
       "order.documents_label": "Documentele comenzii",
       "order.management_label": "Gestionarea comenzii",
-      "order.management_hint": "Disponibilă numai cât timp comanda este în procesare.",
+      "order.management_hint":
+        "Disponibilă numai cât timp comanda este în procesare.",
       "order.edit_kicker": "Comandă modificabilă",
       "order.edit_title": "Modifică această comandă",
-      "order.edit_hint": "Actualizează cantitățile sau elimină un produs. Noul total este calculat înainte de salvare.",
+      "order.edit_hint":
+        "Actualizează cantitățile sau elimină un produs. Noul total este calculat înainte de salvare.",
       "order.close": "Închide",
       "order.keep_original": "Păstrează comanda inițială",
       "order.save_changes": "Salvează modificările comenzii",
@@ -2998,14 +3023,19 @@
       "order.decrease": "Micșorează cantitatea",
       "order.increase": "Mărește cantitatea",
       "order.remove": "Elimină {name}",
-      "order.last_item_error": "Nu poți elimina ultimul produs: pentru a elimina totul folosește „Anulează comanda”.",
-      "order.not_editable": "Această comandă nu mai poate fi modificată deoarece nu este în procesare.",
+      "order.last_item_error":
+        "Nu poți elimina ultimul produs: pentru a elimina totul folosește „Anulează comanda”.",
+      "order.not_editable":
+        "Această comandă nu mai poate fi modificată deoarece nu este în procesare.",
       "order.updated_success": "Comanda a fost actualizată.",
-      "order.cancel_confirm": "Vrei să anulezi comanda {id}? Va rămâne vizibilă în istoric ca anulată.",
+      "order.cancel_confirm":
+        "Vrei să anulezi comanda {id}? Va rămâne vizibilă în istoric ca anulată.",
       "order.cancelled_success": "Comanda a fost anulată.",
       "manual.preparing": "Se creează PDF-ul…",
-      "manual.no_plants": "Această comandă nu conține culturi pentru care se poate crea manualul.",
-      "manual.error": "Manualul nu a putut fi creat. Încearcă din nou în câteva momente.",
+      "manual.no_plants":
+        "Această comandă nu conține culturi pentru care se poate crea manualul.",
+      "manual.error":
+        "Manualul nu a putut fi creat. Încearcă din nou în câteva momente.",
       "dash.notif_dismiss": "Marchează ca citite",
       "dash.notif_loading": "Se încarcă alertele...",
       "dash.profile_saved": "Modificările au fost salvate cu succes!",
@@ -3016,7 +3046,8 @@
       "admin.tab_users": "Gestionare Utilizatori",
       "admin.tab_backup": "Mentenanță Bază de Date",
       "admin.orders_kicker": "Operațiuni",
-      "admin.orders_hint": "Actualizează starea, pregătește livrarea și tipărește documentele dintr-un singur loc.",
+      "admin.orders_hint":
+        "Actualizează starea, pregătește livrarea și tipărește documentele dintr-un singur loc.",
       "admin.orders_count": "{count} comenzi",
       "admin.orders_active": "De gestionat",
       "admin.orders_shipped_today": "Expediate azi",
@@ -3028,7 +3059,8 @@
       "admin.view": "Detalii",
       "admin.cancel_order": "Anulează comanda",
       "admin.delete_cancelled_order": "Șterge definitiv",
-      "admin.delete_cancelled_order_success": "Comanda anulată a fost ștearsă definitiv.",
+      "admin.delete_cancelled_order_success":
+        "Comanda anulată a fost ștearsă definitiv.",
       "admin.add_tracking": "Adaugă tracking",
       "admin.edit_tracking": "Modifică tracking",
       "admin.users_orders": "Comenzi",
@@ -3084,7 +3116,8 @@
       "admin.orders_title": "Istoricul Comenzilor Tuturor Clienților",
       "admin.orders_client": "Client",
       "admin.packing_btn": "Fișă de pregătire",
-      "admin.packing_btn_hint": "Tipărește sau salvează în PDF fișa operațională pentru depozit",
+      "admin.packing_btn_hint":
+        "Tipărește sau salvează în PDF fișa operațională pentru depozit",
       "packing.eyebrow": "Uz intern · Depozit",
       "packing.title": "Fișă de pregătire a comenzii",
       "packing.workflow": "Colectează, verifică și ambalează",
@@ -3099,7 +3132,8 @@
       "packing.prepared_on": "Data pregătirii",
       "packing.parcels": "Număr colete",
       "packing.notes": "Note de pregătire",
-      "packing.internal_note": "Document operațional intern · Verifică cantitățile, integritatea produselor și adresa înainte de închiderea coletelor.",
+      "packing.internal_note":
+        "Document operațional intern · Verifică cantitățile, integritatea produselor și adresa înainte de închiderea coletelor.",
 
       // Testi della scheda amministrativa dedicata agli utenti.
       "admin.users_title": "Listă Clienți Înregistrați",
