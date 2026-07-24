@@ -11,6 +11,7 @@ async function collectJavaScript(directory) {
     entries.map(async (entry) => {
       const fullPath = path.join(directory, entry.name);
       if (entry.isDirectory()) return collectJavaScript(fullPath);
+      if (entry.name.endsWith(".part.js")) return [];
       return entry.name.endsWith(".js") ? [fullPath] : [];
     })
   );

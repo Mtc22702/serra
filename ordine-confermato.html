@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="it">
   <head>
+    <!-- Metadati, preferenze iniziali e foglio di stile della conferma ordine. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ordine confermato · Orto in Serra</title>
     <script>
-      window.SERRA_APP_VERSION = "20260724-7eec0de04052";
+      window.SERRA_APP_VERSION = "20260724-5193b4027f3e";
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,12 +32,14 @@
         document.documentElement.lang = lang === "ro" ? "ro" : "it";
       })();
     </script>
+    <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-order-confirmation.css?v=20260724-7eec0de04052"
+      href="assets/css/serra-order-confirmation.css?v=20260724-5193b4027f3e"
     />
   </head>
   <body class="order-confirmation-page confirmation-loading">
+    <!-- Intestazione: identità dell'app e preferenze persistenti. -->
     <header class="confirmation-header">
       <div class="confirmation-shell confirmation-header-inner">
         <a
@@ -87,6 +90,7 @@
       </div>
     </header>
 
+    <!-- Contenuto: esito dell'ordine, riepilogo dinamico e prossimi passi. -->
     <main class="confirmation-main">
       <div class="confirmation-shell">
         <div class="confirmation-layout">
@@ -180,18 +184,17 @@
       </div>
     </main>
 
+    <!-- Chiusura informativa della pagina. -->
     <footer class="confirmation-footer">
       <div class="confirmation-shell" data-confirm-i18n="footer">
         Orto in Serra · Dalla pianificazione al raccolto
       </div>
     </footer>
 
-    <script src="assets/js/theme.js?v=20260724-7eec0de04052" defer></script>
-    <script src="assets/js/api.js?v=20260724-7eec0de04052" defer></script>
-    <script
-      src="assets/js/order-confirmation.js?v=20260724-7eec0de04052"
-      defer
-    ></script>
-    <script src="assets/js/boot-sw.js?v=20260724-7eec0de04052" defer></script>
+    <!-- Dipendenze caricate in ordine: tema, dati locali, rendering e cache. -->
+    <!-- Runtime semplificato: fondazioni, logica pagina e cache. -->
+    <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/ordine-confermato.js" defer></script>
+    <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

@@ -2,10 +2,13 @@
   "private": true,
   "scripts": {
     "build:css": "node scripts/build-css.mjs",
+    "build:js": "node scripts/check-js.mjs",
+    "build": "npm run build:css && npm run build:js",
+    "check:docs": "node scripts/check-source-documentation.mjs",
     "audit:assets": "node scripts/audit-assets.mjs",
     "check:js": "node scripts/check-js.mjs",
     "check:html": "node scripts/check-html.mjs",
     "version:bump": "node scripts/bump-version.mjs",
-    "check": "npm run build:css && npm run version:bump && npm run check:js && npm run check:html"
+    "check": "npm run check:docs && npm run check:js && npm run check:html"
   }
 }

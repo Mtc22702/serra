@@ -1,3 +1,10 @@
+/**
+ * Guida interattiva: contenuti localizzati e collegamento al percorso scelto.
+ * Il file non conserva stato di dominio: legge lingua e tema dalle fondazioni
+ * comuni e traduce solo gli elementi marcati nel markup della guida.
+ */
+
+// Guida interattiva: applica lingua e collega il livello scelto al configuratore.
 (() => {
   const copy = {
     it: {

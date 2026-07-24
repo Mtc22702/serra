@@ -1,3 +1,11 @@
+/**
+ * Area account: autenticazione, profilo, ordini e strumenti amministrativi.
+ * Dipende dalle API e dalle utilità esposte da common.js.
+ * Lo stato è privato alla IIFE: le azioni del DOM passano dal dispatcher
+ * data-account-action, per evitare funzioni globali e accoppiamenti invisibili.
+ * Le sezioni seguenti sono ordinate come: stato → eventi → rendering → azioni.
+ */
+
 // Gestisce autenticazione, cruscotti e azioni dell'area riservata per utenti e amministratori.
 (function () {
   let currentUser = null;
@@ -197,15 +205,15 @@
     if (badge) badge.textContent = String(getCartCount());
   }
 
-  window.openCart = function () {
+  function openCart() {
     window.location.href = "index.html?from=configuratore";
-  };
+  }
 
-  window.setLang = function (lang) {
+  function setLang(lang) {
     currentLang = lang === "ro" || lang === "it" ? lang : "it";
     localStorage.setItem("ois.lang", currentLang);
     applyAccountLanguage();
-  };
+  }
 
   function applyAccountLanguage() {
     document.documentElement.lang = currentLang;
@@ -268,6 +276,12 @@
   });
 
   // --- INIZIALIZZAZIONE ---
+
+  // -----------------------------------------------------------------------------
+  // Area account — Delegazione eventi, avvio pagina e scelta della vista da mostrare.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
   function bindAccountEvents() {
     document.addEventListener("click", (event) => {
       const control = event.target.closest("[data-account-action]");
@@ -277,92 +291,91 @@
         case "set-language":
           // I pulsanti IT/RO sono usati nel menu mobile; il select desktop
           // resta gestito dall'evento `change` qui sotto.
-          if (control.tagName !== "SELECT")
-            window.setLang(control.dataset.lang);
+          if (control.tagName !== "SELECT") setLang(control.dataset.lang);
           break;
         case "open-cart":
-          window.openCart();
+          openCart();
           break;
         case "switch-auth-tab":
-          window.switchAuthTab(control.dataset.tab);
+          switchAuthTab(control.dataset.tab);
           break;
         case "dismiss-notifications":
-          window.handleDismissNotifications();
+          handleDismissNotifications();
           break;
         case "logout":
           window.SerraAPI.logout();
           break;
         case "switch-admin-tab":
-          window.switchAdminTab(control.dataset.tab);
+          switchAdminTab(control.dataset.tab);
           break;
         case "open-plant-modal":
-          window.openPlantModal(control.dataset.mode);
+          openPlantModal(control.dataset.mode);
           break;
         case "reset-catalog":
-          window.resetCatalogToDefault();
+          resetCatalogToDefault();
           break;
         case "export-database":
-          window.exportDatabaseJson();
+          exportDatabaseJson();
           break;
         case "clear-orders":
-          window.handleClearOrders();
+          handleClearOrders();
           break;
         case "clear-users":
-          window.handleClearUsers();
+          handleClearUsers();
           break;
         case "close-plant-modal":
-          window.closePlantModal();
+          closePlantModal();
           break;
         case "open-user-project":
-          window.openUserProject(control.dataset.projectId);
+          openUserProject(control.dataset.projectId);
           break;
         case "print-invoice":
-          window.printInvoice(control.dataset.orderId);
+          printInvoice(control.dataset.orderId);
           break;
         case "export-packing-sheet":
-          window.exportPackingSheet(control.dataset.orderId);
+          exportPackingSheet(control.dataset.orderId);
           break;
         case "update-order-tracking":
-          window.updateOrderTracking(control.dataset.orderId);
+          updateOrderTracking(control.dataset.orderId);
           break;
         case "download-plant-manual":
-          window.downloadOrderPlantManual(control.dataset.orderId, control);
+          downloadOrderPlantManual(control.dataset.orderId, control);
           break;
         case "edit-order":
-          window.openOrderEditModal(control.dataset.orderId);
+          openOrderEditModal(control.dataset.orderId);
           break;
         case "cancel-order":
-          window.cancelUserOrder(control.dataset.orderId);
+          cancelUserOrder(control.dataset.orderId);
           break;
         case "close-order-edit":
-          window.closeOrderEditModal();
+          closeOrderEditModal();
           break;
         case "order-edit-step":
-          window.stepOrderEditQuantity(
+          stepOrderEditQuantity(
             Number(control.dataset.itemIndex),
             Number(control.dataset.delta)
           );
           break;
         case "order-edit-remove":
-          window.removeOrderEditItem(Number(control.dataset.itemIndex));
+          removeOrderEditItem(Number(control.dataset.itemIndex));
           break;
         case "edit-plant":
-          window.openPlantModal("edit", control.dataset.plantId);
+          openPlantModal("edit", control.dataset.plantId);
           break;
         case "delete-plant":
-          window.handleDeletePlant(control.dataset.plantId);
+          handleDeletePlant(control.dataset.plantId);
           break;
         case "delete-order":
-          window.cancelAdminOrder(control.dataset.orderId);
+          cancelAdminOrder(control.dataset.orderId);
           break;
         case "purge-cancelled-order":
-          window.deleteCancelledOrder(control.dataset.orderId);
+          deleteCancelledOrder(control.dataset.orderId);
           break;
         case "open-order-detail":
-          window.openAdminOrderDetail(control.dataset.orderId);
+          openAdminOrderDetail(control.dataset.orderId);
           break;
         case "close-order-detail":
-          window.closeAdminOrderDetail();
+          closeAdminOrderDetail();
           break;
         case "filter-orders":
           if (control.dataset.filterScope) {
@@ -371,7 +384,7 @@
           }
           break;
         case "delete-user":
-          window.handleDeleteUser(control.dataset.email);
+          handleDeleteUser(control.dataset.email);
           break;
       }
     });
@@ -379,12 +392,12 @@
       const control = event.target.closest(
         '[data-account-action="filter-plants"]'
       );
-      if (control) window.filterAdminPlants();
+      if (control) filterAdminPlants();
       if (event.target.closest('[data-account-action="filter-orders"]'))
         renderAdminOrdersList();
       const orderQuantity = event.target.closest("[data-order-edit-quantity]");
       if (orderQuantity) {
-        window.setOrderEditQuantity(
+        setOrderEditQuantity(
           Number(orderQuantity.dataset.itemIndex),
           Number(orderQuantity.value)
         );
@@ -394,7 +407,7 @@
       const control = event.target.closest(
         '[data-account-action="set-language"]'
       );
-      if (control) window.setLang(control.value);
+      if (control) setLang(control.value);
       if (
         event.target.id === "profAccountType" ||
         event.target.id === "profShippingSame"
@@ -405,10 +418,7 @@
         '[data-account-action="set-order-status"]'
       );
       if (orderStatus)
-        window.handleToggleOrderStatus(
-          orderStatus.dataset.orderId,
-          orderStatus.value
-        );
+        handleToggleOrderStatus(orderStatus.dataset.orderId, orderStatus.value);
       if (event.target.closest('[data-account-action="filter-orders"]'))
         renderAdminOrdersList();
     });
@@ -417,11 +427,11 @@
       if (!form) return;
 
       const handlers = {
-        login: window.handleLogin,
-        register: window.handleRegister,
-        "update-profile": window.handleUpdateProfile,
-        "update-order": window.handleOrderUpdate,
-        "save-plant": window.handleSavePlant
+        login: handleLogin,
+        register: handleRegister,
+        "update-profile": handleUpdateProfile,
+        "update-order": handleOrderUpdate,
+        "save-plant": handleSavePlant
       };
       handlers[form.dataset.accountForm]?.(event);
     });
@@ -551,6 +561,11 @@
       tracking
     });
   }
+
+  // -----------------------------------------------------------------------------
+  // Area account — Rendering dei progetti e degli ordini dell'utente autenticato.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
 
   function renderUserDashboard() {
     // Aggiorna currentUser con i dati più freschi dal DB per le notifiche
@@ -682,7 +697,7 @@
   }
 
   // Apertura del progetto selezionato nel configuratore.
-  window.openUserProject = function (id) {
+  function openUserProject(id) {
     try {
       const store = JSON.parse(
         localStorage.getItem("serra.projects.v1") || "null"
@@ -703,7 +718,7 @@
       }
     } catch (_) {}
     window.location.href = "configuratore.html";
-  };
+  }
 
   function renderUserOrders() {
     const listContainer = document.getElementById("userOrdersList");
@@ -824,6 +839,11 @@
     });
   }
 
+  // -----------------------------------------------------------------------------
+  // Area account — Modifica, ricalcolo e annullamento degli ordini dell'utente.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
   function orderEditMoney(value) {
     return new Intl.NumberFormat(locale(), {
       style: "currency",
@@ -866,7 +886,7 @@
     total.textContent = orderEditMoney(orderEditTotal());
   }
 
-  window.openOrderEditModal = function (orderId) {
+  function openOrderEditModal(orderId) {
     const order = allOrders.find(
       (entry) => entry.id === orderId && entry.email === currentUser?.email
     );
@@ -881,32 +901,32 @@
     renderOrderEditItems();
     document.getElementById("orderEditModal").hidden = false;
     document.body.classList.add("modal-open");
-  };
+  }
 
-  window.closeOrderEditModal = function () {
+  function closeOrderEditModal() {
     const modal = document.getElementById("orderEditModal");
     if (modal) modal.hidden = true;
     editingOrderId = null;
     editingOrderItems = [];
     document.body.classList.remove("modal-open");
-  };
+  }
 
-  window.setOrderEditQuantity = function (index, value) {
+  function setOrderEditQuantity(index, value) {
     if (!editingOrderItems[index]) return;
     editingOrderItems[index].bustine = Math.min(
       99,
       Math.max(1, Math.round(Number(value) || 1))
     );
     renderOrderEditItems();
-  };
+  }
 
-  window.stepOrderEditQuantity = function (index, delta) {
+  function stepOrderEditQuantity(index, delta) {
     const item = editingOrderItems[index];
     if (!item) return;
-    window.setOrderEditQuantity(index, Number(item.bustine) + delta);
-  };
+    setOrderEditQuantity(index, Number(item.bustine) + delta);
+  }
 
-  window.removeOrderEditItem = function (index) {
+  function removeOrderEditItem(index) {
     if (editingOrderItems.length <= 1) {
       const error = document.getElementById("orderEditError");
       error.textContent = tAcc("order.last_item_error");
@@ -916,9 +936,9 @@
     editingOrderItems.splice(index, 1);
     document.getElementById("orderEditError").hidden = true;
     renderOrderEditItems();
-  };
+  }
 
-  window.handleOrderUpdate = async function (event) {
+  async function handleOrderUpdate(event) {
     event.preventDefault();
     const latestOrders = await window.SerraAPI.getOrders();
     const order = latestOrders.find(
@@ -927,7 +947,7 @@
     );
     if (!order || order.status !== "In elaborazione") {
       alert(tAcc("order.not_editable"));
-      window.closeOrderEditModal();
+      closeOrderEditModal();
       renderUserOrders();
       return;
     }
@@ -936,12 +956,12 @@
     order.updatedAt = new Date().toISOString();
     allOrders = latestOrders;
     await window.SerraAPI.saveOrders(allOrders);
-    window.closeOrderEditModal();
+    closeOrderEditModal();
     renderUserOrders();
     alert(tAcc("order.updated_success"));
-  };
+  }
 
-  window.cancelUserOrder = async function (orderId) {
+  async function cancelUserOrder(orderId) {
     const latestOrders = await window.SerraAPI.getOrders();
     const order = latestOrders.find(
       (entry) => entry.id === orderId && entry.email === currentUser?.email
@@ -958,9 +978,15 @@
     await window.SerraAPI.saveOrders(allOrders);
     renderUserOrders();
     alert(tAcc("order.cancelled_success"));
-  };
+  }
 
   // --- INTERFACCIA AMMINISTRATORE ---
+
+  // -----------------------------------------------------------------------------
+  // Area account — Dashboard amministrativa, catalogo e gestione operativa degli ordini.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
   function renderAdminDashboard() {
     renderAdminOrdersList();
     renderAdminUsersList();
@@ -1017,10 +1043,10 @@
     });
   }
 
-  window.filterAdminPlants = function () {
+  function filterAdminPlants() {
     const query = document.getElementById("adminPlantSearch").value;
     renderAdminPlantsList(query);
-  };
+  }
 
   function renderAdminOrdersList() {
     const listContainer = document.getElementById("adminOrdersList");
@@ -1169,7 +1195,7 @@
     });
   }
 
-  window.cancelAdminOrder = async function (orderId) {
+  async function cancelAdminOrder(orderId) {
     if (confirm(tAcc("confirm.cancel_admin_order", { id: orderId }))) {
       const order = allOrders.find((entry) => entry.id === orderId);
       if (!order) return;
@@ -1179,11 +1205,11 @@
       renderAdminOrdersList();
       updateAdminStats();
     }
-  };
+  }
 
   // Un ordine può essere eliminato in modo permanente solo dopo essere stato
   // annullato, e solo dall'area amministrativa.
-  window.deleteCancelledOrder = async function (orderId) {
+  async function deleteCancelledOrder(orderId) {
     if (currentUser?.role !== "admin") return;
 
     const latestOrders = await window.SerraAPI.getOrders();
@@ -1196,9 +1222,9 @@
     renderAdminOrdersList();
     updateAdminStats();
     alert(tAcc("admin.delete_cancelled_order_success"));
-  };
+  }
 
-  window.updateOrderTracking = async function (orderId) {
+  async function updateOrderTracking(orderId) {
     const order = allOrders.find((entry) => entry.id === orderId);
     if (!order || normalizedOrderStatus(order.status) !== "Spedito") return;
 
@@ -1232,9 +1258,9 @@
     }
 
     renderAdminOrdersList();
-  };
+  }
 
-  window.handleDismissNotifications = async function () {
+  async function handleDismissNotifications() {
     if (!currentUser) return;
     const freshUser = allUsers.find((u) => u.email === currentUser.email);
     if (freshUser) {
@@ -1245,9 +1271,14 @@
     }
     const banner = document.getElementById("notificationBanner");
     if (banner) banner.hidden = true;
-  };
+  }
 
   function updateAdminStats() {
+    // -----------------------------------------------------------------------------
+    // Area account — Statistiche, grafici, utenti e dettaglio ordini amministrativo.
+    // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+    // -----------------------------------------------------------------------------
+
     const statsText = document.getElementById("adminStatsText");
     if (!statsText) return;
     // Rimuove i placeholder localizzati dai dati caricati.
@@ -1383,26 +1414,26 @@
     topContainer.innerHTML = topSvg;
   }
 
-  window.handleClearOrders = async function () {
+  async function handleClearOrders() {
     if (!confirmIrreversibleAction("orders")) return;
-    window.exportDatabaseJson();
+    exportDatabaseJson();
     allOrders = [];
     await window.SerraAPI.saveOrders([]);
     renderAdminOrdersList();
     updateAdminStats();
     alert(tAcc("alert.orders_cleared"));
-  };
+  }
 
-  window.handleClearUsers = async function () {
+  async function handleClearUsers() {
     if (!confirmIrreversibleAction("users")) return;
-    window.exportDatabaseJson();
+    exportDatabaseJson();
     const adminOnly = allUsers.filter((u) => u.role === "admin");
     allUsers = adminOnly;
     await window.SerraAPI.saveUsers(adminOnly);
     renderAdminUsersList();
     updateAdminStats();
     alert(tAcc("alert.users_cleared"));
-  };
+  }
 
   function renderAdminUsersList() {
     const listContainer = document.getElementById("adminUsersList");
@@ -1443,21 +1474,21 @@
     });
   }
 
-  window.handleDeleteUser = async function (email) {
+  async function handleDeleteUser(email) {
     if (confirm(tAcc("confirm.delete_user", { email }))) {
       allUsers = allUsers.filter((u) => u.email !== email);
       await window.SerraAPI.saveUsers(allUsers);
       renderAdminUsersList();
       updateAdminStats();
     }
-  };
+  }
 
   function getUserNameByEmail(email) {
     const u = allUsers.find((user) => user.email === email);
     return u ? fullUserName(u) : tAcc("customer.guest");
   }
 
-  window.openAdminOrderDetail = function (orderId) {
+  function openAdminOrderDetail(orderId) {
     const order = allOrders.find((entry) => entry.id === orderId);
     const modal = document.getElementById("adminOrderDetailModal");
     const content = document.getElementById("adminOrderDetailContent");
@@ -1471,15 +1502,21 @@
       .join("");
     content.innerHTML = `<div class="admin-order-detail-meta"><p><strong>${tAcc("admin.orders_client")}</strong><br>${escapeHtmlAccount(fullUserName(user) || tAcc("customer.guest"))}<br><small>${escapeHtmlAccount(order.email)}</small></p><p><strong>${tAcc("dash.order_status")}</strong><br><span class="status-badge ${order.status.toLowerCase().replace(" ", "-")}">${statusLabel(order.status)}</span></p><p><strong>${tAcc("dash.order_total")}</strong><br>€ ${Number(order.total || 0).toFixed(2)}</p></div><div class="admin-order-detail-list"><strong>${tAcc("dash.order_items")}</strong><ul>${items}</ul></div>`;
     modal.hidden = false;
-  };
+  }
 
-  window.closeAdminOrderDetail = function () {
+  function closeAdminOrderDetail() {
     const modal = document.getElementById("adminOrderDetailModal");
     if (modal) modal.hidden = true;
-  };
+  }
 
   // --- AZIONI LOGIN / REGISTRAZIONE ---
-  window.switchAuthTab = function (tab) {
+
+  // -----------------------------------------------------------------------------
+  // Area account — Accesso, registrazione, profilo e schede amministrative.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
+  function switchAuthTab(tab) {
     document
       .getElementById("tabLogin")
       .classList.toggle("active", tab === "login");
@@ -1488,9 +1525,9 @@
       .classList.toggle("active", tab === "register");
     document.getElementById("loginForm").hidden = tab !== "login";
     document.getElementById("registerForm").hidden = tab !== "register";
-  };
+  }
 
-  window.handleLogin = async function (e) {
+  async function handleLogin(e) {
     e.preventDefault();
     const email = document
       .getElementById("loginEmail")
@@ -1514,9 +1551,9 @@
       errorEl.textContent = tAcc("auth.login_error");
       errorEl.hidden = false;
     }
-  };
+  }
 
-  window.handleRegister = async function (e) {
+  async function handleRegister(e) {
     e.preventDefault();
     const nome = document.getElementById("regNome").value.trim();
     const cognome = document.getElementById("regCognome").value.trim();
@@ -1578,9 +1615,9 @@
       errorEl.textContent = tAcc("auth.register_error");
       errorEl.hidden = false;
     }
-  };
+  }
 
-  window.handleUpdateProfile = async function (e) {
+  async function handleUpdateProfile(e) {
     e.preventDefault();
     const nome = document.getElementById("profNome").value.trim();
     const cognome = document.getElementById("profCognome").value.trim();
@@ -1654,7 +1691,7 @@
         renderView();
       }
     }
-  };
+  }
 
   function syncProfileFieldVisibility() {
     const company =
@@ -1680,7 +1717,7 @@
   }
 
   // --- AZIONI ADMIN TAB ---
-  window.switchAdminTab = function (tab) {
+  function switchAdminTab(tab) {
     document
       .getElementById("btnTabAdminPlants")
       .classList.toggle("active", tab === "plants");
@@ -1702,10 +1739,16 @@
     if (tab === "backup") {
       updateAdminStats();
     }
-  };
+  }
 
   // Aggiorna lo stato di un ordine dalla sezione amministrativa.
-  window.handleToggleOrderStatus = async function (orderId, nextStatus) {
+
+  // -----------------------------------------------------------------------------
+  // Area account — Gestione catalogo, piante e operazioni di backup.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
+  async function handleToggleOrderStatus(orderId, nextStatus) {
     const index = allOrders.findIndex((o) => o.id === orderId);
     if (index !== -1) {
       const order = allOrders[index];
@@ -1743,10 +1786,10 @@
 
       renderAdminOrdersList();
     }
-  };
+  }
 
   // --- CRUD PIANTE (ADMIN) ---
-  window.openPlantModal = function (action, plantId = null) {
+  function openPlantModal(action, plantId = null) {
     const modal = document.getElementById("plantModal");
     const title = document.getElementById("plantModalTitle");
     const form = document.getElementById("plantForm");
@@ -1831,13 +1874,13 @@
       document.getElementById("editPlantFoto").value = "";
       updateModalPhotoPreview("", "");
     }
-  };
+  }
 
-  window.closePlantModal = function () {
+  function closePlantModal() {
     document.getElementById("plantModal").hidden = true;
-  };
+  }
 
-  window.handleSavePlant = async function (e) {
+  async function handleSavePlant(e) {
     e.preventDefault();
     const action = document.getElementById("editPlantAction").value;
     const id = document
@@ -1919,18 +1962,18 @@
 
     // Aggiorna la vista
     renderAdminPlantsList();
-  };
+  }
 
-  window.handleDeletePlant = async function (plantId) {
+  async function handleDeletePlant(plantId) {
     if (confirm(tAcc("confirm.delete_plant", { id: plantId }))) {
       allPlants = allPlants.filter((p) => p.id !== plantId);
       await window.SerraAPI.savePlants(allPlants);
       renderAdminPlantsList();
     }
-  };
+  }
 
   // --- OPERAZIONI BACKUP (ADMIN) ---
-  window.resetCatalogToDefault = async function () {
+  async function resetCatalogToDefault() {
     if (confirm(tAcc("confirm.reset_catalog"))) {
       const factoryPlants = cloneData(window.PLANTS || []);
       if (!factoryPlants.length) {
@@ -1938,15 +1981,15 @@
         return;
       }
       localStorage.removeItem("serra.custom_plants");
-      window.exportDatabaseJson();
+      exportDatabaseJson();
       await window.SerraAPI.savePlants(factoryPlants);
 
       alert(tAcc("alert.catalog_reset"));
       window.location.reload();
     }
-  };
+  }
 
-  window.exportDatabaseJson = function () {
+  function exportDatabaseJson() {
     const backup = getBackupPayload();
     const datePart = backup.exportedAt.slice(0, 10);
     downloadJson(backup, `orto_in_serra_backup_${datePart}.json`);
@@ -1960,9 +2003,15 @@
       })
     );
     renderBackupStatus();
-  };
+  }
 
   // Helper per emoji frutti di backup se manca
+
+  // -----------------------------------------------------------------------------
+  // Area account — Anteprime e risoluzione delle immagini delle piante.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
   function fruitEmoji(plantId) {
     const emojis = {
       pomodoro: "🍅",
@@ -2094,7 +2143,12 @@
     previewImg.src = src;
   }
 
-  window.downloadOrderPlantManual = async function (orderId, button) {
+  // -----------------------------------------------------------------------------
+  // Area account — Manuali, packing list, ricevute e stampa finale.
+  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // -----------------------------------------------------------------------------
+
+  async function downloadOrderPlantManual(orderId, button) {
     const order = allOrders.find((entry) => entry.id === orderId);
     if (!order) {
       alert(tAcc("alert.order_not_found"));
@@ -2126,9 +2180,9 @@
       if (button) button.disabled = false;
       if (label) label.textContent = previous || tAcc("dash.manual_btn");
     }
-  };
+  }
 
-  window.exportPackingSheet = function (orderId) {
+  function exportPackingSheet(orderId) {
     const order = allOrders.find((entry) => entry.id === orderId);
     if (!order) {
       alert(tAcc("alert.order_not_found"));
@@ -2248,9 +2302,9 @@
     `;
 
     window.print();
-  };
+  }
 
-  window.printInvoice = function (orderId) {
+  function printInvoice(orderId) {
     const order = allOrders.find((o) => o.id === orderId);
     if (!order) {
       alert(tAcc("alert.order_not_found"));
@@ -2389,5 +2443,5 @@
 
     // Esegui la stampa nativa del browser
     window.print();
-  };
+  }
 })();

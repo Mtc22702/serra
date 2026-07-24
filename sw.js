@@ -1,5 +1,5 @@
 /* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
-const CACHE_VERSION = "20260724-7eec0de04052";
+const CACHE_VERSION = "20260724-5193b4027f3e";
 // Incrementato a ogni rilascio forzato: assicura una nuova impronta della
 // cache anche quando la modifica è principalmente grafica o di distribuzione.
 const RELEASE_EPOCH = 3;

@@ -4,42 +4,12 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cssDir = path.join(root, "assets/css");
-const layerOrder = "@layer base, dark-theme, polish;\n\n";
-
 const bundles = {
-  "serra-home.css": [
-    "index.css",
-    "theme.css",
-    "uiux-polish.css",
-    "mobile-form-safety.css"
-  ],
-  "serra-configuratore.css": [
-    "index.css",
-    "style.css",
-    "theme.css",
-    "uiux-polish.css",
-    "mobile-form-safety.css"
-  ],
-  "serra-account.css": [
-    "index.css",
-    "theme.css",
-    "account.css",
-    "uiux-polish.css",
-    "mobile-form-safety.css"
-  ],
-  "serra-guida.css": [
-    "index.css",
-    "theme.css",
-    "uiux-polish.css",
-    "guida.css",
-    "mobile-form-safety.css"
-  ],
-  "serra-order-confirmation.css": [
-    "index.css",
-    "theme.css",
-    "order-confirmation.css",
-    "mobile-form-safety.css"
-  ]
+  "serra-home.css": "pages/home.css",
+  "serra-configuratore.css": "pages/configuratore.css",
+  "serra-account.css": "pages/account.css",
+  "serra-guida.css": "pages/guida.css",
+  "serra-order-confirmation.css": "pages/ordine-confermato.css"
 };
 
 const isExternalUrl = (value) =>
@@ -96,13 +66,11 @@ async function replaceAsync(value, expression, callback) {
 }
 
 await mkdir(cssDir, { recursive: true });
-for (const [bundleName, entries] of Object.entries(bundles)) {
+for (const [bundleName, entry] of Object.entries(bundles)) {
   const outputFile = path.join(cssDir, bundleName);
-  const content = await Promise.all(
-    entries.map((entry) => inlineCss(path.join(cssDir, entry), outputFile))
-  );
+  const content = await readFile(path.join(cssDir, entry), "utf8");
   await writeFile(
     outputFile,
-    `/* File generato con npm run build:css: modificare i moduli CSS sorgente. */\n${layerOrder}${content.join("\n")}`
+    `/* File generato con npm run build:css: modificare il CSS completo in pages/. */\n${content}`
   );
 }

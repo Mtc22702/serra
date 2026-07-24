@@ -1,5 +1,4 @@
-/* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Stili esclusivi di home.css: caricati dopo base.css per preservare la cascata. */
+/* Stili esclusivi di guida.css: caricati dopo base.css per preservare la cascata. */
 /* Moduli CSS del tema globale */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
@@ -6669,6 +6668,553 @@
     display: none !important;
   }
 } /* fine @layer polish */
+
+/* Variabili grafiche della pagina guida. */
+:root {
+  --guide-green: #245733;
+  --guide-green-2: #4f9a3f;
+  --guide-paper: var(--serra-paper);
+  --guide-ink: #1f3428;
+  --guide-muted: #617164;
+}
+/* Modello di dimensionamento condiviso. */
+* {
+  box-sizing: border-box;
+}
+/* Stile generale della pagina. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--guide-ink);
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: linear-gradient(150deg, #e4efe2 0%, #f5f9f3 55%, #e7f1e5 100%);
+}
+/* Header desktop senza navigazione centrale. */
+@media (min-width: 901px) {
+  .guide-page-header .site-header-inner {
+    grid-template-columns: minmax(190px, auto) auto;
+  }
+}
+.guide-page-header .nav-link--home {
+  border-radius: 13px;
+}
+/* Header compatto con azioni sempre visibili. */
+@media (max-width: 900px) {
+  .guide-page-header .site-header-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .guide-page-header .nav-actions {
+    width: auto;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+  }
+  .guide-page-header .nav-actions > .nav-lang {
+    display: flex;
+  }
+  /* Mantiene centrata l'icona del tema. */
+  .guide-page-header .nav-actions > .theme-toggle {
+    display: inline-grid;
+  }
+}
+/* Header mobile con Home sul lato sinistro. */
+@media (max-width: 660px) {
+  /* Nasconde l'etichetta Home per lasciare spazio al marchio. */
+  .guide-page-header .nav-link--home {
+    position: absolute;
+    top: 50%;
+    left: 0.68rem;
+    z-index: 2;
+    width: 40px;
+    min-width: 40px;
+    height: 38px;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transform: translateY(-50%);
+  }
+  .guide-page-header .nav-link--home .nav-link-label {
+    display: none;
+  }
+  .guide-page-header .nav-link--home .nav-link-icon {
+    margin-right: 0;
+    font-size: 1.1rem;
+  }
+}
+/* Contenitore principale con spazio per l'header fisso. */
+main {
+  width: min(100% - 2rem, 900px);
+  margin: 0 auto;
+  padding: calc(var(--nav-h, 76px) + clamp(2rem, 7vw, 5rem)) 0 3rem;
+}
+/* Introduzione e selezione del livello. */
+.guide-hero {
+  text-align: center;
+}
+.guide-kicker,
+.route-heading p {
+  margin: 0;
+  color: var(--guide-green-2);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+.guide-hero h1 {
+  max-width: 680px;
+  margin: 0.4rem auto 0.75rem;
+  font:
+    600 clamp(2.1rem, 7vw, 4.3rem)/1.08 Fraunces,
+    serif;
+}
+.guide-hero > p:not(.guide-kicker) {
+  max-width: 560px;
+  margin: 0 auto;
+  color: var(--guide-muted);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+/* Barra delle opzioni di percorso. */
+.guide-tabs {
+  display: grid;
+  gap: 0.3rem;
+  max-width: 720px;
+  margin: 2rem auto 0;
+  padding: 0.35rem;
+  border: 1px solid rgba(36, 87, 51, 0.14);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--guide-green) 6%, #fffdf7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 8px 20px rgba(7, 31, 21, 0.07);
+}
+/* Opzioni affiancate da tablet in su. */
+@media (min-width: 681px) {
+  .guide-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 940px;
+    padding: 0.4rem;
+  }
+  .guide-tab {
+    min-height: 92px;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.7rem 0.65rem 0.7rem 0.85rem;
+  }
+  .guide-tab-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 1.05rem;
+  }
+  .guide-tab-body b {
+    font-size: 0.93rem;
+  }
+  .guide-tab-body small {
+    font-size: 0.68rem;
+  }
+}
+.guide-tab {
+  --guide-accent: #79b75a;
+  --guide-accent-text: #245733;
+  position: relative;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.75rem 0.55rem 0.95rem;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+  border-radius: 13px;
+  color: #5b6b5e;
+  background: transparent;
+  box-shadow: none;
+  font-family:
+    DM Sans,
+    sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+.guide-tab:not(.is-active):hover {
+  color: var(--guide-accent-text);
+  background: color-mix(in srgb, var(--guide-accent) 10%, transparent);
+}
+.guide-tab::before {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0;
+  width: 4px;
+  content: "";
+  border-radius: 0 3px 3px 0;
+  background: var(--guide-accent);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.guide-tab.is-active::before {
+  opacity: 1;
+}
+.guide-tab--intermedio {
+  --guide-accent: #d5a343;
+  --guide-accent-text: #674b0d;
+}
+.guide-tab--esperto {
+  --guide-accent: #d46f52;
+  --guide-accent-text: #71311f;
+}
+.guide-tab-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: rgba(36, 87, 51, 0.07);
+  box-shadow: none;
+  font-size: 1.2rem;
+  opacity: 0.75;
+}
+.guide-tab.is-active .guide-tab-icon {
+  border-color: color-mix(in srgb, var(--guide-accent) 38%, transparent);
+  background: color-mix(in srgb, var(--guide-accent) 16%, var(--serra-white));
+  box-shadow: 0 4px 10px
+    color-mix(in srgb, var(--guide-accent) 16%, transparent);
+  opacity: 1;
+}
+.guide-tab-body {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+.guide-tab-body b {
+  font-family: Fraunces, serif;
+  font-size: 1.04rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+.guide-tab-body small {
+  color: #7c8a7e;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.guide-tab.is-active .guide-tab-body small {
+  color: var(--guide-accent-text);
+}
+.guide-tab.is-active {
+  border-color: color-mix(in srgb, var(--guide-accent) 45%, transparent);
+  color: var(--guide-accent-text);
+  background: color-mix(in srgb, var(--guide-accent) 13%, #fffdf7);
+  box-shadow:
+    0 10px 22px rgba(7, 31, 21, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.guide-tab:focus-visible,
+.guide-cta:focus-visible {
+  outline: 3px solid var(--guide-green-2);
+  outline-offset: 3px;
+}
+/* Pannello del percorso selezionato. */
+.guide-route {
+  margin-top: 2.1rem;
+  padding: clamp(1rem, 3.4vw, 2rem);
+  border: 1px solid rgba(36, 87, 51, 0.13);
+  border-radius: 22px;
+  background: rgba(255, 253, 246, 0.88);
+  box-shadow: 0 18px 44px rgba(36, 87, 51, 0.1);
+}
+.route-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(36, 87, 51, 0.12);
+}
+.route-heading > span {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  font-size: 1.5rem;
+  background: #e8f2e1;
+}
+.route-heading--intermediate > span {
+  background: #fff2d4;
+}
+.route-heading--expert > span {
+  background: #f9e4d9;
+}
+.route-heading h2 {
+  margin: 0.12rem 0 0;
+  font:
+    700 clamp(1.32rem, 4vw, 2rem)/1.12 Fraunces,
+    serif;
+}
+/* Elenco numerato dei passaggi. */
+.guide-steps {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1.25rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: steps;
+}
+.guide-steps li {
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr) 34px;
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.82rem;
+  border-radius: 14px;
+  background: #f6f8f0;
+}
+.step-no {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--serra-white);
+  background: var(--guide-green);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.guide-steps h3 {
+  margin: 0.1rem 0 0.2rem;
+  font-size: 0.98rem;
+}
+.guide-steps p {
+  margin: 0;
+  color: var(--guide-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.step-icon {
+  padding-top: 0.12rem;
+  text-align: center;
+  font-size: 1.3rem;
+}
+/* Azione di apertura del configuratore. */
+.guide-cta {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 1.5rem auto 0;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  border-radius: 11px;
+  color: var(--serra-white);
+  border: 0;
+  background: var(--guide-green);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 7px 14px rgba(36, 87, 51, 0.2);
+}
+.guide-cta:hover {
+  background: var(--serra-green);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(36, 87, 51, 0.26);
+}
+.guide-cta span:last-child {
+  font-size: 1.05rem;
+}
+/* Nota comune a tutti i livelli. */
+.guide-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin: 1.2rem auto 0;
+  max-width: 680px;
+  padding: 1rem;
+  border-radius: 15px;
+  color: #405543;
+  background: rgba(255, 255, 255, 0.64);
+}
+.guide-help p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.guide-help span {
+  font-size: 1.25rem;
+}
+/* Adattamenti per smartphone. */
+@media (max-width: 580px) {
+  main {
+    width: min(100% - 1.2rem, 900px);
+    padding-top: calc(var(--nav-h, 60px) + 1.53rem);
+  }
+  /* Hero compatto su schermi piccoli. */
+  .guide-hero h1 {
+    margin-top: 0.36rem;
+    margin-bottom: 0.68rem;
+  }
+  .guide-tabs {
+    margin-top: 1.8rem;
+    gap: 0.28rem;
+    padding: 0.3rem;
+  }
+  .guide-hero h1 {
+    max-width: 17ch;
+    margin-inline: auto;
+    font-size: clamp(1.9rem, 8vw, 2.15rem);
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .guide-tab {
+    min-height: 58px;
+    gap: 0.46rem;
+    padding: 0.4rem 0.5rem 0.4rem 0.7rem;
+  }
+  .guide-tab-icon {
+    width: 33px;
+    height: 33px;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  .guide-tab-body b {
+    font-size: 0.92rem;
+  }
+  .guide-tab-body small {
+    font-size: 0.67rem;
+  }
+  .guide-route {
+    margin-top: 1.4rem;
+    padding: 0.85rem;
+    border-radius: 17px;
+  }
+  .route-heading > span {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  .guide-steps {
+    gap: 0.5rem;
+  }
+  .guide-steps li {
+    grid-template-columns: 27px minmax(0, 1fr) 28px;
+    gap: 0.5rem;
+    padding: 0.7rem;
+  }
+  .step-no {
+    width: 25px;
+    height: 25px;
+  }
+  .guide-steps h3 {
+    font-size: 0.9rem;
+  }
+  .guide-steps p {
+    font-size: 0.8rem;
+  }
+  .step-icon {
+    font-size: 1.08rem;
+  }
+}
+/* Animazioni secondo le preferenze utente. */
+@media (prefers-reduced-motion: no-preference) {
+  .guide-tab,
+  .guide-cta {
+    transition:
+      transform 0.18s ease,
+      background-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+}
+/* Tema scuro. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+html[data-theme="dark"] body {
+  color: var(--serra-soft-surface);
+  background:
+    radial-gradient(circle at 20% 0%, #254b34 0%, transparent 37%),
+    linear-gradient(150deg, #102019, #162c20 64%, #10251a);
+}
+html[data-theme="dark"] .guide-hero > p:not(.guide-kicker),
+html[data-theme="dark"] .guide-steps p {
+  color: #b6c8b9;
+}
+html[data-theme="dark"] .guide-tabs {
+  border-color: rgba(155, 215, 169, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+}
+html[data-theme="dark"] .guide-tab {
+  color: #a9bdac;
+}
+html[data-theme="dark"] .guide-tab:not(.is-active):hover {
+  color: #d8efdc;
+  background: rgba(255, 255, 255, 0.05);
+}
+html[data-theme="dark"] .guide-tab-icon {
+  background: rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .guide-tab.is-active {
+  border-color: var(--guide-accent);
+  color: #d8efdc;
+  background: color-mix(in srgb, var(--guide-accent) 24%, #152a1d);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .guide-tab.is-active .guide-tab-icon {
+  border-color: color-mix(in srgb, var(--guide-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--guide-accent) 30%, #152a1d);
+}
+html[data-theme="dark"] .guide-tab-body small {
+  color: #93a696;
+}
+html[data-theme="dark"] .guide-tab.is-active .guide-tab-body small {
+  color: #d8efdc;
+}
+html[data-theme="dark"] .guide-cta {
+  border-color: #8bd49e;
+  color: #0b1a13;
+  background: #8bd49e;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.26);
+}
+html[data-theme="dark"] .guide-route {
+  border-color: rgba(155, 215, 169, 0.2);
+  background: rgba(16, 34, 24, 0.92);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+}
+html[data-theme="dark"] .route-heading {
+  border-color: rgba(155, 215, 169, 0.18);
+}
+html[data-theme="dark"] .route-heading > span {
+  background: rgba(139, 212, 158, 0.15);
+}
+html[data-theme="dark"] .route-heading--intermediate > span {
+  background: rgba(217, 164, 65, 0.16);
+}
+html[data-theme="dark"] .route-heading--expert > span {
+  background: rgba(200, 100, 60, 0.18);
+}
+html[data-theme="dark"] .guide-steps li {
+  background: rgba(255, 255, 255, 0.055);
+}
+html[data-theme="dark"] .step-no {
+  color: #0b1a13;
+  background: #8bd49e;
+}
+html[data-theme="dark"] .guide-help {
+  color: #d8efdc;
+  background: rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .guide-cta:hover {
+  background: #a7e6b4;
+}
 
 /* Protezioni trasversali per l'uso su smartphone. */
 @media (max-width: 660px) {

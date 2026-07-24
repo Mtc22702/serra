@@ -1,3 +1,6 @@
+/** Risorse catalogo: piante, foto, contenuti editoriali, sicurezza HTML e manuali. */
+// Archivio piante — gruppo 1 di 9.
+
 // Archivio condiviso delle piante
 const DATA_EXPORT = (function (root) {
   // Anagrafica colture
@@ -286,6 +289,9 @@ const DATA_EXPORT = (function (root) {
       },
       tipo: "foglia"
     },
+
+// Archivio piante — gruppo 2 di 9.
+
     {
       id: "spinaci",
       nome: "Spinaci",
@@ -559,6 +565,9 @@ const DATA_EXPORT = (function (root) {
       },
       tipo: "aromatica"
     },
+
+// Archivio piante — gruppo 3 di 9.
+
     {
       id: "coriandolo",
       nome: "Coriandolo",
@@ -860,6 +869,9 @@ const DATA_EXPORT = (function (root) {
       tipo: "radice",
       notaBreve: "Il più veloce: pronto in 3–4 settimane."
     },
+
+// Archivio piante — gruppo 4 di 9.
+
     {
       id: "barbabietola",
       nome: "Barbabietola",
@@ -1122,6 +1134,9 @@ const DATA_EXPORT = (function (root) {
       },
       tipo: "radice"
     },
+
+// Archivio piante — gruppo 5 di 9.
+
     {
       id: "radice_prezemolo",
       nome: "Prezzemolo da radice",
@@ -1381,6 +1396,9 @@ const DATA_EXPORT = (function (root) {
       },
       tipo: "aromatica"
     },
+
+// Archivio piante — gruppo 6 di 9.
+
     {
       id: "menta",
       nome: "Menta",
@@ -1637,6 +1655,9 @@ const DATA_EXPORT = (function (root) {
       },
       tipo: "foglia"
     },
+
+// Archivio piante — gruppo 7 di 9.
+
     {
       id: "senape_foglia",
       nome: "Senape da foglia",
@@ -1897,6 +1918,9 @@ const DATA_EXPORT = (function (root) {
       },
       tipo: "foglia"
     },
+
+// Archivio piante — gruppo 8 di 9.
+
     {
       id: "cavolo_navone",
       nome: "Navone",
@@ -2123,6 +2147,9 @@ const DATA_EXPORT = (function (root) {
       col: { l1: "#6a9a5a", l2: "#4e7642" },
       tipo: "aromatica"
     },
+
+// Archivio piante — gruppo 9 di 9.
+
     {
       id: "cimbru",
       nome: "Cimbru",
@@ -4118,3 +4145,1506 @@ const DATA_EXPORT = (function (root) {
   }
   return DATA;
 })(typeof window !== "undefined" ? window : globalThis);
+
+
+
+// Mappa condivisa delle foto del catalogo.
+const PLANT_PHOTO_MAP = {
+  pomodoro: "assets/img/photo/pomodoro.webp",
+  peperone: "assets/img/photo/peperone.webp",
+  peperoncino: "assets/img/photo/peperoncino.webp",
+  melanzana: "assets/img/photo/melanzana.webp",
+  zucchina: "assets/img/photo/zucchina.webp",
+  zucca: "assets/img/photo/zucca.webp",
+  cetriolo: "assets/img/photo/cetriolo.webp",
+  melone: "assets/img/photo/melone.webp",
+  anguria: "assets/img/photo/anguria.webp",
+  lattuga: "assets/img/photo/lattuga.webp",
+  radicchio: "assets/img/photo/radicchio.webp",
+  rucola: "assets/img/photo/rucola.webp",
+  spinaci: "assets/img/photo/spinaci.webp",
+  bietola: "assets/img/photo/bietola_coste.webp",
+  cavolo: "assets/img/photo/cavolo_cappuccio.webp",
+  verza: "assets/img/photo/verza.webp",
+  broccolo: "assets/img/photo/broccolo.webp",
+  cavolfiore: "assets/img/photo/cavolfiore.webp",
+  cavolonero: "assets/img/photo/cavolo_nero.webp",
+  cavolorapa: "assets/img/photo/cavolo_rapa.webp",
+  carota: "assets/img/photo/carota.webp",
+  finocchio: "assets/img/photo/finocchio.webp",
+  prezzemolo: "assets/img/photo/prezzemolo.webp",
+  basilico: "assets/img/photo/basilico.webp",
+  coriandolo: "assets/img/photo/coriandolo.webp",
+  aneto: "assets/img/photo/aneto.webp",
+  cipolla: "assets/img/photo/cipolla.webp",
+  aglio: "assets/img/photo/aglio.webp",
+  porro: "assets/img/photo/porro.webp",
+  scalogno: "assets/img/photo/scalogno.webp",
+  fagiolino: "assets/img/photo/fagiolino_nano.webp",
+  fagiolo: "assets/img/photo/fagiolo_rampicante.webp",
+  pisello: "assets/img/photo/pisello.webp",
+  fragola: "assets/img/photo/fragola.webp",
+  sedano: "assets/img/photo/sedano.webp",
+  ravanello: "assets/img/photo/ravanello.webp",
+  barbabietola: "assets/img/photo/barbabietola.webp",
+  cicoria: "assets/img/photo/cicoria.webp",
+  indivia: "assets/img/photo/indivia_scarola.webp",
+  pakchoi: "assets/img/photo/pak_choi.webp",
+  cavoletti: "assets/img/photo/cavoletti_bruxelles.webp",
+  rapa: "assets/img/photo/rapa.webp",
+  valerianella: "assets/img/photo/valerianella.webp",
+  rosmarino: "assets/img/photo/rosmarino.webp",
+  timo: "assets/img/photo/timo.webp",
+  origano: "assets/img/photo/origano.webp",
+  salvia: "assets/img/photo/salvia.webp",
+  pastinaca: "assets/img/photo/pastinaca.webp",
+  radice_prezemolo: "assets/img/photo/radice_prezemolo.webp",
+  sedano_rapa: "assets/img/photo/sedano_rapa.webp",
+  rafano: "assets/img/photo/rafano.webp",
+  patata: "assets/img/photo/patata.webp",
+  patata_dolce: "assets/img/photo/patata_dolce.webp",
+  cipolla_rossa: "assets/img/photo/cipolla_rossa.webp",
+  cipollotto: "assets/img/photo/cipollotto.webp",
+  erba_cipollina: "assets/img/photo/erba_cipollina.webp",
+  loboda: "assets/img/photo/loboda.webp",
+  stevia_dolce: "assets/img/photo/stevia_dolce.webp",
+  leustean: "assets/img/photo/leustean.webp",
+  dragoncello: "assets/img/photo/dragoncello.webp",
+  menta: "assets/img/photo/menta.webp",
+  maggiorana: "assets/img/photo/maggiorana.webp",
+  camomilla: "assets/img/photo/camomilla.webp",
+  mais_dolce: "assets/img/photo/mais_dolce.webp",
+  tomatillo: "assets/img/photo/tomatillo.webp",
+  physalis: "assets/img/photo/physalis.webp",
+  cucamelon: "assets/img/photo/cucamelon.webp",
+  asparago: "assets/img/photo/asparago.webp",
+  carciofo: "assets/img/photo/carciofo.webp",
+  cardo: "assets/img/photo/cardo.webp",
+  crescione: "assets/img/photo/crescione.webp",
+  mizuna: "assets/img/photo/mizuna.webp",
+  senape_foglia: "assets/img/photo/senape_foglia.webp",
+  tatsoi: "assets/img/photo/tatsoi.webp",
+  cavolo_cinese: "assets/img/photo/cavolo_cinese.webp",
+  daikon: "assets/img/photo/daikon.webp",
+  scorzonera: "assets/img/photo/scorzonera.webp",
+  topinambur: "assets/img/photo/topinambur.webp",
+  fava: "assets/img/photo/fava.webp",
+  soia_edamame: "assets/img/photo/soia_edamame.webp",
+  cece: "assets/img/photo/cece.webp",
+  lenticchia: "assets/img/photo/lenticchia.webp",
+  fagiolo_borlotto: "assets/img/photo/fagiolo_borlotto.webp",
+  cavolo_rosso: "assets/img/photo/cavolo_rosso.webp",
+  cavolo_navone: "assets/img/photo/cavolo_navone.webp",
+  broccolo_rapa: "assets/img/photo/broccolo_rapa.webp",
+  shiso: "assets/img/photo/shiso.webp",
+  broccolo_romanesco: "assets/img/photo/broccolo_romanesco.webp",
+  friggitello: "assets/img/photo/friggitello.webp",
+  agretti: "assets/img/photo/agretti.webp",
+  borragine: "assets/img/photo/borragine.webp",
+  catalogna: "assets/img/photo/catalogna.webp",
+  acetosa: "assets/img/photo/acetosa.webp",
+  leurda: "assets/img/photo/leurda.webp",
+  melissa: "assets/img/photo/melissa.webp",
+  cerfoglio: "assets/img/photo/cerfoglio.webp",
+  cimbru: "assets/img/photo/cimbru.webp"
+};
+const preloadedPlantPhotos = new Set();
+
+// Restituisce la foto della pianta usando il percorso salvato o il nome derivato dall'ID.
+function resolvePlantPhoto(plant, id) {
+  const p = plant || {};
+  if (p.foto) {
+    if (
+      p.foto.startsWith("http://") ||
+      p.foto.startsWith("https://") ||
+      p.foto.startsWith("data:")
+    ) {
+      return p.foto;
+    }
+    if (p.foto.includes("/")) return p.foto;
+    return `assets/img/photo/${p.foto}`;
+  }
+  if (PLANT_PHOTO_MAP[id]) return PLANT_PHOTO_MAP[id];
+  return `assets/img/photo/${id}.webp`;
+}
+
+// Avvia il download di una miniatura prima che il pannello che la usa diventi
+// visibile. Il browser riutilizza poi la stessa risorsa per catalogo e carrello.
+function preloadPlantPhoto(plant, id) {
+  const src = resolvePlantPhoto(plant, id);
+  if (!src || preloadedPlantPhotos.has(src) || typeof Image === "undefined")
+    return;
+
+  preloadedPlantPhotos.add(src);
+  const image = new Image();
+  image.decoding = "async";
+  image.src = src;
+}
+
+if (typeof window !== "undefined") {
+  window.resolvePlantPhoto = resolvePlantPhoto;
+  window.preloadPlantPhoto = preloadPlantPhoto;
+}
+
+
+// Testi editoriali brevi e note agronomiche condivisi tra catalogo,
+// configuratore e manuali post-acquisto.
+(function (root) {
+  const GROUPS = {
+    it: {
+      frutto:
+        "Ortaggio da frutto, colorato e versatile nelle preparazioni fresche e cotte.",
+      foglia:
+        "Ortaggio da foglia fresco e versatile, adatto a raccolte e ricette di stagione.",
+      radice:
+        "Ortaggio da radice o bulbo, apprezzato per il gusto deciso e la grande versatilità.",
+      legume:
+        "Legume nutriente e saporito, protagonista di piatti semplici e completi.",
+      aromatica:
+        "Pianta aromatica dal profumo riconoscibile, ideale per dare carattere alle ricette."
+    },
+    ro: {
+      frutto:
+        "Legumă cu fructe colorate și versatile, potrivită pentru preparate proaspete sau gătite.",
+      foglia:
+        "Legumă cu frunze fragede și versatile, potrivită pentru recolte și rețete de sezon.",
+      radice:
+        "Legumă cu rădăcină sau bulb, apreciată pentru gustul distinct și versatilitate.",
+      legume:
+        "Leguminoasă hrănitoare și gustoasă, potrivită pentru preparate simple și consistente.",
+      aromatica:
+        "Plantă aromatică cu parfum distinct, ideală pentru a da personalitate rețetelor."
+    }
+  };
+
+  const SPECIAL = {
+    it: {
+      pomodoro:
+        "Frutto estivo succoso e aromatico, disponibile in molte varietà da insalata e da salsa.",
+      peperone:
+        "Frutto dolce e croccante, disponibile in colori e forme diverse.",
+      peperoncino:
+        "Capsicum dal carattere piccante, con intensità, colori e forme molto diverse.",
+      melanzana:
+        "Ortaggio estivo dalla polpa morbida, protagonista di molti piatti mediterranei.",
+      zucchina:
+        "Ortaggio estivo delicato e versatile, apprezzato anche per i suoi fiori commestibili.",
+      zucca:
+        "Frutto autunnale dalla polpa dolce e vellutata, ottimo in ricette dolci e salate.",
+      cetriolo:
+        "Frutto fresco, croccante e ricco d'acqua, ideale per insalate e conserve.",
+      melone:
+        "Frutto estivo dolce e profumato, disponibile in numerose varietà.",
+      anguria:
+        "Grande frutto estivo dalla polpa dolce, fresca e ricca d'acqua.",
+      fragola:
+        "Piccolo frutto rosso, profumato e dolce, tra i più amati della bella stagione.",
+      lattuga:
+        "Insalata tenera e leggera, disponibile in cespi, colori e consistenze differenti.",
+      rucola: "Foglia dal gusto vivace e leggermente piccante, ottima fresca.",
+      spinaci:
+        "Foglia verde tenera e nutriente, versatile sia cruda sia cotta.",
+      radicchio: "Cicoria dal colore intenso e dal piacevole gusto amarognolo.",
+      cavolonero:
+        "Kale toscano dalle foglie scure e bollose, dal sapore intenso.",
+      broccolo_romanesco:
+        "Brassicacea dalla caratteristica testa verde a spirale, scenografica e saporita.",
+      carota:
+        "Radice dolce e croccante, disponibile in diverse forme e colori.",
+      ravanello:
+        "Piccola radice croccante dal gusto fresco e leggermente piccante.",
+      aglio:
+        "Bulbo aromatico composto da spicchi, essenziale in moltissime cucine.",
+      patata:
+        "Tubero nutriente e versatile, base di innumerevoli ricette tradizionali.",
+      patata_dolce:
+        "Tubero dalla polpa dolce e colorata, morbido e versatile in cucina.",
+      fagiolo: "Legume ricco e sostanzioso, consumato fresco oppure secco.",
+      fagiolino: "Legume dal baccello tenero e croccante, dal sapore delicato.",
+      pisello:
+        "Legume dolce e tenero, apprezzato fresco e in numerose ricette.",
+      basilico:
+        "Aromatica mediterranea dal profumo fresco e inconfondibile, simbolo della cucina italiana.",
+      rosmarino:
+        "Arbusto mediterraneo sempreverde dal profumo intenso e resinoso.",
+      menta:
+        "Aromatica fresca e balsamica, ideale in bevande, salse e piatti estivi.",
+      camomilla:
+        "Pianta dai piccoli fiori profumati, tradizionalmente usati per infusi delicati.",
+      borragine:
+        "Pianta dalle foglie morbide e dai fiori azzurri commestibili.",
+      physalis:
+        "Piccolo frutto dorato racchiuso in un calice simile a una lanterna.",
+      cucamelon:
+        "Minuscolo frutto croccante, simile a un'anguria e dal gusto agrumato.",
+      tomatillo:
+        "Frutto verde avvolto in un calice cartaceo, tipico della cucina messicana.",
+      shiso:
+        "Aromatica asiatica dalle foglie decorative e dal profumo complesso.",
+      topinambur:
+        "Pianta vigorosa dai fiori gialli e dai tuberi dal gusto delicato.",
+      asparago:
+        "Ortaggio perenne dai giovani germogli teneri e dal sapore raffinato.",
+      carciofo:
+        "Grande pianta mediterranea con capolini carnosi e un gusto inconfondibile."
+    },
+    ro: {
+      pomodoro:
+        "Fruct de vară suculent și aromat, disponibil în multe soiuri pentru salate și sosuri.",
+      peperone:
+        "Fruct dulce și crocant, disponibil în culori și forme variate.",
+      peperoncino:
+        "Capsicum cu gust picant, în intensități, culori și forme foarte diferite.",
+      melanzana:
+        "Legumă de vară cu miez fin, prezentă în multe preparate mediteraneene.",
+      zucchina:
+        "Legumă de vară delicată și versatilă, apreciată inclusiv pentru florile comestibile.",
+      zucca:
+        "Fruct de toamnă cu miez dulce și catifelat, potrivit pentru rețete dulci și sărate.",
+      cetriolo:
+        "Fruct proaspăt, crocant și bogat în apă, ideal pentru salate și murături.",
+      melone:
+        "Fruct de vară dulce și parfumat, disponibil în numeroase soiuri.",
+      anguria: "Fruct mare de vară, cu miez dulce, răcoritor și bogat în apă.",
+      fragola:
+        "Fruct mic, roșu, parfumat și dulce, foarte iubit în sezonul cald.",
+      lattuga:
+        "Salată fragedă și ușoară, disponibilă în forme, culori și texturi diferite.",
+      rucola:
+        "Frunză cu gust vioi și ușor picant, excelentă consumată proaspătă.",
+      spinaci:
+        "Frunză verde, fragedă și hrănitoare, versatilă crudă sau gătită.",
+      radicchio: "Cicoare cu o culoare intensă și un gust plăcut, ușor amărui.",
+      cavolonero:
+        "Kale toscan cu frunze întunecate și reliefate, cu gust intens.",
+      broccolo_romanesco:
+        "Brasicacee cu inflorescență verde spiralată, spectaculoasă și gustoasă.",
+      carota:
+        "Rădăcină dulce și crocantă, disponibilă în forme și culori diferite.",
+      ravanello: "Rădăcină mică și crocantă, cu gust proaspăt și ușor picant.",
+      aglio: "Bulb aromatic format din căței, esențial în numeroase bucătării.",
+      patata: "Tubercul hrănitor și versatil, baza multor rețete tradiționale.",
+      patata_dolce:
+        "Tubercul cu miez dulce și colorat, fin și versatil în bucătărie.",
+      fagiolo:
+        "Leguminoasă consistentă și hrănitoare, consumată proaspătă sau uscată.",
+      fagiolino: "Leguminoasă cu păstaie fragedă și crocantă, cu gust delicat.",
+      pisello:
+        "Leguminoasă dulce și fragedă, apreciată proaspătă și în multe rețete.",
+      basilico:
+        "Aromatică mediteraneeană cu parfum proaspăt și inconfundabil, simbol al bucătăriei italiene.",
+      rosmarino:
+        "Arbust mediteraneean veșnic verde, cu parfum intens și rășinos.",
+      menta:
+        "Aromatică proaspătă și balsamică, ideală în băuturi, sosuri și preparate de vară.",
+      camomilla:
+        "Plantă cu flori mici și parfumate, folosite tradițional pentru infuzii delicate.",
+      borragine: "Plantă cu frunze moi și flori albastre comestibile.",
+      physalis:
+        "Fruct mic și auriu, învelit într-un caliciu asemănător unui felinar.",
+      cucamelon:
+        "Fruct minuscul și crocant, asemănător unui pepene verde, cu gust citric.",
+      tomatillo:
+        "Fruct verde învelit într-un caliciu fin, specific bucătăriei mexicane.",
+      shiso: "Aromatică asiatică cu frunze decorative și parfum complex.",
+      topinambur:
+        "Plantă viguroasă cu flori galbene și tuberculi cu gust delicat.",
+      asparago: "Legumă perenă cu lăstari fragezi și gust rafinat.",
+      carciofo:
+        "Plantă mediteraneeană mare, cu inflorescențe cărnoase și gust inconfundabil."
+    }
+  };
+
+  const CROP_GROUPS = {
+    fruitVine: [
+      "pomodoro",
+      "peperone",
+      "peperoncino",
+      "melanzana",
+      "tomatillo",
+      "physalis",
+      "friggitello"
+    ],
+    cucurbit: [
+      "zucchina",
+      "zucca",
+      "cetriolo",
+      "melone",
+      "anguria",
+      "cucamelon"
+    ],
+    leafyCut: [
+      "lattuga",
+      "rucola",
+      "spinaci",
+      "bietola",
+      "cicoria",
+      "indivia",
+      "valerianella",
+      "loboda",
+      "crescione",
+      "mizuna",
+      "senape_foglia",
+      "tatsoi",
+      "catalogna",
+      "acetosa",
+      "agretti"
+    ],
+    brassica: [
+      "cavolo",
+      "verza",
+      "broccolo",
+      "cavolfiore",
+      "cavolonero",
+      "cavolorapa",
+      "pakchoi",
+      "cavoletti",
+      "cavolo_cinese",
+      "cavolo_rosso",
+      "cavolo_navone",
+      "broccolo_rapa",
+      "broccolo_romanesco"
+    ],
+    directRoot: [
+      "carota",
+      "ravanello",
+      "barbabietola",
+      "rapa",
+      "pastinaca",
+      "radice_prezemolo",
+      "sedano_rapa",
+      "rafano",
+      "daikon",
+      "scorzonera"
+    ],
+    allium: [
+      "cipolla",
+      "aglio",
+      "porro",
+      "scalogno",
+      "cipolla_rossa",
+      "cipollotto",
+      "erba_cipollina",
+      "leurda"
+    ],
+    tuber: ["patata", "patata_dolce", "topinambur"],
+    climbingLegume: ["fagiolo", "pisello", "fagiolo_borlotto"],
+    bushLegume: ["fagiolino", "fava", "soia_edamame", "cece", "lenticchia"],
+    woodyHerb: [
+      "rosmarino",
+      "timo",
+      "origano",
+      "salvia",
+      "dragoncello",
+      "maggiorana",
+      "menta",
+      "melissa",
+      "cimbru"
+    ],
+    annualHerb: [
+      "prezzemolo",
+      "basilico",
+      "coriandolo",
+      "aneto",
+      "stevia_dolce",
+      "leustean",
+      "shiso",
+      "cerfoglio"
+    ],
+    flowerHerb: ["camomilla", "borragine"],
+    perennial: ["asparago", "carciofo", "cardo"]
+  };
+
+  const GROUP_BY_ID = Object.entries(CROP_GROUPS).reduce(
+    (result, [group, ids]) => {
+      ids.forEach((id) => {
+        result[id] = group;
+      });
+      return result;
+    },
+    {}
+  );
+
+  const DETAIL = {
+    it: {
+      defaults: {
+        frutto: [
+          "Terreno profondo, fertile e ben drenato, arricchito con compost maturo.",
+          "Irriga a fondo e alla base, lasciando asciugare leggermente la superficie tra un intervento e l'altro.",
+          "Incorpora compost prima dell'impianto; dalla fioritura evita eccessi di azoto.",
+          "Mantieni la chioma ariosa, elimina le parti danneggiate e controlla i sostegni."
+        ],
+        foglia: [
+          "Terreno soffice, ricco di sostanza organica e uniformemente umido, senza ristagni.",
+          "Irriga con regolarità alla base: gli sbalzi idrici rendono le foglie meno tenere.",
+          "Usa compost maturo prima della semina; aggiungi azoto solo se la crescita rallenta.",
+          "Mantieni il terreno pulito e raccogli senza danneggiare il punto di crescita."
+        ],
+        radice: [
+          "Terreno fine, sciolto e privo di sassi; evita letame fresco e ristagni.",
+          "Mantieni un'umidità regolare, senza saturare il terreno né alternare secco e bagnato.",
+          "Fertilizza con moderazione: troppo azoto favorisce le foglie a scapito della parte raccolta.",
+          "Tieni il suolo libero dalle infestanti ed evita lavorazioni profonde vicino alla pianta."
+        ],
+        aromatica: [
+          "Substrato arioso e drenante; per le aromatiche mediterranee evita terreni troppo ricchi.",
+          "Bagna alla base quando lo strato superficiale è asciutto, senza lasciare ristagni.",
+          "Concima poco: un eccesso di azoto riduce aroma e robustezza dei tessuti.",
+          "Raccogli con tagli puliti e rispetta il portamento naturale della pianta."
+        ],
+        legume: [
+          "Terreno drenato e moderatamente fertile; evita concimazioni ricche di azoto.",
+          "Mantieni l'umidità costante soprattutto durante fioritura e formazione dei baccelli.",
+          "Di norma basta compost maturo: le leguminose non richiedono molto azoto.",
+          "Mantieni la base ariosa e raccogli al momento adatto alla varietà."
+        ]
+      },
+      groups: {
+        fruitVine: {
+          care: "Lega le varietà alte, arieggia la chioma e rimuovi le foglie malate; raccogli con regolarità.",
+          harvest:
+            "Stacca i frutti quando hanno colore e consistenza tipici della varietà, usando forbici pulite se il peduncolo è tenace."
+        },
+        cucurbit: {
+          care: "Guida i tralci senza piegarli, lascia spazio alle foglie e controlla l'allegagione dei primi fiori.",
+          water:
+            "Bagna in profondità alla base, evitando foglie e colletto; aumenta gradualmente durante l'ingrossamento dei frutti.",
+          harvest:
+            "Raccogli i frutti teneri con taglio netto; per zucche e meloni attendi i segnali di piena maturazione della varietà."
+        },
+        leafyCut: {
+          care: "Raccogli le foglie esterne o effettua tagli puliti, lasciando integro il centro per favorire la ricrescita.",
+          harvest:
+            "Raccogli al mattino le foglie turgide, con tagli puliti e senza danneggiare il centro della pianta.",
+          storage:
+            "Raffredda subito le foglie e conservale in frigorifero in un contenitore aerato."
+        },
+        brassica: {
+          care: "Proteggi il cuore e le infiorescenze, elimina le foglie danneggiate e controlla la pagina inferiore.",
+          soil: "Terreno fertile, profondo e ben drenato, con compost maturo e umidità uniforme.",
+          harvest:
+            "Taglia cespo, testa o infiorescenza quando è ben formata e ancora compatta, lasciando integre le parti utili a eventuali ricacci."
+        },
+        directRoot: {
+          care: "Dirada solo se necessario, quando le piantine sono giovani, e non lavorare in profondità vicino alle radici.",
+          harvest:
+            "Estrai con terreno leggermente umido quando la radice ha raggiunto il diametro desiderato, senza attendere che diventi fibrosa.",
+          storage:
+            "Elimina le foglie e conserva le radici sane, non lavate, al fresco e al buio."
+        },
+        allium: {
+          care: "Controlla le infestanti con lavorazioni superficiali e mantieni il colletto asciutto e aerato.",
+          soil: "Terreno sciolto e drenante; evita letame fresco e ristagni vicino ai bulbi.",
+          water:
+            "Bagna con moderazione alla base e riduci l'acqua quando bulbi o spicchi si avvicinano alla maturazione.",
+          harvest:
+            "Estrai i bulbi quando le foglie iniziano a ingiallire e piegarsi, lavorando con terreno asciutto.",
+          storage:
+            "Lascia asciugare bulbi e tuniche in un luogo ombreggiato e ventilato, poi conserva al fresco e all'asciutto."
+        },
+        tuber: {
+          care: "Rincalza quando necessario, proteggi i tuberi dalla luce ed evita lavorazioni che possano danneggiarli.",
+          soil: "Terreno profondo, soffice e drenante, privo di zolle compatte.",
+          harvest:
+            "Solleva i tuberi con terreno asciutto, partendo lontano dal fusto per non ferirli.",
+          storage:
+            "Fai asciugare la superficie e conserva soltanto tuberi integri, al buio e in ambiente ventilato."
+        },
+        climbingLegume: {
+          care: "Predisponi sostegni solidi prima che i tralci si allunghino e raccogli i baccelli con delicatezza.",
+          harvest:
+            "Raccogli spesso i baccelli giovani; per il seme secco attendi che siano completamente maturi."
+        },
+        bushLegume: {
+          care: "Mantieni la base libera e ariosa; non servono sostegni salvo varietà molto vigorose.",
+          harvest:
+            "Raccogli i baccelli senza tirare i rami; per ceci e lenticchie attendi la completa maturazione del seme."
+        },
+        woodyHerb: {
+          care: "Esegui tagli leggeri sopra la parte verde, evitando potature drastiche sul legno vecchio.",
+          harvest:
+            "Preleva rametti sani con tagli leggeri, preferibilmente al mattino e prima della piena fioritura.",
+          storage:
+            "Usa fresca oppure essicca lentamente all'ombra in un luogo ventilato."
+        },
+        annualHerb: {
+          care: "Raccogli gli apici con tagli puliti; elimina i fiori solo per prolungare la produzione di foglie.",
+          harvest:
+            "Taglia foglie e apici sani al mattino, senza asportare più di un terzo della pianta alla volta.",
+          storage:
+            "Usa fresca, congela le foglie pulite oppure essiccale all'ombra se la specie lo consente."
+        },
+        flowerHerb: {
+          care: "Lascia sviluppare i fiori e raccoglili asciutti, appena aperti, senza cimare gli steli produttivi.",
+          harvest:
+            "Raccogli i fiori asciutti, appena aperti, nelle ore fresche della mattina.",
+          storage:
+            "Essicca i fiori in strato sottile, all'ombra, e conservali asciutti al riparo dalla luce."
+        },
+        perennial: {
+          care: "Non forzare la raccolta sulle piante giovani; elimina le parti secche e lascia spazio allo sviluppo pluriennale."
+        }
+      },
+      prevention:
+        "Arieggia ogni giorno, irriga al mattino alla base e rimuovi subito i tessuti malati.",
+      harvest:
+        "Raccogli a maturazione con utensili puliti, senza ferire la pianta o la parte destinata al consumo.",
+      storage:
+        "Conserva soltanto prodotti sani e asciutti; raffredda rapidamente quelli deperibili.",
+      rotation:
+        "Dopo la raccolta elimina i residui e non ripiantare la stessa famiglia botanica nello stesso spazio nel ciclo successivo.",
+      labels: [
+        "Distanze dopo il diradamento",
+        "Distanze di trapianto",
+        "Distanze d'impianto"
+      ]
+    },
+    ro: {
+      defaults: {
+        frutto: [
+          "Sol profund, fertil și bine drenat, îmbogățit cu compost matur.",
+          "Udă profund la bază, lăsând suprafața să se usuce ușor între udări.",
+          "Încorporează compost înainte de plantare; după înflorire evită excesul de azot.",
+          "Menține frunzișul aerisit, elimină părțile deteriorate și verifică susținerile."
+        ],
+        foglia: [
+          "Sol afânat, bogat în materie organică și uniform umed, fără băltire.",
+          "Udă regulat la bază: variațiile mari de umiditate reduc frăgezimea frunzelor.",
+          "Folosește compost matur înainte de semănat; adaugă azot doar dacă dezvoltarea încetinește.",
+          "Menține solul curat și recoltează fără a răni punctul de creștere."
+        ],
+        radice: [
+          "Sol fin, afânat și fără pietre; evită gunoiul de grajd proaspăt și băltirea.",
+          "Menține umiditatea constantă, fără să saturezi solul și fără alternanțe bruște.",
+          "Fertilizează moderat: prea mult azot favorizează frunzele în detrimentul părții recoltate.",
+          "Îndepărtează buruienile și evită lucrările adânci lângă plantă."
+        ],
+        aromatica: [
+          "Substrat aerat și drenat; pentru aromaticele mediteraneene evită solul prea bogat.",
+          "Udă la bază când stratul superficial s-a uscat, fără apă stagnantă.",
+          "Fertilizează puțin: excesul de azot reduce aroma și rezistența țesuturilor.",
+          "Recoltează prin tăieri curate, respectând forma naturală a plantei."
+        ],
+        legume: [
+          "Sol drenat și moderat fertil; evită îngrășămintele bogate în azot.",
+          "Menține umiditatea constantă mai ales în timpul înfloririi și formării păstăilor.",
+          "De regulă este suficient compostul matur; leguminoasele nu cer mult azot.",
+          "Menține baza aerisită și recoltează la momentul potrivit soiului."
+        ]
+      },
+      groups: {
+        fruitVine: {
+          care: "Leagă soiurile înalte, aerisește frunzișul și elimină frunzele bolnave; recoltează regulat.",
+          harvest:
+            "Culege fructele când au culoarea și consistența tipice soiului; folosește foarfecă dacă pedunculul este tare."
+        },
+        cucurbit: {
+          care: "Ghidează vrejurile fără să le îndoi, lasă spațiu frunzelor și urmărește legarea primelor flori.",
+          water:
+            "Udă profund la bază, evitând frunzele și coletul; mărește treptat cantitatea când fructele cresc.",
+          harvest:
+            "Culege fructele fragede printr-o tăiere curată; pentru dovleci și pepeni așteaptă semnele maturității depline."
+        },
+        leafyCut: {
+          care: "Recoltează frunzele exterioare sau taie curat, păstrând centrul intact pentru regenerare.",
+          harvest:
+            "Recoltează dimineața frunzele turgescente, fără a răni centrul plantei.",
+          storage:
+            "Răcește imediat frunzele și păstrează-le la frigider într-un recipient aerisit."
+        },
+        brassica: {
+          care: "Protejează centrul și inflorescențele, elimină frunzele deteriorate și verifică dosul frunzelor.",
+          soil: "Sol fertil, profund și bine drenat, cu compost matur și umiditate uniformă.",
+          harvest:
+            "Taie căpățâna sau inflorescența când este bine formată și încă compactă."
+        },
+        directRoot: {
+          care: "Rărește numai dacă este necesar, cât plantele sunt tinere, și evită lucrările adânci lângă rădăcini.",
+          harvest:
+            "Extrage din sol ușor umed când rădăcina a ajuns la dimensiunea dorită, înainte să devină fibroasă.",
+          storage:
+            "Îndepărtează frunzele și păstrează rădăcinile sănătoase, nespălate, la rece și întuneric."
+        },
+        allium: {
+          care: "Controlează buruienile superficial și menține coletul uscat și bine aerisit.",
+          soil: "Sol afânat și drenat, fără gunoi de grajd proaspăt; evită băltirea lângă bulbi.",
+          water:
+            "Udă moderat la bază și redu apa când bulbii sau cățeii se apropie de maturitate.",
+          harvest:
+            "Scoate bulbii când frunzele încep să se îngălbenească și să se aplece, pe sol uscat.",
+          storage:
+            "Lasă bulbii să se usuce la umbră, într-un loc aerisit, apoi păstrează-i la rece și uscat."
+        },
+        tuber: {
+          care: "Mușuroiește când este necesar, protejează tuberculii de lumină și evită să-i rănești.",
+          soil: "Sol profund, afânat și drenat, fără bulgări compacți.",
+          harvest:
+            "Ridică tuberculii din sol uscat, începând la distanță de tulpină pentru a nu-i răni.",
+          storage:
+            "Lasă suprafața să se usuce și păstrează doar tuberculii integri, la întuneric și aerisit."
+        },
+        climbingLegume: {
+          care: "Instalează susțineri solide înainte ca lăstarii să se alungească și recoltează cu grijă.",
+          harvest:
+            "Culege des păstăile tinere; pentru semințe uscate așteaptă maturitatea completă."
+        },
+        bushLegume: {
+          care: "Menține baza curată și aerisită; susținerea nu este necesară decât la soiurile viguroase.",
+          harvest:
+            "Culege păstăile fără a trage ramurile; pentru năut și linte așteaptă maturarea completă a semințelor."
+        },
+        woodyHerb: {
+          care: "Taie ușor deasupra părții verzi și evită tăierile drastice în lemnul bătrân.",
+          harvest:
+            "Taie ușor ramuri sănătoase, preferabil dimineața și înainte de înflorirea deplină.",
+          storage:
+            "Folosește proaspătă sau usucă lent la umbră, într-un loc aerisit."
+        },
+        annualHerb: {
+          care: "Recoltează vârfurile curat; elimină florile doar pentru a prelungi producția de frunze.",
+          harvest:
+            "Taie dimineața frunze și vârfuri sănătoase, fără a lua mai mult de o treime din plantă.",
+          storage:
+            "Folosește proaspătă, congelează frunzele sau usucă-le la umbră dacă specia permite."
+        },
+        flowerHerb: {
+          care: "Lasă florile să se dezvolte și recoltează-le uscate, imediat după deschidere, fără să ciupești tulpinile.",
+          harvest:
+            "Culege florile uscate, imediat după deschidere, în orele răcoroase ale dimineții.",
+          storage:
+            "Usucă florile într-un strat subțire, la umbră, și păstrează-le ferite de lumină."
+        },
+        perennial: {
+          care: "Nu forța recoltarea plantelor tinere; elimină părțile uscate și lasă loc dezvoltării perene."
+        }
+      },
+      prevention:
+        "Aerisește zilnic, udă dimineața la bază și îndepărtează imediat țesuturile bolnave.",
+      harvest:
+        "Recoltează la maturitate cu unelte curate, fără a răni planta sau partea destinată consumului.",
+      storage:
+        "Păstrează doar produse sănătoase și uscate; răcește rapid produsele perisabile.",
+      rotation:
+        "După recoltare elimină resturile și nu replanta aceeași familie în același loc în ciclul următor.",
+      labels: [
+        "Distanțe după rărire",
+        "Distanțe de transplantare",
+        "Distanțe de plantare"
+      ]
+    }
+  };
+
+  function language(lang) {
+    return lang === "ro" ? "ro" : "it";
+  }
+
+  function compactDescription(plant, lang) {
+    if (!plant) return "";
+    const code = language(lang);
+    const type = plant.tipo || plant.arch || "foglia";
+    return SPECIAL[code][plant.id] || GROUPS[code][type] || GROUPS[code].foglia;
+  }
+
+  function localizedName(plant, lang) {
+    if (!plant) return "";
+    const code = language(lang);
+    return code === "ro"
+      ? root.SERRA_I18N?.plants?.ro?.[plant.id]?.nome || plant.nome || plant.id
+      : plant.nome || plant.id;
+  }
+
+  function cultivationNote(plant, lang) {
+    if (!plant) return "";
+    const code = language(lang);
+    const note =
+      code === "ro"
+        ? root.SERRA_I18N?.plants?.ro?.[plant.id]?.nota || plant.nota || ""
+        : plant.nota || "";
+    const name = localizedName(plant, code).trim().toLocaleLowerCase(code);
+    const separator = note.indexOf(":");
+    if (
+      separator > 0 &&
+      note.slice(0, separator).trim().toLocaleLowerCase(code) === name
+    ) {
+      const clean = note.slice(separator + 1).trim();
+      return clean ? clean[0].toLocaleUpperCase(code) + clean.slice(1) : "";
+    }
+    return note;
+  }
+
+  function cropGroup(plant) {
+    return GROUP_BY_ID[plant?.id] || plant?.tipo || plant?.arch || "foglia";
+  }
+
+  function detailProfile(plant, guide, lang) {
+    if (!plant) return null;
+    const code = language(lang);
+    const copy = DETAIL[code];
+    const type = plant.tipo || plant.arch || "foglia";
+    const values = copy.defaults[type] || copy.defaults.foglia;
+    const overrides = copy.groups[cropGroup(plant)] || {};
+    return {
+      description: compactDescription(plant, code),
+      soil: overrides.soil || values[0],
+      exposure: guide?.esposizione || "",
+      irrigation: overrides.water || guide?.annaffiatura || values[1],
+      feeding: overrides.feed || values[2],
+      maintenance: overrides.care || values[3],
+      prevention: copy.prevention,
+      harvestMethod: overrides.harvest || copy.harvest,
+      storage: overrides.storage || copy.storage,
+      rotation: copy.rotation
+    };
+  }
+
+  function spacingLabel(plant, lang) {
+    const copy = DETAIL[language(lang)];
+    const group = cropGroup(plant);
+    if (["directRoot", "leafyCut"].includes(group)) return copy.labels[0];
+    if (["fruitVine", "cucurbit", "brassica"].includes(group))
+      return copy.labels[1];
+    return copy.labels[2];
+  }
+
+  root.SERRA_PLANT_CONTENT = {
+    compactDescription,
+    cultivationNote,
+    localizedName,
+    detailProfile,
+    spacingLabel
+  };
+})(window);
+
+
+// Escape HTML condiviso per i contenuti interpolati.
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+if (typeof window !== "undefined") {
+  window.escapeHtml = escapeHtml;
+}
+
+
+// Genera nel browser un manuale PDF personalizzato per le colture di un ordine.
+(function (root) {
+  const PAGE_W = 1240;
+  const PAGE_H = 1754;
+  const MARGIN = 92;
+  const GREEN = "#245b36";
+  const GREEN_DARK = "#153d27";
+  const GREEN_SOFT = "#e9f4e9";
+  const CREAM = "#f8f4e9";
+  const INK = "#203127";
+  const MUTED = "#637167";
+
+  const COPY = {
+    it: {
+      title: "Manuale di semina e coltivazione",
+      eyebrow: "IL TUO ORTO, PASSO DOPO PASSO",
+      intro:
+        "Una guida personale con le indicazioni essenziali per iniziare, curare e raccogliere le varietà del tuo ordine.",
+      order: "Ordine",
+      preparedFor: "Preparato per",
+      varieties: "varietà",
+      pack: "confezione",
+      packs: "confezioni",
+      index: "Le colture del tuo ordine",
+      sowing: "Periodo di semina",
+      spacing: "Distanze consigliate",
+      light: "Esposizione",
+      water: "Acqua",
+      harvest: "Primo raccolto",
+      yield: "Resa indicativa",
+      start: "Come iniziare",
+      care: "Cura della coltura",
+      companions: "Buone vicine",
+      noCompanions: "Nessuna associazione specifica indicata.",
+      disclaimer:
+        "Le indicazioni sono orientative: clima locale, varietà e condizioni della serra possono modificare tempi e fabbisogni.",
+      days: "giorni circa",
+      kg: "kg per pianta",
+      row: "sulla fila",
+      rows: "tra le file",
+      full: "Pieno sole",
+      half: "Mezz'ombra",
+      low: "Bassa",
+      medium: "Media",
+      high: "Alta",
+      direct:
+        "Prepara un letto fine e drenante, semina direttamente alla profondità indicata sulla confezione e mantieni il terreno appena umido fino alla germinazione.",
+      transplant:
+        "Avvia in vasetto o usa giovani piantine robuste. Trapianta con il pane di terra integro, rispettando le distanze e annaffiando subito al piede.",
+      bulbs:
+        "Sistema bulbi, spicchi o tuberi in terreno soffice e drenante, con germoglio o punta rivolti verso l'alto, poi compatta leggermente.",
+      perennial:
+        "Dedica una posizione stabile e ben preparata: è una coltura che può restare produttiva per più stagioni.",
+      careLow:
+        "Lascia asciugare leggermente lo strato superficiale tra le bagnature ed evita ristagni.",
+      careMedium:
+        "Mantieni un'umidità regolare, bagnando al piede quando il primo strato di terreno inizia ad asciugarsi.",
+      careHigh:
+        "Controlla spesso l'umidità e mantienila costante, senza lasciare acqua stagnante attorno alle radici.",
+      footer: "Orto in Serra · Manuale personale di coltivazione"
+    },
+    ro: {
+      title: "Manual de semănare și cultivare",
+      eyebrow: "GRĂDINA TA, PAS CU PAS",
+      intro:
+        "Un ghid personal cu indicațiile esențiale pentru pornirea, îngrijirea și recoltarea soiurilor din comanda ta.",
+      order: "Comanda",
+      preparedFor: "Pregătit pentru",
+      varieties: "soiuri",
+      pack: "pachet",
+      packs: "pachete",
+      index: "Culturile din comanda ta",
+      sowing: "Perioada de semănare",
+      spacing: "Distanțe recomandate",
+      light: "Expunere",
+      water: "Apă",
+      harvest: "Prima recoltă",
+      yield: "Producție orientativă",
+      start: "Cum începi",
+      care: "Îngrijirea culturii",
+      companions: "Vecine bune",
+      noCompanions: "Nu este indicată o asociere specifică.",
+      disclaimer:
+        "Indicațiile sunt orientative: clima locală, soiul și condițiile din seră pot modifica perioadele și necesarul plantelor.",
+      days: "zile aproximativ",
+      kg: "kg per plantă",
+      row: "pe rând",
+      rows: "între rânduri",
+      full: "Soare direct",
+      half: "Semiumbră",
+      low: "Redusă",
+      medium: "Medie",
+      high: "Ridicată",
+      direct:
+        "Pregătește un strat fin și bine drenat, seamănă direct la adâncimea de pe ambalaj și păstrează solul ușor umed până la germinare.",
+      transplant:
+        "Pornește în ghiveci sau folosește răsaduri viguroase. Transplantează cu balotul intact, respectă distanțele și udă imediat la bază.",
+      bulbs:
+        "Așază bulbii, cățeii sau tuberculii într-un sol afânat și drenat, cu mugurele orientat în sus, apoi tasează ușor.",
+      perennial:
+        "Alege un loc stabil și bine pregătit: această cultură poate rămâne productivă mai multe sezoane.",
+      careLow:
+        "Lasă stratul de la suprafață să se usuce ușor între udări și evită apa stagnantă.",
+      careMedium:
+        "Menține umiditatea constantă și udă la bază când primul strat al solului începe să se usuce.",
+      careHigh:
+        "Verifică des umiditatea și păstreaz-o constantă, fără apă stagnantă în jurul rădăcinilor.",
+      footer: "Orto in Serra · Manual personal de cultivare"
+    }
+  };
+
+  const DIRECT_IDS = new Set([
+    "carota",
+    "ravanello",
+    "barbabietola",
+    "rapa",
+    "pastinaca",
+    "radice_prezemolo",
+    "daikon",
+    "scorzonera",
+    "rucola",
+    "spinaci",
+    "coriandolo",
+    "aneto",
+    "fagiolino",
+    "fagiolo",
+    "fava",
+    "cece",
+    "lenticchia",
+    "pisello",
+    "soia_edamame",
+    "mais_dolce"
+  ]);
+  const BULB_IDS = new Set([
+    "aglio",
+    "cipolla",
+    "cipolla_rossa",
+    "cipollotto",
+    "scalogno",
+    "patata",
+    "patata_dolce",
+    "topinambur"
+  ]);
+  const PERENNIAL_IDS = new Set([
+    "asparago",
+    "carciofo",
+    "fragola",
+    "rosmarino",
+    "salvia",
+    "timo",
+    "origano",
+    "menta",
+    "melissa",
+    "erba_cipollina",
+    "leustean"
+  ]);
+
+  function langCode(lang) {
+    return lang === "ro" ? "ro" : "it";
+  }
+
+  function font(ctx, weight, size, family) {
+    ctx.font = `${weight} ${size}px ${family || "DM Sans, Arial, sans-serif"}`;
+  }
+
+  function roundedRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, h, r);
+  }
+
+  function wrapLines(ctx, text, maxWidth) {
+    const words = String(text || "")
+      .split(/\s+/)
+      .filter(Boolean);
+    const lines = [];
+    let line = "";
+    words.forEach((word) => {
+      const candidate = line ? `${line} ${word}` : word;
+      if (ctx.measureText(candidate).width <= maxWidth || !line)
+        line = candidate;
+      else {
+        lines.push(line);
+        line = word;
+      }
+    });
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  function drawWrapped(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+    let lines = wrapLines(ctx, text, maxWidth);
+    if (maxLines && lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      let last = lines[maxLines - 1];
+      while (ctx.measureText(`${last}…`).width > maxWidth && last.length > 1) {
+        last = last.slice(0, -1);
+      }
+      lines[maxLines - 1] = `${last.trim()}…`;
+    }
+    lines.forEach((line, index) =>
+      ctx.fillText(line, x, y + index * lineHeight)
+    );
+    return y + lines.length * lineHeight;
+  }
+
+  function newCanvas() {
+    const canvas = document.createElement("canvas");
+    canvas.width = PAGE_W;
+    canvas.height = PAGE_H;
+    return canvas;
+  }
+
+  function paintBackground(ctx) {
+    ctx.fillStyle = CREAM;
+    ctx.fillRect(0, 0, PAGE_W, PAGE_H);
+    ctx.fillStyle = GREEN_DARK;
+    ctx.fillRect(0, 0, 22, PAGE_H);
+    ctx.fillStyle = "rgba(73, 122, 74, .07)";
+    ctx.beginPath();
+    ctx.arc(PAGE_W - 35, 45, 250, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawLogo(ctx, logo, x, y, size) {
+    if (logo) ctx.drawImage(logo, x, y, size, size);
+    else {
+      ctx.fillStyle = GREEN;
+      roundedRect(ctx, x, y, size, size, 22);
+      ctx.fill();
+      ctx.fillStyle = "#fff";
+      ctx.textAlign = "center";
+      font(ctx, 700, size * 0.48);
+      ctx.fillText("O", x + size / 2, y + size * 0.69);
+      ctx.textAlign = "left";
+    }
+  }
+
+  function drawBrand(ctx, logo, compact) {
+    const size = compact ? 58 : 82;
+    drawLogo(ctx, logo, MARGIN, compact ? 58 : 74, size);
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, compact ? 27 : 34, "Fraunces, Georgia, serif");
+    ctx.fillText(
+      "Orto in Serra",
+      MARGIN + size + 20,
+      (compact ? 58 : 74) + size * 0.63
+    );
+  }
+
+  // Ritaglia la fotografia senza deformarla e la inserisce in una cornice
+  // coerente con le schede del manuale.
+  function drawPhotoCover(ctx, image, x, y, w, h, radius) {
+    ctx.save();
+    roundedRect(ctx, x, y, w, h, radius);
+    ctx.clip();
+    ctx.fillStyle = GREEN_SOFT;
+    ctx.fillRect(x, y, w, h);
+    if (image) {
+      const scale = Math.max(w / image.naturalWidth, h / image.naturalHeight);
+      const drawW = image.naturalWidth * scale;
+      const drawH = image.naturalHeight * scale;
+      ctx.drawImage(
+        image,
+        x + (w - drawW) / 2,
+        y + (h - drawH) / 2,
+        drawW,
+        drawH
+      );
+    }
+    ctx.restore();
+    ctx.strokeStyle = "rgba(36, 91, 54, .18)";
+    ctx.lineWidth = 3;
+    roundedRect(ctx, x, y, w, h, radius);
+    ctx.stroke();
+  }
+
+  function drawFooter(ctx, c, orderId, page, total) {
+    const y = PAGE_H - 65;
+    ctx.strokeStyle = "rgba(36, 91, 54, .2)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(MARGIN, y - 30);
+    ctx.lineTo(PAGE_W - MARGIN, y - 30);
+    ctx.stroke();
+    ctx.fillStyle = MUTED;
+    font(ctx, 500, 20);
+    ctx.fillText(c.footer, MARGIN, y);
+    ctx.textAlign = "right";
+    ctx.fillText(`${orderId}  ·  ${page}/${total}`, PAGE_W - MARGIN, y);
+    ctx.textAlign = "left";
+  }
+
+  function formatDate(value, lang) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime())
+      ? "-"
+      : date.toLocaleDateString(lang === "ro" ? "ro-RO" : "it-IT", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        });
+  }
+
+  function getStartText(plant, c) {
+    if (BULB_IDS.has(plant.id)) return c.bulbs;
+    if (PERENNIAL_IDS.has(plant.id)) return c.perennial;
+    if (DIRECT_IDS.has(plant.id)) return c.direct;
+    return c.transplant;
+  }
+
+  function waterText(plant, c) {
+    if (plant.acqua === "alta") return c.careHigh;
+    if (plant.acqua === "bassa") return c.careLow;
+    return c.careMedium;
+  }
+
+  function valueLabel(value, c) {
+    if (value === "alta") return c.high;
+    if (value === "bassa") return c.low;
+    if (value === "mezzombra" || value === "mezza") return c.half;
+    if (value === "pieno") return c.full;
+    return c.medium;
+  }
+
+  function monthsLabel(plant, lang) {
+    const months = root.SERRA_I18N?.months?.[lang] || [];
+    return (
+      (plant.mesi || []).map((m) => months[m - 1] || String(m)).join(" · ") ||
+      "-"
+    );
+  }
+
+  function localizedName(plant, lang) {
+    return (
+      root.SERRA_PLANT_CONTENT?.localizedName(plant, lang) ||
+      plant.nome ||
+      plant.id
+    );
+  }
+
+  function fullUserName(user) {
+    const firstName = String(user?.nome || "").trim();
+    const lastName = String(user?.cognome || "").trim();
+    if (lastName || !firstName)
+      return [firstName, lastName].filter(Boolean).join(" ");
+    return firstName;
+  }
+
+  function drawCover(ctx, logo, data, c, totalPages) {
+    paintBackground(ctx);
+    drawBrand(ctx, logo, false);
+    ctx.fillStyle = GREEN;
+    font(ctx, 700, 21);
+    ctx.fillText(c.eyebrow, MARGIN, 305);
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 79, "Fraunces, Georgia, serif");
+    let y = drawWrapped(ctx, c.title, MARGIN, 395, 920, 88, 3);
+    ctx.fillStyle = MUTED;
+    font(ctx, 400, 32);
+    y = drawWrapped(ctx, c.intro, MARGIN, y + 36, 930, 47, 4);
+
+    ctx.fillStyle = "#fff";
+    roundedRect(ctx, MARGIN, y + 60, PAGE_W - MARGIN * 2, 260, 30);
+    ctx.fill();
+    const metaY = y + 125;
+    ctx.fillStyle = MUTED;
+    font(ctx, 700, 19);
+    ctx.fillText(c.order.toUpperCase(), MARGIN + 42, metaY);
+    ctx.fillText(c.preparedFor.toUpperCase(), MARGIN + 440, metaY);
+    ctx.fillStyle = INK;
+    font(ctx, 700, 29);
+    ctx.fillText(data.order.id || "-", MARGIN + 42, metaY + 43);
+    ctx.fillText(
+      fullUserName(data.user) || data.order.email || "-",
+      MARGIN + 440,
+      metaY + 43
+    );
+    ctx.fillStyle = MUTED;
+    font(ctx, 500, 21);
+    ctx.fillText(
+      formatDate(data.order.date, data.lang),
+      MARGIN + 42,
+      metaY + 82
+    );
+
+    const countY = y + 390;
+    ctx.fillStyle = GREEN_SOFT;
+    roundedRect(ctx, MARGIN, countY, 360, 142, 24);
+    ctx.fill();
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 48, "Fraunces, Georgia, serif");
+    ctx.fillText(String(data.items.length), MARGIN + 35, countY + 62);
+    font(ctx, 600, 22);
+    ctx.fillText(c.varieties, MARGIN + 35, countY + 101);
+    ctx.fillStyle = "#eef0e9";
+    roundedRect(ctx, MARGIN + 390, countY, 360, 142, 24);
+    ctx.fill();
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 48, "Fraunces, Georgia, serif");
+    ctx.fillText(
+      String(data.items.reduce((sum, item) => sum + item.quantity, 0)),
+      MARGIN + 425,
+      countY + 62
+    );
+    font(ctx, 600, 22);
+    ctx.fillText(c.packs, MARGIN + 425, countY + 101);
+    drawFooter(ctx, c, data.order.id || "-", 1, totalPages);
+  }
+
+  function drawFact(ctx, x, y, w, title, value) {
+    ctx.fillStyle = "#fff";
+    roundedRect(ctx, x, y, w, 126, 20);
+    ctx.fill();
+    ctx.fillStyle = MUTED;
+    font(ctx, 700, 17);
+    ctx.fillText(title.toUpperCase(), x + 24, y + 36);
+    ctx.fillStyle = INK;
+    font(ctx, 650, 23);
+    drawWrapped(ctx, value, x + 24, y + 75, w - 48, 29, 2);
+  }
+
+  function drawPlantPage(ctx, logo, data, item, c, page, total) {
+    paintBackground(ctx);
+    drawBrand(ctx, logo, true);
+    const plant = item.plant;
+    const name = localizedName(plant, data.lang);
+    ctx.fillStyle = GREEN;
+    font(ctx, 700, 20);
+    ctx.fillText(
+      `${String(page - 1).padStart(2, "0")}  ·  ${item.quantity} ${item.quantity === 1 ? c.pack : c.packs}`,
+      MARGIN,
+      210
+    );
+    const photoSize = 210;
+    const photoX = PAGE_W - MARGIN - photoSize;
+    drawPhotoCover(ctx, item.photo, photoX, 214, photoSize, photoSize, 34);
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 64, "Fraunces, Georgia, serif");
+    let y = drawWrapped(ctx, name, MARGIN, 286, photoX - MARGIN - 34, 72, 2);
+    ctx.fillStyle = MUTED;
+    font(ctx, 400, 27);
+    const desc =
+      root.SERRA_PLANT_CONTENT?.compactDescription(plant, data.lang) || "";
+    y =
+      drawWrapped(ctx, desc, MARGIN, y + 20, photoX - MARGIN - 34, 39, 3) + 30;
+
+    const gap = 18;
+    const factW = (PAGE_W - MARGIN * 2 - gap * 2) / 3;
+    drawFact(ctx, MARGIN, y, factW, c.sowing, monthsLabel(plant, data.lang));
+    drawFact(
+      ctx,
+      MARGIN + factW + gap,
+      y,
+      factW,
+      c.spacing,
+      `${plant.d || "-"} cm ${c.row} · ${plant.dr || plant.d || "-"} cm ${c.rows}`
+    );
+    drawFact(
+      ctx,
+      MARGIN + (factW + gap) * 2,
+      y,
+      factW,
+      c.light,
+      valueLabel(plant.sole, c)
+    );
+    y += 144;
+    drawFact(ctx, MARGIN, y, factW, c.water, valueLabel(plant.acqua, c));
+    drawFact(
+      ctx,
+      MARGIN + factW + gap,
+      y,
+      factW,
+      c.harvest,
+      `${plant.gg || "-"} ${c.days}`
+    );
+    drawFact(
+      ctx,
+      MARGIN + (factW + gap) * 2,
+      y,
+      factW,
+      c.yield,
+      `${plant.resa || "-"} ${c.kg}`
+    );
+    y += 184;
+
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 31, "Fraunces, Georgia, serif");
+    ctx.fillText(c.start, MARGIN, y);
+    ctx.fillStyle = INK;
+    font(ctx, 400, 24);
+    y =
+      drawWrapped(
+        ctx,
+        getStartText(plant, c),
+        MARGIN,
+        y + 43,
+        PAGE_W - MARGIN * 2,
+        35,
+        4
+      ) + 45;
+
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 31, "Fraunces, Georgia, serif");
+    ctx.fillText(c.care, MARGIN, y);
+    const localizedNote =
+      root.SERRA_PLANT_CONTENT?.cultivationNote(plant, data.lang) || "";
+    ctx.fillStyle = INK;
+    font(ctx, 400, 24);
+    y =
+      drawWrapped(
+        ctx,
+        `${waterText(plant, c)} ${localizedNote}`,
+        MARGIN,
+        y + 43,
+        PAGE_W - MARGIN * 2,
+        35,
+        5
+      ) + 44;
+
+    ctx.fillStyle = GREEN_SOFT;
+    roundedRect(ctx, MARGIN, y, PAGE_W - MARGIN * 2, 112, 22);
+    ctx.fill();
+    ctx.fillStyle = GREEN_DARK;
+    font(ctx, 700, 19);
+    ctx.fillText(c.companions.toUpperCase(), MARGIN + 28, y + 36);
+    ctx.fillStyle = INK;
+    font(ctx, 500, 22);
+    const friends = (plant.amiche || [])
+      .map((id) => data.byId[id])
+      .filter(Boolean)
+      .slice(0, 6)
+      .map((friend) => localizedName(friend, data.lang));
+    drawWrapped(
+      ctx,
+      friends.join(" · ") || c.noCompanions,
+      MARGIN + 28,
+      y + 76,
+      PAGE_W - MARGIN * 2 - 56,
+      28,
+      1
+    );
+
+    ctx.fillStyle = MUTED;
+    font(ctx, 400, 18);
+    drawWrapped(
+      ctx,
+      c.disclaimer,
+      MARGIN,
+      PAGE_H - 142,
+      PAGE_W - MARGIN * 2,
+      26,
+      2
+    );
+    drawFooter(ctx, c, data.order.id || "-", page, total);
+  }
+
+  function loadImage(src) {
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => resolve(null);
+      if (/^https?:/i.test(src || "")) image.crossOrigin = "anonymous";
+      image.src = src;
+    });
+  }
+
+  function photoSource(plant) {
+    if (typeof root.resolvePlantPhoto === "function") {
+      return root.resolvePlantPhoto(plant, plant.id);
+    }
+    if (plant.foto) return plant.foto;
+    return `assets/img/photo/${plant.id}.webp`;
+  }
+
+  function dataUrlBytes(url) {
+    const binary = atob(url.split(",")[1]);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return bytes;
+  }
+
+  function makePdf(jpegs) {
+    const encoder = new TextEncoder();
+    const chunks = [];
+    const offsets = [0];
+    let length = 0;
+    const add = (value) => {
+      const bytes = typeof value === "string" ? encoder.encode(value) : value;
+      chunks.push(bytes);
+      length += bytes.length;
+    };
+    const objectCount = 2 + jpegs.length * 3;
+    const pageIds = jpegs.map((_, index) => 3 + index * 3 + 2);
+    add("%PDF-1.4\n%OrtoInSerra\n");
+    const addObject = (id, bodyParts) => {
+      offsets[id] = length;
+      add(`${id} 0 obj\n`);
+      bodyParts.forEach(add);
+      add("\nendobj\n");
+    };
+    addObject(1, [`<< /Type /Catalog /Pages 2 0 R >>`]);
+    addObject(2, [
+      `<< /Type /Pages /Count ${jpegs.length} /Kids [${pageIds.map((id) => `${id} 0 R`).join(" ")}] >>`
+    ]);
+    jpegs.forEach((jpeg, index) => {
+      const imageId = 3 + index * 3;
+      const contentId = imageId + 1;
+      const pageId = imageId + 2;
+      const stream = "q\n595 0 0 842 0 0 cm\n/Im0 Do\nQ\n";
+      addObject(imageId, [
+        `<< /Type /XObject /Subtype /Image /Width ${PAGE_W} /Height ${PAGE_H} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`,
+        jpeg,
+        "\nendstream"
+      ]);
+      addObject(contentId, [
+        `<< /Length ${encoder.encode(stream).length} >>\nstream\n${stream}endstream`
+      ]);
+      addObject(pageId, [
+        `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /XObject << /Im0 ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`
+      ]);
+    });
+    const xrefOffset = length;
+    add(`xref\n0 ${objectCount + 1}\n`);
+    add("0000000000 65535 f \n");
+    for (let id = 1; id <= objectCount; id += 1) {
+      add(`${String(offsets[id]).padStart(10, "0")} 00000 n \n`);
+    }
+    add(
+      `trailer\n<< /Size ${objectCount + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`
+    );
+    return new Blob(chunks, { type: "application/pdf" });
+  }
+
+  function cleanFilename(value) {
+    return String(value || "ordine")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  async function create(options) {
+    const lang = langCode(options.lang);
+    const c = COPY[lang];
+    const byId = Object.fromEntries(
+      (options.plants || []).map((plant) => [plant.id, plant])
+    );
+    const merged = new Map();
+    (options.order.items || []).forEach((orderItem) => {
+      const plant = byId[orderItem.id];
+      if (!plant) return;
+      const current = merged.get(plant.id) || { plant, quantity: 0 };
+      current.quantity += Number(orderItem.bustine || orderItem.quantity || 1);
+      merged.set(plant.id, current);
+    });
+    const items = [...merged.values()].sort((a, b) =>
+      localizedName(a.plant, lang).localeCompare(
+        localizedName(b.plant, lang),
+        lang === "ro" ? "ro" : "it"
+      )
+    );
+    if (!items.length) throw new Error("No plants in order");
+    const itemsWithPhotos = await Promise.all(
+      items.map(async (item) => ({
+        ...item,
+        photo: await loadImage(photoSource(item.plant))
+      }))
+    );
+    const data = { ...options, lang, items: itemsWithPhotos, byId };
+    const logo = await loadImage("assets/img/svg/logo.svg");
+    const canvases = [];
+    const cover = newCanvas();
+    drawCover(
+      cover.getContext("2d"),
+      logo,
+      data,
+      c,
+      itemsWithPhotos.length + 1
+    );
+    canvases.push(cover);
+    itemsWithPhotos.forEach((item, index) => {
+      const canvas = newCanvas();
+      drawPlantPage(
+        canvas.getContext("2d"),
+        logo,
+        data,
+        item,
+        c,
+        index + 2,
+        itemsWithPhotos.length + 1
+      );
+      canvases.push(canvas);
+    });
+    const jpegs = canvases.map((canvas) =>
+      dataUrlBytes(canvas.toDataURL("image/jpeg", 0.88))
+    );
+    return makePdf(jpegs);
+  }
+
+  root.SERRA_PLANT_MANUAL = {
+    async download(options) {
+      const blob = await create(options);
+      const href = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = href;
+      anchor.download = `manuale-coltivazione-${cleanFilename(options.order.id)}.pdf`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(href), 3000);
+      return blob;
+    },
+    create
+  };
+})(window);
+
+

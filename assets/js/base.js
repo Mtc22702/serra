@@ -1,3 +1,256 @@
+/** Fondazioni condivise: tema, navigazione, traduzioni e API. */
+// Gestione tema
+(function () {
+  "use strict";
+
+  const root = document.documentElement;
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  // Legge il tema corrente
+  function currentTheme() {
+    return root.dataset.theme === "dark" ? "dark" : "light";
+  }
+
+  // Allinea icona, testo e attributi dei controlli tema allo stato corrente.
+  function syncControls() {
+    const dark = currentTheme() === "dark";
+    const ro = (root.lang || "it").toLowerCase().startsWith("ro");
+    document.querySelectorAll(".theme-toggle").forEach((button) => {
+      button.setAttribute("aria-pressed", String(dark));
+      button.setAttribute(
+        "aria-label",
+        ro
+          ? dark
+            ? "Activează modul luminos"
+            : "Activează modul întunecat"
+          : dark
+            ? "Attiva modalità chiara"
+            : "Attiva modalità scura"
+      );
+      button.title = ro
+        ? dark
+          ? "Mod luminos"
+          : "Mod întunecat"
+        : dark
+          ? "Modalità chiara"
+          : "Modalità scura";
+    });
+    if (themeMeta) themeMeta.content = dark ? "#0b1814" : "#2f6b3a";
+  }
+
+  // Applica il tema scelto al documento e lo salva nelle preferenze locali.
+  function setTheme(theme, persist) {
+    root.dataset.theme = theme === "dark" ? "dark" : "light";
+    if (persist) localStorage.setItem("serra-theme", root.dataset.theme);
+    syncControls();
+    window.dispatchEvent(
+      new CustomEvent("serra:themechange", {
+        detail: { theme: root.dataset.theme }
+      })
+    );
+  }
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".theme-toggle");
+    if (!button) return;
+    setTheme(currentTheme() === "dark" ? "light" : "dark", true);
+  });
+
+  media.addEventListener?.("change", (event) => {
+    if (!localStorage.getItem("serra-theme"))
+      setTheme(event.matches ? "dark" : "light", false);
+  });
+
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", syncControls);
+  else syncControls();
+  new MutationObserver(syncControls).observe(root, {
+    attributes: true,
+    attributeFilter: ["lang"]
+  });
+})();
+
+
+// Aggiorna l'etichetta dei collegamenti alla guida quando cambia la lingua del documento.
+(() => {
+  // Etichette localizzate usate dai collegamenti che rimandano alla guida.
+  const labels = {
+    it: "Non sai da dove iniziare? Guarda la guida",
+    ro: "Nu știi de unde să începi? Vezi ghidul"
+  };
+  // Applica l'etichetta corrispondente alla lingua italiana o romena attiva.
+  function apply() {
+    const lang = document.documentElement.lang === "ro" ? "ro" : "it";
+    document.querySelectorAll("[data-guide-link-label]").forEach((element) => {
+      element.textContent = labels[lang];
+    });
+  }
+  // Esegue l'aggiornamento iniziale e osserva le successive modifiche della lingua.
+  apply();
+  new MutationObserver(apply).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["lang"]
+  });
+})();
+
+
+// Gestisce apertura, chiusura e accessibilità del menu di navigazione mobile.
+(() => {
+  const header = document.querySelector(".site-header");
+  const toggle = document.querySelector(".nav-menu-toggle");
+  const menu = document.getElementById("mainNav");
+  if (!header || !toggle || !menu) return;
+
+  const isRo = () =>
+    (document.documentElement.lang || "it").toLowerCase().startsWith("ro");
+
+  // Blocca lo scorrimento della pagina mentre un pannello mobile è aperto.
+  let lockedScrollY = 0;
+
+  const closeMenu = () => {
+    const wasOpen = document.body.classList.contains("nav-menu-open");
+    document.body.classList.remove("nav-menu-open");
+    if (wasOpen) {
+      document.body.style.top = "";
+      window.scrollTo(0, lockedScrollY);
+    }
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", isRo() ? "Deschide meniul" : "Apri menu");
+  };
+
+  const openMenu = () => {
+    lockedScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.classList.add("nav-menu-open");
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute(
+      "aria-label",
+      isRo() ? "Închide meniul" : "Chiudi menu"
+    );
+  };
+
+  toggle.addEventListener("click", () => {
+    if (document.body.classList.contains("nav-menu-open")) closeMenu();
+    else openMenu();
+  });
+
+  menu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[data-placeholder-link]");
+    if (link) event.preventDefault();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!document.body.classList.contains("nav-menu-open")) return;
+    if (header.contains(event.target)) return;
+    closeMenu();
+  });
+
+  // Riduce le esecuzioni ripetute durante il ridimensionamento della finestra.
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  window.addEventListener(
+    "resize",
+    debounce(() => {
+      if (window.innerWidth > 900) closeMenu();
+    }, 150)
+  );
+
+  // Aggiorna l'etichetta del pulsante menu quando cambia la lingua della pagina.
+  new MutationObserver(() => {
+    const open = document.body.classList.contains("nav-menu-open");
+    toggle.setAttribute(
+      "aria-label",
+      isRo()
+        ? open
+          ? "Închide meniul"
+          : "Deschide meniul"
+        : open
+          ? "Chiudi menu"
+          : "Apri menu"
+    );
+  }).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["lang"]
+  });
+
+  // Separa l'icona iniziale dall'etichetta nelle voci "Esplora" del menu, cosi'
+  // il CSS puo' dare all'icona un trattamento a riquadro coerente col resto
+  // dell'app (senza toccare i dizionari di traduzione ne' i link del footer,
+  // che restano fuori da #mainNav). La funzione e' idempotente: puo' essere
+  // rieseguita ogni volta che il cambio lingua riscrive il testo dei link.
+  function splitIconLabel(raw) {
+    const trimmed = raw.trim();
+    const spaceIndex = trimmed.indexOf(" ");
+    if (spaceIndex <= 0) return null;
+    return {
+      icon: trimmed.slice(0, spaceIndex),
+      label: trimmed.slice(spaceIndex + 1)
+    };
+  }
+
+  function enhanceNavIcons() {
+    menu.querySelectorAll(":scope > a.nav-link").forEach((link) => {
+      // Se è già stato diviso in icona+etichetta e nessuno l'ha riscritto nel
+      // frattempo (il cambio lingua sostituisce sempre l'intero testo,
+      // svuotando questi span), non rielaborarlo: leggere di nuovo il testo
+      // da due span già separati (senza lo spazio originale) spezzerebbe la
+      // divisione in un punto sbagliato.
+      const alreadySplit =
+        link.children.length === 2 &&
+        link.children[0].classList.contains("nav-link-icon") &&
+        link.children[1].classList.contains("nav-link-label");
+      if (alreadySplit) return;
+
+      const parts = splitIconLabel(link.textContent);
+      if (!parts) return;
+      link.textContent = "";
+      const iconSpan = document.createElement("span");
+      iconSpan.className = "nav-link-icon";
+      iconSpan.setAttribute("aria-hidden", "true");
+      iconSpan.textContent = parts.icon;
+      const labelSpan = document.createElement("span");
+      labelSpan.className = "nav-link-label";
+      labelSpan.textContent = parts.label;
+      link.append(iconSpan, labelSpan);
+    });
+  }
+
+  enhanceNavIcons();
+
+  // Ripete la separazione ogni volta che il cambio lingua riscrive il testo
+  // (si disconnette durante la propria modifica per evitare un loop).
+  const navIconObserver = new MutationObserver(() => {
+    navIconObserver.disconnect();
+    enhanceNavIcons();
+    navIconObserver.observe(menu, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  });
+  navIconObserver.observe(menu, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+})();
+
+
 // Contiene i dizionari condivisi per tradurre contenuti e attributi dell'interfaccia.
 (function (global) {
   const shared = {
@@ -3273,3 +3526,301 @@
 
   global.SERRA_I18N = Object.assign({}, global.SERRA_I18N || {}, shared);
 })(window);
+
+
+// File generato con npm run build:js: modificare i moduli in data/plants/.
+
+
+// Gestisce il database locale e l'archivio alternativo nel browser.
+(() => {
+  const PORT = 3000;
+  // Determina l'host per le chiamate API
+  const host = window.location.hostname || "localhost";
+  const apiBase = `http://${host}:${PORT}`;
+
+  let isServerActiveCache = null;
+
+  // Funzione helper per effettuare un fetch con timeout
+  async function fetchWithTimeout(resource, options = {}) {
+    const { timeout = 1200 } = options;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    try {
+      const response = await fetch(resource, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(id);
+      return response;
+    } catch (error) {
+      clearTimeout(id);
+      throw error;
+    }
+  }
+
+  // Verifica se il server di scrittura locale è attivo
+  async function checkServerActive() {
+    if (window.location.protocol === "https:") {
+      // Le chiamate HTTP miste sono bloccate su pagine HTTPS (es. GitHub Pages)
+      return false;
+    }
+    try {
+      const res = await fetchWithTimeout(`${apiBase}/api/status`, {
+        timeout: 180
+      });
+      return res.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Interfaccia API globale
+  const SerraAPI = {
+    // Rileva se siamo connessi al server locale di scrittura
+    async isServerActive() {
+      if (isServerActiveCache !== null) return isServerActiveCache;
+      isServerActiveCache = await checkServerActive();
+      return isServerActiveCache;
+    },
+
+    // --- GESTIONE PIANTE ---
+    async getPlants() {
+      const serverActive = await this.isServerActive();
+      if (serverActive) {
+        try {
+          const res = await fetchWithTimeout(`${apiBase}/api/plants`);
+          if (res.ok) return await res.json();
+        } catch (e) {
+          console.warn(
+            "Rilevato server ma errore nel caricamento piante, provo fallback...",
+            e
+          );
+        }
+      }
+
+      // In assenza del server, controlla prima i dati salvati nel browser.
+      try {
+        const local = localStorage.getItem("serra.custom_plants");
+        if (local) return JSON.parse(local);
+      } catch (e) {}
+
+      // Se localStorage è vuoto, carica dal file statico (GitHub Pages)
+      try {
+        const res = await fetchWithTimeout("./db/plants.json", {
+          timeout: 1500
+        });
+        if (res.ok) {
+          const plants = await res.json();
+          localStorage.setItem("serra.custom_plants", JSON.stringify(plants));
+          return plants;
+        }
+      } catch (e) {
+        console.warn("Impossibile caricare db/plants.json statico...", e);
+      }
+
+      return null;
+    },
+
+    // Sincronizza il catalogo globale e le relative categorie.
+    async bootstrapPlants() {
+      try {
+        const customPlants = await this.getPlants();
+        if (customPlants) {
+          window.PLANTS = customPlants;
+          customPlants.forEach((p) => {
+            if (p.arch && window.TIPO) window.TIPO[p.id] = p.arch;
+          });
+        }
+      } catch (e) {
+        console.error("Errore nel caricamento del catalogo piante:", e);
+      }
+    },
+
+    async savePlants(plants) {
+      const serverActive = await this.isServerActive();
+      if (serverActive) {
+        try {
+          const res = await fetch(`${apiBase}/api/plants`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(plants)
+          });
+          if (res.ok) return true;
+        } catch (e) {
+          console.error(
+            "Errore nel salvataggio sul server locale, salvo in localStorage...",
+            e
+          );
+        }
+      }
+      // Salvataggio locale
+      localStorage.setItem("serra.custom_plants", JSON.stringify(plants));
+      return true;
+    },
+
+    // --- GESTIONE UTENTI ---
+    async getUsers() {
+      const serverActive = await this.isServerActive();
+      if (serverActive) {
+        try {
+          const res = await fetchWithTimeout(`${apiBase}/api/users`);
+          if (res.ok) return await res.json();
+        } catch (e) {}
+      }
+
+      // In assenza del server, controlla prima i dati salvati nel browser.
+      try {
+        const local = localStorage.getItem("serra.users");
+        if (local) return JSON.parse(local);
+      } catch (e) {}
+
+      // Se localStorage è vuoto, carica il default dal file statico
+      try {
+        const res = await fetchWithTimeout("./db/users.json", {
+          timeout: 1500
+        });
+        if (res.ok) {
+          const users = await res.json();
+          localStorage.setItem("serra.users", JSON.stringify(users));
+          return users;
+        }
+      } catch (e) {}
+
+      // Usa i dati predefiniti quando nessuna sorgente locale è disponibile.
+      const defaultUsers = [
+        {
+          email: "admin@ortoinserra.it",
+          password: "admin",
+          nome: "Admin Serra",
+          indirizzo: "Sede Centrale",
+          citta: "Milano",
+          cap: "20100",
+          telefono: "02000000",
+          role: "admin"
+        },
+        {
+          email: "user@ortoinserra.it",
+          password: "password",
+          nome: "Mario Rossi",
+          indirizzo: "Via Roma 10",
+          citta: "Milano",
+          cap: "20121",
+          telefono: "3331234567",
+          role: "user"
+        }
+      ];
+      localStorage.setItem("serra.users", JSON.stringify(defaultUsers));
+      return defaultUsers;
+    },
+
+    async saveUsers(users) {
+      const serverActive = await this.isServerActive();
+      if (serverActive) {
+        try {
+          const res = await fetch(`${apiBase}/api/users`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(users)
+          });
+          if (res.ok) return true;
+        } catch (e) {}
+      }
+      localStorage.setItem("serra.users", JSON.stringify(users));
+      return true;
+    },
+
+    // --- GESTIONE ORDINI ---
+    async getOrders() {
+      const serverActive = await this.isServerActive();
+      if (serverActive) {
+        try {
+          const res = await fetchWithTimeout(`${apiBase}/api/orders`);
+          if (res.ok) return await res.json();
+        } catch (e) {}
+      }
+
+      // In assenza del server, controlla prima i dati salvati nel browser.
+      try {
+        const local = localStorage.getItem("serra.orders");
+        if (local) return JSON.parse(local);
+      } catch (e) {}
+
+      // Se localStorage è vuoto, carica dal file statico
+      try {
+        const res = await fetchWithTimeout("./db/orders.json", {
+          timeout: 1500
+        });
+        if (res.ok) {
+          const orders = await res.json();
+          localStorage.setItem("serra.orders", JSON.stringify(orders));
+          return orders;
+        }
+      } catch (e) {}
+
+      return [];
+    },
+
+    async saveOrders(orders) {
+      const serverActive = await this.isServerActive();
+      if (serverActive) {
+        try {
+          const res = await fetch(`${apiBase}/api/orders`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(orders)
+          });
+          if (res.ok) return true;
+        } catch (e) {}
+      }
+      localStorage.setItem("serra.orders", JSON.stringify(orders));
+      return true;
+    },
+
+    getCurrentUser() {
+      try {
+        const user = localStorage.getItem("serra.current_user");
+        return user ? JSON.parse(user) : null;
+      } catch (e) {
+        return null;
+      }
+    },
+
+    logout() {
+      localStorage.removeItem("serra.current_user");
+      window.location.reload();
+    },
+
+    updateNavbarUser() {
+      const user = this.getCurrentUser();
+      const btn = document.getElementById("navAccountBtn");
+      if (btn) {
+        const ro = (document.documentElement.lang || "it")
+          .toLowerCase()
+          .startsWith("ro");
+        if (user) {
+          const firstName = user.nome.split(" ")[0];
+          btn.textContent = ro
+            ? `👤 Salut, ${firstName}`
+            : `👤 Ciao, ${firstName}`;
+        } else {
+          btn.textContent = ro ? "👤 Conectare" : "👤 Accedi";
+        }
+      }
+    }
+  };
+
+  window.SerraAPI = SerraAPI;
+  // Esegui allineamento del bottone utente all'avvio della pagina
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      SerraAPI.updateNavbarUser();
+    });
+  } else {
+    SerraAPI.updateNavbarUser();
+  }
+  // Riallinea il testo del bottone utente quando cambia la lingua della pagina
+  new MutationObserver(() => SerraAPI.updateNavbarUser()).observe(
+    document.documentElement,
+    { attributes: true, attributeFilter: ["lang"] }
+  );
+})();
