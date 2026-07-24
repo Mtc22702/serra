@@ -1954,7 +1954,6 @@ function unlockDetailPageScroll() {
 const DETAIL_TAB_ORDER = [
   "overview",
   "cultivation",
-  "calendar",
   "care",
   "harvest"
 ];

@@ -1136,24 +1136,6 @@
                   type="button"
                   role="tab"
                   aria-selected="false"
-                  aria-controls="detailTabCalendar"
-                  data-detail-tab="calendar"
-                  data-home-action="set-detail-tab"
-                  data-tab="calendar"
-                >
-                  <span class="detail-tab-icon" aria-hidden="true"
-                    ><svg viewBox="0 0 24 24">
-                      <rect x="3" y="5" width="18" height="16" rx="2" />
-                      <path
-                        d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 18h2"
-                      /></svg></span
-                  ><span data-i18n="detail.tab_calendar">Calendario</span>
-                </button>
-                <button
-                  class="detail-tab"
-                  type="button"
-                  role="tab"
-                  aria-selected="false"
                   aria-controls="detailTabCare"
                   data-detail-tab="care"
                   data-home-action="set-detail-tab"
@@ -1211,28 +1193,24 @@
                   >Dalla semina alla pianta adulta</small
                 >
               </div>
+              <section class="detail-seasonality" aria-labelledby="detailSeasonalityTitle">
+                <div class="detail-seasonality-heading">
+                  <span class="detail-seasonality-icon" aria-hidden="true">🗓</span>
+                  <div>
+                    <b id="detailSeasonalityTitle" data-i18n="detail.calendar_title"
+                      >Calendario stagionale</b
+                    ><small data-i18n="detail.calendar_subtitle"
+                      >Adattato a zona climatica e riscaldamento</small
+                    >
+                  </div>
+                </div>
+                <div class="month-bar" id="detailMonthBar"></div>
+              </section>
               <div class="detail-sow" id="detailSow">
                 <div class="detail-sow-body" id="detailSowBody"></div>
               </div>
               <div class="detail-spacing" id="detailSpacing"></div>
               <div class="detail-tech-grid" id="detailCultivationExtra"></div>
-            </div>
-
-            <div
-              class="detail-tab-panel"
-              id="detailTabCalendar"
-              role="tabpanel"
-              data-detail-panel="calendar"
-              hidden
-            >
-              <div class="detail-section-heading">
-                <span data-i18n="detail.calendar_title"
-                  >Calendario stagionale</span
-                ><small data-i18n="detail.calendar_subtitle"
-                  >Adattato a zona climatica e riscaldamento</small
-                >
-              </div>
-              <div class="month-bar" id="detailMonthBar"></div>
             </div>
 
             <div

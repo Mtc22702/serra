@@ -5175,7 +5175,6 @@ function openSettingsPanelAndFocusDimensions() {
 const CONFIG_DETAIL_TABS = [
   "overview",
   "cultivation",
-  "calendar",
   "care",
   "harvest"
 ];
@@ -6237,14 +6236,7 @@ function renderPlantDetailPanel(initialTab = "overview") {
 
       <div class="detail-tab-panel" data-detail-panel="cultivation" hidden>
         <div class="detail-section-heading"><span>${detailText("detail.cultivation_title")}</span><small>${detailText("detail.cultivation_subtitle")}</small></div>
-        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? sowRow("🌱", tx("sowMethod"), sow.method) : ""}${sow.periodo ? sowRow("📅", detailText("detail.sow_period"), sow.periodo) : ""}${sow.depth ? sowRow("📏", tx("sowDepth"), sow.depth) : ""}${sow.tip || nota ? sowTip(sow.tip || nota) : ""}</div></div>` : ""}
-        <div class="detail-spacing"><div class="detail-spacing-header"><span class="detail-tile-label">${window.SERRA_PLANT_CONTENT?.spacingLabel(p, state.lang) || tx("distance")}</span><b class="detail-spacing-val">${spacingValue(p)}</b></div>${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}</div>
-        <div class="detail-tech-grid">${renderConfigTechCards(profile.cultivation)}</div>
-      </div>
-
-      <div class="detail-tab-panel" data-detail-panel="calendar" hidden>
-        <div class="detail-section-heading"><span>${detailText("detail.calendar_title")}</span><small>${detailText("detail.calendar_subtitle")}</small></div>
-        <div class="month-bar"><div class="month-bar-head"><span>${monthLegend.title}</span><b>${activeMonthsLabel}</b></div><div class="month-segments" aria-label="${monthLegend.title}">${Array.from(
+        <section class="detail-seasonality"><div class="detail-seasonality-heading"><span class="detail-seasonality-icon" aria-hidden="true">🗓</span><div><b>${detailText("detail.calendar_title")}</b><small>${detailText("detail.calendar_subtitle")}</small></div></div><div class="month-bar"><div class="month-bar-head"><span>${monthLegend.title}</span><b>${activeMonthsLabel}</b></div><div class="month-segments" aria-label="${monthLegend.title}">${Array.from(
           { length: 12 },
           (_, i) => {
             const on = effectiveMonths(p).has(i + 1);
@@ -6253,7 +6245,10 @@ function renderPlantDetailPanel(initialTab = "overview") {
           }
         ).join(
           ""
-        )}</div><div class="month-bar-legend"><span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span><span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span></div></div>
+        )}</div><div class="month-bar-legend"><span><i class="month-legend-dot month-legend-dot--active"></i>${monthLegend.available}</span><span><i class="month-legend-dot month-legend-dot--current"></i>${monthLegend.selected}</span></div></div></section>
+        ${sow ? `<div class="detail-sow"><div class="detail-sow-body">${sow.method ? sowRow("🌱", tx("sowMethod"), sow.method) : ""}${sow.periodo ? sowRow("📅", detailText("detail.sow_period"), sow.periodo) : ""}${sow.depth ? sowRow("📏", tx("sowDepth"), sow.depth) : ""}${sow.tip || nota ? sowTip(sow.tip || nota) : ""}</div></div>` : ""}
+        <div class="detail-spacing"><div class="detail-spacing-header"><span class="detail-tile-label">${window.SERRA_PLANT_CONTENT?.spacingLabel(p, state.lang) || tx("distance")}</span><b class="detail-spacing-val">${spacingValue(p)}</b></div>${svgSpacing ? `<div class="detail-spacing-diagram">${svgSpacing}</div>` : ""}</div>
+        <div class="detail-tech-grid">${renderConfigTechCards(profile.cultivation)}</div>
       </div>
 
       <div class="detail-tab-panel" data-detail-panel="care" hidden>

@@ -1863,7 +1863,7 @@
         calendarViewTabsAria: "Vista calendario",
         calendarMonthStripAria: "Mesi",
         noviceGuideTitle: "Segui il tuo piano",
-        noviceGuideTag: "Percorso Principiante",
+        noviceGuideTag: "Principiante",
         noviceGuideStep1:
           "Il badge in alto mostra il percorso attivo: toccalo solo se vuoi scegliere un livello diverso.",
         noviceGuideStep2:
@@ -1875,7 +1875,7 @@
         noviceGuideStep5:
           "Vuoi più libertà? Tocca il badge del percorso e passa a Intermedio, senza perdere il contesto.",
         intermediateGuideTitle: "Personalizza il tuo piano",
-        intermediateGuideTag: "Percorso Intermedio",
+        intermediateGuideTag: "Intermedio",
         intermediateGuideStep1:
           "Il badge in alto mostra il percorso attivo: toccalo quando vuoi passare a Principiante o Esperto.",
         intermediateGuideStep2:
@@ -1887,7 +1887,7 @@
         intermediateGuideStep5:
           "Quando il piano è pronto, apri la lista dei semi e aggiungi al carrello solo ciò che vuoi acquistare.",
         expertGuideTitle: "Componi il tuo piano",
-        expertGuideTag: "Percorso Esperto",
+        expertGuideTag: "Esperto",
         expertGuideStep1:
           "Il badge in alto mostra il percorso attivo: toccalo quando vuoi cambiare livello di autonomia.",
         expertGuideStep2:
@@ -2445,7 +2445,7 @@
         calendarViewTabsAria: "Vizualizare calendar",
         calendarMonthStripAria: "Luni",
         noviceGuideTitle: "Urmează-ți planul",
-        noviceGuideTag: "Traseu Începător",
+        noviceGuideTag: "Începător",
         noviceGuideStep1:
           "Insigna de sus arată traseul activ: atinge-o doar dacă vrei să alegi un alt nivel.",
         noviceGuideStep2:
@@ -2457,7 +2457,7 @@
         noviceGuideStep5:
           "Vrei mai multă libertate? Atinge insigna traseului și treci la Intermediar, fără să pierzi contextul.",
         intermediateGuideTitle: "Personalizează-ți planul",
-        intermediateGuideTag: "Traseu Intermediar",
+        intermediateGuideTag: "Intermediar",
         intermediateGuideStep1:
           "Insigna de sus arată traseul activ: atinge-o când vrei să treci la Începător sau Expert.",
         intermediateGuideStep2:
@@ -2469,7 +2469,7 @@
         intermediateGuideStep5:
           "Când planul este gata, deschide lista de semințe și adaugă în coș doar ce vrei să cumperi.",
         expertGuideTitle: "Compune-ți planul",
-        expertGuideTag: "Traseu Expert",
+        expertGuideTag: "Expert",
         expertGuideStep1:
           "Insigna de sus arată traseul activ: atinge-o când vrei să schimbi nivelul de autonomie.",
         expertGuideStep2:
