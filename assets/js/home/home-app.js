@@ -165,6 +165,8 @@ function setMese(m) {
 // Allinea i controlli del catalogo
 function syncCatalogControls() {
   const search = document.getElementById("catalogSearch");
+  const hint = document.getElementById("catalogHint");
+  const filterToggle = document.getElementById("catalogFilterToggle");
   const type = document.getElementById("catalogType");
   const sort = document.getElementById("catalogSort");
   const season = document.getElementById("catalogSeasonOnly");
@@ -172,6 +174,16 @@ function syncCatalogControls() {
   const easy = document.getElementById("catalogEasyOnly");
   if (search && search !== document.activeElement)
     search.value = catalog.search;
+  // Su smartphone, durante la ricerca togliamo il suggerimento dal flusso:
+  // i risultati restano così raggiungibili anche con la tastiera aperta.
+  const hasSearchTerm = Boolean(catalog.search.trim());
+  if (hint)
+    hint.classList.toggle("catalog-mobile-hidden-while-searching", hasSearchTerm);
+  if (filterToggle)
+    filterToggle.classList.toggle(
+      "catalog-mobile-hidden-while-searching",
+      hasSearchTerm
+    );
   if (type && type !== document.activeElement) type.value = catalog.type;
   if (sort && sort !== document.activeElement) sort.value = catalog.sort;
   if (season) {

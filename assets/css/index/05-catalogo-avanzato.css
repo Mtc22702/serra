@@ -1534,6 +1534,9 @@
       align-items: stretch;
       gap: 0.6rem;
     }
+    .catalog-mobile-hidden-while-searching {
+      display: none;
+    }
     .catalog-hint-controls {
       justify-content: space-between;
       width: 100%;
