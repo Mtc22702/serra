@@ -1060,32 +1060,6 @@
               >
             </button>
             <button
-              class="btn btn-soft btn-icon view-calendar-btn"
-              id="btnCalendar"
-              type="button"
-              title="Calendario di manutenzione"
-              data-i18n-conf-title="calendar.title"
-              data-conf-action="open-calendar"
-            >
-              <svg
-                class="btn-ico"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              <span class="btn-label" data-i18n-conf="calendar.button"
-                >Calendario</span
-              >
-            </button>
-            <button
               class="btn btn-soft btn-icon view-print-btn"
               id="btnStampa"
               type="button"
@@ -1612,152 +1586,39 @@
       <div class="projects-backdrop" data-conf-action="close-projects"></div>
       <div class="projects-dialog">
         <div class="projects-head">
-          <h2
-            class="projects-title"
-            id="projectsModalTitle"
-            data-i18n-conf="projects.title"
-          >
-            I miei progetti
-          </h2>
-          <button
-            class="projects-close"
-            type="button"
-            data-conf-action="close-projects"
-            aria-label="Chiudi"
-            data-i18n-conf-aria="projectsCloseAria"
-          >
-            ✕
-          </button>
-        </div>
-        <p class="projects-intro" data-i18n-conf="projects.intro">
-          Ogni progetto conserva il suo layout, le misure e il mese. Apri,
-          duplica, rinomina o elimina.
-        </p>
-        <ul class="projects-list" id="projectsList"></ul>
-        <div class="projects-foot">
-          <button
-            class="btn btn-success btn-block"
-            type="button"
-            data-conf-action="create-project"
-          >
-            <span aria-hidden="true">＋</span>
-            <span data-i18n-conf="projects.new">Nuovo progetto</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modale calendario -->
-    <div
-      class="projects-modal"
-      id="calendarModal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="calendarModalTitle"
-      hidden
-    >
-      <div class="projects-backdrop" data-conf-action="close-calendar"></div>
-      <div class="projects-dialog projects-dialog--wide">
-        <div class="projects-head">
-          <div>
+          <div class="projects-title-group">
             <h2
               class="projects-title"
-              id="calendarModalTitle"
-              data-i18n-conf="calendar.title"
+              id="projectsModalTitle"
+              data-i18n-conf="projects.title"
             >
-              Calendario di manutenzione
+              I miei progetti
             </h2>
-            <small class="calendar-subtitle" id="calendarSubtitle"></small>
+            <p class="projects-intro" data-i18n-conf="projects.intro">
+              Salva versioni della tua serra e riprendi da dove eri rimasto.
+            </p>
           </div>
-          <button
-            class="projects-close"
-            type="button"
-            data-conf-action="close-calendar"
-            aria-label="Chiudi"
-            data-i18n-conf-aria="projectsCloseAria"
-          >
-            ✕
-          </button>
-        </div>
-        <p
-          class="projects-intro"
-          id="calendarIntro"
-          data-i18n-conf="calendar.intro"
-        >
-          Semina, cura e raccolta stimate mese per mese.
-        </p>
-        <div
-          class="calendar-tools"
-          aria-label="Strumenti calendario"
-          data-i18n-conf-aria="calendarToolsAria"
-        >
-          <div
-            class="calendar-view-tabs"
-            role="tablist"
-            aria-label="Vista calendario"
-            data-i18n-conf-aria="calendarViewTabsAria"
-          >
+          <div class="projects-head-actions">
             <button
-              class="calendar-view-tab is-active"
-              id="calendarViewProject"
+              class="projects-new-btn"
               type="button"
-              role="tab"
-              aria-selected="true"
-              data-calendar-view="project"
-              data-conf-action="set-calendar-view"
-              data-view="project"
+              data-conf-action="create-project"
             >
-              Il mio progetto
+              <span aria-hidden="true">+</span>
+              <span data-i18n-conf="projects.new">Nuovo progetto</span>
             </button>
             <button
-              class="calendar-view-tab"
-              id="calendarViewAll"
+              class="projects-close"
               type="button"
-              role="tab"
-              aria-selected="false"
-              data-calendar-view="all"
-              data-conf-action="set-calendar-view"
-              data-view="all"
+              data-conf-action="close-projects"
+              aria-label="Chiudi"
+              data-i18n-conf-aria="projectsCloseAria"
             >
-              Tutte le colture
+              ✕
             </button>
           </div>
-          <div class="calendar-filters">
-            <label class="calendar-search">
-              <span class="sr-only" id="calendarSearchLabel"
-                >Cerca una pianta</span
-              >
-              <span aria-hidden="true">⌕</span>
-              <input
-                id="calendarSearch"
-                type="search"
-                placeholder="Cerca una pianta"
-                autocomplete="off"
-                data-conf-action="set-calendar-search"
-              />
-            </label>
-            <label class="calendar-category-wrap">
-              <span class="sr-only" id="calendarCategoryLabel">Categoria</span>
-              <select
-                id="calendarCategory"
-                data-conf-action="set-calendar-category"
-              ></select>
-            </label>
-          </div>
         </div>
-        <div
-          class="calendar-month-strip"
-          id="calendarMonthStrip"
-          role="tablist"
-          aria-label="Mesi"
-          data-i18n-conf-aria="calendarMonthStripAria"
-        ></div>
-        <div
-          class="calendar-summary"
-          id="calendarSummary"
-          aria-live="polite"
-        ></div>
-        <div class="calendar-grid" id="calendarGrid"></div>
+        <ul class="projects-list" id="projectsList"></ul>
       </div>
     </div>
 
