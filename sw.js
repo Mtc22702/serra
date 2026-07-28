@@ -1,4 +1,7 @@
-/* Definisce versione e risorse statiche da memorizzare nella cache dell'applicazione. */
+/* Offline: precache minimo e strategie di rete/cache per l'intera applicazione.
+ * CACHE_VERSION deve avanzare a ogni rilascio che modifica risorse memorizzate;
+ * boot-sw.js registra questo file e riconosce con il prefisso "serra-" le cache locali.
+ */
 const CACHE_VERSION = "20260724-5193b4027f3e";
 // Incrementato a ogni rilascio forzato: assicura una nuova impronta della
 // cache anche quando la modifica è principalmente grafica o di distribuzione.

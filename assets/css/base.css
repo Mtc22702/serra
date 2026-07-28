@@ -1,7 +1,7 @@
-/* Base condivisa: reset, fondazioni, header, footer e componenti generali.
- * Home completa: header, catalogo, carrello, hero e responsive.
- * Struttura: fondazioni → tema → componenti → adattamenti viewport.
- * Questo è l'unico sorgente CSS della home; non esistono import o patch esterne.
+/* Fondazioni condivise: reset, token, tema, intestazione, piè di pagina e componenti comuni.
+ * Viene caricato prima del foglio specifico di ogni pagina; le regole qui definite
+ * non devono assumere una schermata particolare. Struttura: fondazioni → tema →
+ * componenti → adattamenti viewport. Le personalizzazioni stanno in pages/.
  */
 @layer base, dark-theme, polish;
 

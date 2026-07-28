@@ -32,6 +32,8 @@
     </script>
   </head>
   <body>
+    <!-- Area riservata: usa base.css e serra-account.css; base.js, catalogo.js e
+         account.js devono restare in quest'ordine per preservare API e dati condivisi. -->
     <!-- Intestazione con navigazione, preferenze e accesso alle sezioni principali -->
     <header class="site-header">
       <div class="site-header-inner">
@@ -1580,9 +1582,7 @@
     <!-- Contenitore Nascosto per Stampa Ricevuta (A4) -->
     <div id="invoicePrintContainer" class="invoice-print-section"></div>
 
-    <!-- Script che inizializzano autenticazione, dati utente e azioni amministrative -->
-    <!-- Service worker condiviso -->
-    <!-- Runtime semplificato: fondazioni, logica pagina e cache. -->
+    <!-- Bootstrap: base e catalogo devono precedere account; boot-sw gestisce la cache. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
     <script src="assets/js/account.js" defer></script>

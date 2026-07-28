@@ -1,3 +1,8 @@
+/**
+ * Server locale di sviluppo: espone API JSON per catalogo, utenti e ordini.
+ * I dati risiedono in db/ e i nomi degli endpoint sono consumati da base.js;
+ * mantenerli stabili quando si interviene sulle funzioni di lettura e scrittura.
+ */
 const http = require("http");
 const fs = require("fs");
 const path = require("path");

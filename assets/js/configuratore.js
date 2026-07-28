@@ -1,6 +1,6 @@
 /**
  * Configuratore: dati agronomici, stato persistente, calcoli, rendering e wizard.
- * Dipende da common.js per catalogo, traduzioni, API e strumenti condivisi.
+ * Dipende da base.js e catalogo.js per traduzioni, API, strumenti e dati condivisi.
  * L'ordine delle sezioni è intenzionale: costanti → stato → dominio → UI → avvio.
  * Le modifiche allo stato devono passare dalle funzioni di persistenza per non
  * perdere progetti, carrello e storico salvati nel browser.

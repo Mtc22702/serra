@@ -1,6 +1,7 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Stili esclusivi di configuratore.css: caricati dopo base.css per preservare la cascata. */
-/* Moduli CSS del configuratore */
+/* Configuratore: bundle degli stili di layout, wizard, serra e catalogo.
+ * È caricato dopo base.css; il sorgente principale è pages/configuratore.css.
+ */
 /* Fondazioni e introduzione */
 @layer base {
   :root {

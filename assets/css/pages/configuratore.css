@@ -1,5 +1,6 @@
-/* Stili esclusivi di configuratore.css: caricati dopo base.css per preservare la cascata. */
-/* Moduli CSS del configuratore */
+/* Configuratore: sorgente degli stili di layout, wizard, serra e catalogo.
+ * Viene distribuito come serra-configuratore.css e caricato dopo base.css; modificare qui.
+ */
 /* Fondazioni e introduzione */
 @layer base {
   :root {
@@ -9374,7 +9375,7 @@
   }
 }
 
-/* Moduli CSS del tema globale */
+/* Componenti condivisi richiamati anche dalle pagine con preferenze utente. */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */

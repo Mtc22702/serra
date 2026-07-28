@@ -1,4 +1,8 @@
-// Registrazione e aggiornamento del Service Worker.
+/**
+ * Bootstrap offline: registra il Service Worker in produzione e lo rimuove in locale.
+ * È caricato per ultimo da ogni pagina: non deve bloccare l'interfaccia né alterare
+ * la navigazione. Le chiavi che iniziano con "serra-" sono il contratto della cache.
+ */
 if ("serviceWorker" in navigator) {
   const isLocalDev =
     location.hostname === "localhost" ||

@@ -1,6 +1,6 @@
 /**
  * Home: catalogo, filtri, carrello, hero animata e passaggio al configuratore.
- * Dipende da common.js per dati piante, lingua, API, foto e navigazione.
+ * Dipende da base.js e catalogo.js per dati piante, lingua, API, foto e navigazione.
  * Le sezioni sono ordinate in base al flusso utente: dati → catalogo → carrello
  * → interazioni → avvio. Il DOM viene aggiornato solo dal rendering dedicato.
  */

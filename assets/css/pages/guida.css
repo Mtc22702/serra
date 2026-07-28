@@ -1,5 +1,6 @@
-/* Stili esclusivi di guida.css: caricati dopo base.css per preservare la cascata. */
-/* Moduli CSS del tema globale */
+/* Guida: sorgente degli stili dei percorsi, delle schede e dei controlli di navigazione.
+ * Viene distribuito come serra-guida.css e caricato dopo base.css; modificare qui.
+ */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */

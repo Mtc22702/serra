@@ -1,6 +1,7 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Stili esclusivi di home.css: caricati dopo base.css per preservare la cascata. */
-/* Moduli CSS del tema globale */
+/* Home: sorgente degli stili di catalogo, carrello, hero e configurazione rapida.
+ * Viene distribuito come serra-home.css e caricato dopo base.css; modificare qui.
+ */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */

@@ -1,6 +1,7 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Stili esclusivi di ordine-confermato.css: caricati dopo base.css per preservare la cascata. */
-/* Moduli CSS del tema globale */
+/* Conferma ordine: sorgente degli stili del riepilogo e delle azioni successive.
+ * Viene distribuito come serra-order-confirmation.css e caricato dopo base.css; modificare qui.
+ */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */

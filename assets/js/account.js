@@ -1,6 +1,6 @@
 /**
  * Area account: autenticazione, profilo, ordini e strumenti amministrativi.
- * Dipende dalle API e dalle utilità esposte da common.js.
+ * Dipende da base.js per API, traduzioni e utilità condivise.
  * Lo stato è privato alla IIFE: le azioni del DOM passano dal dispatcher
  * data-account-action, per evitare funzioni globali e accoppiamenti invisibili.
  * Le sezioni seguenti sono ordinate come: stato → eventi → rendering → azioni.

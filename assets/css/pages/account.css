@@ -1,5 +1,6 @@
-/* Stili esclusivi di account.css: caricati dopo base.css per preservare la cascata. */
-/* Moduli CSS del tema globale */
+/* Area riservata: sorgente degli stili di account, distribuito come serra-account.css.
+ * Il bundle viene caricato dopo base.css: modificare qui, mantenendo l'ordine della cascata.
+ */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
