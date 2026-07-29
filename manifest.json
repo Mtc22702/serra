@@ -10,13 +10,13 @@
   "theme_color": "#2f6b3a",
   "icons": [
     {
-      "src": "assets/img/icons/logo-192.png",
+      "src": "assets/img/icons/orto-in-serra-192-v2.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/img/icons/logo-512.png",
+      "src": "assets/img/icons/orto-in-serra-512-v2.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

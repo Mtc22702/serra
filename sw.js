@@ -2,7 +2,7 @@
  * CACHE_VERSION deve avanzare a ogni rilascio che modifica risorse memorizzate;
  * boot-sw.js registra questo file e riconosce con il prefisso "serra-" le cache locali.
  */
-const CACHE_VERSION = "20260724-5193b4027f3e";
+const CACHE_VERSION = "20260729-2e548bd3c9c8";
 // Incrementato a ogni rilascio forzato: assicura una nuova impronta della
 // cache anche quando la modifica è principalmente grafica o di distribuzione.
 const RELEASE_EPOCH = 3;
@@ -11,9 +11,9 @@ const CACHE = `serra-${CACHE_VERSION}`;
 const PRECACHE = [
   "./",
   "./manifest.json",
-  "./assets/img/icons/logo-180.png",
-  "./assets/img/icons/logo-192.png",
-  "./assets/img/icons/logo-512.png",
+  "./assets/img/icons/orto-in-serra-180-v2.png",
+  "./assets/img/icons/orto-in-serra-192-v2.png",
+  "./assets/img/icons/orto-in-serra-512-v2.png",
   "./assets/img/svg/logo.svg"
 ];
 
