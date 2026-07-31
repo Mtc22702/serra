@@ -6046,7 +6046,6 @@ function getPlantDetailReturnScroll(panel) {
 // Apre il pannello dettaglio della pianta selezionata
 function openPlantDetailPanel(originScroll = null) {
   const panel = document.getElementById("panelPlantDetail");
-  const settings = document.getElementById("panelSettings");
   if (!panel) return;
   if (!isResponsiveConfiguratorLayout() && panel.hidden) {
     const returnScroll = originScroll || {
@@ -6059,15 +6058,12 @@ function openPlantDetailPanel(originScroll = null) {
   }
   renderPlantDetailPanel();
   panel.hidden = false;
-  if (settings && isResponsiveConfiguratorLayout())
-    setPanelCollapsed(settings, true);
   scrollPlantDetailPanelIntoView("smooth");
 }
 
 // Chiude il pannello dettaglio e ripristina la selezione
 function closePlantDetailPanel() {
   const panel = document.getElementById("panelPlantDetail");
-  const settings = document.getElementById("panelSettings");
   const selectedBedIndex = state.selected;
   const desktopReturnScroll = !isResponsiveConfiguratorLayout()
     ? getPlantDetailReturnScroll(panel)
@@ -6090,8 +6086,6 @@ function closePlantDetailPanel() {
     delete panel.dataset.returnScrollTop;
   }
   if (panel) panel.hidden = true;
-  if (settings && isResponsiveConfiguratorLayout())
-    setPanelCollapsed(settings, false);
   state.selected = -1;
   render();
   if (desktopReturnScroll && selectedBedIndex >= 0) {
@@ -6109,6 +6103,27 @@ function closePlantDetailPanel() {
       document.documentElement.style.removeProperty("overflow-anchor");
     restorePlantDetailScroll(desktopReturnScroll);
   }
+}
+
+// Su mobile mostra subito la miniatura disponibile e aggiorna la foto soltanto
+// dopo il download e la decodifica della versione di dettaglio.
+function upgradePlantDetailHeroImage(image, heroSrc) {
+  if (!image || !heroSrc || image.src.endsWith(heroSrc)) return;
+  const heroImage = new Image();
+  heroImage.decoding = "async";
+  heroImage.fetchPriority = "low";
+  heroImage.onload = () => {
+    const applyHero = () => {
+      if (!image.isConnected || image.dataset.heroSrc !== heroSrc) return;
+      image.src = heroSrc;
+    };
+    if (typeof heroImage.decode === "function") {
+      heroImage.decode().then(applyHero, applyHero);
+    } else {
+      applyHero();
+    }
+  };
+  heroImage.src = heroSrc;
 }
 
 // Costruisce la scheda dettagliata della pianta selezionata nel catalogo.
@@ -6147,6 +6162,10 @@ function renderPlantDetailPanel(initialTab = "overview") {
   if (heroMatch) {
     heroPhotoSrc = `assets/img/photo/large/${heroMatch[1]}`;
   }
+  const useProgressiveMobileHero = window.matchMedia(
+    "(max-width: 680px)"
+  ).matches;
+  const displayedPhotoSrc = useProgressiveMobileHero ? photoSrc : heroPhotoSrc;
   const desc =
     window.SERRA_PLANT_CONTENT?.compactDescription(p, state.lang) ||
     (PLANT_DESC[state.lang] || PLANT_DESC.it)[p.id] ||
@@ -6219,7 +6238,7 @@ function renderPlantDetailPanel(initialTab = "overview") {
 
   container.innerHTML = `
     <div class="pdp-hero-wrap">
-      <img class="pdp-photo-full" src="${heroPhotoSrc}" alt="${plantText(p, "nome")}"
+      <img class="pdp-photo-full" src="${displayedPhotoSrc}" data-hero-src="${heroPhotoSrc}" alt="${plantText(p, "nome")}" decoding="async"
            onerror="if(!this.dataset.fallbackStep){this.dataset.fallbackStep='1';this.src='${photoSrc}';}else{this.src='assets/img/svg/${p.id}.svg';}">
       <div class="pdp-hero-gradient"></div>
       <div class="pdp-hero-meta">
@@ -6286,6 +6305,13 @@ function renderPlantDetailPanel(initialTab = "overview") {
       </div>
     </div>
   `;
+  if (useProgressiveMobileHero && heroPhotoSrc !== photoSrc) {
+    const heroImage = container.querySelector(".pdp-photo-full");
+    // Lascia completare il primo paint con la miniatura prima del download grande.
+    window.requestAnimationFrame(() =>
+      upgradePlantDetailHeroImage(heroImage, heroPhotoSrc)
+    );
+  }
   setConfigDetailTab(initialTab);
 }
 
@@ -9630,18 +9656,53 @@ function clearConfCart() {
   updateConfCartUI();
 }
 
+let confCartScrollLockCount = 0;
+let confCartScrollY = 0;
+
+// Blocca la pagina dietro il cassetto anche su Safari mobile, che ignora il
+// solo overflow:hidden del body durante lo scorrimento tattile.
+function lockConfCartPageScroll() {
+  if (confCartScrollLockCount === 0) {
+    confCartScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${confCartScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  }
+  confCartScrollLockCount++;
+}
+
+// Ripristina la posizione originale dopo la chiusura del cassetto.
+function unlockConfCartPageScroll() {
+  confCartScrollLockCount = Math.max(0, confCartScrollLockCount - 1);
+  if (confCartScrollLockCount !== 0) return;
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.left = "";
+  document.body.style.right = "";
+  document.body.style.width = "";
+  window.scrollTo({ top: confCartScrollY, behavior: "instant" });
+}
+
 // Apre il pannello carrello
 function openConfCart() {
+  const overlay = document.getElementById("cartOverlay");
+  if (!overlay || overlay.classList.contains("open")) return;
   loadConfCart();
   document.getElementById("cartNudge")?.classList.remove("visible");
+  lockConfCartPageScroll();
   document.body.classList.add("cart-open");
-  document.getElementById("cartOverlay").classList.add("open");
+  overlay.classList.add("open");
 }
 
 // Chiude il pannello carrello
 function closeConfCart() {
-  document.getElementById("cartOverlay").classList.remove("open");
+  const overlay = document.getElementById("cartOverlay");
+  if (!overlay || !overlay.classList.contains("open")) return;
+  overlay.classList.remove("open");
   document.body.classList.remove("cart-open");
+  unlockConfCartPageScroll();
 }
 
 // Importa il carrello nel piano e chiude

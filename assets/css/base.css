@@ -4784,6 +4784,7 @@
   }
   .cart-overlay.open {
     display: block;
+    overscroll-behavior: none;
   }
   .cart-backdrop {
     position: absolute;
@@ -4799,6 +4800,9 @@
     background: var(--white);
     padding: 1.5rem;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.13);
