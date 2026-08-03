@@ -1468,8 +1468,6 @@ const PRESETS = {
   ]
 };
 
-
-
 // Definisce lo stato condiviso della serra, del profilo e dell'interfaccia configuratore.
 const state = {
   lang: "it",
@@ -2055,7 +2053,6 @@ function scrollToScene() {
   scrollToLivelloLanding(state.livello);
 }
 
-
 // Gestisce lo store locale che contiene configurazioni e progetto attivo.
 const PROJECTS_KEY = "serra.projects.v1";
 
@@ -2305,8 +2302,12 @@ function renderProjectsModal() {
       { date: fmtDate(project.updatedAt) }
     )}`;
   };
-  const active = store.projects.find((project) => project.id === store.activeId);
-  const others = store.projects.filter((project) => project.id !== store.activeId);
+  const active = store.projects.find(
+    (project) => project.id === store.activeId
+  );
+  const others = store.projects.filter(
+    (project) => project.id !== store.activeId
+  );
   const activeMarkup = active
     ? `<li class="projects-active-card">
         <span class="projects-badge">${projectsText("projects.current")}</span>
@@ -2336,7 +2337,6 @@ function renderProjectsModal() {
     : "";
   list.innerHTML = activeMarkup + otherMarkup;
 }
-
 
 // Traduce le chiavi del configuratore sostituendo le variabili dinamiche richieste.
 function tx(key, vars = {}) {
@@ -2864,7 +2864,6 @@ function applyLanguage() {
   // la lingua cambia mentre la modale è già aperta.
   renderProjectsModal();
 }
-
 
 // File generato con npm run build:js: modificare i moduli in conf/draw/.
 
@@ -4349,8 +4348,6 @@ function overlayShape(bed, bx, by) {
   return s;
 }
 
-
-
 // File generato con npm run build:js: modificare i moduli in conf/ui/.
 
 // -----------------------------------------------------------------------------
@@ -4647,7 +4644,6 @@ function cropSignature() {
     .sort()
     .join("|");
 }
-
 
 // -----------------------------------------------------------------------------
 // Rendering delle interfacce del configuratore — sezione 2 di 8
@@ -5192,12 +5188,7 @@ function openSettingsPanelAndFocusDimensions() {
   });
 }
 
-const CONFIG_DETAIL_TABS = [
-  "overview",
-  "cultivation",
-  "care",
-  "harvest"
-];
+const CONFIG_DETAIL_TABS = ["overview", "cultivation", "care", "harvest"];
 
 // Recupera una stringa dalla i18n della home
 function detailText(key, vars = {}) {
@@ -6162,9 +6153,8 @@ function renderPlantDetailPanel(initialTab = "overview") {
   if (heroMatch) {
     heroPhotoSrc = `assets/img/photo/large/${heroMatch[1]}`;
   }
-  const useProgressiveMobileHero = window.matchMedia(
-    "(max-width: 680px)"
-  ).matches;
+  const useProgressiveMobileHero =
+    window.matchMedia("(max-width: 680px)").matches;
   const displayedPhotoSrc = useProgressiveMobileHero ? photoSrc : heroPhotoSrc;
   const desc =
     window.SERRA_PLANT_CONTENT?.compactDescription(p, state.lang) ||
@@ -6853,8 +6843,6 @@ function renderPrintSummary() {
     </div>`;
 }
 
-
-
 // Analisi consociazioni
 function analyzeCompanions() {
   const beds = state.beds;
@@ -6919,7 +6907,6 @@ function companionSuggestionFor(pair, presentIds) {
   }
   return null;
 }
-
 
 // Definisce prezzi unitari e funzioni per calcolare i materiali dell'ordine.
 const MATERIAL_PRICES = {
@@ -7242,7 +7229,6 @@ function materialsPrintHtml() {
       )}</td></tr></tfoot>
     </table>`;
 }
-
 
 // File generato con npm run build:js: modificare i moduli in conf/engine/.
 
@@ -8821,8 +8807,6 @@ function applyBootIntent() {
   return true;
 }
 
-
-
 // Popola i selettori dei mesi con etichette localizzate e valore corrente.
 function bindConfigStaticActions() {
   document.addEventListener("click", (event) => {
@@ -9983,7 +9967,6 @@ window.addEventListener("pageshow", (event) => {
   // Mostra il contenuto dopo la sincronizzazione della lingua.
   document.documentElement.classList.remove("serra-i18n-pending");
 })();
-
 
 // Coordina i passi del percorso guidato e le relative destinazioni nella pagina.
 (function () {

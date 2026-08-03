@@ -629,7 +629,6 @@ function getStagione(m) {
   return "autunno";
 }
 
-
 // Stato della pagina
 let state = {
   zona: "temperato",
@@ -1603,7 +1602,6 @@ function render() {
   savePrefs();
 }
 
-
 // Operazioni carrello
 function toggleCart(e, id) {
   e.stopPropagation();
@@ -1951,12 +1949,7 @@ function unlockDetailPageScroll() {
   unlockBodyScroll();
 }
 
-const DETAIL_TAB_ORDER = [
-  "overview",
-  "cultivation",
-  "care",
-  "harvest"
-];
+const DETAIL_TAB_ORDER = ["overview", "cultivation", "care", "harvest"];
 
 // Imposta la tab dettaglio
 function setDetailTab(tab, moveFocus = false) {
@@ -3307,7 +3300,6 @@ document.getElementById("detailPanel")?.addEventListener(
   { passive: false }
 );
 
-
 // File generato con npm run build:js: modificare i moduli in home/app/.
 
 // -----------------------------------------------------------------------------
@@ -3989,10 +3981,10 @@ function rejectCookies() {
 window.addEventListener(
   "scroll",
 
-// -----------------------------------------------------------------------------
-// Home — Animazione della serra dimostrativa e ciclo visivo dell'hero.
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
+  // Home — Animazione della serra dimostrativa e ciclo visivo dell'hero.
+  // Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+  // -----------------------------------------------------------------------------
 
   function () {
     const btn = document.getElementById("backToTop");
@@ -4519,11 +4511,10 @@ if (catalogSearchLink) {
 
 // Pre-configurazione
 (function () {
-
-// -----------------------------------------------------------------------------
-// Home — Pannello di preconfigurazione e trasferimento al configuratore.
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
+  // Home — Pannello di preconfigurazione e trasferimento al configuratore.
+  // Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+  // -----------------------------------------------------------------------------
 
   const CONFIG_KEY = "serra.config.v1";
 
@@ -4954,11 +4945,10 @@ if (catalogSearchLink) {
     window.setTimeout(onEnd, 450);
   }
 
-
-// -----------------------------------------------------------------------------
-// Home — Avvio pagina, parametri URL e caricamento differito della mappa.
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
+  // Home — Avvio pagina, parametri URL e caricamento differito della mappa.
+  // Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+  // -----------------------------------------------------------------------------
 
   function initHomeApp() {
     document

@@ -290,7 +290,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "foglia"
     },
 
-// Archivio piante — gruppo 2 di 9.
+    // Archivio piante — gruppo 2 di 9.
 
     {
       id: "spinaci",
@@ -566,7 +566,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "aromatica"
     },
 
-// Archivio piante — gruppo 3 di 9.
+    // Archivio piante — gruppo 3 di 9.
 
     {
       id: "coriandolo",
@@ -870,7 +870,7 @@ const DATA_EXPORT = (function (root) {
       notaBreve: "Il più veloce: pronto in 3–4 settimane."
     },
 
-// Archivio piante — gruppo 4 di 9.
+    // Archivio piante — gruppo 4 di 9.
 
     {
       id: "barbabietola",
@@ -1135,7 +1135,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "radice"
     },
 
-// Archivio piante — gruppo 5 di 9.
+    // Archivio piante — gruppo 5 di 9.
 
     {
       id: "radice_prezemolo",
@@ -1397,7 +1397,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "aromatica"
     },
 
-// Archivio piante — gruppo 6 di 9.
+    // Archivio piante — gruppo 6 di 9.
 
     {
       id: "menta",
@@ -1656,7 +1656,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "foglia"
     },
 
-// Archivio piante — gruppo 7 di 9.
+    // Archivio piante — gruppo 7 di 9.
 
     {
       id: "senape_foglia",
@@ -1919,7 +1919,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "foglia"
     },
 
-// Archivio piante — gruppo 8 di 9.
+    // Archivio piante — gruppo 8 di 9.
 
     {
       id: "cavolo_navone",
@@ -2148,7 +2148,7 @@ const DATA_EXPORT = (function (root) {
       tipo: "aromatica"
     },
 
-// Archivio piante — gruppo 9 di 9.
+    // Archivio piante — gruppo 9 di 9.
 
     {
       id: "cimbru",
@@ -4146,8 +4146,6 @@ const DATA_EXPORT = (function (root) {
   return DATA;
 })(typeof window !== "undefined" ? window : globalThis);
 
-
-
 // Mappa condivisa delle foto del catalogo.
 const PLANT_PHOTO_MAP = {
   pomodoro: "assets/img/photo/pomodoro.webp",
@@ -4285,7 +4283,6 @@ if (typeof window !== "undefined") {
   window.resolvePlantPhoto = resolvePlantPhoto;
   window.preloadPlantPhoto = preloadPlantPhoto;
 }
-
 
 // Testi editoriali brevi e note agronomiche condivisi tra catalogo,
 // configuratore e manuali post-acquisto.
@@ -4915,7 +4912,6 @@ if (typeof window !== "undefined") {
   };
 })(window);
 
-
 // Escape HTML condiviso per i contenuti interpolati.
 function escapeHtml(value) {
   return String(value)
@@ -4929,7 +4925,6 @@ function escapeHtml(value) {
 if (typeof window !== "undefined") {
   window.escapeHtml = escapeHtml;
 }
-
 
 // Genera nel browser un manuale PDF personalizzato per le colture di un ordine.
 (function (root) {
@@ -5646,5 +5641,3 @@ if (typeof window !== "undefined") {
     create
   };
 })(window);
-
-

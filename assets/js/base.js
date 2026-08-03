@@ -71,7 +71,6 @@
   });
 })();
 
-
 // Aggiorna l'etichetta dei collegamenti alla guida quando cambia la lingua del documento.
 (() => {
   // Etichette localizzate usate dai collegamenti che rimandano alla guida.
@@ -93,7 +92,6 @@
     attributeFilter: ["lang"]
   });
 })();
-
 
 // Gestisce apertura, chiusura e accessibilità del menu di navigazione mobile.
 (() => {
@@ -249,7 +247,6 @@
     characterData: true
   });
 })();
-
 
 // Contiene i dizionari condivisi per tradurre contenuti e attributi dell'interfaccia.
 (function (global) {
@@ -3535,9 +3532,7 @@
   global.SERRA_I18N = Object.assign({}, global.SERRA_I18N || {}, shared);
 })(window);
 
-
 // File generato con npm run build:js: modificare i moduli in data/plants/.
-
 
 // Gestisce il database locale e l'archivio alternativo nel browser.
 (() => {
