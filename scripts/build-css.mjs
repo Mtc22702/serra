@@ -9,7 +9,16 @@ const bundles = {
   "serra-configuratore.css": "pages/configuratore.css",
   "serra-account.css": "pages/account.css",
   "serra-guida.css": "pages/guida.css",
-  "serra-order-confirmation.css": "pages/ordine-confermato.css"
+  "serra-order-confirmation.css": "pages/ordine-confermato.css",
+  // Un bundle può indicare più sorgenti: vengono concatenate nell'ordine dato.
+  // I bundle storici restano a sorgente singola, con lo stesso risultato di prima.
+  "serra-orto.css": ["pages/_fondazioni.css", "pages/orto.css"],
+  // Il vivaio riusa i componenti della sezione orto e aggiunge il vassoio.
+  "serra-vivaio.css": [
+    "pages/_fondazioni.css",
+    "pages/orto.css",
+    "pages/vivaio.css"
+  ]
 };
 
 const isExternalUrl = (value) =>
@@ -68,9 +77,12 @@ async function replaceAsync(value, expression, callback) {
 await mkdir(cssDir, { recursive: true });
 for (const [bundleName, entry] of Object.entries(bundles)) {
   const outputFile = path.join(cssDir, bundleName);
-  const content = await readFile(path.join(cssDir, entry), "utf8");
+  const sources = Array.isArray(entry) ? entry : [entry];
+  const parts = await Promise.all(
+    sources.map((source) => readFile(path.join(cssDir, source), "utf8"))
+  );
   await writeFile(
     outputFile,
-    `/* File generato con npm run build:css: modificare il CSS completo in pages/. */\n${content}`
+    `/* File generato con npm run build:css: modificare il CSS completo in pages/. */\n${parts.join("\n")}`
   );
 }

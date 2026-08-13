@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="carciofo">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.39" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(10.18)"><path d="M0 0 C 16.11 -6.21, 8.86 -31.05, 0 -36.52 C -8.86 -31.05, -16.11 -6.21, 0 0 Z" fill="#3d7a52"/></g><g transform="rotate(35.16)"><path d="M0 0 C 12.99 -5.01, 7.15 -25.04, 0 -29.45 C -7.15 -25.04, -12.99 -5.01, 0 0 Z" fill="#2c5b3d"/></g><g transform="rotate(92.32)"><path d="M0 0 C 16.01 -6.17, 8.81 -30.85, 0 -36.29 C -8.81 -30.85, -16.01 -6.17, 0 0 Z" fill="#3d7a52"/></g><g transform="rotate(127.64)"><path d="M0 0 C 15.68 -6.04, 8.62 -30.2, 0 -35.53 C -8.62 -30.2, -15.68 -6.04, 0 0 Z" fill="#2c5b3d"/></g><g transform="rotate(179.14)"><path d="M0 0 C 16.64 -6.41, 9.15 -32.06, 0 -37.72 C -9.15 -32.06, -16.64 -6.41, 0 0 Z" fill="#3d7a52"/></g><g transform="rotate(231.81)"><path d="M0 0 C 14.21 -5.48, 7.82 -27.39, 0 -32.22 C -7.82 -27.39, -14.21 -5.48, 0 0 Z" fill="#2c5b3d"/></g><g transform="rotate(262.74)"><path d="M0 0 C 14.85 -5.72, 8.17 -28.61, 0 -33.66 C -8.17 -28.61, -14.85 -5.72, 0 0 Z" fill="#3d7a52"/></g><g transform="rotate(321.8)"><path d="M0 0 C 14.33 -5.52, 7.88 -27.62, 0 -32.49 C -7.88 -27.62, -14.33 -5.52, 0 0 Z" fill="#2c5b3d"/></g>
+<circle cx="0" cy="1" r="12" fill="#6f7f9a"/><circle cx="-3.6" cy="-4.2" r="4.08" fill="rgba(255,255,255,.3)"/>
 </svg>

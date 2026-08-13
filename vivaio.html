@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="it" data-theme="light">
+  <head>
+    <!-- Metadati, preferenze iniziali e risorse condivise della sezione Vivaio -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <title>Vivaio · Piantine pronte da trapiantare</title>
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/icons/orto-in-serra-180-v2.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
+    <!-- Versione applicativa e tema iniziale: stesso contratto delle altre pagine -->
+    <script>
+      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
+      window.SERRA_IS_LOCAL_DEV =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      (function () {
+        var saved = localStorage.getItem("serra-theme");
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+    <!-- Lingua iniziale: evita il lampeggio del testo italiano in romeno -->
+    <style>
+      html.serra-i18n-pending body {
+        visibility: hidden;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var lang = localStorage.getItem("ois.lang");
+          if (lang === "it" || lang === "ro") {
+            document.documentElement.lang = lang;
+          }
+          if (lang === "ro") {
+            document.documentElement.classList.add("serra-i18n-pending");
+            window.setTimeout(function () {
+              document.documentElement.classList.remove("serra-i18n-pending");
+            }, 1200);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/serra-vivaio.css?v=20260813-b5b73776f70c"
+    />
+  </head>
+  <!-- orto-page fornisce i token condivisi con la sezione "Il mio orto" -->
+  <body class="orto-page viv-page">
+    <!-- Intestazione condivisa con il resto dell'app: stesse voci, stesso ordine -->
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
+          <span class="nav-brand-mark"
+            ><img src="assets/img/svg/logo.svg" alt=""
+          /></span>
+          <span class="nav-brand-copy">
+            <strong class="nav-brand-text">Orto in Serra</strong>
+            <small data-viv-key="nav.brand_sub">Coltiva con un piano</small>
+          </span>
+        </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+          <span class="mobile-nav-section-title" data-viv-key="nav.menu_explore"
+            >Esplora</span
+          >
+          <a
+            href="index.html#stagione"
+            class="nav-link nav-link--semi"
+            data-viv-key="nav.semi"
+            >🌿 Catalogo semi</a
+          >
+          <a
+            href="vivaio.html"
+            class="nav-link nav-link--vivaio nav-link--current"
+            data-viv-key="nav.vivaio"
+            aria-current="page"
+            >🪴 Vivaio piantine</a
+          >
+          <a
+            href="orto.html"
+            class="nav-link nav-link--orto"
+            data-viv-key="nav.orto"
+            >🌱 Il mio orto</a
+          >
+          <a
+            href="configuratore.html?source=index&resume=1"
+            class="nav-link nav-link--configuratore"
+            data-viv-key="nav.configuratore"
+            >📐 Configuratore serra</a
+          >
+          <a
+            href="account.html"
+            class="nav-link nav-link--account"
+            data-viv-key="nav.account"
+            >👤 Area Personale</a
+          >
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="nav-menu-toggle"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Apri menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
+               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <a
+            href="account.html"
+            class="nav-account-btn"
+            data-viv-key-aria="nav.account_label"
+            aria-label="Area Personale"
+          >
+            <span class="nav-account-ico" aria-hidden="true">👤</span>
+            <span class="nav-account-label" data-viv-key="nav.account_label"
+              >Area Personale</span
+            >
+          </a>
+          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <div class="nav-prefs">
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+              title="Cambia tema"
+            >
+              <span
+                class="theme-toggle-icon theme-toggle-moon"
+                aria-hidden="true"
+                >☾</span
+              >
+              <span
+                class="theme-toggle-icon theme-toggle-sun"
+                aria-hidden="true"
+                >☀</span
+              >
+            </button>
+            <div class="nav-lang">
+              <select id="vivaioLangSelect" title="Lingua / Limbă">
+                <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
+                <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
+              </select>
+            </div>
+          </div>
+          <a
+            href="#vivaioCartOverlay"
+            class="cart-btn"
+            data-viv-action="show-cart"
+            aria-label="Apri carrello"
+          >
+            <span class="cart-icon" aria-hidden="true">🛒</span>
+            <span class="cart-label" data-viv-key="nav.carrello">Carrello</span>
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Listino e vassoio d'acquisto: contenuto disegnato da vivaio.js -->
+    <main class="orto-wrap">
+      <div id="vivaioApp"></div>
+    </main>
+
+    <!-- Carrello a scomparsa: stessa struttura e stesse classi della home,
+         così l'interazione è identica in tutta l'app. -->
+    <div class="cart-overlay" id="vivaioCartOverlay">
+      <div class="cart-backdrop" data-viv-action="close-cart"></div>
+      <div
+        class="cart-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="vivaioCartTitle"
+      >
+        <div class="cart-header">
+          <div class="cart-title-area">
+            <div
+              class="cart-title"
+              id="vivaioCartTitle"
+              data-viv-key="cart.title"
+            >
+              Il tuo carrello
+            </div>
+            <span class="cart-species-line" id="vivaioCartLine"></span>
+          </div>
+          <div class="cart-header-actions">
+            <button
+              class="cart-clear-btn"
+              type="button"
+              data-viv-action="clear"
+              data-viv-key="cart.clear"
+            >
+              Svuota
+            </button>
+            <button
+              class="cart-close"
+              type="button"
+              data-viv-action="close-cart"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+        <!-- Contenuto disegnato da vivaio.js -->
+        <div id="vivaioCartBody"></div>
+      </div>
+    </div>
+
+    <!-- Messaggio temporaneo di conferma delle azioni -->
+    <div
+      class="orto-toast"
+      id="vivaioToast"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+    <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; vivaio.js disegna. -->
+    <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/serra-cart.js" defer></script>
+    <script src="assets/js/serra-care-engine.js" defer></script>
+    <script src="assets/js/vivaio.js" defer></script>
+    <script src="assets/js/boot-sw.js" defer></script>
+  </body>
+</html>

@@ -38,7 +38,7 @@ for (const source of sources) {
   }
 }
 
-for (const page of ["index.html", "configuratore.html", "account.html", "guida.html", "ordine-confermato.html"]) {
+for (const page of ["index.html", "configuratore.html", "account.html", "guida.html", "ordine-confermato.html", "orto.html", "vivaio.html"]) {
   const html = await readFile(path.join(root, page), "utf8");
   if (!html.includes("<!--")) {
     throw new Error(`${page}: commenti di orientamento mancanti.`);

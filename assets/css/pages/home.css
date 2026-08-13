@@ -5085,40 +5085,68 @@
     gap: 8px;
   }
 
+  /* Ogni livello è un pulsante pieno: superficie compatta, bordo marcato e
+     spessore inferiore che simula il rilievo di un tasto, così è chiaro che si
+     clicca tutta la card e non solo l'indicatore a destra. */
   .hero-cfg-level {
-    --accent-text: #245b2a;
-    min-height: 66px;
-    padding: 6px 11px 6px 14px;
-    gap: 11px;
-    border-width: 1.5px;
-    border-color: color-mix(in srgb, var(--accent) 38%, #d6ddd2);
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--accent) 7%, #fffdf7);
+    --accent-text: #1f4f27;
+    --accent-edge: color-mix(in srgb, var(--accent) 62%, #14301f);
+    min-height: 70px;
+    padding: 9px 14px 9px 16px;
+    gap: 12px;
+    border-width: 2px;
+    border-color: color-mix(in srgb, var(--accent) 66%, #cbd6c9);
+    border-radius: 16px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent) 9%, #fffdf7),
+      color-mix(in srgb, var(--accent) 22%, #fffdf7)
+    );
     box-shadow:
-      0 5px 15px rgba(7, 31, 21, 0.14),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      0 4px 0 0 var(--accent-edge),
+      0 10px 20px rgba(7, 31, 21, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.16s ease,
+      background 0.16s ease,
+      border-color 0.16s ease;
   }
 
   .hero-cfg-level.pc-persona-card--intermedio {
-    --accent-text: #674b0d;
+    --accent-text: #5c410a;
   }
 
   .hero-cfg-level.pc-persona-card--esperto {
-    --accent-text: #71311f;
+    --accent-text: #6b2b1a;
   }
 
+  /* La barretta laterale non serve più: il colore pieno identifica il livello. */
   .hero-cfg-level::before {
-    width: 5px;
-    opacity: 1;
+    display: none;
   }
 
   .hero-cfg-level:hover {
     border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 12%, #fffdf7);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent) 16%, #fffdf7),
+      color-mix(in srgb, var(--accent) 32%, #fffdf7)
+    );
     box-shadow:
-      0 10px 24px rgba(7, 31, 21, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.94);
+      0 6px 0 0 var(--accent-edge),
+      0 14px 26px rgba(7, 31, 21, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
     transform: translateY(-2px);
+  }
+
+  /* Feedback di pressione: il tasto scende sul proprio spessore. */
+  .hero-cfg-level:active {
+    box-shadow:
+      0 0 0 0 var(--accent-edge),
+      0 4px 10px rgba(7, 31, 21, 0.2),
+      inset 0 2px 6px rgba(7, 31, 21, 0.16);
+    transform: translateY(4px);
   }
 
   .hero-cfg-level:focus-visible {
@@ -5164,21 +5192,49 @@
     line-height: 1.28;
   }
 
+  /* "Consigliato" diventa un'etichetta, non un elemento cliccabile a sé. */
+  .hero-cfg-level .hero-cfg-recommendation {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.16rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 30%, #fff);
+    color: var(--accent-text);
+    font-size: 0.64rem;
+    font-weight: 750;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* L'azione è solo una freccia: nessun secondo pulsante dentro il pulsante. */
   .hero-cfg-level .hero-cfg-level-action {
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    min-height: 34px;
-    padding: 0 10px;
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--accent) 11%, #fff);
-    color: var(--accent-text);
-    font-size: 0.7rem;
-    font-weight: 850;
-    opacity: 1;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 72%, #fff);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 800;
+    opacity: 0.92;
     transform: none;
+  }
+
+  /* Il testo "Scegli" resta per screen reader ma non compete visivamente. */
+  .hero-cfg-level .hero-cfg-level-action > span:first-child {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .hero-cfg-level:hover .hero-cfg-level-action {
@@ -5194,16 +5250,31 @@
   }
 
   html[data-theme="dark"] .hero-cfg-level {
-    border-color: color-mix(in srgb, var(--accent) 48%, #31463a);
-    background: color-mix(in srgb, var(--accent) 13%, #16271f);
+    --accent-edge: color-mix(in srgb, var(--accent) 45%, #060f0a);
+    border-color: color-mix(in srgb, var(--accent) 62%, #31463a);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent) 16%, #16271f),
+      color-mix(in srgb, var(--accent) 28%, #16271f)
+    );
     box-shadow:
-      0 7px 18px rgba(0, 0, 0, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 4px 0 0 var(--accent-edge),
+      0 10px 20px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   html[data-theme="dark"] .hero-cfg-level:hover {
-    border-color: color-mix(in srgb, var(--accent) 78%, #fff);
-    background: color-mix(in srgb, var(--accent) 19%, #172a20);
+    border-color: color-mix(in srgb, var(--accent) 85%, #fff);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent) 24%, #172a20),
+      color-mix(in srgb, var(--accent) 38%, #172a20)
+    );
+  }
+
+  html[data-theme="dark"] .hero-cfg-level .hero-cfg-recommendation {
+    background: color-mix(in srgb, var(--accent) 34%, #16271f);
+    color: #eef6f0;
   }
 
   html[data-theme="dark"] .hero-cfg-level .pc-persona-ico {
@@ -5220,8 +5291,8 @@
   }
 
   html[data-theme="dark"] .hero-cfg-level .hero-cfg-level-action {
-    border-color: color-mix(in srgb, var(--accent) 58%, #6f8577);
-    background: color-mix(in srgb, var(--accent) 23%, #20372a);
+    border: 0;
+    background: color-mix(in srgb, var(--accent) 62%, #20372a);
     color: #f1f6f2;
   }
 
@@ -5240,9 +5311,9 @@
     }
 
     .hero-cfg-level {
-      min-height: 66px;
-      padding: 8px 10px 8px 12px;
-      gap: 9px;
+      min-height: 68px;
+      padding: 10px 12px 10px 13px;
+      gap: 10px;
     }
 
     .hero-cfg-level .pc-persona-ico {
@@ -5269,9 +5340,10 @@
     }
 
     .hero-cfg-level .hero-cfg-level-action {
-      min-height: 32px;
-      padding-inline: 9px;
-      font-size: 0.66rem;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      font-size: 0.9rem;
     }
 
     /* La menzione "consigliato" non deve più comprimere la descrizione: ogni
@@ -5335,12 +5407,9 @@
   }
 
   @media (max-width: 380px) {
-    .hero-cfg-level .hero-cfg-level-action > span:first-child {
-      display: none;
-    }
-
     .hero-cfg-level .hero-cfg-level-action {
-      width: 32px;
+      width: 26px;
+      height: 26px;
       padding: 0;
     }
   }
@@ -6685,5 +6754,514 @@
   textarea,
   select {
     font-size: 16px !important;
+  }
+}
+
+/* Le tre strade dell'app (sezione #percorsi): comprare semi, comprare piantine
+   oppure farsi seguire nella coltivazione di ciò che si possiede già.
+   È la prima cosa che l'utente incontra dopo l'hero. */
+@layer base {
+  .paths-section {
+    width: min(100% - 2rem, 1180px);
+    margin: clamp(2.5rem, 6vw, 4.5rem) auto clamp(1rem, 3vw, 2rem);
+  }
+
+  .paths-head {
+    max-width: 60ch;
+    margin-bottom: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .paths-title {
+    margin: 0.35rem 0 0.5rem;
+    font-family: var(--serif, "Fraunces", Georgia, serif);
+    font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .paths-lead {
+    margin: 0;
+    color: var(--muted);
+    font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  }
+
+  .paths-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .path-card {
+    --path-accent: #2f6b3a;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 26px 24px 22px;
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    background: var(--white);
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(31, 58, 38, 0.07);
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.2s ease,
+      border-color 0.18s ease;
+  }
+
+  /* Filo di colore che identifica la strada senza urlare. */
+  .path-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 5px;
+    background: var(--path-accent);
+  }
+
+  .path-card--semi {
+    --path-accent: #4f9a3f;
+  }
+
+  .path-card--piantine {
+    --path-accent: #c9962f;
+  }
+
+  .path-card--orto {
+    --path-accent: #2f6b3a;
+  }
+
+  .path-card:hover {
+    border-color: var(--path-accent);
+    box-shadow: 0 16px 36px rgba(31, 58, 38, 0.16);
+    transform: translateY(-4px);
+  }
+
+  .path-card:focus-visible {
+    outline: 3px solid var(--path-accent);
+    outline-offset: 3px;
+  }
+
+  .path-tag {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--path-accent) 14%, transparent);
+    color: var(--path-accent);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .path-ico {
+    display: grid;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 14px;
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--path-accent) 12%, transparent);
+    font-size: 27px;
+    place-items: center;
+  }
+
+  .path-card h3 {
+    margin: 0 0 8px;
+    font-family: var(--serif, "Fraunces", Georgia, serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .path-card p {
+    flex: 1;
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.93rem;
+    line-height: 1.5;
+  }
+
+  .path-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: var(--path-accent);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 650;
+    transition: gap 0.18s ease;
+  }
+
+  .path-card:hover .path-cta {
+    gap: 12px;
+  }
+
+  @media (max-width: 660px) {
+    .path-card {
+      padding: 22px 20px 20px;
+    }
+
+    .path-ico {
+      width: 48px;
+      height: 48px;
+      font-size: 23px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .path-card,
+    .path-cta {
+      transition: none;
+    }
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .path-card {
+    border-color: var(--theme-line, rgba(172, 214, 187, 0.16));
+    background: var(--theme-surface, #13221b);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  html[data-theme="dark"] .path-card--semi {
+    --path-accent: #79c78d;
+  }
+
+  html[data-theme="dark"] .path-card--piantine {
+    --path-accent: #e0c06a;
+  }
+
+  html[data-theme="dark"] .path-card--orto {
+    --path-accent: #69b77d;
+  }
+
+  html[data-theme="dark"] .path-cta {
+    color: #0f2318;
+  }
+
+  html[data-theme="dark"] .path-card:hover {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Quarta scelta dell'hero: non è un quarto livello, è l'uscita per chi ha già
+   semi o piantine. Un separatore "oppure" la stacca dai tre livelli, le tre
+   icone anticipano le tre strade e la freccia in basso dice che si scende. */
+@layer base {
+  .hero-cfg-alt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .hero-cfg-alt-or {
+    flex: none;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hero-cfg-alt-link {
+    flex: 1;
+    min-width: 0;
+    gap: 11px;
+    padding: 0.6rem 0.85rem 0.6rem 0.7rem;
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.34);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-cfg-alt-link:hover {
+    border-style: solid;
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  /* Le tre icone sovrapposte annunciano che dietro c'è una scelta fra tre. */
+  .hero-cfg-alt-icons {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+
+  .hero-cfg-alt-icons span {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    border: 1.5px solid rgba(20, 48, 30, 0.5);
+    border-radius: 50%;
+    background: #f3f8ee;
+    font-size: 13px;
+    place-items: center;
+  }
+
+  .hero-cfg-alt-icons span + span {
+    margin-left: -9px;
+  }
+
+  .hero-cfg-alt-link .hero-cfg-catalog-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .hero-cfg-alt-link .hero-cfg-catalog-copy strong {
+    font-size: 0.92rem;
+    line-height: 1.15;
+  }
+
+  .hero-cfg-alt-link .hero-cfg-catalog-copy small {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.74rem;
+    font-weight: 500;
+    line-height: 1.28;
+  }
+
+  /* La freccia punta in basso: la sezione è più giù nella pagina. */
+  .hero-cfg-alt-link .hero-cfg-catalog-arrow {
+    flex: none;
+    font-size: 1.05rem;
+  }
+
+  .hero-cfg-alt-link:hover .hero-cfg-catalog-arrow {
+    transform: translateY(3px);
+  }
+
+  @media (max-width: 660px) {
+    .hero-cfg-alt {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 7px;
+    }
+
+    .hero-cfg-alt-or {
+      text-align: center;
+    }
+
+    .hero-cfg-alt-link {
+      min-height: 54px;
+    }
+
+    .hero-cfg-alt-icons span {
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+    }
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .hero-cfg-alt {
+    border-top-color: rgba(255, 255, 255, 0.14);
+  }
+
+  html[data-theme="dark"] .hero-cfg-alt-icons span {
+    border-color: rgba(0, 0, 0, 0.45);
+    background: #dcebd6;
+  }
+}
+
+/* Distintivo "gratis" accanto a Il mio orto: nel menu le prime due voci
+   portano a un acquisto, la terza no, e la differenza va vista subito. */
+@layer base {
+  /* base.js riscrive il contenuto dei link del menu (icona + etichetta):
+     il distintivo deve quindi vivere in uno pseudo-elemento, che sopravvive
+     alla riscrittura. La traduzione passa dall'attributo lang del documento. */
+  .nav-link--orto {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-link--orto::after {
+    content: "gratis";
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.14);
+    color: #2f6b3a;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  html[lang="ro"] .nav-link--orto::after {
+    content: "gratuit";
+  }
+
+  /* Riga finale della terza strada: lo dice a parole, non solo con l'etichetta. */
+  .path-card--tool .path-note {
+    display: block;
+    margin: -8px 0 16px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .nav-link--orto::after {
+    background: rgba(115, 191, 138, 0.22);
+    color: #a8e6a3;
+  }
+}
+
+/* Promessa dell'hero: la riga che riassume le tre cose che l'app fa.
+   L'hero viene anche accorciato di poco, così il bordo della fascia
+   "Tre strade" si intravede e si capisce che sotto c'è dell'altro. */
+@layer base {
+  .hero-promise {
+    max-width: 44ch;
+    margin: 0.6rem auto 0;
+    color: var(--muted);
+    font-size: clamp(0.95rem, 1.7vw, 1.1rem);
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .hero-immersive {
+    min-height: min(100vh, 880px);
+  }
+
+  @media (min-height: 760px) {
+    .hero-immersive {
+      min-height: 90vh;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .hero-promise {
+      margin-top: 0.5rem;
+      font-size: 0.92rem;
+    }
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .hero-promise {
+    color: rgba(233, 243, 236, 0.78);
+  }
+}
+
+/* Contatore del vassoio piantine sul collegamento al vivaio: il numero arriva
+   dall'attributo data-count impostato da base.js, perché la navigazione
+   riscrive il contenuto dei link e un elemento figlio andrebbe perso. */
+@layer base {
+  .nav-link--vivaio {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-link--vivaio[data-count]::after {
+    content: attr(data-count);
+    min-width: 19px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: #c9962f;
+    color: #2a1d02;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.6;
+    text-align: center;
+  }
+}
+
+/* Suggerimento incrociato dentro il carrello: chi ha solo semi scopre le
+   piantine già cresciute, chi ha solo piantine scopre il catalogo. */
+@layer base {
+  .cart-cross {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 10px 0;
+    padding: 12px 14px;
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+    background: rgba(201, 150, 47, 0.08);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  .cart-cross:hover {
+    border-color: #c9962f;
+    background: rgba(201, 150, 47, 0.14);
+    transform: translateY(-1px);
+  }
+
+  .cart-cross-ico {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 19px;
+    place-items: center;
+  }
+
+  .cart-cross-copy {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cart-cross-copy b {
+    display: block;
+    font-size: 13.5px;
+  }
+
+  .cart-cross-copy small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .cart-cross-arrow {
+    color: #c9962f;
+    font-weight: 800;
+  }
+
+  /* Riga piantina dentro il carrello dei semi: si distingue a colpo d'occhio. */
+  .cart-item-tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #f6c85a;
+    color: #4a3405;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .cart-cross {
+    background: rgba(201, 150, 47, 0.14);
+  }
+
+  html[data-theme="dark"] .cart-cross-ico {
+    background: rgba(255, 255, 255, 0.12);
   }
 }

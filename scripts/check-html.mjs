@@ -8,7 +8,9 @@ const pages = {
   "configuratore.html": "serra-configuratore.css",
   "account.html": "serra-account.css",
   "guida.html": "serra-guida.css",
-  "ordine-confermato.html": "serra-order-confirmation.css"
+  "ordine-confermato.html": "serra-order-confirmation.css",
+  "orto.html": "serra-orto.css",
+  "vivaio.html": "serra-vivaio.css"
 };
 
 for (const [page, bundle] of Object.entries(pages)) {

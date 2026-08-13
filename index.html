@@ -7,7 +7,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260731-76172f6ed862";
+      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -29,7 +29,11 @@
       rel="stylesheet"
     />
     <!-- Icone e manifest PWA -->
-    <link rel="icon" href="assets/img/icons/orto-in-serra-192-v2.png" type="image/png" />
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -75,12 +79,12 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260731-76172f6ed862"
+      href="assets/css/serra-home.css?v=20260813-b5b73776f70c"
     />
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260731-76172f6ed862"
+      href="assets/css/serra-configuratore.css?v=20260813-b5b73776f70c"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -107,35 +111,40 @@
           <span class="mobile-nav-section-title" data-i18n="nav.menu_explore"
             >Esplora</span
           >
+          <!-- Solo le tre strade dell'app più il configuratore: Abbinamenti,
+               Kit del mese e Contatti restano raggiungibili dal piè di pagina. -->
           <a
-            href="#hero"
-            class="nav-link nav-link--current nav-link--home"
-            aria-current="page"
-            data-i18n="nav.home"
-            >🏠 Home</a
+            href="#stagione"
+            class="nav-link nav-link--semi"
+            data-i18n="nav.semi"
+            >🌿 Catalogo semi</a
           >
-          <a href="#stagione" class="nav-link" data-i18n="nav.stagione"
-            >🌿 Catalogo completo</a
+          <a
+            href="vivaio.html"
+            class="nav-link nav-link--vivaio"
+            data-i18n="nav.vivaio"
+            >🪴 Vivaio piantine</a
           >
-          <a href="#abbinamenti" class="nav-link" data-i18n="nav.abbinamenti"
-            >🤝 Abbinamenti</a
-          >
-          <a href="#kit" class="nav-link" data-i18n="footer.kit"
-            >📦 Kit del mese</a
+          <!-- Il distintivo "gratis" arriva da CSS (::after in home.css):
+               base.js riscrive il contenuto dei link di questo menu dividendolo
+               in icona ed etichetta, quindi un elemento figlio verrebbe perso. -->
+          <a
+            href="orto.html"
+            class="nav-link nav-link--orto"
+            data-i18n="nav.orto"
+            >🌱 Il mio orto</a
           >
           <a
             href="configuratore.html?source=index&resume=1"
             class="nav-link nav-link--configuratore"
             data-i18n="nav.configuratore"
-            >📐 Configuratore</a
-          >
-          <a href="#contatti" class="nav-link" data-i18n="nav.contatti"
-            >✉️ Contatti</a
+            >📐 Configuratore serra</a
           >
           <a
             href="account.html"
             class="nav-link nav-link--account"
             id="navAccountBtn"
+            data-i18n="nav.account"
             >👤 Area Personale</a
           >
           <div class="mobile-nav-preferences">
@@ -201,30 +210,50 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <button
-            class="theme-toggle"
-            type="button"
-            aria-label="Attiva modalità scura"
-            aria-pressed="false"
-            title="Cambia tema"
+          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
+               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <a
+            href="account.html"
+            class="nav-account-btn"
+            data-i18n-aria="nav.account_label"
+            aria-label="Area Personale"
           >
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
-              >☾</span
+            <span class="nav-account-ico" aria-hidden="true">👤</span>
+            <span class="nav-account-label" data-i18n="nav.account_label"
+              >Area Personale</span
             >
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
-              >☀</span
+          </a>
+          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <div class="nav-prefs">
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+              title="Cambia tema"
             >
-          </button>
-          <div class="nav-lang">
-            <select
-              id="langSelect"
-              data-lang-select
-              data-home-action="set-language"
-              title="Lingua / Limbă"
-            >
-              <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
-              <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
-            </select>
+              <span
+                class="theme-toggle-icon theme-toggle-moon"
+                aria-hidden="true"
+                >☾</span
+              >
+              <span
+                class="theme-toggle-icon theme-toggle-sun"
+                aria-hidden="true"
+                >☀</span
+              >
+            </button>
+            <div class="nav-lang">
+              <select
+                id="langSelect"
+                data-lang-select
+                data-home-action="set-language"
+                title="Lingua / Limbă"
+              >
+                <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
+                <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
+              </select>
+            </div>
           </div>
           <button
             class="cart-btn"
@@ -250,6 +279,12 @@
             Progetta la serra. Scegli i semi giusti.
           </h1>
           <span id="heroTagline" hidden></span>
+          <!-- Una riga sola per dire tutto quello che l'app offre: comprare
+               semi, comprare piantine, farsi seguire nella coltivazione. -->
+          <p class="hero-promise" data-i18n="hero.promise">
+            Semi, piantine già cresciute e un diario che ti segue fino alla
+            raccolta.
+          </p>
           <a
             class="hero-guide-link hero-guide-link--secondary"
             href="guida.html"
@@ -349,22 +384,33 @@
                       </a>
                     </div>
                   </div>
-                  <a class="hero-cfg-catalog-link" href="#stagione">
-                    <span class="hero-cfg-catalog-icon" aria-hidden="true"
-                      >🌱</span
+                  <!-- Uscita alternativa: chi non vuole progettare la serra
+                       scende alle tre strade (catalogo, vivaio, il mio orto). -->
+                  <div class="hero-cfg-alt">
+                    <span class="hero-cfg-alt-or" data-i18n="hero.alt_or"
+                      >oppure</span
                     >
-                    <span class="hero-cfg-catalog-copy">
-                      <strong data-i18n="hero.cfg_catalog_title"
-                        >Hai già scelto i semi?</strong
-                      >
-                      <small data-i18n="hero.cfg_catalog_hint"
-                        >Esplora il catalogo</small
-                      >
-                    </span>
-                    <span class="hero-cfg-catalog-arrow" aria-hidden="true"
-                      >→</span
+                    <a
+                      class="hero-cfg-catalog-link hero-cfg-alt-link"
+                      href="#percorsi"
                     >
-                  </a>
+                      <span class="hero-cfg-alt-icons" aria-hidden="true">
+                        <span>🌿</span><span>🪴</span><span>🌱</span>
+                      </span>
+                      <span class="hero-cfg-catalog-copy">
+                        <strong data-i18n="hero.alt_title"
+                          >Non parti da zero?</strong
+                        >
+                        <small data-i18n="hero.alt_hint"
+                          >Semi, piantine o quello che hai già: scegli la tua
+                          strada</small
+                        >
+                      </span>
+                      <span class="hero-cfg-catalog-arrow" aria-hidden="true"
+                        >↓</span
+                      >
+                    </a>
+                  </div>
                 </div>
               </div>
               <div class="hero-cfg-visual" aria-hidden="true">
@@ -391,6 +437,72 @@
         <div class="hero-scroll-hint">
           <span data-i18n="catalog.kicker">Cosa piantare</span>
           <span class="hero-scroll-arrow">↓</span>
+        </div>
+      </section>
+
+      <!-- Le tre strade dell'app: comprare semi, comprare piantine, oppure
+           farsi seguire nella coltivazione di ciò che si possiede già. -->
+      <section class="paths-section" id="percorsi" aria-labelledby="pathsTitle">
+        <header class="paths-head">
+          <span class="section-kicker" data-i18n="paths.kicker"
+            >Da dove vuoi partire?</span
+          >
+          <h2 class="paths-title" id="pathsTitle" data-i18n="paths.title">
+            Tre strade, un solo orto
+          </h2>
+          <p class="paths-lead" data-i18n="paths.lead">
+            Che tu debba ancora comprare o abbia già tutto in casa, il punto
+            d'ingresso è qui.
+          </p>
+        </header>
+        <div class="paths-grid">
+          <a class="path-card path-card--semi" href="#stagione">
+            <span class="path-tag" data-i18n="paths.semi_tag">97 varietà</span>
+            <span class="path-ico" aria-hidden="true">🌿</span>
+            <h3 data-i18n="paths.semi_title">Compra i semi</h3>
+            <p data-i18n="paths.semi_text">
+              Il catalogo completo, con mesi di semina, distanze e abbinamenti
+              già calcolati.
+            </p>
+            <span class="path-cta">
+              <span data-i18n="paths.semi_cta">Vai al catalogo</span>
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
+          <a class="path-card path-card--piantine" href="vivaio.html">
+            <span class="path-tag" data-i18n="paths.piantine_tag"
+              >pronte adesso</span
+            >
+            <span class="path-ico" aria-hidden="true">🪴</span>
+            <h3 data-i18n="paths.piantine_title">Compra le piantine</h3>
+            <p data-i18n="paths.piantine_text">
+              Già cresciute, pronte da mettere nel terreno: guadagni fino a un
+              mese sulla raccolta.
+            </p>
+            <span class="path-cta">
+              <span data-i18n="paths.piantine_cta">Apri il vivaio</span>
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
+          <a class="path-card path-card--orto path-card--tool" href="orto.html">
+            <span class="path-tag" data-i18n="paths.orto_tag"
+              >strumento gratuito</span
+            >
+            <span class="path-ico" aria-hidden="true">🌱</span>
+            <h3 data-i18n="paths.orto_title">Hai già semi o piante?</h3>
+            <p data-i18n="paths.orto_text">
+              Registra cosa hai piantato e quando: ti accompagniamo giorno per
+              giorno fino alla raccolta.
+            </p>
+            <!-- Detto esplicitamente: questa terza strada non è un negozio. -->
+            <span class="path-note" data-i18n="paths.orto_note">
+              Nessun acquisto: qui si coltiva quello che hai già.
+            </span>
+            <span class="path-cta">
+              <span data-i18n="paths.orto_cta">Apri Il mio orto</span>
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
         </div>
       </section>
 
@@ -1046,7 +1158,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260731-76172f6ed862</span
+          >v20260813-b5b73776f70c</span
         >
       </div>
     </footer>
@@ -1194,11 +1306,18 @@
                   >Dalla semina alla pianta adulta</small
                 >
               </div>
-              <section class="detail-seasonality" aria-labelledby="detailSeasonalityTitle">
+              <section
+                class="detail-seasonality"
+                aria-labelledby="detailSeasonalityTitle"
+              >
                 <div class="detail-seasonality-heading">
-                  <span class="detail-seasonality-icon" aria-hidden="true">🗓</span>
+                  <span class="detail-seasonality-icon" aria-hidden="true"
+                    >🗓</span
+                  >
                   <div>
-                    <b id="detailSeasonalityTitle" data-i18n="detail.calendar_title"
+                    <b
+                      id="detailSeasonalityTitle"
+                      data-i18n="detail.calendar_title"
                       >Calendario stagionale</b
                     ><small data-i18n="detail.calendar_subtitle"
                       >Adattato a zona climatica e riscaldamento</small
@@ -1852,6 +1971,7 @@
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
     <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
     <script src="assets/js/home.js" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>

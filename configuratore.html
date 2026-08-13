@@ -7,7 +7,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "20260731-76172f6ed862";
+      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -25,7 +25,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Icone e manifest -->
-    <link rel="icon" href="assets/img/icons/orto-in-serra-192-v2.png" type="image/png" />
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -80,7 +84,7 @@
       (function () {
         // Applica il profilo prima del primo rendering.
         var livello = new URLSearchParams(window.location.search).get(
-          "livello"
+          "livello",
         );
         if (livello === "novizio") {
           document.documentElement.classList.add("serra-boot-novizio");
@@ -115,7 +119,7 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-configuratore.css?v=20260731-76172f6ed862"
+      href="assets/css/serra-configuratore.css?v=20260813-b5b73776f70c"
     />
   </head>
   <body>
@@ -137,41 +141,38 @@
             data-i18n-conf="nav.menu_explore"
             >Esplora</span
           >
-          <a href="index.html" class="nav-link" data-i18n-conf="nav.home"
-            >🏠 Home</a
-          >
+          <!-- Le stesse quattro strade di tutta l'app, nello stesso ordine.
+               Abbinamenti, Kit del mese e Contatti restano nel piè di pagina. -->
           <a
             href="index.html#stagione"
-            class="nav-link"
-            data-i18n-conf="nav.stagione"
-            >🌿 Catalogo completo</a
+            class="nav-link nav-link--semi"
+            data-i18n-conf="nav.semi"
+            >🌿 Catalogo semi</a
           >
           <a
-            href="index.html#abbinamenti"
-            class="nav-link"
-            data-i18n-conf="nav.abbinamenti"
-            >🤝 Abbinamenti</a
+            href="vivaio.html"
+            class="nav-link nav-link--vivaio"
+            data-i18n-conf="nav.vivaio"
+            >🪴 Vivaio piantine</a
           >
-          <a href="index.html#kit" class="nav-link" data-i18n-conf="footer.kit"
-            >📦 Kit del mese</a
+          <a
+            href="orto.html"
+            class="nav-link nav-link--orto"
+            data-i18n-conf="nav.orto"
+            >🌱 Il mio orto</a
           >
           <a
             href="#configuratore"
-            class="nav-link nav-link--current nav-link--home"
+            class="nav-link nav-link--configuratore nav-link--current"
             aria-current="page"
             data-i18n-conf="nav.configuratore"
-            >📐 Configuratore</a
-          >
-          <a
-            href="index.html#contatti"
-            class="nav-link"
-            data-i18n-conf="nav.contatti"
-            >✉️ Contatti</a
+            >📐 Configuratore serra</a
           >
           <a
             href="account.html"
             class="nav-link nav-link--account"
             id="navAccountBtn"
+            data-i18n-conf="nav.account"
             >👤 Area Personale</a
           >
           <div class="mobile-nav-preferences">
@@ -237,29 +238,49 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <button
-            class="theme-toggle"
-            type="button"
-            aria-label="Attiva modalità scura"
-            aria-pressed="false"
-            title="Cambia tema"
+          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
+               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <a
+            href="account.html"
+            class="nav-account-btn"
+            data-i18n-conf-aria="nav.account_label"
+            aria-label="Area Personale"
           >
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
-              >☾</span
+            <span class="nav-account-ico" aria-hidden="true">👤</span>
+            <span class="nav-account-label" data-i18n-conf="nav.account_label"
+              >Area Personale</span
             >
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
-              >☀</span
+          </a>
+          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <div class="nav-prefs">
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+              title="Cambia tema"
             >
-          </button>
-          <div class="nav-lang">
-            <select
-              id="navLang"
-              data-conf-action="set-language"
-              title="Lingua / Limbă"
-            >
-              <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
-              <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
-            </select>
+              <span
+                class="theme-toggle-icon theme-toggle-moon"
+                aria-hidden="true"
+                >☾</span
+              >
+              <span
+                class="theme-toggle-icon theme-toggle-sun"
+                aria-hidden="true"
+                >☀</span
+              >
+            </button>
+            <div class="nav-lang">
+              <select
+                id="navLang"
+                data-conf-action="set-language"
+                title="Lingua / Limbă"
+              >
+                <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
+                <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
+              </select>
+            </div>
           </div>
           <button
             class="cart-btn"
@@ -503,12 +524,12 @@
               (function () {
                 // Mantiene chiuso il pannello iniziale dalla home.
                 var liv = new URLSearchParams(window.location.search).get(
-                  "livello"
+                  "livello",
                 );
                 if (!liv) {
                   try {
                     var saved = JSON.parse(
-                      localStorage.getItem("serra.config.v1") || "null"
+                      localStorage.getItem("serra.config.v1") || "null",
                     );
                     if (saved && saved.livello) liv = saved.livello;
                   } catch (e) {}
@@ -918,7 +939,7 @@
             document.getElementById("noviceGuidePanel").hidden = false;
             // Rimuove le sezioni vuote dal layout iniziale.
             var bootModeSection = document.querySelector(
-              "#panelSettings.is-collapsed"
+              "#panelSettings.is-collapsed",
             );
             bootModeSection = bootModeSection
               ? bootModeSection.closest(".mode-section")
@@ -1849,7 +1870,7 @@
           <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260731-76172f6ed862</span
+          >v20260813-b5b73776f70c</span
         >
       </div>
     </footer>
@@ -1857,6 +1878,7 @@
     <!-- Bootstrap: base e catalogo devono precedere configuratore; boot-sw gestisce la cache. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
+    <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/configuratore.js" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>

@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2f6b3a" />
     <title>Come usare Orto in Serra</title>
-    <link rel="icon" href="assets/img/icons/orto-in-serra-192-v2.png" type="image/png" />
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -15,7 +19,7 @@
     <link rel="manifest" href="manifest.json" />
     <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
     <script>
-      window.SERRA_APP_VERSION = "20260731-76172f6ed862";
+      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" || location.hostname === "127.0.0.1";
       (function () {
@@ -35,7 +39,7 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-guida.css?v=20260731-76172f6ed862"
+      href="assets/css/serra-guida.css?v=20260813-b5b73776f70c"
     />
   </head>
   <body>
@@ -60,24 +64,32 @@
             <span class="nav-link-icon" aria-hidden="true">🏠</span>
             <span class="nav-link-label" data-guide-key="nav.home">Home</span>
           </a>
-          <button
-            class="theme-toggle"
-            type="button"
-            aria-label="Attiva modalità scura"
-            aria-pressed="false"
-            title="Cambia tema"
-          >
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
-              >☾</span
-            ><span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
-              >☀</span
+          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <div class="nav-prefs">
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+              title="Cambia tema"
             >
-          </button>
-          <div class="nav-lang">
-            <select id="guideLangSelect" title="Lingua / Limbă">
-              <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
-              <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
-            </select>
+              <span
+                class="theme-toggle-icon theme-toggle-moon"
+                aria-hidden="true"
+                >☾</span
+              >
+              <span
+                class="theme-toggle-icon theme-toggle-sun"
+                aria-hidden="true"
+                >☀</span
+              >
+            </button>
+            <div class="nav-lang">
+              <select id="guideLangSelect" title="Lingua / Limbă">
+                <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
+                <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

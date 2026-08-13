@@ -1,0 +1,2090 @@
+<!doctype html>
+<html lang="it" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <title>Prototipo · Il mio orto + Piantine — Orto in Serra</title>
+    <style>
+      /* ==========================================================
+         PROTOTIPO — sistema visivo allineato all'app Orto in Serra
+         ========================================================== */
+      :root {
+        --green: #2f6b3a;
+        --green-dk: #1f4c2b;
+        --green-lt: #7bb661;
+        --ink: #1f3a26;
+        --ink-soft: #46584b;
+        --muted: #6b7a6e;
+        --paper: #fffdf6;
+        --surface: #ffffff;
+        --surface-2: #f6f8f3;
+        --line: #e3e9dd;
+        --line-strong: #cfd9c9;
+        --amber: #b5860f;
+        --amber-soft: #fdf3d4;
+        --rust: #a8452c;
+        --shadow-sm: 0 2px 6px rgba(24, 46, 32, 0.06);
+        --shadow: 0 8px 24px rgba(24, 46, 32, 0.1);
+        --shadow-lg: 0 18px 44px rgba(24, 46, 32, 0.16);
+        --serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        --r-sm: 12px;
+        --r: 18px;
+        --r-lg: 26px;
+      }
+      html[data-theme="dark"] {
+        --ink: #eaf2e9;
+        --ink-soft: #c3d2c4;
+        --muted: #9bab9d;
+        --paper: #101c15;
+        --surface: #17281d;
+        --surface-2: #1d3325;
+        --line: #2b4030;
+        --line-strong: #3a5340;
+        --amber-soft: #2f2a15;
+        --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+        --shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(
+            1100px 520px at 78% -8%,
+            rgba(123, 182, 97, 0.22),
+            transparent 62%
+          ),
+          radial-gradient(
+            760px 420px at 4% 4%,
+            rgba(47, 107, 58, 0.13),
+            transparent 60%
+          ),
+          var(--paper);
+        color: var(--ink);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* Trama botanica appena percettibile sullo sfondo */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.5;
+        pointer-events: none;
+        background-image: radial-gradient(
+          circle at 1px 1px,
+          rgba(47, 107, 58, 0.09) 1px,
+          transparent 0
+        );
+        background-size: 26px 26px;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 20px 120px;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--serif);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      /* ---------- barra prototipo ---------- */
+      .protobar {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--amber-soft);
+        color: var(--amber);
+        font-size: 12.5px;
+      }
+      html[data-theme="dark"] .protobar {
+        color: #e0c86f;
+      }
+      .protobar code {
+        padding: 1px 5px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.06);
+        font-size: 11.5px;
+      }
+      .protobar .tag {
+        padding: 2px 9px;
+        border-radius: 999px;
+        background: var(--amber);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      /* ---------- header ---------- */
+      header.app {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 22px 0 20px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand-mark {
+        position: relative;
+        display: grid;
+        width: 46px;
+        height: 46px;
+        border-radius: 15px;
+        background: linear-gradient(150deg, #3d8148, var(--green-dk));
+        box-shadow: 0 6px 16px rgba(31, 76, 43, 0.34);
+        place-items: center;
+      }
+      .brand-mark svg {
+        width: 26px;
+        height: 26px;
+      }
+      .brand b {
+        display: block;
+        font-family: var(--serif);
+        font-size: 21px;
+        line-height: 1.1;
+      }
+      .brand small {
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      .head-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tabs {
+        display: flex;
+        gap: 4px;
+        padding: 5px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+      }
+      .tab {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 15px;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        color: var(--ink-soft);
+        cursor: pointer;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 650;
+        transition:
+          background 0.18s ease,
+          color 0.18s ease;
+      }
+      .tab:hover {
+        background: var(--surface-2);
+      }
+      .tab[aria-selected="true"] {
+        background: linear-gradient(160deg, #3d8148, var(--green-dk));
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(31, 76, 43, 0.3);
+      }
+      .tab .badge {
+        min-width: 20px;
+        padding: 1px 6px;
+        border-radius: 999px;
+        background: var(--rust);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .icon-btn {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: var(--surface);
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 17px;
+        place-items: center;
+        box-shadow: var(--shadow-sm);
+      }
+
+      /* ---------- vista OGGI ---------- */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 26px 28px;
+        border-radius: var(--r-lg);
+        background:
+          radial-gradient(
+            520px 260px at 88% 8%,
+            rgba(123, 182, 97, 0.4),
+            transparent 65%
+          ),
+          linear-gradient(155deg, #35784227, transparent),
+          linear-gradient(150deg, #2f6b3a, #16341f);
+        color: #fff;
+        box-shadow: var(--shadow-lg);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        right: -60px;
+        bottom: -90px;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 26px;
+      }
+      .hero-date {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .hero h2 {
+        margin: 6px 0 10px;
+        font-size: 32px;
+        line-height: 1.1;
+      }
+      .hero-sub {
+        max-width: 46ch;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 14px;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 22px;
+        margin-top: 18px;
+      }
+      .hero-stat b {
+        display: block;
+        font-family: var(--serif);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .hero-stat span {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 11.5px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .ring-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .ring {
+        position: relative;
+        width: 132px;
+        height: 132px;
+      }
+      .ring svg {
+        transform: rotate(-90deg);
+      }
+      .ring-txt {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        color: #fff;
+        place-items: center;
+        text-align: center;
+      }
+      .ring-txt b {
+        display: block;
+        font-family: var(--serif);
+        font-size: 27px;
+        line-height: 1;
+      }
+      .ring-txt span {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      /* anteprima notifica push */
+      .notif {
+        display: flex;
+        gap: 12px;
+        max-width: 330px;
+        padding: 13px 15px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: var(--r);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(6px);
+      }
+      .notif-ico {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.16);
+        font-size: 16px;
+        place-items: center;
+      }
+      .notif b {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.03em;
+        opacity: 0.75;
+        text-transform: uppercase;
+      }
+      .notif p {
+        margin: 2px 0 0;
+        font-size: 13.5px;
+        line-height: 1.35;
+      }
+
+      /* ---------- gruppi di attività ---------- */
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 30px 0 12px;
+      }
+      .section-head h3 {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+      .section-head .count {
+        padding: 2px 9px;
+        border-radius: 999px;
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 11.5px;
+        font-weight: 700;
+      }
+      .section-head .rule {
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+
+      .task {
+        --accent: var(--green);
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 9px;
+        padding: 13px 16px 13px 18px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+        animation: rise 0.32s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+        transition:
+          box-shadow 0.18s ease,
+          transform 0.18s ease,
+          opacity 0.2s ease;
+      }
+      .task::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 4px;
+        background: var(--accent);
+      }
+      .task:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-1px);
+      }
+      .task.late {
+        background: linear-gradient(
+          100deg,
+          color-mix(in srgb, var(--accent) 7%, var(--surface)),
+          var(--surface) 55%
+        );
+      }
+      .task.done {
+        opacity: 0.5;
+      }
+      .task.done .task-label {
+        text-decoration: line-through;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(9px);
+        }
+      }
+      .check {
+        position: relative;
+        width: 27px;
+        height: 27px;
+        flex: none;
+        border: 2px solid var(--line-strong);
+        border-radius: 9px;
+        background: var(--surface);
+        cursor: pointer;
+        transition:
+          background 0.18s ease,
+          border-color 0.18s ease,
+          transform 0.12s ease;
+      }
+      .check:hover {
+        border-color: var(--accent);
+        transform: scale(1.06);
+      }
+      .check[data-on="1"] {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+      .check[data-on="1"]::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 8px;
+        width: 6px;
+        height: 12px;
+        border: solid #fff;
+        border-width: 0 2.6px 2.6px 0;
+        transform: rotate(43deg);
+        animation: pop 0.22s ease;
+      }
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: rotate(43deg) scale(0.4);
+        }
+      }
+      .task-ico {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        flex: none;
+        border-radius: 13px;
+        background: color-mix(in srgb, var(--accent) 13%, var(--surface));
+        color: var(--accent);
+        font-size: 18px;
+        place-items: center;
+      }
+      .task-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .task-label {
+        display: block;
+        font-size: 15px;
+        font-weight: 650;
+      }
+      .task-label em {
+        color: var(--accent);
+        font-style: normal;
+      }
+      .task-meta {
+        display: block;
+        overflow: hidden;
+        color: var(--muted);
+        font-size: 12.5px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .task-thumb {
+        width: 44px;
+        height: 44px;
+        flex: none;
+        border: 2px solid var(--surface);
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: var(--shadow-sm);
+      }
+      .snooze {
+        padding: 7px 13px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--muted);
+        cursor: pointer;
+        font: inherit;
+        font-size: 12.5px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .snooze:hover {
+        border-color: var(--line-strong);
+        color: var(--ink);
+      }
+
+      /* ---------- stato vuoto ---------- */
+      .empty {
+        padding: 48px 26px;
+        border: 1.5px dashed var(--line-strong);
+        border-radius: var(--r-lg);
+        background: color-mix(in srgb, var(--surface) 60%, transparent);
+        text-align: center;
+      }
+      .empty-ico {
+        display: grid;
+        width: 74px;
+        height: 74px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        background: var(--surface-2);
+        font-size: 32px;
+        place-items: center;
+      }
+      .empty h4 {
+        margin: 0 0 6px;
+        font-family: var(--serif);
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .empty p {
+        max-width: 42ch;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* ---------- griglie e schede ---------- */
+      .view-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 4px 0 20px;
+      }
+      .view-head h2 {
+        margin: 0 0 4px;
+        font-size: 30px;
+      }
+      .view-head p {
+        max-width: 60ch;
+        margin: 0;
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      }
+      .card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+        animation: rise 0.36s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-3px);
+      }
+      /* testata con foto reale della pianta */
+      .card-photo {
+        position: relative;
+        height: 132px;
+        background: var(--surface-2);
+      }
+      .card-photo img.bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .card-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(9, 24, 14, 0.05) 30%,
+          rgba(9, 24, 14, 0.72)
+        );
+      }
+      .card-photo .plant-svg {
+        position: absolute;
+        right: 10px;
+        bottom: 8px;
+        z-index: 2;
+        width: 62px;
+        height: 62px;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+        opacity: 0.96;
+      }
+      .card-photo .titles {
+        position: absolute;
+        z-index: 2;
+        right: 74px;
+        bottom: 11px;
+        left: 16px;
+        color: #fff;
+      }
+      .card-photo .titles h3 {
+        margin: 0;
+        font-size: 20px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+      .card-photo .titles small {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+      }
+      .badges {
+        position: absolute;
+        z-index: 2;
+        top: 11px;
+        left: 12px;
+        display: flex;
+        gap: 6px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .chip--seme {
+        background: rgba(255, 255, 255, 0.92);
+        color: #2f6b3a;
+      }
+      .chip--piantina {
+        background: #f6c85a;
+        color: #4a3405;
+      }
+      .chip--soft {
+        background: var(--surface-2);
+        color: var(--muted);
+      }
+      .card-body {
+        padding: 16px 17px 17px;
+      }
+
+      /* timeline delle fasi */
+      .phases {
+        position: relative;
+        margin: 4px 0 16px;
+        padding-top: 6px;
+      }
+      .track {
+        position: relative;
+        height: 7px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--surface-2);
+      }
+      .track i {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--green-lt), var(--green));
+        transition: width 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+      }
+      .track .cursor {
+        position: absolute;
+        top: 50%;
+        width: 15px;
+        height: 15px;
+        border: 3px solid var(--surface);
+        border-radius: 50%;
+        background: var(--green-dk);
+        box-shadow: 0 2px 7px rgba(24, 46, 32, 0.35);
+        transform: translate(-50%, -50%);
+      }
+      .phase-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 9px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .phase-labels b {
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 11px 0;
+        border-top: 1px solid var(--line);
+        font-size: 13px;
+      }
+      .meta-row .k {
+        color: var(--muted);
+      }
+      .meta-row .v {
+        font-weight: 650;
+      }
+      .next-task {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+        padding: 11px 13px;
+        border-radius: var(--r-sm);
+        background: var(--surface-2);
+        font-size: 13px;
+      }
+      .next-task .dot {
+        display: grid;
+        width: 30px;
+        height: 30px;
+        flex: none;
+        border-radius: 9px;
+        background: var(--surface);
+        font-size: 15px;
+        place-items: center;
+        box-shadow: var(--shadow-sm);
+      }
+      .card-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 13px;
+      }
+
+      /* ---------- catalogo ---------- */
+      .seg {
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 13px;
+        background: var(--surface-2);
+      }
+      .seg button {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        padding: 8px 6px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        color: var(--ink-soft);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 650;
+        transition: all 0.16s ease;
+      }
+      .seg button small {
+        color: var(--muted);
+        font-size: 10.5px;
+        font-weight: 600;
+      }
+      .seg button[aria-pressed="true"] {
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow-sm);
+      }
+      .seg button:disabled {
+        color: color-mix(in srgb, var(--muted) 55%, transparent);
+        cursor: not-allowed;
+      }
+      .price-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 15px 0 12px;
+      }
+      .price {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-family: var(--serif);
+        font-size: 29px;
+        line-height: 1;
+      }
+      .price small {
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 12.5px;
+      }
+      .save-badge {
+        padding: 6px 11px;
+        border-radius: 999px;
+        background: linear-gradient(140deg, #f6c85a, #e2a92c);
+        color: #4a3405;
+        font-size: 12px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      .note {
+        display: flex;
+        gap: 9px;
+        padding: 11px 13px;
+        border-radius: var(--r-sm);
+        background: color-mix(in srgb, var(--green) 8%, var(--surface));
+        font-size: 12.5px;
+        line-height: 1.4;
+      }
+      .note b {
+        color: var(--green);
+      }
+      html[data-theme="dark"] .note b {
+        color: var(--green-lt);
+      }
+      .note--warn {
+        background: color-mix(in srgb, var(--amber) 12%, var(--surface));
+      }
+      .note--warn b {
+        color: var(--amber);
+      }
+      .note--off {
+        background: var(--surface-2);
+        color: var(--muted);
+      }
+      .link {
+        border: 0;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        text-decoration: underline;
+      }
+
+      /* ---------- controlli ---------- */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 10px 17px;
+        border: 1.5px solid var(--green);
+        border-radius: 999px;
+        background: linear-gradient(160deg, #3d8148, var(--green-dk));
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 650;
+        box-shadow: 0 4px 12px rgba(31, 76, 43, 0.26);
+        transition:
+          transform 0.14s ease,
+          box-shadow 0.18s ease;
+      }
+      .btn:hover {
+        box-shadow: 0 8px 20px rgba(31, 76, 43, 0.34);
+        transform: translateY(-2px);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn--ghost {
+        border-color: var(--line-strong);
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow-sm);
+      }
+      .btn--sm {
+        padding: 8px 13px;
+        font-size: 13px;
+      }
+      .btn--block {
+        width: 100%;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-bottom: 20px;
+      }
+      .stats {
+        display: grid;
+        gap: 13px;
+        margin-bottom: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      }
+      .stat {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 15px 17px;
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+      }
+      .stat .si {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: none;
+        border-radius: 13px;
+        background: var(--surface-2);
+        font-size: 19px;
+        place-items: center;
+      }
+      .stat b {
+        display: block;
+        font-family: var(--serif);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .stat span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 11px 13px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        color: inherit;
+        font: inherit;
+      }
+      input:focus,
+      select:focus {
+        border-color: var(--green);
+        outline: 3px solid color-mix(in srgb, var(--green) 22%, transparent);
+      }
+      dialog {
+        width: min(470px, 94vw);
+        padding: 0;
+        border: 0;
+        border-radius: var(--r-lg);
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow-lg);
+      }
+      dialog::backdrop {
+        background: rgba(10, 24, 15, 0.58);
+        backdrop-filter: blur(3px);
+      }
+      .dlg-head {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(150deg, #2f6b3a, #16341f);
+        color: #fff;
+      }
+      .dlg-head h3 {
+        margin: 0;
+        font-size: 21px;
+      }
+      .dlg-head p {
+        margin: 3px 0 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 13px;
+      }
+      .dlg-body {
+        padding: 20px 24px 24px;
+      }
+      .field {
+        margin-bottom: 14px;
+      }
+      .field label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12.5px;
+        font-weight: 700;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+      }
+      .row > * {
+        flex: 1;
+      }
+      /* selettore origine dentro il dialogo */
+      .origin {
+        display: flex;
+        gap: 10px;
+      }
+      .origin label {
+        flex: 1;
+        padding: 12px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--r-sm);
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 650;
+        text-align: center;
+        transition: all 0.16s ease;
+      }
+      .origin input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+      }
+      .origin label:has(input:checked) {
+        border-color: var(--green);
+        background: color-mix(in srgb, var(--green) 10%, var(--surface));
+        color: var(--green);
+      }
+      .origin label span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 500;
+      }
+      .toast {
+        position: fixed;
+        bottom: 26px;
+        left: 50%;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 20px;
+        border-radius: 999px;
+        background: var(--green-dk);
+        color: #fff;
+        box-shadow: var(--shadow-lg);
+        font-size: 14px;
+        transform: translate(-50%, 20px);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.22s ease,
+          transform 0.22s ease;
+      }
+      .toast.on {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      [hidden] {
+        display: none !important;
+      }
+
+      /* ---------- mobile ---------- */
+      @media (max-width: 720px) {
+        .wrap {
+          padding: 0 14px 110px;
+        }
+        header.app {
+          padding: 16px 0 12px;
+        }
+        .brand small {
+          display: none;
+        }
+        .hero {
+          padding: 20px;
+        }
+        .hero h2 {
+          font-size: 25px;
+        }
+        .ring {
+          width: 104px;
+          height: 104px;
+        }
+        .notif {
+          max-width: none;
+        }
+        .view-head h2 {
+          font-size: 24px;
+        }
+        .task-thumb {
+          display: none;
+        }
+        /* le schede diventano barra di navigazione in basso */
+        .tabs {
+          position: fixed;
+          right: 12px;
+          bottom: 12px;
+          left: 12px;
+          z-index: 30;
+          justify-content: space-around;
+          border-radius: 20px;
+          box-shadow: var(--shadow-lg);
+        }
+        .tab {
+          flex: 1;
+          justify-content: center;
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="protobar">
+      <span class="tag">Prototipo</span>
+      <span
+        >Dati reali da <code>db/plants.json</code> · foto e illustrazioni
+        dell'app · attività generate dal motore descritto nel piano tecnico ·
+        stato salvato solo in questo browser</span
+      >
+      <button class="btn btn--sm btn--ghost" id="resetBtn" style="margin-left: auto">
+        ↺ Azzera demo
+      </button>
+    </div>
+
+    <div class="wrap">
+      <header class="app">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path
+                d="M16 29V13"
+                stroke="#cdeec4"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              />
+              <path d="M16 17c0-5.2 3.7-8.9 9.3-9.3-.4 5.6-4.1 9.3-9.3 9.3Z" fill="#a8e6a3" />
+              <path d="M16 22c0-4.5-3.2-7.8-8.2-8.2.4 5 3.7 8.2 8.2 8.2Z" fill="#eaf8e0" />
+            </svg>
+          </span>
+          <span>
+            <b>Il mio orto</b>
+            <small>Dalla semina alla raccolta</small>
+          </span>
+        </div>
+        <div class="head-right">
+          <nav class="tabs" role="tablist">
+            <button class="tab" role="tab" data-view="oggi" aria-selected="true">
+              Oggi <span class="badge" id="tabBadge" hidden>0</span>
+            </button>
+            <button class="tab" role="tab" data-view="colture" aria-selected="false">
+              Colture
+            </button>
+            <button class="tab" role="tab" data-view="catalogo" aria-selected="false">
+              Semi o piantine
+            </button>
+          </nav>
+          <button class="icon-btn" id="themeBtn" aria-label="Cambia tema">☾</button>
+        </div>
+      </header>
+
+      <main id="app">
+        <div class="empty"><div class="empty-ico">🌱</div><h4>Caricamento del catalogo…</h4></div>
+      </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <dialog id="addDlg">
+      <div class="dlg-head">
+        <h3>Aggiungi una coltura</h3>
+        <p>Da qui parte il calendario di cura fino alla raccolta.</p>
+      </div>
+      <form method="dialog" class="dlg-body" id="addForm">
+        <div class="field">
+          <label for="fPlant">Pianta</label>
+          <select id="fPlant" required></select>
+        </div>
+        <div class="field">
+          <label>Sei partito da…</label>
+          <div class="origin">
+            <label
+              ><input type="radio" name="origine" value="seme" checked />Semi<span
+                >ciclo completo</span
+              ></label
+            >
+            <label
+              ><input type="radio" name="origine" value="piantina" />Piantina<span
+                >già cresciuta</span
+              ></label
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="fData">Data di semina / messa a dimora</label>
+            <input type="date" id="fData" required />
+          </div>
+          <div class="field" style="max-width: 110px">
+            <label for="fQta">Quante</label>
+            <input type="number" id="fQta" min="1" value="4" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="fPos">Posizione (facoltativa)</label>
+          <input type="text" id="fPos" placeholder="es. Aiuola 2" />
+        </div>
+        <div class="row" style="margin-top: 18px">
+          <button type="submit" class="btn" value="ok">Aggiungi all'orto</button>
+          <button type="submit" class="btn btn--ghost" value="cancel">Annulla</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script>
+      /* ============================================================
+         PROTOTIPO — Il mio orto + varianti piantina
+         Destinazione nell'app:
+         - CareEngine → assets/js/shared/care-engine.js (funzione pura)
+         - Listino    → db/products.json
+         - Diario     → serra.garden.v1 / GET-PUT /api/garden/:userId
+         ============================================================ */
+
+      const STORE_KEY = "serra.garden.demo.v1";
+      const DAY = 86400000;
+
+      /* ---------- date ---------- */
+      const iso = (d) => new Date(d).toISOString().slice(0, 10);
+      const parse = (s) => new Date(s + "T00:00:00");
+      const addDays = (d, n) => new Date(d.getTime() + n * DAY);
+      const today = () => parse(iso(new Date()));
+      const fmt = (d) => d.toLocaleDateString("it-IT", { day: "numeric", month: "long" });
+      const fmtShort = (d) =>
+        d.toLocaleDateString("it-IT", { day: "numeric", month: "short" });
+      const diffDays = (a, b) => Math.round((a - b) / DAY);
+      const nomeMese = (m) =>
+        new Date(2026, m - 1, 1).toLocaleDateString("it-IT", { month: "long" });
+
+      /* ---------- immagini reali dell'app ---------- */
+      const PHOTO_FIX = {
+        bietola: "bietola_coste", cavolo: "cavolo_cappuccio",
+        cavolonero: "cavolo_nero", cavolorapa: "cavolo_rapa",
+        fagiolino: "fagiolino_nano", fagiolo: "fagiolo_rampicante",
+        indivia: "indivia_scarola", pakchoi: "pak_choi",
+        cavoletti: "cavoletti_bruxelles"
+      };
+      const photoSrc = (id) => `../assets/img/photo/${PHOTO_FIX[id] || id}.webp`;
+      const svgSrc = (id) => `../assets/img/svg/${id}.svg`;
+
+      /* ============================================================
+         1. LISTINO — variante "piantina"  (docs §1.2)
+         ============================================================ */
+      const PACK_DATA = {
+        pomodoro: { seeds: 20, price: 3.5 }, peperone: { seeds: 15, price: 3.2 },
+        peperoncino: { seeds: 15, price: 3.2 }, melanzana: { seeds: 20, price: 3.5 },
+        zucchina: { seeds: 10, price: 3.8 }, zucca: { seeds: 8, price: 3.8 },
+        cetriolo: { seeds: 15, price: 3.2 }, melone: { seeds: 12, price: 3.5 },
+        anguria: { seeds: 10, price: 3.8 }, lattuga: { seeds: 400, price: 2.4 },
+        radicchio: { seeds: 300, price: 2.5 }, rucola: { seeds: 500, price: 2.2 },
+        spinaci: { seeds: 200, price: 2.4 }, bietola: { seeds: 150, price: 2.6 },
+        cavolo: { seeds: 100, price: 2.8 }, verza: { seeds: 100, price: 2.8 },
+        broccolo: { seeds: 100, price: 2.8 }, cavolfiore: { seeds: 100, price: 2.8 },
+        cavolonero: { seeds: 100, price: 2.8 }, cavolorapa: { seeds: 100, price: 2.8 },
+        carota: { seeds: 300, price: 2.3 }, finocchio: { seeds: 200, price: 2.5 },
+        prezzemolo: { seeds: 200, price: 2.6 }, basilico: { seeds: 300, price: 2.6 },
+        coriandolo: { seeds: 200, price: 2.6 }, aneto: { seeds: 200, price: 2.6 },
+        cipolla: { seeds: 200, price: 2.3 }, aglio: { seeds: 50, price: 3.0 },
+        porro: { seeds: 200, price: 2.4 }, scalogno: { seeds: 100, price: 2.8 },
+        fagiolino: { seeds: 40, price: 2.8 }, fagiolo: { seeds: 30, price: 3.0 },
+        pisello: { seeds: 50, price: 2.8 }, fragola: { seeds: 100, price: 3.2 },
+        sedano: { seeds: 300, price: 2.6 }, ravanello: { seeds: 300, price: 2.2 },
+        barbabietola: { seeds: 100, price: 2.4 }, cicoria: { seeds: 300, price: 2.4 },
+        indivia: { seeds: 300, price: 2.5 }, pakchoi: { seeds: 200, price: 2.6 },
+        cavoletti: { seeds: 100, price: 2.8 }, rapa: { seeds: 200, price: 2.3 },
+        valerianella: { seeds: 300, price: 2.4 }, rosmarino: { seeds: 100, price: 3.0 },
+        timo: { seeds: 200, price: 2.8 }, origano: { seeds: 300, price: 2.8 },
+        salvia: { seeds: 100, price: 2.8 }
+      };
+      const PACK_FALLBACK = { seeds: 100, price: 2.5 };
+      const VANTAGGIO = { frutto: 30, foglia: 20, aromatica: 25, legume: 0, radice: 0 };
+      // Radici a fittone e legumi non si trapiantano: niente variante piantina.
+      const NO_PIANTINA = new Set(["radice", "legume"]);
+
+      function buildProducts(plants) {
+        const out = {};
+        plants.forEach((p) => {
+          const pack = PACK_DATA[p.id] || PACK_FALLBACK;
+          const semi = { prezzo: pack.price, semiPerBustina: pack.seeds };
+          let piantina = null;
+          if (!NO_PIANTINA.has(p.tipo) && p.gg > 0) {
+            // Il vivaio vende per tutta la finestra di trapianto: mesi di semina
+            // e mese successivo a ciascuno.
+            const mesi = [
+              ...new Set((p.mesi || []).flatMap((m) => [m, (m % 12) + 1]))
+            ].sort((a, b) => a - b);
+            piantina = {
+              prezzo: Math.round((pack.price / 2) * 10) / 10,
+              unita: "vaso ø7",
+              lotto: 6,
+              mesiDisponibili: mesi,
+              vantaggioGiorni: VANTAGGIO[p.tipo] ?? 20,
+              stock: 40 + ((p.id.length * 17) % 200)
+            };
+          }
+          out[p.id] = { semi, piantina };
+        });
+        return out;
+      }
+
+      /* ============================================================
+         2. MOTORE ATTIVITÀ
+         ============================================================ */
+      const GERMINAZIONE = { frutto: 8, foglia: 5, radice: 7, legume: 6, aromatica: 12 };
+      const IRRIGAZIONE = { bassa: 4, media: 2, alta: 1 };
+      const CONCIMAZIONE = { alta: 14, media: 21, bassa: 30 };
+
+      const TIPI_TASK = {
+        germinazione: { ico: "🌱", label: "Controlla la germinazione", col: "#4f9a4a" },
+        irrigazione: { ico: "💧", label: "Annaffia", col: "#2f80c8" },
+        concimazione: { ico: "🧪", label: "Concima", col: "#9a7318" },
+        diradamento: { ico: "✂️", label: "Dirada le piantine", col: "#7a5b9c" },
+        trapianto: { ico: "🪴", label: "Trapianta a dimora", col: "#2f6b3a" },
+        tutoraggio: { ico: "🎋", label: "Metti il sostegno", col: "#8a5a2b" },
+        controllo: { ico: "🔍", label: "Controlla foglie e parassiti", col: "#5c7a63" },
+        potatura: { ico: "✂️", label: "Cima e pota", col: "#7a5b9c" },
+        raccolta: { ico: "🧺", label: "Raccolta", col: "#b5471f" }
+      };
+      // Le ricorrenti decadono, le puntuali no (docs §2.2).
+      const RICORRENTI = new Set(["irrigazione", "concimazione", "controllo", "potatura"]);
+
+      function passoIrrigazione(pianta, mese) {
+        let base = IRRIGAZIONE[pianta.acqua] ?? 2;
+        if (mese >= 6 && mese <= 8) base = Math.max(1, base - 1);
+        if (mese >= 11 || mese <= 2) base += 2;
+        return base;
+      }
+
+      function giorniARaccolta(pianta, prod, origine) {
+        if (!pianta.gg) return 0; // perenni
+        const v = origine === "piantina" ? (prod?.piantina?.vantaggioGiorni ?? 20) : 0;
+        return Math.max(15, pianta.gg - v);
+      }
+
+      function generaAttivita(coltura, pianta, prod) {
+        const start = parse(coltura.dataInizio);
+        const ggRacc = giorniARaccolta(pianta, prod, coltura.origine);
+        const perenne = ggRacc === 0;
+        const fine = perenne ? 365 : ggRacc;
+        const tasks = [];
+        const push = (offset, tipo, extra) => {
+          if (offset < 0 || offset > fine + 40) return;
+          tasks.push({
+            id: `${coltura.id}|${tipo}|${iso(addDays(start, offset))}`,
+            colturaId: coltura.id,
+            data: addDays(start, offset),
+            tipo,
+            ...TIPI_TASK[tipo],
+            ...extra
+          });
+        };
+
+        if (coltura.origine === "seme") {
+          push(GERMINAZIONE[pianta.tipo] ?? 7, "germinazione", {
+            nota: "I primi cotiledoni dovrebbero essere fuori."
+          });
+          if (pianta.tipo === "foglia")
+            push(20, "diradamento", { nota: `Lascia ${pianta.d} cm tra una pianta e l'altra.` });
+          if (pianta.tipo === "radice")
+            push(18, "diradamento", { nota: `Lascia ${pianta.d} cm: le radici storte nascono qui.` });
+          if (pianta.tipo === "frutto")
+            push(30, "trapianto", {
+              nota: `Distanza ${pianta.d} cm sulla fila, ${pianta.dr || pianta.d} cm tra le file.`
+            });
+        } else {
+          push(0, "controllo", {
+            label: "Assesta la piantina",
+            nota: "Annaffia subito dopo il trapianto e ombreggia per due giorni."
+          });
+        }
+        if (pianta.tipo === "frutto") push(35, "tutoraggio", { nota: pianta.nota });
+        if (pianta.arch === "rampicante")
+          push(25, "tutoraggio", { nota: "Prepara rete o canne prima che si allunghi." });
+
+        const mese = start.getMonth() + 1;
+        const passoAcqua = passoIrrigazione(pianta, mese);
+        for (let g = passoAcqua; g <= fine; g += passoAcqua)
+          push(g, "irrigazione", {
+            nota: `Fabbisogno ${pianta.acqua}. In serra controlla il terreno a 3 cm.`
+          });
+        const passoConcime = CONCIMAZIONE[pianta.h] ?? 21;
+        for (let g = passoConcime; g <= fine; g += passoConcime)
+          push(g, "concimazione", { nota: `Fabbisogno nutritivo ${pianta.h}.` });
+        for (let g = 7; g <= fine; g += 7) push(g, "controllo", {});
+
+        if (perenne) {
+          for (let g = 60; g <= 300; g += 60)
+            push(g, "potatura", { nota: "Perenne: cima regolarmente per mantenerla compatta." });
+        } else if (pianta.tipo === "foglia") {
+          for (let i = 0; i < 4; i++)
+            push(ggRacc + i * 7, "raccolta", {
+              label: i === 0 ? "Prima raccolta" : "Raccolta scalare",
+              nota: "Taglia le foglie esterne: la pianta ricaccia."
+            });
+        } else {
+          push(ggRacc, "raccolta", { nota: pianta.nota });
+        }
+        return tasks.sort((a, b) => a.data - b.data);
+      }
+
+      // Fasi mostrate nella timeline della scheda coltura.
+      function fasi(coltura, pianta, prod) {
+        const gg = giorniARaccolta(pianta, prod, coltura.origine);
+        if (!gg) return [{ at: 0, label: "Impianto" }, { at: 1, label: "Perenne" }];
+        const germ = GERMINAZIONE[pianta.tipo] ?? 7;
+        return coltura.origine === "piantina"
+          ? [
+              { at: 0, label: "A dimora" },
+              { at: 7 / gg, label: "Attecchimento" },
+              { at: 0.55, label: "Sviluppo" },
+              { at: 1, label: "Raccolta" }
+            ]
+          : [
+              { at: 0, label: "Semina" },
+              { at: germ / gg, label: "Germinazione" },
+              { at: 0.5, label: "Crescita" },
+              { at: 1, label: "Raccolta" }
+            ];
+      }
+
+      /* ============================================================
+         3. STATO
+         ============================================================ */
+      let PLANTS = [], BYID = {}, PRODUCTS = {}, view = "oggi";
+      let garden = { colture: [], fatti: {}, rinviati: {} };
+      const varianteScelta = {};
+
+      const load = () => {
+        try {
+          const raw = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+          if (raw && Array.isArray(raw.colture)) garden = raw;
+        } catch (_) {}
+      };
+      const save = () => localStorage.setItem(STORE_KEY, JSON.stringify(garden));
+
+      function seedDemo() {
+        const t = today();
+        garden.colture = [
+          ["pomodoro", "piantina", -26, 6, "Aiuola 1"],
+          ["lattuga", "seme", -41, 12, "Aiuola 2"],
+          ["basilico", "piantina", -12, 4, "Vaso lungo"]
+        ]
+          .filter(([id]) => BYID[id])
+          .map(([plantId, origine, off, qta, pos], i) => ({
+            id: "c" + i + Date.now().toString(36),
+            plantId,
+            origine,
+            dataInizio: iso(addDays(t, off)),
+            quantita: qta,
+            posizione: pos,
+            stato: "in_corso",
+            eventi: []
+          }));
+        save();
+      }
+
+      /* ============================================================
+         4. VISTE
+         ============================================================ */
+      const app = document.getElementById("app");
+
+      const tuttiITask = () =>
+        garden.colture.flatMap((c) => {
+          const p = BYID[c.plantId];
+          return p
+            ? generaAttivita(c, p, PRODUCTS[c.plantId]).map((t) => ({ ...t, pianta: p, coltura: c }))
+            : [];
+        });
+
+      const dataEffettiva = (t) =>
+        garden.rinviati[t.id] ? parse(garden.rinviati[t.id]) : t.data;
+
+      function comprimiRicorrenti(tasks) {
+        const visti = new Set();
+        const out = [];
+        [...tasks]
+          .sort((a, b) => b.quando - a.quando)
+          .forEach((t) => {
+            if (RICORRENTI.has(t.tipo)) {
+              const k = t.colturaId + "|" + t.tipo;
+              if (visti.has(k)) return;
+              visti.add(k);
+            }
+            out.push(t);
+          });
+        return out.sort((a, b) => a.quando - b.quando);
+      }
+
+      function datiOggi() {
+        const t0 = today();
+        const aperti = comprimiRicorrenti(
+          tuttiITask()
+            .filter((t) => !garden.fatti[t.id])
+            .map((t) => ({ ...t, quando: dataEffettiva(t) }))
+            .filter((t) => t.quando <= t0)
+        );
+        const fatti = tuttiITask().filter(
+          (t) => garden.fatti[t.id] && garden.fatti[t.id] === iso(t0)
+        );
+        return {
+          t0,
+          arretrati: aperti.filter((t) => diffDays(t0, t.quando) > 0),
+          diOggi: aperti.filter((t) => diffDays(t0, t.quando) === 0),
+          fatti
+        };
+      }
+
+      function ring(perc) {
+        const r = 58, c = 2 * Math.PI * r;
+        return `<svg width="132" height="132" viewBox="0 0 132 132">
+          <circle cx="66" cy="66" r="${r}" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="10"/>
+          <circle cx="66" cy="66" r="${r}" fill="none" stroke="#a8e6a3" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="${c}"
+            stroke-dashoffset="${c - (c * perc) / 100}"
+            style="transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.3,1)"/>
+        </svg>`;
+      }
+
+      function renderOggi() {
+        const { t0, arretrati, diOggi, fatti } = datiOggi();
+        const totale = diOggi.length + fatti.length;
+        const perc = totale ? Math.round((fatti.length / totale) * 100) : 100;
+        const testo = diOggi.length
+          ? `Oggi nell'orto: ${diOggi
+              .slice(0, 2)
+              .map((t) => `${t.label.toLowerCase()} ${t.pianta.nome.toLowerCase()}`)
+              .join(", ")}${diOggi.length > 2 ? ` e altre ${diOggi.length - 2} attività` : ""}.`
+          : "Tutto fatto per oggi. Goditi la serra.";
+
+        app.innerHTML = `
+          <section class="hero">
+            <div class="hero-inner">
+              <div>
+                <div class="hero-date">${t0.toLocaleDateString("it-IT", {
+                  weekday: "long"
+                })} ${t0.getDate()} ${t0.toLocaleDateString("it-IT", { month: "long" })}</div>
+                <h2>${
+                  diOggi.length
+                    ? `Hai ${diOggi.length} ${diOggi.length === 1 ? "cosa" : "cose"} da fare`
+                    : "Niente di urgente oggi"
+                }</h2>
+                <p class="hero-sub">${
+                  arretrati.length
+                    ? `${arretrati.length} attività aspettano da qualche giorno: nessun dramma, si recuperano.`
+                    : "Le colture procedono secondo il piano."
+                }</p>
+                <div class="hero-stats">
+                  <div class="hero-stat"><b>${garden.colture.length}</b><span>colture</span></div>
+                  <div class="hero-stat"><b>${fatti.length}/${totale}</b><span>fatte oggi</span></div>
+                  <div class="hero-stat"><b>${arretrati.length}</b><span>da recuperare</span></div>
+                </div>
+              </div>
+              <div class="ring-wrap">
+                <div class="ring">${ring(perc)}
+                  <div class="ring-txt"><span><b>${perc}%</b>giornata</span></div>
+                </div>
+                <div class="notif">
+                  <span class="notif-ico" aria-hidden="true">🔔</span>
+                  <span><b>Notifica delle 07:30</b><p>${testo}</p></span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          ${
+            arretrati.length
+              ? `<div class="section-head"><h3>Da recuperare</h3>
+                  <span class="count">${arretrati.length}</span><span class="rule"></span></div>
+                 ${arretrati.map((t, i) => taskRow(t, i, true)).join("")}`
+              : ""
+          }
+
+          <div class="section-head"><h3>Oggi</h3>
+            <span class="count">${diOggi.length}</span><span class="rule"></span></div>
+          ${
+            diOggi.length
+              ? diOggi.map((t, i) => taskRow(t, i)).join("")
+              : `<div class="empty"><div class="empty-ico">🌿</div>
+                  <h4>Nessuna attività per oggi</h4>
+                  <p>Le prossime scadenze di ogni coltura le trovi nella scheda “Colture”.</p></div>`
+          }
+
+          ${
+            fatti.length
+              ? `<div class="section-head"><h3>Fatto oggi</h3>
+                  <span class="count">${fatti.length}</span><span class="rule"></span></div>
+                 ${fatti
+                   .map((t, i) => taskRow({ ...t, quando: t.data }, i, false, true))
+                   .join("")}`
+              : ""
+          }`;
+      }
+
+      function taskRow(t, i, late, done) {
+        const c = t.coltura || garden.colture.find((x) => x.id === t.colturaId);
+        const p = t.pianta || BYID[c?.plantId];
+        const gg = t.quando ? diffDays(today(), t.quando) : 0;
+        const ritardo = !late
+          ? ""
+          : RICORRENTI.has(t.tipo)
+            ? `ultima volta ${gg} ${gg === 1 ? "giorno" : "giorni"} fa`
+            : `in ritardo di ${gg} ${gg === 1 ? "giorno" : "giorni"}`;
+        const meta = [c?.posizione, t.nota, ritardo].filter(Boolean).join(" · ");
+        return `
+          <article class="task ${late ? "late" : ""} ${done ? "done" : ""}"
+            style="--accent:${t.col};animation-delay:${Math.min(i, 8) * 32}ms">
+            <button class="check" data-task="${t.id}" data-on="${done ? 1 : 0}"
+              aria-label="Segna come fatto"></button>
+            <span class="task-ico" aria-hidden="true">${t.ico}</span>
+            <span class="task-body">
+              <span class="task-label">${t.label} <em>· ${p ? p.nome : ""}</em></span>
+              <span class="task-meta">${meta || "&nbsp;"}</span>
+            </span>
+            ${p ? `<img class="task-thumb" src="${photoSrc(p.id)}" alt="" loading="lazy" />` : ""}
+            ${done ? "" : `<button class="snooze" data-snooze="${t.id}">Domani</button>`}
+          </article>`;
+      }
+
+      function renderColture() {
+        const t0 = today();
+        const s = garden.colture.reduce(
+          (a, c) => {
+            const p = BYID[c.plantId];
+            if (!p) return a;
+            const gg = giorniARaccolta(p, PRODUCTS[c.plantId], c.origine);
+            const fine = addDays(parse(c.dataInizio), gg);
+            if (gg && fine >= t0 && diffDays(fine, t0) <= 14) a.vicine++;
+            a.piante += c.quantita;
+            return a;
+          },
+          { vicine: 0, piante: 0 }
+        );
+        app.innerHTML = `
+          <div class="view-head">
+            <div>
+              <h2>Le mie colture</h2>
+              <p>Ogni coltura genera da sola il proprio calendario di cura fino alla raccolta.</p>
+            </div>
+            <button class="btn" id="addBtn">＋ Aggiungi coltura</button>
+          </div>
+          <div class="stats">
+            <div class="stat"><span class="si">🌿</span><span><b>${garden.colture.length}</b><span>colture in corso</span></span></div>
+            <div class="stat"><span class="si">🪴</span><span><b>${s.piante}</b><span>piante seguite</span></span></div>
+            <div class="stat"><span class="si">🧺</span><span><b>${s.vicine}</b><span>vicine alla raccolta</span></span></div>
+          </div>
+          <div class="toolbar">
+            <button class="btn btn--ghost btn--sm" id="importBtn">Importa dalla mia serra</button>
+            <button class="btn btn--ghost btn--sm" id="icsBtn">Esporta nel calendario (.ics)</button>
+          </div>
+          <div class="grid">${
+            garden.colture.length
+              ? garden.colture.map(colturaCard).join("")
+              : `<div class="empty" style="grid-column:1/-1"><div class="empty-ico">🌱</div>
+                  <h4>Non stai ancora seguendo nulla</h4>
+                  <p>Aggiungi una coltura, oppure importa in un tocco le aiuole di una serra che hai già progettato.</p></div>`
+          }</div>`;
+      }
+
+      function colturaCard(c, i) {
+        const p = BYID[c.plantId];
+        if (!p) return "";
+        const prod = PRODUCTS[c.plantId];
+        const t0 = today();
+        const start = parse(c.dataInizio);
+        const gg = giorniARaccolta(p, prod, c.origine);
+        const passati = Math.max(0, diffDays(t0, start));
+        const perc = gg ? Math.min(100, Math.round((passati / gg) * 100)) : 100;
+        const raccolta = gg ? addDays(start, gg) : null;
+        const mancano = gg ? diffDays(raccolta, t0) : null;
+        const prossimo = generaAttivita(c, p, prod)
+          .filter((t) => !garden.fatti[t.id] && dataEffettiva(t) >= t0)
+          .sort((a, b) => dataEffettiva(a) - dataEffettiva(b))[0];
+        const ph = fasi(c, p, prod);
+        const attuale = ph.filter((f) => f.at * 100 <= perc).pop() || ph[0];
+        return `
+          <article class="card" style="animation-delay:${Math.min(i, 8) * 45}ms">
+            <div class="card-photo">
+              <img class="bg" src="${photoSrc(p.id)}" alt="" loading="lazy" />
+              <span class="badges">
+                <span class="chip chip--${c.origine === "piantina" ? "piantina" : "seme"}">
+                  ${c.origine === "piantina" ? "da piantina" : "da seme"}</span>
+              </span>
+              <img class="plant-svg" src="${svgSrc(p.id)}" alt="" loading="lazy" />
+              <span class="titles">
+                <h3>${p.nome}</h3>
+                <small>${c.quantita} piante${c.posizione ? " · " + c.posizione : ""}</small>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="phases">
+                <div class="track">
+                  <i style="width:${perc}%"></i>
+                  <span class="cursor" style="left:${Math.min(99, perc)}%"></span>
+                </div>
+                <div class="phase-labels">
+                  ${ph
+                    .map((f) =>
+                      f.label === attuale.label
+                        ? `<span><b>${f.label}</b></span>`
+                        : `<span>${f.label}</span>`
+                    )
+                    .join("")}
+                </div>
+              </div>
+              <div class="meta-row">
+                <span class="k">Fase attuale</span><span class="v">${attuale.label}</span>
+              </div>
+              <div class="meta-row">
+                <span class="k">Raccolta stimata</span>
+                <span class="v">${
+                  raccolta
+                    ? mancano > 0
+                      ? `${fmt(raccolta)} · −${mancano} g`
+                      : "in corso"
+                    : "perenne"
+                }</span>
+              </div>
+              <div class="next-task">
+                <span class="dot">${prossimo ? prossimo.ico : "✓"}</span>
+                <span>${
+                  prossimo
+                    ? `<b>${prossimo.label}</b><br><span style="color:var(--muted)">${fmtShort(
+                        dataEffettiva(prossimo)
+                      )}</span>`
+                    : "<b>Ciclo completato</b>"
+                }</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn btn--sm btn--ghost" data-harvest="${c.id}">Registra raccolta</button>
+                <button class="btn btn--sm btn--ghost" data-remove="${c.id}">Rimuovi</button>
+              </div>
+            </div>
+          </article>`;
+      }
+
+      function renderCatalogo() {
+        const mese = new Date().getMonth() + 1;
+        const lista = PLANTS.filter((p) => p.gg > 0);
+        const disp = lista.filter((p) =>
+          PRODUCTS[p.id].piantina?.mesiDisponibili.includes(mese)
+        );
+        const ordinata = [...disp, ...lista.filter((p) => !disp.includes(p))].slice(0, 30);
+        app.innerHTML = `
+          <div class="view-head">
+            <div>
+              <h2>Semi o piantine</h2>
+              <p>La piantina non è un prodotto separato: è una variante d'acquisto della stessa
+                coltura, con una finestra di disponibilità stagionale.</p>
+            </div>
+            <span class="chip chip--soft">${disp.length} disponibili a ${nomeMese(mese)}</span>
+          </div>
+          <div class="grid">${ordinata.map((p, i) => prodCard(p, mese, i)).join("")}</div>`;
+      }
+
+      function prodCard(p, mese, i) {
+        const prod = PRODUCTS[p.id];
+        const disponibile = !!prod.piantina && prod.piantina.mesiDisponibili.includes(mese);
+        const scelta = varianteScelta[p.id] || (disponibile ? "piantina" : "semi");
+        const isP = scelta === "piantina" && disponibile;
+        const prezzo = isP ? prod.piantina.prezzo : prod.semi.prezzo;
+        const unita = isP ? "a piantina · vaso ø7" : `bustina · ${prod.semi.semiPerBustina} semi`;
+        const ggP = giorniARaccolta(p, prod, "piantina");
+        const raccolta = addDays(today(), isP ? ggP : p.gg);
+        const risparmio = p.gg - ggP;
+        return `
+          <article class="card" style="animation-delay:${Math.min(i, 10) * 35}ms">
+            <div class="card-photo">
+              <img class="bg" src="${photoSrc(p.id)}" alt="" loading="lazy" />
+              ${
+                disponibile
+                  ? `<span class="badges"><span class="chip chip--piantina">piantina disponibile</span></span>`
+                  : ""
+              }
+              <img class="plant-svg" src="${svgSrc(p.id)}" alt="" loading="lazy" />
+              <span class="titles">
+                <h3>${p.nome}</h3>
+                <small>${p.tipo} · ciclo ${p.gg} giorni</small>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="seg" role="group" aria-label="Variante d'acquisto">
+                <button data-var="${p.id}|semi" aria-pressed="${!isP}">
+                  Semi<small>${prod.semi.semiPerBustina} semi</small></button>
+                <button data-var="${p.id}|piantina" aria-pressed="${isP}" ${
+                  disponibile ? "" : "disabled"
+                }>Piantina<small>${
+                  prod.piantina ? (disponibile ? "vaso ø7" : "fuori stagione") : "non trapiantabile"
+                }</small></button>
+              </div>
+              <div class="price-row">
+                <span class="price">${prezzo.toFixed(2).replace(".", ",")} €<small>${unita}</small></span>
+                ${isP ? `<span class="save-badge">−${risparmio} giorni</span>` : ""}
+              </div>
+              ${
+                isP
+                  ? `<div class="note"><span>🧺</span><span>Raccolta verso il <b>${fmt(
+                      raccolta
+                    )}</b>, circa <b>${risparmio} giorni prima</b> rispetto alla semina.</span></div>`
+                  : prod.piantina
+                    ? disponibile
+                      ? `<div class="note"><span>🧺</span><span>Raccolta verso il <b>${fmt(
+                          raccolta
+                        )}</b>.</span></div>`
+                      : `<div class="note note--warn"><span>📅</span><span>Piantine disponibili da
+                          <b>${nomeMese(prod.piantina.mesiDisponibili[0])}</b>.
+                          <button class="link" data-notify="${p.id}">Avvisami</button></span></div>`
+                    : `<div class="note note--off"><span>ℹ️</span><span>${
+                        p.tipo === "radice"
+                          ? "Non si trapianta: la radice a fittone va seminata a dimora."
+                          : "Si semina direttamente a dimora."
+                      }</span></div>`
+              }
+              <div class="card-actions">
+                <button class="btn btn--sm" data-buy="${p.id}|${isP ? "piantina" : "semi"}">
+                  Aggiungi al carrello</button>
+                <button class="btn btn--sm btn--ghost" data-quick="${p.id}|${
+                  isP ? "piantina" : "seme"
+                }">Al mio orto</button>
+              </div>
+            </div>
+          </article>`;
+      }
+
+      function render() {
+        document
+          .querySelectorAll(".tab")
+          .forEach((b) => b.setAttribute("aria-selected", String(b.dataset.view === view)));
+        const badge = document.getElementById("tabBadge");
+        const n = datiOggi().diOggi.length;
+        badge.hidden = !n;
+        badge.textContent = n;
+        if (view === "oggi") renderOggi();
+        else if (view === "colture") renderColture();
+        else renderCatalogo();
+      }
+
+      /* ============================================================
+         5. INTERAZIONI
+         ============================================================ */
+      let toastTimer;
+      function toast(msg) {
+        const el = document.getElementById("toast");
+        el.textContent = msg;
+        el.classList.add("on");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove("on"), 2600);
+      }
+
+      document.addEventListener("click", (e) => {
+        const tab = e.target.closest(".tab");
+        if (tab) {
+          view = tab.dataset.view;
+          return render();
+        }
+        const check = e.target.closest("[data-task]");
+        if (check) {
+          const id = check.dataset.task;
+          if (garden.fatti[id]) delete garden.fatti[id];
+          else {
+            garden.fatti[id] = iso(new Date());
+            check.dataset.on = "1";
+          }
+          save();
+          return setTimeout(render, 190);
+        }
+        const sn = e.target.closest("[data-snooze]");
+        if (sn) {
+          garden.rinviati[sn.dataset.snooze] = iso(addDays(today(), 1));
+          save();
+          toast("Rimandata a domani");
+          return render();
+        }
+        const rm = e.target.closest("[data-remove]");
+        if (rm) {
+          garden.colture = garden.colture.filter((c) => c.id !== rm.dataset.remove);
+          save();
+          return render();
+        }
+        const hv = e.target.closest("[data-harvest]");
+        if (hv) {
+          const c = garden.colture.find((x) => x.id === hv.dataset.harvest);
+          const kg = prompt("Quanti kg hai raccolto?", "1,5");
+          if (kg && c) {
+            c.eventi.push({ data: iso(new Date()), tipo: "raccolta", quantitaKg: kg });
+            c.stato = "raccolta";
+            save();
+            toast("Registrato: diventerà la stima dell'anno prossimo");
+          }
+          return render();
+        }
+        const seg = e.target.closest("[data-var]");
+        if (seg && !seg.disabled) {
+          const [id, v] = seg.dataset.var.split("|");
+          varianteScelta[id] = v;
+          return render();
+        }
+        const nt = e.target.closest("[data-notify]");
+        if (nt) return toast("Ti avviseremo appena tornano disponibili");
+        const buy = e.target.closest("[data-buy]");
+        if (buy) {
+          const [id, v] = buy.dataset.buy.split("|");
+          toast(
+            `Carrello: { id: "${id}", variante: "${v}", qta: ${v === "piantina" ? 6 : 1} }`
+          );
+          return;
+        }
+        const q = e.target.closest("[data-quick]");
+        if (q) {
+          const [id, origine] = q.dataset.quick.split("|");
+          aggiungiColtura(id, origine, iso(new Date()), 4, "");
+          view = "colture";
+          toast(`${BYID[id].nome} aggiunta al tuo orto`);
+          return render();
+        }
+        if (e.target.id === "addBtn") return apriDialogo();
+        if (e.target.id === "importBtn") return importaDaSerra();
+        if (e.target.id === "icsBtn") return esportaIcs();
+      });
+
+      document.getElementById("themeBtn").addEventListener("click", (e) => {
+        const dark = document.documentElement.dataset.theme === "dark";
+        document.documentElement.dataset.theme = dark ? "light" : "dark";
+        e.target.textContent = dark ? "☾" : "☀";
+      });
+
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        localStorage.removeItem(STORE_KEY);
+        garden = { colture: [], fatti: {}, rinviati: {} };
+        seedDemo();
+        view = "oggi";
+        render();
+        toast("Demo riportata allo stato iniziale");
+      });
+
+      function aggiungiColtura(plantId, origine, dataInizio, quantita, posizione) {
+        garden.colture.unshift({
+          id: "c" + Date.now().toString(36),
+          plantId,
+          origine,
+          dataInizio,
+          quantita: Number(quantita) || 1,
+          posizione,
+          stato: "in_corso",
+          eventi: []
+        });
+        save();
+      }
+
+      const dlg = document.getElementById("addDlg");
+      function apriDialogo() {
+        document.getElementById("fPlant").innerHTML = PLANTS.map(
+          (p) => `<option value="${p.id}">${p.nome}</option>`
+        ).join("");
+        document.getElementById("fData").value = iso(new Date());
+        dlg.showModal();
+      }
+      document.getElementById("addForm").addEventListener("submit", (e) => {
+        if (e.submitter && e.submitter.value === "cancel") return;
+        const origine =
+          document.querySelector('input[name="origine"]:checked')?.value || "seme";
+        aggiungiColtura(
+          document.getElementById("fPlant").value,
+          origine,
+          document.getElementById("fData").value,
+          document.getElementById("fQta").value,
+          document.getElementById("fPos").value.trim()
+        );
+        setTimeout(() => {
+          render();
+          toast("Coltura aggiunta");
+        }, 0);
+      });
+
+      // Aggancio con serra.projects.v1, già presente nell'app.
+      function importaDaSerra() {
+        let beds = [];
+        try {
+          const store = JSON.parse(localStorage.getItem("serra.projects.v1") || "null");
+          beds = store?.projects?.find((p) => p.id === store.activeId)?.config?.beds || [];
+        } catch (_) {}
+        const ids = [...new Set(beds.map((b) => b.plantId).filter((id) => BYID[id]))];
+        if (!ids.length) {
+          toast("Nessuna serra salvata in questo browser");
+          return;
+        }
+        ids.forEach((id) => aggiungiColtura(id, "seme", iso(new Date()), 4, "Da serra"));
+        render();
+        toast(`${ids.length} colture importate dalla serra`);
+      }
+
+      // Promemoria che funziona ovunque, iOS compreso, senza push.
+      function esportaIcs() {
+        const t0 = today();
+        const tasks = tuttiITask()
+          .filter((t) => dataEffettiva(t) >= t0 && !garden.fatti[t.id])
+          .slice(0, 200);
+        const stamp = (d) => iso(d).replace(/-/g, "");
+        const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Orto in Serra//IT\n${tasks
+          .map(
+            (t) => `BEGIN:VEVENT
+UID:${t.id}@ortoinserra
+DTSTART;VALUE=DATE:${stamp(dataEffettiva(t))}
+SUMMARY:${t.label} · ${t.pianta.nome}
+DESCRIPTION:${(t.nota || "").replace(/\n/g, " ")}
+END:VEVENT`
+          )
+          .join("\n")}\nEND:VCALENDAR`;
+        const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "orto-in-serra.ics";
+        a.click();
+        URL.revokeObjectURL(url);
+        toast(`${tasks.length} attività esportate`);
+      }
+
+      /* ============================================================
+         6. AVVIO
+         ============================================================ */
+      fetch("../db/plants.json")
+        .then((r) => r.json())
+        .then((data) => {
+          PLANTS = data;
+          data.forEach((p) => (BYID[p.id] = p));
+          PRODUCTS = buildProducts(data);
+          load();
+          if (!garden.colture.length) seedDemo();
+          garden.fatti ||= {};
+          garden.rinviati ||= {};
+          render();
+        })
+        .catch(() => {
+          app.innerHTML = `<div class="empty"><div class="empty-ico">⚠️</div>
+            <h4>Non riesco a caricare il catalogo</h4>
+            <p>Apri la pagina tramite il server locale:
+            <code>127.0.0.1:5500/serra/prototipo/mio-orto.html</code></p></div>`;
+        });
+    </script>
+  </body>
+</html>

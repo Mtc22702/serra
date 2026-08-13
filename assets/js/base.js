@@ -26,7 +26,7 @@
             : "Activează modul întunecat"
           : dark
             ? "Attiva modalità chiara"
-            : "Attiva modalità scura"
+            : "Attiva modalità scura",
       );
       button.title = ro
         ? dark
@@ -46,8 +46,8 @@
     syncControls();
     window.dispatchEvent(
       new CustomEvent("serra:themechange", {
-        detail: { theme: root.dataset.theme }
-      })
+        detail: { theme: root.dataset.theme },
+      }),
     );
   }
 
@@ -67,7 +67,33 @@
   else syncControls();
   new MutationObserver(syncControls).observe(root, {
     attributes: true,
-    attributeFilter: ["lang"]
+    attributeFilter: ["lang"],
+  });
+})();
+
+/* Contatore del carrello, valido su ogni pagina.
+ * Il carrello è unico (`ois.cart`): qui si limita a tenere allineato il numero
+ * mostrato nell'intestazione, così anche le pagine senza un proprio pannello
+ * carrello (vivaio, il mio orto) dicono il vero.
+ */
+(() => {
+  function aggiorna() {
+    const badge = document.getElementById("cartCount");
+    if (!badge) return;
+    let righe = [];
+    try {
+      righe = window.SerraCart
+        ? window.SerraCart.leggi()
+        : JSON.parse(localStorage.getItem("ois.cart") || "[]");
+    } catch (_) {}
+    badge.textContent = String(Array.isArray(righe) ? righe.length : 0);
+  }
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", aggiorna);
+  else aggiorna();
+  window.addEventListener("serra:cart-change", aggiorna);
+  window.addEventListener("storage", (e) => {
+    if (e.key === "ois.cart") aggiorna();
   });
 })();
 
@@ -76,7 +102,7 @@
   // Etichette localizzate usate dai collegamenti che rimandano alla guida.
   const labels = {
     it: "Non sai da dove iniziare? Guarda la guida",
-    ro: "Nu știi de unde să începi? Vezi ghidul"
+    ro: "Nu știi de unde să începi? Vezi ghidul",
   };
   // Applica l'etichetta corrispondente alla lingua italiana o romena attiva.
   function apply() {
@@ -89,7 +115,7 @@
   apply();
   new MutationObserver(apply).observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ["lang"]
+    attributeFilter: ["lang"],
   });
 })();
 
@@ -124,7 +150,7 @@
     toggle.setAttribute("aria-expanded", "true");
     toggle.setAttribute(
       "aria-label",
-      isRo() ? "Închide meniul" : "Chiudi menu"
+      isRo() ? "Închide meniul" : "Chiudi menu",
     );
   };
 
@@ -165,7 +191,7 @@
     "resize",
     debounce(() => {
       if (window.innerWidth > 900) closeMenu();
-    }, 150)
+    }, 150),
   );
 
   // Aggiorna l'etichetta del pulsante menu quando cambia la lingua della pagina.
@@ -179,11 +205,11 @@
           : "Deschide meniul"
         : open
           ? "Chiudi menu"
-          : "Apri menu"
+          : "Apri menu",
     );
   }).observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ["lang"]
+    attributeFilter: ["lang"],
   });
 
   // Separa l'icona iniziale dall'etichetta nelle voci "Esplora" del menu, cosi'
@@ -197,7 +223,7 @@
     if (spaceIndex <= 0) return null;
     return {
       icon: trimmed.slice(0, spaceIndex),
-      label: trimmed.slice(spaceIndex + 1)
+      label: trimmed.slice(spaceIndex + 1),
     };
   }
 
@@ -238,13 +264,13 @@
     navIconObserver.observe(menu, {
       childList: true,
       subtree: true,
-      characterData: true
+      characterData: true,
     });
   });
   navIconObserver.observe(menu, {
     childList: true,
     subtree: true,
-    characterData: true
+    characterData: true,
   });
 })();
 
@@ -264,7 +290,7 @@
         "Settembre",
         "Ottobre",
         "Novembre",
-        "Dicembre"
+        "Dicembre",
       ],
       ro: [
         "Ianuarie",
@@ -278,8 +304,8 @@
         "Septembrie",
         "Octombrie",
         "Noiembrie",
-        "Decembrie"
-      ]
+        "Decembrie",
+      ],
     },
     monthAbbr: {
       it: [
@@ -294,7 +320,7 @@
         "Set",
         "Ott",
         "Nov",
-        "Dic"
+        "Dic",
       ],
       ro: [
         "Ian",
@@ -308,401 +334,401 @@
         "Sep",
         "Oct",
         "Nov",
-        "Dec"
-      ]
+        "Dec",
+      ],
     },
 
     plants: {
       ro: {
         pomodoro: {
           nome: "Roșie",
-          nota: "Are nevoie de susținere și soare plin. Îndepărtează lăstarii laterali."
+          nota: "Are nevoie de susținere și soare plin. Îndepărtează lăstarii laterali.",
         },
         peperone: {
           nome: "Ardei gras",
-          nota: "Iubește căldura. Fertilizează când începe fructificarea."
+          nota: "Iubește căldura. Fertilizează când începe fructificarea.",
         },
         peperoncino: {
           nome: "Ardei iute",
-          nota: "Rustic și productiv. Suportă bine seceta."
+          nota: "Rustic și productiv. Suportă bine seceta.",
         },
         melanzana: {
           nome: "Vânătă",
-          nota: "Are nevoie de multă căldură și udări regulate."
+          nota: "Are nevoie de multă căldură și udări regulate.",
         },
         zucchina: {
           nome: "Dovlecel",
-          nota: "Crește repede și ocupă mult spațiu. Recoltează des."
+          nota: "Crește repede și ocupă mult spațiu. Recoltează des.",
         },
         zucca: {
           nome: "Dovleac",
-          nota: "Se întinde mult: lasă-i spațiu sau condu-l pe suport."
+          nota: "Se întinde mult: lasă-i spațiu sau condu-l pe suport.",
         },
         cetriolo: {
           nome: "Castravete",
-          nota: "Condu-l pe plasă: fructele rămân mai curate și mai drepte."
+          nota: "Condu-l pe plasă: fructele rămân mai curate și mai drepte.",
         },
         melone: {
           nome: "Pepene galben",
-          nota: "Vrea mult soare și mai puțină apă spre coacere."
+          nota: "Vrea mult soare și mai puțină apă spre coacere.",
         },
         anguria: {
           nome: "Pepene verde",
-          nota: "Ocupă mult spațiu: o plantă poate umple jumătate dintr-o seră mică."
+          nota: "Ocupă mult spațiu: o plantă poate umple jumătate dintr-o seră mică.",
         },
         lattuga: {
           nome: "Salată verde",
-          nota: "Foarte ușoară și rapidă. Seamănă puține plante odată."
+          nota: "Foarte ușoară și rapidă. Seamănă puține plante odată.",
         },
         radicchio: {
           nome: "Radicchio",
-          nota: "Frigul îl face mai roșu și mai dulce."
+          nota: "Frigul îl face mai roșu și mai dulce.",
         },
         rucola: {
           nome: "Rucola",
-          nota: "Gata în câteva săptămâni. Se taie și crește din nou."
+          nota: "Gata în câteva săptămâni. Se taie și crește din nou.",
         },
         spinaci: {
           nome: "Spanac",
-          nota: "Iubește răcoarea; vara intră repede în floare."
+          nota: "Iubește răcoarea; vara intră repede în floare.",
         },
         bietola: {
           nome: "Mangold",
-          nota: "Generos: recoltează frunzele exterioare treptat."
+          nota: "Generos: recoltează frunzele exterioare treptat.",
         },
         cavolo: {
           nome: "Varză albă",
-          nota: "Are nevoie de spațiu și sol bogat. Atenție la omizi."
+          nota: "Are nevoie de spațiu și sol bogat. Atenție la omizi.",
         },
         verza: {
           nome: "Varză creață",
-          nota: "Rezistă la îngheț; e mai gustoasă după primele brume."
+          nota: "Rezistă la îngheț; e mai gustoasă după primele brume.",
         },
         broccolo: {
           nome: "Broccoli",
-          nota: "După căpățâna centrală produce mulți lăstari laterali."
+          nota: "După căpățâna centrală produce mulți lăstari laterali.",
         },
         cavolfiore: {
           nome: "Conopidă",
-          nota: "Îndoaie frunzele peste căpățână ca să rămână albă."
+          nota: "Îndoaie frunzele peste căpățână ca să rămână albă.",
         },
         cavolonero: {
           nome: "Varză kale neagră",
-          nota: "Rustică: se recoltează frunză cu frunză timp de luni întregi."
+          nota: "Rustică: se recoltează frunză cu frunză timp de luni întregi.",
         },
         cavolorapa: {
           nome: "Gulie",
-          nota: "Se mănâncă tulpina îngroșată: recoltează când e tânără."
+          nota: "Se mănâncă tulpina îngroșată: recoltează când e tânără.",
         },
         carota: {
           nome: "Morcov",
-          nota: "Seamănă des și rărește. Sol afânat, fără pietre."
+          nota: "Seamănă des și rărește. Sol afânat, fără pietre.",
         },
         finocchio: {
           nome: "Fenicul",
-          nota: "Nu se potrivește cu multe plante: ține-l separat."
+          nota: "Nu se potrivește cu multe plante: ține-l separat.",
         },
         prezzemolo: {
           nome: "Pătrunjel",
-          nota: "Pornește lent; apoi taie des pe tot parcursul anului."
+          nota: "Pornește lent; apoi taie des pe tot parcursul anului.",
         },
         basilico: {
           nome: "Busuioc",
-          nota: "Ciuppește florile pentru frunze mereu fragede."
+          nota: "Ciuppește florile pentru frunze mereu fragede.",
         },
         coriandolo: {
           nome: "Coriandru",
-          nota: "Înflorește la căldură: seamănă eșalonat la fiecare 2 săptămâni."
+          nota: "Înflorește la căldură: seamănă eșalonat la fiecare 2 săptămâni.",
         },
         aneto: {
           nome: "Mărar",
-          nota: "Ajută verzele și atrage insecte utile."
+          nota: "Ajută verzele și atrage insecte utile.",
         },
         cipolla: {
           nome: "Ceapă",
-          nota: "Puțină apă la finalul ciclului. Ține la distanță mulți dăunători."
+          nota: "Puțină apă la finalul ciclului. Ține la distanță mulți dăunători.",
         },
         aglio: {
           nome: "Usturoi",
-          nota: "Se plantează în căței toamna și se recoltează vara."
+          nota: "Se plantează în căței toamna și se recoltează vara.",
         },
         porro: {
           nome: "Praz",
-          nota: "Mușuroiește pământul în jur pentru o tulpină albă mai lungă."
+          nota: "Mușuroiește pământul în jur pentru o tulpină albă mai lungă.",
         },
         scalogno: {
           nome: "Șalotă",
-          nota: "Ca ceapa, dar mai delicată; foarte bună pentru începători."
+          nota: "Ca ceapa, dar mai delicată; foarte bună pentru începători.",
         },
         fagiolino: {
           nome: "Fasole pitică",
-          nota: "Nu are nevoie de suport. Îmbunătățește solul cu azot."
+          nota: "Nu are nevoie de suport. Îmbunătățește solul cu azot.",
         },
         fagiolo: {
           nome: "Fasole urcătoare",
-          nota: "Are nevoie de araci sau plasă: poate urca până la 2 metri."
+          nota: "Are nevoie de araci sau plasă: poate urca până la 2 metri.",
         },
         pisello: {
           nome: "Mazăre",
-          nota: "Iubește răcoarea: se seamănă toamna sau la final de iarnă."
+          nota: "Iubește răcoarea: se seamănă toamna sau la final de iarnă.",
         },
         fragola: {
           nome: "Căpșun",
-          nota: "Peren: produce mai mulți ani și face stoloni."
+          nota: "Peren: produce mai mulți ani și face stoloni.",
         },
         sedano: {
           nome: "Țelină",
-          nota: "Are nevoie de multă apă și sol bogat."
+          nota: "Are nevoie de multă apă și sol bogat.",
         },
         ravanello: {
           nome: "Ridiche",
-          nota: "Cea mai rapidă: gata în 3-4 săptămâni. Ideală cu copiii."
+          nota: "Cea mai rapidă: gata în 3-4 săptămâni. Ideală cu copiii.",
         },
         barbabietola: {
           nome: "Sfeclă roșie",
-          nota: "Se mănâncă rădăcina și frunzele. Rărește plantele tinere."
+          nota: "Se mănâncă rădăcina și frunzele. Rărește plantele tinere.",
         },
         cicoria: {
           nome: "Cicoare",
-          nota: "Rustică și gustoasă. Recoltează frunzele exterioare sau căpățâna tânără."
+          nota: "Rustică și gustoasă. Recoltează frunzele exterioare sau căpățâna tânără.",
         },
         indivia: {
           nome: "Andivă / Escarolă",
-          nota: "Iubește răcoarea. Leagă căpățâna dacă vrei frunze interioare mai deschise."
+          nota: "Iubește răcoarea. Leagă căpățâna dacă vrei frunze interioare mai deschise.",
         },
         pakchoi: {
           nome: "Pak choi",
-          nota: "Crește repede pe vreme răcoroasă. Recoltează frunze baby sau căpățâni mici."
+          nota: "Crește repede pe vreme răcoroasă. Recoltează frunze baby sau căpățâni mici.",
         },
         cavoletti: {
           nome: "Varză de Bruxelles",
-          nota: "Are nevoie de timp și răcoare: ciupește vârful când mugurii încep să se formeze."
+          nota: "Are nevoie de timp și răcoare: ciupește vârful când mugurii încep să se formeze.",
         },
         rapa: {
           nome: "Nap",
-          nota: "Rădăcină rapidă de sezon rece. Rărește devreme ca să se îngroașe."
+          nota: "Rădăcină rapidă de sezon rece. Rărește devreme ca să se îngroașe.",
         },
         valerianella: {
           nome: "Valerianelă",
-          nota: "Perfectă pentru sera rece: formează rozete mici și fragede toamna și iarna."
+          nota: "Perfectă pentru sera rece: formează rozete mici și fragede toamna și iarna.",
         },
         rosmarino: {
           nome: "Rozmarin",
-          nota: "Peren și rustic: foarte puțină apă, trăiește ani întregi."
+          nota: "Peren și rustic: foarte puțină apă, trăiește ani întregi.",
         },
         timo: {
           nome: "Cimbru",
-          nota: "Târâtor și parfumat; iubește uscăciunea."
+          nota: "Târâtor și parfumat; iubește uscăciunea.",
         },
         origano: {
           nome: "Oregano",
-          nota: "Peren: se usucă foarte bine pentru iarnă."
+          nota: "Peren: se usucă foarte bine pentru iarnă.",
         },
         salvia: {
           nome: "Salvie",
-          nota: "Tufă perenă cu frunze catifelate."
+          nota: "Tufă perenă cu frunze catifelate.",
         },
         pastinaca: {
           nome: "Păstârnac",
-          nota: "Devine mai dulce după frig; seamănă direct în sol afânat și adânc."
+          nota: "Devine mai dulce după frig; seamănă direct în sol afânat și adânc.",
         },
         radice_prezemolo: {
           nome: "Pătrunjel rădăcină",
-          nota: "Cultură tradițională: rădăcină albă aromată pentru supe și ciorbe."
+          nota: "Cultură tradițională: rădăcină albă aromată pentru supe și ciorbe.",
         },
         sedano_rapa: {
           nome: "Țelină rădăcină",
-          nota: "Rădăcină rotundă și parfumată; cere apă constantă și sol bogat."
+          nota: "Rădăcină rotundă și parfumată; cere apă constantă și sol bogat.",
         },
         rafano: {
           nome: "Hrean",
-          nota: "Rădăcină picantă foarte folosită în România; controlează-l, este viguros."
+          nota: "Rădăcină picantă foarte folosită în România; controlează-l, este viguros.",
         },
         patata: {
           nome: "Cartof",
-          nota: "În seră grăbește recolta; mușuroiește când tulpinile cresc."
+          nota: "În seră grăbește recolta; mușuroiește când tulpinile cresc.",
         },
         patata_dolce: {
           nome: "Cartof dulce",
-          nota: "Iubește căldura stabilă și solul ușor; potrivit pentru seră caldă."
+          nota: "Iubește căldura stabilă și solul ușor; potrivit pentru seră caldă.",
         },
         cipolla_rossa: {
           nome: "Ceapă roșie",
-          nota: "Bulb dulce și colorat; bun pentru recoltări eșalonate."
+          nota: "Bulb dulce și colorat; bun pentru recoltări eșalonate.",
         },
         cipollotto: {
           nome: "Ceapă verde",
-          nota: "Gata rapid; recoltează-l tânăr înainte să se îngroașe."
+          nota: "Gata rapid; recoltează-l tânăr înainte să se îngroașe.",
         },
         erba_cipollina: {
           nome: "Chives / Cepșoară",
-          nota: "Aromatică perenă; taie des pentru frunze fragede."
+          nota: "Aromatică perenă; taie des pentru frunze fragede.",
         },
         loboda: {
           nome: "Lobodă",
-          nota: "Frunză tradițională pentru ciorbe; crește bine pe vreme răcoroasă."
+          nota: "Frunză tradițională pentru ciorbe; crește bine pe vreme răcoroasă.",
         },
         stevia_dolce: {
           nome: "Ștevie",
-          nota: "Plantă acrișoară pentru ciorbe de primăvară; recoltează frunze tinere."
+          nota: "Plantă acrișoară pentru ciorbe de primăvară; recoltează frunze tinere.",
         },
         leustean: {
           nome: "Leuștean",
-          nota: "Aroma clasică a ciorbelor românești; peren și viguros."
+          nota: "Aroma clasică a ciorbelor românești; peren și viguros.",
         },
         dragoncello: {
           nome: "Tarhon",
-          nota: "Aromatic fin pentru oțeturi și conserve; evită băltirea."
+          nota: "Aromatic fin pentru oțeturi și conserve; evită băltirea.",
         },
         menta: {
           nome: "Mentă",
-          nota: "Foarte viguroasă: mai bine în ghiveci sau zonă controlată."
+          nota: "Foarte viguroasă: mai bine în ghiveci sau zonă controlată.",
         },
         maggiorana: {
           nome: "Măghiran",
-          nota: "Aromatică delicată; iubește căldura, lumina și solul drenat."
+          nota: "Aromatică delicată; iubește căldura, lumina și solul drenat.",
         },
         camomilla: {
           nome: "Mușețel",
-          nota: "Flori pentru ceai; atrage insecte utile și parfumează sera."
+          nota: "Flori pentru ceai; atrage insecte utile și parfumează sera.",
         },
         mais_dolce: {
           nome: "Porumb dulce",
-          nota: "Are nevoie de grupuri de plante pentru polenizare bună; ideal pe margini."
+          nota: "Are nevoie de grupuri de plante pentru polenizare bună; ideal pe margini.",
         },
         tomatillo: {
           nome: "Tomatillo",
-          nota: "Are nevoie de cel puțin două plante pentru fructificare bună; excelent pentru sosuri."
+          nota: "Are nevoie de cel puțin două plante pentru fructificare bună; excelent pentru sosuri.",
         },
         physalis: {
           nome: "Physalis",
-          nota: "Fructe dulci în înveliș ca o lanternă; în seră se coace mai bine."
+          nota: "Fructe dulci în înveliș ca o lanternă; în seră se coace mai bine.",
         },
         cucamelon: {
           nome: "Cucamelon",
-          nota: "Fructe mici și crocante; productiv pe plasă în seră."
+          nota: "Fructe mici și crocante; productiv pe plasă în seră.",
         },
         asparago: {
           nome: "Sparanghel",
-          nota: "Peren: cere răbdare, dar produce mulți ani."
+          nota: "Peren: cere răbdare, dar produce mulți ani.",
         },
         carciofo: {
           nome: "Anghinare",
-          nota: "Cultură mare și decorativă; protejează de ger puternic."
+          nota: "Cultură mare și decorativă; protejează de ger puternic.",
         },
         cardo: {
           nome: "Cardon",
-          nota: "Rudă cu anghinarea; albește pețiolurile înainte de recoltă."
+          nota: "Rudă cu anghinarea; albește pețiolurile înainte de recoltă.",
         },
         crescione: {
           nome: "Năsturel",
-          nota: "Crește rapid și cere umiditate constantă; perfect pentru tăieri repetate."
+          nota: "Crește rapid și cere umiditate constantă; perfect pentru tăieri repetate.",
         },
         mizuna: {
           nome: "Mizuna",
-          nota: "Muștar japonez ușor; frunze zimțate pentru mixuri de salată."
+          nota: "Muștar japonez ușor; frunze zimțate pentru mixuri de salată.",
         },
         senape_foglia: {
           nome: "Muștar frunze",
-          nota: "Frunze picante; seamănă pe răcoare ca să eviți înflorirea rapidă."
+          nota: "Frunze picante; seamănă pe răcoare ca să eviți înflorirea rapidă.",
         },
         tatsoi: {
           nome: "Tatsoi",
-          nota: "Rozetă compactă, foarte rezistentă la frig."
+          nota: "Rozetă compactă, foarte rezistentă la frig.",
         },
         cavolo_cinese: {
           nome: "Varză chinezească",
-          nota: "Formează căpățână fragedă; protejează de căldură și stres hidric."
+          nota: "Formează căpățână fragedă; protejează de căldură și stres hidric.",
         },
         daikon: {
           nome: "Daikon",
-          nota: "Ridiche lungă: sol adânc și recoltare înainte să devină lemnoasă."
+          nota: "Ridiche lungă: sol adânc și recoltare înainte să devină lemnoasă.",
         },
         scorzonera: {
           nome: "Scorțonera",
-          nota: "Rădăcină neagră lungă; cere sol ușor și adânc."
+          nota: "Rădăcină neagră lungă; cere sol ușor și adânc.",
         },
         topinambur: {
           nome: "Topinambur",
-          nota: "Tubercul rustic și productiv; delimitează spațiul deoarece se extinde."
+          nota: "Tubercul rustic și productiv; delimitează spațiul deoarece se extinde.",
         },
         fava: {
           nome: "Bob",
-          nota: "Leguminoasă timpurie, rezistentă la răcoare; îmbunătățește solul."
+          nota: "Leguminoasă timpurie, rezistentă la răcoare; îmbunătățește solul.",
         },
         soia_edamame: {
           nome: "Soia edamame",
-          nota: "Recoltează păstăile verzi când boabele sunt pline, dar fragede."
+          nota: "Recoltează păstăile verzi când boabele sunt pline, dar fragede.",
         },
         cece: {
           nome: "Năut",
-          nota: "Iubește uscăciunea și căldura; nu uda excesiv în seră."
+          nota: "Iubește uscăciunea și căldura; nu uda excesiv în seră.",
         },
         lenticchia: {
           nome: "Linte",
-          nota: "Leguminoasă mică și rustică; potrivită pentru margini mai uscate."
+          nota: "Leguminoasă mică și rustică; potrivită pentru margini mai uscate.",
         },
         fagiolo_borlotto: {
           nome: "Fasole pestriță",
-          nota: "Pentru păstăi proaspete sau boabe; folosește araci solizi."
+          nota: "Pentru păstăi proaspete sau boabe; folosește araci solizi.",
         },
         cavolo_rosso: {
           nome: "Varză roșie",
-          nota: "Căpățână compactă și colorată; excelentă pentru recolte de toamnă."
+          nota: "Căpățână compactă și colorată; excelentă pentru recolte de toamnă.",
         },
         cavolo_navone: {
           nome: "Gulie furajeră / Nap",
-          nota: "Rădăcină mare și rustică; utilă pentru toamnă și iarnă."
+          nota: "Rădăcină mare și rustică; utilă pentru toamnă și iarnă.",
         },
         broccolo_rapa: {
           nome: "Rapini",
-          nota: "Recoltează vârfurile și frunzele înainte de înflorire completă."
+          nota: "Recoltează vârfurile și frunzele înainte de înflorire completă.",
         },
         shiso: {
           nome: "Shiso",
-          nota: "Aromatică asiatică parfumată; frumoasă și în ghiveci în seră."
+          nota: "Aromatică asiatică parfumată; frumoasă și în ghiveci în seră.",
         },
         broccolo_romanesco: {
           nome: "Broccoli romanesc",
-          nota: "Varietate de broccoli cu capul spiralat caracteristic. Gust delicat și ornamental."
+          nota: "Varietate de broccoli cu capul spiralat caracteristic. Gust delicat și ornamental.",
         },
         friggitello: {
           nome: "Ardei friggitello",
-          nota: "Ardei dulce alungit tipic din centrul și sudul Italiei. Excelent la prăjit."
+          nota: "Ardei dulce alungit tipic din centrul și sudul Italiei. Excelent la prăjit.",
         },
         agretti: {
           nome: "Agretti",
-          nota: "Legumă primăvăratică italiană cu tulpini subțiri și cărnoase. Se mănâncă fiartă cu ulei de măsline."
+          nota: "Legumă primăvăratică italiană cu tulpini subțiri și cărnoase. Se mănâncă fiartă cu ulei de măsline.",
         },
         borragine: {
           nome: "Borago",
-          nota: "Flori și frunze comestibile albastre. Atrage albinele; excelentă lângă roșii și castraveți."
+          nota: "Flori și frunze comestibile albastre. Atrage albinele; excelentă lângă roșii și castraveți.",
         },
         catalogna: {
           nome: "Catalogna",
-          nota: "Cicoare romană: puntarellele centrale se mănâncă crude cu anșoa și usturoi."
+          nota: "Cicoare romană: puntarellele centrale se mănâncă crude cu anșoa și usturoi.",
         },
         acetosa: {
           nome: "Macriș",
-          nota: "Frunze acide cu gust de lămâie, excelente în borș. Perenă: revine în fiecare an."
+          nota: "Frunze acide cu gust de lămâie, excelente în borș. Perenă: revine în fiecare an.",
         },
         leurda: {
           nome: "Leurdă",
-          nota: "Usturoi sălbatic cu frunze comestibile. Tipic bucătăriei românești de primăvară."
+          nota: "Usturoi sălbatic cu frunze comestibile. Tipic bucătăriei românești de primăvară.",
         },
         melissa: {
           nome: "Melisă / Roiniță",
-          nota: "Aromată perenă cu parfum de lămâie. Excelentă pentru ceaiuri și în bucătărie."
+          nota: "Aromată perenă cu parfum de lămâie. Excelentă pentru ceaiuri și în bucătărie.",
         },
         cerfoglio: {
           nome: "Hasmațuchi",
-          nota: "Aromată delicată cu gust între pătrunjel și anason. Se folosește doar proaspătă."
+          nota: "Aromată delicată cu gust între pătrunjel și anason. Se folosește doar proaspătă.",
         },
         cimbru: {
           nome: "Cimbru",
-          nota: "Cea mai folosită aromă în bucătăria românească: indispensabilă pentru fasole, murături și sarmale."
-        }
-      }
+          nota: "Cea mai folosită aromă în bucătăria românească: indispensabilă pentru fasole, murături și sarmale.",
+        },
+      },
     },
 
     index: {
@@ -712,7 +738,49 @@
         "nav.stagione": "🌿 Catalogo completo",
         "nav.catalog_all": "🌿 Catalogo completo",
         "nav.abbinamenti": "🤝 Abbinamenti",
-        "nav.configuratore": "📐 Configuratore",
+        "nav.configuratore": "📐 Configuratore serra",
+        "cart.plugs_count": "{count} piantine",
+        "cart.plugs_unit": "vaso ø7",
+        "cart.plugs_hint": "Già cresciuta, pronta da mettere a dimora",
+        "cart.per_plug": " a piantina",
+        "cart.tag_plug": "piantina",
+        "cross.to_plugs_title": "Vuoi guadagnare settimane?",
+        "cross.to_plugs_text":
+          "Alcune di queste colture esistono già cresciute nel vivaio: raccolta fino a un mese prima.",
+        "cross.to_seeds_title": "Ti servono anche i semi?",
+        "cross.to_seeds_text":
+          "Nel catalogo trovi 97 varietà con mesi di semina, distanze e abbinamenti.",
+        "hero.promise":
+          "Semi, piantine già cresciute e un diario che ti segue fino alla raccolta.",
+        "hero.alt_or": "oppure",
+        "hero.alt_title": "Non parti da zero?",
+        "hero.alt_hint":
+          "Semi, piantine o quello che hai già: scegli la tua strada",
+        "nav.semi": "🌿 Catalogo semi",
+        "nav.orto_badge": "gratis",
+        "nav.orto": "🌱 Il mio orto",
+        "nav.vivaio": "🪴 Vivaio piantine",
+        "paths.kicker": "Da dove vuoi partire?",
+        "paths.title": "Tre strade, un solo orto",
+        "paths.lead":
+          "Che tu debba ancora comprare o abbia già tutto in casa, il punto d'ingresso è qui.",
+        "paths.semi_title": "Compra i semi",
+        "paths.semi_text":
+          "Il catalogo completo, con mesi di semina, distanze e abbinamenti già calcolati.",
+        "paths.semi_cta": "Vai al catalogo",
+        "paths.semi_tag": "97 varietà",
+        "paths.piantine_title": "Compra le piantine",
+        "paths.piantine_text":
+          "Già cresciute, pronte da mettere nel terreno: guadagni fino a un mese sulla raccolta.",
+        "paths.piantine_cta": "Apri il vivaio",
+        "paths.piantine_tag": "pronte adesso",
+        "paths.orto_title": "Hai già semi o piante?",
+        "paths.orto_text":
+          "Registra cosa hai piantato e quando: ti accompagniamo giorno per giorno fino alla raccolta.",
+        "paths.orto_cta": "Apri Il mio orto",
+        "paths.orto_tag": "strumento gratuito",
+        "paths.orto_note":
+          "Nessun acquisto: qui si coltiva quello che hai già.",
         "nav.contatti": "✉️ Contatti",
         "nav.carrello": "Carrello",
         "nav.menu_explore": "Esplora",
@@ -1125,6 +1193,7 @@
         "preconfig.account_choice_edit": "Modifica i parametri",
         "nav.aria_main": "Navigazione principale",
         "nav.account": "👤 Area Personale",
+        "nav.account_label": "Area Personale",
         "footer.tip_default":
           "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
         "cart.aria_open": "Apri carrello",
@@ -1147,7 +1216,7 @@
         "cart.checkout_login_required":
           "Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area Personale.",
         "cart.order_success":
-          "Ordine {id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale."
+          "Ordine {id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.",
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
@@ -1155,7 +1224,47 @@
         "nav.stagione": "🌿 Catalog complet",
         "nav.catalog_all": "🌿 Catalog complet",
         "nav.abbinamenti": "🤝 Combinații",
-        "nav.configuratore": "📐 Configurator",
+        "nav.configuratore": "📐 Configurator seră",
+        "cart.plugs_count": "{count} răsaduri",
+        "cart.plugs_unit": "ghiveci ø7",
+        "cart.plugs_hint": "Deja crescut, gata de pus în pământ",
+        "cart.per_plug": " per răsad",
+        "cart.tag_plug": "răsad",
+        "cross.to_plugs_title": "Vrei să câștigi săptămâni?",
+        "cross.to_plugs_text":
+          "Unele dintre aceste culturi există deja crescute în pepinieră: recoltare cu până la o lună mai devreme.",
+        "cross.to_seeds_title": "Îți trebuie și semințe?",
+        "cross.to_seeds_text":
+          "În catalog găsești 97 de soiuri cu luni de semănat, distanțe și asocieri.",
+        "hero.promise":
+          "Semințe, răsaduri deja crescute și un jurnal care te însoțește până la recoltare.",
+        "hero.alt_or": "sau",
+        "hero.alt_title": "Nu pornești de la zero?",
+        "hero.alt_hint": "Semințe, răsaduri sau ce ai deja: alege-ți drumul",
+        "nav.semi": "🌿 Catalog de semințe",
+        "nav.orto_badge": "gratuit",
+        "nav.orto": "🌱 Grădina mea",
+        "nav.vivaio": "🪴 Pepinieră răsaduri",
+        "paths.kicker": "De unde vrei să pornești?",
+        "paths.title": "Trei drumuri, o singură grădină",
+        "paths.lead":
+          "Fie că mai ai de cumpărat, fie că ai deja totul acasă, punctul de plecare este aici.",
+        "paths.semi_title": "Cumpără semințe",
+        "paths.semi_text":
+          "Catalogul complet, cu lunile de semănat, distanțele și asocierile deja calculate.",
+        "paths.semi_cta": "Mergi la catalog",
+        "paths.semi_tag": "97 soiuri",
+        "paths.piantine_title": "Cumpără răsaduri",
+        "paths.piantine_text":
+          "Deja crescute, gata de pus în pământ: câștigi până la o lună la recoltare.",
+        "paths.piantine_cta": "Deschide pepiniera",
+        "paths.piantine_tag": "gata acum",
+        "paths.orto_title": "Ai deja semințe sau plante?",
+        "paths.orto_text":
+          "Notează ce ai plantat și când: te însoțim zi de zi până la recoltare.",
+        "paths.orto_cta": "Deschide Grădina mea",
+        "paths.orto_tag": "instrument gratuit",
+        "paths.orto_note": "Fără cumpărături: aici cultivi ce ai deja.",
         "nav.contatti": "✉️ Contact",
         "nav.carrello": "Coș",
         "nav.menu_explore": "Explorează",
@@ -1544,6 +1653,7 @@
         "detail.sow_water": "Udare",
         "nav.aria_main": "Navigare principală",
         "nav.account": "👤 Contul Meu",
+        "nav.account_label": "Contul Meu",
         "footer.tip_default":
           "Udă la bază, niciodată pe frunze: previne oidiumul.",
         "cart.aria_open": "Deschide coșul",
@@ -1566,8 +1676,8 @@
         "cart.checkout_login_required":
           "Pentru a finaliza achiziția și a trimite cererea de semințe, trebuie mai întâi să te autentifici sau să te înregistrezi în Contul Meu.",
         "cart.order_success":
-          "Comanda {id} a fost trimisă cu succes!\nGăsești istoricul livrării în Contul Meu."
-      }
+          "Comanda {id} a fost trimisă cu succes!\nGăsești istoricul livrării în Contul Meu.",
+      },
     },
 
     configurator: {
@@ -2156,7 +2266,7 @@
         "print.shopping": "Da preparare",
         "print.total": "Totale stimato",
         "cart.checkout_msg":
-          "Il pagamento online non è ancora attivo.\n\nScrivici a info@ortoinserra.it o chiamaci al +39 055 987 0123 con la tua lista:\n{lines}\n\nTotale: {total}"
+          "Il pagamento online non è ancora attivo.\n\nScrivici a info@ortoinserra.it o chiamaci al +39 055 987 0123 con la tua lista:\n{lines}\n\nTotale: {total}",
       },
       ro: {
         title: "Grădină în seră · Proiectează sera de sus",
@@ -2762,15 +2872,15 @@
         "preconfig.account_choice_text":
           "Configurarea actuală este deja în siguranță. Poți continua fără modificări sau poți actualiza parametrii serei.",
         "preconfig.account_choice_continue": "Reia configurarea",
-        "preconfig.account_choice_edit": "Modifică parametrii"
-      }
-    }
+        "preconfig.account_choice_edit": "Modifică parametrii",
+      },
+    },
   };
 
   const _uiSources = [shared.configurator, shared.index];
   shared.ui = {
     it: Object.assign({}, ..._uiSources.map((s) => s.it || {})),
-    ro: Object.assign({}, ..._uiSources.map((s) => s.ro || {}))
+    ro: Object.assign({}, ..._uiSources.map((s) => s.ro || {})),
   };
   shared.index = shared.ui;
   shared.configurator = shared.ui;
@@ -2781,9 +2891,14 @@
       "page.title": "Orto in Serra · Area Riservata",
       "nav.home": "🏠 Home",
       "nav.catalog": "🌿 Catalogo completo",
+      "nav.semi": "🌿 Catalogo semi",
+      "nav.orto_badge": "gratis",
+      "nav.vivaio": "🪴 Vivaio piantine",
+      "nav.orto": "🌱 Il mio orto",
       "nav.abbinamenti": "🤝 Abbinamenti",
-      "nav.configuratore": "📐 Configuratore",
+      "nav.configuratore": "📐 Configuratore serra",
       "nav.account": "👤 Area Personale",
+      "nav.account_label": "Area Personale",
       "nav.brand_sub": "Coltiva con un piano",
       "nav.carrello": "Carrello",
       "nav.aria_main": "Navigazione principale",
@@ -3152,15 +3267,20 @@
       "invoice.thanks":
         "Grazie per aver acquistato da Orto in Serra! Per qualsiasi domanda scrivi a assistenza@ortoinserra.it",
       "invoice.legal":
-        "Documento valido come ricevuta d'acquisto telematica. IVA assolta all'origine."
+        "Documento valido come ricevuta d'acquisto telematica. IVA assolta all'origine.",
     },
     ro: {
       "page.title": "Orto in Serra · Zonă Rezervată",
       "nav.home": "🏠 Acasă",
       "nav.catalog": "🌿 Catalog complet",
+      "nav.semi": "🌿 Catalog de semințe",
+      "nav.orto_badge": "gratuit",
+      "nav.vivaio": "🪴 Pepinieră răsaduri",
+      "nav.orto": "🌱 Grădina mea",
       "nav.abbinamenti": "🤝 Asocieri",
-      "nav.configuratore": "📐 Configurator",
+      "nav.configuratore": "📐 Configurator seră",
       "nav.account": "👤 Contul Meu",
+      "nav.account_label": "Contul Meu",
       "nav.brand_sub": "Cultivă cu un plan",
       "nav.carrello": "Coș",
       "nav.aria_main": "Navigare principală",
@@ -3525,8 +3645,8 @@
       "invoice.thanks":
         "Îți mulțumim că ai cumpărat de la Orto in Serra! Pentru orice întrebare scrie la assistenza@ortoinserra.it",
       "invoice.legal":
-        "Document valabil ca chitanță de cumpărare online. TVA achitat la origine."
-    }
+        "Document valabil ca chitanță de cumpărare online. TVA achitat la origine.",
+    },
   };
 
   global.SERRA_I18N = Object.assign({}, global.SERRA_I18N || {}, shared);
@@ -3551,7 +3671,7 @@
     try {
       const response = await fetch(resource, {
         ...options,
-        signal: controller.signal
+        signal: controller.signal,
       });
       clearTimeout(id);
       return response;
@@ -3569,7 +3689,7 @@
     }
     try {
       const res = await fetchWithTimeout(`${apiBase}/api/status`, {
-        timeout: 180
+        timeout: 180,
       });
       return res.ok;
     } catch (e) {
@@ -3596,7 +3716,7 @@
         } catch (e) {
           console.warn(
             "Rilevato server ma errore nel caricamento piante, provo fallback...",
-            e
+            e,
           );
         }
       }
@@ -3610,7 +3730,7 @@
       // Se localStorage è vuoto, carica dal file statico (GitHub Pages)
       try {
         const res = await fetchWithTimeout("./db/plants.json", {
-          timeout: 1500
+          timeout: 1500,
         });
         if (res.ok) {
           const plants = await res.json();
@@ -3646,13 +3766,13 @@
           const res = await fetch(`${apiBase}/api/plants`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(plants)
+            body: JSON.stringify(plants),
           });
           if (res.ok) return true;
         } catch (e) {
           console.error(
             "Errore nel salvataggio sul server locale, salvo in localStorage...",
-            e
+            e,
           );
         }
       }
@@ -3680,7 +3800,7 @@
       // Se localStorage è vuoto, carica il default dal file statico
       try {
         const res = await fetchWithTimeout("./db/users.json", {
-          timeout: 1500
+          timeout: 1500,
         });
         if (res.ok) {
           const users = await res.json();
@@ -3699,7 +3819,7 @@
           citta: "Milano",
           cap: "20100",
           telefono: "02000000",
-          role: "admin"
+          role: "admin",
         },
         {
           email: "user@ortoinserra.it",
@@ -3709,8 +3829,8 @@
           citta: "Milano",
           cap: "20121",
           telefono: "3331234567",
-          role: "user"
-        }
+          role: "user",
+        },
       ];
       localStorage.setItem("serra.users", JSON.stringify(defaultUsers));
       return defaultUsers;
@@ -3723,7 +3843,7 @@
           const res = await fetch(`${apiBase}/api/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(users)
+            body: JSON.stringify(users),
           });
           if (res.ok) return true;
         } catch (e) {}
@@ -3751,7 +3871,7 @@
       // Se localStorage è vuoto, carica dal file statico
       try {
         const res = await fetchWithTimeout("./db/orders.json", {
-          timeout: 1500
+          timeout: 1500,
         });
         if (res.ok) {
           const orders = await res.json();
@@ -3770,7 +3890,7 @@
           const res = await fetch(`${apiBase}/api/orders`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(orders)
+            body: JSON.stringify(orders),
           });
           if (res.ok) return true;
         } catch (e) {}
@@ -3795,21 +3915,28 @@
 
     updateNavbarUser() {
       const user = this.getCurrentUser();
+      const ro = (document.documentElement.lang || "it")
+        .toLowerCase()
+        .startsWith("ro");
+      const nome = user ? user.nome.split(" ")[0] : "";
+      const etichetta = user
+        ? ro
+          ? `Salut, ${nome}`
+          : `Ciao, ${nome}`
+        : ro
+          ? "Conectare"
+          : "Accedi";
       const btn = document.getElementById("navAccountBtn");
-      if (btn) {
-        const ro = (document.documentElement.lang || "it")
-          .toLowerCase()
-          .startsWith("ro");
-        if (user) {
-          const firstName = user.nome.split(" ")[0];
-          btn.textContent = ro
-            ? `👤 Salut, ${firstName}`
-            : `👤 Ciao, ${firstName}`;
-        } else {
-          btn.textContent = ro ? "👤 Conectare" : "👤 Accedi";
-        }
-      }
-    }
+      if (btn) btn.textContent = `👤 ${etichetta}`;
+      // Pulsante del cluster destro: l'icona è un elemento a sé, quindi si
+      // riscrive solo l'etichetta. Su schermi stretti resta la sola icona,
+      // perciò l'etichetta accessibile va aggiornata comunque.
+      document.querySelectorAll(".nav-account-btn").forEach((el) => {
+        const label = el.querySelector(".nav-account-label");
+        if (label) label.textContent = etichetta;
+        el.setAttribute("aria-label", etichetta);
+      });
+    },
   };
 
   window.SerraAPI = SerraAPI;
@@ -3824,6 +3951,6 @@
   // Riallinea il testo del bottone utente quando cambia la lingua della pagina
   new MutationObserver(() => SerraAPI.updateNavbarUser()).observe(
     document.documentElement,
-    { attributes: true, attributeFilter: ["lang"] }
+    { attributes: true, attributeFilter: ["lang"] },
   );
 })();

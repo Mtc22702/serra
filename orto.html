@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="it" data-theme="light">
+  <head>
+    <!-- Metadati, preferenze iniziali e risorse condivise della pagina "Il mio orto" -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2f6b3a" />
+    <title>Il mio orto · Orto in Serra</title>
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/icons/orto-in-serra-180-v2.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
+    <!-- Versione applicativa e tema iniziale: stesso contratto delle altre pagine -->
+    <script>
+      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
+      window.SERRA_IS_LOCAL_DEV =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      (function () {
+        var saved = localStorage.getItem("serra-theme");
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+    <!-- Lingua iniziale: evita il lampeggio del testo italiano in romeno -->
+    <style>
+      html.serra-i18n-pending body {
+        visibility: hidden;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var lang = localStorage.getItem("ois.lang");
+          if (lang === "it" || lang === "ro") {
+            document.documentElement.lang = lang;
+          }
+          if (lang === "ro") {
+            document.documentElement.classList.add("serra-i18n-pending");
+            window.setTimeout(function () {
+              document.documentElement.classList.remove("serra-i18n-pending");
+            }, 1200);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/serra-orto.css?v=20260813-b5b73776f70c"
+    />
+  </head>
+  <body class="orto-page">
+    <!-- Intestazione condivisa con il resto dell'app: stesse voci, stesso ordine -->
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
+          <span class="nav-brand-mark"
+            ><img src="assets/img/svg/logo.svg" alt=""
+          /></span>
+          <span class="nav-brand-copy">
+            <strong class="nav-brand-text">Orto in Serra</strong>
+            <small data-orto-key="nav.brand_sub">Coltiva con un piano</small>
+          </span>
+        </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+          <span
+            class="mobile-nav-section-title"
+            data-orto-key="nav.menu_explore"
+            >Esplora</span
+          >
+          <a
+            href="index.html#stagione"
+            class="nav-link nav-link--semi"
+            data-orto-key="nav.semi"
+            >🌿 Catalogo semi</a
+          >
+          <a
+            href="vivaio.html"
+            class="nav-link nav-link--vivaio"
+            data-orto-key="nav.vivaio"
+            >🪴 Vivaio piantine</a
+          >
+          <a
+            href="orto.html"
+            class="nav-link nav-link--orto nav-link--current"
+            data-orto-key="nav.orto"
+            aria-current="page"
+            >🌱 Il mio orto</a
+          >
+          <a
+            href="configuratore.html?source=index&resume=1"
+            class="nav-link nav-link--configuratore"
+            data-orto-key="nav.configuratore"
+            >📐 Configuratore serra</a
+          >
+          <a
+            href="account.html"
+            class="nav-link nav-link--account"
+            data-orto-key="nav.account"
+            >👤 Area Personale</a
+          >
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="nav-menu-toggle"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Apri menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
+               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <a
+            href="account.html"
+            class="nav-account-btn"
+            data-orto-key-aria="nav.account_label"
+            aria-label="Area Personale"
+          >
+            <span class="nav-account-ico" aria-hidden="true">👤</span>
+            <span class="nav-account-label" data-orto-key="nav.account_label"
+              >Area Personale</span
+            >
+          </a>
+          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <div class="nav-prefs">
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+              title="Cambia tema"
+            >
+              <span
+                class="theme-toggle-icon theme-toggle-moon"
+                aria-hidden="true"
+                >☾</span
+              >
+              <span
+                class="theme-toggle-icon theme-toggle-sun"
+                aria-hidden="true"
+                >☀</span
+              >
+            </button>
+            <div class="nav-lang">
+              <select id="ortoLangSelect" title="Lingua / Limbă">
+                <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
+                <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
+              </select>
+            </div>
+          </div>
+          <a
+            href="index.html?cart=open"
+            class="cart-btn"
+            aria-label="Apri carrello"
+          >
+            <span class="cart-icon" aria-hidden="true">🛒</span>
+            <span class="cart-label" data-orto-key="nav.carrello"
+              >Carrello</span
+            >
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="orto-wrap">
+      <!-- Selettore delle tre viste: attività del giorno, colture seguite, listino -->
+      <div class="orto-viewbar">
+        <!-- Volutamente un div e non un <nav>: in base.css il tag nav è la
+             navigazione principale fissa, e un secondo nav ne erediterebbe il
+             posizionamento coprendo l'intestazione. -->
+        <div class="orto-tabs" role="tablist" aria-label="Sezioni dell'orto">
+          <button
+            class="orto-tab is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-orto-view="oggi"
+          >
+            <span data-orto-key="tab.oggi">Oggi</span>
+            <span class="orto-tab-badge" id="ortoTodayBadge" hidden>0</span>
+          </button>
+          <button
+            class="orto-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-orto-view="colture"
+          >
+            <span data-orto-key="tab.colture">Colture</span>
+          </button>
+          <button
+            class="orto-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-orto-view="dispensa"
+          >
+            <span data-orto-key="tab.dispensa">Da piantare</span>
+          </button>
+        </div>
+        <!-- Contesto: qui non si vende, si coltiva ciò che si possiede già. -->
+        <p class="orto-tool-note">
+          <span aria-hidden="true">🛠️</span>
+          <span data-orto-key="page.tool_note"
+            >Strumento gratuito per i semi e le piantine che hai già. Qui non si
+            compra nulla.</span
+          >
+        </p>
+      </div>
+
+      <!-- Contenuto generato da orto.js in base alla vista attiva -->
+      <div id="ortoApp"></div>
+    </main>
+
+    <!-- Messaggio temporaneo di conferma delle azioni -->
+    <div
+      class="orto-toast"
+      id="ortoToast"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+    <!-- Inserimento di una nuova coltura nel diario -->
+    <dialog class="orto-dialog" id="ortoAddDialog">
+      <div class="orto-dialog-head">
+        <h3 data-orto-key="dlg.title">Aggiungi una coltura</h3>
+        <p data-orto-key="dlg.sub">
+          Da qui parte il calendario di cura fino alla raccolta.
+        </p>
+      </div>
+      <form method="dialog" class="orto-dialog-body" id="ortoAddForm">
+        <div class="orto-field">
+          <label for="ortoPlantInput" data-orto-key="dlg.plant">Pianta</label>
+          <!-- Campo con suggerimenti invece di un elenco di 97 voci: si digita
+               e si filtra, ma resta un controllo nativo (accessibile, mobile). -->
+          <input
+            id="ortoPlantInput"
+            list="ortoPlantList"
+            autocomplete="off"
+            data-orto-key-ph="dlg.plant_ph"
+            placeholder="Scrivi un nome, es. pomodoro"
+            required
+          />
+          <datalist id="ortoPlantList"></datalist>
+          <small class="orto-field-error" id="ortoPlantError" hidden></small>
+        </div>
+        <div class="orto-field">
+          <label data-orto-key="dlg.origin">Sei partito da…</label>
+          <div class="orto-origin">
+            <label>
+              <input type="radio" name="ortoOrigine" value="seme" checked />
+              <span data-orto-key="dlg.seed" class="orto-origin-title"
+                >Semi</span
+              >
+              <span data-orto-key="dlg.seed_hint">ciclo completo</span>
+            </label>
+            <label>
+              <input type="radio" name="ortoOrigine" value="piantina" />
+              <span data-orto-key="dlg.seedling" class="orto-origin-title"
+                >Piantina</span
+              >
+              <span data-orto-key="dlg.seedling_hint">già cresciuta</span>
+            </label>
+          </div>
+        </div>
+        <div class="orto-row">
+          <div class="orto-field">
+            <label for="ortoDate" data-orto-key="dlg.date"
+              >Data di semina / messa a dimora</label
+            >
+            <input type="date" id="ortoDate" required />
+          </div>
+          <div class="orto-field" style="max-width: 120px">
+            <label for="ortoQty" data-orto-key="dlg.qty">Quante</label>
+            <input type="number" id="ortoQty" min="1" value="4" required />
+          </div>
+        </div>
+        <div class="orto-field">
+          <label for="ortoPosition" data-orto-key="dlg.position"
+            >Posizione (facoltativa)</label
+          >
+          <input
+            type="text"
+            id="ortoPosition"
+            data-orto-key-ph="dlg.position_ph"
+            placeholder="es. Aiuola 2"
+          />
+        </div>
+        <div class="orto-row" style="margin-top: 18px">
+          <button
+            type="submit"
+            class="orto-btn"
+            value="ok"
+            data-orto-key="dlg.confirm"
+          >
+            Aggiungi all'orto
+          </button>
+          <button
+            type="submit"
+            class="orto-btn orto-btn--ghost"
+            value="cancel"
+            data-orto-key="dlg.cancel"
+          >
+            Annulla
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Messa a dimora parziale: da venti piantine se ne piantano cinque oggi -->
+    <dialog class="orto-dialog" id="ortoPlantDialog">
+      <div class="orto-dialog-head">
+        <h3 data-orto-key="plant.title">Metti a dimora</h3>
+        <p>
+          <span id="ortoPlantWho"></span> —
+          <span data-orto-key="plant.sub"
+            >Scegli quante piante avviare e quando.</span
+          >
+        </p>
+      </div>
+      <form method="dialog" class="orto-dialog-body" id="ortoPlantForm">
+        <div class="orto-row">
+          <div class="orto-field">
+            <label for="ortoPlantQty" data-orto-key="plant.qty"
+              >Quante ne pianti ora</label
+            >
+            <input type="number" id="ortoPlantQty" min="1" value="4" required />
+            <small id="ortoPlantQtyHint" class="orto-field-hint"></small>
+          </div>
+          <div class="orto-field">
+            <label for="ortoPlantDate" data-orto-key="plant.date"
+              >Data di semina / messa a dimora</label
+            >
+            <input type="date" id="ortoPlantDate" required />
+          </div>
+        </div>
+        <div class="orto-field">
+          <label for="ortoPlantPosition" data-orto-key="plant.position"
+            >Posizione (facoltativa)</label
+          >
+          <input
+            type="text"
+            id="ortoPlantPosition"
+            data-orto-key-ph="dlg.position_ph"
+            placeholder="es. Aiuola 2"
+          />
+        </div>
+        <div class="orto-row" style="margin-top: 18px">
+          <button
+            type="submit"
+            class="orto-btn"
+            value="ok"
+            data-orto-key="plant.confirm"
+          >
+            Metti a dimora
+          </button>
+          <button
+            type="submit"
+            class="orto-btn orto-btn--ghost"
+            value="cancel"
+            data-orto-key="dlg.cancel"
+          >
+            Annulla
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Correzione di una coltura già registrata: data, quantità, posizione -->
+    <dialog class="orto-dialog" id="ortoEditDialog">
+      <div class="orto-dialog-head">
+        <h3 data-orto-key="edit.title">Modifica coltura</h3>
+        <p><span id="ortoEditWho"></span></p>
+      </div>
+      <form method="dialog" class="orto-dialog-body" id="ortoEditForm">
+        <div class="orto-field">
+          <label data-orto-key="dlg.origin">Sei partito da…</label>
+          <div class="orto-origin">
+            <label>
+              <input type="radio" name="ortoEditOrigine" value="seme" />
+              <span data-orto-key="dlg.seed" class="orto-origin-title"
+                >Semi</span
+              >
+              <span data-orto-key="dlg.seed_hint">ciclo completo</span>
+            </label>
+            <label>
+              <input type="radio" name="ortoEditOrigine" value="piantina" />
+              <span data-orto-key="dlg.seedling" class="orto-origin-title"
+                >Piantina</span
+              >
+              <span data-orto-key="dlg.seedling_hint">già cresciuta</span>
+            </label>
+          </div>
+        </div>
+        <div class="orto-row">
+          <div class="orto-field">
+            <label for="ortoEditDate" data-orto-key="dlg.date"
+              >Data di semina / messa a dimora</label
+            >
+            <input type="date" id="ortoEditDate" required />
+          </div>
+          <div class="orto-field" style="max-width: 120px">
+            <label for="ortoEditQty" data-orto-key="dlg.qty">Quante</label>
+            <input type="number" id="ortoEditQty" min="1" required />
+          </div>
+        </div>
+        <div class="orto-field">
+          <label for="ortoEditPosition" data-orto-key="dlg.position"
+            >Posizione (facoltativa)</label
+          >
+          <input
+            type="text"
+            id="ortoEditPosition"
+            data-orto-key-ph="dlg.position_ph"
+            placeholder="es. Aiuola 2"
+          />
+        </div>
+        <p class="orto-field-hint" data-orto-key="edit.note">
+          Cambiando la data, il calendario delle attività viene ricalcolato da
+          capo.
+        </p>
+        <div class="orto-row" style="margin-top: 18px">
+          <button
+            type="submit"
+            class="orto-btn"
+            value="ok"
+            data-orto-key="edit.confirm"
+          >
+            Salva
+          </button>
+          <button
+            type="submit"
+            class="orto-btn orto-btn--ghost"
+            value="cancel"
+            data-orto-key="dlg.cancel"
+          >
+            Annulla
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; orto.js disegna. -->
+    <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/serra-care-engine.js" defer></script>
+    <script src="assets/js/orto.js" defer></script>
+    <script src="assets/js/boot-sw.js" defer></script>
+  </body>
+</html>

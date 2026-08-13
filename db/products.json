@@ -1,0 +1,1552 @@
+{
+  "_nota": "Generato da npm run build:products. Il blocco 'semi' viene rigenerato da PACK_DATA (assets/js/home.js); il blocco 'piantina' è modificabile a mano e viene conservato.",
+  "generato": "2026-08-13",
+  "items": {
+    "pomodoro": {
+      "semi": {
+        "prezzo": 3.5,
+        "semiPerBustina": 20
+      },
+      "piantina": {
+        "prezzo": 1.8,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "peperone": {
+      "semi": {
+        "prezzo": 3.2,
+        "semiPerBustina": 15
+      },
+      "piantina": {
+        "prezzo": 1.6,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "peperoncino": {
+      "semi": {
+        "prezzo": 3.2,
+        "semiPerBustina": 15
+      },
+      "piantina": {
+        "prezzo": 1.6,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "melanzana": {
+      "semi": {
+        "prezzo": 3.5,
+        "semiPerBustina": 20
+      },
+      "piantina": {
+        "prezzo": 1.8,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "zucchina": {
+      "semi": {
+        "prezzo": 3.8,
+        "semiPerBustina": 10
+      },
+      "piantina": {
+        "prezzo": 1.9,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "zucca": {
+      "semi": {
+        "prezzo": 3.8,
+        "semiPerBustina": 8
+      },
+      "piantina": {
+        "prezzo": 1.9,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "cetriolo": {
+      "semi": {
+        "prezzo": 3.2,
+        "semiPerBustina": 15
+      },
+      "piantina": {
+        "prezzo": 1.6,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "melone": {
+      "semi": {
+        "prezzo": 3.5,
+        "semiPerBustina": 12
+      },
+      "piantina": {
+        "prezzo": 1.8,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "anguria": {
+      "semi": {
+        "prezzo": 3.8,
+        "semiPerBustina": 10
+      },
+      "piantina": {
+        "prezzo": 1.9,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "lattuga": {
+      "semi": {
+        "prezzo": 2.4,
+        "semiPerBustina": 400
+      },
+      "piantina": {
+        "prezzo": 1.2,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "radicchio": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 300
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "rucola": {
+      "semi": {
+        "prezzo": 2.2,
+        "semiPerBustina": 500
+      },
+      "piantina": {
+        "prezzo": 1.1,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "spinaci": {
+      "semi": {
+        "prezzo": 2.4,
+        "semiPerBustina": 200
+      },
+      "piantina": {
+        "prezzo": 1.2,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          1,
+          2,
+          3,
+          4,
+          9,
+          10,
+          11,
+          12
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "bietola": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 150
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavolo": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "verza": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "broccolo": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavolfiore": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavolonero": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavolorapa": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "carota": {
+      "semi": {
+        "prezzo": 2.3,
+        "semiPerBustina": 300
+      },
+      "piantina": null
+    },
+    "finocchio": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 200
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "prezzemolo": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 200
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "basilico": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 300
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "coriandolo": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 200
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "aneto": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 200
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "cipolla": {
+      "semi": {
+        "prezzo": 2.3,
+        "semiPerBustina": 200
+      },
+      "piantina": null
+    },
+    "aglio": {
+      "semi": {
+        "prezzo": 3,
+        "semiPerBustina": 50
+      },
+      "piantina": null
+    },
+    "porro": {
+      "semi": {
+        "prezzo": 2.4,
+        "semiPerBustina": 200
+      },
+      "piantina": null
+    },
+    "scalogno": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "fagiolino": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 40
+      },
+      "piantina": null
+    },
+    "fagiolo": {
+      "semi": {
+        "prezzo": 3,
+        "semiPerBustina": 30
+      },
+      "piantina": null
+    },
+    "pisello": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 50
+      },
+      "piantina": null
+    },
+    "fragola": {
+      "semi": {
+        "prezzo": 3.2,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.6,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "sedano": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 300
+      },
+      "piantina": null
+    },
+    "ravanello": {
+      "semi": {
+        "prezzo": 2.2,
+        "semiPerBustina": 300
+      },
+      "piantina": null
+    },
+    "barbabietola": {
+      "semi": {
+        "prezzo": 2.4,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "cicoria": {
+      "semi": {
+        "prezzo": 2.4,
+        "semiPerBustina": 300
+      },
+      "piantina": {
+        "prezzo": 1.2,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "indivia": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 300
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "pakchoi": {
+      "semi": {
+        "prezzo": 2.6,
+        "semiPerBustina": 200
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavoletti": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.4,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "rapa": {
+      "semi": {
+        "prezzo": 2.3,
+        "semiPerBustina": 200
+      },
+      "piantina": null
+    },
+    "valerianella": {
+      "semi": {
+        "prezzo": 2.4,
+        "semiPerBustina": 300
+      },
+      "piantina": {
+        "prezzo": 1.2,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          1,
+          2,
+          3,
+          9,
+          10,
+          11,
+          12
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "rosmarino": {
+      "semi": {
+        "prezzo": 3,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "timo": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 200
+      },
+      "piantina": null
+    },
+    "origano": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 300
+      },
+      "piantina": null
+    },
+    "salvia": {
+      "semi": {
+        "prezzo": 2.8,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "pastinaca": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "radice_prezemolo": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "sedano_rapa": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "rafano": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "patata": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "patata_dolce": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "cipolla_rossa": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "cipollotto": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "erba_cipollina": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "loboda": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "stevia_dolce": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "leustean": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "dragoncello": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "menta": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "maggiorana": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "camomilla": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "mais_dolce": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "tomatillo": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "physalis": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "cucamelon": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "asparago": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "carciofo": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cardo": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "crescione": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "mizuna": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "senape_foglia": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "tatsoi": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavolo_cinese": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "daikon": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "scorzonera": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "topinambur": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "fava": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "soia_edamame": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "cece": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "lenticchia": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "fagiolo_borlotto": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "cavolo_rosso": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "cavolo_navone": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": null
+    },
+    "broccolo_rapa": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "shiso": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "broccolo_romanesco": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          7,
+          8,
+          9
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "friggitello": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 30,
+        "stock": null
+      }
+    },
+    "agretti": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "borragine": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "catalogna": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "acetosa": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 20,
+        "stock": null
+      }
+    },
+    "leurda": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "melissa": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "cerfoglio": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          2,
+          3,
+          4,
+          8,
+          9,
+          10
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    },
+    "cimbru": {
+      "semi": {
+        "prezzo": 2.5,
+        "semiPerBustina": 100
+      },
+      "piantina": {
+        "prezzo": 1.3,
+        "unita": "vaso ø7",
+        "lotto": 6,
+        "mesiDisponibili": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "vantaggioGiorni": 25,
+        "stock": null
+      }
+    }
+  }
+}

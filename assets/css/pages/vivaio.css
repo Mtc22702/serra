@@ -1,0 +1,915 @@
+/* Vivaio: stili specifici della sezione che vende le piantine già cresciute.
+ * Il bundle serra-vivaio.css è composto da _fondazioni.css (token, tema scuro,
+ * intestazione) + orto.css (schede, pulsanti, hero: componenti condivisi dalle
+ * due sezioni nuove) + questo file, che aggiunge solo il vassoio d'acquisto.
+ * Le classi sono prefissate `viv-`.
+ */
+
+@layer base {
+  /* Ritmo verticale della pagina: hero → strumenti → listino, con lo stesso
+     respiro fra i blocchi. Prima la barra di ricerca toccava la hero. */
+  .viv-page #vivaioApp {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .viv-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Blocco strumenti: cerca, ordina, famiglie, conteggio. Stesso schema del
+     catalogo semi in home, in versione ridotta. */
+  .viv-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px 12px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: var(--orto-r-lg, 20px);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .viv-toolbar-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .viv-toolbar-row .viv-search {
+    flex: 1 1 260px;
+    margin: 0;
+  }
+
+  .viv-sort {
+    min-height: 44px;
+    flex: 0 1 260px;
+    padding: 0 12px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 999px;
+    background: var(--orto-surface-2);
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .viv-chiprail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .viv-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 999px;
+    background: var(--orto-surface-2);
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 650;
+    transition:
+      background 0.14s ease,
+      border-color 0.14s ease,
+      color 0.14s ease;
+  }
+
+  .viv-chip small {
+    color: var(--orto-muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .viv-chip:hover {
+    border-color: color-mix(in srgb, var(--orto-green) 45%, transparent);
+  }
+
+  .viv-chip.is-active {
+    border-color: var(--orto-green);
+    background: var(--orto-green);
+    color: #fff;
+  }
+
+  .viv-chip.is-active small {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .viv-results {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 2px;
+    border-top: 1px dashed var(--orto-line);
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
+  .viv-results b {
+    color: var(--orto-text, inherit);
+    font-weight: 750;
+  }
+
+  .viv-reset {
+    border: 0;
+    background: none;
+    color: var(--orto-green);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 650;
+    text-decoration: underline;
+  }
+
+  .viv-grid {
+    margin-top: 0;
+  }
+
+  /* Barra di stato sopra il listino: tiene visibili le regole della merce viva
+     (vassoi scelti, consegna, ordine minimo) anche a cassetto chiuso. */
+  .viv-statusbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
+    font-size: 12.5px;
+  }
+
+  .viv-statusbar.is-warning {
+    border-color: color-mix(in srgb, var(--orto-amber) 45%, transparent);
+    background: color-mix(in srgb, var(--orto-amber) 12%, var(--orto-surface));
+  }
+
+  .viv-statusbar-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .viv-statusbar-warn {
+    color: color-mix(in srgb, var(--orto-amber) 78%, #4a3405);
+    font-weight: 700;
+  }
+
+  .viv-statusbar .orto-btn {
+    margin-left: auto;
+  }
+
+  /* Dentro il cassetto il pannello non ha bisogno di cornice né aggancio. */
+  .viv-panel--drawer {
+    position: static;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .viv-panel--drawer .panel-body {
+    padding: 0;
+  }
+
+  .viv-panel--drawer .yield-footer {
+    margin-top: 14px;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--orto-line);
+    background: transparent;
+  }
+
+  /* Schede più strette: con oltre trenta varietà due colonne obbligavano a
+     uno scorrimento lunghissimo. */
+  .viv-grid {
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  }
+
+  .viv-grid .orto-card-photo {
+    height: 112px;
+  }
+
+  .viv-grid .orto-card-titles h3 {
+    font-size: 17px;
+  }
+
+  .viv-grid .orto-card-body {
+    padding: 13px 14px 14px;
+  }
+
+  .viv-grid .orto-price {
+    font-size: 23px;
+  }
+
+  /* Ricerca rapida sopra il listino. */
+  .viv-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+    padding: 10px 15px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 999px;
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .viv-search span {
+    color: var(--orto-muted);
+    font-size: 17px;
+  }
+
+  .viv-search input {
+    width: 100%;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    outline: none;
+  }
+
+  /* Regolatore di quantità: un vassoio alla volta. */
+  .viv-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 999px;
+    background: var(--orto-surface-2);
+  }
+
+  .viv-stepper button {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--orto-surface);
+    color: var(--orto-green);
+    cursor: pointer;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    place-items: center;
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .viv-stepper button:hover {
+    background: var(--orto-green);
+    color: #fff;
+  }
+
+  .viv-stepper b {
+    min-width: 26px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* Piede della scheda: stessa altezza sia con il pulsante sia con il
+     regolatore, così le schede della griglia non ballano. */
+  .viv-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 13px;
+  }
+
+  .viv-qty {
+    display: grid;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 1.5px solid color-mix(in srgb, var(--orto-green) 35%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface));
+    grid-template-columns: 34px 1fr 34px;
+  }
+
+  .viv-qty-btn {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--orto-surface);
+    color: var(--orto-green);
+    cursor: pointer;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 800;
+    place-items: center;
+    box-shadow: var(--orto-shadow-sm);
+    transition:
+      background 0.14s ease,
+      color 0.14s ease;
+  }
+
+  .viv-qty-btn:hover:not(:disabled) {
+    background: var(--orto-green);
+    color: #fff;
+  }
+
+  /* Al primo vassoio il meno si spegne: per togliere del tutto c'è "Togli",
+     così il regolatore non cancella mai una riga di nascosto. */
+  .viv-qty-btn:disabled {
+    color: var(--orto-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .viv-qty-value {
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .viv-qty-value b {
+    display: block;
+    font-size: 13.5px;
+  }
+
+  .viv-qty-value small {
+    display: block;
+    color: var(--orto-muted);
+    font-size: 10.5px;
+  }
+
+  .viv-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 18px;
+    font-size: 11.5px;
+  }
+
+  .viv-card-foot--hint {
+    justify-content: center;
+    color: var(--orto-muted);
+  }
+
+  .viv-in-cart {
+    color: var(--orto-green);
+    font-weight: 700;
+  }
+
+  .viv-remove {
+    border: 0;
+    background: none;
+    color: var(--orto-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+    text-decoration: underline;
+  }
+
+  .viv-remove:hover {
+    color: #a8452c;
+  }
+
+  /* Il vantaggio in giorni sta sulla foto: nella scheda stretta la riga del
+     prezzo diventava illeggibile. */
+  .viv-save-photo {
+    position: absolute;
+    z-index: 2;
+    top: 11px;
+    right: 11px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: linear-gradient(140deg, #f6c85a, #e2a92c);
+    color: #4a3405;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .viv-price-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin: 13px 0 9px;
+  }
+
+  .viv-unit {
+    color: var(--orto-muted);
+    font-size: 11.5px;
+  }
+
+  /* Prezzo unitario: serve a confrontare, non a decidere — quindi sotto. */
+  .viv-unit-price {
+    margin: -6px 0 10px;
+    padding: 4px 9px;
+    align-self: flex-start;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface-2));
+    color: var(--orto-muted);
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+
+  .viv-cart-delivery {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    padding: 9px 11px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface));
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+
+  .viv-cart-delivery b {
+    color: var(--orto-green);
+  }
+
+  /* Sotto il minimo l'ordine non parte: va detto prima del pulsante. */
+  .viv-cart-min {
+    margin: 0 0 10px;
+    padding: 9px 11px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--orto-amber) 15%, var(--orto-surface));
+    color: color-mix(in srgb, var(--orto-amber) 75%, #4a3405);
+    font-size: 12.5px;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  .orto-btn[disabled] {
+    cursor: not-allowed;
+    filter: grayscale(0.55);
+    opacity: 0.55;
+    transform: none;
+  }
+
+  .viv-cart-after {
+    margin: 10px 0 0;
+    padding-top: 10px;
+    border-top: 1px dashed var(--orto-line);
+    color: var(--orto-muted);
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+
+  /* Promemoria dell'altro carrello: due sezioni, due ordini. */
+  .viv-cart-seeds {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 10px 0 0;
+    padding: 9px 11px;
+    border-radius: 12px;
+    background: var(--orto-surface-2);
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+
+  .viv-cart-cross {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 11px 12px;
+    border: 1.5px dashed var(--orto-line-strong);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
+    color: inherit;
+    text-decoration: none;
+    font-size: 12px;
+  }
+
+  .viv-cart-cross:hover {
+    border-color: var(--orto-green);
+  }
+
+  .viv-cart-cross b {
+    display: block;
+    font-size: 13px;
+  }
+
+  .viv-cart-cross small {
+    display: block;
+    color: var(--orto-muted);
+    line-height: 1.35;
+  }
+
+  .viv-cart-seeds a {
+    color: var(--orto-green);
+    font-weight: 700;
+  }
+
+  .viv-cart-after b {
+    color: var(--orto-green);
+  }
+
+  /* Hero della sezione: più aria attorno al testo e statistiche separate da
+     un filetto, così i tre dati non si leggono come una frase unica. */
+  .viv-hero {
+    padding: 30px 32px;
+  }
+
+  .viv-hero .orto-hero-sub {
+    max-width: 58ch;
+  }
+
+  .viv-hero .orto-hero-stats {
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 22px;
+  }
+
+  .viv-hero .orto-hero-stats span {
+    padding-right: 20px;
+  }
+
+  .viv-hero .orto-hero-stats span + span {
+    padding-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .viv-hero .orto-hero-stats b {
+    font-size: 22px;
+  }
+
+  /* Colonna destra della hero: illustrazione e nota di spedizione. */
+  /* Illustrazione e nota di spedizione impilate: così la colonna resta
+     stretta e sta accanto al testo in tutte e due le lingue. */
+  .viv-hero-side {
+    display: flex;
+    max-width: 300px;
+    flex: 0 1 auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .viv-hero .orto-hero-inner > div:first-child {
+    min-width: 0;
+    flex: 1 1 420px;
+  }
+
+  .viv-hero-art {
+    width: 168px;
+    height: 168px;
+    flex: none;
+  }
+
+  .viv-art-leaf {
+    transform-box: fill-box;
+    transform-origin: 100% 100%;
+    animation: viv-leaf 5.5s ease-in-out infinite;
+  }
+
+  .viv-art-leaf--r {
+    transform-origin: 0% 100%;
+    animation-delay: -1.8s;
+  }
+
+  .viv-art-leaf--top {
+    transform-origin: 50% 100%;
+    animation-delay: -3.2s;
+  }
+
+  @keyframes viv-leaf {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-4deg);
+    }
+  }
+
+  /* La zolla scende appena verso la linea del terreno: suggerisce il gesto
+     del trapianto senza spiegarlo a parole. */
+  .viv-art-plug,
+  .viv-art-plant {
+    animation: viv-settle 5.5s ease-in-out infinite;
+  }
+
+  @keyframes viv-settle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  .viv-art-soil {
+    animation: viv-soil 5.5s ease-in-out infinite;
+  }
+
+  @keyframes viv-soil {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .viv-art-leaf,
+    .viv-art-plug,
+    .viv-art-plant,
+    .viv-art-soil {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .viv-hero-art {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  .viv-shipping {
+    max-width: 300px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* Pannello identico nell'impianto alla "Lista semi da acquistare" del
+     configuratore: distintivo, riepilogo, elenco, totale e azioni in fondo.
+     Stessi nomi di classe, così le due pagine si leggono allo stesso modo. */
+  .viv-panel {
+    position: sticky;
+    top: calc(var(--nav-h, 76px) + 16px);
+    overflow: hidden;
+    border: 1.5px solid rgba(47, 107, 58, 0.15);
+    border-radius: 18px;
+    background: var(--orto-surface);
+    box-shadow:
+      0 2px 8px rgba(31, 58, 38, 0.06),
+      0 14px 38px rgba(31, 58, 38, 0.12);
+  }
+
+  /* Richiamo visivo quando si preme il carrello nell'intestazione. */
+  .viv-panel.is-focus-pulse {
+    animation: viv-pulse 1.3s ease;
+  }
+
+  @keyframes viv-pulse {
+    0%,
+    100% {
+      border-color: rgba(47, 107, 58, 0.15);
+      box-shadow:
+        0 2px 8px rgba(31, 58, 38, 0.06),
+        0 14px 38px rgba(31, 58, 38, 0.12);
+    }
+    18%,
+    52% {
+      border-color: var(--orto-green);
+      box-shadow:
+        0 0 0 4px color-mix(in srgb, var(--orto-green) 22%, transparent),
+        0 16px 40px rgba(31, 58, 38, 0.2);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .viv-panel.is-focus-pulse {
+      animation: none;
+      border-color: var(--orto-green);
+    }
+  }
+
+  .viv-panel .panel-title-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 16px 18px 12px;
+  }
+
+  .viv-panel .yield-cart-badge {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--orto-green) 13%, var(--orto-surface));
+    font-size: 18px;
+    place-items: center;
+  }
+
+  .viv-panel h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  .viv-panel .panel-badge {
+    display: inline-block;
+    margin-top: 3px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--orto-green) 12%, transparent);
+    color: var(--orto-green);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .viv-panel .panel-body {
+    padding: 0 18px 4px;
+  }
+
+  .viv-panel .sub {
+    margin: 0 0 12px;
+    color: var(--orto-muted);
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  /* Riepilogo a numeri grandi, come nel configuratore. */
+  .viv-summary {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .viv-summary span {
+    display: block;
+    padding: 9px 6px;
+    border: 1px solid var(--orto-line);
+    border-radius: 12px;
+    background: var(--orto-surface-2);
+    text-align: center;
+  }
+
+  .viv-summary b {
+    display: block;
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .viv-summary small {
+    color: var(--orto-muted);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .viv-panel .shop {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0 0 6px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .viv-panel .shop li {
+    display: grid;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid rgba(47, 107, 58, 0.1);
+    border-radius: 11px;
+    background: var(--orto-surface-2);
+    grid-template-columns: 38px 1fr auto;
+    transition:
+      background 0.13s ease,
+      box-shadow 0.13s ease,
+      transform 0.13s ease;
+  }
+
+  .viv-panel .shop li:hover {
+    background: var(--orto-surface);
+    box-shadow: 0 3px 12px rgba(31, 58, 38, 0.09);
+    transform: translateY(-1px);
+  }
+
+  .shop-photo {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    object-fit: cover;
+  }
+
+  .shop-plant {
+    min-width: 0;
+  }
+
+  .shop-plant b {
+    display: block;
+    overflow: hidden;
+    font-size: 13.5px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .shop-plant small {
+    color: var(--orto-muted);
+    font-size: 10.5px;
+    line-height: 1.25;
+  }
+
+  .shop-side {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .shop-price {
+    color: var(--orto-green);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .shop-remove {
+    border: 0;
+    background: none;
+    color: var(--orto-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10.5px;
+    text-decoration: underline;
+  }
+
+  .shop-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2px 0 10px;
+    padding-top: 9px;
+    border-top: 1px solid var(--orto-line);
+    font-size: 15px;
+  }
+
+  .shop-total b {
+    color: var(--orto-green);
+    font-size: 19px;
+  }
+
+  /* Azioni in fondo: principale più modifica, come nel configuratore. */
+  .yield-footer {
+    padding: 12px 18px 16px;
+    border-top: 1px solid var(--orto-line);
+    background: var(--orto-surface-2);
+  }
+
+  .viv-edit-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 8px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--orto-line-strong);
+    border-radius: 999px;
+    background: var(--orto-surface);
+    color: var(--orto-ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .viv-edit-btn:hover {
+    border-color: var(--orto-green);
+    color: var(--orto-green);
+  }
+
+  .viv-panel .viv-cart-empty,
+  .viv-panel .viv-cart-note,
+  .viv-panel .viv-cart-cross {
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .viv-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Su schermo stretto il vassoio precede il listino e non resta agganciato. */
+    .viv-cart {
+      position: static;
+      order: -1;
+    }
+  }
+}

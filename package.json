@@ -3,7 +3,9 @@
   "scripts": {
     "build:css": "node scripts/build-css.mjs",
     "build:js": "node scripts/check-js.mjs",
-    "build": "npm run build:css && npm run build:js",
+    "build:products": "node scripts/build-products.mjs",
+    "build:svg": "node scripts/build-plant-svg.mjs",
+    "build": "npm run build:css && npm run build:products && npm run build:js",
     "check:docs": "node scripts/check-source-documentation.mjs",
     "audit:assets": "node scripts/audit-assets.mjs",
     "check:js": "node scripts/check-js.mjs",

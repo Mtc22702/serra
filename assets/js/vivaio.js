@@ -1,0 +1,1127 @@
+/**
+ * Vivaio: la sezione dove si acquistano le piantine già cresciute.
+ *
+ * È una sezione a sé perché la merce è viva: disponibilità stagionale,
+ * spedizione a inizio settimana, lotti da sei. Il carrello però è **unico**
+ * (`ois.cart`, gestito da serra-cart.js): semi e piantine stanno insieme e
+ * partono in un solo ordine.
+ *
+ * All'ordine, le righe entrano nello storico esistente con i campi che
+ * l'Area Personale già legge (`bustine`, `prezzo`) più `variante: "piantina"`,
+ * che le pagine vecchie ignorano senza accorgersene.
+ *
+ * Tema e lingua: stessi contratti delle altre pagine.
+ */
+(() => {
+  const E = window.SerraCareEngine;
+  if (!E) return;
+
+  // Carrello unico dell'utente: la lista è la stessa del catalogo semi.
+  const C = () => window.SerraCart;
+
+  /* Regole commerciali della merce viva, raccolte qui perché sono le prime
+     che cambieranno: le piantine partono a inizio settimana e viaggiano solo
+     a vassoi interi, quindi sotto una certa soglia la spedizione non regge. */
+  const CONSEGNA = {
+    giornoSpedizione: 1, // lunedì
+    anticipoMinimoGiorni: 2, // ordini raccolti fino a due giorni prima
+    transitoGiorni: 1, // consegna il giorno dopo la partenza
+    vassoiMinimi: 2,
+  };
+
+  const COPY = {
+    it: {
+      "page.title": "Vivaio · Piantine pronte da trapiantare",
+      "nav.brand_sub": "Coltiva con un piano",
+      "nav.home": "Home",
+      "nav.menu_explore": "Esplora",
+      "nav.semi": "🌿 Catalogo semi",
+      "nav.vivaio": "🪴 Vivaio piantine",
+      "nav.orto": "🌱 Il mio orto",
+      "nav.configuratore": "📐 Configuratore serra",
+      "nav.account": "👤 Area Personale",
+      "nav.account_label": "Area Personale",
+      "nav.carrello": "Carrello",
+      "hero.kicker": "VIVAIO",
+      "hero.title": "Piantine pronte da mettere a dimora",
+      "hero.lead":
+        "Non tutte le colture si seminano: alcune arrivano già cresciute e ti fanno guadagnare settimane. Qui trovi solo ciò che è pronto adesso.",
+      "hero.count": "varietà pronte in questo momento",
+      "hero.count_month": "varietà pronte a {mese}",
+      "hero.month": "disponibili {mese}",
+      "hero.lot_value": "{n} piantine",
+      "hero.lot_label": "per vassoio · minimo {n} vassoi",
+      "search.placeholder": "Cerca una piantina…",
+      "search.none": "Nessuna piantina corrisponde a “{q}”.",
+      "filters.aria": "Filtri del vivaio",
+      "filters.family": "Famiglia",
+      "filters.all": "Tutte",
+      "filters.sort_aria": "Ordina le piantine",
+      "filters.sort_consigliati": "Ordina: consigliate",
+      "filters.sort_nome": "Ordina: nome A-Z",
+      "filters.sort_veloce": "Ordina: raccolta più vicina",
+      "filters.sort_risparmio": "Ordina: più tempo guadagnato",
+      "filters.sort_prezzo": "Ordina: prezzo più basso",
+      "filters.reset": "Azzera filtri",
+      "filters.count_one": "1 varietà",
+      "filters.count": "{n} varietà",
+      "filters.of_total": "su {n} disponibili questo mese",
+      "filters.none": "Nessun risultato con questi filtri.",
+      "cart.qty_less": "Togli un vassoio",
+      "cart.qty_more": "Aggiungi un vassoio",
+      "cart.trays": "{n} vassoi",
+      "cart.tray": "1 vassoio",
+      "cart.after":
+        "Dopo l'ordine le ritrovi in <b>Il mio orto</b>, con il calendario fino alla raccolta.",
+      "cart.group_plugs": "Piantine",
+      "cart.group_seeds": "Semi",
+      "cart.packs": "{n} bustine",
+      "cart.pack": "1 bustina",
+      "cart.same_order": "Semi e piantine partono con lo stesso ordine.",
+      "cross.title": "Ti servono anche i semi?",
+      "cross.text":
+        "Nel catalogo trovi 97 varietà, con mesi di semina e abbinamenti già calcolati. Vanno nello stesso carrello.",
+      "cart.delivery": "Consegna prevista <b>{data}</b>",
+      "cart.min_missing_one": "Manca un vassoio all'ordine minimo",
+      "cart.min_missing": "Mancano {n} vassoi all'ordine minimo",
+      "cart.min_note":
+        "Ordine minimo: {n} vassoi. La merce viva viaggia solo a pieno carico.",
+      "hero.delivery": "prossima partenza",
+      "hero.art_alt":
+        "Piantina con il pane di terra, pronta da estrarre dall'alveolo e mettere a dimora",
+      "hero.shipping":
+        "Merce viva: spedizione a inizio settimana, sospesa in caso di gelate.",
+      "cat.per_plant": "a piantina · vaso ø7",
+      "cat.per_tray": "al vassoio · {n} piantine",
+      "cat.each": "{prezzo} a piantina · vaso ø7",
+      "cat.hint_tray": "Si acquista a vassoio intero",
+      "cat.lot": "vassoio da {n}",
+      "cat.cycle": "{tipo} · ciclo {n} giorni",
+      "cat.days_earlier": "−{n} giorni",
+      "cat.harvest_earlier":
+        "Raccolta verso il <b>{data}</b>, circa <b>{n} giorni prima</b> rispetto alla semina.",
+      "cat.add": "＋ Aggiungi vassoio",
+      "cat.plugs_in": "{n} piantine",
+      "cat.remove": "Togli",
+      "cat.min_tray": "Il vassoio non si divide: si parte da 6 piantine",
+      "cat.in_cart": "Nel carrello",
+      "cat.tray_one": "1 vassoio",
+      "cat.trays": "{n} vassoi",
+      "empty.title": "Nessuna piantina disponibile questo mese",
+      "empty.text":
+        "Le piantine seguono la stagione. Torna tra qualche settimana, oppure parti dai semi nel catalogo.",
+      "empty.cta": "Vai al catalogo dei semi",
+      "cart.title": "Il tuo carrello",
+      "cart.sub":
+        "Quello che hai scelto è già nel carrello: semi e piantine insieme.",
+      "cart.vars": "{n} var.",
+      "cart.stat_plugs": "PIANTINE",
+      "cart.stat_trays": "VASSOI",
+      "cart.stat_packs": "BUSTINE",
+      "cart.edit": "Continua a scegliere",
+      "cart.empty": "Il carrello è vuoto.",
+      "cart.total": "Totale orientativo",
+      "cart.checkout": "Completa acquisto",
+      "cart.clear": "Svuota",
+      "cart.open": "Vedi il carrello",
+      "cart.remove": "Togli",
+      "cart.note":
+        "Ordine senza pagamento online: ti confermiamo disponibilità e data di consegna.",
+      "cart.login": "Accedi per completare l'ordine",
+      "toast.added": "{n} piantine di {nome} nel carrello",
+      "toast.removed": "Rimossa",
+      "toast.cleared": "Piantine tolte dal carrello",
+      "toast.order_error": "Non è stato possibile registrare l'ordine",
+      "seeds.link": "Cerchi i semi? Vai al catalogo",
+    },
+    ro: {
+      "page.title": "Pepinieră · Răsaduri gata de plantat",
+      "nav.brand_sub": "Cultivă cu un plan",
+      "nav.home": "Acasă",
+      "nav.menu_explore": "Explorează",
+      "nav.semi": "🌿 Catalog de semințe",
+      "nav.vivaio": "🪴 Pepinieră răsaduri",
+      "nav.orto": "🌱 Grădina mea",
+      "nav.configuratore": "📐 Configurator seră",
+      "nav.account": "👤 Contul Meu",
+      "nav.account_label": "Contul Meu",
+      "nav.carrello": "Coș",
+      "hero.kicker": "PEPINIERĂ",
+      "hero.title": "Răsaduri gata de pus în pământ",
+      "hero.lead":
+        "Nu toate culturile se seamănă: unele ajung deja crescute și îți câștigă săptămâni. Aici găsești doar ce este gata acum.",
+
+      "hero.count": "soiuri gata chiar acum",
+      "hero.count_month": "soiuri gata în {mese}",
+      "hero.month": "disponibile în {mese}",
+      "hero.lot_value": "{n} răsaduri",
+      "hero.lot_label": "pe tavă · minimum {n} tăvi",
+      "search.placeholder": "Caută un răsad…",
+      "search.none": "Niciun răsad nu corespunde cu „{q}”.",
+      "filters.aria": "Filtre pepinieră",
+      "filters.family": "Familie",
+      "filters.all": "Toate",
+      "filters.sort_aria": "Ordonează răsadurile",
+      "filters.sort_consigliati": "Ordonare: recomandate",
+      "filters.sort_nome": "Ordonare: nume A-Z",
+      "filters.sort_veloce": "Ordonare: recoltă mai apropiată",
+      "filters.sort_risparmio": "Ordonare: cel mai mult timp câștigat",
+      "filters.sort_prezzo": "Ordonare: preț mai mic",
+      "filters.reset": "Șterge filtrele",
+      "filters.count_one": "1 soi",
+      "filters.count": "{n} soiuri",
+      "filters.of_total": "din {n} disponibile luna aceasta",
+      "filters.none": "Niciun rezultat cu aceste filtre.",
+      "cart.qty_less": "Scoate o tavă",
+      "cart.qty_more": "Adaugă o tavă",
+      "cart.trays": "{n} tăvi",
+      "cart.tray": "o tavă",
+      "cart.after":
+        "După comandă le regăsești în <b>Grădina mea</b>, cu calendarul până la recoltare.",
+      "cart.group_plugs": "Răsaduri",
+      "cart.group_seeds": "Semințe",
+      "cart.packs": "{n} plicuri",
+      "cart.pack": "un plic",
+      "cart.same_order": "Semințele și răsadurile pleacă în aceeași comandă.",
+      "cross.title": "Îți trebuie și semințe?",
+      "cross.text":
+        "În catalog găsești 97 de soiuri, cu luni de semănat și asocieri deja calculate. Merg în același coș.",
+      "cart.delivery": "Livrare estimată <b>{data}</b>",
+      "cart.min_missing_one": "Mai lipsește o tavă până la comanda minimă",
+      "cart.min_missing": "Mai lipsesc {n} tăvi până la comanda minimă",
+      "cart.min_note":
+        "Comandă minimă: {n} tăvi. Marfa vie călătorește doar la încărcătură plină.",
+      "hero.delivery": "următoarea expediere",
+      "hero.art_alt":
+        "Răsad cu bulgărele de pământ, gata de scos din alveolă și pus în pământ",
+      "hero.shipping":
+        "Marfă vie: livrare la început de săptămână, suspendată în caz de îngheț.",
+      "cat.per_plant": "per răsad · ghiveci ø7",
+      "cat.per_tray": "pe tavă · {n} răsaduri",
+      "cat.each": "{prezzo} pe răsad · ghiveci ø7",
+      "cat.hint_tray": "Se cumpără la tavă întreagă",
+      "cat.lot": "tavă de {n}",
+      "cat.cycle": "{tipo} · ciclu {n} zile",
+      "cat.days_earlier": "−{n} zile",
+      "cat.harvest_earlier":
+        "Recoltare în jur de <b>{data}</b>, cu circa <b>{n} zile mai devreme</b> față de semănat.",
+      "cat.add": "＋ Adaugă tavă",
+      "cat.plugs_in": "{n} răsaduri",
+      "cat.remove": "Scoate",
+      "cat.min_tray": "Tava nu se împarte: se pornește de la 6 răsaduri",
+      "cat.in_cart": "În coș",
+      "cat.tray_one": "o tavă",
+      "cat.trays": "{n} tăvi",
+      "empty.title": "Niciun răsad disponibil luna aceasta",
+      "empty.text":
+        "Răsadurile urmează sezonul. Revino peste câteva săptămâni sau pornește de la semințe din catalog.",
+      "empty.cta": "Mergi la catalogul de semințe",
+      "cart.title": "Coșul tău",
+      "cart.sub": "Ce ai ales este deja în coș: semințe și răsaduri împreună.",
+      "cart.vars": "{n} soiuri",
+      "cart.stat_plugs": "RĂSADURI",
+      "cart.stat_trays": "TĂVI",
+      "cart.stat_packs": "PLICURI",
+      "cart.edit": "Continuă să alegi",
+      "cart.empty": "Coșul este gol.",
+      "cart.total": "Total orientativ",
+      "cart.checkout": "Finalizează achiziția",
+      "cart.clear": "Golește",
+      "cart.open": "Vezi coșul",
+      "cart.remove": "Scoate",
+      "cart.note":
+        "Comandă fără plată online: îți confirmăm disponibilitatea și data livrării.",
+      "cart.login": "Autentifică-te pentru a finaliza comanda",
+      "toast.added": "{n} răsaduri de {nome} în coș",
+      "toast.removed": "Eliminat",
+      "toast.cleared": "Răsaduri scoase din coș",
+      "toast.order_error": "Comanda nu a putut fi înregistrată",
+      "seeds.link": "Cauți semințe? Mergi la catalog",
+    },
+  };
+
+  const PHOTO_FIX = {
+    bietola: "bietola_coste",
+    cavolo: "cavolo_cappuccio",
+    cavolonero: "cavolo_nero",
+    cavolorapa: "cavolo_rapa",
+    fagiolino: "fagiolino_nano",
+    fagiolo: "fagiolo_rampicante",
+    indivia: "indivia_scarola",
+    pakchoi: "pak_choi",
+    cavoletti: "cavoletti_bruxelles",
+  };
+  const TIPI = {
+    it: {
+      frutto: "da frutto",
+      foglia: "da foglia",
+      radice: "da radice",
+      legume: "legume",
+      aromatica: "aromatica",
+    },
+    ro: {
+      frutto: "de fruct",
+      foglia: "de frunze",
+      radice: "de rădăcină",
+      legume: "leguminoasă",
+      aromatica: "aromatică",
+    },
+  };
+
+  let lang = "it";
+  let PLANTS = [];
+  let PRODUCTS = {};
+  const BYID = {};
+  let cart = [];
+  let filtro = "";
+  // Filtri del listino: famiglia botanica e criterio d'ordinamento, come nel
+  // catalogo dei semi in home. Restano in memoria per la sessione.
+  let tipoAttivo = "";
+  let ordine = "consigliati";
+
+  const app = document.getElementById("vivaioApp");
+  const toastEl = document.getElementById("vivaioToast");
+
+  const normalizeLang = (v) => (v === "ro" ? "ro" : "it");
+  function t(key, vars) {
+    let value = (COPY[lang] || {})[key] ?? COPY.it[key] ?? key;
+    if (vars)
+      Object.keys(vars).forEach((k) => {
+        value = value.split("{" + k + "}").join(vars[k]);
+      });
+    return value;
+  }
+  const plantName = (p) =>
+    lang === "ro"
+      ? window.SERRA_I18N?.plants?.ro?.[p.id]?.nome || p.nome
+      : p.nome;
+  const nomeMese = (m) =>
+    (window.SERRA_I18N?.months?.[lang]?.[m - 1] || String(m)).toLowerCase();
+  const locale = () => (lang === "ro" ? "ro-RO" : "it-IT");
+  const money = (v) =>
+    new Intl.NumberFormat(locale(), {
+      style: "currency",
+      currency: "EUR",
+    }).format(v);
+  const fmtData = (d) =>
+    d.toLocaleDateString(locale(), { day: "numeric", month: "long" });
+  const photoSrc = (id) => `assets/img/photo/${PHOTO_FIX[id] || id}.webp`;
+  const svgSrc = (id) => `assets/img/svg/${id}.svg`;
+  const escape = (s) =>
+    typeof window.escapeHtml === "function"
+      ? window.escapeHtml(s)
+      : String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+
+  /* ---------- carrello unico, condiviso con il catalogo semi ---------- */
+  function loadCart() {
+    cart = C() ? C().leggi() : [];
+  }
+  function saveCart() {
+    if (C()) C().scrivi(cart);
+  }
+  const piantine = () => (C() ? C().soloPiantine(cart) : []);
+  const semi = () => (C() ? C().soloSemi(cart) : []);
+  const bustineNelCarrelloSemi = () =>
+    semi().reduce((n, r) => n + (Number(r.bustine) || 0), 0);
+  const qtaInCarrello = (id) => piantine().find((i) => i.id === id)?.qta || 0;
+  // Solo la parte piantine: i semi hanno il proprio riepilogo nella home.
+  const totale = () =>
+    Math.round(
+      piantine().reduce((sum, i) => sum + (Number(i.prezzo) || 0) * i.qta, 0) *
+        100,
+    ) / 100;
+
+  // Prima partenza utile: il primo giorno di spedizione che rispetti il
+  // preavviso minimo. La consegna è il giorno dopo la partenza.
+  function prossimaConsegna() {
+    let giorno = E.addDays(E.startOfToday(), CONSEGNA.anticipoMinimoGiorni);
+    for (let i = 0; i < 14; i++) {
+      if (giorno.getDay() === CONSEGNA.giornoSpedizione) break;
+      giorno = E.addDays(giorno, 1);
+    }
+    return E.addDays(giorno, CONSEGNA.transitoGiorni);
+  }
+  const fmtGiorno = (d) =>
+    d.toLocaleDateString(locale(), {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
+
+  const vassoiInCarrello = () => (C() ? C().vassoi(cart) : 0);
+
+  /* ---------- viste ---------- */
+  function disponibili() {
+    const mese = new Date().getMonth() + 1;
+    return PLANTS.filter(
+      (p) =>
+        p.gg > 0 && PRODUCTS[p.id]?.piantina?.mesiDisponibili?.includes(mese),
+    );
+  }
+
+  // Tre leve, nello stesso ordine del catalogo semi: cerca, filtra, ordina.
+  function filtrate(lista) {
+    const q = filtro.trim().toLowerCase();
+    let out = lista;
+    if (tipoAttivo) out = out.filter((p) => p.tipo === tipoAttivo);
+    if (q) out = out.filter((p) => plantName(p).toLowerCase().includes(q));
+    return ordinate(out);
+  }
+
+  const prezzoDi = (p) => Number(PRODUCTS[p.id]?.piantina?.prezzo) || 0;
+  const giorniDi = (p) => E.giorniARaccolta(p, PRODUCTS[p.id], "piantina");
+
+  function ordinate(lista) {
+    const copia = lista.slice();
+    if (ordine === "nome")
+      return copia.sort((a, b) =>
+        plantName(a).localeCompare(plantName(b), locale()),
+      );
+    if (ordine === "veloce")
+      return copia.sort((a, b) => giorniDi(a) - giorniDi(b));
+    if (ordine === "risparmio")
+      return copia.sort((a, b) => b.gg - giorniDi(b) - (a.gg - giorniDi(a)));
+    if (ordine === "prezzo")
+      return copia.sort((a, b) => prezzoDi(a) - prezzoDi(b));
+    return copia; // consigliate: l'ordine del catalogo
+  }
+
+  // Famiglie presenti davvero questo mese: un filtro che non porta a nulla
+  // è peggio che nessun filtro.
+  function famiglie(lista) {
+    const conta = {};
+    lista.forEach((p) => {
+      conta[p.tipo] = (conta[p.tipo] || 0) + 1;
+    });
+    return Object.keys(conta)
+      .sort((a, b) => conta[b] - conta[a])
+      .map((tipo) => ({ tipo, n: conta[tipo] }));
+  }
+
+  const filtriAttivi = () =>
+    !!tipoAttivo || !!filtro.trim() || ordine !== "consigliati";
+
+  function barraFiltriHtml(lista, visibili) {
+    const opzioni = ["consigliati", "nome", "veloce", "risparmio", "prezzo"]
+      .map(
+        (v) =>
+          `<option value="${v}"${v === ordine ? " selected" : ""}>${escape(
+            t("filters.sort_" + v),
+          )}</option>`,
+      )
+      .join("");
+    const chip = (tipo, etichetta, n) =>
+      `<button type="button" class="viv-chip${
+        tipoAttivo === tipo ? " is-active" : ""
+      }" data-viv-action="set-type" data-type="${tipo}"
+        aria-pressed="${tipoAttivo === tipo}">
+        <span>${escape(etichetta)}</span><small>${n}</small></button>`;
+    return `
+      <section class="viv-toolbar" aria-label="${escape(t("filters.aria"))}">
+        <div class="viv-toolbar-row">
+          <label class="viv-search">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" id="vivSearch" value="${escape(filtro)}"
+              placeholder="${escape(t("search.placeholder"))}"
+              aria-label="${escape(t("search.placeholder"))}" />
+          </label>
+          <select class="viv-sort" id="vivSort"
+            aria-label="${escape(t("filters.sort_aria"))}">${opzioni}</select>
+        </div>
+        <div class="viv-chiprail" role="group"
+          aria-label="${escape(t("filters.family"))}">
+          ${chip("", t("filters.all"), lista.length)}
+          ${famiglie(lista)
+            .map(({ tipo, n }) => chip(tipo, TIPI[lang][tipo] || tipo, n))
+            .join("")}
+        </div>
+        <div class="viv-results">
+          <span role="status" aria-live="polite">
+            <b>${
+              visibili.length === 1
+                ? t("filters.count_one")
+                : t("filters.count", { n: visibili.length })
+            }</b>
+            ${
+              visibili.length !== lista.length
+                ? escape(t("filters.of_total", { n: lista.length }))
+                : ""
+            }
+          </span>
+          ${
+            filtriAttivi()
+              ? `<button type="button" class="viv-reset" data-viv-action="reset-filters">${escape(
+                  t("filters.reset"),
+                )}</button>`
+              : ""
+          }
+        </div>
+      </section>`;
+  }
+
+  function render() {
+    const mese = new Date().getMonth() + 1;
+    const lista = disponibili();
+    const visibili = filtrate(lista);
+    app.innerHTML = `
+      <section class="orto-hero viv-hero">
+        <div class="orto-hero-inner">
+          <div>
+            <p class="orto-hero-date">${t("hero.kicker")}</p>
+            <h2>${t("hero.title")}</h2>
+            <p class="orto-hero-sub">${t("hero.lead")}</p>
+            <!-- Tre fatti che servono davvero prima di scegliere: quante
+                 varietà ci sono, quando partono, come si comprano. -->
+            <div class="orto-hero-stats">
+              <span><b>${lista.length}</b><small>${t("hero.count_month", {
+                mese: nomeMese(mese),
+              })}</small></span>
+              <span><b>${fmtGiorno(prossimaConsegna())
+                .split(" ")
+                .slice(0, 3)
+                .join(" ")}</b><small>${t("hero.delivery")}</small></span>
+              <span><b>${t("hero.lot_value", {
+                n: 6,
+              })}</b><small>${t("hero.lot_label", {
+                n: CONSEGNA.vassoiMinimi,
+              })}</small></span>
+            </div>
+          </div>
+          <div class="viv-hero-side">
+            ${illustrazionePiantina()}
+            <p class="orto-notif viv-shipping"><span class="orto-notif-ico" aria-hidden="true">🚚</span>
+              <span>${t("hero.shipping")}</span></p>
+          </div>
+        </div>
+      </section>
+
+      <div class="viv-listing">
+        ${lista.length ? barraFiltriHtml(lista, visibili) : ""}
+        ${barraStatoHtml()}
+        <div class="orto-grid viv-grid">${
+          !lista.length
+            ? `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">🌱</span>
+                <h4>${t("empty.title")}</h4><p>${t("empty.text")}</p>
+                <p><a class="orto-btn orto-btn--ghost orto-btn--sm" href="index.html#stagione">${t("empty.cta")}</a></p></div>`
+            : visibili.length
+              ? visibili.map(card).join("")
+              : `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">⌕</span>
+                  <h4>${escape(
+                    filtro.trim()
+                      ? t("search.none", { q: filtro })
+                      : t("filters.none"),
+                  )}</h4>
+                  <p><button type="button" class="orto-btn orto-btn--ghost orto-btn--sm"
+                    data-viv-action="reset-filters">${escape(t("filters.reset"))}</button></p></div>`
+        }</div>
+      </div>`;
+
+    disegnaCarrello();
+
+    const input = document.getElementById("vivSearch");
+    if (input && document.activeElement !== input && filtro) {
+      input.focus();
+      input.setSelectionRange(filtro.length, filtro.length);
+    }
+  }
+
+  function card(plant, index) {
+    const product = PRODUCTS[plant.id];
+    const piantina = product.piantina;
+    const lotto = piantina.lotto || 6;
+    const ggPiantina = E.giorniARaccolta(plant, product, "piantina");
+    const raccolta = E.addDays(E.startOfToday(), ggPiantina);
+    const risparmio = plant.gg - ggPiantina;
+    const inCarrello = qtaInCarrello(plant.id);
+    const prezzoVassoio = Math.round(piantina.prezzo * lotto * 100) / 100;
+    return `
+      <article class="orto-card" style="animation-delay:${Math.min(index, 10) * 35}ms">
+        <div class="orto-card-photo">
+          <img class="orto-card-bg" src="${photoSrc(plant.id)}" alt="" loading="lazy" />
+          <span class="orto-badges">
+            <span class="orto-chip orto-chip--piantina">${t("cat.lot", { n: lotto })}</span>
+          </span>
+          <span class="viv-save-photo">${t("cat.days_earlier", { n: risparmio })}</span>
+          <img class="orto-card-svg" src="${svgSrc(plant.id)}" alt="" loading="lazy" />
+          <span class="orto-card-titles">
+            <h3>${escape(plantName(plant))}</h3>
+            <small>${t("cat.cycle", {
+              tipo: TIPI[lang][plant.tipo] || plant.tipo,
+              n: plant.gg,
+            })}</small>
+          </span>
+        </div>
+        <div class="orto-card-body">
+          <!-- Si compra a vassoio: in evidenza il prezzo che si paga davvero,
+               sotto il prezzo unitario per poter confrontare. -->
+          <div class="orto-price-row viv-price-row">
+            <span class="orto-price">${money(prezzoVassoio)}</span>
+            <small class="viv-unit">${t("cat.per_tray", { n: lotto })}</small>
+          </div>
+          <div class="viv-unit-price">${t("cat.each", {
+            prezzo: money(piantina.prezzo),
+          })}</div>
+          <div class="orto-note">${t("cat.harvest_earlier", {
+            data: fmtData(raccolta),
+            n: risparmio,
+          })}</div>
+          <div class="viv-card-actions">
+            ${
+              inCarrello
+                ? `<div class="viv-qty" role="group" aria-label="${escape(
+                    plantName(plant),
+                  )}">
+                     <button type="button" class="viv-qty-btn"
+                       data-viv-action="less" data-plant="${plant.id}"
+                       ${inCarrello <= lotto ? "disabled" : ""}
+                       aria-label="${escape(t("cart.qty_less"))}"
+                       title="${escape(
+                         inCarrello <= lotto
+                           ? t("cat.min_tray")
+                           : t("cart.qty_less"),
+                       )}">−</button>
+                     <span class="viv-qty-value">
+                       <b>${
+                         inCarrello / lotto === 1
+                           ? t("cat.tray_one")
+                           : t("cat.trays", {
+                               n: Math.round(inCarrello / lotto),
+                             })
+                       }</b>
+                       <small>${t("cat.plugs_in", { n: inCarrello })}</small>
+                     </span>
+                     <button type="button" class="viv-qty-btn"
+                       data-viv-action="add" data-plant="${plant.id}"
+                       aria-label="${escape(t("cart.qty_more"))}"
+                       title="${escape(t("cart.qty_more"))}">＋</button>
+                   </div>
+                   <div class="viv-card-foot">
+                     <span class="viv-in-cart">✓ ${t("cat.in_cart")}</span>
+                     <button type="button" class="viv-remove"
+                       data-viv-action="remove" data-plant="${plant.id}">${t("cat.remove")}</button>
+                   </div>`
+                : `<button class="orto-btn orto-btn--block" type="button"
+                     data-viv-action="add" data-plant="${plant.id}"
+                     aria-label="${escape(t("cat.add"))} ${escape(plantName(plant))}">${t("cat.add")}</button>
+                   <span class="viv-card-foot viv-card-foot--hint">${t(
+                     "cat.hint_tray",
+                   )}</span>`
+            }
+        </div>
+      </article>`;
+  }
+
+  /* Con il carrello a scomparsa le regole della merce viva (minimo, consegna)
+     resterebbero nascoste fino alla fine: questa barra le tiene sotto gli occhi
+     mentre si sceglie. */
+  /* Illustrazione della hero: una piantina con il pane di terra, cioè il
+     "răsad" — pronta da estrarre dall'alveolo e mettere a dimora. Disegnata a
+     mano in SVG per restare nitida a ogni dimensione e seguire il tema.
+     L'animazione è lieve e si spegne con prefers-reduced-motion. */
+  // Illustrazione della hero: una piantina sollevata dall'alveolo, con il pane
+  // di terra e le radici in vista. È il disegno che spiega in un colpo d'occhio
+  // che qui non si vendono semi ma piante già pronte da mettere a dimora.
+  function illustrazionePiantina() {
+    return `
+      <svg class="viv-hero-art" viewBox="0 0 200 200" role="img"
+        aria-label="${escape(t("hero.art_alt"))}">
+        <defs>
+          <linearGradient id="vivTerra" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7a5638" />
+            <stop offset="100%" stop-color="#432c1c" />
+          </linearGradient>
+          <linearGradient id="vivFoglia" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#a8e6a3" />
+            <stop offset="100%" stop-color="#5fbf72" />
+          </linearGradient>
+        </defs>
+
+        <circle cx="100" cy="96" r="80" fill="rgba(255,255,255,.06)" />
+
+        <!-- Vassoio alveolare: l'alveolo centrale è vuoto, la piantina è
+             appena uscita da lì. -->
+        <g class="viv-art-tray">
+          <path d="M40 150 h30 l-6 20 a9 4 0 0 1 -18 0 z" fill="url(#vivTerra)" />
+          <path d="M130 150 h30 l-6 20 a9 4 0 0 1 -18 0 z" fill="url(#vivTerra)" />
+          <path d="M85 150 h30 l-6 20 a9 4 0 0 1 -18 0 z" fill="#20301f" />
+          <rect x="26" y="139" width="148" height="12" rx="4" fill="#2c4430" />
+          <rect x="26" y="139" width="148" height="3" rx="1.5"
+            fill="rgba(255,255,255,.16)" />
+          <ellipse cx="55" cy="150" rx="15" ry="4.5" fill="#6b4a2f" />
+          <ellipse cx="145" cy="150" rx="15" ry="4.5" fill="#6b4a2f" />
+          <ellipse cx="100" cy="150" rx="15" ry="4.5" fill="#1b2a1a" />
+        </g>
+
+        <!-- Ombra sull'alveolo vuoto: dice che la zolla è sollevata. -->
+        <ellipse class="viv-art-soil" cx="100" cy="151" rx="12" ry="3.5"
+          fill="#0d1a0d" opacity=".55" />
+
+        <g class="viv-art-plug">
+          <!-- Pane di terra: tronco di cono, la forma dell'alveolo. -->
+          <path d="M82 88 h36 l-7 28 a11 5 0 0 1 -22 0 z" fill="url(#vivTerra)" />
+          <ellipse cx="100" cy="88" rx="18" ry="5.5" fill="#8a643f" />
+          <ellipse cx="100" cy="88" rx="12" ry="3.5" fill="#3f2a1b" opacity=".45" />
+          <!-- Radici: avvolgono la zolla e spuntano sotto. -->
+          <g stroke="#e2d0b2" stroke-width="1.5" fill="none" stroke-linecap="round"
+            opacity=".6">
+            <path d="M86 96 q10 5 22 1" />
+            <path d="M88 105 q10 5 20 1" />
+            <path d="M94 118 q-3 9 -6 14" />
+            <path d="M100 120 v15" />
+            <path d="M106 118 q4 9 6 13" />
+          </g>
+        </g>
+
+        <!-- Fusto e foglie: la pianta è già formata, non un seme. -->
+        <g class="viv-art-plant">
+          <g transform="translate(0,-24)">
+          <path d="M100 112 V64" stroke="#4f9a4a" stroke-width="4"
+            stroke-linecap="round" fill="none" />
+          <g class="viv-art-leaf viv-art-leaf--l">
+            <path d="M99 86 C78 86 64 74 60 60 c18 -5 34 4 39 26 z"
+              fill="url(#vivFoglia)" />
+          </g>
+          <g class="viv-art-leaf viv-art-leaf--r">
+            <path d="M101 78 C122 78 136 66 140 52 c-18 -5 -34 4 -39 26 z"
+              fill="url(#vivFoglia)" />
+          </g>
+          <g class="viv-art-leaf viv-art-leaf--top">
+            <path d="M100 66 C94 52 97 38 106 30 c8 10 8 26 -6 36 z"
+              fill="url(#vivFoglia)" />
+          </g>
+          </g>
+        </g>
+      </svg>`;
+  }
+
+  function barraStatoHtml() {
+    const vassoi = vassoiInCarrello();
+    if (!vassoi) return "";
+    const mancanti = Math.max(0, CONSEGNA.vassoiMinimi - vassoi);
+    return `<div class="viv-statusbar${mancanti ? " is-warning" : ""}">
+        <span class="viv-statusbar-main">
+          <b>${
+            vassoi === 1 ? t("cat.tray_one") : t("cat.trays", { n: vassoi })
+          }</b>
+          <span>·</span>
+          <span>${t("cart.delivery", { data: fmtGiorno(prossimaConsegna()) })}</span>
+        </span>
+        ${
+          mancanti
+            ? `<span class="viv-statusbar-warn">${
+                mancanti === 1
+                  ? t("cart.min_missing_one")
+                  : t("cart.min_missing", { n: mancanti })
+              }</span>`
+            : ""
+        }
+        <button class="orto-btn orto-btn--sm" type="button" data-viv-action="show-cart">${t(
+          "cart.open",
+        )}</button>
+      </div>`;
+  }
+
+  function carrelloHtml() {
+    const mancanti = Math.max(0, CONSEGNA.vassoiMinimi - vassoiInCarrello());
+    const listaPiantine = piantine().filter((i) => BYID[i.id]);
+    const listaSemi = semi().filter((i) => BYID[i.id]);
+    const vuoto = !listaPiantine.length && !listaSemi.length;
+    const nPiantine = listaPiantine.reduce((n, i) => n + i.qta, 0);
+    const nBustine = listaSemi.reduce(
+      (n, i) => n + (Number(i.bustine) || 0),
+      0,
+    );
+    const totaleCarrello = C()
+      ? C().totale(cart, (id) => PRODUCTS[id]?.semi?.prezzo || 0)
+      : 0;
+
+    /* Stessa struttura della "Lista semi da acquistare" del configuratore:
+       intestazione con distintivo, riepilogo, elenco, totale e, in fondo,
+       azione principale più modifica. */
+    const riga = (i, dettaglio, importo, rimovibile) => `
+        <li>
+          <img class="shop-photo" src="${photoSrc(i.id)}" alt="" loading="lazy" />
+          <span class="shop-plant">
+            <b>${escape(plantName(BYID[i.id]))}</b>
+            <small>${dettaglio}</small>
+          </span>
+          <span class="shop-side">
+            <span class="shop-price">${money(importo)}</span>
+            ${
+              rimovibile
+                ? `<button type="button" class="shop-remove" data-viv-action="remove"
+                     data-plant="${i.id}" aria-label="${escape(t("cart.remove"))}">${t("cart.remove")}</button>`
+                : ""
+            }
+          </span>
+        </li>`;
+
+    const elenco = [
+      ...listaPiantine.map((i) =>
+        riga(
+          i,
+          `${i.qta} × ${money(Number(i.prezzo) || 0)}`,
+          (Number(i.prezzo) || 0) * i.qta,
+          true,
+        ),
+      ),
+      ...listaSemi.map((i) => {
+        const n = Number(i.bustine) || 0;
+        const prezzo = PRODUCTS[i.id]?.semi?.prezzo || 0;
+        return riga(
+          i,
+          `${n === 1 ? t("cart.pack") : t("cart.packs", { n })}`,
+          prezzo * n,
+          false,
+        );
+      }),
+    ].join("");
+
+    const invitoSemi = `<a class="viv-cart-cross" href="index.html#stagione">
+        <span aria-hidden="true">🌿</span>
+        <span><b>${t("cross.title")}</b><small>${t("cross.text")}</small></span>
+        <span aria-hidden="true">→</span>
+      </a>`;
+
+    return `
+      <div class="viv-panel viv-panel--drawer" id="vivaioCart">
+        <div class="panel-body">
+          <p class="sub">${t("cart.sub")}</p>
+          ${
+            vuoto
+              ? `<p class="viv-cart-empty">${t("cart.empty")}</p>
+                 <p class="viv-cart-note">${t("cart.min_note", { n: CONSEGNA.vassoiMinimi })}</p>
+                 ${invitoSemi}`
+              : `<div class="viv-summary">
+                   <span><b>${nPiantine}</b><small>${t("cart.stat_plugs")}</small></span>
+                   <span><b>${vassoiInCarrello()}</b><small>${t("cart.stat_trays")}</small></span>
+                   <span><b>${nBustine}</b><small>${t("cart.stat_packs")}</small></span>
+                 </div>
+                 <ul class="shop">${elenco}</ul>
+                 <div class="shop-total"><span>${t("cart.total")}</span><b>${money(totaleCarrello)}</b></div>
+                 ${
+                   listaPiantine.length
+                     ? `<p class="viv-cart-delivery">
+                          <span aria-hidden="true">🚚</span>
+                          <span>${t("cart.delivery", { data: fmtGiorno(prossimaConsegna()) })}</span>
+                        </p>`
+                     : ""
+                 }
+                 ${
+                   listaPiantine.length && mancanti > 0
+                     ? `<p class="viv-cart-min">${
+                         mancanti === 1
+                           ? t("cart.min_missing_one")
+                           : t("cart.min_missing", { n: mancanti })
+                       }</p>`
+                     : ""
+                 }
+                 <p class="viv-cart-note">${t("cart.note")}</p>
+                 ${
+                   listaSemi.length && listaPiantine.length
+                     ? `<p class="viv-cart-after">${t("cart.same_order")}</p>`
+                     : ""
+                 }
+                 <p class="viv-cart-after">${t("cart.after")}</p>
+                 ${!listaSemi.length ? invitoSemi : ""}`
+          }
+        </div>
+        ${
+          vuoto
+            ? ""
+            : `<div class="yield-footer">
+                 <button class="orto-btn orto-btn--block" type="button"
+                   data-viv-action="checkout" ${
+                     listaPiantine.length && mancanti > 0 ? "disabled" : ""
+                   }>${t("cart.checkout")}</button>
+                 <button class="viv-edit-btn" type="button" data-viv-action="edit-list">
+                   <span aria-hidden="true">↑</span>
+                   <span>${t("cart.edit")}</span>
+                 </button>
+               </div>`
+        }
+      </div>`;
+  }
+
+  // Riempie il cassetto e aggiorna l'intestazione del carrello.
+  function disegnaCarrello() {
+    const corpo = document.getElementById("vivaioCartBody");
+    if (corpo) corpo.innerHTML = carrelloHtml();
+    const riga = document.getElementById("vivaioCartLine");
+    if (riga) {
+      const n = cart.length;
+      riga.hidden = !n;
+      riga.textContent = n ? t("cart.vars", { n }) : "";
+    }
+    const svuota = document.querySelector(".cart-clear-btn");
+    if (svuota) svuota.hidden = !piantine().length;
+  }
+
+  function apriCarrello() {
+    const overlay = document.getElementById("vivaioCartOverlay");
+    if (!overlay) return;
+    overlay.classList.add("open");
+    document.body.classList.add("cart-open");
+    overlay.querySelector(".cart-close")?.focus({ preventScroll: true });
+  }
+
+  function chiudiCarrello() {
+    document.getElementById("vivaioCartOverlay")?.classList.remove("open");
+    document.body.classList.remove("cart-open");
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") chiudiCarrello();
+  });
+
+  /* ---------- lingua ---------- */
+  function applyLanguage(value) {
+    lang = normalizeLang(value);
+    document.documentElement.lang = lang;
+    document.title = t("page.title");
+    document.querySelectorAll("[data-viv-key]").forEach((el) => {
+      el.textContent = t(el.dataset.vivKey);
+    });
+    document.querySelectorAll("[data-viv-key-aria]").forEach((el) => {
+      el.setAttribute("aria-label", t(el.dataset.vivKeyAria));
+    });
+    // Il pulsante profilo mostra lo stato di accesso, non una voce tradotta.
+    window.SerraAPI?.updateNavbarUser?.();
+    const select = document.getElementById("vivaioLangSelect");
+    if (select) select.value = lang;
+    try {
+      localStorage.setItem("ois.lang", lang);
+    } catch (_) {}
+    render();
+    document.documentElement.classList.remove("serra-i18n-pending");
+  }
+  window.addEventListener("storage", (event) => {
+    if (event.key !== "ois.lang") return;
+    const next = normalizeLang(event.newValue);
+    if (next !== lang) applyLanguage(next);
+  });
+
+  /* ---------- azioni ---------- */
+  let toastTimer;
+  function toast(message) {
+    if (!toastEl) return;
+    toastEl.textContent = message;
+    toastEl.classList.add("is-on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("is-on"), 2600);
+  }
+
+  // Crea un ordine con le stesse chiavi che l'Area Personale già legge.
+  async function checkout() {
+    const utente = window.SerraAPI?.getCurrentUser?.();
+    if (!utente) {
+      toast(t("cart.login"));
+      setTimeout(() => (window.location.href = "account.html"), 900);
+      return;
+    }
+    /* Un carrello, un ordine: partono insieme bustine e piantine. Le righe
+       usano i campi che l'Area Personale già legge (bustine, prezzo). */
+    const items = cart
+      .filter((i) => BYID[i.id])
+      .map((i) => {
+        const piantina = C().isPiantina(i);
+        const riga = {
+          id: i.id,
+          nome: plantName(BYID[i.id]),
+          bustine: C().quantita(i),
+          prezzo: piantina
+            ? Number(i.prezzo) || 0
+            : PRODUCTS[i.id]?.semi?.prezzo || 0,
+        };
+        if (piantina) {
+          riga.variante = "piantina";
+          riga.unita = i.unita || "vaso ø7";
+        }
+        return riga;
+      });
+    if (!items.length) return;
+    const ordine = {
+      id: "ORD-" + Math.floor(10000 + Math.random() * 90000),
+      email: utente.email,
+      date: new Date().toISOString(),
+      items,
+      total:
+        Math.round(
+          items.reduce((s2, r) => s2 + r.prezzo * r.bustine, 0) * 100,
+        ) / 100,
+      status: "In elaborazione",
+      origine: "vivaio",
+      billing: {
+        accountType: utente.accountType || "private",
+        name: utente.ragioneSociale || utente.nome,
+        address: utente.billingIndirizzo || utente.indirizzo || "",
+        city: utente.billingCitta || utente.citta || "",
+        cap: utente.billingCap || utente.cap || "",
+      },
+      shipping: {
+        name: utente.nome,
+        phone: utente.telefono || "",
+        address: utente.shippingIndirizzo || utente.indirizzo || "",
+        city: utente.shippingCitta || utente.citta || "",
+        cap: utente.shippingCap || utente.cap || "",
+      },
+    };
+    try {
+      const ordini = (await window.SerraAPI.getOrders()) || [];
+      ordini.push(ordine);
+      await window.SerraAPI.saveOrders(ordini);
+    } catch (_) {
+      return toast(t("toast.order_error"));
+    }
+    cart = [];
+    saveCart();
+    try {
+      sessionStorage.setItem(
+        "ois.order_confirmation",
+        JSON.stringify({ ...ordine, source: "vivaio" }),
+      );
+    } catch (_) {}
+    window.location.href = "ordine-confermato.html";
+  }
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-viv-action]");
+    if (!trigger) return;
+    const action = trigger.dataset.vivAction;
+    const id = trigger.dataset.plant;
+    if (action === "add") {
+      const prodotto = PRODUCTS[id]?.piantina || {};
+      const lotto = prodotto.lotto || 6;
+      const found = piantine().find((i) => i.id === id);
+      if (found) {
+        found.qta += lotto;
+        found.bustine = found.qta;
+      } else {
+        // Il prezzo viaggia nella riga: la home mostra il totale senza dover
+        // conoscere il listino del vivaio.
+        cart.push({
+          id,
+          variante: "piantina",
+          qta: lotto,
+          bustine: lotto,
+          prezzo: prodotto.prezzo || 0,
+          unita: prodotto.unita || "vaso ø7",
+          lotto,
+        });
+      }
+      saveCart();
+      render();
+      return toast(t("toast.added", { n: lotto, nome: plantName(BYID[id]) }));
+    }
+    if (action === "less") {
+      const lotto = PRODUCTS[id]?.piantina?.lotto || 6;
+      const voce = piantine().find((i) => i.id === id);
+      if (voce) {
+        voce.qta -= lotto;
+        voce.bustine = voce.qta;
+        if (voce.qta <= 0)
+          cart = cart.filter((i) => !(i.id === id && C().isPiantina(i)));
+        saveCart();
+        render();
+      }
+      return;
+    }
+    if (action === "remove") {
+      cart = cart.filter((i) => !(i.id === id && C().isPiantina(i)));
+      saveCart();
+      render();
+      return toast(t("toast.removed"));
+    }
+    // "Svuota" tocca solo le piantine: le bustine non sono di questa sezione.
+    if (action === "clear") {
+      cart = semi();
+      saveCart();
+      render();
+      return toast(t("toast.cleared"));
+    }
+    if (action === "set-type") {
+      const tipo = trigger.dataset.type || "";
+      tipoAttivo = tipoAttivo === tipo ? "" : tipo;
+      render();
+      return;
+    }
+    if (action === "reset-filters") {
+      tipoAttivo = "";
+      filtro = "";
+      ordine = "consigliati";
+      render();
+      return;
+    }
+    if (action === "edit-list") {
+      chiudiCarrello();
+      document.getElementById("vivSearch")?.focus({ preventScroll: true });
+      return;
+    }
+    if (action === "show-cart") {
+      event.preventDefault();
+      apriCarrello();
+      return;
+    }
+    if (action === "close-cart") {
+      chiudiCarrello();
+      return;
+    }
+    if (action === "checkout") {
+      if (trigger.disabled) return;
+      return checkout();
+    }
+  });
+
+  // La ricerca filtra mentre si digita, senza ricaricare la pagina.
+  document.addEventListener("input", (event) => {
+    if (event.target.id !== "vivSearch") return;
+    filtro = event.target.value;
+    render();
+  });
+
+  // L'ordinamento vive nel corpo ridisegnato a ogni render: delega sul
+  // documento, come per i clic.
+  document.addEventListener("change", (event) => {
+    if (event.target.id !== "vivSort") return;
+    ordine = event.target.value;
+    render();
+  });
+
+  document
+    .getElementById("vivaioLangSelect")
+    ?.addEventListener("change", (event) => applyLanguage(event.target.value));
+
+  /* ---------- avvio ---------- */
+  (async function boot() {
+    let plants = null;
+    try {
+      plants = await window.SerraAPI?.getPlants?.();
+    } catch (_) {}
+    if (!plants) {
+      try {
+        plants = await (await fetch("db/plants.json")).json();
+      } catch (_) {
+        plants = [];
+      }
+    }
+    PLANTS = plants || [];
+    PLANTS.forEach((p) => (BYID[p.id] = p));
+    let listino = null;
+    try {
+      listino = (await (await fetch("db/products.json")).json())?.items;
+    } catch (_) {}
+    PRODUCTS = listino || E.buildProducts(PLANTS, {});
+    loadCart();
+    applyLanguage(localStorage.getItem("ois.lang"));
+  })();
+})();

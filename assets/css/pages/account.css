@@ -4,6 +4,80 @@
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
+/* Modulo "Semi e piantine da piantare": ponte tra ordini e Il mio orto.
+   Disegnato da assets/js/account-orto.js; classi prefissate `toplant-`. */
+@layer base {
+  .toplant-order {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(31, 58, 38, 0.12);
+  }
+
+  .toplant-order-head {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+  }
+
+  .toplant-order-id {
+    font-weight: 700;
+  }
+
+  .toplant-order-date {
+    color: #6b7a6e;
+    font-size: 12.5px;
+  }
+
+  .toplant-items {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+  }
+
+  .toplant-items li {
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.09);
+  }
+
+  .toplant-items span {
+    color: #5f6d60;
+  }
+
+  .toplant-feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(47, 107, 58, 0.12);
+    font-size: 13px;
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .toplant-order {
+    border-top-color: rgba(172, 214, 187, 0.16);
+  }
+
+  html[data-theme="dark"] .toplant-items li,
+  html[data-theme="dark"] .toplant-feedback {
+    background: rgba(115, 191, 138, 0.18);
+  }
+
+  html[data-theme="dark"] .toplant-order-date,
+  html[data-theme="dark"] .toplant-items span {
+    color: #a9b9ae;
+  }
+}
+
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -9527,5 +9601,61 @@ html[data-theme="dark"] .notification-content {
   textarea,
   select {
     font-size: 16px !important;
+  }
+}
+
+/* Distintivo "gratis" sulla voce Il mio orto: base.js riscrive il contenuto
+   dei link del menu, quindi il badge vive in uno pseudo-elemento. */
+@layer base {
+  .nav-link--orto {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-link--orto::after {
+    content: "gratis";
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.14);
+    color: #2f6b3a;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  html[lang="ro"] .nav-link--orto::after {
+    content: "gratuit";
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .nav-link--orto::after {
+    background: rgba(115, 191, 138, 0.22);
+    color: #a8e6a3;
+  }
+}
+
+/* Contatore del vassoio piantine: vedi home.css. */
+@layer base {
+  .nav-link--vivaio {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-link--vivaio[data-count]::after {
+    content: attr(data-count);
+    min-width: 19px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: #c9962f;
+    color: #2a1d02;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.6;
+    text-align: center;
   }
 }

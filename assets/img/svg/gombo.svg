@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="foglia decorativa">
-  <path d="M50 95C20 75 10 40 50 5c40 35 30 70 0 90Z" fill="#fff"/>
-  <path d="M50 90V15" stroke="#2f6b3a" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100" role="img" aria-label="gombo">
+<circle cx="0" cy="0" r="46" fill="#6b4e2a" opacity="0.18"/>
+<ellipse cx="3.36" cy="4.2" rx="38.64" ry="34.39" fill="rgba(0,0,0,.15)"/>
+<g transform="rotate(6.88)"><path d="M0 0 C 15.2 -5.86, 8.36 -29.29, 0 -34.46 C -8.36 -29.29, -15.2 -5.86, 0 0 Z" fill="#4e8f3c"/></g><g transform="rotate(55.18)"><path d="M0 0 C 15.54 -5.99, 8.55 -29.93, 0 -35.22 C -8.55 -29.93, -15.54 -5.99, 0 0 Z" fill="#3a6f2c"/></g><g transform="rotate(109.99)"><path d="M0 0 C 13.79 -5.31, 7.58 -26.56, 0 -31.25 C -7.58 -26.56, -13.79 -5.31, 0 0 Z" fill="#4e8f3c"/></g><g transform="rotate(177.18)"><path d="M0 0 C 13.01 -5.01, 7.15 -25.06, 0 -29.48 C -7.15 -25.06, -13.01 -5.01, 0 0 Z" fill="#3a6f2c"/></g><g transform="rotate(235.31)"><path d="M0 0 C 16.18 -6.24, 8.9 -31.18, 0 -36.68 C -8.9 -31.18, -16.18 -6.24, 0 0 Z" fill="#4e8f3c"/></g><g transform="rotate(314.84)"><path d="M0 0 C 15.06 -5.8, 8.28 -29.01, 0 -34.13 C -8.28 -29.01, -15.06 -5.8, 0 0 Z" fill="#3a6f2c"/></g>
+<g transform="translate(-10.12 10.03) rotate(2.17)"><rect x="-5" y="-14" width="10" height="28" rx="5" fill="#5f9b45"/></g><g transform="translate(-8.74 4.05) rotate(-19.36)"><rect x="-5" y="-14" width="10" height="28" rx="5" fill="#5f9b45"/></g><g transform="translate(4.9 12.5) rotate(-7.38)"><rect x="-5" y="-14" width="10" height="28" rx="5" fill="#5f9b45"/></g>
 </svg>

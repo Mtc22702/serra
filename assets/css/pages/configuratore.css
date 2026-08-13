@@ -924,6 +924,19 @@
     background: rgba(47, 107, 58, 0.05);
     white-space: nowrap;
   }
+  /* Il badge della guida rapida identifica il livello attivo. */
+  #quickGuideTag {
+    --quick-guide-accent: #4f9a3f;
+    color: var(--quick-guide-accent);
+    border-color: color-mix(in srgb, var(--quick-guide-accent) 38%, transparent);
+    background: color-mix(in srgb, var(--quick-guide-accent) 10%, #fff);
+  }
+  body.livello-intermedio #quickGuideTag {
+    --quick-guide-accent: #c9962f;
+  }
+  body.livello-esperto #quickGuideTag {
+    --quick-guide-accent: #c0552f;
+  }
   .panel--settings .section-label {
     color: var(--verde-scuro);
   }
@@ -5419,6 +5432,249 @@
     border-top: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
   }
 
+  /* Gestione progetti: priorità al progetto in uso e alle azioni di ripresa. */
+  #projectsModal .projects-dialog {
+    width: min(680px, 100%);
+    max-height: min(82vh, 720px);
+    border-radius: 18px;
+  }
+  #projectsModal .projects-head {
+    align-items: flex-start;
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid rgba(31, 58, 38, 0.1);
+  }
+  .projects-title-group {
+    min-width: 0;
+  }
+  #projectsModal .projects-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.08;
+  }
+  #projectsModal .projects-intro {
+    max-width: 45ch;
+    margin: 7px 0 0;
+    color: #596c5d;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .projects-head-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+  }
+  .projects-new-btn {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 15px;
+    border: 1px solid var(--verde, var(--serra-green));
+    border-radius: 11px;
+    background: var(--verde, var(--serra-green));
+    box-shadow: 0 7px 15px rgba(47, 107, 58, 0.18);
+    color: var(--serra-white);
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+  .projects-new-btn:hover {
+    background: var(--verde-scuro, var(--serra-ink));
+  }
+  .projects-new-btn > span:first-child {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+  #projectsModal .projects-close {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(31, 58, 38, 0.12);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.58);
+  }
+  #projectsModal .projects-list {
+    padding: 18px 24px 24px;
+  }
+  .projects-active-card {
+    display: grid;
+    gap: 13px;
+    padding: 16px;
+    border: 1px solid rgba(79, 154, 63, 0.52);
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(230, 244, 228, 0.92), rgba(255, 255, 255, 0.8));
+  }
+  .projects-active-card .projects-badge {
+    justify-self: start;
+    margin: 0;
+    padding: 4px 9px;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+  .projects-active-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .projects-active-copy {
+    display: grid;
+    min-width: 0;
+    gap: 5px;
+  }
+  .projects-active-copy b {
+    overflow-wrap: anywhere;
+    color: var(--verde-scuro, var(--serra-ink));
+    font-family: var(--serif, Georgia, serif);
+    font-size: 1.28rem;
+    line-height: 1.15;
+  }
+  .projects-active-copy small {
+    color: #5c705f;
+    font-size: 0.8rem;
+  }
+  .projects-open-main,
+  .projects-open-secondary {
+    border: 1px solid var(--verde, var(--serra-green));
+    border-radius: 10px;
+    background: var(--verde, var(--serra-green));
+    color: var(--serra-white);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+  .projects-open-main {
+    min-height: 40px;
+    padding: 0 15px;
+  }
+  .projects-open-main:hover,
+  .projects-open-secondary:hover {
+    background: var(--verde-scuro, var(--serra-ink));
+  }
+  .projects-active-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+    border-top: 1px solid rgba(79, 154, 63, 0.25);
+  }
+  .projects-list-heading {
+    margin: 20px 0 8px;
+    color: var(--verde-scuro, var(--serra-ink));
+    font-family: var(--serif, Georgia, serif);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  #projectsModal .projects-item {
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 9px 10px 9px 13px;
+    border-color: rgba(31, 58, 38, 0.12);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.56);
+  }
+  #projectsModal .projects-item:hover {
+    border-color: rgba(79, 154, 63, 0.34);
+  }
+  #projectsModal .projects-open-btn {
+    padding: 3px 0;
+  }
+  #projectsModal .projects-item-name {
+    font-family: var(--serif, Georgia, serif);
+    font-size: 1rem;
+  }
+  #projectsModal .projects-item-meta {
+    margin-top: 3px;
+    color: #647767;
+  }
+  .projects-open-secondary {
+    min-height: 32px;
+    padding: 0 11px;
+    background: transparent;
+    color: var(--verde-scuro, var(--serra-ink));
+  }
+  .projects-open-secondary:hover {
+    color: var(--serra-white);
+  }
+  .projects-item-actions--compact .projects-act--danger {
+    display: none;
+  }
+  html[data-theme="dark"] #projectsModal .projects-dialog {
+    border-color: var(--dark-border-strong);
+    background: var(--dark-surface);
+  }
+  html[data-theme="dark"] #projectsModal .projects-head {
+    border-color: var(--dark-border);
+  }
+  html[data-theme="dark"] #projectsModal .projects-title,
+  html[data-theme="dark"] #projectsModal .projects-active-copy b,
+  html[data-theme="dark"] #projectsModal .projects-list-heading,
+  html[data-theme="dark"] #projectsModal .projects-item-name {
+    color: var(--dark-text);
+  }
+  html[data-theme="dark"] #projectsModal .projects-intro,
+  html[data-theme="dark"] #projectsModal .projects-active-copy small,
+  html[data-theme="dark"] #projectsModal .projects-item-meta {
+    color: var(--dark-muted);
+  }
+  html[data-theme="dark"] #projectsModal .projects-active-card {
+    border-color: rgba(139, 212, 158, 0.38);
+    background: linear-gradient(135deg, #20392c, #1c3027);
+  }
+  html[data-theme="dark"] #projectsModal .projects-item {
+    border-color: var(--dark-border);
+    background: var(--dark-raised);
+  }
+  html[data-theme="dark"] #projectsModal .projects-close,
+  html[data-theme="dark"] #projectsModal .projects-open-secondary {
+    border-color: var(--dark-border);
+    background: var(--dark-raised);
+    color: var(--dark-text);
+  }
+  @media (max-width: 560px) {
+    .projects-modal {
+      padding: 9px;
+    }
+    #projectsModal .projects-head,
+    #projectsModal .projects-list {
+      padding-right: 16px;
+      padding-left: 16px;
+    }
+    #projectsModal .projects-head {
+      gap: 12px;
+    }
+    .projects-new-btn {
+      width: 42px;
+      padding: 0;
+    }
+    .projects-new-btn > span:last-child {
+      display: none;
+    }
+    .projects-active-content {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .projects-open-main {
+      width: 100%;
+    }
+    #projectsModal .projects-item {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .projects-open-secondary {
+      margin-left: auto;
+    }
+    .projects-item-actions--compact {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
   .calendar-open {
     overflow: hidden;
   }
@@ -6674,7 +6930,7 @@
   }
   .panel--plant-detail .detail-tabs {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 4px;
     padding: 5px;
     border: 1px solid rgba(47, 107, 58, 0.12);
@@ -6813,6 +7069,74 @@
     font-size: 11px;
     color: #718072;
     line-height: 1.35;
+  }
+  .panel--plant-detail .detail-seasonality {
+    padding: 9px;
+    border: 1px solid rgba(47, 107, 58, 0.18);
+    border-radius: 13px;
+    background: linear-gradient(135deg, rgba(229, 243, 232, 0.78), rgba(255, 255, 255, 0.9));
+  }
+  .panel--plant-detail .detail-seasonality-heading {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+  }
+  .panel--plant-detail .detail-seasonality-icon {
+    display: grid;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(47, 107, 58, 0.12);
+    font-size: 14px;
+  }
+  .panel--plant-detail .detail-seasonality-heading b,
+  .panel--plant-detail .detail-seasonality-heading small {
+    display: block;
+  }
+  .panel--plant-detail .detail-seasonality-heading b {
+    color: var(--verde-scuro);
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .panel--plant-detail .detail-seasonality-heading small {
+    margin-top: 1px;
+    color: #637866;
+    font-size: 10px;
+    line-height: 1.3;
+  }
+  .panel--plant-detail .detail-seasonality .month-bar {
+    margin: 0;
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality {
+    border-color: rgba(139, 212, 158, 0.25);
+    background: linear-gradient(135deg, #1d3328, #24382d);
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality-icon {
+    background: rgba(139, 212, 158, 0.14);
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality-heading b {
+    color: #b9e3c4;
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality-heading small {
+    color: #b6c8b9;
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality .month-bar {
+    border-color: rgba(139, 212, 158, 0.2);
+    background: #182a21;
+    box-shadow: none;
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality .month-bar-head span,
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality .month-bar-head b {
+    color: #b9e3c4;
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality .month-bar-head b {
+    background: rgba(139, 212, 158, 0.14);
+  }
+  html[data-theme="dark"] .panel--plant-detail .detail-seasonality .month-bar-legend {
+    color: #b6c8b9;
   }
   .panel--plant-detail .detail-tech-grid {
     display: grid;
@@ -9375,7 +9699,7 @@
   }
 }
 
-/* Componenti condivisi richiamati anche dalle pagine con preferenze utente. */
+/* Moduli CSS del tema globale */
 
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia.
    I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */

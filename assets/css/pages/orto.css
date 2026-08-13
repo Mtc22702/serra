@@ -1,0 +1,1338 @@
+/* Il mio orto: sorgente degli stili del diario colturale, delle attività del
+ * giorno e del confronto tra semi e piantine.
+ * Viene distribuito come serra-orto.css e caricato dopo base.css; modificare qui.
+ * Tutte le classi sono prefissate con `orto-` per non interferire con le
+ * pagine esistenti; le varianti scure vivono nel layer dark-theme.
+ */
+
+/* Le fondazioni comuni (token, tema scuro, intestazione, piè di pagina) sono
+   in pages/_fondazioni.css: npm run build:css le antepone a questo file.
+   Gli altri bundle le contengono duplicate al proprio interno. */
+@layer base, dark-theme, polish;
+
+@layer base {
+  /* Token locali della pagina: derivano dalla palette dell'app. */
+  .orto-page {
+    --orto-green: #2f6b3a;
+    --orto-green-dk: #1f4c2b;
+    --orto-green-lt: #7bb661;
+    --orto-ink: #1f3a26;
+    --orto-ink-soft: #46584b;
+    --orto-muted: #6b7a6e;
+    --orto-surface: #ffffff;
+    --orto-surface-2: #f6f8f3;
+    --orto-line: #e3e9dd;
+    --orto-line-strong: #cfd9c9;
+    --orto-amber: #b5860f;
+    --orto-shadow-sm: 0 2px 6px rgba(24, 46, 32, 0.06);
+    --orto-shadow: 0 8px 24px rgba(24, 46, 32, 0.1);
+    --orto-shadow-lg: 0 18px 44px rgba(24, 46, 32, 0.16);
+    --orto-r: 18px;
+    --orto-r-lg: 26px;
+    color: var(--orto-ink);
+  }
+
+  /* L'intestazione dell'app è fissa: lo spazio in alto la compensa. */
+  .orto-wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: calc(var(--nav-h, 76px) + 22px) 20px 110px;
+  }
+
+  /* ---------- barra delle viste ---------- */
+  .orto-viewbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .orto-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid var(--orto-line);
+    border-radius: 16px;
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 650;
+    transition:
+      background 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .orto-tab:hover {
+    background: var(--orto-surface-2);
+  }
+
+  .orto-tab.is-active {
+    background: linear-gradient(160deg, #3d8148, var(--orto-green-dk));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(31, 76, 43, 0.3);
+  }
+
+  .orto-tab-badge {
+    min-width: 20px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: #a8452c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  /* ---------- intestazione della giornata ---------- */
+  .orto-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 26px 28px;
+    border-radius: var(--orto-r-lg);
+    background:
+      radial-gradient(
+        520px 260px at 88% 8%,
+        rgba(123, 182, 97, 0.4),
+        transparent 65%
+      ),
+      linear-gradient(150deg, #2f6b3a, #16341f);
+    color: #fff;
+    box-shadow: var(--orto-shadow-lg);
+  }
+
+  .orto-hero::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    bottom: -90px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .orto-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 26px;
+  }
+
+  .orto-hero-date {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .orto-hero h2 {
+    margin: 6px 0 10px;
+    font-size: 32px;
+    line-height: 1.1;
+  }
+
+  .orto-hero-sub {
+    max-width: 46ch;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 14px;
+  }
+
+  .orto-hero-stats {
+    display: flex;
+    gap: 22px;
+    margin-top: 18px;
+  }
+
+  .orto-hero-stats b {
+    display: block;
+    font-size: 25px;
+    line-height: 1;
+  }
+
+  .orto-hero-stats small {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .orto-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .orto-ring {
+    position: relative;
+    width: 132px;
+    height: 132px;
+  }
+
+  .orto-ring svg {
+    transform: rotate(-90deg);
+  }
+
+  /* Colonna flessibile, non griglia: con due elementi la griglia creava due
+     righe di pari altezza e la percentuale finiva a un quarto dall'alto
+     invece che al centro dell'anello. */
+  .orto-ring-txt {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #fff;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .orto-ring-txt b {
+    display: block;
+    font-size: 30px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .orto-ring-txt small {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .orto-notif {
+    display: flex;
+    gap: 12px;
+    max-width: 330px;
+    padding: 13px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--orto-r);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .orto-notif-ico {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.16);
+    place-items: center;
+  }
+
+  .orto-notif b {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    opacity: 0.75;
+    text-transform: uppercase;
+  }
+
+  .orto-notif p {
+    margin: 2px 0 0;
+    font-size: 13.5px;
+    line-height: 1.35;
+  }
+
+  /* ---------- elenco attività ---------- */
+  .orto-section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 30px 0 12px;
+  }
+
+  .orto-section-head h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .orto-count {
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: var(--orto-surface-2);
+    color: var(--orto-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+
+  .orto-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--orto-line);
+  }
+
+  .orto-task {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 9px;
+    padding: 13px 16px 13px 18px;
+    overflow: hidden;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+    animation: orto-rise 0.32s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+    transition:
+      box-shadow 0.18s ease,
+      transform 0.18s ease,
+      opacity 0.2s ease;
+  }
+
+  .orto-task::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: var(--task-accent, var(--orto-green));
+  }
+
+  .orto-task:hover {
+    box-shadow: var(--orto-shadow);
+    transform: translateY(-1px);
+  }
+
+  .orto-task.is-late {
+    background: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--task-accent, var(--orto-green)) 7%, var(--orto-surface)),
+      var(--orto-surface) 55%
+    );
+  }
+
+  .orto-task.is-done {
+    opacity: 0.5;
+  }
+
+  .orto-task.is-done .orto-task-label {
+    text-decoration: line-through;
+  }
+
+  @keyframes orto-rise {
+    from {
+      opacity: 0;
+      transform: translateY(9px);
+    }
+  }
+
+  .orto-check {
+    position: relative;
+    width: 27px;
+    height: 27px;
+    flex: none;
+    border: 2px solid var(--orto-line-strong);
+    border-radius: 9px;
+    background: var(--orto-surface);
+    cursor: pointer;
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      transform 0.12s ease;
+  }
+
+  .orto-check:hover {
+    border-color: var(--task-accent, var(--orto-green));
+    transform: scale(1.06);
+  }
+
+  .orto-check[data-on="1"] {
+    border-color: var(--task-accent, var(--orto-green));
+    background: var(--task-accent, var(--orto-green));
+  }
+
+  .orto-check[data-on="1"]::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 6px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 2.6px 2.6px 0;
+    transform: rotate(43deg);
+  }
+
+  .orto-task-ico {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 13px;
+    background: color-mix(
+      in srgb,
+      var(--task-accent, var(--orto-green)) 13%,
+      var(--orto-surface)
+    );
+    font-size: 18px;
+    place-items: center;
+  }
+
+  .orto-task-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .orto-task-label {
+    display: block;
+    font-size: 15px;
+    font-weight: 650;
+  }
+
+  .orto-task-label em {
+    color: var(--task-accent, var(--orto-green));
+    font-style: normal;
+  }
+
+  .orto-task-meta {
+    display: block;
+    overflow: hidden;
+    color: var(--orto-muted);
+    font-size: 12.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .orto-task-thumb {
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border: 2px solid var(--orto-surface);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-snooze {
+    padding: 7px 13px;
+    border: 1px solid var(--orto-line);
+    border-radius: 999px;
+    background: var(--orto-surface);
+    color: var(--orto-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ---------- stato vuoto ---------- */
+  .orto-empty {
+    padding: 44px 26px;
+    border: 1.5px dashed var(--orto-line-strong);
+    border-radius: var(--orto-r-lg);
+    text-align: center;
+  }
+
+  .orto-empty--wide {
+    grid-column: 1 / -1;
+  }
+
+  .orto-empty-ico {
+    display: grid;
+    width: 74px;
+    height: 74px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: var(--orto-surface-2);
+    font-size: 32px;
+    place-items: center;
+  }
+
+  .orto-empty h4 {
+    margin: 0 0 6px;
+    font-size: 20px;
+  }
+
+  .orto-empty p {
+    max-width: 42ch;
+    margin: 0 auto;
+    color: var(--orto-muted);
+    font-size: 14px;
+  }
+
+  /* ---------- schede ---------- */
+  .orto-view-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 4px 0 20px;
+  }
+
+  .orto-view-head h2 {
+    margin: 0 0 4px;
+    font-size: 30px;
+  }
+
+  .orto-view-head p {
+    max-width: 62ch;
+    margin: 0;
+    color: var(--orto-muted);
+  }
+
+  .orto-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  }
+
+  .orto-card {
+    overflow: hidden;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+    animation: orto-rise 0.36s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .orto-card:hover {
+    box-shadow: var(--orto-shadow);
+    transform: translateY(-3px);
+  }
+
+  .orto-card-photo {
+    position: relative;
+    height: 132px;
+    background: var(--orto-surface-2);
+  }
+
+  .orto-card-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .orto-card-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(9, 24, 14, 0.05) 30%,
+      rgba(9, 24, 14, 0.72)
+    );
+  }
+
+  /* Il disegno della pianta sta sopra la foto: alcune illustrazioni sono
+     chiarissime (cavolfiore, cipollotto) e su una foto luminosa sparivano.
+     Un dischetto scuro sotto e un contorno chiaro le tengono sempre leggibili,
+     senza cambiare i disegni. */
+  .orto-card-svg {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    z-index: 2;
+    width: 62px;
+    height: 62px;
+    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    background: rgba(18, 38, 26, 0.42);
+    backdrop-filter: blur(3px) saturate(1.05);
+    -webkit-backdrop-filter: blur(3px) saturate(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  .orto-card-titles {
+    position: absolute;
+    z-index: 2;
+    right: 74px;
+    bottom: 11px;
+    left: 16px;
+    color: #fff;
+  }
+
+  .orto-card-titles h3 {
+    margin: 0;
+    font-size: 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .orto-card-titles small {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 12px;
+  }
+
+  .orto-badges {
+    position: absolute;
+    z-index: 2;
+    top: 11px;
+    left: 12px;
+  }
+
+  .orto-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .orto-chip--seme {
+    background: rgba(255, 255, 255, 0.92);
+    color: #2f6b3a;
+  }
+
+  .orto-chip--piantina {
+    background: #f6c85a;
+    color: #4a3405;
+  }
+
+  .orto-chip--soft {
+    background: var(--orto-surface-2);
+    color: var(--orto-muted);
+  }
+
+  .orto-card-body {
+    padding: 16px 17px 17px;
+  }
+
+  /* ---------- avanzamento e fasi ---------- */
+  .orto-track {
+    position: relative;
+    height: 7px;
+    margin: 6px 0 0;
+    border-radius: 999px;
+    background: var(--orto-surface-2);
+  }
+
+  .orto-track i {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--orto-green-lt), var(--orto-green));
+  }
+
+  .orto-track-cursor {
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    border: 3px solid var(--orto-surface);
+    border-radius: 50%;
+    background: var(--orto-green-dk);
+    box-shadow: 0 2px 7px rgba(24, 46, 32, 0.35);
+    transform: translate(-50%, -50%);
+  }
+
+  .orto-phase-labels {
+    display: flex;
+    justify-content: space-between;
+    margin: 9px 0 12px;
+    color: var(--orto-muted);
+    font-size: 11px;
+  }
+
+  .orto-phase-labels b {
+    color: var(--orto-ink);
+    font-weight: 700;
+  }
+
+  .orto-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 0;
+    border-top: 1px solid var(--orto-line);
+    font-size: 13px;
+  }
+
+  .orto-meta-row span {
+    color: var(--orto-muted);
+  }
+
+  .orto-next {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+    padding: 11px 13px;
+    border-radius: 12px;
+    background: var(--orto-surface-2);
+    font-size: 13px;
+  }
+
+  .orto-next-ico {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-radius: 9px;
+    background: var(--orto-surface);
+    font-size: 15px;
+    place-items: center;
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-next small {
+    color: var(--orto-muted);
+  }
+
+  .orto-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 13px;
+  }
+
+  /* ---------- catalogo semi/piantine ---------- */
+  .orto-seg {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 13px;
+    background: var(--orto-surface-2);
+  }
+
+  .orto-seg button {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 8px 6px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    transition:
+      background 0.16s ease,
+      color 0.16s ease;
+  }
+
+  .orto-seg button small {
+    color: var(--orto-muted);
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+
+  .orto-seg button[aria-pressed="true"] {
+    background: var(--orto-surface);
+    color: var(--orto-ink);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-seg button:disabled {
+    color: color-mix(in srgb, var(--orto-muted) 55%, transparent);
+    cursor: not-allowed;
+  }
+
+  .orto-price-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 15px 0 12px;
+  }
+
+  .orto-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 27px;
+    line-height: 1;
+  }
+
+  .orto-price small {
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
+  .orto-save {
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: linear-gradient(140deg, #f6c85a, #e2a92c);
+    color: #4a3405;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .orto-note {
+    padding: 11px 13px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface));
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .orto-note b {
+    color: var(--orto-green);
+  }
+
+  .orto-note--warn {
+    background: color-mix(in srgb, var(--orto-amber) 12%, var(--orto-surface));
+  }
+
+  .orto-note--warn b {
+    color: var(--orto-amber);
+  }
+
+  .orto-note--off {
+    background: var(--orto-surface-2);
+    color: var(--orto-muted);
+  }
+
+  .orto-link {
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  /* ---------- controlli ---------- */
+  .orto-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 17px;
+    border: 1.5px solid var(--orto-green);
+    border-radius: 999px;
+    background: linear-gradient(160deg, #3d8148, var(--orto-green-dk));
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 650;
+    box-shadow: 0 4px 12px rgba(31, 76, 43, 0.26);
+    transition:
+      transform 0.14s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .orto-btn:hover {
+    box-shadow: 0 8px 20px rgba(31, 76, 43, 0.34);
+    transform: translateY(-2px);
+  }
+
+  .orto-btn:active {
+    transform: translateY(1px);
+  }
+
+  .orto-btn--ghost {
+    border-color: var(--orto-line-strong);
+    background: var(--orto-surface);
+    color: var(--orto-ink);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-btn--sm {
+    padding: 8px 13px;
+    font-size: 13px;
+  }
+
+  .orto-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 20px;
+  }
+
+  .orto-stats {
+    display: grid;
+    gap: 13px;
+    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+
+  .orto-stat {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 17px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-stat-ico {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    border-radius: 13px;
+    background: var(--orto-surface-2);
+    font-size: 19px;
+    place-items: center;
+  }
+
+  .orto-stat b {
+    display: block;
+    font-size: 25px;
+    line-height: 1;
+  }
+
+  .orto-stat small {
+    color: var(--orto-muted);
+    font-size: 12px;
+  }
+
+  /* ---------- dialogo di inserimento ---------- */
+  .orto-dialog {
+    /* base.css azzera i margini dei dialog: qui va ripristinato il centraggio. */
+    margin: auto;
+    width: min(470px, 94vw);
+    max-height: min(92vh, 760px);
+    padding: 0;
+    overflow: auto;
+    border: 0;
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    color: var(--orto-ink);
+    box-shadow: var(--orto-shadow-lg);
+  }
+
+  .orto-dialog::backdrop {
+    background: rgba(10, 24, 15, 0.58);
+  }
+
+  .orto-dialog-head {
+    padding: 20px 24px 16px;
+    background: linear-gradient(150deg, #2f6b3a, #16341f);
+    color: #fff;
+  }
+
+  .orto-dialog-head h3 {
+    margin: 0;
+    font-size: 21px;
+  }
+
+  .orto-dialog-head p {
+    margin: 3px 0 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 13px;
+  }
+
+  .orto-dialog-body {
+    padding: 20px 24px 24px;
+  }
+
+  .orto-field {
+    margin-bottom: 14px;
+  }
+
+  .orto-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  .orto-field input,
+  .orto-field select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 12px;
+    background: var(--orto-surface);
+    color: inherit;
+    font: inherit;
+  }
+
+  .orto-field-error {
+    display: block;
+    margin-top: 6px;
+    color: #a8452c;
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .orto-field-hint {
+    display: block;
+    margin-top: 5px;
+    color: var(--orto-muted);
+    font-size: 11.5px;
+  }
+
+  .orto-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .orto-row > * {
+    flex: 1;
+  }
+
+  .orto-origin {
+    display: flex;
+    gap: 10px;
+  }
+
+  .orto-origin label {
+    position: relative;
+    flex: 1;
+    margin: 0;
+    padding: 12px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 650;
+    text-align: center;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      color 0.16s ease;
+  }
+
+  .orto-origin input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .orto-origin label:has(input:checked) {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 10%, var(--orto-surface));
+    color: var(--orto-green);
+  }
+
+  .orto-origin span {
+    display: block;
+    color: var(--orto-muted);
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  /* ---------- messaggio temporaneo ---------- */
+  .orto-toast {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    z-index: 60;
+    padding: 13px 20px;
+    border-radius: 999px;
+    background: var(--orto-green-dk);
+    color: #fff;
+    box-shadow: var(--orto-shadow-lg);
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 20px);
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease;
+  }
+
+  .orto-toast.is-on {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 720px) {
+    .orto-wrap {
+      padding: calc(var(--nav-h, 62px) + 14px) 14px 104px;
+    }
+
+    .orto-hero {
+      padding: 20px;
+    }
+
+    .orto-hero h2 {
+      font-size: 25px;
+    }
+
+    .orto-ring {
+      width: 104px;
+      height: 104px;
+    }
+
+    .orto-notif {
+      max-width: none;
+    }
+
+    .orto-view-head h2 {
+      font-size: 24px;
+    }
+
+    .orto-task-thumb {
+      display: none;
+    }
+
+    /* Le viste diventano barra di navigazione in basso. */
+    .orto-tabs {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      z-index: 50;
+      justify-content: space-around;
+      border-radius: 20px;
+      box-shadow: var(--orto-shadow-lg);
+    }
+
+    .orto-tab {
+      flex: 1;
+      justify-content: center;
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orto-task,
+    .orto-card {
+      animation: none;
+    }
+  }
+}
+
+/* Varianti scure: stessi selettori del resto dell'app. */
+@layer dark-theme {
+  html[data-theme="dark"] .orto-page {
+    --orto-ink: #eaf2e9;
+    --orto-ink-soft: #c3d2c4;
+    --orto-muted: #9bab9d;
+    --orto-surface: #17281d;
+    --orto-surface-2: #1d3325;
+    --orto-line: #2b4030;
+    --orto-line-strong: #3a5340;
+    --orto-amber: #d8a72a;
+    --orto-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --orto-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+    --orto-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+  }
+
+  html[data-theme="dark"] .orto-note b {
+    color: var(--orto-green-lt);
+  }
+
+  html[data-theme="dark"] .orto-chip--seme {
+    background: rgba(255, 255, 255, 0.86);
+    color: #1f4c2b;
+  }
+
+  html[data-theme="dark"] .orto-btn--ghost {
+    color: var(--orto-ink);
+  }
+
+  html[data-theme="dark"] .orto-track-cursor {
+    border-color: var(--orto-surface);
+  }
+}
+
+/* Riga di contesto sotto le viste: chiarisce che la pagina è uno strumento
+   gratuito e non una vetrina d'acquisto. */
+@layer base {
+  .orto-tool-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 8px 13px;
+    border: 1px dashed var(--orto-line-strong);
+    border-radius: 999px;
+    color: var(--orto-muted);
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 720px) {
+    .orto-tool-note {
+      border-radius: 14px;
+    }
+  }
+}
+
+/* Primo avvio: al posto di un cruscotto vuoto, una domanda sola e tre modi
+   per rispondere. Senza colture il riepilogo direbbe "tutto a posto" quando
+   in realtà non c'è ancora nulla. */
+@layer base {
+  .orto-welcome {
+    max-width: 620px;
+    margin: 10px auto 0;
+    padding: 46px 32px 40px;
+    border: 1.5px dashed var(--orto-line-strong);
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+    text-align: center;
+  }
+
+  .orto-welcome-ico {
+    display: grid;
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(150deg, #e8f4e2, #cfe8c8);
+    font-size: 36px;
+    place-items: center;
+  }
+
+  .orto-welcome-kicker {
+    margin: 0;
+    color: var(--orto-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .orto-welcome h2 {
+    margin: 8px 0 10px;
+    font-size: 28px;
+    line-height: 1.12;
+  }
+
+  .orto-welcome-text {
+    max-width: 46ch;
+    margin: 0 auto 24px;
+    color: var(--orto-muted);
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  .orto-welcome-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    justify-content: center;
+  }
+
+  .orto-welcome-shop {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 24px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--orto-line);
+    color: var(--orto-muted);
+    font-size: 13px;
+  }
+
+  .orto-welcome-shop a {
+    color: var(--orto-green);
+    font-weight: 650;
+  }
+
+  @media (max-width: 720px) {
+    .orto-welcome {
+      padding: 34px 20px 30px;
+    }
+
+    .orto-welcome h2 {
+      font-size: 23px;
+    }
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .orto-welcome-ico {
+    background: linear-gradient(150deg, #23402c, #1a3122);
+  }
+
+  html[data-theme="dark"] .orto-welcome-shop a {
+    color: var(--orto-green-lt);
+  }
+}
+
+/* Promemoria del vassoio piantine anche da questa pagina. */
+@layer base {
+  .nav-link--vivaio[data-count]::after {
+    content: attr(data-count);
+    min-width: 19px;
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: #c9962f;
+    color: #2a1d02;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.6;
+    text-align: center;
+  }
+}
+
+/* Voci del menu mobile e distintivo "gratis": stesse regole della home, che
+   qui non sono incluse perché il bundle di questa pagina non contiene home.css. */
+@layer base {
+  .mobile-nav-section-title,
+  .mobile-nav-preferences {
+    display: none;
+  }
+
+  .nav-link--orto {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-link--orto::after {
+    content: "gratis";
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.14);
+    color: #2f6b3a;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  html[lang="ro"] .nav-link--orto::after {
+    content: "gratuit";
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .nav-link--orto::after {
+    background: rgba(115, 191, 138, 0.22);
+    color: #a8e6a3;
+  }
+}

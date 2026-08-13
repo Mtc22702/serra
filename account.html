@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Area Riservata · Orto in Serra</title>
     <script>
-      window.SERRA_APP_VERSION = "20260731-76172f6ed862";
+      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,7 +13,11 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="assets/img/icons/orto-in-serra-192-v2.png" type="image/png" />
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -25,7 +29,7 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-account.css?v=20260722-order-insights-ui"
+      href="assets/css/serra-account.css?v=20260813-b5b73776f70c"
     />
     <!-- Script iniziale che applica il tema prima della visualizzazione della pagina -->
     <script>
@@ -64,35 +68,31 @@
             data-i18n-acc="nav.menu_explore"
             >Esplora</span
           >
-          <a href="index.html" class="nav-link" data-i18n-acc="nav.home"
-            >🏠 Home</a
-          >
+          <!-- Stesse tre strade della home, più il configuratore. -->
           <a
             href="index.html#stagione"
-            class="nav-link"
-            data-i18n-acc="nav.catalog"
-            >🌿 Catalogo completo</a
+            class="nav-link nav-link--semi"
+            data-i18n-acc="nav.semi"
+            >🌿 Catalogo semi</a
           >
           <a
-            href="index.html#abbinamenti"
-            class="nav-link"
-            data-i18n-acc="nav.abbinamenti"
-            >🤝 Abbinamenti</a
+            href="vivaio.html"
+            class="nav-link nav-link--vivaio"
+            data-i18n-acc="nav.vivaio"
+            >🪴 Vivaio piantine</a
           >
-          <a href="index.html#kit" class="nav-link" data-i18n-acc="nav.kit"
-            >📦 Kit del mese</a
+          <!-- Il distintivo "gratis" è uno pseudo-elemento CSS: vedi index. -->
+          <a
+            href="orto.html"
+            class="nav-link nav-link--orto"
+            data-i18n-acc="nav.orto"
+            >🌱 Il mio orto</a
           >
           <a
             href="index.html?preconfig=account"
             class="nav-link nav-link--configuratore"
             data-i18n-acc="nav.configuratore"
-            >📐 Configuratore</a
-          >
-          <a
-            href="index.html#contatti"
-            class="nav-link"
-            data-i18n-acc="nav.contatti"
-            >✉️ Contatti</a
+            >📐 Configuratore serra</a
           >
           <a
             href="account.html"
@@ -165,30 +165,50 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <!-- Toggle Tema -->
-          <button
-            class="theme-toggle"
-            type="button"
-            aria-label="Attiva modalità scura"
-            aria-pressed="false"
-            title="Cambia tema"
+          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
+               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <a
+            href="account.html"
+            class="nav-account-btn"
+            aria-current="page"
+            data-i18n-acc-aria="nav.account_label"
+            aria-label="Area Personale"
           >
-            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"
-              >☾</span
+            <span class="nav-account-ico" aria-hidden="true">👤</span>
+            <span class="nav-account-label" data-i18n-acc="nav.account_label"
+              >Area Personale</span
             >
-            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"
-              >☀</span
+          </a>
+          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <div class="nav-prefs">
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+              title="Cambia tema"
             >
-          </button>
-          <div class="nav-lang">
-            <select
-              id="langSelect"
-              data-account-action="set-language"
-              title="Lingua / Limbă"
-            >
-              <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
-              <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
-            </select>
+              <span
+                class="theme-toggle-icon theme-toggle-moon"
+                aria-hidden="true"
+                >☾</span
+              >
+              <span
+                class="theme-toggle-icon theme-toggle-sun"
+                aria-hidden="true"
+                >☀</span
+              >
+            </button>
+            <div class="nav-lang">
+              <select
+                id="langSelect"
+                data-account-action="set-language"
+                title="Lingua / Limbă"
+              >
+                <option value="it">🇮🇹&nbsp;&nbsp;IT</option>
+                <option value="ro">🇷🇴&nbsp;&nbsp;RO</option>
+              </select>
+            </div>
           </div>
           <button
             class="cart-btn"
@@ -797,6 +817,15 @@
               </div>
             </div>
           </div>
+
+          <!-- Modulo aggiuntivo: porta gli acquisti in "Il mio orto".
+               Il contenuto è disegnato da account-orto.js, che non tocca
+               account.js né gli ordini: li legge soltanto. -->
+          <div
+            class="dashboard-card card span-2-large"
+            id="accountToPlantCard"
+            hidden
+          ></div>
         </div>
       </section>
 
@@ -1581,7 +1610,7 @@
           © 2026 Orto in Serra · Tutti i diritti riservati
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260731-76172f6ed862</span
+          >v20260813-b5b73776f70c</span
         >
       </div>
     </footer>
@@ -1591,8 +1620,10 @@
 
     <!-- Bootstrap: base e catalogo devono precedere account; boot-sw gestisce la cache. -->
     <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
     <script src="assets/js/account.js" defer></script>
+    <script src="assets/js/account-orto.js" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

@@ -13,7 +13,9 @@ const HTML_PAGES = [
   "configuratore.html",
   "account.html",
   "guida.html",
-  "ordine-confermato.html"
+  "ordine-confermato.html",
+  "orto.html",
+  "vivaio.html"
 ];
 const SW_FILE = "sw.js";
 

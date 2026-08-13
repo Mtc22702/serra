@@ -47,8 +47,8 @@
       data: {
         plants: cloneData(allPlants),
         users: cloneData(allUsers),
-        orders: cloneData(allOrders)
-      }
+        orders: cloneData(allOrders),
+      },
     };
   }
 
@@ -58,7 +58,7 @@
 
     try {
       const metadata = JSON.parse(
-        localStorage.getItem(LAST_BACKUP_KEY) || "null"
+        localStorage.getItem(LAST_BACKUP_KEY) || "null",
       );
       if (!metadata?.exportedAt) {
         details.textContent = tAcc("admin.backup_never");
@@ -68,8 +68,8 @@
         locale(),
         {
           dateStyle: "medium",
-          timeStyle: "short"
-        }
+          timeStyle: "short",
+        },
       );
       details.textContent = tAcc("admin.backup_last", { date: exportedAt });
     } catch (_) {
@@ -79,7 +79,7 @@
 
   function downloadJson(data, filename) {
     const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json;charset=utf-8"
+      type: "application/json;charset=utf-8",
     });
     const downloadUrl = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
@@ -94,7 +94,7 @@
   function confirmIrreversibleAction(kind) {
     const confirmationValue = tAcc(`admin.clear_${kind}_confirm_value`);
     const typedValue = prompt(
-      tAcc(`confirm.clear_${kind}_typed`, { value: confirmationValue })
+      tAcc(`confirm.clear_${kind}_typed`, { value: confirmationValue }),
     );
     return typedValue?.trim().toLocaleUpperCase(locale()) === confirmationValue;
   }
@@ -108,7 +108,7 @@
     const parts = firstName.split(/\s+/);
     return {
       firstName: parts.shift() || "",
-      lastName: parts.join(" ")
+      lastName: parts.join(" "),
     };
   }
 
@@ -123,7 +123,7 @@
       month: "2-digit",
       year: "numeric",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
     });
   }
 
@@ -131,14 +131,14 @@
     "In elaborazione": "status.processing",
     Imballato: "status.packed",
     Spedito: "status.shipped",
-    Annullato: "status.cancelled"
+    Annullato: "status.cancelled",
   };
 
   const ADMIN_ORDER_STATUSES = [
     "In elaborazione",
     "Imballato",
     "Spedito",
-    "Annullato"
+    "Annullato",
   ];
 
   // Gli eventuali vecchi ordini "Completato" restano leggibili e vengono
@@ -152,7 +152,7 @@
     frutto: "category.fruit",
     radice: "category.root",
     aromatica: "category.aromatic",
-    legume: "category.legume"
+    legume: "category.legume",
   };
 
   function statusLabel(status) {
@@ -240,13 +240,15 @@
     document.querySelectorAll("[data-i18n-acc-aria]").forEach((el) => {
       el.setAttribute(
         "aria-label",
-        tAcc(el.getAttribute("data-i18n-acc-aria"))
+        tAcc(el.getAttribute("data-i18n-acc-aria")),
       );
     });
 
     document.querySelectorAll("[data-i18n-acc-title]").forEach((el) => {
       el.setAttribute("title", tAcc(el.getAttribute("data-i18n-acc-title")));
     });
+    // Il pulsante profilo mostra lo stato di accesso, non una voce tradotta.
+    window.SerraAPI?.updateNavbarUser?.();
 
     updateAccountSelectLabels();
     updateAccountCartCount();
@@ -353,7 +355,7 @@
         case "order-edit-step":
           stepOrderEditQuantity(
             Number(control.dataset.itemIndex),
-            Number(control.dataset.delta)
+            Number(control.dataset.delta),
           );
           break;
         case "order-edit-remove":
@@ -390,7 +392,7 @@
     });
     document.addEventListener("input", (event) => {
       const control = event.target.closest(
-        '[data-account-action="filter-plants"]'
+        '[data-account-action="filter-plants"]',
       );
       if (control) filterAdminPlants();
       if (event.target.closest('[data-account-action="filter-orders"]'))
@@ -399,13 +401,13 @@
       if (orderQuantity) {
         setOrderEditQuantity(
           Number(orderQuantity.dataset.itemIndex),
-          Number(orderQuantity.value)
+          Number(orderQuantity.value),
         );
       }
     });
     document.addEventListener("change", (event) => {
       const control = event.target.closest(
-        '[data-account-action="set-language"]'
+        '[data-account-action="set-language"]',
       );
       if (control) setLang(control.value);
       if (
@@ -415,7 +417,7 @@
         syncProfileFieldVisibility();
       }
       const orderStatus = event.target.closest(
-        '[data-account-action="set-order-status"]'
+        '[data-account-action="set-order-status"]',
       );
       if (orderStatus)
         handleToggleOrderStatus(orderStatus.dataset.orderId, orderStatus.value);
@@ -431,7 +433,7 @@
         register: handleRegister,
         "update-profile": handleUpdateProfile,
         "update-order": handleOrderUpdate,
-        "save-plant": handleSavePlant
+        "save-plant": handleSavePlant,
       };
       handlers[form.dataset.accountForm]?.(event);
     });
@@ -464,7 +466,7 @@
       ?.addEventListener("input", function () {
         updateModalPhotoPreview(
           this.value,
-          document.getElementById("editPlantId").value
+          document.getElementById("editPlantId").value,
         );
       });
     document
@@ -558,7 +560,7 @@
     return tAcc("notification.order_status", {
       id: order.id,
       status: statusLabel(order.status),
-      tracking
+      tracking,
     });
   }
 
@@ -672,7 +674,7 @@
     listContainer.innerHTML = "";
 
     const sorted = [...projects].sort(
-      (a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)
+      (a, b) => (b.updatedAt || 0) - (a.updatedAt || 0),
     );
 
     sorted.forEach((p) => {
@@ -700,7 +702,7 @@
   function openUserProject(id) {
     try {
       const store = JSON.parse(
-        localStorage.getItem("serra.projects.v1") || "null"
+        localStorage.getItem("serra.projects.v1") || "null",
       );
       if (!store || !Array.isArray(store.projects)) {
         window.location.href = "configuratore.html";
@@ -735,8 +737,8 @@
         myOrders.flatMap((order) =>
           (order.items || [])
             .filter((item) => item.type !== "material")
-            .map((item) => item.id)
-        )
+            .map((item) => item.id),
+        ),
       );
       varietiesCount.textContent = String(varieties.size);
     }
@@ -761,11 +763,11 @@
 
       // Ordina la lista dei prodotti alfabeticamente
       const sortedItems = [...(order.items || [])].sort((a, b) =>
-        plantLabel(a).localeCompare(plantLabel(b), locale())
+        plantLabel(a).localeCompare(plantLabel(b), locale()),
       );
       const totalUnits = sortedItems.reduce(
         (sum, item) => sum + (Number(item.bustine) || 0),
-        0
+        0,
       );
       const productsSummaryKey = `dash.products_summary_${
         sortedItems.length === 1 ? "one" : "many"
@@ -776,7 +778,7 @@
             <span class="order-items-summary-icon" aria-hidden="true">⌄</span>
             <span>${tAcc(productsSummaryKey, {
               count: sortedItems.length,
-              units: totalUnits
+              units: totalUnits,
             })}</span>
           </summary>
           <div class="order-items-flex">
@@ -847,7 +849,7 @@
   function orderEditMoney(value) {
     return new Intl.NumberFormat(locale(), {
       style: "currency",
-      currency: "EUR"
+      currency: "EUR",
     }).format(Number(value) || 0);
   }
 
@@ -855,7 +857,7 @@
     return editingOrderItems.reduce(
       (sum, item) =>
         sum + (Number(item.prezzo) || 2.5) * (Number(item.bustine) || 0),
-      0
+      0,
     );
   }
 
@@ -888,7 +890,7 @@
 
   function openOrderEditModal(orderId) {
     const order = allOrders.find(
-      (entry) => entry.id === orderId && entry.email === currentUser?.email
+      (entry) => entry.id === orderId && entry.email === currentUser?.email,
     );
     if (!order || order.status !== "In elaborazione") {
       alert(tAcc("order.not_editable"));
@@ -915,7 +917,7 @@
     if (!editingOrderItems[index]) return;
     editingOrderItems[index].bustine = Math.min(
       99,
-      Math.max(1, Math.round(Number(value) || 1))
+      Math.max(1, Math.round(Number(value) || 1)),
     );
     renderOrderEditItems();
   }
@@ -943,7 +945,7 @@
     const latestOrders = await window.SerraAPI.getOrders();
     const order = latestOrders.find(
       (entry) =>
-        entry.id === editingOrderId && entry.email === currentUser?.email
+        entry.id === editingOrderId && entry.email === currentUser?.email,
     );
     if (!order || order.status !== "In elaborazione") {
       alert(tAcc("order.not_editable"));
@@ -964,7 +966,7 @@
   async function cancelUserOrder(orderId) {
     const latestOrders = await window.SerraAPI.getOrders();
     const order = latestOrders.find(
-      (entry) => entry.id === orderId && entry.email === currentUser?.email
+      (entry) => entry.id === orderId && entry.email === currentUser?.email,
     );
     if (!order || order.status !== "In elaborazione") {
       alert(tAcc("order.not_editable"));
@@ -1005,7 +1007,7 @@
       (p) =>
         plantLabel(p).toLocaleLowerCase(currentLang).includes(query) ||
         p.id.toLowerCase().includes(query) ||
-        (p.arch || "").toLowerCase().includes(query)
+        (p.arch || "").toLowerCase().includes(query),
     );
 
     filtered.forEach((p) => {
@@ -1055,10 +1057,10 @@
 
     // Ordina dal più recente in alto
     const sorted = [...allOrders].sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
+      (a, b) => new Date(b.date) - new Date(a.date),
     );
     const search = String(
-      document.getElementById("adminOrderSearch")?.value || ""
+      document.getElementById("adminOrderSearch")?.value || "",
     )
       .trim()
       .toLocaleLowerCase(currentLang);
@@ -1067,15 +1069,15 @@
     const today = new Date().toDateString();
     const active = sorted.filter(
       (order) =>
-        !order.archived && normalizedOrderStatus(order.status) !== "Annullato"
+        !order.archived && normalizedOrderStatus(order.status) !== "Annullato",
     );
     const shippedToday = active.filter(
       (order) =>
         normalizedOrderStatus(order.status) === "Spedito" &&
-        new Date(order.date).toDateString() === today
+        new Date(order.date).toDateString() === today,
     );
     const cancelled = sorted.filter(
-      (order) => normalizedOrderStatus(order.status) === "Annullato"
+      (order) => normalizedOrderStatus(order.status) === "Annullato",
     );
     const scopeOrders =
       adminOrderScope === "cancelled"
@@ -1085,7 +1087,7 @@
           : active;
     const filtered = scopeOrders.filter((order) => {
       const customer = getUserNameByEmail(order.email).toLocaleLowerCase(
-        currentLang
+        currentLang,
       );
       const haystack =
         `${order.id} ${order.email} ${customer}`.toLocaleLowerCase(currentLang);
@@ -1098,7 +1100,7 @@
     [
       ["adminOrdersActiveCount", active.length],
       ["adminOrdersShippedTodayCount", shippedToday.length],
-      ["adminOrdersArchivedCount", cancelled.length]
+      ["adminOrdersArchivedCount", cancelled.length],
     ].forEach(([id, count]) => {
       const el = document.getElementById(id);
       if (el) el.textContent = String(count);
@@ -1106,13 +1108,13 @@
     document.querySelectorAll(".admin-order-insight").forEach((button) => {
       button.classList.toggle(
         "active",
-        button.dataset.filterScope === adminOrderScope
+        button.dataset.filterScope === adminOrderScope,
       );
     });
     const countEl = document.getElementById("adminOrderCount");
     if (countEl) {
       countEl.textContent = tAcc("admin.orders_count", {
-        count: filtered.length
+        count: filtered.length,
       });
     }
 
@@ -1124,11 +1126,11 @@
 
       // Ordina la lista dei prodotti alfabeticamente
       const sortedItems = [...order.items].sort((a, b) =>
-        plantLabel(a).localeCompare(plantLabel(b), locale())
+        plantLabel(a).localeCompare(plantLabel(b), locale()),
       );
       const totalUnits = sortedItems.reduce(
         (sum, item) => sum + (Number(item.bustine) || 0),
-        0
+        0,
       );
       const productsSummaryKey = `dash.products_summary_${
         sortedItems.length === 1 ? "one" : "many"
@@ -1139,7 +1141,7 @@
             <span class="order-items-summary-icon" aria-hidden="true">⌄</span>
             <span>${tAcc(productsSummaryKey, {
               count: sortedItems.length,
-              units: totalUnits
+              units: totalUnits,
             })}</span>
           </summary>
           <div class="order-items-flex">
@@ -1249,10 +1251,10 @@
         orderId: order.id,
         message: tAcc("notification.tracking_updated", {
           id: order.id,
-          code: tracking
+          code: tracking,
         }),
         read: false,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
       });
       await window.SerraAPI.saveUsers(allUsers);
     }
@@ -1285,7 +1287,7 @@
     statsText.removeAttribute("data-i18n-acc");
     const clientsCount = allUsers.filter((u) => u.role !== "admin").length;
     const cancelledOrders = allOrders.filter(
-      (order) => order.status === "Annullato"
+      (order) => order.status === "Annullato",
     ).length;
     const activeOrders = allOrders.length - cancelledOrders;
     statsText.innerHTML = `
@@ -1309,7 +1311,7 @@
       foglia: 0,
       frutto: 0,
       radice: 0,
-      aromatica: 0
+      aromatica: 0,
     };
 
     allOrders.forEach((order) => {
@@ -1333,21 +1335,21 @@
       foglia: categoryLabel("foglia"),
       frutto: categoryLabel("frutto"),
       radice: categoryLabel("radice"),
-      aromatica: categoryLabel("aromatica")
+      aromatica: categoryLabel("aromatica"),
     };
 
     const catColors = {
       foglia: "#48bb78", // Green
       frutto: "#ecc94b", // Yellow/Orange
       radice: "#ed8936", // Orange/Brown
-      aromatica: "#9f7aea" // Purple
+      aromatica: "#9f7aea", // Purple
     };
 
     // Costruisci SVG ricavi
     const revData = Object.entries(categoryRevenues).map(([cat, val]) => ({
       label: catLabels[cat] || cat,
       value: val,
-      color: catColors[cat] || "#48bb78"
+      color: catColors[cat] || "#48bb78",
     }));
 
     const maxRev = Math.max(...revData.map((d) => d.value), 10);
@@ -1454,10 +1456,10 @@
           : tAcc("auth.test_customer").replace(":", "");
       const roleClass = user.role === "admin" ? "admin" : "user";
       const orders = allOrders.filter(
-        (order) => order.email === user.email && order.status !== "Annullato"
+        (order) => order.email === user.email && order.status !== "Annullato",
       );
       const lastOrder = [...orders].sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
+        (a, b) => new Date(b.date) - new Date(a.date),
       )[0];
 
       tr.innerHTML = `
@@ -1497,7 +1499,7 @@
     const items = (order.items || [])
       .map(
         (item) =>
-          `<li><strong>${escapeHtmlAccount(plantLabel(item))}</strong><span>×${Number(item.bustine) || 0}</span></li>`
+          `<li><strong>${escapeHtmlAccount(plantLabel(item))}</strong><span>×${Number(item.bustine) || 0}</span></li>`,
       )
       .join("");
     content.innerHTML = `<div class="admin-order-detail-meta"><p><strong>${tAcc("admin.orders_client")}</strong><br>${escapeHtmlAccount(fullUserName(user) || tAcc("customer.guest"))}<br><small>${escapeHtmlAccount(order.email)}</small></p><p><strong>${tAcc("dash.order_status")}</strong><br><span class="status-badge ${order.status.toLowerCase().replace(" ", "-")}">${statusLabel(order.status)}</span></p><p><strong>${tAcc("dash.order_total")}</strong><br>€ ${Number(order.total || 0).toFixed(2)}</p></div><div class="admin-order-detail-list"><strong>${tAcc("dash.order_items")}</strong><ul>${items}</ul></div>`;
@@ -1540,7 +1542,7 @@
 
     // Cerca l'utente nel db locale
     const user = allUsers.find(
-      (u) => u.email === email && u.password === password
+      (u) => u.email === email && u.password === password,
     );
 
     if (user) {
@@ -1599,7 +1601,7 @@
       shippingCitta: citta,
       shippingCap: cap,
       shippingPaese: currentLang === "ro" ? "România" : "Italia",
-      role: "user"
+      role: "user",
     };
 
     allUsers.push(newUser);
@@ -1709,7 +1711,7 @@
       "profShippingAddress",
       "profShippingCity",
       "profShippingCap",
-      "profShippingCountry"
+      "profShippingCountry",
     ].forEach((id) => {
       const input = document.getElementById(id);
       if (input) input.required = !same;
@@ -1776,10 +1778,10 @@
           message: tAcc("notification.order_status", {
             id: order.id,
             status: statusLabel(nextStatus),
-            tracking: trackingMsg
+            tracking: trackingMsg,
           }),
           read: false,
-          date: new Date().toISOString()
+          date: new Date().toISOString(),
         });
         await window.SerraAPI.saveUsers(allUsers);
       }
@@ -1808,10 +1810,10 @@
       allPlants.forEach((pOpt) => {
         if (pOpt.id !== plantId) {
           selectAmiche.appendChild(
-            new Option(`${plantLabel(pOpt)} (${pOpt.id})`, pOpt.id)
+            new Option(`${plantLabel(pOpt)} (${pOpt.id})`, pOpt.id),
           );
           selectNemiche.appendChild(
-            new Option(`${plantLabel(pOpt)} (${pOpt.id})`, pOpt.id)
+            new Option(`${plantLabel(pOpt)} (${pOpt.id})`, pOpt.id),
           );
         }
       });
@@ -1909,7 +1911,7 @@
     // Leggi mesi selezionati
     const selectMonths = document.getElementById("editPlantMonths");
     const mesi = Array.from(selectMonths.selectedOptions).map((opt) =>
-      parseInt(opt.value)
+      parseInt(opt.value),
     );
 
     if (action === "new") {
@@ -1934,7 +1936,7 @@
         acqua: "media",
         mesi,
         amiche,
-        nemiche
+        nemiche,
       };
       allPlants.push(newPlant);
     } else {
@@ -1999,8 +2001,8 @@
         exportedAt: backup.exportedAt,
         plants: backup.data.plants.length,
         users: backup.data.users.length,
-        orders: backup.data.orders.length
-      })
+        orders: backup.data.orders.length,
+      }),
     );
     renderBackupStatus();
   }
@@ -2110,7 +2112,7 @@
       leurda: "🧄",
       melissa: "🌿",
       cerfoglio: "🌿",
-      cimbru: "🌿"
+      cimbru: "🌿",
     };
     return emojis[plantId] || "🌿";
   }
@@ -2171,7 +2173,7 @@
         order,
         user,
         plants: allPlants,
-        lang: currentLang
+        lang: currentLang,
       });
     } catch (error) {
       console.error("Manual PDF generation failed", error);
@@ -2193,7 +2195,7 @@
       nome: tAcc("customer.guest"),
       email: order.email,
       telefono: "",
-      indirizzo: "-"
+      indirizzo: "-",
     };
     const shipping = order.shipping || {
       name: fullUserName(user),
@@ -2201,23 +2203,23 @@
       address: user.shippingIndirizzo || user.indirizzo || "-",
       city: user.shippingCitta || user.citta || "",
       cap: user.shippingCap || user.cap || "",
-      country: user.shippingPaese || user.billingPaese || "Italia"
+      country: user.shippingPaese || user.billingPaese || "Italia",
     };
     const shippingAddress = [
       shipping.address,
       shipping.cap,
       shipping.city,
-      shipping.country
+      shipping.country,
     ]
       .filter(Boolean)
       .map(escapeHtmlAccount)
       .join(", ");
     const sortedItems = [...(order.items || [])].sort((a, b) =>
-      plantLabel(a).localeCompare(plantLabel(b), locale())
+      plantLabel(a).localeCompare(plantLabel(b), locale()),
     );
     const totalUnits = sortedItems.reduce(
       (sum, item) => sum + (Number(item.bustine) || 0),
-      0
+      0,
     );
     const rowsHtml = sortedItems
       .map((item) => {
@@ -2316,7 +2318,7 @@
       nome: tAcc("customer.guest"),
       email: order.email,
       phone: "-",
-      indirizzo: "-"
+      indirizzo: "-",
     };
     const billing = order.billing || {
       accountType: user.accountType || "private",
@@ -2326,7 +2328,7 @@
       cap: user.billingCap || user.cap || "",
       country: user.billingPaese || "Italia",
       vatNumber: user.partitaIva || "",
-      taxCode: user.codiceFiscale || ""
+      taxCode: user.codiceFiscale || "",
     };
     const shipping = order.shipping || {
       name: fullUserName(user),
@@ -2334,7 +2336,7 @@
       address: user.shippingIndirizzo || user.indirizzo || "-",
       city: user.shippingCitta || user.citta || "",
       cap: user.shippingCap || user.cap || "",
-      country: user.shippingPaese || user.billingPaese || "Italia"
+      country: user.shippingPaese || user.billingPaese || "Italia",
     };
     const addressLine = (data) =>
       [data.address, data.cap, data.city, data.country]
