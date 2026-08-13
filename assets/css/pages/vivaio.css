@@ -1294,3 +1294,21 @@
     }
   }
 }
+
+/* Prezzi, filtri e promesse di servizio restano leggibili su tutti i device. */
+@layer polish {
+  .viv-visual-label,
+  .viv-hero .orto-hero-date,
+  .viv-shipping,
+  .viv-hero .viv-stat-copy small,
+  .viv-chip small,
+  .orto-chip--piantina,
+  .viv-save-photo,
+  .viv-unit,
+  .viv-unit-price,
+  .viv-card-foot,
+  .viv-card-foot--hint,
+  .shop-remove {
+    font-size: 12px;
+  }
+}

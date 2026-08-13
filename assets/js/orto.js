@@ -42,6 +42,8 @@
       "nav.account": "👤 Area Personale",
       "nav.account_label": "Area Personale",
       "nav.carrello": "Carrello",
+      "nav.main_aria": "Navigazione principale",
+      "nav.cart_aria": "Apri carrello",
       "page.tool_note":
         "Strumento gratuito per i semi e le piantine che hai già. Qui non si compra nulla.",
       "tab.oggi": "Oggi",
@@ -239,6 +241,8 @@
       "nav.account": "👤 Contul Meu",
       "nav.account_label": "Contul Meu",
       "nav.carrello": "Coș",
+      "nav.main_aria": "Navigare principală",
+      "nav.cart_aria": "Deschide coșul",
       "page.tool_note":
         "Instrument gratuit pentru semințele și răsadurile pe care le ai deja. Aici nu se cumpără nimic.",
       "tab.oggi": "Astăzi",
@@ -1082,6 +1086,17 @@
     window.SerraAPI?.updateNavbarUser?.();
     const select = document.getElementById("ortoLangSelect");
     if (select) select.value = lang;
+    document
+      .getElementById("mainNav")
+      ?.setAttribute("aria-label", t("nav.main_aria"));
+    document
+      .querySelector(".cart-btn")
+      ?.setAttribute("aria-label", t("nav.cart_aria"));
+    document.querySelectorAll(".lang-switch-opt").forEach((button) => {
+      const active = button.dataset.lang === lang;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
     try {
       localStorage.setItem("ois.lang", lang);
     } catch (_) {}

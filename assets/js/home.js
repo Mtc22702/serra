@@ -5092,7 +5092,9 @@ if (catalogSearchLink) {
       ?.addEventListener("click", toggleCatalogFilters);
 
     document
-      .querySelectorAll(".hero-cfg-level, .nav-link--configuratore")
+      .querySelectorAll(
+        ".hero-cfg-level, .hero-cfg-open-preconfig, .nav-link--configuratore",
+      )
       .forEach((link) => {
         link.addEventListener("click", function (e) {
           e.preventDefault();

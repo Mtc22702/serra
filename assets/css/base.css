@@ -11208,8 +11208,9 @@ html[data-theme="dark"]
     .site-header #mainNav > .nav-link--orto {
       display: grid;
       align-items: center;
-      grid-template-columns: 34px minmax(0, 1fr);
+      grid-template-columns: 34px max-content minmax(0, 1fr);
       grid-template-rows: auto auto;
+      column-gap: 0.55rem;
       row-gap: 2px;
     }
 
@@ -11227,7 +11228,7 @@ html[data-theme="dark"]
     .site-header #mainNav > .nav-link--orto .nav-link-tool-hint {
       display: block;
       min-width: 0;
-      grid-column: 2;
+      grid-column: 2 / -1;
       grid-row: 2;
       align-self: start;
       overflow: visible;
@@ -11239,12 +11240,61 @@ html[data-theme="dark"]
       white-space: normal;
     }
 
+    /* Il distintivo appartiene al titolo del tool: sulla stessa riga è più
+       facile da associare a “Il mio orto” e non sembra una voce separata. */
+    .site-header #mainNav > .nav-link--orto::after {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+      justify-self: start;
+      margin: 0;
+      padding: 3px 8px;
+      border: 1px solid rgba(47, 107, 58, 0.18);
+      border-radius: 999px;
+      background: #e2efdf;
+      color: #2f6b3a;
+      font-size: 12px !important;
+      font-weight: 800;
+      letter-spacing: 0.045em;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
     html[data-theme="dark"]
       .site-header
       #mainNav
       > .nav-link--orto
       .nav-link-tool-hint {
       color: #aebdb2;
+    }
+
+    html[data-theme="dark"]
+      .site-header
+      #mainNav
+      > .nav-link--orto::after {
+      border-color: rgba(168, 230, 163, 0.24);
+      background: rgba(115, 191, 138, 0.2);
+      color: #c4efc4;
+    }
+  }
+}
+
+/* Soglia di leggibilità condivisa: micro-etichette mai sotto i 12 px. */
+@layer polish {
+  .site-header .cart-count,
+  .footer-tip-kicker,
+  .footer-nav-title,
+  .footer-legal-title,
+  .footer-company-info,
+  .footer-app-version,
+  .footer-gdpr-copy {
+    font-size: 12px !important;
+  }
+
+  @media (max-width: 660px) {
+    .site-header #mainNav > .nav-link--orto .nav-link-tool-hint {
+      font-size: 12px !important;
+      line-height: 1.3;
     }
   }
 }

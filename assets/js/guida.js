@@ -8,6 +8,10 @@
 (() => {
   const copy = {
     it: {
+      "page.title": "Guida · Orto in Serra",
+      "aria.main_nav": "Navigazione principale",
+      "aria.cart": "Apri carrello",
+      "aria.tabs": "Scegli il tuo livello di esperienza",
       "nav.home": "🏠 Home",
       "nav.brand_sub": "Coltiva con un piano",
       "nav.menu_explore": "Esplora",
@@ -22,7 +26,11 @@
       "nav.theme_hint": "Chiaro / scuro",
       "nav.language": "Lingua",
       "hero.kicker": "GUIDA ALL'APP",
-      "hero.title": "Impara a progettare la tua serra.",
+      "hero.title": "Scegli come progettare la tua serra.",
+      "hero.intro":
+        "Tre percorsi chiari, dal primo progetto alla composizione libera. Parti dal livello che ti somiglia di più.",
+      "hero.picker_title": "Da dove vuoi partire?",
+      "hero.picker_hint": "Potrai cambiare percorso in qualsiasi momento.",
       "tab.novizio": "Principiante",
       "tab.novizio_hint": "Ti guido passo passo",
       "tab.intermedio": "Intermedio",
@@ -80,6 +88,10 @@
       help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore."
     },
     ro: {
+      "page.title": "Ghid · Orto in Serra",
+      "aria.main_nav": "Navigare principală",
+      "aria.cart": "Deschide coșul",
+      "aria.tabs": "Alege nivelul tău de experiență",
       "nav.home": "🏠 Acasă",
       "nav.brand_sub": "Cultivă cu un plan",
       "nav.menu_explore": "Explorează",
@@ -94,7 +106,11 @@
       "nav.theme_hint": "Luminos / întunecat",
       "nav.language": "Limbă",
       "hero.kicker": "GHIDUL APLICAȚIEI",
-      "hero.title": "Învață să îți proiectezi sera.",
+      "hero.title": "Alege cum vrei să îți proiectezi sera.",
+      "hero.intro":
+        "Trei trasee clare, de la primul proiect la compoziția liberă. Începe cu nivelul care ți se potrivește.",
+      "hero.picker_title": "De unde vrei să începi?",
+      "hero.picker_hint": "Poți schimba traseul în orice moment.",
       "tab.novizio": "Începător",
       "tab.novizio_hint": "Te ghidez pas cu pas",
       "tab.intermedio": "Intermediar",
@@ -179,6 +195,7 @@
   function applyLanguage(value) {
     const lang = value === "ro" ? "ro" : "it";
     document.documentElement.lang = lang;
+    document.title = copy[lang]["page.title"];
     localStorage.setItem("ois.lang", lang);
     document.querySelectorAll("[data-guide-key]").forEach((element) => {
       const value = copy[lang][element.dataset.guideKey];
@@ -186,6 +203,20 @@
     });
     const languageSelect = document.getElementById("guideLangSelect");
     if (languageSelect) languageSelect.value = lang;
+    document
+      .getElementById("mainNav")
+      ?.setAttribute("aria-label", copy[lang]["aria.main_nav"]);
+    document
+      .querySelector(".cart-btn")
+      ?.setAttribute("aria-label", copy[lang]["aria.cart"]);
+    document
+      .querySelector(".guide-tabs")
+      ?.setAttribute("aria-label", copy[lang]["aria.tabs"]);
+    document.querySelectorAll(".lang-switch-opt").forEach((button) => {
+      const active = button.dataset.lang === lang;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
   }
 
   function selectRoute(level, focus = false) {

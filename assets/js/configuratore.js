@@ -1674,29 +1674,6 @@ function isGuidedBoot() {
   );
 }
 
-// La CTA generica della home non assegna un profilo: la scelta avviene qui,
-// con il configuratore già visibile e con la possibilità di cambiarla dopo.
-function shouldChooseLevelOnBoot() {
-  return BOOT_PARAMS.get("choose-level") === "1";
-}
-
-function openPersonaLevelChoiceOnBoot() {
-  if (!shouldChooseLevelOnBoot()) return;
-  const panel = document.getElementById("guidedIntro");
-  const picker = document.getElementById("personaPickDetails");
-  const trigger = document.getElementById("personaPickerTrigger");
-  const prompt = document.getElementById("personaEntryPrompt");
-  if (!panel || !picker || !trigger) return;
-
-  panel.hidden = false;
-  picker.open = true;
-  trigger.setAttribute("aria-expanded", "true");
-  trigger.classList.add("is-open");
-  if (prompt) prompt.hidden = false;
-  document.body.classList.add("persona-entry-choice");
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-}
-
 // Verifica se il boot è per un progetto vuoto libero
 function isFreeProjectBoot() {
   return (
@@ -1968,9 +1945,6 @@ function chooseLivello(liv) {
   if (picker) picker.open = false;
   const pickerPanel = document.getElementById("guidedIntro");
   const pickerTrigger = document.getElementById("personaPickerTrigger");
-  const entryPrompt = document.getElementById("personaEntryPrompt");
-  if (entryPrompt) entryPrompt.hidden = true;
-  document.body.classList.remove("persona-entry-choice");
   if (pickerPanel) pickerPanel.hidden = true;
   if (pickerTrigger) {
     pickerTrigger.setAttribute("aria-expanded", "false");
@@ -2713,8 +2687,6 @@ function applyLanguage() {
   setText(".modal .hero p", isGuidedBoot() ? "guidedModalCopy" : "modalCopy");
   setText("#personaPickLabel", "personaPickLabel");
   setText("#personaPickHint", "personaPickHint");
-  setText("#personaEntryTitle", "personaEntryTitle");
-  setText("#personaEntryHint", "personaEntryHint");
   setText("#personaPickAction", "personaPickAction");
   setText("#personaNovTitle", "personaNovTitle");
   setText("#personaNovLevel", "personaNovLevel");
@@ -10009,11 +9981,6 @@ window.addEventListener("pageshow", (event) => {
   collapseSettingsPanelAfterAutoPlan({
     scroll: !_shouldFocusGuidedIntroOnBoot,
   });
-
-  if (shouldChooseLevelOnBoot()) {
-    openPersonaLevelChoiceOnBoot();
-    clearBootParams();
-  }
 
   // Mostra il contenuto dopo la sincronizzazione della lingua.
   document.documentElement.classList.remove("serra-i18n-pending");

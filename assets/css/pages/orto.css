@@ -100,7 +100,7 @@
   .orto-hero {
     position: relative;
     overflow: hidden;
-    padding: 26px 28px;
+    padding: 22px 24px;
     border-radius: var(--orto-r-lg);
     background:
       radial-gradient(
@@ -127,11 +127,11 @@
   .orto-hero-inner {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
     align-items: center;
     justify-content: space-between;
-    gap: 26px;
+    gap: 24px;
   }
 
   .orto-hero-date {
@@ -157,9 +157,17 @@
   }
 
   .orto-hero-stats {
-    display: flex;
-    gap: 22px;
-    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(76px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .orto-hero-stats > span {
+    padding: 10px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
   }
 
   .orto-hero-stats b {
@@ -176,19 +184,21 @@
   }
 
   .orto-ring-wrap {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
     align-items: center;
-    gap: 10px;
+    gap: 14px;
   }
 
   .orto-ring {
     position: relative;
-    width: 132px;
-    height: 132px;
+    width: 104px;
+    height: 104px;
   }
 
   .orto-ring svg {
+    width: 100%;
+    height: 100%;
     transform: rotate(-90deg);
   }
 
@@ -210,7 +220,7 @@
 
   .orto-ring-txt b {
     display: block;
-    font-size: 30px;
+    font-size: 24px;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
     line-height: 1;
@@ -228,8 +238,8 @@
   .orto-notif {
     display: flex;
     gap: 12px;
-    max-width: 330px;
-    padding: 13px 15px;
+    max-width: 360px;
+    padding: 11px 12px;
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: var(--orto-r);
     background: rgba(255, 255, 255, 0.1);
@@ -1078,20 +1088,88 @@
     }
 
     .orto-hero {
-      padding: 20px;
+      padding: 17px;
+      border-radius: 22px;
     }
 
     .orto-hero h2 {
-      font-size: 25px;
+      margin: 4px 0 6px;
+      font-size: 23px;
+      line-height: 1.08;
+    }
+
+    .orto-hero-sub {
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
+
+    .orto-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 13px;
+    }
+
+    .orto-hero-stats {
+      gap: 6px;
+      margin-top: 11px;
+    }
+
+    .orto-hero-stats > span {
+      min-width: 0;
+      padding: 7px 8px;
+      border-radius: 10px;
+    }
+
+    .orto-hero-stats b {
+      font-size: 20px;
+    }
+
+    .orto-hero-stats small {
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      line-height: 1.15;
     }
 
     .orto-ring {
-      width: 104px;
-      height: 104px;
+      width: 78px;
+      height: 78px;
+    }
+
+    .orto-ring-txt b {
+      font-size: 20px;
+    }
+
+    .orto-ring-txt small {
+      font-size: 8px;
+    }
+
+    .orto-ring-wrap {
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 10px;
     }
 
     .orto-notif {
       max-width: none;
+      gap: 8px;
+      padding: 9px 10px;
+      border-radius: 13px;
+    }
+
+    .orto-notif-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .orto-notif b {
+      font-size: 9.5px;
+    }
+
+    .orto-notif p {
+      margin-top: 1px;
+      font-size: 11.5px;
+      line-height: 1.3;
     }
 
     .orto-view-head h2 {
@@ -1334,5 +1412,23 @@
   html[data-theme="dark"] .nav-link--orto::after {
     background: rgba(115, 191, 138, 0.22);
     color: #a8e6a3;
+  }
+}
+
+/* Dati della dashboard: mantengono il ruolo di micro-copy senza scendere
+   sotto la soglia minima di lettura. */
+@layer polish {
+  .orto-hero-stats small,
+  .orto-ring-txt small,
+  .orto-notif b,
+  .orto-notif p,
+  .orto-count,
+  .nav-link--vivaio[data-count]::after,
+  .nav-link--orto::after {
+    font-size: 12px;
+  }
+
+  .orto-notif p {
+    font-size: 14px;
   }
 }

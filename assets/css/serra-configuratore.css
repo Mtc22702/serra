@@ -16407,100 +16407,29 @@
   }
 }
 
-/* Ingresso generico dalla home: la modalità si sceglie nel configuratore,
-   senza preassegnare il profilo Principiante alla CTA principale. */
+/* Micro-copy operativa del configuratore. Le annotazioni nella planimetria
+   SVG restano proporzionali allo zoom del disegno per evitare collisioni. */
 @layer polish {
-  .persona-entry-prompt {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin: 0 0 0.7rem;
-    padding: 0.85rem 1rem;
-    border: 1px solid rgba(47, 107, 58, 0.22);
-    border-radius: 14px;
-    background: linear-gradient(135deg, #eff8ea, #fff9e9);
-    color: var(--green-dk, #2f6b3a);
-  }
-
-  .persona-entry-prompt[hidden] {
-    display: none !important;
-  }
-
-  .persona-entry-prompt-step {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    flex: none;
-    border-radius: 50%;
-    background: var(--green-dk, #2f6b3a);
-    color: #fff;
-    font-size: 0.85rem;
-    font-weight: 800;
-    place-items: center;
-  }
-
-  .persona-entry-prompt > span:last-child {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 0.14rem;
-  }
-
-  .persona-entry-prompt strong {
-    font-family: var(--serif, "Fraunces", Georgia, serif);
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-
-  .persona-entry-prompt small {
-    color: var(--muted);
-    font-size: 0.76rem;
-    line-height: 1.35;
-  }
-
-  body.persona-entry-choice .workflow-persona-panel {
-    border-color: rgba(47, 107, 58, 0.28);
-    box-shadow: 0 12px 28px rgba(31, 58, 38, 0.12);
-  }
-
-  /* Prima della scelta il percorso non è ancora definito: nascondere il
-     riepilogo del profilo salvato evita che sembri già imposto. */
-  body.persona-entry-choice .journey-context {
-    display: none;
-  }
-
-  @media (max-width: 660px) {
-    .persona-entry-prompt {
-      gap: 0.65rem;
-      padding: 0.72rem 0.78rem;
-    }
-
-    .persona-entry-prompt-step {
-      width: 30px;
-      height: 30px;
-    }
-
-    .persona-entry-prompt strong {
-      font-size: 0.92rem;
-    }
-
-    .persona-entry-prompt small {
-      display: block;
-      font-size: 0.7rem;
-      overflow: visible;
-      white-space: normal;
-    }
-  }
-}
-
-@layer dark-theme {
-  html[data-theme="dark"] .persona-entry-prompt {
-    border-color: rgba(139, 212, 158, 0.25);
-    background: linear-gradient(135deg, #173322, #2a2b1a);
-    color: #eaf6ed;
-  }
-
-  html[data-theme="dark"] .persona-entry-prompt small {
-    color: #b9cabc;
+  .journey-context-level-edit,
+  .guided-brand-copy p,
+  .guided-tutorial-link span,
+  .smp-kicker,
+  .guided-page-subtitle,
+  .preset-visual-copy small,
+  .preset-visual-copy .fld,
+  .guided-panel-help,
+  .journey-context-copy small,
+  .preset-label,
+  .saph-plan-label,
+  .saph-text,
+  .panel-badge,
+  .panel-toggle-badge,
+  .guide-label,
+  .journey-context-path,
+  .journey-context-step,
+  .scale-note,
+  .workflow-hub .journey-context-level,
+  .config-page-title .guided-tutorial-link-short {
+    font-size: 12px !important;
   }
 }

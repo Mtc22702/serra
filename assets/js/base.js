@@ -2092,9 +2092,6 @@
         modeExpertHint: "Aggiungi o rimuovi le piante una a una",
         personaPickLabel: "Percorso scelto",
         personaPickHint: "Apri per cambiare livello di guida e controllo.",
-        personaEntryTitle: "Come vuoi progettare?",
-        personaEntryHint:
-          "Scegli il livello di guida: potrai cambiarlo anche in seguito.",
         personaPickAction: "Cambia",
         personaNovTitle: "Sono alle prime armi",
         personaNovLevel: "(Principiante)",
@@ -2681,9 +2678,6 @@
         modeExpertHint: "Adaugă sau elimină plantele una câte una",
         personaPickLabel: "Traseu ales",
         personaPickHint: "Deschide ca să schimbi nivelul de ghidaj și control.",
-        personaEntryTitle: "Cum vrei să proiectezi?",
-        personaEntryHint:
-          "Alege nivelul de ghidaj: îl poți schimba și mai târziu.",
         personaPickAction: "Schimbă",
         personaNovTitle: "Sunt la început",
         personaNovLevel: "(Începător)",
