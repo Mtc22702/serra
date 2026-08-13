@@ -2769,7 +2769,7 @@
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
-      display: none;
+      display: inline-grid;
     }
     .site-header .nav-brand-text {
       font-size: 0.88rem;
@@ -2973,6 +2973,362 @@
     :root {
       --icon-text-gap: 0.46rem;
       --icon-text-gap-compact: 0.34rem;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Menu mobile: sezione "Preferenze"
+ * Le pagine Orto e Vivaio usano lo stesso menu a tendina delle altre, ma i
+ * suoi stili vivevano solo nei pacchetti di home/account/configuratore. Sono
+ * copiati qui perché sotto i 660px tema e lingua spariscono dall'intestazione
+ * e restano solo dentro il menu: senza queste regole i due controlli non
+ * sarebbero raggiungibili.
+ * ------------------------------------------------------------------------ */
+@layer base {
+  .mobile-nav-section-title,
+  .mobile-nav-preferences {
+    display: none;
+  }
+
+  /* Icona ed etichetta dei link "Esplora": separate a runtime da base.js. */
+  .nav-link-icon {
+    margin-right: 0.4em;
+  }
+
+  @media (max-width: 660px) {
+    /* Stessa disposizione delle altre pagine: marchio a sinistra, pulsante
+       menu al centro, carrello a destra. */
+    .site-header .nav-actions {
+      grid-column: 2;
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .site-header .nav-menu-toggle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .site-header .nav-menu-toggle,
+    .site-header .nav-menu-toggle:hover,
+    .site-header .nav-menu-toggle:focus,
+    .site-header .nav-menu-toggle:focus-visible,
+    .site-header .nav-menu-toggle:active,
+    .site-header .nav-menu-toggle[aria-expanded="true"] {
+      border-color: #72c58a;
+      background: #2d6a4f;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(27, 67, 50, 0.24);
+      transform: translate(-50%, -50%);
+    }
+
+    .site-header .nav-menu-toggle span {
+      background: #fff;
+    }
+
+    .site-header .cart-btn {
+      order: 2;
+      margin-left: auto;
+    }
+
+    .site-header .mobile-nav-section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 0.65rem 0.3rem;
+      color: #7c8a7e;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .site-header .mobile-nav-preferences > .mobile-nav-section-title {
+      padding-top: 0;
+    }
+
+    /* Riquadro icona coerente con le righe Tema/Lingua e le tab della guida. */
+    .site-header .nav-link-icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-right: 0;
+      border-radius: 10px;
+      background: #fff;
+      color: #2f6b3a;
+      font-size: 1rem;
+      box-shadow: 0 3px 8px rgba(27, 67, 50, 0.1);
+    }
+
+    .site-header .nav-link-label {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .site-header .nav-link--current .nav-link-icon {
+      background: #2f6b3a;
+      color: #fff;
+      box-shadow: 0 3px 9px rgba(27, 67, 50, 0.22);
+    }
+
+    /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
+    .site-header .mobile-nav-preferences {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      padding: 0.55rem 0.5rem 0.6rem;
+      border-radius: 16px;
+      background: rgba(47, 107, 58, 0.045);
+      border: 1px solid rgba(47, 107, 58, 0.1);
+    }
+
+    .site-header .mobile-menu-theme,
+    .site-header .mobile-menu-language {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      /* Uniforma l'allineamento dei controlli tema e lingua nel menu mobile. */
+      justify-items: start;
+      gap: 0.6rem;
+      min-width: 0;
+      min-height: 56px;
+      margin: 0;
+      padding: 0.5rem 0.6rem;
+      border: 0;
+      border-radius: 13px;
+      background: transparent;
+      color: #26382c;
+      text-align: left;
+    }
+
+    .site-header .mobile-menu-theme {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .site-header .mobile-menu-theme:hover,
+    .site-header .mobile-menu-language:hover {
+      background: rgba(47, 107, 58, 0.06);
+    }
+
+    .mobile-menu-pref-icon {
+      display: inline-flex;
+      position: relative;
+      width: 32px;
+      height: 32px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #fff;
+      color: #2f6b3a;
+      font-size: 0.95rem;
+      box-shadow: 0 3px 8px rgba(27, 67, 50, 0.1);
+    }
+
+    .mobile-menu-pref-copy {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .mobile-menu-pref-copy b {
+      font-size: 0.8rem;
+      font-weight: 750;
+      line-height: 1.15;
+    }
+
+    .mobile-menu-pref-copy small {
+      color: #6f7b72;
+      font-size: 0.64rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    /* Definisce l'interruttore visivo per cambiare il tema della pagina. */
+    .mobile-menu-switch {
+      position: relative;
+      flex: none;
+      width: 42px;
+      height: 25px;
+      border-radius: 999px;
+      background: rgba(47, 107, 58, 0.22);
+      transition: background 0.2s ease;
+    }
+
+    .mobile-menu-switch-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(27, 67, 50, 0.28);
+      transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    html[data-theme="dark"] .mobile-menu-switch {
+      background: #ffd778;
+    }
+
+    html[data-theme="dark"] .mobile-menu-switch-knob {
+      background: #1b3026;
+      transform: translateX(17px);
+    }
+
+    /* Mostra le opzioni lingua con evidenza per quella attualmente attiva. */
+    .lang-switch {
+      display: inline-flex;
+      flex: none;
+      padding: 3px;
+      gap: 2px;
+      border-radius: 11px;
+      background: #fff;
+      border: 1px solid rgba(47, 107, 58, 0.16);
+    }
+
+    .lang-switch-opt {
+      min-width: 38px;
+      padding: 0.34rem 0.5rem;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #6f7b72;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition:
+        background 0.16s ease,
+        color 0.16s ease,
+        box-shadow 0.16s ease;
+    }
+
+    html[lang="it"] .lang-switch-opt[data-lang="it"],
+    html[lang="ro"] .lang-switch-opt[data-lang="ro"] {
+      background: #2f6b3a;
+      color: #fff;
+      box-shadow: 0 3px 9px rgba(27, 67, 50, 0.22);
+    }
+
+    html[data-theme="dark"] .site-header .mobile-nav-preferences {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(173, 221, 190, 0.14);
+    }
+
+    html[data-theme="dark"] .site-header .mobile-menu-theme:hover,
+    html[data-theme="dark"] .site-header .mobile-menu-language:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    html[data-theme="dark"] .site-header .mobile-menu-theme,
+    html[data-theme="dark"] .site-header .mobile-menu-language {
+      color: #edf5ef;
+    }
+
+    html[data-theme="dark"] .mobile-menu-pref-icon {
+      background: #1d3327;
+      color: #edf5ef;
+    }
+
+    html[data-theme="dark"] .lang-switch {
+      background: #1d3327;
+      border-color: rgba(173, 221, 190, 0.18);
+    }
+
+    html[data-theme="dark"] .lang-switch-opt {
+      color: #aebdb2;
+    }
+
+    html[data-theme="dark"][lang="it"] .lang-switch-opt[data-lang="it"],
+    html[data-theme="dark"][lang="ro"] .lang-switch-opt[data-lang="ro"] {
+      background: #2d6a4f;
+      color: #fff;
+    }
+
+    html[data-theme="dark"] .mobile-menu-pref-copy small,
+    html[data-theme="dark"] .site-header .mobile-nav-section-title {
+      color: #aebdb2;
+    }
+
+    html[data-theme="dark"] .site-header .nav-link-icon {
+      background: #1d3327;
+      color: #edf5ef;
+    }
+
+    html[data-theme="dark"] .site-header .nav-link--current .nav-link-icon {
+      background: #2d6a4f;
+      color: #fff;
+    }
+  }
+}
+
+/* Header mobile: menu a sinistra, identità dell'app centrata, carrello a
+   destra — la stessa disposizione di home, area personale e configuratore. */
+@layer base {
+  @media (max-width: 660px) {
+    :root {
+      --nav-h: 60px;
+    }
+
+    .site-header {
+      --nav-h: 60px;
+    }
+
+    .site-header-inner {
+      position: relative;
+      min-height: 60px;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: 1fr;
+    }
+
+    .site-header .nav-actions {
+      grid-column: 2;
+      grid-row: 1;
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .site-header .nav-actions > .nav-prefs {
+      display: none;
+    }
+
+    .site-header .nav-brand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      max-width: calc(100vw - 9rem);
+      margin: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .site-header .nav-menu-toggle {
+      left: 0.68rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .site-header .nav-menu-toggle,
+    .site-header .nav-menu-toggle:hover,
+    .site-header .nav-menu-toggle:focus,
+    .site-header .nav-menu-toggle:focus-visible,
+    .site-header .nav-menu-toggle:active,
+    .site-header .nav-menu-toggle[aria-expanded="true"] {
+      transform: translateY(-50%);
     }
   }
 }

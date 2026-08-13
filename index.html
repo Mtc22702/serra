@@ -7,7 +7,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
+      window.SERRA_APP_VERSION = "20260813-b6e9d4f29885";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -79,12 +79,12 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260813-b5b73776f70c"
+      href="assets/css/serra-home.css?v=20260813-b6e9d4f29885"
     />
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260813-b5b73776f70c"
+      href="assets/css/serra-configuratore.css?v=20260813-b6e9d4f29885"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -110,6 +110,12 @@
         >
           <span class="mobile-nav-section-title" data-i18n="nav.menu_explore"
             >Esplora</span
+          >
+          <a
+            href="index.html"
+            class="nav-link nav-link--menu-home"
+            data-i18n="nav.home"
+            >🏠 Home</a
           >
           <!-- Solo le tre strade dell'app più il configuratore: Abbinamenti,
                Kit del mese e Contatti restano raggiungibili dal piè di pagina. -->
@@ -199,6 +205,13 @@
           </div>
         </nav>
         <div class="nav-actions">
+          <a
+            href="index.html"
+            class="nav-header-home"
+            aria-label="Home"
+            data-i18n="nav.home"
+            >🏠 Home</a
+          >
           <button
             class="nav-menu-toggle"
             type="button"
@@ -285,134 +298,10 @@
             Semi, piantine già cresciute e un diario che ti segue fino alla
             raccolta.
           </p>
-          <a
-            class="hero-guide-link hero-guide-link--secondary"
-            href="guida.html"
-          >
-            <span class="hero-guide-link-icon" aria-hidden="true">?</span>
-            <span data-guide-link-label>Scopri come usare l'app</span>
-            <span class="hero-guide-link-arrow" aria-hidden="true">→</span>
-          </a>
-          <!-- Accesso al configuratore -->
+          <!-- Un solo invito principale: il livello di esperienza viene scelto
+               nel configuratore, quando l'utente ha già deciso di progettare. -->
           <div class="hero-cfg">
             <div class="hero-cfg-inner">
-              <div class="hero-cfg-text">
-                <div class="hero-cfg-actions">
-                  <div class="hero-cfg-route-intro">
-                    <span class="hero-cfg-route-step">1</span>
-                    <span data-i18n="hero.cfg_levels_title"
-                      >Che tipo di coltivatore sei?</span
-                    >
-                  </div>
-                  <div
-                    class="hero-cfg-levels"
-                    id="cfgLevels"
-                    role="group"
-                    aria-label="Scegli il livello"
-                    data-i18n-aria="hero.aria_levels"
-                  >
-                    <div class="pc-persona-cards hero-cfg-levels-grid">
-                      <a
-                        class="pc-persona-card pc-persona-card--novizio hero-cfg-level"
-                        href="configuratore.html?livello=novizio&guided=1&source=index"
-                      >
-                        <span class="pc-persona-ico"
-                          ><img
-                            src="assets/img/svg/plant_lv1.svg"
-                            alt=""
-                            class="level-plant-ico"
-                        /></span>
-                        <span class="pc-persona-body">
-                          <b data-i18n="hero.cfg_novizio">Principiante</b>
-                          <small data-i18n="hero.cfg_nov_hint"
-                            >Ti guido dalla prima scelta fino
-                            all'acquisto</small
-                          >
-                        </span>
-                        <span
-                          class="hero-cfg-recommendation"
-                          data-i18n="hero.cfg_recommended"
-                          >Consigliato</span
-                        >
-                        <span class="pc-persona-go hero-cfg-level-action">
-                          <span data-i18n="hero.cfg_choose">Scegli</span>
-                          <span aria-hidden="true">→</span>
-                        </span>
-                      </a>
-                      <a
-                        class="pc-persona-card pc-persona-card--intermedio hero-cfg-level"
-                        href="configuratore.html?livello=intermedio&guided=1&source=index"
-                      >
-                        <span class="pc-persona-ico"
-                          ><img
-                            src="assets/img/svg/plant_lv2.svg"
-                            alt=""
-                            class="level-plant-ico"
-                        /></span>
-                        <span class="pc-persona-body">
-                          <b data-i18n="hero.cfg_intermedio">Intermedio</b>
-                          <small data-i18n="hero.cfg_int_hint"
-                            >Parti da un piano pronto e personalizzalo</small
-                          >
-                        </span>
-                        <span class="pc-persona-go hero-cfg-level-action">
-                          <span data-i18n="hero.cfg_choose">Scegli</span>
-                          <span aria-hidden="true">→</span>
-                        </span>
-                      </a>
-                      <a
-                        class="pc-persona-card pc-persona-card--esperto hero-cfg-level"
-                        href="configuratore.html?livello=esperto&mode=expert&empty=1&source=index"
-                      >
-                        <span class="pc-persona-ico"
-                          ><img
-                            src="assets/img/svg/plant_lv3.svg"
-                            alt=""
-                            class="level-plant-ico"
-                        /></span>
-                        <span class="pc-persona-body">
-                          <b data-i18n="hero.cfg_esperto">Esperto</b>
-                          <small data-i18n="hero.cfg_exp_hint"
-                            >Scegli un layout pronto oppure componi
-                            liberamente</small
-                          >
-                        </span>
-                        <span class="pc-persona-go hero-cfg-level-action">
-                          <span data-i18n="hero.cfg_choose">Scegli</span>
-                          <span aria-hidden="true">→</span>
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                  <!-- Uscita alternativa: chi non vuole progettare la serra
-                       scende alle tre strade (catalogo, vivaio, il mio orto). -->
-                  <div class="hero-cfg-alt">
-                    <span class="hero-cfg-alt-or" data-i18n="hero.alt_or"
-                      >oppure</span
-                    >
-                    <a
-                      class="hero-cfg-catalog-link hero-cfg-alt-link"
-                      href="#percorsi"
-                    >
-                      <span class="hero-cfg-alt-icons" aria-hidden="true">
-                        <span>🌿</span><span>🪴</span><span>🌱</span>
-                      </span>
-                      <span class="hero-cfg-catalog-copy">
-                        <strong data-i18n="hero.alt_title"
-                          >Non parti da zero?</strong
-                        >
-                        <small data-i18n="hero.alt_hint"
-                          >Semi, piantine o quello che hai già: scegli la tua
-                          strada</small
-                        >
-                      </span>
-                      <span class="hero-cfg-catalog-arrow" aria-hidden="true"
-                        >↓</span
-                      >
-                    </a>
-                  </div>
-                </div>
-              </div>
               <div class="hero-cfg-visual" aria-hidden="true">
                 <div class="hcg">
                   <div class="hcg-glass">
@@ -431,6 +320,51 @@
                   </div>
                 </div>
               </div>
+              <div class="hero-cfg-text hero-cfg-primary">
+                <span class="hero-cfg-eyebrow" data-i18n="hero.plan_kicker"
+                  >Piano personalizzato</span
+                >
+                <h2 class="hero-cfg-primary-title" data-i18n="hero.plan_title">
+                  Dalle misure della serra a un piano pronto da coltivare.
+                </h2>
+                <p class="hero-cfg-primary-copy" data-i18n="hero.plan_copy">
+                  Ti guidiamo nella scelta di clima, spazio e colture. Potrai
+                  sempre modificare il risultato.
+                </p>
+                <ul
+                  class="hero-cfg-benefits"
+                  aria-label="Vantaggi"
+                  data-i18n-aria="hero.plan_benefits_aria"
+                >
+                  <li data-i18n="hero.plan_benefit_1">Adatto alla stagione</li>
+                  <li data-i18n="hero.plan_benefit_2">Distanze già calcolate</li>
+                  <li data-i18n="hero.plan_benefit_3">Modificabile quando vuoi</li>
+                </ul>
+                <div class="hero-cfg-primary-actions">
+                  <a
+                    class="hero-cfg-primary-cta"
+                    href="configuratore.html?source=index&choose-level=1"
+                  >
+                    <span data-i18n="hero.plan_cta"
+                      >Crea il piano della mia serra</span
+                    >
+                    <span aria-hidden="true">→</span>
+                  </a>
+                  <a class="hero-cfg-guide-link" href="guida.html">
+                    <span aria-hidden="true">?</span>
+                    <span data-i18n="hero.plan_help">Scopri come funziona</span>
+                  </a>
+                </div>
+                <a
+                  class="hero-cfg-catalog-link hero-cfg-direct-link"
+                  href="#percorsi"
+                >
+                  <span data-i18n="hero.direct_label"
+                    >Sai già cosa ti serve? Vai alle scelte rapide</span
+                  >
+                  <span aria-hidden="true">↓</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -448,11 +382,10 @@
             >Da dove vuoi partire?</span
           >
           <h2 class="paths-title" id="pathsTitle" data-i18n="paths.title">
-            Tre strade, un solo orto
+            Cosa vuoi fare oggi?
           </h2>
           <p class="paths-lead" data-i18n="paths.lead">
-            Che tu debba ancora comprare o abbia già tutto in casa, il punto
-            d'ingresso è qui.
+            Scegli il punto di partenza: potrai cambiare strada in ogni momento.
           </p>
         </header>
         <div class="paths-grid">
@@ -489,7 +422,7 @@
               >strumento gratuito</span
             >
             <span class="path-ico" aria-hidden="true">🌱</span>
-            <h3 data-i18n="paths.orto_title">Hai già semi o piante?</h3>
+            <h3 data-i18n="paths.orto_title">Gestisci il mio orto</h3>
             <p data-i18n="paths.orto_text">
               Registra cosa hai piantato e quando: ti accompagniamo giorno per
               giorno fino alla raccolta.
@@ -886,19 +819,24 @@
       </section>
 
       <!-- Sezione Abbinamenti -->
-      <section class="abbinamenti-section" id="abbinamenti">
+      <section
+        class="abbinamenti-section"
+        id="abbinamenti"
+        aria-labelledby="companionsHeading"
+      >
         <div class="abbinamenti-inner">
           <div class="flow-section-head">
             <div>
               <div class="section-kicker" data-i18n="companions.kicker">
                 Botanica relazionale
               </div>
-              <div
+              <h2
                 class="section-heading companions-heading"
+                id="companionsHeading"
                 data-i18n="companions.heading"
               >
                 Si amano in serra
-              </div>
+              </h2>
               <div class="companions-copy" data-i18n="companions.copy">
                 Piante che crescono meglio vicine: benefici reciproci, parassiti
                 allontanati, resa più alta.
@@ -909,17 +847,28 @@
             </div>
           </div>
           <div class="abbinamenti-grid" id="abbinamenti-grid"></div>
+          <button
+            class="companions-toggle"
+            id="companionsToggle"
+            type="button"
+            aria-controls="abbinamenti-grid"
+            aria-expanded="false"
+            data-home-action="toggle-companions"
+          >
+            <span data-i18n="companions.show_more">Vedi le altre 2 coppie</span>
+            <span aria-hidden="true">↓</span>
+          </button>
         </div>
       </section>
 
       <!-- Sezione Kit del Mese -->
-      <section class="kit-section" id="kit">
+      <section class="kit-section" id="kit" aria-labelledby="kitHeading">
         <div class="kit-card">
           <div class="kit-info">
             <div class="section-kicker" data-i18n="kit.kicker">
               Già compatibili tra loro
             </div>
-            <div class="section-heading" id="kitHeading">Kit del mese</div>
+            <h2 class="section-heading" id="kitHeading">Kit del mese</h2>
             <div class="kit-name" id="kitTitle">Kit Estivo in Serra</div>
             <div class="kit-desc" id="kitDesc">
               Sei varietà già compatibili tra loro, perfette per iniziare questo
@@ -955,12 +904,20 @@
       </section>
 
       <!-- Sezione Contatti -->
-      <section class="contatti-section" id="contatti">
+      <section
+        class="contatti-section"
+        id="contatti"
+        aria-labelledby="contactsHeading"
+      >
         <div class="contatti-inner">
           <div class="section-kicker" data-i18n="contatti.kicker">Parlaci</div>
-          <div class="section-heading" data-i18n="contatti.heading">
+          <h2
+            class="section-heading"
+            id="contactsHeading"
+            data-i18n="contatti.heading"
+          >
             Contattaci
-          </div>
+          </h2>
           <div class="contatti-grid">
             <div>
               <div class="contatti-info-list">
@@ -1158,7 +1115,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260813-b5b73776f70c</span
+          >v20260813-b6e9d4f29885</span
         >
       </div>
     </footer>

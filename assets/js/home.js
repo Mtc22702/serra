@@ -1505,6 +1505,8 @@ function renderAbbinamenti() {
   if (!pairs.length) {
     document.getElementById("abbinamenti-grid").innerHTML =
       `<div class="abbinamenti-empty" style="grid-column:1/-1">${t("companions.empty")}</div>`;
+    const toggle = document.getElementById("companionsToggle");
+    if (toggle) toggle.hidden = true;
     return;
   }
   const ABBINAMENTO_REASONS = [
@@ -1534,6 +1536,39 @@ function renderAbbinamenti() {
     </div>`;
     })
     .join("");
+  const toggle = document.getElementById("companionsToggle");
+  if (toggle) {
+    const expanded = document
+      .getElementById("abbinamenti")
+      ?.classList.contains("is-expanded");
+    toggle.hidden = pairs.length <= 1;
+    toggle.setAttribute("aria-expanded", String(Boolean(expanded)));
+    const label = toggle.querySelector("span:first-child");
+    if (label) {
+      label.textContent = expanded
+        ? t("companions.show_less")
+        : tv("companions.show_more", { count: Math.max(0, pairs.length - 1) });
+    }
+  }
+}
+
+// Su smartphone mostra prima la coppia consigliata e lascia le altre su richiesta.
+function toggleCompanions() {
+  const section = document.getElementById("abbinamenti");
+  const toggle = document.getElementById("companionsToggle");
+  if (!section || !toggle) return;
+  const expanded = section.classList.toggle("is-expanded");
+  toggle.setAttribute("aria-expanded", String(expanded));
+  const label = toggle.querySelector("span:first-child");
+  if (label) {
+    const hiddenCount = Math.max(
+      0,
+      document.querySelectorAll("#abbinamenti-grid .abbinamento-card").length - 1,
+    );
+    label.textContent = expanded
+      ? t("companions.show_less")
+      : tv("companions.show_more", { count: hiddenCount });
+  }
 }
 
 // Kit del mese
@@ -3469,6 +3504,9 @@ function bindHomeStaticActions() {
           control.dataset.firstPlantId,
           control.dataset.secondPlantId,
         );
+        break;
+      case "toggle-companions":
+        toggleCompanions();
         break;
     }
   });

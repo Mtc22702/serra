@@ -227,6 +227,21 @@
     };
   }
 
+  // Nel menu mobile chiarisce che "Il mio orto" non è una semplice pagina
+  // informativa, ma lo strumento che accompagna la coltivazione nel tempo.
+  function ensureOrtoHint(link) {
+    if (!link.classList.contains("nav-link--orto")) return;
+    let hint = link.querySelector(".nav-link-tool-hint");
+    if (!hint) {
+      hint = document.createElement("small");
+      hint.className = "nav-link-tool-hint";
+      link.append(hint);
+    }
+    hint.textContent = isRo()
+      ? "Asistent pentru cultivare"
+      : "Assistente per la coltivazione";
+  }
+
   function enhanceNavIcons() {
     menu.querySelectorAll(":scope > a.nav-link").forEach((link) => {
       // Se è già stato diviso in icona+etichetta e nessuno l'ha riscritto nel
@@ -235,10 +250,13 @@
       // da due span già separati (senza lo spazio originale) spezzerebbe la
       // divisione in un punto sbagliato.
       const alreadySplit =
-        link.children.length === 2 &&
+        link.children.length >= 2 &&
         link.children[0].classList.contains("nav-link-icon") &&
         link.children[1].classList.contains("nav-link-label");
-      if (alreadySplit) return;
+      if (alreadySplit) {
+        ensureOrtoHint(link);
+        return;
+      }
 
       const parts = splitIconLabel(link.textContent);
       if (!parts) return;
@@ -251,6 +269,7 @@
       labelSpan.className = "nav-link-label";
       labelSpan.textContent = parts.label;
       link.append(iconSpan, labelSpan);
+      ensureOrtoHint(link);
     });
   }
 
@@ -752,6 +771,19 @@
           "Nel catalogo trovi 97 varietà con mesi di semina, distanze e abbinamenti.",
         "hero.promise":
           "Semi, piantine già cresciute e un diario che ti segue fino alla raccolta.",
+        "hero.plan_kicker": "Piano personalizzato",
+        "hero.plan_title":
+          "Dalle misure della serra a un piano pronto da coltivare.",
+        "hero.plan_copy":
+          "Ti guidiamo nella scelta di clima, spazio e colture. Potrai sempre modificare il risultato.",
+        "hero.plan_benefit_1": "Adatto alla stagione",
+        "hero.plan_benefit_2": "Distanze già calcolate",
+        "hero.plan_benefit_3": "Modificabile quando vuoi",
+        "hero.plan_benefits_aria": "Vantaggi del piano personalizzato",
+        "hero.plan_cta": "Crea il piano della mia serra",
+        "hero.plan_help": "Scopri come funziona",
+        "hero.direct_label":
+          "Sai già cosa ti serve? Vai alle scelte rapide",
         "hero.alt_or": "oppure",
         "hero.alt_title": "Non parti da zero?",
         "hero.alt_hint":
@@ -761,9 +793,9 @@
         "nav.orto": "🌱 Il mio orto",
         "nav.vivaio": "🪴 Vivaio piantine",
         "paths.kicker": "Da dove vuoi partire?",
-        "paths.title": "Tre strade, un solo orto",
+        "paths.title": "Cosa vuoi fare oggi?",
         "paths.lead":
-          "Che tu debba ancora comprare o abbia già tutto in casa, il punto d'ingresso è qui.",
+          "Scegli il punto di partenza: potrai cambiare strada in ogni momento.",
         "paths.semi_title": "Compra i semi",
         "paths.semi_text":
           "Il catalogo completo, con mesi di semina, distanze e abbinamenti già calcolati.",
@@ -774,7 +806,7 @@
           "Già cresciute, pronte da mettere nel terreno: guadagni fino a un mese sulla raccolta.",
         "paths.piantine_cta": "Apri il vivaio",
         "paths.piantine_tag": "pronte adesso",
-        "paths.orto_title": "Hai già semi o piante?",
+        "paths.orto_title": "Gestisci il mio orto",
         "paths.orto_text":
           "Registra cosa hai piantato e quando: ti accompagniamo giorno per giorno fino alla raccolta.",
         "paths.orto_cta": "Apri Il mio orto",
@@ -858,6 +890,8 @@
         "companions.in_cart_pair": "✓&nbsp;Coppia nel carrello",
         "companions.summary": "{count} coppie adatte a {month}",
         "companions.pair_number": "Coppia {number}",
+        "companions.show_more": "Vedi le altre {count} coppie",
+        "companions.show_less": "Mostra solo la consigliata",
         "kit.kicker": "Già compatibili tra loro",
         "kit.heading": "Kit del mese · {month}",
         "kit.desc":
@@ -1238,6 +1272,19 @@
           "În catalog găsești 97 de soiuri cu luni de semănat, distanțe și asocieri.",
         "hero.promise":
           "Semințe, răsaduri deja crescute și un jurnal care te însoțește până la recoltare.",
+        "hero.plan_kicker": "Plan personalizat",
+        "hero.plan_title":
+          "De la dimensiunile serei la un plan gata de cultivat.",
+        "hero.plan_copy":
+          "Te ghidăm în alegerea climei, spațiului și culturilor. Poți modifica oricând rezultatul.",
+        "hero.plan_benefit_1": "Potrivit sezonului",
+        "hero.plan_benefit_2": "Distanțe deja calculate",
+        "hero.plan_benefit_3": "Îl modifici când vrei",
+        "hero.plan_benefits_aria": "Avantajele planului personalizat",
+        "hero.plan_cta": "Creează planul serei mele",
+        "hero.plan_help": "Vezi cum funcționează",
+        "hero.direct_label":
+          "Știi deja ce îți trebuie? Mergi la alegerile rapide",
         "hero.alt_or": "sau",
         "hero.alt_title": "Nu pornești de la zero?",
         "hero.alt_hint": "Semințe, răsaduri sau ce ai deja: alege-ți drumul",
@@ -1246,9 +1293,9 @@
         "nav.orto": "🌱 Grădina mea",
         "nav.vivaio": "🪴 Pepinieră răsaduri",
         "paths.kicker": "De unde vrei să pornești?",
-        "paths.title": "Trei drumuri, o singură grădină",
+        "paths.title": "Ce vrei să faci astăzi?",
         "paths.lead":
-          "Fie că mai ai de cumpărat, fie că ai deja totul acasă, punctul de plecare este aici.",
+          "Alege punctul de plecare: poți schimba traseul în orice moment.",
         "paths.semi_title": "Cumpără semințe",
         "paths.semi_text":
           "Catalogul complet, cu lunile de semănat, distanțele și asocierile deja calculate.",
@@ -1259,7 +1306,7 @@
           "Deja crescute, gata de pus în pământ: câștigi până la o lună la recoltare.",
         "paths.piantine_cta": "Deschide pepiniera",
         "paths.piantine_tag": "gata acum",
-        "paths.orto_title": "Ai deja semințe sau plante?",
+        "paths.orto_title": "Gestionează grădina mea",
         "paths.orto_text":
           "Notează ce ai plantat și când: te însoțim zi de zi până la recoltare.",
         "paths.orto_cta": "Deschide Grădina mea",
@@ -1342,6 +1389,8 @@
         "companions.in_cart_pair": "✓&nbsp;Perechea este în coș",
         "companions.summary": "{count} perechi potrivite pentru {month}",
         "companions.pair_number": "Perechea {number}",
+        "companions.show_more": "Vezi celelalte {count} perechi",
+        "companions.show_less": "Arată doar recomandarea",
         "kit.kicker": "Deja compatibile între ele",
         "kit.heading": "Kit-ul lunii · {month}",
         "kit.desc":
@@ -2043,6 +2092,9 @@
         modeExpertHint: "Aggiungi o rimuovi le piante una a una",
         personaPickLabel: "Percorso scelto",
         personaPickHint: "Apri per cambiare livello di guida e controllo.",
+        personaEntryTitle: "Come vuoi progettare?",
+        personaEntryHint:
+          "Scegli il livello di guida: potrai cambiarlo anche in seguito.",
         personaPickAction: "Cambia",
         personaNovTitle: "Sono alle prime armi",
         personaNovLevel: "(Principiante)",
@@ -2629,6 +2681,9 @@
         modeExpertHint: "Adaugă sau elimină plantele una câte una",
         personaPickLabel: "Traseu ales",
         personaPickHint: "Deschide ca să schimbi nivelul de ghidaj și control.",
+        personaEntryTitle: "Cum vrei să proiectezi?",
+        personaEntryHint:
+          "Alege nivelul de ghidaj: îl poți schimba și mai târziu.",
         personaPickAction: "Schimbă",
         personaNovTitle: "Sunt la început",
         personaNovLevel: "(Începător)",

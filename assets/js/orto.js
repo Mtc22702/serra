@@ -29,8 +29,12 @@
     it: {
       "page.title": "Il mio orto · Orto in Serra",
       "nav.brand_sub": "Coltiva con un piano",
-      "nav.home": "Home",
+      "nav.home": "🏠 Home",
       "nav.menu_explore": "Esplora",
+      "nav.menu_preferences": "Preferenze",
+      "nav.theme": "Tema",
+      "nav.theme_hint": "Chiaro / scuro",
+      "nav.language": "Lingua",
       "nav.semi": "🌿 Catalogo semi",
       "nav.vivaio": "🪴 Vivaio piantine",
       "nav.orto": "🌱 Il mio orto",
@@ -222,8 +226,12 @@
     ro: {
       "page.title": "Grădina mea · Orto in Serra",
       "nav.brand_sub": "Cultivă cu un plan",
-      "nav.home": "Acasă",
+      "nav.home": "🏠 Acasă",
       "nav.menu_explore": "Explorează",
+      "nav.menu_preferences": "Preferințe",
+      "nav.theme": "Temă",
+      "nav.theme_hint": "Deschisă / închisă",
+      "nav.language": "Limbă",
       "nav.semi": "🌿 Catalog de semințe",
       "nav.vivaio": "🪴 Pepinieră răsaduri",
       "nav.orto": "🌱 Grădina mea",
@@ -1196,6 +1204,12 @@
     const trigger = event.target.closest("[data-orto-action]");
     if (!trigger) return;
     const action = trigger.dataset.ortoAction;
+    // Lingua dal menu mobile: sotto i 660px il selettore dell'intestazione è
+    // nascosto e questi due pulsanti sono l'unico modo per cambiarla.
+    if (action === "set-language") {
+      applyLanguage(trigger.dataset.lang);
+      return;
+    }
 
     if (action === "toggle-task") {
       const id = trigger.dataset.taskId;

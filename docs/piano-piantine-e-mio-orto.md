@@ -429,6 +429,15 @@ Dettagli che vale la pena ricordare:
   richiama in fondo alla propria funzione di traduzione.
 - Sotto i 900px `.nav-prefs` diventa `display: contents`: i controlli tornano
   singoli e tutte le regole mobili già scritte continuano a valere invariate.
+- Sotto i 660px tema e lingua **spariscono dall'intestazione**: vivono nella
+  sezione "Preferenze" del menu a tendina, dove c'è spazio per etichetta e
+  descrizione. In alto restano solo le tre cose che servono con il pollice —
+  menu a sinistra, marchio al centro, carrello a destra. Le pagine Orto e
+  Vivaio non avevano quel blocco nel menu (i suoi stili stavano solo nei
+  pacchetti di home/account/configuratore): ora è in `_fondazioni.css`,
+  insieme alla disposizione mobile dell'intestazione, così le cinque pagine
+  sono identiche. La guida fa eccezione perché non ha il menu a tendina: lì i
+  due controlli restano in alto.
 
 ## 5.9 Vivaio: prezzi, strumenti del listino, hero
 

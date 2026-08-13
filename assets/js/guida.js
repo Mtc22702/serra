@@ -8,8 +8,16 @@
 (() => {
   const copy = {
     it: {
-      "nav.home": "Home",
+      "nav.home": "🏠 Home",
       "nav.brand_sub": "Coltiva con un piano",
+      "nav.menu_explore": "Esplora",
+      "nav.menu_preferences": "Preferenze",
+      "nav.semi": "🌿 Catalogo semi",
+      "nav.vivaio": "🪴 Vivaio piantine",
+      "nav.orto": "🌱 Il mio orto",
+      "nav.configuratore": "📐 Configuratore serra",
+      "nav.account": "👤 Area Personale",
+      "nav.carrello": "Carrello",
       "nav.theme": "Tema",
       "nav.theme_hint": "Chiaro / scuro",
       "nav.language": "Lingua",
@@ -72,8 +80,16 @@
       help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore."
     },
     ro: {
-      "nav.home": "Acasă",
+      "nav.home": "🏠 Acasă",
       "nav.brand_sub": "Cultivă cu un plan",
+      "nav.menu_explore": "Explorează",
+      "nav.menu_preferences": "Preferințe",
+      "nav.semi": "🌿 Catalog semințe",
+      "nav.vivaio": "🪴 Răsaduri",
+      "nav.orto": "🌱 Grădina mea",
+      "nav.configuratore": "📐 Configurator seră",
+      "nav.account": "👤 Zona personală",
+      "nav.carrello": "Coș",
       "nav.theme": "Temă",
       "nav.theme_hint": "Luminos / întunecat",
       "nav.language": "Limbă",
@@ -222,6 +238,9 @@
   document
     .getElementById("guideLangSelect")
     ?.addEventListener("change", (event) => applyLanguage(event.target.value));
+  document.querySelectorAll(".lang-switch-opt").forEach((button) => {
+    button.addEventListener("click", () => applyLanguage(button.dataset.lang));
+  });
   applyLanguage(localStorage.getItem("ois.lang"));
   selectRoute(requested || "novizio");
 })();

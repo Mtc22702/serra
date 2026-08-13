@@ -5297,7 +5297,7 @@
     }
     .nav-brand-text {
       font-size: 1rem;
-      overflow: hidden;
+      overflow: visible;
       text-overflow: ellipsis;
     }
     .nav-links {
@@ -6725,6 +6725,16 @@
       display: none;
     }
   }
+
+  /* Sotto i 660px tema e lingua vivono nella sezione "Preferenze" del menu a
+     tendina: tenerli anche nell'intestazione significherebbe due comandi per
+     la stessa cosa, in una barra che su telefono deve restare essenziale
+     (marchio · carrello · menu). La guida fa eccezione perché non ha menu. */
+  @media (max-width: 660px) {
+    .site-header:not(.guide-page-header) .nav-actions > .nav-prefs {
+      display: none;
+    }
+  }
   .site-header .nav-lang {
     min-height: 44px;
     min-width: 60px;
@@ -7584,8 +7594,8 @@
       min-width: 0;
       font-size: 0.78rem;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      text-overflow: clip;
+      white-space: normal;
     }
     .catalog-pro-section .compact-badge {
       justify-self: end;
@@ -11143,5 +11153,98 @@ html[data-theme="dark"]
   html[data-theme="dark"] .site-header .nav-account-btn:hover {
     background: #2b4938;
     border-color: rgba(172, 229, 188, 0.46);
+  }
+}
+
+/* Chiarezza del menu mobile: Home è esplicita e "Il mio orto" dichiara la
+   propria funzione di assistente, senza rendere più affollato l'header desktop. */
+@layer polish {
+  .site-header #mainNav .nav-link-tool-hint {
+    display: none;
+  }
+
+  .site-header #mainNav > .nav-link--menu-home {
+    display: none;
+    align-items: center;
+  }
+
+  .site-header .nav-header-home {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.78rem;
+    border: 1px solid rgba(47, 107, 58, 0.16);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--green-dk, #2f6b3a);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .site-header .nav-header-home:hover {
+    border-color: rgba(47, 107, 58, 0.32);
+    background: rgba(234, 245, 232, 0.96);
+  }
+
+  html[data-theme="dark"] .site-header .nav-header-home {
+    border-color: rgba(172, 214, 187, 0.18);
+    background: #17271f;
+    color: #e6f2ea;
+  }
+
+  @media (max-width: 660px) {
+    .site-header #mainNav > .nav-link--menu-home {
+      display: flex;
+    }
+
+    .site-header .nav-header-home {
+      display: none;
+    }
+
+    .site-header #mainNav > .nav-link--orto {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 34px minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      row-gap: 2px;
+    }
+
+    .site-header #mainNav > .nav-link--orto .nav-link-icon {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .site-header #mainNav > .nav-link--orto .nav-link-label {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
+    }
+
+    .site-header #mainNav > .nav-link--orto .nav-link-tool-hint {
+      display: block;
+      min-width: 0;
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+      overflow: visible;
+      color: #68766b;
+      font-size: 0.68rem;
+      font-weight: 500;
+      line-height: 1.2;
+      text-overflow: clip;
+      white-space: normal;
+    }
+
+    html[data-theme="dark"]
+      .site-header
+      #mainNav
+      > .nav-link--orto
+      .nav-link-tool-hint {
+      color: #aebdb2;
+    }
   }
 }

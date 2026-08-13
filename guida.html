@@ -19,7 +19,7 @@
     <link rel="manifest" href="manifest.json" />
     <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
     <script>
-      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
+      window.SERRA_APP_VERSION = "20260813-b6e9d4f29885";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" || location.hostname === "127.0.0.1";
       (function () {
@@ -39,11 +39,12 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-guida.css?v=20260813-b5b73776f70c"
+      href="assets/css/serra-guida.css?v=20260813-b6e9d4f29885"
     />
   </head>
   <body>
-    <!-- Intestazione minimale: solo ritorno alla home, tema e lingua -->
+    <!-- Intestazione condivisa: su mobile menu a sinistra, marchio al centro
+         e carrello a destra, come nel resto dell'app. -->
     <header class="site-header guide-page-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -55,16 +56,106 @@
             <small data-guide-key="nav.brand_sub">Coltiva con un piano</small>
           </span>
         </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navigazione principale">
+          <span class="mobile-nav-section-title" data-guide-key="nav.menu_explore"
+            >Esplora</span
+          >
+          <a
+            href="index.html"
+            class="nav-link nav-link--menu-home"
+            data-guide-key="nav.home"
+            >🏠 Home</a
+          >
+          <a
+            href="index.html#stagione"
+            class="nav-link nav-link--semi"
+            data-guide-key="nav.semi"
+            >🌿 Catalogo semi</a
+          >
+          <a
+            href="vivaio.html"
+            class="nav-link nav-link--vivaio"
+            data-guide-key="nav.vivaio"
+            >🪴 Vivaio piantine</a
+          >
+          <a
+            href="orto.html"
+            class="nav-link nav-link--orto"
+            data-guide-key="nav.orto"
+            >🌱 Il mio orto</a
+          >
+          <a
+            href="configuratore.html?source=guida&amp;resume=1"
+            class="nav-link nav-link--configuratore"
+            data-guide-key="nav.configuratore"
+            >📐 Configuratore serra</a
+          >
+          <a
+            href="account.html"
+            class="nav-link nav-link--account"
+            data-guide-key="nav.account"
+            >👤 Area Personale</a
+          >
+          <div class="mobile-nav-preferences">
+            <span
+              class="mobile-nav-section-title"
+              data-guide-key="nav.menu_preferences"
+              >Preferenze</span
+            >
+            <button
+              class="theme-toggle mobile-menu-theme"
+              type="button"
+              aria-label="Attiva modalità scura"
+              aria-pressed="false"
+            >
+              <span class="mobile-menu-pref-icon" aria-hidden="true">
+                <span class="theme-toggle-icon theme-toggle-moon">☾</span>
+                <span class="theme-toggle-icon theme-toggle-sun">☀</span>
+              </span>
+              <span class="mobile-menu-pref-copy">
+                <b data-guide-key="nav.theme">Tema</b>
+                <small data-guide-key="nav.theme_hint">Chiaro / scuro</small>
+              </span>
+              <span class="mobile-menu-switch" aria-hidden="true"
+                ><span class="mobile-menu-switch-knob"></span
+              ></span>
+            </button>
+            <div class="mobile-menu-language">
+              <span class="mobile-menu-pref-icon" aria-hidden="true">🌐</span>
+              <span class="mobile-menu-pref-copy">
+                <b data-guide-key="nav.language">Lingua</b>
+                <small>Italiano / Română</small>
+              </span>
+              <div class="lang-switch" role="group" aria-label="Lingua / Limbă">
+                <button type="button" class="lang-switch-opt" data-lang="it">
+                  IT
+                </button>
+                <button type="button" class="lang-switch-opt" data-lang="ro">
+                  RO
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
         <div class="nav-actions">
           <a
             href="index.html"
-            class="nav-link nav-link--home"
-            aria-label="Torna alla home"
+            class="nav-header-home"
+            aria-label="Home"
+            data-guide-key="nav.home"
+            >🏠 Home</a
           >
-            <span class="nav-link-icon" aria-hidden="true">🏠</span>
-            <span class="nav-link-label" data-guide-key="nav.home">Home</span>
-          </a>
-          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <button
+            class="nav-menu-toggle"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Apri menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
           <div class="nav-prefs">
             <button
               class="theme-toggle"
@@ -91,6 +182,15 @@
               </select>
             </div>
           </div>
+          <a
+            href="index.html?cart=open"
+            class="cart-btn"
+            aria-label="Apri carrello"
+          >
+            <span class="cart-icon" aria-hidden="true">🛒</span>
+            <span class="cart-label" data-guide-key="nav.carrello">Carrello</span>
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
         </div>
       </div>
     </header>

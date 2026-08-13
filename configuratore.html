@@ -7,7 +7,7 @@
     <title>Orto in Serra · Progetta la tua serra dall'alto</title>
     <!-- Versioning e asset path -->
     <script>
-      window.SERRA_APP_VERSION = "20260813-b5b73776f70c";
+      window.SERRA_APP_VERSION = "20260813-b6e9d4f29885";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -119,7 +119,7 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-configuratore.css?v=20260813-b5b73776f70c"
+      href="assets/css/serra-configuratore.css?v=20260813-b6e9d4f29885"
     />
   </head>
   <body>
@@ -140,6 +140,12 @@
             class="mobile-nav-section-title"
             data-i18n-conf="nav.menu_explore"
             >Esplora</span
+          >
+          <a
+            href="index.html"
+            class="nav-link nav-link--menu-home"
+            data-i18n-conf="nav.home"
+            >🏠 Home</a
           >
           <!-- Le stesse quattro strade di tutta l'app, nello stesso ordine.
                Abbinamenti, Kit del mese e Contatti restano nel piè di pagina. -->
@@ -227,6 +233,13 @@
           </div>
         </nav>
         <div class="nav-actions">
+          <a
+            href="index.html"
+            class="nav-header-home"
+            aria-label="Home"
+            data-i18n-conf="nav.home"
+            >🏠 Home</a
+          >
           <button
             class="nav-menu-toggle"
             type="button"
@@ -400,6 +413,16 @@
 
         <!-- Selettore del profilo collegato al percorso di configurazione -->
         <div class="workflow-persona-panel" id="guidedIntro" hidden>
+          <div class="persona-entry-prompt" id="personaEntryPrompt" hidden>
+            <span class="persona-entry-prompt-step" aria-hidden="true">1</span>
+            <span>
+              <strong id="personaEntryTitle">Come vuoi progettare?</strong>
+              <small id="personaEntryHint"
+                >Scegli il livello di guida: potrai cambiarlo anche in
+                seguito.</small
+              >
+            </span>
+          </div>
           <details class="persona-pick" id="personaPickDetails">
             <summary class="persona-pick-head">
               <span class="persona-pick-copy">
@@ -1870,7 +1893,7 @@
           <span data-i18n-conf="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260813-b5b73776f70c</span
+          >v20260813-b6e9d4f29885</span
         >
       </div>
     </footer>

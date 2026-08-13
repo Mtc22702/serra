@@ -33,8 +33,12 @@
     it: {
       "page.title": "Vivaio · Piantine pronte da trapiantare",
       "nav.brand_sub": "Coltiva con un piano",
-      "nav.home": "Home",
+      "nav.home": "🏠 Home",
       "nav.menu_explore": "Esplora",
+      "nav.menu_preferences": "Preferenze",
+      "nav.theme": "Tema",
+      "nav.theme_hint": "Chiaro / scuro",
+      "nav.language": "Lingua",
       "nav.semi": "🌿 Catalogo semi",
       "nav.vivaio": "🪴 Vivaio piantine",
       "nav.orto": "🌱 Il mio orto",
@@ -91,6 +95,8 @@
         "Piantina con il pane di terra, pronta da estrarre dall'alveolo e mettere a dimora",
       "hero.shipping":
         "Merce viva: spedizione a inizio settimana, sospesa in caso di gelate.",
+      "hero.cta": "Vedi le piantine disponibili",
+      "hero.visual_label": "Pronte al trapianto",
       "cat.per_plant": "a piantina · vaso ø7",
       "cat.per_tray": "al vassoio · {n} piantine",
       "cat.each": "{prezzo} a piantina · vaso ø7",
@@ -137,8 +143,12 @@
     ro: {
       "page.title": "Pepinieră · Răsaduri gata de plantat",
       "nav.brand_sub": "Cultivă cu un plan",
-      "nav.home": "Acasă",
+      "nav.home": "🏠 Acasă",
       "nav.menu_explore": "Explorează",
+      "nav.menu_preferences": "Preferințe",
+      "nav.theme": "Temă",
+      "nav.theme_hint": "Deschisă / închisă",
+      "nav.language": "Limbă",
       "nav.semi": "🌿 Catalog de semințe",
       "nav.vivaio": "🪴 Pepinieră răsaduri",
       "nav.orto": "🌱 Grădina mea",
@@ -196,6 +206,8 @@
         "Răsad cu bulgărele de pământ, gata de scos din alveolă și pus în pământ",
       "hero.shipping":
         "Marfă vie: livrare la început de săptămână, suspendată în caz de îngheț.",
+      "hero.cta": "Vezi răsadurile disponibile",
+      "hero.visual_label": "Gata de transplantat",
       "cat.per_plant": "per răsad · ghiveci ø7",
       "cat.per_tray": "pe tavă · {n} răsaduri",
       "cat.each": "{prezzo} pe răsad · ghiveci ø7",
@@ -474,38 +486,61 @@
     const lista = disponibili();
     const visibili = filtrate(lista);
     app.innerHTML = `
-      <section class="orto-hero viv-hero">
+      <section class="orto-hero viv-hero" aria-labelledby="vivHeroTitle">
         <div class="orto-hero-inner">
-          <div>
+          <div class="viv-hero-copy">
             <p class="orto-hero-date">${t("hero.kicker")}</p>
-            <h2>${t("hero.title")}</h2>
+            <h1 id="vivHeroTitle">${t("hero.title")}</h1>
             <p class="orto-hero-sub">${t("hero.lead")}</p>
-            <!-- Tre fatti che servono davvero prima di scegliere: quante
-                 varietà ci sono, quando partono, come si comprano. -->
-            <div class="orto-hero-stats">
-              <span><b>${lista.length}</b><small>${t("hero.count_month", {
+            <a class="viv-hero-cta" href="#vivaioCatalog">
+              <span>${t("hero.cta")}</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <div class="viv-hero-visual">
+            <span class="viv-visual-label">${t("hero.visual_label")}</span>
+            ${illustrazionePiantina()}
+            <p class="viv-shipping">
+              <span class="orto-notif-ico" aria-hidden="true">🚚</span>
+              <span>${t("hero.shipping")}</span>
+            </p>
+          </div>
+        </div>
+        <!-- I tre dati decisivi restano sempre completi: il CSS permette il
+             ritorno a capo e non applica ellissi nelle viste strette. -->
+        <div class="orto-hero-stats" aria-label="Informazioni di acquisto">
+          <div class="viv-hero-stat">
+            <span class="viv-stat-icon" aria-hidden="true">🌿</span>
+            <span class="viv-stat-copy">
+              <b>${lista.length}</b>
+              <small>${t("hero.count_month", {
                 mese: nomeMese(mese),
-              })}</small></span>
-              <span><b>${fmtGiorno(prossimaConsegna())
+              })}</small>
+            </span>
+          </div>
+          <div class="viv-hero-stat">
+            <span class="viv-stat-icon" aria-hidden="true">📅</span>
+            <span class="viv-stat-copy">
+              <b>${fmtGiorno(prossimaConsegna())
                 .split(" ")
                 .slice(0, 3)
-                .join(" ")}</b><small>${t("hero.delivery")}</small></span>
-              <span><b>${t("hero.lot_value", {
-                n: 6,
-              })}</b><small>${t("hero.lot_label", {
-                n: CONSEGNA.vassoiMinimi,
-              })}</small></span>
-            </div>
+                .join(" ")}</b>
+              <small>${t("hero.delivery")}</small>
+            </span>
           </div>
-          <div class="viv-hero-side">
-            ${illustrazionePiantina()}
-            <p class="orto-notif viv-shipping"><span class="orto-notif-ico" aria-hidden="true">🚚</span>
-              <span>${t("hero.shipping")}</span></p>
+          <div class="viv-hero-stat">
+            <span class="viv-stat-icon" aria-hidden="true">🪴</span>
+            <span class="viv-stat-copy">
+              <b>${t("hero.lot_value", { n: 6 })}</b>
+              <small>${t("hero.lot_label", {
+                n: CONSEGNA.vassoiMinimi,
+              })}</small>
+            </span>
           </div>
         </div>
       </section>
 
-      <div class="viv-listing">
+      <div class="viv-listing" id="vivaioCatalog">
         ${lista.length ? barraFiltriHtml(lista, visibili) : ""}
         ${barraStatoHtml()}
         <div class="orto-grid viv-grid">${
@@ -633,72 +668,109 @@
   // che qui non si vendono semi ma piante già pronte da mettere a dimora.
   function illustrazionePiantina() {
     return `
-      <svg class="viv-hero-art" viewBox="0 0 200 200" role="img"
+      <svg class="viv-hero-art" viewBox="0 0 260 230" role="img"
         aria-label="${escape(t("hero.art_alt"))}">
         <defs>
-          <linearGradient id="vivTerra" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#7a5638" />
-            <stop offset="100%" stop-color="#432c1c" />
+          <linearGradient id="vivTerra" x1="0" y1="0" x2="0.85" y2="1">
+            <stop offset="0%" stop-color="#a87443" />
+            <stop offset="52%" stop-color="#725033" />
+            <stop offset="100%" stop-color="#3f2b20" />
           </linearGradient>
           <linearGradient id="vivFoglia" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#a8e6a3" />
-            <stop offset="100%" stop-color="#5fbf72" />
+            <stop offset="0%" stop-color="#c7f5a8" />
+            <stop offset="45%" stop-color="#72d17a" />
+            <stop offset="100%" stop-color="#2b8d50" />
           </linearGradient>
+          <linearGradient id="vivFogliaScura" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#91e08d" />
+            <stop offset="100%" stop-color="#247244" />
+          </linearGradient>
+          <linearGradient id="vivVassoio" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#49624c" />
+            <stop offset="100%" stop-color="#1d3024" />
+          </linearGradient>
+          <filter id="vivOmbra" x="-30%" y="-30%" width="160%" height="180%">
+            <feDropShadow dx="0" dy="10" stdDeviation="8"
+              flood-color="#0a2415" flood-opacity=".32" />
+          </filter>
         </defs>
+        <path class="viv-art-aura"
+          d="M43 118 C35 58 80 16 139 18 c65 2 103 49 86 108 c-15 52 -55 81 -105 75 c-48 -6 -72 -38 -77 -83 z"
+          fill="rgba(255,255,255,.09)" />
+        <circle cx="48" cy="72" r="5" fill="rgba(210,249,185,.7)" />
+        <circle cx="218" cy="88" r="4" fill="rgba(210,249,185,.55)" />
 
-        <circle cx="100" cy="96" r="80" fill="rgba(255,255,255,.06)" />
-
-        <!-- Vassoio alveolare: l'alveolo centrale è vuoto, la piantina è
-             appena uscita da lì. -->
-        <g class="viv-art-tray">
-          <path d="M40 150 h30 l-6 20 a9 4 0 0 1 -18 0 z" fill="url(#vivTerra)" />
-          <path d="M130 150 h30 l-6 20 a9 4 0 0 1 -18 0 z" fill="url(#vivTerra)" />
-          <path d="M85 150 h30 l-6 20 a9 4 0 0 1 -18 0 z" fill="#20301f" />
-          <rect x="26" y="139" width="148" height="12" rx="4" fill="#2c4430" />
-          <rect x="26" y="139" width="148" height="3" rx="1.5"
-            fill="rgba(255,255,255,.16)" />
-          <ellipse cx="55" cy="150" rx="15" ry="4.5" fill="#6b4a2f" />
-          <ellipse cx="145" cy="150" rx="15" ry="4.5" fill="#6b4a2f" />
-          <ellipse cx="100" cy="150" rx="15" ry="4.5" fill="#1b2a1a" />
+        <!-- Vassoio in prospettiva: l'alveolo centrale vuoto rende evidente
+             che il răsad è già stato estratto ed è pronto al trapianto. -->
+        <g class="viv-art-tray" filter="url(#vivOmbra)">
+          <ellipse cx="130" cy="205" rx="93" ry="11" fill="rgba(7,26,15,.3)" />
+          <path d="M28 167 L232 167 L216 202 Q130 218 44 202 Z"
+            fill="url(#vivVassoio)" />
+          <path d="M28 167 Q130 147 232 167 Q130 190 28 167 Z"
+            fill="#5c755d" />
+          <path d="M34 166 Q130 151 226 166 Q130 181 34 166 Z"
+            fill="#263a2b" />
+          <g fill="#7b5738">
+            <ellipse cx="66" cy="166" rx="20" ry="7" />
+            <ellipse cx="194" cy="166" rx="20" ry="7" />
+          </g>
+          <g fill="#17251b">
+            <ellipse cx="108" cy="166" rx="18" ry="6" />
+            <ellipse cx="152" cy="166" rx="18" ry="6" />
+          </g>
+          <path d="M46 179 Q130 194 214 179" fill="none"
+            stroke="rgba(255,255,255,.12)" stroke-width="3" />
         </g>
 
-        <!-- Ombra sull'alveolo vuoto: dice che la zolla è sollevata. -->
-        <ellipse class="viv-art-soil" cx="100" cy="151" rx="12" ry="3.5"
-          fill="#0d1a0d" opacity=".55" />
+        <ellipse class="viv-art-soil" cx="130" cy="159" rx="22" ry="7"
+          fill="rgba(8,22,13,.62)" />
 
-        <g class="viv-art-plug">
-          <!-- Pane di terra: tronco di cono, la forma dell'alveolo. -->
-          <path d="M82 88 h36 l-7 28 a11 5 0 0 1 -22 0 z" fill="url(#vivTerra)" />
-          <ellipse cx="100" cy="88" rx="18" ry="5.5" fill="#8a643f" />
-          <ellipse cx="100" cy="88" rx="12" ry="3.5" fill="#3f2a1b" opacity=".45" />
-          <!-- Radici: avvolgono la zolla e spuntano sotto. -->
-          <g stroke="#e2d0b2" stroke-width="1.5" fill="none" stroke-linecap="round"
-            opacity=".6">
-            <path d="M86 96 q10 5 22 1" />
-            <path d="M88 105 q10 5 20 1" />
-            <path d="M94 118 q-3 9 -6 14" />
-            <path d="M100 120 v15" />
-            <path d="M106 118 q4 9 6 13" />
+        <!-- Pane di terra compatto con radici chiare ben visibili. -->
+        <g class="viv-art-plug" filter="url(#vivOmbra)">
+          <path d="M103 103 Q130 94 157 103 L150 151 Q130 164 110 151 Z"
+            fill="url(#vivTerra)" />
+          <ellipse cx="130" cy="103" rx="27" ry="9" fill="#a77849" />
+          <ellipse cx="130" cy="104" rx="17" ry="5" fill="#4b3324" opacity=".55" />
+          <g class="viv-art-roots" fill="none" stroke="#f2dfb7"
+            stroke-width="2" stroke-linecap="round" opacity=".78">
+            <path d="M111 114 Q126 120 149 113" />
+            <path d="M110 126 Q130 134 151 124" />
+            <path d="M116 108 Q120 130 115 146" />
+            <path d="M137 108 Q133 126 142 150" />
+            <path d="M126 116 Q128 139 126 157" />
           </g>
         </g>
 
-        <!-- Fusto e foglie: la pianta è già formata, non un seme. -->
+        <!-- Foglie asimmetriche, venature e fusto curvo danno al răsad una
+             silhouette più naturale e leggibile anche a dimensioni ridotte. -->
         <g class="viv-art-plant">
-          <g transform="translate(0,-24)">
-          <path d="M100 112 V64" stroke="#4f9a4a" stroke-width="4"
-            stroke-linecap="round" fill="none" />
+          <path d="M130 106 C128 89 132 70 131 50" fill="none"
+            stroke="#4ca95c" stroke-width="5" stroke-linecap="round" />
+          <path d="M130 83 C113 73 98 65 82 57" fill="none"
+            stroke="#4ca95c" stroke-width="3" stroke-linecap="round" />
+          <path d="M132 72 C149 62 164 53 177 42" fill="none"
+            stroke="#4ca95c" stroke-width="3" stroke-linecap="round" />
           <g class="viv-art-leaf viv-art-leaf--l">
-            <path d="M99 86 C78 86 64 74 60 60 c18 -5 34 4 39 26 z"
-              fill="url(#vivFoglia)" />
+            <path d="M126 82 C102 82 81 71 71 52 C93 43 119 56 126 82 Z"
+              fill="url(#vivFogliaScura)" />
+            <path d="M77 55 Q102 63 123 78" fill="none"
+              stroke="rgba(229,255,211,.52)" stroke-width="1.6" />
           </g>
           <g class="viv-art-leaf viv-art-leaf--r">
-            <path d="M101 78 C122 78 136 66 140 52 c-18 -5 -34 4 -39 26 z"
+            <path d="M134 72 C143 47 163 33 187 31 C190 53 170 73 134 72 Z"
               fill="url(#vivFoglia)" />
+            <path d="M181 36 Q155 51 138 68" fill="none"
+              stroke="rgba(239,255,221,.62)" stroke-width="1.7" />
           </g>
           <g class="viv-art-leaf viv-art-leaf--top">
-            <path d="M100 66 C94 52 97 38 106 30 c8 10 8 26 -6 36 z"
+            <path d="M131 57 C116 42 115 25 126 13 C143 24 145 43 131 57 Z"
               fill="url(#vivFoglia)" />
+            <path d="M128 18 Q132 37 131 53" fill="none"
+              stroke="rgba(239,255,221,.62)" stroke-width="1.6" />
           </g>
+          <g class="viv-art-leaf viv-art-leaf--small">
+            <path d="M129 94 C113 93 102 86 98 75 C113 72 126 80 129 94 Z"
+              fill="url(#vivFoglia)" />
           </g>
         </g>
       </svg>`;
@@ -999,6 +1071,12 @@
     if (!trigger) return;
     const action = trigger.dataset.vivAction;
     const id = trigger.dataset.plant;
+    // Lingua dal menu mobile: sotto i 660px il selettore dell'intestazione è
+    // nascosto e questi due pulsanti sono l'unico modo per cambiarla.
+    if (action === "set-language") {
+      applyLanguage(trigger.dataset.lang);
+      return;
+    }
     if (action === "add") {
       const prodotto = PRODUCTS[id]?.piantina || {};
       const lotto = prodotto.lotto || 6;

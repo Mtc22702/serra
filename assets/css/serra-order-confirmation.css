@@ -2770,7 +2770,7 @@
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
-      display: none;
+      display: inline-grid;
     }
     .site-header .nav-brand-text {
       font-size: 0.88rem;

@@ -2770,7 +2770,7 @@
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
-      display: none;
+      display: inline-grid;
     }
     .site-header .nav-brand-text {
       font-size: 0.88rem;
@@ -6691,58 +6691,53 @@ body {
   font-family: "DM Sans", system-ui, sans-serif;
   background: linear-gradient(150deg, #e4efe2 0%, #f5f9f3 55%, #e7f1e5 100%);
 }
-/* Header desktop senza navigazione centrale. */
-@media (min-width: 901px) {
-  .guide-page-header .site-header-inner {
-    grid-template-columns: minmax(190px, auto) auto;
+/* Header mobile coerente con le pagine operative dell'app. */
+@media (max-width: 660px) {
+  .guide-page-header {
+    --nav-h: 60px;
   }
-}
-.guide-page-header .nav-link--home {
-  border-radius: 13px;
-}
-/* Header compatto con azioni sempre visibili. */
-@media (max-width: 900px) {
+
   .guide-page-header .site-header-inner {
-    grid-template-columns: minmax(0, 1fr) auto;
+    position: relative;
+    min-height: 60px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr;
   }
+
   .guide-page-header .nav-actions {
-    width: auto;
     grid-column: 2;
     grid-row: 1;
+    width: 100%;
     justify-content: flex-end;
   }
-  .guide-page-header .nav-actions > .nav-lang {
-    display: flex;
-  }
-  /* Mantiene centrata l'icona del tema. */
-  .guide-page-header .nav-actions > .theme-toggle {
-    display: inline-grid;
-  }
-}
-/* Header mobile con Home sul lato sinistro. */
-@media (max-width: 660px) {
-  /* Nasconde l'etichetta Home per lasciare spazio al marchio. */
-  .guide-page-header .nav-link--home {
-    position: absolute;
-    top: 50%;
-    left: 0.68rem;
-    z-index: 2;
-    width: 40px;
-    min-width: 40px;
-    height: 38px;
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transform: translateY(-50%);
-  }
-  .guide-page-header .nav-link--home .nav-link-label {
+
+  .guide-page-header .nav-actions > .nav-prefs {
     display: none;
   }
-  .guide-page-header .nav-link--home .nav-link-icon {
-    margin-right: 0;
-    font-size: 1.1rem;
+
+  .guide-page-header .nav-brand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    max-width: calc(100vw - 9rem);
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  .guide-page-header .nav-brand-mark {
+    display: inline-grid;
+  }
+
+  .guide-page-header .nav-menu-toggle,
+  .guide-page-header .nav-menu-toggle:hover,
+  .guide-page-header .nav-menu-toggle:focus,
+  .guide-page-header .nav-menu-toggle:focus-visible,
+  .guide-page-header .nav-menu-toggle:active,
+  .guide-page-header .nav-menu-toggle[aria-expanded="true"] {
+    left: 0.68rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 /* Contenitore principale con spazio per l'header fisso. */

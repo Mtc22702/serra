@@ -12468,7 +12468,7 @@
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 400px) {
     .site-header .nav-brand-mark {
-      display: none;
+      display: inline-grid;
     }
     .site-header .nav-brand-text {
       font-size: 0.88rem;
@@ -16235,8 +16235,26 @@
 
   /* Header mobile: menu a sinistra, identità dell'app centrata, carrello a destra. */
   @media (max-width: 660px) {
+    .site-header {
+      --nav-h: 60px;
+    }
+
     .site-header-inner {
       position: relative;
+      min-height: 60px;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: 1fr;
+    }
+
+    .site-header .nav-actions {
+      grid-column: 2;
+      grid-row: 1;
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .site-header .nav-actions > .nav-prefs {
+      display: none;
     }
 
     .site-header .nav-brand {
@@ -16251,6 +16269,7 @@
 
     .site-header .nav-menu-toggle {
       left: 0.68rem;
+      top: 50%;
       transform: translateY(-50%);
     }
 
@@ -16384,5 +16403,103 @@
   textarea,
   select {
     font-size: 16px !important;
+  }
+}
+
+/* Ingresso generico dalla home: la modalità si sceglie nel configuratore,
+   senza preassegnare il profilo Principiante alla CTA principale. */
+@layer polish {
+  .persona-entry-prompt {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0 0 0.7rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(47, 107, 58, 0.22);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #eff8ea, #fff9e9);
+    color: var(--green-dk, #2f6b3a);
+  }
+
+  .persona-entry-prompt[hidden] {
+    display: none !important;
+  }
+
+  .persona-entry-prompt-step {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--green-dk, #2f6b3a);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    place-items: center;
+  }
+
+  .persona-entry-prompt > span:last-child {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.14rem;
+  }
+
+  .persona-entry-prompt strong {
+    font-family: var(--serif, "Fraunces", Georgia, serif);
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .persona-entry-prompt small {
+    color: var(--muted);
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  body.persona-entry-choice .workflow-persona-panel {
+    border-color: rgba(47, 107, 58, 0.28);
+    box-shadow: 0 12px 28px rgba(31, 58, 38, 0.12);
+  }
+
+  /* Prima della scelta il percorso non è ancora definito: nascondere il
+     riepilogo del profilo salvato evita che sembri già imposto. */
+  body.persona-entry-choice .journey-context {
+    display: none;
+  }
+
+  @media (max-width: 660px) {
+    .persona-entry-prompt {
+      gap: 0.65rem;
+      padding: 0.72rem 0.78rem;
+    }
+
+    .persona-entry-prompt-step {
+      width: 30px;
+      height: 30px;
+    }
+
+    .persona-entry-prompt strong {
+      font-size: 0.92rem;
+    }
+
+    .persona-entry-prompt small {
+      display: block;
+      font-size: 0.7rem;
+      overflow: visible;
+      white-space: normal;
+    }
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .persona-entry-prompt {
+    border-color: rgba(139, 212, 158, 0.25);
+    background: linear-gradient(135deg, #173322, #2a2b1a);
+    color: #eaf6ed;
+  }
+
+  html[data-theme="dark"] .persona-entry-prompt small {
+    color: #b9cabc;
   }
 }
