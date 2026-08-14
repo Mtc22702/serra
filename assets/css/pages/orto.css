@@ -11,17 +11,31 @@
 @layer base, dark-theme, polish;
 
 @layer base {
-  /* Token locali della pagina: derivano dalla palette dell'app. */
+  /* Token locali della pagina: derivano dalla palette dell'app.
+     Prima erano otto valori scritti a mano, vicinissimi a quelli condivisi ma
+     mai uguali: il verde chiaro tirava al giallo (#7bb661 contro #5b9c4a), le
+     schede erano bianco pieno invece del bianco caldo, bordi e grigi
+     leggermente sfasati. Passando da "Il mio orto" al resto dell'app si vedeva
+     un cambio di temperatura. Ora i nomi `--orto-*` restano — li usano
+     centinaia di regole — ma puntano ai token di base.css, così le due sezioni
+     non possono più divergere. Il tema scuro continua a sovrascriverli più in
+     basso, esattamente come prima. */
   .orto-page {
-    --orto-green: #2f6b3a;
-    --orto-green-dk: #1f4c2b;
-    --orto-green-lt: #7bb661;
-    --orto-ink: #1f3a26;
+    /* I verdi puntano ai token di marca, che non cambiano col tema: qui fanno
+       da riempimento sotto testo bianco (schede attive, spunte, toast), quindi
+       schiarirli al buio li renderebbe illeggibili. Il verde chiaro prende il
+       valore condiviso #5b9c4a al posto del #7bb661 che tirava al giallo. */
+    --orto-green: var(--serra-green);
+    --orto-green-dk: var(--serra-ink);
+    --orto-green-lt: #5b9c4a;
+    /* I neutri invece derivano: nel tema scuro il blocco in fondo al file li
+       sovrascrive comunque, quindi la derivazione vale per il tema chiaro. */
+    --orto-ink: var(--text);
     --orto-ink-soft: #46584b;
-    --orto-muted: #6b7a6e;
-    --orto-surface: #ffffff;
-    --orto-surface-2: #f6f8f3;
-    --orto-line: #e3e9dd;
+    --orto-muted: var(--muted);
+    --orto-surface: var(--white);
+    --orto-surface-2: var(--sand-lt);
+    --orto-line: var(--border);
     --orto-line-strong: #cfd9c9;
     --orto-amber: #b5860f;
     --orto-shadow-sm: 0 2px 6px rgba(24, 46, 32, 0.06);
@@ -113,16 +127,9 @@
     box-shadow: var(--orto-shadow-lg);
   }
 
-  .orto-hero::after {
-    content: "";
-    position: absolute;
-    right: -60px;
-    bottom: -90px;
-    width: 320px;
-    height: 320px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-  }
+  /* Lo sfondo della hero è solo verde: il disco bianco da 320px che stava in
+     basso a destra tagliava la scheda con un arco di cerchio e competeva con
+     l'anello della percentuale, l'unico cerchio che qui deve farsi notare. */
 
   .orto-hero-inner {
     position: relative;
@@ -1130,21 +1137,22 @@
       line-height: 1.15;
     }
 
+    /* L'anello resta a 104px anche su schermo stretto. Prima scendeva a 78px
+       insieme a un'etichetta da 8px, ma il ritocco di leggibilità in
+       @layer polish riporta quel testo a 12px: "GIORNATA" diventava più larga
+       del cerchio e ne usciva. Il diametro utile qui dentro è ~88px, mentre
+       l'etichetta ne misura circa 71: ci sta con un margine per parte. */
     .orto-ring {
-      width: 78px;
-      height: 78px;
+      width: 104px;
+      height: 104px;
     }
 
     .orto-ring-txt b {
-      font-size: 20px;
-    }
-
-    .orto-ring-txt small {
-      font-size: 8px;
+      font-size: 22px;
     }
 
     .orto-ring-wrap {
-      grid-template-columns: 78px minmax(0, 1fr);
+      grid-template-columns: 104px minmax(0, 1fr);
       gap: 10px;
     }
 
@@ -1269,13 +1277,21 @@
    per rispondere. Senza colture il riepilogo direbbe "tutto a posto" quando
    in realtà non c'è ancora nulla. */
 @layer base {
+  /* Primo avvio: è la scheda più grande della pagina e col fondo bianco pieno
+     era l'unica superficie dell'app a staccare così tanto dallo sfondo. Il
+     verde tenue nasce dagli stessi token del resto della sezione, quindi segue
+     anche il tema scuro senza colori scritti a mano. */
   .orto-welcome {
     max-width: 620px;
     margin: 10px auto 0;
     padding: 46px 32px 40px;
     border: 1.5px dashed var(--orto-line-strong);
     border-radius: var(--orto-r-lg);
-    background: var(--orto-surface);
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--orto-green) 3%, var(--orto-surface)),
+      color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface))
+    );
     box-shadow: var(--orto-shadow-sm);
     text-align: center;
   }
@@ -1291,9 +1307,12 @@
     place-items: center;
   }
 
+  /* Sul fondo verde della scheda `--orto-muted` scende a 4,04:1, sotto la
+     soglia AA per il testo piccolo: kicker, descrizione e riga del negozio
+     usano il grigio più scuro, che risale a 6,78:1. */
   .orto-welcome-kicker {
     margin: 0;
-    color: var(--orto-muted);
+    color: var(--orto-ink-soft);
     font-size: 11.5px;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -1309,7 +1328,7 @@
   .orto-welcome-text {
     max-width: 46ch;
     margin: 0 auto 24px;
-    color: var(--orto-muted);
+    color: var(--orto-ink-soft);
     font-size: 14.5px;
     line-height: 1.5;
   }
@@ -1329,7 +1348,7 @@
     margin: 24px 0 0;
     padding-top: 18px;
     border-top: 1px solid var(--orto-line);
-    color: var(--orto-muted);
+    color: var(--orto-ink-soft);
     font-size: 13px;
   }
 

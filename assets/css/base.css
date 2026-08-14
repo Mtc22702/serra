@@ -3,7 +3,12 @@
  * non devono assumere una schermata particolare. Struttura: fondazioni → tema →
  * componenti → adattamenti viewport. Le personalizzazioni stanno in pages/.
  */
-@layer base, dark-theme, polish;
+/* `components` è l'ultimo livello: ci vive il sistema dei pulsanti, che deve
+   valere sopra le regole delle singole pagine. Senza, ogni foglio di pagina —
+   caricato dopo questo — riportava i suoi pulsanti al colore di casa propria.
+   I fogli di pagina ridichiarano solo i primi tre livelli: ridichiararli non
+   li riordina, quindi `components` resta comunque l'ultimo. */
+@layer base, dark-theme, polish, components;
 
 /* Punto di ingresso completo della pagina: nessun foglio correttivo esterno. */
 /* Moduli CSS della pagina principale */
@@ -45,6 +50,59 @@
     --shadow-sm: 0 2px 8px rgba(31, 58, 38, 0.08);
     --shadow-md: 0 12px 34px rgba(31, 58, 38, 0.14);
     --shadow-lg: 0 20px 48px rgba(31, 58, 38, 0.18);
+
+    /* ---------- sistema dei pulsanti ----------
+       Tre ruoli soli: principale (l'azione che fa avanzare), secondario (le
+       alternative) e distruttivo (toglie o svuota). Questi token stavano in sei
+       copie identiche dentro i fogli di pagina; ora vivono qui, nell'unico
+       foglio che tutte le pagine caricano, così non possono più divergere.
+       `--button-primary-fill` esiste perché il riempimento principale era
+       scritto a mano in otto modi diversi — angoli e fermate ogni volta un po'
+       differenti — e ora ha una forma sola. */
+    --button-primary: var(--serra-green, #2f6b3a);
+    --button-primary-hover: #357944;
+    /* Schiarita del passaggio col mouse: il #3f8a50 di prima portava il testo
+       bianco a 4,14:1, sotto la soglia AA. Questo è il verde più chiaro che la
+       rispetta ancora (4,72:1) e lo stacco dallo stato di riposo si vede. */
+    --button-primary-lift: #398049;
+    --button-primary-text: #fcfdf9;
+    --button-primary-border: rgba(47, 107, 58, 0.42);
+    --button-primary-shadow: rgba(47, 107, 58, 0.24);
+    --button-primary-fill: linear-gradient(
+      135deg,
+      var(--button-primary-hover),
+      var(--button-primary)
+    );
+    --button-primary-fill-hover: linear-gradient(
+      135deg,
+      var(--button-primary-lift),
+      var(--button-primary-hover)
+    );
+    --button-secondary-bg: rgba(47, 107, 58, 0.1);
+    --button-secondary-bg-hover: rgba(47, 107, 58, 0.17);
+    --button-secondary-text: #245733;
+    --button-secondary-border: rgba(47, 107, 58, 0.18);
+    --button-danger-bg: #fff3f1;
+    --button-danger-bg-hover: #ffe8e4;
+    --button-danger-text: #9f2f24;
+    --button-danger-border: rgba(176, 48, 32, 0.32);
+
+    /* Principale sopra una superficie verde scura (la scheda della hero, i
+       riquadri pieni). Lì il verde su verde sparirebbe: si inverte in crema
+       con testo verde scuro, che è il modo in cui l'app già risolve il caso
+       altrove (.percorso-cta-btn--green, il pulsante della notifica carrello).
+       Prima la hero usava un giallo #f4cd67 che non appartiene alla palette. */
+    --button-on-dark-bg: var(--serra-paper, #fffdf6);
+    --button-on-dark-bg-hover: #ffffff;
+    --button-on-dark-text: #1c4429;
+    --button-on-dark-border: rgba(255, 255, 255, 0.6);
+
+    /* Geometria: prima i pulsanti d'azione avevano sette raggi diversi (da 6px
+       alla pillola) e sei pesi di carattere. Ora la forma è una sola; le
+       pillole restano ai chip dei filtri, che non sono azioni. */
+    --button-radius: 12px;
+    --button-min-height: 44px;
+    --button-font-weight: 700;
   }
   html {
     scroll-behavior: smooth;
@@ -4920,6 +4978,94 @@
     flex-direction: column;
     gap: 0.65rem;
   }
+
+  /* Riepilogo in cima al cassetto. Compare solo quando ha almeno due numeri da
+     dire (vedi riepilogoHtml in assets/js/serra-cart-ui.js): con le sole
+     bustine ripeterebbe quello che c'è già nell'intestazione. */
+  .cart-summary {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.7rem 0.5rem;
+    border-radius: 12px;
+    background: rgba(45, 106, 79, 0.07);
+  }
+  .cart-summary span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    text-align: center;
+  }
+  .cart-summary b {
+    color: var(--green-dk);
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+  .cart-summary small {
+    color: var(--muted);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+  }
+
+  /* Gruppi: semi, piantine, materiali. L'intestazione compare solo quando i
+     gruppi sono davvero due, altrimenti etichetterebbe l'ovvio. */
+  .cart-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .cart-group-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0 0.15rem;
+  }
+  .cart-group-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--green-dk);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .cart-group-meta {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* Note dell'ordine: consegna, ordine minimo, "partono insieme". Seguono la
+     merce, non la pagina: appaiono in qualunque carrello contenga piantine. */
+  .cart-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0.5rem 0.6rem;
+    border-radius: 10px;
+    background: rgba(45, 106, 79, 0.06);
+    color: var(--muted);
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+  .cart-note b {
+    color: var(--green-dk);
+    font-weight: 700;
+  }
+  .cart-note--warn {
+    background: rgba(201, 150, 47, 0.14);
+    color: #7a5410;
+  }
+  .cart-note--warn b {
+    color: #7a5410;
+  }
+
   .cart-item {
     display: flex;
     align-items: center;
@@ -4929,12 +5075,29 @@
     border-radius: 12px;
     border: 1px solid var(--border);
   }
+  /* La riga piantina si riconosce anche senza leggere: filetto sul bordo. */
+  .cart-item--piantina {
+    border-left: 3px solid #f6c85a;
+  }
   .cart-item img {
     width: 44px;
     height: 44px;
     object-fit: cover;
     border-radius: 8px;
     flex-shrink: 0;
+  }
+  /* Ripiego quando la foto manca: stesso ingombro dell'immagine, così le righe
+     restano allineate fra loro. */
+  .cart-item-glyph {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: rgba(45, 106, 79, 0.08);
+    font-size: 1.4rem;
+    line-height: 1;
   }
   .cart-item-copy {
     flex: 1;
@@ -4968,6 +5131,121 @@
     color: var(--green-dk);
     font-weight: 700;
     white-space: nowrap;
+  }
+  /* Invito incrociato: chi ha solo semi scopre le piantine già cresciute, chi
+     ha solo piantine scopre il catalogo. Compare solo quando manca una delle
+     due famiglie e sparisce appena l'utente aggiunge quella che gli mancava —
+     la regola sta in crossHtml(), assets/js/serra-cart-ui.js. */
+  .cart-cross {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 4px 0;
+    padding: 12px 14px;
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+    background: rgba(201, 150, 47, 0.08);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      transform 0.16s ease;
+  }
+  .cart-cross:hover {
+    border-color: #c9962f;
+    background: rgba(201, 150, 47, 0.14);
+    transform: translateY(-1px);
+  }
+  .cart-cross-ico {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 19px;
+    place-items: center;
+  }
+  .cart-cross-copy {
+    flex: 1;
+    min-width: 0;
+  }
+  .cart-cross-copy b {
+    display: block;
+    font-size: 13.5px;
+  }
+  .cart-cross-copy small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .cart-cross-arrow {
+    color: #c9962f;
+    font-weight: 800;
+  }
+
+  /* Riga piantina dentro il carrello: si distingue a colpo d'occhio dalle
+     bustine. Sta qui, e non nel foglio della home, perché lo stesso carrello
+     compare anche nel configuratore. */
+  .cart-item-tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #f6c85a;
+    color: #4a3405;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  /* Colonna di destra della riga: prima la quantità, poi la rimozione.
+     Ogni prodotto del carrello si regola qui, senza tornare al listino. */
+  .cart-item-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+  .cart-item-qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.1rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--paper, #fff);
+  }
+  .cart-qty-btn {
+    display: grid;
+    place-items: center;
+    /* 28px: resta toccabile nel cassetto stretto dello smartphone. */
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--green-dk);
+    font: inherit;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.13s ease;
+  }
+  .cart-qty-btn:hover {
+    background: rgba(45, 106, 79, 0.12);
+  }
+  .cart-qty-value {
+    min-width: 2ch;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--green-dk);
+    text-align: center;
   }
   .cart-item-remove {
     background: none;
@@ -5085,6 +5363,48 @@
     text-align: center;
     margin-top: 0.65rem;
     transition: background 0.16s;
+  }
+  /* Sotto l'ordine minimo di vassoi la spedizione della merce viva non regge:
+     il pulsante resta visibile ma inerte, e il motivo è scritto fra le righe
+     delle piantine. Vedi disegnaCarrello() in assets/js/vivaio.js. */
+  .cart-checkout-btn:disabled {
+    background: var(--border);
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+  /* Azione secondaria del piè di pagina: riporta al listino senza chiudere il
+     discorso, quindi non compete con il pulsante d'acquisto. */
+  .cart-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 100%;
+    margin-top: 0.45rem;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: none;
+    color: var(--green-dk);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background 0.16s ease,
+      border-color 0.16s ease;
+  }
+  .cart-edit-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 106, 79, 0.06);
+  }
+  /* Riga di contesto sotto lo stato vuoto: dice perché il carrello è vuoto e
+     quale vincolo aspettarsi, invece di lasciare l'utente davanti al nulla. */
+  .cart-empty-hint {
+    max-width: 26ch;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
   }
   .cart-checkout-btn:hover {
     background: #cf5c3c;
@@ -6990,6 +7310,15 @@
       display: flex;
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Uscita verso un'altra pagina: il menu sparisce subito, senza transizione
+       e senza rimettere il body in flusso. Vedi closeMenuForNavigation() in
+       assets/js/base.js: rimandare il riflusso a dopo la navigazione è ciò che
+       toglie il ritardo fra il tocco e l'apertura della pagina. */
+    body.nav-menu-open.nav-menu-leaving .site-header .nav-links,
+    body.nav-menu-open.nav-menu-leaving::before {
+      display: none;
     }
     html[data-theme="dark"] .site-header .nav-links {
       /* Sfondo traslucido della navigazione mobile. */
@@ -10099,7 +10428,9 @@ html[data-theme="dark"]
     width: min(480px, 100%);
     display: flex;
     flex-direction: column;
-    max-height: min(84dvh, 720px);
+    /* Cresciuto insieme allo spazio fra i passi: l'aria in più non deve
+       tradursi in scorrimento. */
+    max-height: min(88dvh, 764px);
     overflow: hidden;
     overscroll-behavior: contain;
   }
@@ -10209,8 +10540,9 @@ html[data-theme="dark"]
     .preconfig-footer {
       padding: 8px 14px 12px;
     }
+    /* Su schermo largo lo spazio c'è comunque: basta un respiro più contenuto. */
     .preconfig-section-label {
-      margin: 3px 0 2px;
+      margin: 8px 0 3px;
     }
     .preconfig-sizes-note {
       margin-bottom: 3px;
@@ -10303,22 +10635,39 @@ html[data-theme="dark"]
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
     -webkit-overflow-scrolling: touch;
-    padding: 6px 14px 2px;
+    padding: 6px 14px 4px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
+  }
+  /* I campi non si comprimono. Erano figli di un contenitore flex in colonna,
+     quindi quando il contenuto superava l'altezza disponibile si schiacciavano
+     tutti insieme invece di far scorrere: con `overflow: hidden` addosso, gli
+     steppers finivano tagliati a metà. */
+  .preconfig-body > * {
+    flex: 0 0 auto;
   }
 
+  /* Respiro fra i passi. A 7px sopra l'etichetta i quattro blocchi si
+     leggevano come un elenco continuo: il titolo del passo stava più vicino al
+     campo precedente che al proprio. Portandolo a 12 la separazione diventa
+     evidente, e il pannello resta comunque in una schermata perché il tetto
+     d'altezza è cresciuto in proporzione. */
   .preconfig-section-label {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
     color: var(--serra-green);
-    margin: 7px 0 4px;
+    margin: 12px 0 5px;
     display: flex;
     align-items: center;
     gap: 6px;
+  }
+  /* Il primo passo è già staccato dall'intestazione: non serve altro spazio. */
+  .preconfig-body > *:first-child .preconfig-section-label,
+  .preconfig-body > .preconfig-section-label:first-child {
+    margin-top: 2px;
   }
   .preconfig-section-label::after {
     content: "";
@@ -10457,13 +10806,67 @@ html[data-theme="dark"]
     background-color: #f4f9f2;
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.88), rgba(244, 249, 242, 0.86)),
-      url(img/svg/misure-pattern.svg);
+      url(../img/svg/misure-pattern.svg);
     background-size:
       auto,
       96px 72px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+  }
+
+  /* Camminamento: riga propria, perché non è una dimensione della serra ma la
+     misura del passaggio fra le aiuole. Etichetta a sinistra e regolatore a
+     destra sulla stessa riga, così costa un'altezza sola e il pannello resta
+     dentro la schermata.
+     È il campo secondario del passo: ha un valore ragionevole di partenza e
+     raramente si cambia, quindi sta più basso di tono delle misure — bordo più
+     tenue, ombra assente, regolatore ridotto. */
+  .preconfig-vfield--path {
+    padding: 6px 8px;
+    border-color: rgba(47, 107, 58, 0.1);
+    box-shadow: none;
+    background-color: #eef2ea;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.62), rgba(246, 250, 244, 0.58)),
+      url(../img/svg/ciottoli-pattern.svg);
+    background-size:
+      auto,
+      72px 72px;
+  }
+  /* Etichetta a sinistra, regolatore a destra, sulla stessa riga. */
+  .preconfig-vfield--path > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .preconfig-vfield--path .preconfig-fld-row {
+    margin-bottom: 0;
+    min-width: 0;
+  }
+  .preconfig-vfield--path .preconfig-stepper {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 116px;
+  }
+  .preconfig-vfield--path .preconfig-step-btn {
+    min-height: 32px;
+  }
+  .preconfig-vfield--path .preconfig-step-input {
+    padding-block: 4px;
+    font-size: 15px;
+  }
+  .preconfig-vfield--path .preconfig-fld,
+  .preconfig-vfield--path .preconfig-fld-unit {
+    font-size: 10.5px;
+  }
+  /* Il velo chiaro sopra i ciottoli si scurisce: la texture resta leggibile
+     senza diventare una macchia chiara nel pannello notturno. */
+  html[data-theme="dark"] .preconfig-vfield--path {
+    background-image:
+      linear-gradient(rgba(18, 43, 32, 0.82), rgba(16, 38, 28, 0.86)),
+      url(../img/svg/ciottoli-pattern.svg);
   }
   .preconfig-vfield--dims > div {
     display: flex;
@@ -10485,21 +10888,67 @@ html[data-theme="dark"]
     gap: 10px;
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.5), rgba(249, 252, 247, 0.48)),
-      url(img/svg/clima-pattern.svg);
+      url(../img/svg/clima-pattern.svg);
     background-size:
       auto,
       112px 76px;
   }
 
   .preconfig-fld {
-    display: block;
     font-size: 11px;
     font-weight: 600;
     color: #46554a;
-    margin-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 0.4px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    /* Il nome del campo può accorciarsi, l'unità no. */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* Segno di quota accanto all'etichetta: freccia fra due sponde, orizzontale
+     per la larghezza e verticale per la lunghezza. È il simbolo che si usa sui
+     disegni tecnici, e dice "stai prendendo una misura" prima che si legga il
+     nome del campo. */
+  .preconfig-axis {
+    flex: 0 0 auto;
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: var(--serra-green);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.72;
+  }
+  html[data-theme="dark"] .preconfig-axis {
+    stroke: #a0c8a0;
+  }
+
+  /* Etichetta e unità stanno sulla stessa riga: prima larghezza e lunghezza
+     mostravano numeri nudi mentre il campo accanto diceva "cm", e con quel
+     vicino i metri si leggevano come centimetri. */
+  .preconfig-fld-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 6px;
+  }
+  /* Le etichette senza unità accanto — Zona, Serra — restano a sé: hanno
+     bisogno del loro stacco dal selettore sottostante. Prima ce l'avevano da
+     `.preconfig-fld`, che era un blocco con margine; da quando è in linea, per
+     poter affiancare l'unità, lo spazio va rimesso qui. */
+  .preconfig-fld:not(.preconfig-fld-row > *) {
+    display: block;
+    margin-bottom: 6px;
+  }
+  .preconfig-fld-unit {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
   }
 
   .preconfig-stepper {
@@ -10553,13 +11002,6 @@ html[data-theme="dark"]
   .preconfig-step-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
   }
-  .preconfig-stepper--sm .preconfig-step-btn {
-    width: 36px;
-    font-size: 14px;
-  }
-  .preconfig-stepper--sm .preconfig-step-input {
-    font-size: 13px;
-  }
 
   .preconfig-dim-slider {
     width: 100%;
@@ -10608,97 +11050,197 @@ html[data-theme="dark"]
     box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.2);
   }
 
+  /* I tre livelli di esperienza. I colori erano tre tinte a sé, vicine ma non
+     uguali a quelle dell'app: ora sono i token condivisi, così la progressione
+     verde → ambra → terracotta è la stessa che l'utente vede altrove. */
   :root {
-    --pc-nov: #4f9a3f;
-    --pc-int: #c9962f;
-    --pc-exp: #c0552f;
+    --pc-nov: var(--green-lt);
+    --pc-int: var(--yellow);
+    --pc-exp: var(--accent);
+
+    /* Scala del selettore di livello, usata sia dalle schede della home e del
+       configuratore sia dalle linguette della guida. È una via di mezzo fra le
+       due versioni provate: riempire ogni scheda del proprio colore rendeva la
+       scelta fatta indistinguibile dalle altre due, lasciarle trasparenti
+       toglieva ogni traccia del livello finché non lo si sceglieva.
+       Qui la tinta a riposo è leggera ma presente e il salto verso lo stato
+       scelto è di almeno 36 punti su 255, così si vede sempre dove si è.
+       A separare le tinte fra loro è soprattutto il riquadro dell'icona:
+       ambra e terracotta sono adiacenti e in trasparenza si confondono. */
+    --persona-fill: 18%;
+    --persona-fill-hover: 26%;
+    --persona-fill-on: 36%;
+    --persona-edge: 60%;
+    --persona-ico: 55%;
+    --persona-ico-on: 72%;
+    /* Le due basi con cui la tinta si mescola: la superficie della scheda e il
+       colore verso cui tira il bordo. Cambiano col tema, le percentuali no —
+       così le regole restano uniche e al buio non serve riscriverle. */
+    --persona-base: var(--serra-paper, #fffdf6);
+    --persona-edge-base: #14301f;
+    /* Inchiostro predefinito. Nel tema chiaro ogni livello lo sovrascrive con
+       il proprio, quindi qui non si fissa quello dello stato scelto: lo
+       definisce solo il tema scuro, dove serve un chiaro unico per tutti. */
+    --persona-text: #245733;
   }
   .pc-persona-cards {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    /* Tre scelte alternative, non un elenco continuo: lo spazio fra loro deve
+       leggersi. A 5px sembravano un blocco unico. */
+    gap: 10px;
   }
+  /* Scelta del livello. Usa la scala `--persona-*` definita in cima al file:
+     tinta leggera a riposo, riquadro dell'icona più carico a fare da segno di
+     riconoscimento, e la scheda scelta che prende barretta, bordo pieno e
+     sfondo più forte. */
   .pc-persona-card {
     --accent: var(--green-dk);
+    --accent-text: var(--persona-text);
+    --accent-edge: color-mix(in srgb, var(--accent) var(--persona-edge), var(--persona-edge-base));
     position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 11px;
+    min-height: 62px;
     text-align: left;
-    padding: 8px 12px 8px 14px;
-    border-radius: 14px;
-    border: 1.6px solid rgba(31, 58, 38, 0.16);
-    background: var(--serra-white);
-    box-shadow: 0 2px 8px rgba(31, 58, 38, 0.06);
-    color: #26342a;
+    padding: 10px 14px 10px 16px;
+    border-radius: 13px;
+    border: 1.5px solid var(--accent-edge);
+    background: color-mix(
+      in srgb,
+      var(--accent) var(--persona-fill),
+      var(--persona-base)
+    );
+    box-shadow: 0 2px 6px rgba(7, 31, 21, 0.08);
+    color: var(--accent-text);
     overflow: hidden;
     cursor: pointer;
     font-family: inherit;
     text-decoration: none;
     transition:
-      transform 0.12s ease,
+      color 0.16s ease,
       border-color 0.16s ease,
-      box-shadow 0.16s ease,
-      background 0.16s ease;
+      box-shadow 0.18s ease,
+      background 0.16s ease,
+      transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
   }
+  /* Barretta del livello: compare solo sulla scheda scelta. */
   .pc-persona-card::before {
     content: "";
     position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
     left: 0;
-    top: 0;
-    bottom: 0;
     width: 4px;
-    background: var(--accent);
-    opacity: 0.85;
-    transition: width 0.16s ease;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent-edge);
+    opacity: 0;
+    transition: opacity 0.18s ease;
   }
+  /* Nel tema chiaro ogni livello ha il proprio inchiostro, tarato sulla sua
+     tinta; al buio li sostituisce un unico chiaro (vedi blocco dark-theme). */
   .pc-persona-card--novizio {
     --accent: var(--pc-nov);
+    --accent-text: var(--persona-text, #245733);
   }
   .pc-persona-card--intermedio {
     --accent: var(--pc-int);
+    --accent-text: var(--persona-text-int, #674b0d);
   }
   .pc-persona-card--esperto {
     --accent: var(--pc-exp);
+    --accent-text: var(--persona-text-exp, #71311f);
   }
+  /* Al passaggio la scheda si stacca dal foglio: cresce di poco — il 2,5% è
+     percepibile senza spostare le vicine — e prende un alone del proprio
+     colore, che è il modo in cui il resto dell'app segna la messa a fuoco. */
   .pc-persona-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-    box-shadow: 0 8px 22px rgba(31, 58, 38, 0.14);
+    transform: scale(1.025);
+    z-index: 1;
   }
-  .pc-persona-card:hover::before {
-    width: 6px;
+  .pc-persona-card:not(.is-active):not([aria-pressed="true"]):hover {
+    background: color-mix(
+      in srgb,
+      var(--accent) var(--persona-fill-hover),
+      var(--persona-base)
+    );
+    box-shadow:
+      0 8px 20px rgba(7, 31, 21, 0.16),
+      0 0 0 3px color-mix(in srgb, var(--accent) 26%, transparent);
   }
-  .pc-persona-card.is-active {
-    border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 10%, var(--serra-white));
-    box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 28%, transparent);
+  .pc-persona-card:hover .pc-persona-ico {
+    transform: scale(1.06);
   }
-  .pc-persona-card.is-active::before {
-    width: 6px;
+  /* Il tocco riporta la scheda a terra. Serve anche da uscita sui dispositivi
+     tattili: lì `:hover` può restare attaccato dopo il tocco, e l'ingrandimento
+     rimarrebbe. Prima l'effetto era spento del tutto sotto `hover: none`, ma
+     quella condizione è vera anche nell'emulatore mobile del browser — dove si
+     prova col mouse — e sembrava semplicemente rotto. */
+  .pc-persona-card:active {
+    transform: scale(0.995);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pc-persona-card,
+    .pc-persona-ico {
+      transition-property: color, border-color, box-shadow, background;
+    }
+    .pc-persona-card:hover,
+    .pc-persona-card:active,
+    .pc-persona-card:hover .pc-persona-ico {
+      transform: none;
+    }
+  }
+  .pc-persona-card.is-active,
+  .pc-persona-card[aria-pressed="true"] {
+    color: var(--persona-text-on, var(--accent-text));
+    border-width: 2px;
+    background: color-mix(
+      in srgb,
+      var(--accent) var(--persona-fill-on),
+      var(--persona-base)
+    );
+    box-shadow:
+      0 10px 22px rgba(7, 31, 21, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  .pc-persona-card.is-active::before,
+  .pc-persona-card[aria-pressed="true"]::before {
     opacity: 1;
   }
 
+  /* Riquadro dell'icona: è ciò che distingue davvero i tre livelli, perché
+     ambra e terracotta in trasparenza restano a una decina di punti l'una
+     dall'altra mentre qui stanno a trentasette. */
   .pc-persona-ico {
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    background: color-mix(in srgb, var(--accent) 14%, var(--serra-white));
+    width: 43px;
+    height: 43px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: 12px;
+    background: color-mix(
+      in srgb,
+      var(--accent) var(--persona-ico),
+      var(--persona-base)
+    );
     transition:
       background 0.16s ease,
+      border-color 0.16s ease,
       transform 0.16s ease;
   }
-  .pc-persona-card.is-active .pc-persona-ico {
-    background: var(--accent);
-    transform: scale(1.04);
-  }
-  .pc-persona-card.is-active .pc-persona-ico .level-plant-ico {
-    filter: brightness(0) invert(1);
+  .pc-persona-card.is-active .pc-persona-ico,
+  .pc-persona-card[aria-pressed="true"] .pc-persona-ico {
+    border-color: var(--accent-edge);
+    background: color-mix(
+      in srgb,
+      var(--accent) var(--persona-ico-on),
+      var(--persona-base)
+    );
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 20%, transparent);
   }
   .level-plant-ico {
     width: 22px;
@@ -10765,6 +11307,32 @@ html[data-theme="dark"]
     border: 1.5px dashed rgba(47, 107, 58, 0.25);
   }
 
+  /* Finché il livello manca, il riepilogo lo dichiara: la prima voce non è un
+     dato impostato ma quello che resta da fare. */
+  .preconfig-summary--incompleto {
+    color: #7a5410;
+    font-weight: 650;
+  }
+
+  /* Spiega il pulsante spento. Sta sotto, non dentro un avviso: si legge prima
+     di provare a premere. Il tono è ambra — non è un errore, è un passo che
+     manca ancora. */
+  .preconfig-cta-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0;
+    color: #7a5410;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .preconfig-cta-hint::before {
+    content: "↑";
+    font-weight: 800;
+  }
+
   /* Layout del pannello per tablet e desktop. */
   @media (min-width: 661px) {
     .preconfig-body {
@@ -10784,14 +11352,11 @@ html[data-theme="dark"]
     .preconfig-step-input {
       padding-block: 5px;
     }
-    .preconfig-path-field {
-      padding: 4px;
-    }
-    .preconfig-path-row {
-      padding: 3px 6px;
-    }
+    /* Nel pannello su schermo largo le tre scelte stanno più strette: si
+       riduce l'ingombro, non il rilievo. */
     #preconfigPersonaSection .pc-persona-card {
-      padding: 4px 10px 4px 12px;
+      min-height: 54px;
+      padding: 6px 12px;
     }
     #preconfigPersonaSection .pc-persona-ico {
       width: 28px;
@@ -10800,43 +11365,6 @@ html[data-theme="dark"]
     .preconfig-month-select {
       padding-block: 6px;
     }
-  }
-
-  .preconfig-path-field {
-    position: relative;
-    isolation: isolate;
-    overflow: visible;
-    padding: 8px;
-    border: 1px solid rgba(91, 83, 66, 0.24);
-    border-radius: 13px;
-    background-color: #d8d0bd;
-    background-image:
-      linear-gradient(rgba(255, 253, 247, 0.48), rgba(245, 240, 228, 0.42)),
-      url(img/svg/camminamento-pattern.svg);
-    background-size:
-      auto,
-      54px 54px;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.65),
-      0 5px 14px rgba(73, 63, 45, 0.08);
-  }
-
-  .preconfig-path-row {
-    display: grid;
-    grid-template-columns: minmax(60px, 1fr) auto auto;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 8px;
-    border: 1px solid rgba(91, 83, 66, 0.14);
-    border-radius: 10px;
-    background: rgba(255, 253, 247, 0.76);
-    backdrop-filter: blur(3px);
-  }
-  .preconfig-path-slider {
-    width: 100%;
-    min-width: 0;
-    accent-color: var(--serra-green);
-    cursor: pointer;
   }
 
   .preconfig-month-wrap {
@@ -10881,8 +11409,12 @@ html[data-theme="dark"]
     align-items: center;
   }
 
+  /* Il fondo aveva 36px di aria sotto il pulsante, pensati quando l'aiuto non
+     c'era: sommati alla riga "Scegli il tuo livello" spingevano il pannello
+     oltre la schermata. Restano solo quelli che servono a stare sopra la barra
+     di sistema. */
   .preconfig-footer {
-    padding: 8px 14px calc(36px + env(safe-area-inset-bottom, 0px));
+    padding: 8px 14px calc(12px + env(safe-area-inset-bottom, 0px));
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -10995,6 +11527,17 @@ html[data-theme="dark"]
   html[data-theme="dark"] .preconfig-priority-badge {
     background: #3d7a4a;
   }
+  /* Variante d'avviso: non è un passo obbligatorio come il livello, è un valore
+     di ripiego da verificare. Ambra, come la riga sotto il pulsante, così i due
+     inviti si riconoscono come la stessa cosa detta in due posti. */
+  .preconfig-priority-badge--check {
+    background: #f4dfae;
+    color: #7a5410;
+  }
+  html[data-theme="dark"] .preconfig-priority-badge--check {
+    background: rgba(240, 180, 41, 0.24);
+    color: #f0d79a;
+  }
   html[data-theme="dark"] .preconfig-sizes-note {
     color: #8aaa8a;
     background: rgba(82, 183, 136, 0.07);
@@ -11016,36 +11559,42 @@ html[data-theme="dark"]
     background-color: #162a1e;
     background-image:
       linear-gradient(rgba(18, 43, 32, 0.88), rgba(16, 38, 28, 0.86)),
-      url(img/svg/misure-pattern.svg);
+      url(../img/svg/misure-pattern.svg);
   }
   html[data-theme="dark"] .preconfig-vfield--climate {
     background-image:
       linear-gradient(rgba(18, 43, 32, 0.68), rgba(18, 43, 32, 0.76)),
-      url(img/svg/clima-pattern.svg);
+      url(../img/svg/clima-pattern.svg);
   }
-  html[data-theme="dark"] .pc-persona-card {
-    background: #1e3028;
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #d0ecd0;
+  /* Al buio cambiano solo le basi e le forze della scala, non le regole.
+     Prima qui c'era un fondo verde piatto uguale per tutti e tre — la tinta
+     del livello arrivava al 18% soltanto sulla scheda scelta — e i tre
+     selettori erano di fatto indistinguibili. Su fondo scuro le tinte perdono
+     croma, quindi le percentuali salgono: al 32% i tre stanno a 23 punti su
+     255 l'uno dall'altro invece che a zero. */
+  html[data-theme="dark"] {
+    --persona-fill: 32%;
+    --persona-fill-hover: 40%;
+    --persona-fill-on: 56%;
+    --persona-edge: 80%;
+    --persona-ico: 70%;
+    --persona-ico-on: 88%;
+    --persona-base: #16261d;
+    --persona-edge-base: #eaf7ea;
+    --persona-text: #dff0df;
+    --persona-text-int: #dff0df;
+    --persona-text-exp: #dff0df;
+    --persona-text-on: #f2fbf2;
   }
-  html[data-theme="dark"] .pc-persona-card.is-active {
-    background: color-mix(in srgb, var(--accent) 18%, #1a2d1e);
-  }
-  html[data-theme="dark"] .pc-persona-ico {
-    background: color-mix(in srgb, var(--accent) 18%, #1a2d1e);
+  html[data-theme="dark"] .preconfig-cta-hint,
+  html[data-theme="dark"] .preconfig-summary--incompleto {
+    color: #f0d79a;
   }
   html[data-theme="dark"] .pc-persona-body b {
-    color: #d0ecd0;
+    color: inherit;
   }
   html[data-theme="dark"] .pc-persona-body small {
-    color: #7a9a7a;
-  }
-  html[data-theme="dark"] .preconfig-path-field {
-    background-color: #817966;
-    background-image:
-      linear-gradient(rgba(17, 35, 27, 0.58), rgba(17, 35, 27, 0.66)),
-      url(img/svg/camminamento-pattern.svg);
-    border-color: rgba(197, 187, 163, 0.24);
+    color: color-mix(in srgb, currentColor 72%, transparent);
   }
   html[data-theme="dark"] .preconfig-select {
     background-color: rgba(22, 48, 37, 0.9);
@@ -11087,10 +11636,6 @@ html[data-theme="dark"]
     border-color: #c9941f;
     color: #f5c84a;
   }
-  html[data-theme="dark"] .preconfig-path-row {
-    background: rgba(21, 48, 37, 0.82);
-    border-color: rgba(207, 219, 207, 0.13);
-  }
   html[data-theme="dark"] .preconfig-month-wrap {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
@@ -11110,12 +11655,6 @@ html[data-theme="dark"]
   }
 
   @media (min-width: 661px) {
-    .preconfig-path-field {
-      padding: 4px;
-    }
-    .preconfig-path-row {
-      padding: 3px 6px;
-    }
     .preconfig-month-select {
       padding-block: 6px;
     }
@@ -11125,6 +11664,37 @@ html[data-theme="dark"]
 /* Cluster destro dell'intestazione in tema scuro: il gruppo preferenze deve
    avere un solo contorno, non uno per controllo. */
 @layer dark-theme {
+  /* Cassetto del carrello: gli sfondi tenui si perdono sul tema scuro. */
+  html[data-theme="dark"] .cart-cross {
+    background: rgba(201, 150, 47, 0.14);
+  }
+
+  html[data-theme="dark"] .cart-cross-ico {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  html[data-theme="dark"] .cart-summary,
+  html[data-theme="dark"] .cart-note {
+    background: rgba(172, 214, 187, 0.1);
+  }
+
+  html[data-theme="dark"] .cart-note--warn {
+    background: rgba(246, 200, 90, 0.16);
+    color: #f0d79a;
+  }
+
+  html[data-theme="dark"] .cart-note--warn b {
+    color: #f0d79a;
+  }
+
+  html[data-theme="dark"] .cart-item-glyph {
+    background: rgba(172, 214, 187, 0.12);
+  }
+
+  html[data-theme="dark"] .cart-item-qty {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
   html[data-theme="dark"] .nav-prefs {
     background: #17271f;
     border-color: var(--theme-line, rgba(172, 214, 187, 0.18));
@@ -11296,5 +11866,280 @@ html[data-theme="dark"]
       font-size: 12px !important;
       line-height: 1.3;
     }
+  }
+}
+
+/* ============================================================================
+   Sistema dei pulsanti — un solo posto per tutta l'app
+   ============================================================================
+   Prima ogni pagina ridefiniva i propri: il "completa acquisto" era arancione
+   qui e verde là, il "accetta" dei cookie usava un verde menta pallido, il
+   configuratore aveva --verde, l'area personale --c-green e il vivaio un
+   gradiente tutto suo. Nel tema scuro erano già uniformati da un unico elenco
+   di selettori; mancava il tema chiaro, dove vinceva sempre la regola della
+   pagina perché caricata dopo base.css.
+
+   Il livello `components` è l'ultimo dichiarato, quindi queste regole valgono
+   sopra quelle delle pagine senza bisogno di !important né di selettori gonfi.
+   Le liste qui sotto sono l'elenco autorevole di chi è cosa: aggiungere un
+   pulsante nuovo significa aggiungerlo a una di queste tre.
+   ========================================================================== */
+@layer components {
+  /* --- forma comune: stessa sagoma per tutti i ruoli. --- */
+  :is(
+    .detail-add-btn,
+    .conf-cart-export-btn,
+    .cart-checkout-btn,
+    .kit-cta-btn,
+    .catalog-import-btn,
+    .empty-cta,
+    .guided-nov-cta,
+    .cookie-accept-btn,
+    .btn-primary,
+    .btn-success,
+    .admin-packing-btn,
+    .projects-new-btn,
+    .orto-btn,
+    .hero-cfg-primary-cta,
+    .btn-soft,
+    .view-print-btn,
+    .yield-edit-crops-btn,
+    .pdp-back-btn,
+    .novice-restart-btn,
+    .catalog-load-more-btn,
+    .cart-edit-btn,
+    .orto-btn--ghost,
+    .btn-danger,
+    .cart-clear-btn,
+    .crops-clear-btn,
+    .crop-action-btn--danger,
+    .del,
+    .crops-fill-main-btn
+  ) {
+    border-radius: var(--button-radius);
+    font-weight: var(--button-font-weight);
+  }
+
+  /* Bersaglio comodo al dito: solo per le azioni vere, non per i comandi
+     minuti come "Svuota" nell'intestazione del cassetto. */
+  :is(
+    .detail-add-btn,
+    .conf-cart-export-btn,
+    .cart-checkout-btn,
+    .kit-cta-btn,
+    .catalog-import-btn,
+    .empty-cta,
+    .guided-nov-cta,
+    .btn-primary,
+    .btn-success,
+    .projects-new-btn,
+    .orto-btn,
+    .hero-cfg-primary-cta,
+    .btn-soft,
+    .catalog-load-more-btn,
+    .cart-edit-btn,
+    .crops-fill-main-btn
+  ) {
+    min-height: var(--button-min-height);
+  }
+
+  /* --- principale: l'azione che fa avanzare. Uno solo per schermata. --- */
+  :is(
+    .detail-add-btn,
+    .conf-cart-export-btn,
+    .cart-checkout-btn,
+    .kit-cta-btn,
+    .catalog-import-btn,
+    .empty-cta,
+    .guided-nov-cta,
+    .cookie-accept-btn,
+    .btn-primary,
+    .btn-success,
+    .admin-packing-btn,
+    .projects-new-btn,
+    .orto-btn,
+    body.serra-empty .crops-fill-main-btn
+  ):not(.orto-btn--ghost, .btn-danger) {
+    background: var(--button-primary-fill);
+    color: var(--button-primary-text);
+    border: 1px solid var(--button-primary-border);
+    box-shadow: 0 8px 22px var(--button-primary-shadow);
+  }
+
+  :is(
+    .detail-add-btn,
+    .conf-cart-export-btn,
+    .cart-checkout-btn,
+    .kit-cta-btn,
+    .catalog-import-btn,
+    .empty-cta,
+    .guided-nov-cta,
+    .cookie-accept-btn,
+    .btn-primary,
+    .btn-success,
+    .admin-packing-btn,
+    .projects-new-btn,
+    .orto-btn,
+    body.serra-empty .crops-fill-main-btn
+  ):not(.orto-btn--ghost, .btn-danger):hover:not(:disabled) {
+    background: var(--button-primary-fill-hover);
+    color: var(--button-primary-text);
+    border-color: rgba(47, 107, 58, 0.52);
+  }
+
+  /* --- secondario: le alternative, leggibili ma senza rubare la scena. --- */
+  :is(
+    .btn-soft,
+    .view-print-btn,
+    .yield-edit-crops-btn,
+    .pdp-back-btn,
+    .novice-restart-btn,
+    .catalog-load-more-btn,
+    .cart-edit-btn,
+    .orto-btn--ghost,
+    body:not(.serra-empty) .crops-fill-main-btn
+  ) {
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+    border: 1px solid var(--button-secondary-border);
+    box-shadow: none;
+  }
+
+  :is(
+    .btn-soft,
+    .view-print-btn,
+    .yield-edit-crops-btn,
+    .pdp-back-btn,
+    .novice-restart-btn,
+    .catalog-load-more-btn,
+    .cart-edit-btn,
+    .orto-btn--ghost,
+    body:not(.serra-empty) .crops-fill-main-btn
+  ):hover:not(:disabled) {
+    background: var(--button-secondary-bg-hover);
+    color: var(--button-secondary-text);
+    border-color: rgba(47, 107, 58, 0.28);
+  }
+
+  /* --- distruttivo: toglie o svuota. Rosso tenue, non allarmante. --- */
+  :is(
+    .btn-danger,
+    .cart-clear-btn,
+    .crops-clear-btn,
+    .crop-action-btn--danger,
+    .del
+  ) {
+    background: var(--button-danger-bg);
+    color: var(--button-danger-text);
+    border: 1px solid var(--button-danger-border);
+    box-shadow: none;
+  }
+
+  :is(
+    .btn-danger,
+    .cart-clear-btn,
+    .crops-clear-btn,
+    .crop-action-btn--danger,
+    .del
+  ):hover:not(:disabled) {
+    background: var(--button-danger-bg-hover);
+    color: #8c2316;
+    border-color: rgba(176, 48, 32, 0.48);
+  }
+
+  /* --- principale su fondo scuro: crema, non giallo. --- */
+  :is(.hero-cfg-primary-cta, .percorso-cta-btn--green, .cart-nudge button) {
+    background: var(--button-on-dark-bg);
+    color: var(--button-on-dark-text);
+    border: 1px solid var(--button-on-dark-border);
+    box-shadow: 0 8px 22px rgba(11, 31, 19, 0.24);
+  }
+
+  :is(
+    .hero-cfg-primary-cta,
+    .percorso-cta-btn--green,
+    .cart-nudge button
+  ):hover:not(:disabled) {
+    background: var(--button-on-dark-bg-hover);
+    color: var(--button-on-dark-text);
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Disabilitato: stesso segnale ovunque, qualunque sia il ruolo. */
+  :is(.orto-btn, .cart-checkout-btn, .btn-primary, .btn-success):disabled {
+    background: var(--border);
+    color: var(--muted);
+    border-color: transparent;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+/* Varianti scure del sistema: i token si spostano, le regole restano quelle. */
+@layer components {
+  html[data-theme="dark"] {
+    /* Al buio il rapporto si inverte: verde vivo e testo scuro sopra.
+       Tenendo il testo chiaro, il bianco sul verde si fermava a 2,98:1 e per
+       farlo passare bisognava scurire tanto il pulsante da confonderlo con la
+       superficie (3:1 appena). Così invece il testo sta a 5,6-6,9:1 e il
+       pulsante stacca dallo sfondo di 5,4-6,5:1. */
+    --button-primary: #3da764;
+    --button-primary-hover: #4bb873;
+    --button-primary-lift: #57c481;
+    --button-primary-text: #0d1f14;
+    --button-primary-border: rgba(105, 201, 132, 0.5);
+    --button-primary-shadow: rgba(5, 25, 13, 0.34);
+    --button-secondary-bg: rgba(168, 216, 182, 0.14);
+    --button-secondary-bg-hover: rgba(168, 216, 182, 0.22);
+    --button-secondary-text: #cfe9d6;
+    --button-secondary-border: rgba(168, 216, 182, 0.27);
+    --button-danger-bg: #4a2b2d;
+    --button-danger-bg-hover: #643638;
+    --button-danger-text: #f3c9c5;
+    --button-danger-border: rgba(168, 90, 93, 0.6);
+
+    /* Nomi storici, ancora citati da alcune regole scure dentro i fogli di
+       pagina. Restano come alias dei token qui sopra: così quelle regole
+       continuano a funzionare e c'è comunque un solo valore da cambiare. */
+    --button-secondary: var(--button-secondary-bg);
+    --button-secondary-hover: var(--button-secondary-bg-hover);
+    --button-danger: var(--button-danger-bg);
+    --button-danger-hover: var(--button-danger-bg-hover);
+    --button-disabled: #24332b;
+    --button-disabled-text: #829288;
+  }
+
+  html[data-theme="dark"]
+    :is(
+      .btn-danger,
+      .cart-clear-btn,
+      .crops-clear-btn,
+      .crop-action-btn--danger,
+      .del
+    ):hover:not(:disabled) {
+    color: #ffe0dc;
+  }
+
+  /* Alcune regole scure dentro i fogli di pagina aggiungono un'ombra al testo
+     pensata per il bianco: sotto il testo scuro sporca soltanto. */
+  html[data-theme="dark"]
+    :is(
+      .detail-add-btn,
+      .conf-cart-export-btn,
+      .cart-checkout-btn,
+      .kit-cta-btn,
+      .catalog-import-btn,
+      .empty-cta,
+      .guided-nov-cta,
+      .cookie-accept-btn,
+      .btn-primary,
+      .btn-success,
+      .admin-packing-btn,
+      .projects-new-btn,
+      .percorso-cta-btn--green,
+      .orto-btn,
+      body.serra-empty .crops-fill-main-btn
+    ):not(.orto-btn--ghost, .btn-danger) {
+    text-shadow: none;
   }
 }

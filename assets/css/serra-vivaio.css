@@ -2183,21 +2183,6 @@
 
 /* Pulsanti e stati */
 @layer base {
-  :root {
-    --button-primary: var(--serra-green);
-    --button-primary-hover: #357944;
-    --button-primary-border: rgba(47, 107, 58, 0.42);
-    --button-primary-shadow: rgba(47, 107, 58, 0.24);
-    --button-secondary-bg: rgba(47, 107, 58, 0.1);
-    --button-secondary-bg-hover: rgba(47, 107, 58, 0.17);
-    --button-secondary-text: #245733;
-    --button-secondary-border: rgba(47, 107, 58, 0.18);
-    --button-danger-bg: #fff3f1;
-    --button-danger-bg-hover: #ffe8e4;
-    --button-danger-text: #9f2f24;
-    --button-danger-border: rgba(176, 48, 32, 0.32);
-  }
-
   .detail-add-btn,
   .conf-cart-export-btn,
   .cart-checkout-btn,
@@ -2284,20 +2269,7 @@
   }
 }
 @layer dark-theme {
-  html[data-theme="dark"] {
-    --button-primary: #328f53;
-    --button-primary-hover: #3da764;
-    --button-primary-border: #69c984;
-    --button-secondary: #293f34;
-    --button-secondary-hover: #344f40;
-    --button-secondary-border: rgba(168, 216, 182, 0.27);
-    --button-danger: #4a2b2d;
-    --button-danger-hover: #643638;
-    --button-danger-border: #a85a5d;
-    --button-disabled: #24332b;
-    --button-disabled-text: #829288;
   }
-}
 @layer base {
 }
 @layer dark-theme {
@@ -3347,17 +3319,31 @@
 @layer base, dark-theme, polish;
 
 @layer base {
-  /* Token locali della pagina: derivano dalla palette dell'app. */
+  /* Token locali della pagina: derivano dalla palette dell'app.
+     Prima erano otto valori scritti a mano, vicinissimi a quelli condivisi ma
+     mai uguali: il verde chiaro tirava al giallo (#7bb661 contro #5b9c4a), le
+     schede erano bianco pieno invece del bianco caldo, bordi e grigi
+     leggermente sfasati. Passando da "Il mio orto" al resto dell'app si vedeva
+     un cambio di temperatura. Ora i nomi `--orto-*` restano — li usano
+     centinaia di regole — ma puntano ai token di base.css, così le due sezioni
+     non possono più divergere. Il tema scuro continua a sovrascriverli più in
+     basso, esattamente come prima. */
   .orto-page {
-    --orto-green: #2f6b3a;
-    --orto-green-dk: #1f4c2b;
-    --orto-green-lt: #7bb661;
-    --orto-ink: #1f3a26;
+    /* I verdi puntano ai token di marca, che non cambiano col tema: qui fanno
+       da riempimento sotto testo bianco (schede attive, spunte, toast), quindi
+       schiarirli al buio li renderebbe illeggibili. Il verde chiaro prende il
+       valore condiviso #5b9c4a al posto del #7bb661 che tirava al giallo. */
+    --orto-green: var(--serra-green);
+    --orto-green-dk: var(--serra-ink);
+    --orto-green-lt: #5b9c4a;
+    /* I neutri invece derivano: nel tema scuro il blocco in fondo al file li
+       sovrascrive comunque, quindi la derivazione vale per il tema chiaro. */
+    --orto-ink: var(--text);
     --orto-ink-soft: #46584b;
-    --orto-muted: #6b7a6e;
-    --orto-surface: #ffffff;
-    --orto-surface-2: #f6f8f3;
-    --orto-line: #e3e9dd;
+    --orto-muted: var(--muted);
+    --orto-surface: var(--white);
+    --orto-surface-2: var(--sand-lt);
+    --orto-line: var(--border);
     --orto-line-strong: #cfd9c9;
     --orto-amber: #b5860f;
     --orto-shadow-sm: 0 2px 6px rgba(24, 46, 32, 0.06);
@@ -3449,16 +3435,9 @@
     box-shadow: var(--orto-shadow-lg);
   }
 
-  .orto-hero::after {
-    content: "";
-    position: absolute;
-    right: -60px;
-    bottom: -90px;
-    width: 320px;
-    height: 320px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-  }
+  /* Lo sfondo della hero è solo verde: il disco bianco da 320px che stava in
+     basso a destra tagliava la scheda con un arco di cerchio e competeva con
+     l'anello della percentuale, l'unico cerchio che qui deve farsi notare. */
 
   .orto-hero-inner {
     position: relative;
@@ -4466,21 +4445,22 @@
       line-height: 1.15;
     }
 
+    /* L'anello resta a 104px anche su schermo stretto. Prima scendeva a 78px
+       insieme a un'etichetta da 8px, ma il ritocco di leggibilità in
+       @layer polish riporta quel testo a 12px: "GIORNATA" diventava più larga
+       del cerchio e ne usciva. Il diametro utile qui dentro è ~88px, mentre
+       l'etichetta ne misura circa 71: ci sta con un margine per parte. */
     .orto-ring {
-      width: 78px;
-      height: 78px;
+      width: 104px;
+      height: 104px;
     }
 
     .orto-ring-txt b {
-      font-size: 20px;
-    }
-
-    .orto-ring-txt small {
-      font-size: 8px;
+      font-size: 22px;
     }
 
     .orto-ring-wrap {
-      grid-template-columns: 78px minmax(0, 1fr);
+      grid-template-columns: 104px minmax(0, 1fr);
       gap: 10px;
     }
 
@@ -4605,13 +4585,21 @@
    per rispondere. Senza colture il riepilogo direbbe "tutto a posto" quando
    in realtà non c'è ancora nulla. */
 @layer base {
+  /* Primo avvio: è la scheda più grande della pagina e col fondo bianco pieno
+     era l'unica superficie dell'app a staccare così tanto dallo sfondo. Il
+     verde tenue nasce dagli stessi token del resto della sezione, quindi segue
+     anche il tema scuro senza colori scritti a mano. */
   .orto-welcome {
     max-width: 620px;
     margin: 10px auto 0;
     padding: 46px 32px 40px;
     border: 1.5px dashed var(--orto-line-strong);
     border-radius: var(--orto-r-lg);
-    background: var(--orto-surface);
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--orto-green) 3%, var(--orto-surface)),
+      color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface))
+    );
     box-shadow: var(--orto-shadow-sm);
     text-align: center;
   }
@@ -4627,9 +4615,12 @@
     place-items: center;
   }
 
+  /* Sul fondo verde della scheda `--orto-muted` scende a 4,04:1, sotto la
+     soglia AA per il testo piccolo: kicker, descrizione e riga del negozio
+     usano il grigio più scuro, che risale a 6,78:1. */
   .orto-welcome-kicker {
     margin: 0;
-    color: var(--orto-muted);
+    color: var(--orto-ink-soft);
     font-size: 11.5px;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -4645,7 +4636,7 @@
   .orto-welcome-text {
     max-width: 46ch;
     margin: 0 auto 24px;
-    color: var(--orto-muted);
+    color: var(--orto-ink-soft);
     font-size: 14.5px;
     line-height: 1.5;
   }
@@ -4665,7 +4656,7 @@
     margin: 24px 0 0;
     padding-top: 18px;
     border-top: 1px solid var(--orto-line);
-    color: var(--orto-muted);
+    color: var(--orto-ink-soft);
     font-size: 13px;
   }
 
@@ -4942,25 +4933,8 @@
     margin-left: auto;
   }
 
-  /* Dentro il cassetto il pannello non ha bisogno di cornice né aggancio. */
-  .viv-panel--drawer {
-    position: static;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .viv-panel--drawer .panel-body {
-    padding: 0;
-  }
-
-  .viv-panel--drawer .yield-footer {
-    margin-top: 14px;
-    padding: 14px 0 0;
-    border-top: 1px solid var(--orto-line);
-    background: transparent;
-  }
+  /* Il cassetto del carrello non ha più stili propri qui: usa quelli condivisi
+     di base.css, gli stessi di home e configuratore. */
 
   /* Schede più strette: con oltre trenta varietà due colonne obbligavano a
      uno scorrimento lunghissimo. */
@@ -5192,99 +5166,11 @@
     font-weight: 600;
   }
 
-  .viv-cart-delivery {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 10px;
-    padding: 9px 11px;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface));
-    font-size: 12.5px;
-    line-height: 1.35;
-  }
-
-  .viv-cart-delivery b {
-    color: var(--orto-green);
-  }
-
-  /* Sotto il minimo l'ordine non parte: va detto prima del pulsante. */
-  .viv-cart-min {
-    margin: 0 0 10px;
-    padding: 9px 11px;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--orto-amber) 15%, var(--orto-surface));
-    color: color-mix(in srgb, var(--orto-amber) 75%, #4a3405);
-    font-size: 12.5px;
-    font-weight: 650;
-    line-height: 1.35;
-  }
-
   .orto-btn[disabled] {
     cursor: not-allowed;
     filter: grayscale(0.55);
     opacity: 0.55;
     transform: none;
-  }
-
-  .viv-cart-after {
-    margin: 10px 0 0;
-    padding-top: 10px;
-    border-top: 1px dashed var(--orto-line);
-    color: var(--orto-muted);
-    font-size: 11.5px;
-    line-height: 1.4;
-  }
-
-  /* Promemoria dell'altro carrello: due sezioni, due ordini. */
-  .viv-cart-seeds {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin: 10px 0 0;
-    padding: 9px 11px;
-    border-radius: 12px;
-    background: var(--orto-surface-2);
-    font-size: 11.5px;
-    line-height: 1.4;
-  }
-
-  .viv-cart-cross {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 12px;
-    padding: 11px 12px;
-    border: 1.5px dashed var(--orto-line-strong);
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
-    color: inherit;
-    text-decoration: none;
-    font-size: 12px;
-  }
-
-  .viv-cart-cross:hover {
-    border-color: var(--orto-green);
-  }
-
-  .viv-cart-cross b {
-    display: block;
-    font-size: 13px;
-  }
-
-  .viv-cart-cross small {
-    display: block;
-    color: var(--orto-muted);
-    line-height: 1.35;
-  }
-
-  .viv-cart-seeds a {
-    color: var(--orto-green);
-    font-weight: 700;
-  }
-
-  .viv-cart-after b {
-    color: var(--orto-green);
   }
 
   /* Hero del vivaio: una superficie editoriale chiara per il contenuto e una
@@ -5529,34 +5415,14 @@
     .viv-art-leaf,
     .viv-art-plug,
     .viv-art-plant,
-    .viv-art-soil,
-    .viv-art-aura {
+    .viv-art-soil {
       animation: none;
     }
   }
 
-  .viv-art-aura {
-    animation: viv-aura 6s ease-in-out infinite;
-    transform-origin: center;
-  }
-
-  @keyframes viv-aura {
-    0%,
-    100% {
-      opacity: 0.72;
-      transform: scale(0.98);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.02);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .viv-art-aura {
-      animation: none;
-    }
-  }
+  /* L'alone `.viv-art-aura` dietro la piantina non esiste più: il disco chiaro
+     disegnava un cerchio sul verde della scheda. Vedi illustrazionePiantina()
+     in assets/js/vivaio.js. */
 
   .viv-shipping {
     display: flex;
@@ -5799,26 +5665,6 @@
     }
   }
 
-  /* Pannello identico nell'impianto alla "Lista semi da acquistare" del
-     configuratore: distintivo, riepilogo, elenco, totale e azioni in fondo.
-     Stessi nomi di classe, così le due pagine si leggono allo stesso modo. */
-  .viv-panel {
-    position: sticky;
-    top: calc(var(--nav-h, 76px) + 16px);
-    overflow: hidden;
-    border: 1.5px solid rgba(47, 107, 58, 0.15);
-    border-radius: 18px;
-    background: var(--orto-surface);
-    box-shadow:
-      0 2px 8px rgba(31, 58, 38, 0.06),
-      0 14px 38px rgba(31, 58, 38, 0.12);
-  }
-
-  /* Richiamo visivo quando si preme il carrello nell'intestazione. */
-  .viv-panel.is-focus-pulse {
-    animation: viv-pulse 1.3s ease;
-  }
-
   @keyframes viv-pulse {
     0%,
     100% {
@@ -5837,220 +5683,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .viv-panel.is-focus-pulse {
-      animation: none;
-      border-color: var(--orto-green);
-    }
-  }
-
-  .viv-panel .panel-title-row {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 16px 18px 12px;
-  }
-
-  .viv-panel .yield-cart-badge {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    flex: none;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--orto-green) 13%, var(--orto-surface));
-    font-size: 18px;
-    place-items: center;
-  }
-
-  .viv-panel h2 {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.15;
-  }
-
-  .viv-panel .panel-badge {
-    display: inline-block;
-    margin-top: 3px;
-    padding: 2px 9px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--orto-green) 12%, transparent);
-    color: var(--orto-green);
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .viv-panel .panel-body {
-    padding: 0 18px 4px;
-  }
-
-  .viv-panel .sub {
-    margin: 0 0 12px;
-    color: var(--orto-muted);
-    font-size: 12.5px;
-    line-height: 1.45;
-  }
-
-  /* Riepilogo a numeri grandi, come nel configuratore. */
-  .viv-summary {
-    display: grid;
-    gap: 8px;
-    margin-bottom: 12px;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .viv-summary span {
-    display: block;
-    padding: 9px 6px;
-    border: 1px solid var(--orto-line);
-    border-radius: 12px;
-    background: var(--orto-surface-2);
-    text-align: center;
-  }
-
-  .viv-summary b {
-    display: block;
-    font-size: 19px;
-    line-height: 1;
-  }
-
-  .viv-summary small {
-    color: var(--orto-muted);
-    font-size: 9.5px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-  }
-
-  .viv-panel .shop {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin: 0 0 6px;
-    padding: 0;
-    list-style: none;
-  }
-
-  .viv-panel .shop li {
-    display: grid;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
-    border: 1px solid rgba(47, 107, 58, 0.1);
-    border-radius: 11px;
-    background: var(--orto-surface-2);
-    grid-template-columns: 38px 1fr auto;
-    transition:
-      background 0.13s ease,
-      box-shadow 0.13s ease,
-      transform 0.13s ease;
-  }
-
-  .viv-panel .shop li:hover {
-    background: var(--orto-surface);
-    box-shadow: 0 3px 12px rgba(31, 58, 38, 0.09);
-    transform: translateY(-1px);
-  }
-
-  .shop-photo {
-    width: 38px;
-    height: 38px;
-    border-radius: 9px;
-    object-fit: cover;
-  }
-
-  .shop-plant {
-    min-width: 0;
-  }
-
-  .shop-plant b {
-    display: block;
-    overflow: hidden;
-    font-size: 13.5px;
-    font-weight: 650;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .shop-plant small {
-    color: var(--orto-muted);
-    font-size: 10.5px;
-    line-height: 1.25;
-  }
-
-  .shop-side {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    align-items: flex-end;
-    gap: 2px;
-  }
-
-  .shop-price {
-    color: var(--orto-green);
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .shop-remove {
-    border: 0;
-    background: none;
-    color: var(--orto-muted);
-    cursor: pointer;
-    font: inherit;
-    font-size: 10.5px;
-    text-decoration: underline;
-  }
-
-  .shop-total {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 2px 0 10px;
-    padding-top: 9px;
-    border-top: 1px solid var(--orto-line);
-    font-size: 15px;
-  }
-
-  .shop-total b {
-    color: var(--orto-green);
-    font-size: 19px;
-  }
-
-  /* Azioni in fondo: principale più modifica, come nel configuratore. */
-  .yield-footer {
-    padding: 12px 18px 16px;
-    border-top: 1px solid var(--orto-line);
-    background: var(--orto-surface-2);
-  }
-
-  .viv-edit-btn {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    margin-top: 8px;
-    padding: 9px 12px;
-    border: 1.5px solid var(--orto-line-strong);
-    border-radius: 999px;
-    background: var(--orto-surface);
-    color: var(--orto-ink);
-    cursor: pointer;
-    font: inherit;
-    font-size: 13px;
-    font-weight: 650;
-  }
-
-  .viv-edit-btn:hover {
-    border-color: var(--orto-green);
-    color: var(--orto-green);
-  }
-
-  .viv-panel .viv-cart-empty,
-  .viv-panel .viv-cart-note,
-  .viv-panel .viv-cart-cross {
-    margin-bottom: 12px;
   }
 
   @media (max-width: 900px) {
@@ -6066,20 +5698,24 @@
   }
 }
 
+/* Nel vivaio il disegno della pianta sta sopra la foto senza dischetto: la
+   sezione "Il mio orto" lo tiene (vedi .orto-card-svg in pages/orto.css) perché
+   là le schede hanno foto più chiare, qui il pastiglione scuro pesava sulla
+   scheda. Restano l'ombra e il filo di contorno, che bastano a staccare il
+   disegno dallo sfondo senza costruirgli una medaglia intorno. */
+@layer polish {
+  .viv-page .orto-card-svg {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+  }
+}
+
 /* Prezzi, filtri e promesse di servizio restano leggibili su tutti i device. */
 @layer polish {
-  .viv-visual-label,
-  .viv-hero .orto-hero-date,
-  .viv-shipping,
-  .viv-hero .viv-stat-copy small,
-  .viv-chip small,
-  .orto-chip--piantina,
-  .viv-save-photo,
-  .viv-unit,
-  .viv-unit-price,
-  .viv-card-foot,
-  .viv-card-foot--hint,
-  .shop-remove {
-    font-size: 12px;
-  }
 }

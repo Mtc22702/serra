@@ -8865,7 +8865,17 @@ function bindConfigStaticActions() {
         alertConfCheckout();
         break;
       case "remove-from-cart":
-        removeFromConfCart(control.dataset.plantId);
+        removeFromConfCart(control.dataset.plantId, control.dataset.variante);
+        break;
+      case "cart-qty-more":
+        changeConfCartQty(control.dataset.plantId, control.dataset.variante, 1);
+        break;
+      case "cart-qty-less":
+        changeConfCartQty(
+          control.dataset.plantId,
+          control.dataset.variante,
+          -1,
+        );
         break;
       case "unselect-material":
         unselectMaterial(control.dataset.materialId);
@@ -9501,21 +9511,46 @@ function formatMoney(value) {
 
 let confCart = [];
 
+/* Il carrello è quello unico dell'app (`ois.cart`, gestito da serra-cart.js):
+   il configuratore lo legge e lo scrive con le stesse funzioni di home e
+   vivaio, così le piantine comprate in vivaio restano piantine anche qui.
+   Prima questo file leggeva il grezzo e trattava ogni riga come una bustina:
+   le piantine finivano a listino semi con il prezzo di ripiego. */
+const confIsPiantina = (riga) =>
+  window.SerraCart
+    ? window.SerraCart.isPiantina(riga)
+    : !!riga && riga.variante === "piantina";
+const confQty = (riga) =>
+  window.SerraCart
+    ? window.SerraCart.quantita(riga)
+    : Number(riga.bustine) || 0;
+// Le piantine portano il prezzo nella riga; i semi restano a listino locale.
+const confUnitPrice = (riga) =>
+  confIsPiantina(riga) ? Number(riga.prezzo) || 0 : (PACK_DATA[riga.id]?.price ?? 2.5);
+
 // Gestisce righe, quantità e apertura del carrello del configuratore.
 function loadConfCart() {
-  try {
-    const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
-    confCart = raw.map((i) =>
-      typeof i === "string" ? { id: i, bustine: 1 } : i,
-    );
-  } catch (_) {
-    confCart = [];
+  if (window.SerraCart) {
+    confCart = window.SerraCart.leggi();
+  } else {
+    try {
+      const raw = JSON.parse(localStorage.getItem("ois.cart") || "[]");
+      confCart = raw.map((i) =>
+        typeof i === "string" ? { id: i, bustine: 1 } : i,
+      );
+    } catch (_) {
+      confCart = [];
+    }
   }
   updateConfCartUI();
 }
 
 // Persiste il carrello nel localStorage
 function saveConfCart() {
+  if (window.SerraCart) {
+    window.SerraCart.scrivi(confCart);
+    return;
+  }
   try {
     localStorage.setItem("ois.cart", JSON.stringify(confCart));
   } catch (_) {}
@@ -9561,57 +9596,23 @@ function updateConfCartUI() {
   foot.hidden = false;
   if (clearBtn) clearBtn.hidden = false;
 
-  const seedsTotal = confCart.reduce(
-    (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
-    0,
-  );
   const materialsTotal = materials.reduce(
     (s, m) => s + m.bustine * m.prezzo,
     0,
   );
 
-  const seedRows = confCart
-    .map(({ id, bustine }) => {
-      const p = BYID[id];
-      if (!p) return "";
-      // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
-      let photo = window.resolvePlantPhoto(p, id);
-      window.preloadPlantPhoto?.(p, id);
-      const emoji = FRUIT_EMOJI[id] || "🌱";
-      const pd = PACK_DATA[id] || { seeds: 100, price: 2.5 };
-      const bustLabel =
-        bustine === 1
-          ? tx("cart.pack_one")
-          : tx("cart.pack_many", { count: bustine });
-      const seedLabel = tx("cart.seeds_per_pack", { count: pd.seeds });
-      const priceLabel = tx("cart.per_pack");
-      return `<div class="cart-item">
-        ${
-          photo
-            ? `<img src="${photo}" alt="${plantText(p, "nome")}" decoding="async" />`
-            : `<span style="font-size:2rem;line-height:1;flex-shrink:0">${emoji}</span>`
-        }
-        <span class="cart-item-copy">
-          <span class="cart-item-name">${plantText(p, "nome")}</span>
-          <span class="cart-item-meta">${plantText(p, "nota") || ""}</span>
-          <span class="cart-item-pack">
-            <span>${bustLabel} · ${seedLabel}</span>
-            <b>${formatMoney(pd.price)}${priceLabel}</b>
-          </span>
-        </span>
-        <button class="cart-item-remove" data-conf-action="remove-from-cart" data-plant-id="${id}" title="${tx("remove")}">✕</button>
-      </div>`;
-    })
-    .join("");
-
-  const materialsHeading = materials.length
-    ? `<div class="cart-section-heading">${tx("cart.materials_section")}</div>`
-    : "";
-  const materialRows = materials
-    .map((m) => {
-      const qtyLabel = shoppingUnitLabel(m.unit, m.bustine);
-      return `<div class="cart-item">
-        <span style="font-size:2rem;line-height:1;flex-shrink:0">${m.icon || "🧰"}</span>
+  /* I materiali extra esistono solo qui: sono l'unica parte del cassetto che
+     il modulo condiviso non conosce e che quindi gli si passa già disegnata. */
+  const materialRows = materials.length
+    ? `<div class="cart-group cart-group--materiali">
+        <div class="cart-group-head">
+          <span class="cart-group-name"><span aria-hidden="true">🧰</span>${tx("cart.materials_section")}</span>
+        </div>
+        ${materials
+          .map((m) => {
+            const qtyLabel = shoppingUnitLabel(m.unit, m.bustine);
+            return `<div class="cart-item">
+        <span class="cart-item-glyph" aria-hidden="true">${m.icon || "🧰"}</span>
         <span class="cart-item-copy">
           <span class="cart-item-name">${m.nome}</span>
           <span class="cart-item-pack">
@@ -9619,42 +9620,75 @@ function updateConfCartUI() {
             <b>${formatMoney(m.bustine * m.prezzo)}</b>
           </span>
         </span>
-        <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}">✕</button>
+        <span class="cart-item-side">
+          <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}">✕</button>
+        </span>
       </div>`;
-    })
-    .join("");
-
-  const totalRow = materials.length
-    ? `<div class="cart-total-row cart-total-row--sub">
-        <span>${tx("cart.total")}</span>
-        <b>${formatMoney(seedsTotal)}</b>
-      </div>
-      <div class="cart-total-row cart-total-row--sub">
-        <span>${tx("cart.materials_section")}</span>
-        <b>${formatMoney(materialsTotal)}</b>
-      </div>
-      <div class="cart-total-row">
-        <span>${tx("cart.materials_grand_total")}</span>
-        <b>${formatMoney(seedsTotal + materialsTotal)}</b>
+          })
+          .join("")}
       </div>`
-    : `<div class="cart-total-row">
-        <span>${tx("cart.total")}</span>
-        <b>${formatMoney(seedsTotal)}</b>
-      </div>`;
+    : "";
 
-  items.innerHTML = seedRows + materialsHeading + materialRows + totalRow;
+  // Riepilogo, gruppi, note della merce viva e invito incrociato: stessa
+  // struttura di home e vivaio, vedi assets/js/serra-cart-ui.js.
+  items.innerHTML = window.SerraCartUI
+    ? window.SerraCartUI.corpo({
+        righe: confCart,
+        lang: (document.documentElement.lang || "it").startsWith("ro")
+          ? "ro"
+          : "it",
+        attr: "data-conf-action",
+        nome: (id) => (BYID[id] ? plantText(BYID[id], "nome") : ""),
+        foto: (id) => {
+          const p = BYID[id];
+          if (!p) return "";
+          // Logica di risoluzione foto condivisa: vedi assets/js/shared/plant-photo.js
+          window.preloadPlantPhoto?.(p, id);
+          return window.resolvePlantPhoto(p, id) || "";
+        },
+        nota: (id) => (BYID[id] ? plantText(BYID[id], "nota") || "" : ""),
+        prezzoBustina: (id) => PACK_DATA[id]?.price ?? 2.5,
+        semiPerBustina: (id) => PACK_DATA[id]?.seeds ?? 100,
+        soldi: formatMoney,
+        hrefSemi: "index.html#stagione",
+        hrefPiantine: "vivaio.html",
+        extraHtml: materialRows,
+        extraTotale: materialsTotal,
+        extraLabel: tx("cart.materials_section"),
+      })
+    : "";
 }
 
-// Rimuove una voce dal carrello
-function removeFromConfCart(id) {
-  confCart = confCart.filter((i) => i.id !== id);
+// Rimuove una voce dal carrello. La stessa pianta può esserci due volte, come
+// bustina e come piantina: si toglie solo la variante indicata.
+function removeFromConfCart(id, variante) {
+  const piantina = variante === "piantina";
+  confCart = window.SerraCart
+    ? window.SerraCart.rimuovi(confCart, id, piantina)
+    : confCart.filter((i) => !(i.id === id && confIsPiantina(i) === piantina));
   saveConfCart();
   updateConfCartUI();
 }
-// Svuota l'intero carrello
-function clearConfCart() {
-  confCart = [];
+/* Quantità dal cassetto: un passo è una bustina per i semi e un vassoio intero
+   per le piantine. A zero la riga esce dal carrello. */
+function changeConfCartQty(id, variante, direzione) {
+  if (!window.SerraCart) return;
+  const piantina = variante === "piantina";
+  const riga = window.SerraCart.trova(confCart, id, piantina);
+  if (!riga) return;
+  confCart = window.SerraCart.varia(
+    confCart,
+    id,
+    piantina,
+    direzione * window.SerraCart.passo(riga),
+  );
   saveConfCart();
+  updateConfCartUI();
+}
+// Svuota l'intero carrello: semi e piantine insieme, come dalle altre sezioni.
+function clearConfCart() {
+  confCart = window.SerraCart ? window.SerraCart.svuota() : [];
+  if (!window.SerraCart) saveConfCart();
   updateConfCartUI();
 }
 
@@ -9747,22 +9781,36 @@ function alertConfCheckout() {
     return;
   }
 
-  const seedItems = confCart.map(({ id, bustine }) => {
+  /* Le righe entrano nell'ordine con i campi che l'Area Personale già legge
+     (`bustine`, `prezzo`). Le piantine conservano `variante` e prezzo proprio:
+     prima venivano fatturate al prezzo di una bustina di semi. */
+  const seedItems = confCart.map((riga) => {
+    const id = riga.id;
     const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
-    const price = PACK_DATA[id]?.price ?? 2.5;
-    return {
+    const qta = confQty(riga);
+    const voce = {
       id,
       nome,
-      bustine,
-      prezzo: price,
+      bustine: qta,
+      prezzo: confUnitPrice(riga),
     };
+    if (confIsPiantina(riga)) {
+      voce.variante = "piantina";
+      voce.qta = qta;
+      voce.unita = riga.unita || "vaso ø7";
+      voce.lotto = Number(riga.lotto) || 6;
+    }
+    return voce;
   });
   // I materiali extra selezionati (facoltativi) entrano nello stesso ordine
   const orderItems = seedItems.concat(materials);
-  const seedsTotal = confCart.reduce(
-    (s, { id, bustine }) => s + (PACK_DATA[id]?.price ?? 2.5) * bustine,
-    0,
-  );
+  const seedsTotal =
+    Math.round(
+      confCart.reduce(
+        (s, riga) => s + confUnitPrice(riga) * confQty(riga),
+        0,
+      ) * 100,
+    ) / 100;
   const materialsTotal = materials.reduce(
     (s, m) => s + m.bustine * m.prezzo,
     0,

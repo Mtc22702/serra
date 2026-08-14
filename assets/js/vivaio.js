@@ -19,10 +19,12 @@
   // Carrello unico dell'utente: la lista è la stessa del catalogo semi.
   const C = () => window.SerraCart;
 
-  /* Regole commerciali della merce viva, raccolte qui perché sono le prime
-     che cambieranno: le piantine partono a inizio settimana e viaggiano solo
-     a vassoi interi, quindi sotto una certa soglia la spedizione non regge. */
-  const CONSEGNA = {
+  /* Regole commerciali della merce viva: le piantine partono a inizio settimana
+     e viaggiano solo a vassoi interi, quindi sotto una certa soglia la
+     spedizione non regge. Vivono in serra-cart-ui.js perché valgono per
+     l'ordine, non per questa pagina: chi compone il carrello dalla home deve
+     leggere lo stesso vincolo. Qui c'è solo il ripiego se il modulo manca. */
+  const CONSEGNA = window.SerraCartUI?.CONSEGNA || {
     giornoSpedizione: 1, // lunedì
     anticipoMinimoGiorni: 2, // ordini raccolti fino a due giorni prima
     transitoGiorni: 1, // consegna il giorno dopo la partenza
@@ -73,23 +75,9 @@
       "filters.none": "Nessun risultato con questi filtri.",
       "cart.qty_less": "Togli un vassoio",
       "cart.qty_more": "Aggiungi un vassoio",
-      "cart.trays": "{n} vassoi",
-      "cart.tray": "1 vassoio",
-      "cart.after":
-        "Dopo l'ordine le ritrovi in <b>Il mio orto</b>, con il calendario fino alla raccolta.",
-      "cart.group_plugs": "Piantine",
-      "cart.group_seeds": "Semi",
-      "cart.packs": "{n} bustine",
-      "cart.pack": "1 bustina",
-      "cart.same_order": "Semi e piantine partono con lo stesso ordine.",
-      "cross.title": "Ti servono anche i semi?",
-      "cross.text":
-        "Nel catalogo trovi 97 varietà, con mesi di semina e abbinamenti già calcolati. Vanno nello stesso carrello.",
       "cart.delivery": "Consegna prevista <b>{data}</b>",
       "cart.min_missing_one": "Manca un vassoio all'ordine minimo",
       "cart.min_missing": "Mancano {n} vassoi all'ordine minimo",
-      "cart.min_note":
-        "Ordine minimo: {n} vassoi. La merce viva viaggia solo a pieno carico.",
       "hero.delivery": "prossima partenza",
       "hero.art_alt":
         "Piantina con il pane di terra, pronta da estrarre dall'alveolo e mettere a dimora",
@@ -118,25 +106,20 @@
         "Le piantine seguono la stagione. Torna tra qualche settimana, oppure parti dai semi nel catalogo.",
       "empty.cta": "Vai al catalogo dei semi",
       "cart.title": "Il tuo carrello",
-      "cart.sub":
-        "Quello che hai scelto è già nel carrello: semi e piantine insieme.",
       "cart.vars": "{n} var.",
-      "cart.stat_plugs": "PIANTINE",
-      "cart.stat_trays": "VASSOI",
-      "cart.stat_packs": "BUSTINE",
       "cart.edit": "Continua a scegliere",
       "cart.empty": "Il carrello è vuoto.",
-      "cart.total": "Totale orientativo",
+      "cart.empty_hint":
+        "Le piantine viaggiano a vassoi interi: il minimo è 2 vassoi.",
       "cart.checkout": "Completa acquisto",
       "cart.clear": "Svuota",
       "cart.open": "Vedi il carrello",
-      "cart.remove": "Togli",
       "cart.note":
         "Ordine senza pagamento online: ti confermiamo disponibilità e data di consegna.",
       "cart.login": "Accedi per completare l'ordine",
       "toast.added": "{n} piantine di {nome} nel carrello",
       "toast.removed": "Rimossa",
-      "toast.cleared": "Piantine tolte dal carrello",
+      "toast.cleared": "Carrello svuotato",
       "toast.order_error": "Non è stato possibile registrare l'ordine",
       "seeds.link": "Cerchi i semi? Vai al catalogo",
     },
@@ -184,23 +167,9 @@
       "filters.none": "Niciun rezultat cu aceste filtre.",
       "cart.qty_less": "Scoate o tavă",
       "cart.qty_more": "Adaugă o tavă",
-      "cart.trays": "{n} tăvi",
-      "cart.tray": "o tavă",
-      "cart.after":
-        "După comandă le regăsești în <b>Grădina mea</b>, cu calendarul până la recoltare.",
-      "cart.group_plugs": "Răsaduri",
-      "cart.group_seeds": "Semințe",
-      "cart.packs": "{n} plicuri",
-      "cart.pack": "un plic",
-      "cart.same_order": "Semințele și răsadurile pleacă în aceeași comandă.",
-      "cross.title": "Îți trebuie și semințe?",
-      "cross.text":
-        "În catalog găsești 97 de soiuri, cu luni de semănat și asocieri deja calculate. Merg în același coș.",
       "cart.delivery": "Livrare estimată <b>{data}</b>",
       "cart.min_missing_one": "Mai lipsește o tavă până la comanda minimă",
       "cart.min_missing": "Mai lipsesc {n} tăvi până la comanda minimă",
-      "cart.min_note":
-        "Comandă minimă: {n} tăvi. Marfa vie călătorește doar la încărcătură plină.",
       "hero.delivery": "următoarea expediere",
       "hero.art_alt":
         "Răsad cu bulgărele de pământ, gata de scos din alveolă și pus în pământ",
@@ -229,24 +198,20 @@
         "Răsadurile urmează sezonul. Revino peste câteva săptămâni sau pornește de la semințe din catalog.",
       "empty.cta": "Mergi la catalogul de semințe",
       "cart.title": "Coșul tău",
-      "cart.sub": "Ce ai ales este deja în coș: semințe și răsaduri împreună.",
       "cart.vars": "{n} soiuri",
-      "cart.stat_plugs": "RĂSADURI",
-      "cart.stat_trays": "TĂVI",
-      "cart.stat_packs": "PLICURI",
       "cart.edit": "Continuă să alegi",
       "cart.empty": "Coșul este gol.",
-      "cart.total": "Total orientativ",
+      "cart.empty_hint":
+        "Răsadurile călătoresc în tăvi întregi: minimul este de 2 tăvi.",
       "cart.checkout": "Finalizează achiziția",
       "cart.clear": "Golește",
       "cart.open": "Vezi coșul",
-      "cart.remove": "Scoate",
       "cart.note":
         "Comandă fără plată online: îți confirmăm disponibilitatea și data livrării.",
       "cart.login": "Autentifică-te pentru a finaliza comanda",
       "toast.added": "{n} răsaduri de {nome} în coș",
       "toast.removed": "Eliminat",
-      "toast.cleared": "Răsaduri scoase din coș",
+      "toast.cleared": "Coș golit",
       "toast.order_error": "Comanda nu a putut fi înregistrată",
       "seeds.link": "Cauți semințe? Mergi la catalog",
     },
@@ -342,27 +307,21 @@
     if (C()) C().scrivi(cart);
   }
   const piantine = () => (C() ? C().soloPiantine(cart) : []);
-  const semi = () => (C() ? C().soloSemi(cart) : []);
-  const bustineNelCarrelloSemi = () =>
-    semi().reduce((n, r) => n + (Number(r.bustine) || 0), 0);
   const qtaInCarrello = (id) => piantine().find((i) => i.id === id)?.qta || 0;
-  // Solo la parte piantine: i semi hanno il proprio riepilogo nella home.
-  const totale = () =>
-    Math.round(
-      piantine().reduce((sum, i) => sum + (Number(i.prezzo) || 0) * i.qta, 0) *
-        100,
-    ) / 100;
+
+  /* Il conteggio delle bustine, il totale e l'elenco del cassetto li fa ora il
+     modulo condiviso (serra-cart-ui.js): qui restano solo i numeri che servono
+     alla pagina fuori dal carrello — la hero e la barra di stato. */
 
   // Prima partenza utile: il primo giorno di spedizione che rispetti il
   // preavviso minimo. La consegna è il giorno dopo la partenza.
-  function prossimaConsegna() {
-    let giorno = E.addDays(E.startOfToday(), CONSEGNA.anticipoMinimoGiorni);
-    for (let i = 0; i < 14; i++) {
-      if (giorno.getDay() === CONSEGNA.giornoSpedizione) break;
-      giorno = E.addDays(giorno, 1);
-    }
-    return E.addDays(giorno, CONSEGNA.transitoGiorni);
-  }
+  const prossimaConsegna = () =>
+    window.SerraCartUI
+      ? window.SerraCartUI.prossimaConsegna()
+      : E.addDays(
+          E.startOfToday(),
+          CONSEGNA.anticipoMinimoGiorni + CONSEGNA.transitoGiorni,
+        );
   const fmtGiorno = (d) =>
     d.toLocaleDateString(locale(), {
       weekday: "long",
@@ -694,11 +653,9 @@
               flood-color="#0a2415" flood-opacity=".32" />
           </filter>
         </defs>
-        <path class="viv-art-aura"
-          d="M43 118 C35 58 80 16 139 18 c65 2 103 49 86 108 c-15 52 -55 81 -105 75 c-48 -6 -72 -38 -77 -83 z"
-          fill="rgba(255,255,255,.09)" />
-        <circle cx="48" cy="72" r="5" fill="rgba(210,249,185,.7)" />
-        <circle cx="218" cy="88" r="4" fill="rgba(210,249,185,.55)" />
+        <!-- Niente alone né riflessi dietro la piantina: il disco chiaro e i
+             due puntini disegnavano forme sul verde della scheda e attiravano
+             l'occhio più del soggetto. Resta solo il vassoio con la piantina. -->
 
         <!-- Vassoio in prospettiva: l'alveolo centrale vuoto rende evidente
              che il răsad è già stato estratto ed è pronto al trapianto. -->
@@ -803,140 +760,57 @@
       </div>`;
   }
 
-  function carrelloHtml() {
-    const mancanti = Math.max(0, CONSEGNA.vassoiMinimi - vassoiInCarrello());
-    const listaPiantine = piantine().filter((i) => BYID[i.id]);
-    const listaSemi = semi().filter((i) => BYID[i.id]);
-    const vuoto = !listaPiantine.length && !listaSemi.length;
-    const nPiantine = listaPiantine.reduce((n, i) => n + i.qta, 0);
-    const nBustine = listaSemi.reduce(
-      (n, i) => n + (Number(i.bustine) || 0),
-      0,
-    );
-    const totaleCarrello = C()
-      ? C().totale(cart, (id) => PRODUCTS[id]?.semi?.prezzo || 0)
-      : 0;
-
-    /* Stessa struttura della "Lista semi da acquistare" del configuratore:
-       intestazione con distintivo, riepilogo, elenco, totale e, in fondo,
-       azione principale più modifica. */
-    const riga = (i, dettaglio, importo, rimovibile) => `
-        <li>
-          <img class="shop-photo" src="${photoSrc(i.id)}" alt="" loading="lazy" />
-          <span class="shop-plant">
-            <b>${escape(plantName(BYID[i.id]))}</b>
-            <small>${dettaglio}</small>
-          </span>
-          <span class="shop-side">
-            <span class="shop-price">${money(importo)}</span>
-            ${
-              rimovibile
-                ? `<button type="button" class="shop-remove" data-viv-action="remove"
-                     data-plant="${i.id}" aria-label="${escape(t("cart.remove"))}">${t("cart.remove")}</button>`
-                : ""
-            }
-          </span>
-        </li>`;
-
-    const elenco = [
-      ...listaPiantine.map((i) =>
-        riga(
-          i,
-          `${i.qta} × ${money(Number(i.prezzo) || 0)}`,
-          (Number(i.prezzo) || 0) * i.qta,
-          true,
-        ),
-      ),
-      ...listaSemi.map((i) => {
-        const n = Number(i.bustine) || 0;
-        const prezzo = PRODUCTS[i.id]?.semi?.prezzo || 0;
-        return riga(
-          i,
-          `${n === 1 ? t("cart.pack") : t("cart.packs", { n })}`,
-          prezzo * n,
-          false,
-        );
-      }),
-    ].join("");
-
-    const invitoSemi = `<a class="viv-cart-cross" href="index.html#stagione">
-        <span aria-hidden="true">🌿</span>
-        <span><b>${t("cross.title")}</b><small>${t("cross.text")}</small></span>
-        <span aria-hidden="true">→</span>
-      </a>`;
-
-    return `
-      <div class="viv-panel viv-panel--drawer" id="vivaioCart">
-        <div class="panel-body">
-          <p class="sub">${t("cart.sub")}</p>
-          ${
-            vuoto
-              ? `<p class="viv-cart-empty">${t("cart.empty")}</p>
-                 <p class="viv-cart-note">${t("cart.min_note", { n: CONSEGNA.vassoiMinimi })}</p>
-                 ${invitoSemi}`
-              : `<div class="viv-summary">
-                   <span><b>${nPiantine}</b><small>${t("cart.stat_plugs")}</small></span>
-                   <span><b>${vassoiInCarrello()}</b><small>${t("cart.stat_trays")}</small></span>
-                   <span><b>${nBustine}</b><small>${t("cart.stat_packs")}</small></span>
-                 </div>
-                 <ul class="shop">${elenco}</ul>
-                 <div class="shop-total"><span>${t("cart.total")}</span><b>${money(totaleCarrello)}</b></div>
-                 ${
-                   listaPiantine.length
-                     ? `<p class="viv-cart-delivery">
-                          <span aria-hidden="true">🚚</span>
-                          <span>${t("cart.delivery", { data: fmtGiorno(prossimaConsegna()) })}</span>
-                        </p>`
-                     : ""
-                 }
-                 ${
-                   listaPiantine.length && mancanti > 0
-                     ? `<p class="viv-cart-min">${
-                         mancanti === 1
-                           ? t("cart.min_missing_one")
-                           : t("cart.min_missing", { n: mancanti })
-                       }</p>`
-                     : ""
-                 }
-                 <p class="viv-cart-note">${t("cart.note")}</p>
-                 ${
-                   listaSemi.length && listaPiantine.length
-                     ? `<p class="viv-cart-after">${t("cart.same_order")}</p>`
-                     : ""
-                 }
-                 <p class="viv-cart-after">${t("cart.after")}</p>
-                 ${!listaSemi.length ? invitoSemi : ""}`
-          }
-        </div>
-        ${
-          vuoto
-            ? ""
-            : `<div class="yield-footer">
-                 <button class="orto-btn orto-btn--block" type="button"
-                   data-viv-action="checkout" ${
-                     listaPiantine.length && mancanti > 0 ? "disabled" : ""
-                   }>${t("cart.checkout")}</button>
-                 <button class="viv-edit-btn" type="button" data-viv-action="edit-list">
-                   <span aria-hidden="true">↑</span>
-                   <span>${t("cart.edit")}</span>
-                 </button>
-               </div>`
-        }
-      </div>`;
-  }
-
-  // Riempie il cassetto e aggiorna l'intestazione del carrello.
+  /* Il corpo del cassetto lo disegna il modulo condiviso: riepilogo, gruppi,
+     note della merce viva e invito incrociato sono gli stessi di home e
+     configuratore. Qui restano solo i dati che il vivaio conosce — catalogo,
+     foto, listino delle bustine — e le regole di apertura del pannello. */
   function disegnaCarrello() {
-    const corpo = document.getElementById("vivaioCartBody");
-    if (corpo) corpo.innerHTML = carrelloHtml();
+    const elenco = document.getElementById("vivaioCartItems");
+    const vuoto = document.getElementById("vivaioCartEmpty");
+    const piede = document.getElementById("vivaioCartFooter");
+    const pieno = cart.some((i) => BYID[i.id]);
+
+    if (vuoto) vuoto.hidden = pieno;
+    if (elenco) elenco.hidden = !pieno;
+    if (piede) piede.hidden = !pieno;
+
+    if (elenco && pieno && window.SerraCartUI) {
+      elenco.innerHTML = window.SerraCartUI.corpo({
+        righe: cart,
+        lang,
+        attr: "data-viv-action",
+        nome: (id) => (BYID[id] ? plantName(BYID[id]) : ""),
+        foto: (id) => photoSrc(id),
+        nota: (id) => BYID[id]?.nota || "",
+        prezzoBustina: (id) => PRODUCTS[id]?.semi?.prezzo || 0,
+        semiPerBustina: (id) => PRODUCTS[id]?.semi?.semiPerBustina || 100,
+        soldi: money,
+        // Il catalogo semi vive nella home; le piantine sono il listino di
+        // questa stessa pagina, quindi basta scorrere fin lì.
+        hrefSemi: "index.html#stagione",
+        hrefPiantine: "#vivaioCatalog",
+      });
+    }
+
+    /* Sotto l'ordine minimo di vassoi la spedizione della merce viva non
+       regge: il pulsante resta visibile ma inerte, e il motivo è scritto
+       accanto alle righe delle piantine. */
+    const compra = document.getElementById("vivaioCheckoutBtn");
+    if (compra) {
+      const sotto = piantine().length && vassoiInCarrello() < CONSEGNA.vassoiMinimi;
+      compra.disabled = !!sotto;
+    }
+
     const riga = document.getElementById("vivaioCartLine");
     if (riga) {
       const n = cart.length;
       riga.hidden = !n;
       riga.textContent = n ? t("cart.vars", { n }) : "";
     }
+    // Il pulsante svuota l'intero carrello: resta visibile finché c'è una
+    // riga qualsiasi, non solo una piantina.
     const svuota = document.querySelector(".cart-clear-btn");
-    if (svuota) svuota.hidden = !piantine().length;
+    if (svuota) svuota.hidden = !cart.length;
   }
 
   function apriCarrello() {
@@ -1070,7 +944,9 @@
     const trigger = event.target.closest("[data-viv-action]");
     if (!trigger) return;
     const action = trigger.dataset.vivAction;
-    const id = trigger.dataset.plant;
+    // `data-plant` sulle schede del listino, `data-plant-id` sulle righe del
+    // cassetto condiviso: entrambe indicano la stessa pianta.
+    const id = trigger.dataset.plant || trigger.dataset.plantId;
     // Lingua dal menu mobile: sotto i 660px il selettore dell'intestazione è
     // nascosto e questi due pulsanti sono l'unico modo per cambiarla.
     if (action === "set-language") {
@@ -1103,27 +979,38 @@
     }
     if (action === "less") {
       const lotto = PRODUCTS[id]?.piantina?.lotto || 6;
-      const voce = piantine().find((i) => i.id === id);
-      if (voce) {
-        voce.qta -= lotto;
-        voce.bustine = voce.qta;
-        if (voce.qta <= 0)
-          cart = cart.filter((i) => !(i.id === id && C().isPiantina(i)));
-        saveCart();
-        render();
-      }
+      cart = C().varia(cart, id, true, -lotto);
+      saveCart();
+      render();
       return;
     }
-    if (action === "remove") {
-      cart = cart.filter((i) => !(i.id === id && C().isPiantina(i)));
+    /* Righe del cassetto condiviso: stessi nomi d'azione di home e
+       configuratore. Il passo è una bustina per i semi e un vassoio intero per
+       le piantine, perché è così che i due prodotti viaggiano davvero. */
+    if (action === "cart-qty-more" || action === "cart-qty-less") {
+      const piantina = trigger.dataset.variante === "piantina";
+      const riga = C().trova(cart, id, piantina);
+      if (!riga) return;
+      const verso = action === "cart-qty-more" ? 1 : -1;
+      cart = C().varia(cart, id, piantina, verso * C().passo(riga));
+      saveCart();
+      render();
+      return;
+    }
+    if (action === "remove" || action === "remove-from-cart") {
+      // Dal listino si toglie sempre la piantina; dal cassetto, la variante
+      // scritta nella riga.
+      const piantina =
+        action === "remove" || trigger.dataset.variante === "piantina";
+      cart = C().rimuovi(cart, id, piantina);
       saveCart();
       render();
       return toast(t("toast.removed"));
     }
-    // "Svuota" tocca solo le piantine: le bustine non sono di questa sezione.
+    // Il carrello è unico: "Svuota" lo svuota davvero, semi compresi. Per
+    // togliere solo una parte ci sono i pulsanti riga per riga.
     if (action === "clear") {
-      cart = semi();
-      saveCart();
+      cart = C().svuota();
       render();
       return toast(t("toast.cleared"));
     }
@@ -1138,6 +1025,12 @@
       filtro = "";
       ordine = "consigliati";
       render();
+      return;
+    }
+    // L'invito incrociato verso le piantine punta al listino di questa pagina:
+    // il cassetto lo coprirebbe, quindi si chiude e lascia scorrere.
+    if (action === "cross-sell") {
+      chiudiCarrello();
       return;
     }
     if (action === "edit-list") {

@@ -2182,21 +2182,6 @@
 
 /* Pulsanti e stati */
 @layer base {
-  :root {
-    --button-primary: var(--serra-green);
-    --button-primary-hover: #357944;
-    --button-primary-border: rgba(47, 107, 58, 0.42);
-    --button-primary-shadow: rgba(47, 107, 58, 0.24);
-    --button-secondary-bg: rgba(47, 107, 58, 0.1);
-    --button-secondary-bg-hover: rgba(47, 107, 58, 0.17);
-    --button-secondary-text: #245733;
-    --button-secondary-border: rgba(47, 107, 58, 0.18);
-    --button-danger-bg: #fff3f1;
-    --button-danger-bg-hover: #ffe8e4;
-    --button-danger-text: #9f2f24;
-    --button-danger-border: rgba(176, 48, 32, 0.32);
-  }
-
   .detail-add-btn,
   .conf-cart-export-btn,
   .cart-checkout-btn,
@@ -2283,20 +2268,7 @@
   }
 }
 @layer dark-theme {
-  html[data-theme="dark"] {
-    --button-primary: #328f53;
-    --button-primary-hover: #3da764;
-    --button-primary-border: #69c984;
-    --button-secondary: #293f34;
-    --button-secondary-hover: #344f40;
-    --button-secondary-border: rgba(168, 216, 182, 0.27);
-    --button-danger: #4a2b2d;
-    --button-danger-hover: #643638;
-    --button-danger-border: #a85a5d;
-    --button-disabled: #24332b;
-    --button-disabled-text: #829288;
   }
-}
 @layer base {
 }
 @layer dark-theme {
@@ -5085,32 +5057,16 @@
     gap: 8px;
   }
 
-  /* Ogni livello è un pulsante pieno: superficie compatta, bordo marcato e
-     spessore inferiore che simula il rilievo di un tasto, così è chiaro che si
-     clicca tutta la card e non solo l'indicatore a destra. */
+  /* Colore, bordo e rilievo delle tre scelte stanno in base.css, con il resto
+     dell'app: qui resta solo l'ingombro, che nella hero è un po' più generoso.
+     Prima questo blocco rifaceva tutto da capo — bordo di 2px e spessore
+     inferiore di 4px — e la stessa scheda risultava diversa a seconda della
+     pagina da cui la si guardava. */
   .hero-cfg-level {
     --accent-text: #1f4f27;
-    --accent-edge: color-mix(in srgb, var(--accent) 62%, #14301f);
-    min-height: 70px;
-    padding: 9px 14px 9px 16px;
+    min-height: 68px;
+    padding: 9px 14px;
     gap: 12px;
-    border-width: 2px;
-    border-color: color-mix(in srgb, var(--accent) 66%, #cbd6c9);
-    border-radius: 16px;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent) 9%, #fffdf7),
-      color-mix(in srgb, var(--accent) 22%, #fffdf7)
-    );
-    box-shadow:
-      0 4px 0 0 var(--accent-edge),
-      0 10px 20px rgba(7, 31, 21, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.85);
-    transition:
-      transform 0.12s ease,
-      box-shadow 0.16s ease,
-      background 0.16s ease,
-      border-color 0.16s ease;
   }
 
   .hero-cfg-level.pc-persona-card--intermedio {
@@ -5121,45 +5077,17 @@
     --accent-text: #6b2b1a;
   }
 
-  /* La barretta laterale non serve più: il colore pieno identifica il livello. */
-  .hero-cfg-level::before {
-    display: none;
-  }
-
-  .hero-cfg-level:hover {
-    border-color: var(--accent);
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent) 16%, #fffdf7),
-      color-mix(in srgb, var(--accent) 32%, #fffdf7)
-    );
-    box-shadow:
-      0 6px 0 0 var(--accent-edge),
-      0 14px 26px rgba(7, 31, 21, 0.26),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    transform: translateY(-2px);
-  }
-
-  /* Feedback di pressione: il tasto scende sul proprio spessore. */
-  .hero-cfg-level:active {
-    box-shadow:
-      0 0 0 0 var(--accent-edge),
-      0 4px 10px rgba(7, 31, 21, 0.2),
-      inset 0 2px 6px rgba(7, 31, 21, 0.16);
-    transform: translateY(4px);
-  }
-
   .hero-cfg-level:focus-visible {
     outline: 3px solid #a8edc5;
     outline-offset: 3px;
   }
 
+  /* Solo la misura: colore e contorno del riquadro vengono da base.css, dove
+     sono tarati per restare staccati dal riempimento di ogni livello. */
   .hero-cfg-level .pc-persona-ico {
     width: 44px;
     height: 44px;
-    border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
     border-radius: 12px;
-    background: color-mix(in srgb, var(--accent) 13%, #fff);
     box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 16%, transparent);
   }
 
@@ -7258,90 +7186,9 @@
   }
 }
 
-/* Suggerimento incrociato dentro il carrello: chi ha solo semi scopre le
-   piantine già cresciute, chi ha solo piantine scopre il catalogo. */
-@layer base {
-  .cart-cross {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    margin: 10px 0;
-    padding: 12px 14px;
-    border: 1.5px dashed var(--border);
-    border-radius: 16px;
-    background: rgba(201, 150, 47, 0.08);
-    color: inherit;
-    text-decoration: none;
-    transition:
-      border-color 0.16s ease,
-      background 0.16s ease,
-      transform 0.16s ease;
-  }
+/* Il suggerimento incrociato del carrello (`.cart-cross`) vive in base.css:
+   lo stesso cassetto compare in home, vivaio e configuratore. */
 
-  .cart-cross:hover {
-    border-color: #c9962f;
-    background: rgba(201, 150, 47, 0.14);
-    transform: translateY(-1px);
-  }
-
-  .cart-cross-ico {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    flex: none;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.7);
-    font-size: 19px;
-    place-items: center;
-  }
-
-  .cart-cross-copy {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .cart-cross-copy b {
-    display: block;
-    font-size: 13.5px;
-  }
-
-  .cart-cross-copy small {
-    display: block;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.35;
-  }
-
-  .cart-cross-arrow {
-    color: #c9962f;
-    font-weight: 800;
-  }
-
-  /* Riga piantina dentro il carrello dei semi: si distingue a colpo d'occhio. */
-  .cart-item-tag {
-    display: inline-block;
-    padding: 1px 7px;
-    border-radius: 999px;
-    background: #f6c85a;
-    color: #4a3405;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    vertical-align: middle;
-  }
-}
-
-@layer dark-theme {
-  html[data-theme="dark"] .cart-cross {
-    background: rgba(201, 150, 47, 0.14);
-  }
-
-  html[data-theme="dark"] .cart-cross-ico {
-    background: rgba(255, 255, 255, 0.12);
-  }
-}
 /* Homepage: una sola scelta primaria nell'hero, tre ingressi rapidi sotto e
    contenuti secondari progressivi su schermi piccoli. */
 @layer polish {

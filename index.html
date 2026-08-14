@@ -7,7 +7,7 @@
     <title>Orto in Serra · Coltiva con intelligenza</title>
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260813-58369b2a71af";
+      window.SERRA_APP_VERSION = "20260814-8ce9b81c5fc8";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -76,15 +76,15 @@
       })();
     </script>
     <!-- Fogli di stile principali -->
-    <link rel="stylesheet" href="assets/css/base.css?v=20260813-58369b2a71af" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260814-8ce9b81c5fc8" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260813-58369b2a71af"
+      href="assets/css/serra-home.css?v=20260814-8ce9b81c5fc8"
     />
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260813-58369b2a71af"
+      href="assets/css/serra-configuratore.css?v=20260814-8ce9b81c5fc8"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -337,8 +337,12 @@
                   data-i18n-aria="hero.plan_benefits_aria"
                 >
                   <li data-i18n="hero.plan_benefit_1">Adatto alla stagione</li>
-                  <li data-i18n="hero.plan_benefit_2">Distanze già calcolate</li>
-                  <li data-i18n="hero.plan_benefit_3">Modificabile quando vuoi</li>
+                  <li data-i18n="hero.plan_benefit_2">
+                    Distanze già calcolate
+                  </li>
+                  <li data-i18n="hero.plan_benefit_3">
+                    Modificabile quando vuoi
+                  </li>
                 </ul>
                 <div class="hero-cfg-primary-actions">
                   <a
@@ -1115,7 +1119,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260813-58369b2a71af</span
+          >v20260814-8ce9b81c5fc8</span
         >
       </div>
     </footer>
@@ -1626,206 +1630,18 @@
         </div>
 
         <div class="preconfig-body">
-          <div class="preconfig-section-label preconfig-section-label--primary">
-            <span data-i18n="preconfig.sizes_label">1. Misure interne</span>
-            <span
-              class="preconfig-priority-badge"
-              data-i18n="preconfig.sizes_badge"
-              >Fondamentale</span
-            >
-          </div>
-          <div
-            class="preconfig-vfield preconfig-vfield--dims preconfig-vfield--primary"
-          >
-            <div>
-              <label class="preconfig-fld" data-i18n="preconfig.width"
-                >Larghezza</label
-              >
-              <div class="preconfig-stepper">
-                <button
-                  class="preconfig-step-btn"
-                  data-target="pcW"
-                  data-step="-0.5"
-                  aria-label="−"
-                >
-                  −
-                </button>
-                <input
-                  class="preconfig-step-input"
-                  type="number"
-                  id="pcW"
-                  min="1"
-                  max="12"
-                  step="0.5"
-                  value="3"
-                  inputmode="decimal"
-                />
-                <button
-                  class="preconfig-step-btn"
-                  data-target="pcW"
-                  data-step="0.5"
-                  aria-label="+"
-                >
-                  +
-                </button>
-              </div>
-              <input
-                type="range"
-                id="pcWSlider"
-                min="1"
-                max="12"
-                step="0.5"
-                value="3"
-                hidden
-                aria-hidden="true"
-              />
-            </div>
-            <div>
-              <label class="preconfig-fld" data-i18n="preconfig.length"
-                >Lunghezza</label
-              >
-              <div class="preconfig-stepper">
-                <button
-                  class="preconfig-step-btn"
-                  data-target="pcL"
-                  data-step="-0.5"
-                  aria-label="−"
-                >
-                  −
-                </button>
-                <input
-                  class="preconfig-step-input"
-                  type="number"
-                  id="pcL"
-                  min="1"
-                  max="30"
-                  step="0.5"
-                  value="5"
-                  inputmode="decimal"
-                />
-                <button
-                  class="preconfig-step-btn"
-                  data-target="pcL"
-                  data-step="0.5"
-                  aria-label="+"
-                >
-                  +
-                </button>
-              </div>
-              <input
-                type="range"
-                id="pcLSlider"
-                min="1"
-                max="30"
-                step="0.5"
-                value="5"
-                hidden
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-
-          <!-- Configurazione del camminamento tra le aiuole. -->
-          <div class="preconfig-section-label" data-i18n="preconfig.path_label">
-            Camminamento tra aiuole
-          </div>
-          <div class="preconfig-path-field">
-            <div class="preconfig-path-row">
-              <input
-                type="range"
-                id="pcPath"
-                min="30"
-                max="120"
-                step="5"
-                value="60"
-                class="preconfig-path-slider"
-              />
-              <div class="preconfig-stepper preconfig-stepper--sm">
-                <button
-                  class="preconfig-step-btn"
-                  data-target="pcPathNum"
-                  data-step="-5"
-                  aria-label="−"
-                >
-                  −
-                </button>
-                <input
-                  class="preconfig-step-input"
-                  type="number"
-                  id="pcPathNum"
-                  min="30"
-                  max="120"
-                  step="5"
-                  value="60"
-                  inputmode="numeric"
-                  pattern="[0-9]*"
-                />
-                <button
-                  class="preconfig-step-btn"
-                  data-target="pcPathNum"
-                  data-step="5"
-                  aria-label="+"
-                >
-                  +
-                </button>
-              </div>
-              <span class="preconfig-path-unit">cm</span>
-            </div>
-          </div>
-          <div
-            class="preconfig-section-label"
-            data-i18n="preconfig.climate_label"
-          >
-            2. Clima
-          </div>
-          <div class="preconfig-vfield preconfig-vfield--climate">
-            <div>
-              <label
-                class="preconfig-fld"
-                for="pcZona"
-                data-i18n="preconfig.zona_label"
-                >Zona</label
-              >
-              <select id="pcZona" class="preconfig-select">
-                <option value="freddo" data-i18n="hero.zone_cold_label">
-                  Fredda
-                </option>
-                <option
-                  value="temperato"
-                  selected
-                  data-i18n="hero.zone_temp_label"
-                >
-                  Temperata
-                </option>
-                <option value="caldo" data-i18n="hero.zone_warm_label">
-                  Calda
-                </option>
-              </select>
-            </div>
-            <div>
-              <label
-                class="preconfig-fld"
-                for="pcRisc"
-                data-i18n="preconfig.serra_label"
-                >Serra</label
-              >
-              <select id="pcRisc" class="preconfig-select">
-                <option value="no" data-i18n="preconfig.serra_cold">
-                  Fredda
-                </option>
-                <option value="si" data-i18n="preconfig.serra_heated">
-                  Riscaldata
-                </option>
-              </select>
-            </div>
-          </div>
-
           <div id="preconfigPersonaSection">
             <div
-              class="preconfig-section-label"
-              data-i18n="hero.cfg_levels_title"
+              class="preconfig-section-label preconfig-section-label--primary"
             >
-              Che tipo di coltivatore sei?
+              <span data-i18n="preconfig.persona_label"
+                >1. Che tipo di coltivatore sei?</span
+              >
+              <span
+                class="preconfig-priority-badge"
+                data-i18n="preconfig.persona_badge"
+                >Obbligatorio</span
+              >
             </div>
             <div class="pc-persona-cards">
               <button
@@ -1890,11 +1706,247 @@
               </button>
             </div>
           </div>
+          <div class="preconfig-section-label" id="preconfigSizesLabel">
+            <span data-i18n="preconfig.sizes_label">2. Misure interne</span>
+            <!-- Alla prima visita le misure sono un ripiego (3×5 m): il
+                 distintivo lo dice, e sparisce appena l'utente le tocca o se
+                 arriva con una serra già salvata. Lo accende updatePreconfigCta()
+                 in assets/js/home.js. -->
+            <span
+              class="preconfig-priority-badge preconfig-priority-badge--check"
+              id="preconfigSizesBadge"
+              data-i18n="preconfig.sizes_badge_check"
+              hidden
+              >Da controllare</span
+            >
+          </div>
+          <div
+            class="preconfig-vfield preconfig-vfield--dims preconfig-vfield--primary"
+            id="preconfigSizesField"
+          >
+            <div>
+              <span class="preconfig-fld-row"
+                ><svg
+                  class="preconfig-axis"
+                  viewBox="0 0 22 12"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M2 2v8M20 2v8" />
+                  <path d="M4 6h14" />
+                  <path d="M6.5 3.6 4 6l2.5 2.4M15.5 3.6 18 6l-2.5 2.4" /></svg
+                ><label class="preconfig-fld" data-i18n="preconfig.width"
+                  >Larghezza</label
+                ><span class="preconfig-fld-unit" aria-hidden="true"
+                  >m</span
+                ></span
+              >
+              <div class="preconfig-stepper">
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcW"
+                  data-step="-0.5"
+                  aria-label="−"
+                >
+                  −
+                </button>
+                <input
+                  class="preconfig-step-input"
+                  type="number"
+                  id="pcW"
+                  min="1"
+                  max="12"
+                  step="0.5"
+                  value="3"
+                  inputmode="decimal"
+                />
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcW"
+                  data-step="0.5"
+                  aria-label="+"
+                >
+                  +
+                </button>
+              </div>
+              <input
+                type="range"
+                id="pcWSlider"
+                min="1"
+                max="12"
+                step="0.5"
+                value="3"
+                hidden
+                aria-hidden="true"
+              />
+            </div>
+            <div>
+              <span class="preconfig-fld-row"
+                ><svg
+                  class="preconfig-axis"
+                  viewBox="0 0 12 22"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M2 2h8M2 20h8" />
+                  <path d="M6 4v14" />
+                  <path d="M3.6 6.5 6 4l2.4 2.5M3.6 15.5 6 18l2.4-2.5" /></svg
+                ><label class="preconfig-fld" data-i18n="preconfig.length"
+                  >Lunghezza</label
+                ><span class="preconfig-fld-unit" aria-hidden="true"
+                  >m</span
+                ></span
+              >
+              <div class="preconfig-stepper">
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcL"
+                  data-step="-0.5"
+                  aria-label="−"
+                >
+                  −
+                </button>
+                <input
+                  class="preconfig-step-input"
+                  type="number"
+                  id="pcL"
+                  min="1"
+                  max="30"
+                  step="0.5"
+                  value="5"
+                  inputmode="decimal"
+                />
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcL"
+                  data-step="0.5"
+                  aria-label="+"
+                >
+                  +
+                </button>
+              </div>
+              <input
+                type="range"
+                id="pcLSlider"
+                min="1"
+                max="30"
+                step="0.5"
+                value="5"
+                hidden
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+          <!-- Il camminamento ha una riga propria: non è una dimensione
+               della serra ma la misura del passaggio fra le aiuole. Il
+               fondo a ciottoli lo dice a colpo d'occhio. -->
+          <div class="preconfig-vfield preconfig-vfield--path">
+            <div>
+              <span class="preconfig-fld-row"
+                ><label
+                  class="preconfig-fld"
+                  data-i18n="preconfig.path_label_short"
+                  >Camminamento</label
+                ><span class="preconfig-fld-unit" aria-hidden="true"
+                  >cm</span
+                ></span
+              >
+              <div class="preconfig-stepper">
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcPathNum"
+                  data-step="-5"
+                  aria-label="−"
+                >
+                  −
+                </button>
+                <input
+                  class="preconfig-step-input"
+                  type="number"
+                  id="pcPathNum"
+                  min="30"
+                  max="120"
+                  step="5"
+                  value="60"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                />
+                <button
+                  class="preconfig-step-btn"
+                  data-target="pcPathNum"
+                  data-step="5"
+                  aria-label="+"
+                >
+                  +
+                </button>
+              </div>
+              <!-- Il cursore resta nascosto: syncPcPath() lo usa ancora per
+                     arrotondare il valore ai cinque centimetri. -->
+              <input
+                type="range"
+                id="pcPath"
+                min="30"
+                max="120"
+                step="5"
+                value="60"
+                hidden
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+          <div
+            class="preconfig-section-label"
+            data-i18n="preconfig.climate_label"
+          >
+            3. Clima
+          </div>
+          <div class="preconfig-vfield preconfig-vfield--climate">
+            <div>
+              <label
+                class="preconfig-fld"
+                for="pcZona"
+                data-i18n="preconfig.zona_label"
+                >Zona</label
+              >
+              <select id="pcZona" class="preconfig-select">
+                <option value="freddo" data-i18n="hero.zone_cold_label">
+                  Fredda
+                </option>
+                <option
+                  value="temperato"
+                  selected
+                  data-i18n="hero.zone_temp_label"
+                >
+                  Temperata
+                </option>
+                <option value="caldo" data-i18n="hero.zone_warm_label">
+                  Calda
+                </option>
+              </select>
+            </div>
+            <div>
+              <label
+                class="preconfig-fld"
+                for="pcRisc"
+                data-i18n="preconfig.serra_label"
+                >Serra</label
+              >
+              <select id="pcRisc" class="preconfig-select">
+                <option value="no" data-i18n="preconfig.serra_cold">
+                  Fredda
+                </option>
+                <option value="si" data-i18n="preconfig.serra_heated">
+                  Riscaldata
+                </option>
+              </select>
+            </div>
+          </div>
+
           <div
             class="preconfig-section-label"
             data-i18n="preconfig.month_label"
           >
-            3. Mese di semina
+            4. Mese di semina
           </div>
           <div class="preconfig-month-wrap">
             <span class="preconfig-month-icon" aria-hidden="true">📅</span>
@@ -1918,10 +1970,26 @@
 
         <div class="preconfig-footer">
           <div class="preconfig-summary" id="preconfigSummary"></div>
-          <a class="preconfig-cta" id="preconfigCta" href="#">
+          <a
+            class="preconfig-cta"
+            id="preconfigCta"
+            href="#"
+            aria-describedby="preconfigCtaHint"
+          >
             <span data-i18n="preconfig.cta">Vai al configuratore</span>
             <span class="preconfig-cta-arrow" aria-hidden="true">→</span>
           </a>
+          <!-- Perché il pulsante è spento. Resta scritto finché manca la
+               scelta, invece di comparire in un avviso dopo il clic. -->
+          <p
+            class="preconfig-cta-hint"
+            id="preconfigCtaHint"
+            role="status"
+            data-i18n="preconfig.cta_hint"
+            hidden
+          >
+            Scegli il tuo livello per continuare
+          </p>
         </div>
       </div>
     </div>
@@ -1929,6 +1997,7 @@
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
+    <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
     <script src="assets/js/home.js" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>

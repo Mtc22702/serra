@@ -159,8 +159,53 @@
     else openMenu();
   });
 
+  /* Vero quando il collegamento porta davvero a un altro documento. Gli
+     ancoraggi interni alla pagina corrente non ricaricano nulla e vanno
+     trattati come una chiusura normale. */
+  function portaAdAltraPagina(link) {
+    if (link.target && link.target !== "_self") return false;
+    if (link.hasAttribute("download")) return false;
+    if (link.hasAttribute("data-placeholder-link")) return false;
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#")) return false;
+    let url;
+    try {
+      url = new URL(link.href, window.location.href);
+    } catch (_) {
+      return false;
+    }
+    if (url.origin !== window.location.origin) return false;
+    return (
+      url.pathname !== window.location.pathname ||
+      url.search !== window.location.search
+    );
+  }
+
+  /* Chiusura "a freddo", per le voci che portano altrove.
+     La chiusura normale rimette il body in flusso e ripristina lo scorrimento:
+     è un riflusso dell'intera pagina più il rifacimento del pannello sfocato,
+     e quel lavoro si infila fra il tocco e l'inizio della navigazione. Era il
+     ritardo percepito aprendo Vivaio o Il mio orto dal menu dello smartphone.
+     Qui il body resta com'è — la pagina sta per essere sostituita — e si
+     nasconde soltanto il menu, che è un semplice ridisegno. */
+  const closeMenuForNavigation = () => {
+    document.body.classList.add("nav-menu-leaving");
+    toggle.setAttribute("aria-expanded", "false");
+  };
+
   menu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeMenu);
+    link.addEventListener("click", () => {
+      if (portaAdAltraPagina(link)) closeMenuForNavigation();
+      else closeMenu();
+    });
+  });
+
+  /* Col tasto "indietro" il browser può ripristinare la pagina dalla propria
+     cache esattamente come l'aveva lasciata: menu congelato e body bloccato.
+     Qui si rimette tutto a posto, così la pagina torna utilizzabile. */
+  window.addEventListener("pageshow", () => {
+    document.body.classList.remove("nav-menu-leaving");
+    closeMenu();
   });
 
   document.addEventListener("click", (event) => {
@@ -1050,6 +1095,13 @@
         "cart.in_cart": "✓&nbsp;Nel carrello",
         "cart.clear": "Svuota",
         "cart.remove": "Rimuovi",
+        // Quantità riga per riga nel cassetto: le bustine si contano a una a
+        // una, le piantine a vassoi interi perché così vengono spedite.
+        "cart.qty_label": "Quantità",
+        "cart.qty_less_pack": "Togli una bustina",
+        "cart.qty_more_pack": "Aggiungi una bustina",
+        "cart.qty_less_tray": "Togli un vassoio",
+        "cart.qty_more_tray": "Aggiungi un vassoio",
         "cart.add_to_cart": "+ Aggiungi al carrello",
         "cart.remove_from_cart": "✕ Rimuovi dal carrello",
         "cart.view": "Vedi carrello",
@@ -1548,6 +1600,11 @@
         "cart.in_cart": "✓&nbsp;În coș",
         "cart.clear": "Golește",
         "cart.remove": "Elimină",
+        "cart.qty_label": "Cantitate",
+        "cart.qty_less_pack": "Scoate un plic",
+        "cart.qty_more_pack": "Adaugă un plic",
+        "cart.qty_less_tray": "Scoate o tavă",
+        "cart.qty_more_tray": "Adaugă o tavă",
         "cart.add_to_cart": "+ Adaugă în coș",
         "cart.remove_from_cart": "✕ Elimină din coș",
         "cart.view": "Vezi coșul",

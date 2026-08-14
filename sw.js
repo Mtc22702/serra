@@ -2,7 +2,7 @@
  * CACHE_VERSION deve avanzare a ogni rilascio che modifica risorse memorizzate;
  * boot-sw.js registra questo file e riconosce con il prefisso "serra-" le cache locali.
  */
-const CACHE_VERSION = "20260813-58369b2a71af";
+const CACHE_VERSION = "20260814-8ce9b81c5fc8";
 // Incrementato a ogni rilascio forzato: assicura una nuova impronta della
 // cache anche quando la modifica è principalmente grafica o di distribuzione.
 const RELEASE_EPOCH = 3;

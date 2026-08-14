@@ -2183,21 +2183,6 @@
 
 /* Pulsanti e stati */
 @layer base {
-  :root {
-    --button-primary: var(--serra-green);
-    --button-primary-hover: #357944;
-    --button-primary-border: rgba(47, 107, 58, 0.42);
-    --button-primary-shadow: rgba(47, 107, 58, 0.24);
-    --button-secondary-bg: rgba(47, 107, 58, 0.1);
-    --button-secondary-bg-hover: rgba(47, 107, 58, 0.17);
-    --button-secondary-text: #245733;
-    --button-secondary-border: rgba(47, 107, 58, 0.18);
-    --button-danger-bg: #fff3f1;
-    --button-danger-bg-hover: #ffe8e4;
-    --button-danger-text: #9f2f24;
-    --button-danger-border: rgba(176, 48, 32, 0.32);
-  }
-
   .detail-add-btn,
   .conf-cart-export-btn,
   .cart-checkout-btn,
@@ -2284,20 +2269,7 @@
   }
 }
 @layer dark-theme {
-  html[data-theme="dark"] {
-    --button-primary: #328f53;
-    --button-primary-hover: #3da764;
-    --button-primary-border: #69c984;
-    --button-secondary: #293f34;
-    --button-secondary-hover: #344f40;
-    --button-secondary-border: rgba(168, 216, 182, 0.27);
-    --button-danger: #4a2b2d;
-    --button-danger-hover: #643638;
-    --button-danger-border: #a85a5d;
-    --button-disabled: #24332b;
-    --button-disabled-text: #829288;
   }
-}
 @layer base {
 }
 @layer dark-theme {
@@ -6860,8 +6832,11 @@ main {
     font-size: 0.68rem;
   }
 }
+/* Le tre schede di livello di questa pagina sono il modello che il resto
+   dell'app ora segue (vedi .pc-persona-card in base.css). Le tinte erano tre
+   valori scritti qui: ora sono i token condivisi, così restano in passo. */
 .guide-tab {
-  --guide-accent: #79b75a;
+  --guide-accent: var(--pc-nov);
   --guide-accent-text: #245733;
   position: relative;
   min-height: 64px;
@@ -6870,11 +6845,16 @@ main {
   gap: 0.7rem;
   padding: 0.55rem 0.75rem 0.55rem 0.95rem;
   overflow: hidden;
-  border: 1.5px solid transparent;
+  border: 1.5px solid
+    color-mix(in srgb, var(--guide-accent) var(--persona-edge), var(--persona-edge-base));
   border-radius: 13px;
-  color: #5b6b5e;
-  background: transparent;
-  box-shadow: none;
+  color: var(--guide-accent-text);
+  background: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-fill),
+    var(--persona-base)
+  );
+  box-shadow: 0 2px 6px rgba(7, 31, 21, 0.08);
   font-family:
     DM Sans,
     sans-serif;
@@ -6883,7 +6863,11 @@ main {
 }
 .guide-tab:not(.is-active):hover {
   color: var(--guide-accent-text);
-  background: color-mix(in srgb, var(--guide-accent) 10%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-fill-hover),
+    var(--persona-base)
+  );
 }
 .guide-tab::before {
   position: absolute;
@@ -6901,11 +6885,11 @@ main {
   opacity: 1;
 }
 .guide-tab--intermedio {
-  --guide-accent: #d5a343;
+  --guide-accent: var(--pc-int);
   --guide-accent-text: #674b0d;
 }
 .guide-tab--esperto {
-  --guide-accent: #d46f52;
+  --guide-accent: var(--pc-exp);
   --guide-accent-text: #71311f;
 }
 .guide-tab-icon {
@@ -6914,16 +6898,27 @@ main {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--guide-accent) 45%, transparent);
   border-radius: 12px;
-  background: rgba(36, 87, 51, 0.07);
+  background: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-ico),
+    var(--persona-base)
+  );
   box-shadow: none;
   font-size: 1.2rem;
-  opacity: 0.75;
 }
 .guide-tab.is-active .guide-tab-icon {
-  border-color: color-mix(in srgb, var(--guide-accent) 38%, transparent);
-  background: color-mix(in srgb, var(--guide-accent) 16%, var(--serra-white));
+  border-color: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-edge),
+    var(--persona-edge-base)
+  );
+  background: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-ico-on),
+    var(--persona-base)
+  );
   box-shadow: 0 4px 10px
     color-mix(in srgb, var(--guide-accent) 16%, transparent);
   opacity: 1;
@@ -6951,9 +6946,18 @@ main {
   color: var(--guide-accent-text);
 }
 .guide-tab.is-active {
-  border-color: color-mix(in srgb, var(--guide-accent) 45%, transparent);
+  border-width: 2px;
+  border-color: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-edge),
+    var(--persona-edge-base)
+  );
   color: var(--guide-accent-text);
-  background: color-mix(in srgb, var(--guide-accent) 13%, #fffdf7);
+  background: color-mix(
+    in srgb,
+    var(--guide-accent) var(--persona-fill-on),
+    var(--persona-base)
+  );
   box-shadow:
     0 10px 22px rgba(7, 31, 21, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);

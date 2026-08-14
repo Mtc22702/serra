@@ -1657,9 +1657,11 @@ function render() {
 function toggleCart(e, id) {
   e.stopPropagation();
   const added = !inCart(id);
+  // Si toglie solo la bustina: la piantina omonima comprata in vivaio è
+  // un'altra riga e non deve sparire insieme a questa.
   cart = added
     ? [...cart, { id, bustine: 1 }]
-    : cart.filter((i) => i.id !== id);
+    : cart.filter((i) => !(i.id === id && !isPiantinaItem(i)));
   if (added) window.preloadPlantPhoto?.(BYID[id], id);
   updateCartUI();
   renderEditorialPlants();
@@ -1737,20 +1739,57 @@ function removeFromCart(id, variante) {
   // Con il carrello unico la stessa pianta può esserci due volte: come bustina
   // e come piantina. Si toglie solo la riga richiesta.
   const piantina = variante === "piantina";
-  cart = cart.filter((i) => !(i.id === id && isPiantinaItem(i) === piantina));
-  updateCartUI();
-  renderEditorialPlants();
-  renderAbbinamenti();
-  savePrefs();
+  cart = window.SerraCart
+    ? window.SerraCart.rimuovi(cart, id, piantina)
+    : cart.filter((i) => !(i.id === id && isPiantinaItem(i) === piantina));
+  refreshCartViews();
   showCartNudge(id, false);
 }
-// Svuota il carrello e aggiorna il riepilogo visualizzato nella pagina.
+/* Quantità dal cassetto: le bustine si muovono di una alla volta, le piantine
+   di un vassoio intero, perché è così che vengono spedite. Arrivata a zero la
+   riga esce dal carrello: è la stessa cosa che premere "togli". */
+function changeCartQty(id, variante, direzione) {
+  if (!window.SerraCart) return;
+  const piantina = variante === "piantina";
+  const riga = window.SerraCart.trova(cart, id, piantina);
+  if (!riga) return;
+  const passo = window.SerraCart.passo(riga);
+  cart = window.SerraCart.varia(cart, id, piantina, direzione * passo);
+  refreshCartViews();
+}
+// Svuota il carrello. È l'unico carrello dell'app: se ne va tutto, semi e
+// piantine, esattamente come dalle altre sezioni.
 function clearCart() {
-  cart = [];
+  cart = window.SerraCart ? window.SerraCart.svuota() : [];
+  refreshCartViews();
+}
+// Le tre viste che dipendono dal carrello si aggiornano sempre insieme.
+function refreshCartViews() {
   updateCartUI();
   renderEditorialPlants();
   renderAbbinamenti();
   savePrefs();
+}
+/* Contenuto del cassetto: riepilogo, gruppi, note e invito incrociato stanno
+   nel modulo condiviso, così il carrello aperto dalla home è identico a quello
+   aperto dal vivaio o dal configuratore. Qui restano solo i dati che la home
+   conosce: catalogo, foto, listino delle bustine e formato valuta. */
+function cartDrawerHtml() {
+  if (!window.SerraCartUI) return "";
+  return window.SerraCartUI.corpo({
+    righe: cart,
+    lang: currentLang,
+    attr: "data-home-action",
+    nome: (id) => (BYID[id] ? plantName(id) : ""),
+    foto: (id) => photoSrc(id),
+    nota: (id) => (BYID[id] ? plantNote(BYID[id]) : ""),
+    prezzoBustina: (id) => packPrice(id),
+    semiPerBustina: (id) => seedsPerPack(id),
+    soldi: money,
+    // Il catalogo semi è in questa stessa pagina: basta l'ancora.
+    hrefSemi: "#stagione",
+    hrefPiantine: "vivaio.html",
+  });
 }
 // Sincronizza contatore, righe e totale del carrello con i dati correnti.
 function updateCartUI() {
@@ -1809,47 +1848,9 @@ function updateCartUI() {
     items.hidden = false;
     foot.hidden = false;
     if (clearBtn) clearBtn.hidden = false;
-    items.innerHTML =
-      cart
-        .map((item) => {
-          const id = item.id;
-          const p = BYID[id];
-          if (!p) return "";
-          const piantina = isPiantinaItem(item);
-          const qta = itemQty(item);
-          const prezzo = itemUnitPrice(item);
-          const riga = piantina
-            ? `${tv("cart.plugs_count", { count: qta })} · ${t("cart.plugs_unit")}`
-            : `${
-                qta === 1
-                  ? t("cart.pack")
-                  : tv("cart.pack_many", { count: qta })
-              } · ${tv("cart.seeds_per_pack", { count: seedsPerPack(id) })}`;
-          return `<div class="cart-item${piantina ? " cart-item--piantina" : ""}">
-        <img src="${photoSrc(id)}" alt="${plantName(id)}" />
-        <span class="cart-item-copy">
-          <span class="cart-item-name">${plantName(id)}${
-            piantina
-              ? ` <em class="cart-item-tag">${t("cart.tag_plug")}</em>`
-              : ""
-          }</span>
-          <span class="cart-item-meta">${piantina ? t("cart.plugs_hint") : plantNote(p)}</span>
-          <span class="cart-item-pack">
-            <span>${riga}</span>
-            <b>${money(prezzo)}${piantina ? t("cart.per_plug") : t("cart.per_pack")}</b>
-          </span>
-        </span>
-        <button class="cart-item-remove" data-home-action="remove-from-cart" data-plant-id="${id}" data-variante="${
-          piantina ? "piantina" : "seme"
-        }" title="${t("cart.remove")}">✕</button>
-      </div>`;
-        })
-        .join("") +
-      crossSellingHtml() +
-      `<div class="cart-total-row">
-        <span>${t("cart.estimate")}</span>
-        <b>${money(cartTotal())}</b>
-      </div>`;
+    // Il cassetto è lo stesso di vivaio e configuratore: vedi
+    // assets/js/serra-cart-ui.js. Qui si passano solo i dati della home.
+    items.innerHTML = cartDrawerHtml();
   }
   if (currentDetail) {
     const btn = document.getElementById("detailAddBtn");
@@ -1860,23 +1861,10 @@ function updateCartUI() {
     }
   }
 }
-/* Suggerimento incrociato: chi ha solo semi scopre che alcune colture esistono
-   già cresciute, chi ha solo piantine scopre il catalogo dei semi. Compare solo
-   quando manca una delle due famiglie, così non diventa rumore di fondo. */
-function crossSellingHtml() {
-  const conSemi = cart.some((i) => !isPiantinaItem(i));
-  const conPiantine = cart.some(isPiantinaItem);
-  if (conSemi === conPiantine) return "";
-  const versoVivaio = conSemi && !conPiantine;
-  return `<a class="cart-cross" href="${versoVivaio ? "vivaio.html" : "#stagione"}">
-      <span class="cart-cross-ico" aria-hidden="true">${versoVivaio ? "🪴" : "🌿"}</span>
-      <span class="cart-cross-copy">
-        <b>${versoVivaio ? t("cross.to_plugs_title") : t("cross.to_seeds_title")}</b>
-        <small>${versoVivaio ? t("cross.to_plugs_text") : t("cross.to_seeds_text")}</small>
-      </span>
-      <span class="cart-cross-arrow" aria-hidden="true">→</span>
-    </a>`;
-}
+/* Il suggerimento incrociato — chi ha solo semi scopre le piantine già
+   cresciute e viceversa — ora lo disegna il modulo condiviso, così compare con
+   la stessa regola in tutte e tre le sezioni: vedi crossHtml() in
+   assets/js/serra-cart-ui.js. */
 
 // Mostra un suggerimento temporaneo per richiamare l'attenzione sul carrello.
 function showCartNudge(id, added = true) {
@@ -3464,6 +3452,11 @@ function bindHomeStaticActions() {
       case "close-cart":
         closeCart();
         break;
+      // L'invito incrociato verso i semi punta al catalogo di questa pagina:
+      // il cassetto lo coprirebbe, quindi si chiude e lascia scorrere.
+      case "cross-sell":
+        closeCart();
+        break;
       case "clear-cart":
         clearCart();
         break;
@@ -3494,6 +3487,12 @@ function bindHomeStaticActions() {
         break;
       case "remove-from-cart":
         removeFromCart(control.dataset.plantId, control.dataset.variante);
+        break;
+      case "cart-qty-more":
+        changeCartQty(control.dataset.plantId, control.dataset.variante, 1);
+        break;
+      case "cart-qty-less":
+        changeCartQty(control.dataset.plantId, control.dataset.variante, -1);
         break;
       case "load-more-catalog":
         loadMoreCatalogPlants();
@@ -3832,7 +3831,10 @@ function resetCatalogFilters() {
 
 // Preferenze utente
 function savePrefs() {
-  localStorage.setItem("ois.cart", JSON.stringify(cart));
+  // Il carrello passa da SerraCart: così il contatore in testata e le altre
+  // schede aperte ricevono l'evento `serra:cart-change` e restano allineati.
+  if (window.SerraCart) window.SerraCart.scrivi(cart);
+  else localStorage.setItem("ois.cart", JSON.stringify(cart));
   localStorage.setItem(
     "ois.prefs",
     JSON.stringify({
@@ -4778,7 +4780,18 @@ if (catalogSearchLink) {
       ) || zona;
     const heatedLabel = pcT("preconfig.serra_heated") || "🔥";
     const pathAbbr = pcT("preconfig.path_abbr");
-    el.textContent = `${w}×${l} m · ${pathAbbr} ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
+    /* Il riepilogo elencava solo i quattro campi che hanno un valore di
+       partenza, tacendo l'unico che manca davvero. Ora apre col livello: se non
+       è scelto lo dice, e diventa la lista di ciò che resta da fare invece di
+       un'eco di quello che si è già impostato. */
+    const scelto = document.querySelector(
+      "#preconfigPersonaSection .pc-persona-card.is-active",
+    );
+    const livelloLabel = scelto
+      ? scelto.querySelector(".pc-persona-body b")?.textContent.trim() || ""
+      : pcT("preconfig.summary_missing") || "livello da scegliere";
+    el.textContent = `${livelloLabel} · ${w}×${l} m · ${pathAbbr} ${path} cm · ${zonaLabel}${heated ? " · " + heatedLabel : ""} · ${monthName}`;
+    el.classList.toggle("preconfig-summary--incompleto", !scelto);
   }
 
   // Allinea il selettore serra riscaldata
@@ -4843,20 +4856,23 @@ if (catalogSearchLink) {
       "preconfig.tag": "Imposta i parametri",
       "preconfig.intro_note":
         "Un avvio rapido: bastano pochi dati per aprire il configuratore già pronto. Nulla è definitivo, potrai cambiare tutto in qualsiasi momento nella pagina successiva.",
-      "preconfig.sizes_label": "1. Misure interne",
-      "preconfig.sizes_badge": "Fondamentale",
+      "preconfig.persona_label": "1. Che tipo di coltivatore sei?",
+      "preconfig.summary_missing": "livello da scegliere",
+      "preconfig.persona_badge": "Obbligatorio",
+      "preconfig.sizes_label": "2. Misure interne",
       "preconfig.sizes_note":
         "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
       "preconfig.width": "Larghezza",
       "preconfig.length": "Lunghezza",
       "preconfig.path_label": "Camminamento tra aiuole",
+      "preconfig.path_label_short": "Camminamento",
       "preconfig.path_abbr": "cam.",
-      "preconfig.climate_label": "2. Clima",
+      "preconfig.climate_label": "3. Clima",
       "preconfig.zona_label": "Zona",
       "preconfig.serra_label": "Serra",
       "preconfig.serra_cold": "Fredda",
       "preconfig.serra_heated": "Riscaldata",
-      "preconfig.month_label": "3. Mese di semina",
+      "preconfig.month_label": "4. Mese di semina",
       "preconfig.cta": "Vai al configuratore",
       "preconfig.account_choice_title":
         "Vuoi riprendere la tua configurazione?",
@@ -4864,8 +4880,9 @@ if (catalogSearchLink) {
         "La configurazione attuale è già al sicuro. Puoi continuare senza modifiche oppure aggiornare i parametri della serra.",
       "preconfig.account_choice_continue": "Riprendi configurazione",
       "preconfig.account_choice_edit": "Modifica i parametri",
-      "preconfig.choose_persona_alert":
-        "Scegli prima che tipo di coltivatore sei.",
+      "preconfig.cta_hint": "Scegli il tuo livello per continuare",
+      "preconfig.cta_hint_sizes": "Controlla le misure della serra: ora {n}",
+      "preconfig.sizes_badge_check": "Da controllare",
       "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
       "hero.cfg_novizio": "Principiante",
       "hero.cfg_nov_hint": "Ti guido dalla prima scelta fino all'acquisto",
@@ -4882,28 +4899,32 @@ if (catalogSearchLink) {
       "preconfig.tag": "Setează parametrii",
       "preconfig.intro_note":
         "Un început rapid: e nevoie doar de câteva date pentru a deschide configuratorul deja pregătit. Nimic nu este definitiv, poți schimba totul oricând pe pagina următoare.",
-      "preconfig.sizes_label": "1. Dimensiuni interne",
-      "preconfig.sizes_badge": "Esențial",
+      "preconfig.persona_label": "1. Ce fel de cultivator ești?",
+      "preconfig.summary_missing": "nivel de ales",
+      "preconfig.persona_badge": "Obligatoriu",
+      "preconfig.sizes_label": "2. Dimensiuni interne",
       "preconfig.sizes_note":
         "Dimensiunile determină câte parcele și plante poți cultiva.",
       "preconfig.width": "Lățime",
       "preconfig.length": "Lungime",
       "preconfig.path_label": "Cărare între parcele",
+      "preconfig.path_label_short": "Cărare",
       "preconfig.path_abbr": "căr.",
-      "preconfig.climate_label": "2. Climă",
+      "preconfig.climate_label": "3. Climă",
       "preconfig.zona_label": "Zonă",
       "preconfig.serra_label": "Seră",
       "preconfig.serra_cold": "Rece",
       "preconfig.serra_heated": "Încălzită",
-      "preconfig.month_label": "3. Luna de semănat",
+      "preconfig.month_label": "4. Luna de semănat",
       "preconfig.cta": "Mergi la configurator",
       "preconfig.account_choice_title": "Vrei să reiei configurarea?",
       "preconfig.account_choice_text":
         "Configurarea actuală este deja în siguranță. Poți continua fără modificări sau poți actualiza parametrii serei.",
       "preconfig.account_choice_continue": "Reia configurarea",
       "preconfig.account_choice_edit": "Modifică parametrii",
-      "preconfig.choose_persona_alert":
-        "Alege mai întâi ce tip de cultivator ești.",
+      "preconfig.cta_hint": "Alege-ți nivelul pentru a continua",
+      "preconfig.cta_hint_sizes": "Verifică dimensiunile serei: acum {n}",
+      "preconfig.sizes_badge_check": "De verificat",
       "hero.cfg_levels_title": "Ce fel de cultivator ești?",
       "hero.cfg_novizio": "Începător",
       "hero.cfg_nov_hint": "Te ghidez de la prima alegere până la cumpărare",
@@ -4941,6 +4962,39 @@ if (catalogSearchLink) {
     populatePcMonths();
   }
 
+  /* Vero solo quando le misure a schermo sono ancora il ripiego del pannello e
+     l'utente non le ha toccate in questa sessione. Chi ha già una serra salvata
+     ha misure sue: segnalargliele sarebbe un falso allarme. Si spegne al primo
+     tocco su larghezza o lunghezza, non appena la sessione ne registra uno. */
+  let misureToccate = false;
+  function misureDaControllare() {
+    if (misureToccate) return false;
+    return !readSavedCfg();
+  }
+  function segnaMisureToccate() {
+    if (misureToccate) return;
+    misureToccate = true;
+    updatePreconfigCta();
+  }
+
+  /* Porta lo sguardo sul passo 2 e lo fa notare una volta. Riusa la stessa
+     animazione del richiamo al livello, così i due inviti si somigliano. */
+  function richiamaMisure() {
+    const campo = document.getElementById("preconfigSizesField");
+    if (!campo) return;
+    try {
+      campo.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    } catch (_) {}
+    campo.classList.remove("preconfig-persona-shake");
+    void campo.offsetWidth;
+    campo.classList.add("preconfig-persona-shake");
+    campo.addEventListener(
+      "animationend",
+      () => campo.classList.remove("preconfig-persona-shake"),
+      { once: true },
+    );
+  }
+
   // Aggiorna la CTA pre-configurazione
   function updatePreconfigCta() {
     const active = document.querySelector(
@@ -4948,6 +5002,33 @@ if (catalogSearchLink) {
     );
     const cta = document.getElementById("preconfigCta");
     if (!cta) return;
+
+    /* Due cose possono mancare, in ordine: il livello (obbligatorio, spegne il
+       pulsante) e uno sguardo alle misure (facoltativo, ma 3×5 m è un ripiego
+       che quasi nessuno ha davvero). La riga sotto il pulsante dice una cosa
+       sola per volta: prima il livello, poi le misure. Chi torna con una serra
+       già salvata non vede il secondo messaggio, perché quelle misure sono
+       sue. */
+    const daControllare = misureDaControllare();
+    const badge = document.getElementById("preconfigSizesBadge");
+    if (badge) badge.hidden = !daControllare;
+
+    const hint = document.getElementById("preconfigCtaHint");
+    if (hint) {
+      if (!active) {
+        hint.textContent = pcT("preconfig.cta_hint") || "";
+        hint.hidden = false;
+      } else if (daControllare) {
+        const w = document.getElementById("pcW")?.value ?? "";
+        const l = document.getElementById("pcL")?.value ?? "";
+        hint.textContent = (
+          pcT("preconfig.cta_hint_sizes") || "Controlla le misure: ora {n}"
+        ).replace("{n}", `${w}×${l} m`);
+        hint.hidden = false;
+      } else {
+        hint.hidden = true;
+      }
+    }
     if (active) {
       const target = new URL(active.dataset.url, location.href);
       const source =
@@ -5154,6 +5235,12 @@ if (catalogSearchLink) {
           this.classList.add("is-active");
           this.setAttribute("aria-pressed", "true");
           updatePreconfigCta();
+          // Il riepilogo apre col livello: va rifatto anche qui.
+          updatePreconfigSummary();
+          /* Scelto il livello il pulsante si accende, e l'occhio va lì: è il
+             momento in cui si esce dal pannello senza aver guardato le misure.
+             Si porta il fuoco sul passo 2 e lo si fa notare una volta. */
+          if (misureDaControllare()) richiamaMisure();
         });
       });
 
@@ -5172,8 +5259,22 @@ if (catalogSearchLink) {
             ) * 10,
           ) / 10;
         input.value = val;
-        updatePreconfigSummary();
+        // Toccare larghezza o lunghezza vale come "le ho guardate".
+        if (input.id === "pcW" || input.id === "pcL") segnaMisureToccate();
+        /* Il camminamento ha un secondo campo nascosto che syncPcPath() usa
+           per arrotondare ai cinque centimetri: finché il cursore era visibile
+           ci pensava lui a tenerli allineati, ora che è nascosto deve farlo
+           chi preme i pulsanti. */
+        if (input.id === "pcPathNum") syncPcPath("num");
+        else updatePreconfigSummary();
       });
+    });
+
+    // Vale anche scrivere il valore a mano, non solo premere i pulsanti.
+    ["pcW", "pcL"].forEach((id) => {
+      document
+        .getElementById(id)
+        ?.addEventListener("input", segnaMisureToccate);
     });
 
     document.getElementById("pcWSlider")?.addEventListener("input", () => {
@@ -5207,12 +5308,31 @@ if (catalogSearchLink) {
     document
       .getElementById("preconfigCta")
       ?.addEventListener("click", function (event) {
+        /* Manca la scelta del livello: invece di un avviso di sistema — che
+           interrompe e non mostra dove intervenire — si porta l'utente sulla
+           sezione e la si fa notare. L'animazione esisteva già nel CSS
+           (.preconfig-persona-shake) ma nessuno la usava. */
         if (this.classList.contains("preconfig-cta--disabled")) {
           event.preventDefault();
-          window.alert(
-            pcT("preconfig.choose_persona_alert") ||
-              "Scegli prima che tipo di coltivatore sei.",
+          const sezione = document.getElementById("preconfigPersonaSection");
+          if (!sezione) return;
+          // Lo scorrimento è un di più: se il browser non lo offre, il
+          // richiamo visivo deve partire lo stesso.
+          try {
+            sezione.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          } catch (_) {}
+          sezione.classList.remove("preconfig-persona-shake");
+          // Riavvia l'animazione anche se il pulsante viene premuto due volte.
+          void sezione.offsetWidth;
+          sezione.classList.add("preconfig-persona-shake");
+          sezione.addEventListener(
+            "animationend",
+            () => sezione.classList.remove("preconfig-persona-shake"),
+            { once: true },
           );
+          document
+            .querySelector("#preconfigPersonaSection .pc-persona-card")
+            ?.focus({ preventScroll: true });
           return;
         }
         const config = savePreconfigToStorage();

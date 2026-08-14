@@ -676,6 +676,9 @@
   function ringSvg(percentuale) {
     const r = 58;
     const c = 2 * Math.PI * r;
+    /* Due cerchi sovrapposti: la traccia tenue dice quanto è lunga la giornata,
+       l'arco verde quanto ne è stato fatto. Senza la traccia, a zero per cento
+       non resterebbe nulla intorno al numero. */
     return `<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
       <circle cx="66" cy="66" r="${r}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10"/>
       <circle cx="66" cy="66" r="${r}" fill="none" stroke="#a8e6a3" stroke-width="10"

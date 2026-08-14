@@ -20,7 +20,7 @@
     <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
     <!-- Versione applicativa e tema iniziale: stesso contratto delle altre pagine -->
     <script>
-      window.SERRA_APP_VERSION = "20260813-58369b2a71af";
+      window.SERRA_APP_VERSION = "20260814-8ce9b81c5fc8";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" || location.hostname === "127.0.0.1";
       (function () {
@@ -59,10 +59,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/base.css?v=20260813-58369b2a71af" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260814-8ce9b81c5fc8" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-vivaio.css?v=20260813-58369b2a71af"
+      href="assets/css/serra-vivaio.css?v=20260814-8ce9b81c5fc8"
     />
   </head>
   <!-- orto-page fornisce i token condivisi con la sezione "Il mio orto" -->
@@ -290,8 +290,39 @@
             </button>
           </div>
         </div>
-        <!-- Contenuto disegnato da vivaio.js -->
-        <div id="vivaioCartBody"></div>
+        <!-- Stessa struttura di index.html e configuratore.html: vuoto,
+             righe, piè di pagina. Le righe le disegna serra-cart-ui.js. -->
+        <div class="cart-empty" id="vivaioCartEmpty">
+          <div class="cart-empty-icon">🪴</div>
+          <div data-viv-key="cart.empty">Il carrello è vuoto.</div>
+          <small class="cart-empty-hint" data-viv-key="cart.empty_hint"
+            >Le piantine viaggiano a vassoi interi: il minimo è 2 vassoi.</small
+          >
+        </div>
+        <div class="cart-items" id="vivaioCartItems" hidden></div>
+        <div class="cart-footer" id="vivaioCartFooter" hidden>
+          <div class="cart-footer-note" data-viv-key="cart.note">
+            Confermando crei un ordine reale (pagamento non online): ti
+            confermiamo disponibilità e prezzo finale.
+          </div>
+          <button
+            class="cart-checkout-btn"
+            type="button"
+            id="vivaioCheckoutBtn"
+            data-viv-action="checkout"
+            data-viv-key="cart.checkout"
+          >
+            Completa acquisto
+          </button>
+          <button
+            class="cart-edit-btn"
+            type="button"
+            data-viv-action="edit-list"
+            data-viv-key="cart.edit"
+          >
+            Continua a scegliere
+          </button>
+        </div>
       </div>
     </div>
 
@@ -306,6 +337,7 @@
     <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; vivaio.js disegna. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
+    <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/serra-care-engine.js" defer></script>
     <script src="assets/js/vivaio.js" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>

@@ -1,0 +1,36 @@
+<!-- Ciottoli del camminamento. Piastrella da 72px che si ripete: i sassi sono
+     tagliati ai bordi e ritrovati sul lato opposto, così la ripetizione non
+     lascia vedere la griglia. Toni pietra freddi, tenuti chiari, perché la
+     texture deve leggersi come fondo del campo e non competere col verde del
+     pannello: sopra ci passano l'etichetta e il regolatore. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+  <defs>
+    <linearGradient id="ciottolo" x1="0" y1="0" x2=".7" y2="1">
+      <stop stop-color="#f4f6f1"/>
+      <stop offset="1" stop-color="#d9ded4"/>
+    </linearGradient>
+  </defs>
+  <rect width="72" height="72" fill="#eef2ea"/>
+  <g fill="url(#ciottolo)" stroke="#8d998a" stroke-opacity=".34" stroke-width=".9">
+    <ellipse cx="11" cy="12" rx="8.4" ry="6.2" transform="rotate(-16 11 12)"/>
+    <ellipse cx="34" cy="8" rx="6.6" ry="5" transform="rotate(24 34 8)"/>
+    <ellipse cx="57" cy="14" rx="9" ry="6.4" transform="rotate(-8 57 14)"/>
+    <ellipse cx="72" cy="34" rx="6.8" ry="5.2" transform="rotate(30 72 34)"/>
+    <ellipse cx="0" cy="34" rx="6.8" ry="5.2" transform="rotate(30 0 34)"/>
+    <ellipse cx="21" cy="33" rx="9.2" ry="6.6" transform="rotate(12 21 33)"/>
+    <ellipse cx="45" cy="33" rx="7" ry="5.4" transform="rotate(-26 45 33)"/>
+    <ellipse cx="62" cy="52" rx="8.6" ry="6.2" transform="rotate(18 62 52)"/>
+    <ellipse cx="8" cy="56" rx="7.4" ry="5.6" transform="rotate(-22 8 56)"/>
+    <ellipse cx="33" cy="58" rx="9" ry="6.4" transform="rotate(26 33 58)"/>
+    <ellipse cx="47" cy="72" rx="6.6" ry="5" transform="rotate(-10 47 72)"/>
+    <ellipse cx="47" cy="0" rx="6.6" ry="5" transform="rotate(-10 47 0)"/>
+  </g>
+  <!-- Luce radente sul lato in ombra: dà volume senza scurire il campo. -->
+  <g fill="#ffffff" opacity=".55">
+    <ellipse cx="8.6" cy="9.6" rx="3.4" ry="1.5" transform="rotate(-16 8.6 9.6)"/>
+    <ellipse cx="54.4" cy="11.6" rx="3.6" ry="1.6" transform="rotate(-8 54.4 11.6)"/>
+    <ellipse cx="18.4" cy="30.4" rx="3.7" ry="1.6" transform="rotate(12 18.4 30.4)"/>
+    <ellipse cx="59.4" cy="49.4" rx="3.4" ry="1.5" transform="rotate(18 59.4 49.4)"/>
+    <ellipse cx="30.4" cy="55.4" rx="3.6" ry="1.6" transform="rotate(26 30.4 55.4)"/>
+  </g>
+</svg>
