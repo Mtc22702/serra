@@ -815,49 +815,57 @@
         "cross.to_seeds_text":
           "Nel catalogo trovi 97 varietà con mesi di semina, distanze e abbinamenti.",
         "hero.promise":
-          "Semi, piantine già cresciute e un diario che ti segue fino alla raccolta.",
-        "hero.plan_kicker": "Piano personalizzato",
-        "hero.plan_title":
-          "Dalle misure della serra a un piano pronto da coltivare.",
-        "hero.plan_copy":
-          "Ti guidiamo nella scelta di clima, spazio e colture. Potrai sempre modificare il risultato.",
-        "hero.plan_benefit_1": "Adatto alla stagione",
-        "hero.plan_benefit_2": "Distanze già calcolate",
-        "hero.plan_benefit_3": "Modificabile quando vuoi",
-        "hero.plan_benefits_aria": "Vantaggi del piano personalizzato",
-        "hero.plan_cta": "Crea il piano della mia serra",
+          "Dal progetto al raccolto, con indicazioni adatte al tuo clima.",
+        // Titolo della hero spezzato in due: la seconda parte è evidenziata.
+        "hero.headline_a": "Progetta la serra.",
+        "hero.headline_b": "Poi coltivala davvero.",
+        "hero.eyebrow_now": "· scegli da dove partire",
+        "hero.plan_caption": "Esempio di piano · 4 aiuole, 12 m²",
+        // Il percorso della home: unico componente che dice cosa può fare
+        // l'utente e da dove entra. Le tappe non sono alternative fra loro.
+        // Le tre condizioni sostituiscono i numeri: parallele fra loro, si
+        // leggono come alternative invece che come passi da eseguire.
+        "journey.step1_when": "Se non sai cosa piantare",
+        "journey.step2_when": "Se devi ancora procurartele",
+        "journey.step3_when": "Se le piante ce le hai già",
+        "journey.step1_title": "Progetta",
+        "journey.step1_copy":
+          "Tre domande su spazio, clima e tempo: ottieni un piano su misura, modificabile quando vuoi.",
+        "journey.step1_proof":
+          "Un piano completo, pronto in pochi minuti.",
+        "journey.step1_cta": "Crea il piano",
+        "journey.step2_title": "Procurati le piante",
+        "journey.step2_badge": "due modi",
+        "journey.step2_copy":
+          "Dal seme costa meno, dalla piantina guadagni fino a un mese sulla raccolta.",
+        "journey.semi_label": "I semi",
+        "journey.semi_hint": "97 varietà · da 1,90 €",
+        "journey.piantine_label": "Le piantine",
+        "journey.piantine_hint": "già cresciute · in 48 h",
+        "journey.or": "oppure",
+        "journey.step3_title": "Coltiva",
+        "journey.step3_copy":
+          "Registra le colture che hai già e ricevi promemoria settimanali per acqua, concime e raccolta.",
+        "journey.step3_proof":
+          "Acqua, nutrimento e raccolta sempre sotto controllo.",
+        "journey.step3_preview_title": "La tua settimana",
+        // Selettore di intenti: il sottotitolo descrive la situazione
+        // dell'utente, non il prodotto. È quello che fa capire quale scegliere.
+        // Il flusso in tre tappe: spiega che le possibilità non sono
+        // alternative fra loro ma momenti diversi dello stesso percorso.
+        // Fasce che collegano il catalogo al vivaio e allo strumento gratuito.
+        "bridge.vivaio_kicker": "Non vuoi aspettare la germinazione?",
+        "bridge.vivaio_title": "Le stesse varietà, già cresciute.",
+        "bridge.vivaio_copy":
+          "Piantine pronte da mettere nel terreno: salti la fase più delicata e guadagni fino a un mese sulla prima raccolta.",
         "hero.plan_help": "Scopri come funziona",
-        "hero.direct_label":
-          "Sai già cosa ti serve? Vai alle scelte rapide",
-        "hero.alt_or": "oppure",
-        "hero.alt_title": "Non parti da zero?",
-        "hero.alt_hint":
-          "Semi, piantine o quello che hai già: scegli la tua strada",
         "nav.semi": "🌿 Catalogo semi",
         "nav.orto_badge": "gratis",
         "nav.orto": "🌱 Il mio orto",
         "nav.vivaio": "🪴 Vivaio piantine",
-        "paths.kicker": "Da dove vuoi partire?",
-        "paths.title": "Cosa vuoi fare oggi?",
-        "paths.lead":
-          "Scegli il punto di partenza: potrai cambiare strada in ogni momento.",
-        "paths.semi_title": "Compra i semi",
-        "paths.semi_text":
-          "Il catalogo completo, con mesi di semina, distanze e abbinamenti già calcolati.",
-        "paths.semi_cta": "Vai al catalogo",
-        "paths.semi_tag": "97 varietà",
-        "paths.piantine_title": "Compra le piantine",
-        "paths.piantine_text":
-          "Già cresciute, pronte da mettere nel terreno: guadagni fino a un mese sulla raccolta.",
         "paths.piantine_cta": "Apri il vivaio",
-        "paths.piantine_tag": "pronte adesso",
-        "paths.orto_title": "Gestisci il mio orto",
-        "paths.orto_text":
-          "Registra cosa hai piantato e quando: ti accompagniamo giorno per giorno fino alla raccolta.",
         "paths.orto_cta": "Apri Il mio orto",
         "paths.orto_tag": "strumento gratuito",
-        "paths.orto_note":
-          "Nessun acquisto: qui si coltiva quello che hai già.",
         "nav.contatti": "✉️ Contatti",
         "nav.carrello": "Carrello",
         "nav.menu_explore": "Esplora",
@@ -865,8 +873,6 @@
         "nav.theme": "Tema",
         "nav.theme_hint": "Chiaro / scuro",
         "nav.language": "Lingua",
-        "hero.zone_label": "Scegli la tua zona climatica",
-        "hero.greenhouse_label": "Tipo di Serra",
         "hero.zone_cold": "❄️Zona Climatica Fredda",
         "hero.zone_temp": "🌤️Zona Climatica Temperata",
         "hero.zone_warm": "☀️Zona Climatica Calda",
@@ -878,8 +884,6 @@
         "hero.zone_warm_hint": "inverni miti",
         "hero.heated_off": "Riscaldamento spento",
         "hero.heated_on": "🔥 Riscaldamento attivo",
-        "hero.filter_note_cold":
-          "Riscaldamento spento: selezione adatta a una serra protetta ma non riscaldata.",
         "hero.filter_note_zone_cold":
           "Zona fredda: gelate frequenti e inverno rigido. Senza riscaldamento non proponiamo semine a dicembre e gennaio.",
         "hero.filter_note_zone_temp":
@@ -888,9 +892,6 @@
           "Zona calda: inverno mite o quasi senza gelo. La finestra di semina si estende di circa un mese prima e dopo.",
         "hero.filter_note_heated":
           "Serra riscaldata: la finestra di semina si estende di circa un mese prima e dopo, qualunque sia la zona scelta.",
-        "hero.cta_plants": "Crea il mio orto guidato",
-        "hero.cta_config": "Sfoglia i semi adatti",
-        "hero.scroll": "scorri",
         "path.kicker": "Scegli il percorso",
         "path.heading": "Da dove vuoi iniziare?",
         "path.lead":
@@ -1153,35 +1154,18 @@
         "cookie.mobile_link": "Cookie e privacy",
         "cookie.accept": "Accetta",
         "cookie.reject": "Solo essenziali",
-        "hero.kicker_active": "Stagione attiva",
         "hero.headline": "Progetta la serra. Scegli i semi giusti.",
         "hero.sub":
           "40+ varietà filtrate per clima e mese. Aggiungi al carrello e pianta con metodo.",
-        "hero.action_catalog": "Sfoglia il catalogo",
-        "hero.action_cfg": "Configura la serra",
         "hero.controls_hint": "Com'è il clima fuori dalla tua serra?",
-        "hero.path_label": "Scegli il tuo percorso",
-        "hero.cfg_badge": "Strumento interattivo",
-        "hero.cfg_title": "La tua serra, il tuo percorso",
-        "hero.cfg_desc":
-          "Parti dal livello che ti rappresenta: la vista dall'alto resta il centro del progetto, dalla prima scelta fino ai semi.",
-        "hero.cfg_cta": "Apri il configuratore",
-        "hero.cfg_or": "Sei esperto? Acquista direttamente dal catalogo",
-        "hero.cfg_catalog_title": "Hai già scelto i semi?",
-        "hero.cfg_catalog_hint": "Esplora il catalogo",
-        "hero.cfg_personas_label": "Entra come",
         "hero.cfg_novizio": "Principiante",
         "hero.cfg_intermedio": "Intermedio",
         "hero.cfg_esperto": "Esperto",
-        "hero.cfg_caption": "Anteprima · vista dall'alto",
         "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
         "hero.cfg_nov_hint": "Ti guido dalla prima scelta fino all'acquisto",
         "hero.cfg_int_hint": "Parti da un piano pronto e personalizzalo",
         "hero.cfg_exp_hint":
           "Scegli un layout pronto oppure componi liberamente",
-        "hero.cfg_choose": "Scegli",
-        "hero.cfg_start": "Inizia",
-        "hero.cfg_recommended": "Consigliato",
         "nav.brand_sub": "Coltiva con un piano",
         "detail.how_to_sow": "Come si semina",
         "detail.spacing_label": "Spaziatura",
@@ -1283,7 +1267,6 @@
         "footer.tip_default":
           "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
         "cart.aria_open": "Apri carrello",
-        "hero.aria_levels": "Scegli il livello",
         "catalog.aria_filters": "Filtri catalogo semi",
         "catalog.aria_climate_filters": "Filtri clima",
         "search.aria_clear": "Cancella ricerca",
@@ -1323,47 +1306,47 @@
         "cross.to_seeds_text":
           "În catalog găsești 97 de soiuri cu luni de semănat, distanțe și asocieri.",
         "hero.promise":
-          "Semințe, răsaduri deja crescute și un jurnal care te însoțește până la recoltare.",
-        "hero.plan_kicker": "Plan personalizat",
-        "hero.plan_title":
-          "De la dimensiunile serei la un plan gata de cultivat.",
-        "hero.plan_copy":
-          "Te ghidăm în alegerea climei, spațiului și culturilor. Poți modifica oricând rezultatul.",
-        "hero.plan_benefit_1": "Potrivit sezonului",
-        "hero.plan_benefit_2": "Distanțe deja calculate",
-        "hero.plan_benefit_3": "Îl modifici când vrei",
-        "hero.plan_benefits_aria": "Avantajele planului personalizat",
-        "hero.plan_cta": "Creează planul serei mele",
+          "De la plan la recoltă, cu recomandări potrivite climei tale.",
+        "hero.headline_a": "Planifică sera.",
+        "hero.headline_b": "Apoi cultiv-o cu adevărat.",
+        "hero.eyebrow_now": "· alege de unde pornești",
+        "hero.plan_caption": "Exemplu de plan · 4 straturi, 12 m²",
+        "journey.step1_when": "Dacă nu știi ce să plantezi",
+        "journey.step2_when": "Dacă încă trebuie să le procuri",
+        "journey.step3_when": "Dacă le ai deja",
+        "journey.step1_title": "Planifică",
+        "journey.step1_copy":
+          "Trei întrebări despre spațiu, climă și timp: primești un plan pe măsura ta, pe care îl poți modifica oricând.",
+        "journey.step1_proof":
+          "Un plan complet, gata în doar câteva minute.",
+        "journey.step1_cta": "Creează planul",
+        "journey.step2_title": "Procură-ți plantele",
+        "journey.step2_badge": "două moduri",
+        "journey.step2_copy":
+          "De la sămânță costă mai puțin, de la răsad câștigi până la o lună la recoltare.",
+        "journey.semi_label": "Semințele",
+        "journey.semi_hint": "97 de soiuri · de la 1,90 €",
+        "journey.piantine_label": "Răsadurile",
+        "journey.piantine_hint": "deja crescute · în 48 h",
+        "journey.or": "sau",
+        "journey.step3_title": "Cultivă",
+        "journey.step3_copy":
+          "Înregistrează culturile pe care le ai deja și primești mementouri săptămânale pentru udare, fertilizare și recoltare.",
+        "journey.step3_proof":
+          "Udarea, fertilizarea și recoltarea, mereu sub control.",
+        "journey.step3_preview_title": "Săptămâna ta",
+        "bridge.vivaio_kicker": "Nu vrei să aștepți germinarea?",
+        "bridge.vivaio_title": "Aceleași soiuri, deja crescute.",
+        "bridge.vivaio_copy":
+          "Răsaduri gata de pus în pământ: sari peste etapa cea mai delicată și câștigi până la o lună la prima recoltare.",
         "hero.plan_help": "Vezi cum funcționează",
-        "hero.direct_label":
-          "Știi deja ce îți trebuie? Mergi la alegerile rapide",
-        "hero.alt_or": "sau",
-        "hero.alt_title": "Nu pornești de la zero?",
-        "hero.alt_hint": "Semințe, răsaduri sau ce ai deja: alege-ți drumul",
         "nav.semi": "🌿 Catalog de semințe",
         "nav.orto_badge": "gratuit",
         "nav.orto": "🌱 Grădina mea",
         "nav.vivaio": "🪴 Pepinieră răsaduri",
-        "paths.kicker": "De unde vrei să pornești?",
-        "paths.title": "Ce vrei să faci astăzi?",
-        "paths.lead":
-          "Alege punctul de plecare: poți schimba traseul în orice moment.",
-        "paths.semi_title": "Cumpără semințe",
-        "paths.semi_text":
-          "Catalogul complet, cu lunile de semănat, distanțele și asocierile deja calculate.",
-        "paths.semi_cta": "Mergi la catalog",
-        "paths.semi_tag": "97 soiuri",
-        "paths.piantine_title": "Cumpără răsaduri",
-        "paths.piantine_text":
-          "Deja crescute, gata de pus în pământ: câștigi până la o lună la recoltare.",
         "paths.piantine_cta": "Deschide pepiniera",
-        "paths.piantine_tag": "gata acum",
-        "paths.orto_title": "Gestionează grădina mea",
-        "paths.orto_text":
-          "Notează ce ai plantat și când: te însoțim zi de zi până la recoltare.",
         "paths.orto_cta": "Deschide Grădina mea",
         "paths.orto_tag": "instrument gratuit",
-        "paths.orto_note": "Fără cumpărături: aici cultivi ce ai deja.",
         "nav.contatti": "✉️ Contact",
         "nav.carrello": "Coș",
         "nav.menu_explore": "Explorează",
@@ -1371,8 +1354,6 @@
         "nav.theme": "Temă",
         "nav.theme_hint": "Luminos / întunecat",
         "nav.language": "Limbă",
-        "hero.zone_label": "Alegeți zona dvs. climatică",
-        "hero.greenhouse_label": "Tip de Seră",
         "hero.zone_cold": "❄️Zona climatică Rece",
         "hero.zone_temp": "🌤️Zona climatică Temperată",
         "hero.zone_warm": "☀️Zona climatică Caldă",
@@ -1384,8 +1365,6 @@
         "hero.zone_warm_hint": "ierni blânde",
         "hero.heated_off": "Încălzire oprită",
         "hero.heated_on": "🔥 Încălzire activă",
-        "hero.filter_note_cold":
-          "Încălzire oprită: selecție pentru seră protejată, dar neîncălzită.",
         "hero.filter_note_zone_cold":
           "Zonă rece: înghețuri frecvente și iarnă aspră. Fără încălzire nu recomandăm semănarea în decembrie și ianuarie.",
         "hero.filter_note_zone_temp":
@@ -1394,9 +1373,6 @@
           "Zonă caldă: iarnă blândă sau aproape fără îngheț. Perioada de semănat se extinde cu aproximativ o lună înainte și după.",
         "hero.filter_note_heated":
           "Seră încălzită: perioada de semănat se extinde cu aproximativ o lună înainte și după, indiferent de zona aleasă.",
-        "hero.cta_plants": "Creează grădina mea ghidată",
-        "hero.cta_config": "Vezi semințele potrivite",
-        "hero.scroll": "derulează",
         "path.kicker": "Alege traseul",
         "path.heading": "De unde vrei să începi?",
         "path.lead":
@@ -1657,34 +1633,17 @@
         "cookie.mobile_link": "Cookie și confidențialitate",
         "cookie.accept": "Accept",
         "cookie.reject": "Doar esențiale",
-        "hero.kicker_active": "Sezon activ",
         "hero.headline": "Planifică sera. Alege semințele potrivite.",
         "hero.sub":
           "40+ soiuri filtrate după climă și lună. Adaugă în coș și plantează cu metodă.",
-        "hero.action_catalog": "Răsfoiește catalogul",
-        "hero.action_cfg": "Configurează sera",
         "hero.controls_hint": "Cum este clima din afara serei tale?",
-        "hero.path_label": "Alege traseul tău",
-        "hero.cfg_badge": "Instrument interactiv",
-        "hero.cfg_title": "Sera ta, traseul tău",
-        "hero.cfg_desc":
-          "Pornește de la nivelul care ți se potrivește: vederea de sus rămâne centrul proiectului, de la prima alegere până la semințe.",
-        "hero.cfg_cta": "Deschide configuratorul",
-        "hero.cfg_or": "Ești expert? Cumpără direct din catalog",
-        "hero.cfg_catalog_title": "Știi deja ce semințe vrei?",
-        "hero.cfg_catalog_hint": "Vezi catalogul",
-        "hero.cfg_personas_label": "Intră ca",
         "hero.cfg_novizio": "Începător",
         "hero.cfg_intermedio": "Intermediar",
         "hero.cfg_esperto": "Expert",
-        "hero.cfg_caption": "Previzualizare · vedere de sus",
         "hero.cfg_levels_title": "Ce fel de cultivator ești?",
         "hero.cfg_nov_hint": "Te ghidez de la prima alegere până la cumpărare",
         "hero.cfg_int_hint": "Pornești de la un plan gata și îl personalizezi",
         "hero.cfg_exp_hint": "Alege un plan gata sau compune liber",
-        "hero.cfg_choose": "Alege",
-        "hero.cfg_start": "Începe",
-        "hero.cfg_recommended": "Recomandat",
         "nav.brand_sub": "Cultivă cu un plan",
         "detail.how_to_sow": "Cum se seamănă",
         "detail.spacing_label": "Spațiere",
@@ -1763,7 +1722,6 @@
         "footer.tip_default":
           "Udă la bază, niciodată pe frunze: previne oidiumul.",
         "cart.aria_open": "Deschide coșul",
-        "hero.aria_levels": "Alege nivelul",
         "catalog.aria_filters": "Filtre catalog semințe",
         "catalog.aria_climate_filters": "Filtre climă",
         "search.aria_clear": "Șterge căutarea",

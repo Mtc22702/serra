@@ -93,13 +93,21 @@
 }
 @layer base {
   body,
+
   .site-header,
+
   .panel,
+
   .stage,
+
   .guided-intro,
+
   .catalog-pro-shell,
+
   .catalog-tools,
+
   .cart-drawer,
+
   .cookie-banner {
     transition:
       background-color 0.24s ease,
@@ -171,10 +179,6 @@
 }
 
 @layer dark-theme {
-  html[data-theme="dark"] body {
-    background: #091410;
-    color: var(--theme-text);
-  }
   html[data-theme="dark"] body::before {
     opacity: 0.22;
   }
@@ -190,22 +194,31 @@
     -webkit-backdrop-filter: blur(16px);
   }
   html[data-theme="dark"] .nav-brand,
+
   html[data-theme="dark"] .nav-brand-text,
+
   html[data-theme="dark"] .nav-link,
+
   html[data-theme="dark"] .site-header small {
     color: var(--theme-text);
   }
   html[data-theme="dark"] .nav-link:hover,
+
   html[data-theme="dark"] .nav-link--current {
     background: rgba(105, 183, 125, 0.16);
     border-color: rgba(105, 183, 125, 0.3);
     color: #dff3e5;
   }
   html[data-theme="dark"] .nav-lang,
+
   html[data-theme="dark"] .nav-lang select,
+
   html[data-theme="dark"] .cart-btn,
+
   html[data-theme="dark"] select,
+
   html[data-theme="dark"] input,
+
   html[data-theme="dark"] textarea {
     background-color: #17271f;
     color: var(--theme-text);
@@ -220,7 +233,9 @@
     color: var(--theme-muted);
   }
   html[data-theme="dark"] .project-export-menu button:hover,
+
   html[data-theme="dark"] .project-export-menu button:focus-visible,
+
   html[data-theme="dark"] .project-export-icon {
     background: rgba(105, 183, 125, 0.14);
   }
@@ -239,7 +254,6 @@
     :where(
       .climate-control-panel,
       .climate-help-popover,
-      .hero-promise,
       .catalog-pro-shell,
       .catalog-tools,
       .catalog-filter-group,
@@ -315,7 +329,9 @@
     color: var(--theme-muted);
   }
   html[data-theme="dark"] .stagione-section,
+
   html[data-theme="dark"] .companions-section,
+
   html[data-theme="dark"] .kit-section {
     background-color: #0c1813;
   }
@@ -443,7 +459,9 @@
       inset 0 0 0 1px rgba(190, 225, 201, 0.12);
   }
   html[data-theme="dark"] .pdp-tab.active,
+
   html[data-theme="dark"] .btn.primary,
+
   html[data-theme="dark"] .cart-checkout-btn {
     color: var(--serra-white);
   }
@@ -471,6 +489,7 @@
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (prefers-reduced-motion: reduce) {
     .theme-toggle,
+
     .theme-toggle-icon {
       transition: none;
     }
@@ -525,7 +544,6 @@
 @layer base {
   html[data-theme="dark"]
     :where(
-      .hero-headline,
       .section-heading,
       .kit-name,
       .detail-title,
@@ -548,7 +566,6 @@
   html[data-theme="dark"]
     :where(
       .hero-sub,
-      .hero-filter-note,
       .section-sub,
       .catalog-hint,
       .kit-desc,
@@ -610,53 +627,12 @@
     filter: brightness(0.68) saturate(0.82) contrast(1.02);
     opacity: 0.78;
   }
-  html[data-theme="dark"]
-    :where(
-      .hero-zone-btn,
-      .hero-heated-btn,
-      .hero-controls-pill,
-      .hero-filter-note
-    ) {
+  html[data-theme="dark"] :where(.hero-zone-btn) {
     background: rgba(35, 55, 45, 0.88);
     color: var(--dark-text);
     border-color: var(--dark-border);
   }
-  html[data-theme="dark"]
-    :where(
-      .percorso-primary,
-      .percorso-choice,
-      .hero-path .percorso-primary,
-      .hero-path .percorso-choice
-    ) {
-    background: linear-gradient(
-      145deg,
-      rgba(34, 53, 43, 0.97),
-      rgba(26, 41, 34, 0.98)
-    );
-    border-color: var(--dark-border-strong);
-    color: var(--dark-text);
-  }
-  html[data-theme="dark"] .percorso-choice--semi,
-  html[data-theme="dark"] .hero-path .percorso-choice--semi {
-    background: linear-gradient(145deg, #302c25, #211f1b);
-  }
-  html[data-theme="dark"] .percorso-benefits li {
-    background: rgba(128, 190, 147, 0.11);
-    color: #d6e7da;
-  }
-  html[data-theme="dark"]
-    :where(.percorso-path--auto, .percorso-cta-btn--green) {
-    background: #e8f2eb;
-    color: #183a28;
-  }
-  html[data-theme="dark"] .percorso-cta-btn--earth {
-    background: #f0dfcd;
-    color: #56351f;
-  }
-  html[data-theme="dark"] .hero-heated-btn.active {
-    background: #3b321d;
-    color: #f1d47d;
-  }
+
   html[data-theme="dark"] #inRisc.is-heated {
     background: #3b321d;
     border-color: #d7a93a;
@@ -724,6 +700,7 @@
     color: var(--dark-text);
   }
   html[data-theme="dark"] .catalog-category-chip.active,
+
   html[data-theme="dark"] .catalog-chip.active {
     background: #376f49;
     color: var(--serra-white);
@@ -772,6 +749,7 @@
     color: #b9d9ee;
   }
   html[data-theme="dark"] .plant-card-compact.in-cart,
+
   html[data-theme="dark"] .abbinamento-card.in-cart {
     background: #203a2b;
   }
@@ -790,6 +768,7 @@
       linear-gradient(180deg, #121f19 0%, #0f1b16 100%);
   }
   html[data-theme="dark"] .catalog-tools,
+
   html[data-theme="dark"] .catalog-tools--advanced {
     background: rgba(29, 48, 39, 0.94);
     border-color: var(--dark-border);
@@ -801,8 +780,11 @@
     color: var(--dark-text);
   }
   html[data-theme="dark"] .catalog-status,
+
   html[data-theme="dark"] .catalog-filter-note,
+
   html[data-theme="dark"] .flow-head-note,
+
   html[data-theme="dark"] .kit-compat-note {
     background: rgba(38, 60, 49, 0.82);
     border-color: var(--dark-border);
@@ -813,6 +795,7 @@
     color: #b9ebc8;
   }
   html[data-theme="dark"] .plant-card-top,
+
   html[data-theme="dark"] .catalog-pro-section .plant-card-top {
     background: #1d3027;
     border-color: var(--dark-border);
@@ -820,58 +803,71 @@
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
   }
   html[data-theme="dark"] .plant-card-top:hover,
+
   html[data-theme="dark"] .catalog-pro-section .plant-card-top:hover,
+
   html[data-theme="dark"] .plant-card-compact:hover,
+
   html[data-theme="dark"] .catalog-pro-section .plant-card-compact:hover {
     background: #263c31;
     border-color: var(--dark-border-strong);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
   }
   html[data-theme="dark"] .plant-card-top.in-cart,
+
   html[data-theme="dark"] .catalog-pro-section .plant-card-top.in-cart,
+
   html[data-theme="dark"] .catalog-pro-section .plant-card-compact.in-cart {
     background: #203a2b;
     border-color: rgba(111, 207, 151, 0.38);
   }
   html[data-theme="dark"] .top-name,
+
   html[data-theme="dark"] .compact-name,
+
   html[data-theme="dark"] .catalog-pro-section .compact-name,
+
   html[data-theme="dark"] .abbin-names,
+
   html[data-theme="dark"] .kit-meta-row b,
+
   html[data-theme="dark"] .contatti-label,
+
   html[data-theme="dark"] .contatti-value,
+
   html[data-theme="dark"] .map-address {
     color: var(--dark-text);
   }
   html[data-theme="dark"] .catalog-card-note,
+
   html[data-theme="dark"] .compact-note,
+
   html[data-theme="dark"] .abbin-reason,
+
   html[data-theme="dark"] .map-city,
+
   html[data-theme="dark"] .contatti-value small {
     color: var(--dark-muted);
   }
   html[data-theme="dark"] .top-fact,
+
   html[data-theme="dark"] .catalog-pro-section .top-fact,
+
   html[data-theme="dark"] .compact-facts-row--pro span {
     background: rgba(111, 207, 151, 0.1);
     border-color: rgba(111, 207, 151, 0.14);
     color: #d6e7da;
   }
   html[data-theme="dark"] .compact-thumb,
+
   html[data-theme="dark"] .top-photo,
+
   html[data-theme="dark"] .abbin-photo {
     background: #17271f;
   }
   html[data-theme="dark"] .abbinamenti-section {
-    background:
-      linear-gradient(180deg, #101d17 0%, #17271f 100%),
-      linear-gradient(
-        90deg,
-        rgba(82, 183, 136, 0.08),
-        transparent 44%,
-        rgba(231, 111, 81, 0.06)
-      );
-    border-color: var(--dark-border);
+    border-color: rgba(160, 205, 176, 0.14);
+    background: linear-gradient(180deg, #101d17 0%, #0c1812 100%);
   }
   html[data-theme="dark"] .abbin-card-topline {
     color: #a8e6bd;
@@ -885,6 +881,7 @@
     color: var(--dark-text);
   }
   html[data-theme="dark"] .abbin-add-btn:hover,
+
   html[data-theme="dark"] .abbin-add-btn.added {
     background: #376f49;
     border-color: #376f49;
@@ -902,6 +899,7 @@
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
   }
   html[data-theme="dark"] .kit-meta-row span,
+
   html[data-theme="dark"] .kit-plan-link {
     background: rgba(38, 60, 49, 0.86);
     border-color: var(--dark-border);
@@ -959,6 +957,7 @@
 }
 @layer base {
   html[data-theme="dark"] .detail-panel,
+
   html[data-theme="dark"] .stage > .panel--plant-detail {
     background: linear-gradient(180deg, #1d2e26, #17241e);
     color: var(--dark-text);
@@ -1031,7 +1030,9 @@
     color: #c9c1f2;
   }
   html[data-theme="dark"] .detail-nota,
+
   html[data-theme="dark"] .detail-sow-tip,
+
   html[data-theme="dark"] .pdp-tip {
     background: #352f20;
     color: #f0d997;
@@ -1168,6 +1169,7 @@
     color: var(--dark-text);
   }
   html[data-theme="dark"] .smp-kicker,
+
   html[data-theme="dark"] .smp-arrow {
     color: #6fcf97;
   }
@@ -1229,6 +1231,7 @@
     color: #f0c0ba;
   }
   html[data-theme="dark"] .helper-note,
+
   html[data-theme="dark"] .guide {
     background: #382f20;
     color: #eed99e;
@@ -1248,19 +1251,28 @@
     border-color: var(--dark-border);
   }
   html[data-theme="dark"] .guided-brand-mark,
+
   html[data-theme="dark"] .guided-tags .tag,
+
   html[data-theme="dark"] .guided-summary {
     background: rgba(38, 60, 49, 0.86);
     border-color: var(--dark-border);
     color: var(--dark-muted);
   }
   html[data-theme="dark"] .guided-brand-copy h1,
+
   html[data-theme="dark"] .guided-summary b,
+
   html[data-theme="dark"] .crops-count b,
+
   html[data-theme="dark"] .crop-actions-copy b,
+
   html[data-theme="dark"] .persona-pick-label,
+
   html[data-theme="dark"] .persona-pick-current b,
+
   html[data-theme="dark"] .persona-card-body b,
+
   html[data-theme="dark"] .veg-name {
     color: var(--dark-text);
   }
@@ -1282,10 +1294,12 @@
     background: rgba(111, 207, 151, 0.07);
   }
   html[data-theme="dark"] .persona-pick-hint,
+
   html[data-theme="dark"] .persona-pick-current small {
     color: var(--dark-muted);
   }
   html[data-theme="dark"] .persona-pick-action,
+
   html[data-theme="dark"] .persona-pick-chevron {
     background: rgba(111, 207, 151, 0.18);
     color: #a8e6bd;
@@ -1311,6 +1325,7 @@
     background: color-mix(in srgb, var(--accent) 25%, #263c31);
   }
   html[data-theme="dark"] .persona-level-label,
+
   html[data-theme="dark"] .persona-card-go {
     color: color-mix(in srgb, var(--accent) 82%, #f0f4ef);
   }
@@ -1327,7 +1342,9 @@
     color: #f2d58a;
   }
   html[data-theme="dark"] .customize-sub,
+
   html[data-theme="dark"] #panelCustomize .veg-list,
+
   html[data-theme="dark"] .crops-customize-footer {
     background: rgba(38, 60, 49, 0.84);
     border-color: var(--dark-border);
@@ -1340,14 +1357,19 @@
     border-bottom-color: var(--dark-border);
   }
   html[data-theme="dark"] .crops-count,
+
   html[data-theme="dark"] .veg-meta,
+
   html[data-theme="dark"] .veg-qty-topline,
+
   html[data-theme="dark"] .crop-actions-copy span,
+
   html[data-theme="dark"] .crop-action-text .btn-hint {
     color: var(--dark-muted);
   }
 
   html[data-theme="dark"] .veg,
+
   html[data-theme="dark"] .veg.in {
     background: #263c31;
     border-color: var(--dark-border);
@@ -1373,6 +1395,7 @@
     background: rgba(255, 255, 255, 0.07);
   }
   html[data-theme="dark"] .veg-qty-ctl,
+
   html[data-theme="dark"] .veg-qty-input {
     background: #17271f;
     color: var(--dark-text);
@@ -1396,12 +1419,14 @@
     color: #f1d892;
   }
   html[data-theme="dark"] .veg.in .add,
+
   html[data-theme="dark"] .veg.in > .remove-from-seed {
     background: rgba(202, 87, 76, 0.18);
     border-color: rgba(242, 187, 180, 0.22);
     color: #f2bbb4;
   }
   html[data-theme="dark"] .veg.in .add:hover,
+
   html[data-theme="dark"] .veg.in > .remove-from-seed:hover {
     background: rgba(202, 87, 76, 0.28);
   }
@@ -1444,8 +1469,7 @@
 }
 
 /* Modali e calendario */
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     :where(
@@ -1464,8 +1488,7 @@
     background: #1e3027;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] #calendarModal .projects-backdrop {
     background: rgba(3, 10, 7, 0.72);
@@ -1485,6 +1508,7 @@
 
 @layer dark-theme {
   html[data-theme="dark"] #calendarModal .projects-title,
+
   html[data-theme="dark"] #calendarModal .cal-month-name {
     color: var(--dark-text);
   }
@@ -1691,13 +1715,13 @@
 
 @layer dark-theme {
   html[data-theme="dark"] .cart-nudge button,
+
   html[data-theme="dark"] .back-to-top {
     background: #e7f0e9;
     color: #173823;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] .spacing-svg {
     --spacing-diagram-bg: #20332a;
@@ -1706,15 +1730,11 @@
   }
 }
 @layer base {
-  @media (max-width: 720px) {
-  }
   @layer dark-theme {
     html[data-theme="dark"] .nav-links {
       background: #192820;
       border-color: var(--dark-border);
     }
-  }
-  @layer base {
   }
 }
 @layer dark-theme {
@@ -2009,8 +2029,7 @@
 }
 
 /* Catalogo e footer */
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .catalog-pro-section .top-add-btn {
     background: linear-gradient(135deg, #36975a, #267846);
@@ -2101,8 +2120,7 @@
     border-color: #8370a4;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body footer.footer-botanico {
     background: linear-gradient(180deg, #0e2018 0%, #091710 100%);
@@ -2183,12 +2201,19 @@
 /* Pulsanti e stati */
 @layer base {
   .detail-add-btn,
+
   .conf-cart-export-btn,
+
   .cart-checkout-btn,
+
   .kit-cta-btn,
+
   .catalog-import-btn,
+
   .empty-cta,
+
   .guided-nov-cta,
+
   body.serra-empty .crops-fill-main-btn {
     background: linear-gradient(
       135deg,
@@ -2201,12 +2226,19 @@
   }
 
   .detail-add-btn:hover,
+
   .conf-cart-export-btn:hover,
+
   .cart-checkout-btn:hover,
+
   .kit-cta-btn:hover,
+
   .catalog-import-btn:hover,
+
   .empty-cta:hover,
+
   .guided-nov-cta:hover,
+
   body.serra-empty .crops-fill-main-btn:hover {
     background: linear-gradient(135deg, #3f8a50, var(--button-primary-hover));
     color: var(--serra-white);
@@ -2214,12 +2246,19 @@
   }
 
   .btn-soft,
+
   .view-print-btn,
+
   .yield-edit-crops-btn,
+
   .pdp-back-btn,
+
   .novice-crops-note button,
+
   .novice-restart-btn,
+
   .catalog-load-more-btn,
+
   body:not(.serra-empty) .crops-fill-main-btn {
     background: var(--button-secondary-bg);
     color: var(--button-secondary-text);
@@ -2228,12 +2267,19 @@
   }
 
   .btn-soft:hover,
+
   .view-print-btn:hover,
+
   .yield-edit-crops-btn:hover,
+
   .pdp-back-btn:hover,
+
   .novice-crops-note button:hover,
+
   .novice-restart-btn:hover,
+
   .catalog-load-more-btn:hover,
+
   body:not(.serra-empty) .crops-fill-main-btn:hover {
     background: var(--button-secondary-bg-hover);
     color: var(--button-secondary-text);
@@ -2241,12 +2287,19 @@
   }
 
   .btn-danger,
+
   .btn-ghost,
+
   .cart-clear-btn,
+
   .cart-item-remove,
+
   .crop-action-btn--danger,
+
   .crops-clear-btn,
+
   .del,
+
   .veg.in .add {
     background: var(--button-danger-bg);
     color: var(--button-danger-text);
@@ -2255,22 +2308,26 @@
   }
 
   .btn-danger:hover,
+
   .btn-ghost:hover,
+
   .cart-clear-btn:hover,
+
   .cart-item-remove:hover,
+
   .crop-action-btn--danger:hover,
+
   .crops-clear-btn:hover,
+
   .del:hover,
+
   .veg.in .add:hover {
     background: var(--button-danger-bg-hover);
     color: #8c2316;
     border-color: rgba(176, 48, 32, 0.48);
   }
 }
-@layer dark-theme {
-  }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2288,8 +2345,7 @@
       .crop-action-btn--primary,
       .catalog-import-btn,
       .guided-nov-cta,
-      .empty-cta,
-      .percorso-cta-btn--green
+      .empty-cta
     ) {
     background: linear-gradient(135deg, #399c5b, var(--button-primary));
     color: var(--serra-white);
@@ -2314,8 +2370,7 @@
       .crop-action-btn--primary,
       .catalog-import-btn,
       .guided-nov-cta,
-      .empty-cta,
-      .percorso-cta-btn--green
+      .empty-cta
     ):hover {
     background: linear-gradient(135deg, #48b76d, var(--button-primary-hover));
     color: var(--serra-white);
@@ -2323,61 +2378,7 @@
     box-shadow: 0 10px 24px rgba(8, 46, 23, 0.38);
   }
 }
-@layer base {
-}
-@layer dark-theme {
-  html[data-theme="dark"]
-    body
-    :where(
-      .kit-plan-link,
-      .conf-btn.secondary,
-      .btn-soft,
-      .view-print-btn,
-      .yield-edit-crops-btn,
-      .cookie-reject-btn,
-      .catalog-reset-btn,
-      .pdp-back-btn,
-      .back-home-btn,
-      .cart-nudge button,
-      .novice-crops-note button,
-      .catalog-load-more-btn,
-      body:not(.serra-empty) .crops-fill-main-btn,
-      .percorso-cta-alt,
-      .percorso-path--free,
-      .crop-action-btn--secondary
-    ) {
-    background: var(--button-secondary);
-    color: #dce9df;
-    border: 1px solid var(--button-secondary-border);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.17);
-  }
-  html[data-theme="dark"]
-    body
-    :where(
-      .kit-plan-link,
-      .conf-btn.secondary,
-      .btn-soft,
-      .view-print-btn,
-      .yield-edit-crops-btn,
-      .cookie-reject-btn,
-      .catalog-reset-btn,
-      .pdp-back-btn,
-      .back-home-btn,
-      .cart-nudge button,
-      .novice-crops-note button,
-      .catalog-load-more-btn,
-      body:not(.serra-empty) .crops-fill-main-btn,
-      .percorso-cta-alt,
-      .percorso-path--free,
-      .crop-action-btn--secondary
-    ):hover {
-    background: var(--button-secondary-hover);
-    color: var(--serra-white);
-    border-color: rgba(173, 224, 188, 0.46);
-  }
-}
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2413,8 +2414,7 @@
     border-color: #d0797c;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2454,8 +2454,7 @@
     border-color: #8ddda4;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2506,8 +2505,7 @@
     color: var(--serra-white);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2553,8 +2551,7 @@
     outline-offset: 3px;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2581,18 +2578,8 @@
     color: #ffd878;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
-  html[data-theme="dark"] body .percorso-cta-btn--earth {
-    background: #8a5a32;
-    color: #fff4e8;
-    border: 1px solid #c18a55;
-  }
-  html[data-theme="dark"] body .percorso-cta-btn--earth:hover {
-    background: #a36b3c;
-    border-color: #dda56c;
-  }
   html[data-theme="dark"]
     body
     :where(#catalogAllToggle.active, .catalog-chip#catalogAllToggle.active) {
@@ -2601,8 +2588,7 @@
     border-color: #c8a557;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .diff-easy {
     background: #214832;
@@ -2641,34 +2627,7 @@
       gap: 0.5rem;
       padding-inline: 0.5rem;
     }
-    .site-header .nav-brand {
-      min-width: 0;
-      overflow: hidden;
-      gap: 0.42rem;
-      padding-right: 0;
-    }
-    .site-header .nav-brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-    }
-    .site-header .nav-brand img {
-      width: 25px;
-      height: 25px;
-    }
-    .site-header .nav-brand-copy {
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-    .site-header .nav-brand-text {
-      max-width: none;
-      font-size: 0.93rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .site-header .nav-brand-copy small {
-      display: none;
-    }
+
     .site-header .nav-actions {
       flex: 0 0 auto;
       gap: 0.42rem;
@@ -2739,14 +2698,6 @@
   }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
-  @media (max-width: 400px) {
-    .site-header .nav-brand-mark {
-      display: inline-grid;
-    }
-    .site-header .nav-brand-text {
-      font-size: 0.88rem;
-    }
-  }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 340px) {
@@ -2759,16 +2710,7 @@
       align-content: center;
       gap: 0;
     }
-    .site-header .nav-brand {
-      grid-column: 1;
-      grid-row: 1;
-      justify-self: start;
-      overflow: visible;
-    }
-    .site-header .nav-brand-text {
-      overflow: visible;
-      text-overflow: clip;
-    }
+
     .site-header .nav-actions {
       grid-column: 1;
       grid-row: 2;
@@ -2856,10 +2798,6 @@
   }
 
   @media (max-width: 380px) {
-    .site-header .nav-brand-text {
-      max-width: 112px;
-    }
-
     .site-header .nav-actions {
       gap: 0.22rem;
     }
@@ -2875,11 +2813,7 @@
     .btn-icon,
     .conf-btn,
     .hero-zone-btn,
-    .hero-heated-btn,
-    .hero-cfg-cta,
     .hero-cfg-catalog-link,
-    .hero-cfg-level,
-    .percorso-cta-btn,
     .catalog-category-chip,
     .catalog-chip,
     .catalog-hint,
@@ -3335,6 +3269,7 @@
     }
 
     .guided-setup-toggle .guided-intro-head,
+
     .guided-setup-toggle .guided-intro-right {
       grid-area: auto;
       padding: 0;
@@ -3471,6 +3406,7 @@
     }
 
     .cookie-accept-btn,
+
     .cookie-reject-btn {
       flex: none;
       min-height: 34px;
@@ -3676,6 +3612,7 @@
     }
 
     .persona-pick[open] .persona-card,
+
     .persona-pick[open] .persona-card.is-active {
       min-height: 46px;
       padding: 7px 8px;
@@ -3685,6 +3622,7 @@
     }
 
     .persona-pick[open] .persona-card-ico,
+
     .persona-pick[open] .persona-card.is-active .persona-card-ico {
       width: 28px;
       height: 28px;
@@ -3704,6 +3642,7 @@
     }
 
     .persona-pick[open] .persona-level-label,
+
     .persona-pick[open] .persona-card-body small {
       display: none;
     }
@@ -3724,80 +3663,10 @@
   }
 
   /* Percorsi guidati. */
-  .hero-cfg-inner {
-    grid-template-columns: minmax(430px, 1.18fr) minmax(340px, 0.82fr);
-    gap: clamp(1.4rem, 2.5vw, 2.5rem);
-    padding: 1.55rem 1.75rem;
-  }
 
-  .hero-cfg-visual {
-    order: -1;
-  }
 
-  .hero-cfg-visual .hcg {
-    max-width: 430px;
-  }
 
-  .hero-content {
-    gap: 1rem;
-  }
 
-  .hero-headline {
-    font-size: clamp(2.3rem, 4.5vw, 3.5rem);
-    line-height: 1.13;
-  }
-
-  .hero-cfg-title {
-    min-height: 2.2em;
-    font-size: clamp(1.65rem, 2.15vw, 2rem);
-    line-height: 1.1;
-  }
-
-  .hero-cfg-route-intro {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    width: 100%;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.045em;
-    text-transform: uppercase;
-  }
-
-  .hero-cfg-route-step {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    flex: none;
-    border-radius: 999px;
-    background: #8fe0b4;
-    color: #0f2a1c;
-  }
-
-  .hero-cfg-actions > .hero-cfg-levels {
-    padding: 0;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .hero-cfg-levels-grid {
-    gap: 0.58rem;
-  }
-
-  .hero-cfg-level {
-    min-height: 52px;
-    padding-block: 0.55rem;
-    border-color: rgba(255, 255, 255, 0.22);
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .hero-cfg-level .pc-persona-body small {
-    color: rgba(255, 255, 255, 0.76);
-  }
 
   .hero-cfg-catalog-link {
     width: 100%;
@@ -3931,6 +3800,7 @@
   }
 
   .journey-context-step.is-done,
+
   .journey-context-step.is-current {
     background: color-mix(in srgb, var(--journey-accent) 16%, #fff);
     color: #24382a;
@@ -3952,6 +3822,7 @@
   }
 
   html[data-theme="dark"] .journey-context-copy b,
+
   html[data-theme="dark"] .journey-context-copy small {
     color: var(--dark-text);
   }
@@ -3962,6 +3833,7 @@
   }
 
   html[data-theme="dark"] .journey-context-step.is-done,
+
   html[data-theme="dark"] .journey-context-step.is-current {
     background: color-mix(in srgb, var(--journey-accent) 24%, #17271f);
     color: #f2f7f3;
@@ -3969,19 +3841,14 @@
 
   @media (min-width: 1101px) {
     .col-left,
+
     .col-right {
       top: calc(var(--nav-h, 66px) + 18px);
     }
   }
 
   @media (max-width: 1100px) {
-    .hero-cfg-inner {
-      grid-template-columns: 1fr;
-    }
 
-    .hero-cfg-visual .hcg {
-      max-width: 390px;
-    }
 
     .journey-context {
       grid-template-columns: auto minmax(0, 1fr) auto;
@@ -4009,8 +3876,11 @@
     }
 
     .site-header .nav-menu-toggle,
+
     .site-header .theme-toggle,
+
     .site-header .nav-lang,
+
     .site-header .cart-btn {
       min-height: 44px;
       height: 44px;
@@ -4042,41 +3912,7 @@
       justify-content: flex-start;
     }
 
-    .hero-content {
-      min-height: auto;
-      /* Riserva spazio sotto la CTA per la barra di sistema dei dispositivi iOS. */
-      padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
-    }
 
-    .hero-cfg-inner {
-      padding: 0.9rem 0.9rem 1rem;
-      gap: 0.7rem;
-    }
-
-    .hero-cfg-visual .hcg {
-      max-width: 220px;
-    }
-
-    .hero-cfg-title {
-      font-size: clamp(1.65rem, 8vw, 2rem);
-    }
-
-    .hero-cfg-route-intro {
-      justify-content: center;
-    }
-
-    .hero-cfg-level {
-      min-height: 48px;
-      padding: 0.45rem 0.62rem;
-    }
-
-    .hero-cfg-level .pc-persona-body b {
-      font-size: 0.88rem;
-    }
-
-    .hero-cfg-level .pc-persona-body small {
-      font-size: 0.7rem;
-    }
 
     .hero-cfg-catalog-link {
       min-height: 48px;
@@ -4227,6 +4063,7 @@
 
   /* Preferenze nel menu mobile. */
   .mobile-nav-section-title,
+
   .mobile-nav-preferences {
     display: none;
   }
@@ -4243,11 +4080,6 @@
     .site-header-inner {
       grid-template-columns: auto minmax(0, 1fr);
       gap: 0.65rem;
-    }
-
-    .site-header .nav-brand {
-      grid-column: 1;
-      width: auto;
     }
 
     .site-header .nav-actions {
@@ -4267,10 +4099,15 @@
     }
 
     .site-header .nav-menu-toggle,
+
     .site-header .nav-menu-toggle:hover,
+
     .site-header .nav-menu-toggle:focus,
+
     .site-header .nav-menu-toggle:focus-visible,
+
     .site-header .nav-menu-toggle:active,
+
     .site-header .nav-menu-toggle[aria-expanded="true"] {
       border-color: #72c58a;
       background: #2d6a4f;
@@ -4284,6 +4121,7 @@
     }
 
     .site-header .nav-actions > .theme-toggle,
+
     .site-header .nav-actions > .nav-lang {
       display: none;
     }
@@ -4320,6 +4158,7 @@
     }
 
     .site-header .nav-link,
+
     .site-header .nav-link:not(.cart-btn) {
       display: flex;
       align-items: center;
@@ -4408,6 +4247,7 @@
     }
 
     .site-header .mobile-menu-theme,
+
     .site-header .mobile-menu-language {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr) auto;
@@ -4433,6 +4273,7 @@
     }
 
     .site-header .mobile-menu-theme:hover,
+
     .site-header .mobile-menu-language:hover {
       background: rgba(47, 107, 58, 0.06);
     }
@@ -4533,6 +4374,7 @@
     }
 
     html[lang="it"] .lang-switch-opt[data-lang="it"],
+
     html[lang="ro"] .lang-switch-opt[data-lang="ro"] {
       background: #2f6b3a;
       color: #fff;
@@ -4545,11 +4387,13 @@
     }
 
     html[data-theme="dark"] .site-header .mobile-menu-theme:hover,
+
     html[data-theme="dark"] .site-header .mobile-menu-language:hover {
       background: rgba(255, 255, 255, 0.06);
     }
 
     html[data-theme="dark"] .site-header .mobile-menu-theme,
+
     html[data-theme="dark"] .site-header .mobile-menu-language {
       color: #edf5ef;
     }
@@ -4569,12 +4413,14 @@
     }
 
     html[data-theme="dark"][lang="it"] .lang-switch-opt[data-lang="it"],
+
     html[data-theme="dark"][lang="ro"] .lang-switch-opt[data-lang="ro"] {
       background: #2d6a4f;
       color: #fff;
     }
 
     html[data-theme="dark"] .mobile-menu-pref-copy small,
+
     html[data-theme="dark"] .site-header .mobile-nav-section-title {
       color: #aebdb2;
     }
@@ -4605,6 +4451,7 @@
     }
 
     .persona-pick[open] .persona-card,
+
     .persona-pick[open] .persona-card.is-active {
       min-height: 58px;
       padding: 8px 10px;
@@ -4621,6 +4468,7 @@
 
   /* Varianti tema scuro. */
   html[data-theme="dark"] .guided-setup-gear,
+
   html[data-theme="dark"] .guided-setup-summary-icon {
     border-color: var(--dark-border);
     background: linear-gradient(
@@ -4637,6 +4485,7 @@
   }
 
   html[data-theme="dark"] .guided-setup-gear:focus-visible,
+
   html[data-theme="dark"] .guided-setup-summary:focus-visible {
     outline-color: var(--dark-gold);
   }
@@ -4659,6 +4508,7 @@
   }
 
   html[data-theme="dark"] .guided-setup-summary-action,
+
   html[data-theme="dark"] .stage-context-action {
     border: 1px solid rgba(139, 212, 158, 0.4);
     background: rgba(139, 212, 158, 0.2);
@@ -4709,55 +4559,6 @@
       var(--dark-raised),
       var(--dark-surface)
     );
-  }
-
-  @media (max-width: 660px) {
-    /* Pillola superiore nascosta su mobile. */
-    .hero-season-kicker {
-      display: none;
-    }
-
-    /* Allineamento verticale della card. */
-    .hero-content {
-      gap: 1rem;
-      padding-top: 0.75rem;
-    }
-
-    .hero-headline {
-      max-width: 100%;
-      font-size: clamp(2rem, 8.3vw, 2.25rem);
-      line-height: 1.08;
-      text-wrap: pretty;
-    }
-
-    .hero-cfg-inner {
-      gap: 1rem;
-      padding: 1rem 0.9rem 1.25rem;
-    }
-
-    .hero-cfg-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 2.2em;
-      margin-top: 0;
-      font-size: clamp(1.5rem, 7vw, 1.75rem);
-      line-height: 1.1;
-      text-align: center;
-    }
-
-    .hero-cfg-actions {
-      gap: 0.9rem;
-      margin-top: 1.05rem;
-    }
-
-    .hero-cfg-route-intro {
-      min-height: 34px;
-    }
-
-    .hero-cfg {
-      margin-top: 0;
-    }
   }
 
   /* Separa i parametri iniziali della serra dal selettore del profilo utente. */
@@ -4897,6 +4698,7 @@
   }
 
   html[data-theme="dark"] .guided-setup-gear-copy b,
+
   html[data-theme="dark"] .setup-context-row .stage-context-copy > span {
     color: var(--dark-text);
   }
@@ -4912,6 +4714,7 @@
   }
 
   html[data-theme="dark"] .setup-context-row .guided-tags .tag small,
+
   html[data-theme="dark"] .setup-context-row .guided-tags .tag b {
     color: var(--dark-muted);
   }
@@ -5034,313 +4837,21 @@
   }
 
   /* Rende ogni profilo della hero una scelta primaria chiaramente selezionabile. */
-  .hero-cfg-route-intro {
-    color: rgba(255, 255, 255, 0.96);
-    font-size: 0.82rem;
-  }
-
-  .hero-cfg-route-step {
-    width: 30px;
-    height: 30px;
-    box-shadow: 0 0 0 4px rgba(143, 224, 180, 0.12);
-  }
-
-  .hero-cfg-actions > .hero-cfg-levels {
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .hero-cfg-levels-grid {
-    gap: 8px;
-  }
 
   /* Colore, bordo e rilievo delle tre scelte stanno in base.css, con il resto
      dell'app: qui resta solo l'ingombro, che nella hero è un po' più generoso.
      Prima questo blocco rifaceva tutto da capo — bordo di 2px e spessore
      inferiore di 4px — e la stessa scheda risultava diversa a seconda della
      pagina da cui la si guardava. */
-  .hero-cfg-level {
-    --accent-text: #1f4f27;
-    min-height: 68px;
-    padding: 9px 14px;
-    gap: 12px;
-  }
-
-  .hero-cfg-level.pc-persona-card--intermedio {
-    --accent-text: #5c410a;
-  }
-
-  .hero-cfg-level.pc-persona-card--esperto {
-    --accent-text: #6b2b1a;
-  }
-
-  .hero-cfg-level:focus-visible {
-    outline: 3px solid #a8edc5;
-    outline-offset: 3px;
-  }
 
   /* Solo la misura: colore e contorno del riquadro vengono da base.css, dove
      sono tarati per restare staccati dal riempimento di ogni livello. */
-  .hero-cfg-level .pc-persona-ico {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 16%, transparent);
-  }
-
-  .hero-cfg-level .pc-persona-ico .level-plant-ico {
-    width: 27px;
-    height: 27px;
-  }
-
-  .hero-cfg-level .pc-persona-body {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .hero-cfg-level .pc-persona-body b {
-    color: var(--accent-text);
-    font-family: var(--serif);
-    font-size: 1.08rem;
-    font-weight: 800;
-    letter-spacing: 0.005em;
-    line-height: 1.05;
-  }
-
-  .hero-cfg-level .pc-persona-body small {
-    margin: 0;
-    color: #425247;
-    font-size: 0.78rem;
-    font-weight: 600;
-    line-height: 1.28;
-  }
 
   /* "Consigliato" diventa un'etichetta, non un elemento cliccabile a sé. */
-  .hero-cfg-level .hero-cfg-recommendation {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.16rem 0.5rem;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--accent) 30%, #fff);
-    color: var(--accent-text);
-    font-size: 0.64rem;
-    font-weight: 750;
-    letter-spacing: 0.03em;
-    line-height: 1;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
 
   /* L'azione è solo una freccia: nessun secondo pulsante dentro il pulsante. */
-  .hero-cfg-level .hero-cfg-level-action {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--accent) 72%, #fff);
-    color: #fff;
-    font-size: 0.95rem;
-    font-weight: 800;
-    opacity: 0.92;
-    transform: none;
-  }
 
   /* Il testo "Scegli" resta per screen reader ma non compete visivamente. */
-  .hero-cfg-level .hero-cfg-level-action > span:first-child {
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
-  .hero-cfg-level:hover .hero-cfg-level-action {
-    background: var(--accent);
-    color: #fff;
-    opacity: 1;
-    transform: translateX(2px);
-  }
-
-  html[data-theme="dark"] .hero-cfg-actions > .hero-cfg-levels {
-    border: 0;
-    background: transparent;
-  }
-
-  html[data-theme="dark"] .hero-cfg-level {
-    --accent-edge: color-mix(in srgb, var(--accent) 45%, #060f0a);
-    border-color: color-mix(in srgb, var(--accent) 62%, #31463a);
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent) 16%, #16271f),
-      color-mix(in srgb, var(--accent) 28%, #16271f)
-    );
-    box-shadow:
-      0 4px 0 0 var(--accent-edge),
-      0 10px 20px rgba(0, 0, 0, 0.34),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-
-  html[data-theme="dark"] .hero-cfg-level:hover {
-    border-color: color-mix(in srgb, var(--accent) 85%, #fff);
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent) 24%, #172a20),
-      color-mix(in srgb, var(--accent) 38%, #172a20)
-    );
-  }
-
-  html[data-theme="dark"] .hero-cfg-level .hero-cfg-recommendation {
-    background: color-mix(in srgb, var(--accent) 34%, #16271f);
-    color: #eef6f0;
-  }
-
-  html[data-theme="dark"] .hero-cfg-level .pc-persona-ico {
-    border-color: color-mix(in srgb, var(--accent) 50%, #31463a);
-    background: color-mix(in srgb, var(--accent) 20%, #20372a);
-  }
-
-  html[data-theme="dark"] .hero-cfg-level .pc-persona-body b {
-    color: #f2f7f3;
-  }
-
-  html[data-theme="dark"] .hero-cfg-level .pc-persona-body small {
-    color: #c1d0c5;
-  }
-
-  html[data-theme="dark"] .hero-cfg-level .hero-cfg-level-action {
-    border: 0;
-    background: color-mix(in srgb, var(--accent) 62%, #20372a);
-    color: #f1f6f2;
-  }
-
-  @media (max-width: 660px) {
-    .hero-cfg-route-intro {
-      font-size: 0.76rem;
-    }
-
-    .hero-cfg-actions > .hero-cfg-levels {
-      padding: 0;
-      border-radius: 0;
-    }
-
-    .hero-cfg-levels-grid {
-      gap: 10px;
-    }
-
-    .hero-cfg-level {
-      min-height: 68px;
-      padding: 10px 12px 10px 13px;
-      gap: 10px;
-    }
-
-    .hero-cfg-level .pc-persona-ico {
-      width: 42px;
-      height: 42px;
-    }
-
-    .hero-cfg-level .pc-persona-ico .level-plant-ico {
-      width: 25px;
-      height: 25px;
-    }
-
-    .hero-cfg-level .pc-persona-body b {
-      font-size: 1rem;
-    }
-
-    .hero-cfg-level .pc-persona-body small {
-      display: -webkit-box;
-      font-size: 0.73rem;
-      line-height: 1.22;
-      overflow: hidden;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-    }
-
-    .hero-cfg-level .hero-cfg-level-action {
-      width: 28px;
-      height: 28px;
-      padding: 0;
-      font-size: 0.9rem;
-    }
-
-    /* La menzione "consigliato" non deve più comprimere la descrizione: ogni
-       elemento ha una propria area e l'azione resta sempre sulla destra. */
-    .hero-cfg-level {
-      display: grid;
-      grid-template-columns: 42px minmax(0, 1fr) max-content;
-      grid-template-areas:
-        "icon body action"
-        "icon recommendation action";
-      column-gap: 9px;
-      row-gap: 4px;
-      align-items: center;
-      min-height: 76px;
-    }
-
-    .hero-cfg-level .pc-persona-ico {
-      grid-area: icon;
-    }
-
-    .hero-cfg-level .pc-persona-body {
-      grid-area: body;
-    }
-
-    .hero-cfg-level .hero-cfg-level-action {
-      grid-area: action;
-      align-self: center;
-    }
-
-    .hero-cfg-level .hero-cfg-recommendation {
-      grid-area: recommendation;
-      justify-self: start;
-      position: static;
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      min-height: 18px;
-      margin: 0;
-      padding: 0.12rem 0.42rem;
-      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--accent) 12%, #fff);
-      color: var(--accent-text);
-      font-size: 0.6rem;
-      font-weight: 650;
-      letter-spacing: 0.025em;
-      line-height: 1;
-      white-space: nowrap;
-    }
-
-    .hero-cfg-level .pc-persona-body b {
-      font-weight: 600;
-    }
-
-    .hero-cfg-level .pc-persona-body small {
-      display: block;
-      font-weight: 500;
-      overflow: visible;
-      -webkit-line-clamp: unset;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .hero-cfg-level .hero-cfg-level-action {
-      width: 26px;
-      height: 26px;
-      padding: 0;
-    }
-  }
 
   /* Distingue la tendina impostazioni aperta dalle normali card della pagina. */
   .guided-setup-gear {
@@ -5418,6 +4929,7 @@
   }
 
   .guided-setup-toggle[open] .setup-context-row.stage-context-row,
+
   .guided-setup-toggle[open] .persona-pick {
     border: 1px solid rgba(47, 107, 58, 0.22);
     background: rgba(255, 255, 255, 0.8);
@@ -5430,6 +4942,7 @@
   }
 
   html[data-theme="dark"] .guided-setup-gear-icon,
+
   html[data-theme="dark"] .guided-setup-gear-chevron {
     border-color: rgba(139, 212, 158, 0.42);
     background: rgba(139, 212, 158, 0.14);
@@ -5442,9 +4955,11 @@
   }
 
   html[data-theme="dark"] .guided-setup-toggle[open] .guided-setup-summary,
+
   html[data-theme="dark"]
     .guided-setup-toggle[open]
     .setup-context-row.stage-context-row,
+
   html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
     border-color: var(--dark-border);
   }
@@ -5452,6 +4967,7 @@
   html[data-theme="dark"]
     .guided-setup-toggle[open]
     .setup-context-row.stage-context-row,
+
   html[data-theme="dark"] .guided-setup-toggle[open] .persona-pick {
     background: rgba(3, 21, 13, 0.52);
   }
@@ -5633,6 +5149,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .hero-guide-link,
+
     .hero-guide-link-arrow {
       transition: none;
     }
@@ -5918,6 +5435,7 @@
   }
 
   html[data-theme="dark"] .workflow-hub .journey-context-help,
+
   html[data-theme="dark"] .workflow-hub .journey-context-help:hover {
     border-color: transparent;
     background: transparent;
@@ -5948,6 +5466,7 @@
   }
 
   .workflow-persona-panel .persona-cards,
+
   .workflow-persona-panel .persona-pick[open] .persona-cards {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: 12px 16px 16px;
@@ -5987,11 +5506,13 @@
     }
 
     .workflow-hub .journey-context-copy,
+
     .workflow-hub .journey-context-progress {
       grid-column: 1 / -1;
     }
 
     .workflow-persona-panel .persona-cards,
+
     .workflow-persona-panel .persona-pick[open] .persona-cards {
       grid-template-columns: 1fr;
       padding: 10px 11px 12px;
@@ -6030,7 +5551,9 @@
   }
 
   .workflow-hub .journey-context-step[data-journey-step="settings"],
+
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
     min-height: 28px;
     padding: 2px 1px;
@@ -6086,9 +5609,11 @@
   html[data-theme="dark"]
     .workflow-hub
     .journey-context-step[data-journey-step="settings"],
+
   html[data-theme="dark"]
     .workflow-hub
     .journey-context-step[data-journey-step="settings"].is-done,
+
   html[data-theme="dark"]
     .workflow-hub
     .journey-context-step[data-journey-step="settings"].is-current {
@@ -6152,7 +5677,9 @@
     }
 
     .workflow-hub .journey-context-step[data-journey-step="settings"],
+
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+
     .workflow-hub
       .journey-context-step[data-journey-step="settings"].is-current {
       flex: 1 1 0;
@@ -6329,6 +5856,7 @@
   html[data-theme="dark"]
     .workflow-hub
     .journey-context-step.is-current:not([data-journey-step="settings"]),
+
   html[data-theme="dark"]
     .workflow-hub
     .journey-context-step.is-current:not([data-journey-step="settings"]):hover {
@@ -6340,6 +5868,7 @@
   /* Mantiene affiancati i profili per facilitarne il confronto su desktop. */
   @media (min-width: 901px) {
     .workflow-persona-panel .persona-cards,
+
     .workflow-persona-panel .persona-pick[open] .persona-cards {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -6349,11 +5878,17 @@
     }
 
     .workflow-persona-panel .persona-card,
+
     .workflow-persona-panel .persona-pick[open] .persona-card,
+
     .workflow-persona-panel .persona-card.is-active,
+
     .workflow-persona-panel .persona-pick[open] .persona-card.is-active,
+
     body.livello-novizio .workflow-persona-panel .persona-card--novizio,
+
     body.livello-intermedio .workflow-persona-panel .persona-card--intermedio,
+
     body.livello-esperto .workflow-persona-panel .persona-card--esperto {
       order: initial;
       grid-column: auto;
@@ -6425,22 +5960,8 @@
 
   /* Dà un ritmo verticale più leggibile ai tre blocchi principali della hero. */
   @media (min-width: 901px) {
-    .hero-content {
-      gap: 0;
-      padding-top: clamp(2.25rem, 4.4vh, 3.65rem);
-      padding-bottom: clamp(3rem, 5.5vh, 4.5rem);
-    }
-
-    .hero-headline {
-      margin-bottom: clamp(0.95rem, 1.8vh, 1.45rem);
-    }
-
     .hero-guide-link {
       margin-bottom: clamp(1.45rem, 3.1vh, 2.35rem);
-    }
-
-    .hero-cfg {
-      margin-top: 0;
     }
   }
 
@@ -6449,16 +5970,6 @@
     .hero-immersive {
       min-height: 90vh;
       min-height: 90svh;
-    }
-
-    .hero-content {
-      gap: 0.9rem;
-      padding-bottom: calc(6.75rem + env(safe-area-inset-bottom, 0px));
-    }
-
-    .hero-cfg-inner {
-      gap: 0.63rem;
-      padding: 0.81rem 0.81rem 0.9rem;
     }
   }
 
@@ -6496,7 +6007,6 @@
     [role="button"],
     .btn,
     .nav-link,
-    .hero-cfg-level,
     .hero-cfg-catalog-link,
     .guide-cta,
     .guide-start-modal-confirm,
@@ -6516,7 +6026,6 @@
       [role="button"],
       .btn,
       .nav-link,
-      .hero-cfg-level,
       .hero-cfg-catalog-link,
       .guide-cta,
       .guide-start-modal-confirm,
@@ -6555,16 +6064,6 @@
       display: none;
     }
 
-    .site-header .nav-brand {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 1;
-      max-width: calc(100vw - 9rem);
-      margin: 0;
-      transform: translate(-50%, -50%);
-    }
-
     .site-header .nav-menu-toggle {
       left: 0.68rem;
       top: 50%;
@@ -6572,10 +6071,15 @@
     }
 
     .site-header .nav-menu-toggle,
+
     .site-header .nav-menu-toggle:hover,
+
     .site-header .nav-menu-toggle:focus,
+
     .site-header .nav-menu-toggle:focus-visible,
+
     .site-header .nav-menu-toggle:active,
+
     .site-header .nav-menu-toggle[aria-expanded="true"] {
       transform: translateY(-50%);
     }
@@ -6592,7 +6096,9 @@
     }
 
     .workflow-hub .journey-context-step,
+
     .workflow-hub .journey-context-step.is-current,
+
     .workflow-hub .journey-context-step.is-done {
       flex: 1 1 0;
       min-width: 0;
@@ -6605,7 +6111,9 @@
     }
 
     .workflow-hub .journey-context-step[data-journey-step="settings"],
+
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+
     .workflow-hub
       .journey-context-step[data-journey-step="settings"].is-current {
       flex: 1.45 1 0;
@@ -6623,7 +6131,9 @@
   /* Tablet e desktop: i passaggi restano compatti, ma non usano più il
      microtesto ereditato dalla prima versione della barra guidata. */
   .workflow-hub .journey-context-step[data-journey-step="settings"],
+
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
     font-size: 0.76rem;
     font-weight: 600;
@@ -6641,10 +6151,14 @@
 
   @media (max-width: 660px) {
     .workflow-hub .journey-context-step[data-journey-step="settings"],
+
     .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
+
     .workflow-hub
       .journey-context-step[data-journey-step="settings"].is-current,
+
     .workflow-hub .journey-context-step:not([data-journey-step="settings"]),
+
     .workflow-hub
       .journey-context-step.is-current:not([data-journey-step="settings"]) {
       font-size: 0.7rem;
@@ -6674,13 +6188,19 @@
   /* Questo layer viene caricato dopo gli stili base del catalogo: qui la
      ricerca deve prevalere anche sulle regole che rendono visibili i controlli. */
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
+
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown))
     #catalogFilterToggle,
+
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown))
     #catalogFilterTools,
+
   #catalogHint.catalog-mobile-hidden-while-searching,
+
   #catalogFilterToggle.catalog-mobile-hidden-while-searching,
+
   #catalogFilterTools.catalog-mobile-hidden-while-searching,
+
   #catalogFilterTools[hidden] {
     display: none !important;
   }
@@ -6689,6 +6209,7 @@
 /* Protezioni trasversali per l'uso su smartphone. */
 @media (max-width: 660px) {
   html,
+
   body {
     overflow-x: clip;
     overscroll-behavior-x: none;
@@ -6698,7 +6219,9 @@
   input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not(
       [type="file"]
     ),
+
   textarea,
+
   select {
     font-size: 16px !important;
   }
@@ -6707,367 +6230,10 @@
 /* Le tre strade dell'app (sezione #percorsi): comprare semi, comprare piantine
    oppure farsi seguire nella coltivazione di ciò che si possiede già.
    È la prima cosa che l'utente incontra dopo l'hero. */
-@layer base {
-  .paths-section {
-    width: min(100% - 2rem, 1180px);
-    margin: clamp(2.5rem, 6vw, 4.5rem) auto clamp(1rem, 3vw, 2rem);
-  }
-
-  .paths-head {
-    max-width: 60ch;
-    margin-bottom: clamp(1.2rem, 3vw, 2rem);
-  }
-
-  .paths-title {
-    margin: 0.35rem 0 0.5rem;
-    font-family: var(--serif, "Fraunces", Georgia, serif);
-    font-size: clamp(1.7rem, 3.4vw, 2.5rem);
-    font-weight: 600;
-    line-height: 1.1;
-  }
-
-  .paths-lead {
-    margin: 0;
-    color: var(--muted);
-    font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  }
-
-  .paths-grid {
-    display: grid;
-    gap: 18px;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  .path-card {
-    --path-accent: #2f6b3a;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 20px 18px;
-    overflow: hidden;
-    border: 1.5px solid var(--border);
-    border-radius: 24px;
-    background: var(--white);
-    color: inherit;
-    text-decoration: none;
-    box-shadow: 0 4px 16px rgba(31, 58, 38, 0.07);
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.2s ease,
-      border-color 0.18s ease;
-  }
-
-  /* Filo di colore che identifica la strada senza urlare. */
-  .path-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 5px;
-    background: var(--path-accent);
-  }
-
-  .path-card--semi {
-    --path-accent: #4f9a3f;
-  }
-
-  .path-card--piantine {
-    --path-accent: #c9962f;
-  }
-
-  .path-card--orto {
-    --path-accent: #2f6b3a;
-  }
-
-  .path-card:hover {
-    border-color: var(--path-accent);
-    box-shadow: 0 16px 36px rgba(31, 58, 38, 0.16);
-    transform: translateY(-4px);
-  }
-
-  .path-card:focus-visible {
-    outline: 3px solid var(--path-accent);
-    outline-offset: 3px;
-  }
-
-  .path-tag {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    padding: 4px 11px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--path-accent) 14%, transparent);
-    color: var(--path-accent);
-    font-size: 11px;
-    font-weight: 750;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .path-ico {
-    display: grid;
-    width: 46px;
-    height: 46px;
-    margin-bottom: 10px;
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--path-accent) 12%, transparent);
-    font-size: 22px;
-    place-items: center;
-  }
-
-  .path-card h3 {
-    margin: 0 0 5px;
-    font-family: var(--serif, "Fraunces", Georgia, serif);
-    font-size: 1.3rem;
-    font-weight: 600;
-    line-height: 1.15;
-  }
-
-  .path-card p {
-    flex: 1;
-    margin: 0 0 12px;
-    color: var(--muted);
-    font-size: 0.93rem;
-    line-height: 1.42;
-  }
-
-  .path-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    align-self: flex-start;
-    padding: 8px 15px;
-    border-radius: 999px;
-    background: var(--path-accent);
-    color: #fff;
-    font-size: 0.92rem;
-    font-weight: 650;
-    transition: gap 0.18s ease;
-  }
-
-  .path-card:hover .path-cta {
-    gap: 12px;
-  }
-
-  @media (max-width: 660px) {
-    .paths-grid {
-      gap: 10px;
-    }
-
-    .path-card {
-      display: grid;
-      grid-template-columns: 38px minmax(0, 1fr);
-      column-gap: 10px;
-      row-gap: 7px;
-      padding: 15px 14px 13px;
-      border-radius: 18px;
-    }
-
-    .path-card::before {
-      height: 4px;
-    }
-
-    .path-tag {
-      top: 11px;
-      right: 12px;
-      padding: 3px 8px;
-      font-size: 9px;
-    }
-
-    .path-ico {
-      grid-column: 1;
-      grid-row: 1;
-      width: 38px;
-      height: 38px;
-      margin: 0;
-      border-radius: 12px;
-      font-size: 18px;
-    }
-
-    .path-card h3 {
-      grid-column: 2;
-      grid-row: 1;
-      align-self: end;
-      margin: 0;
-      padding-right: 6.5rem;
-      font-size: 1.08rem;
-      line-height: 1.08;
-    }
-
-    .path-card p {
-      grid-column: 1 / -1;
-      margin: 0;
-      font-size: 0.82rem;
-      line-height: 1.34;
-    }
-
-    .path-cta {
-      grid-column: 1 / -1;
-      gap: 6px;
-      padding: 7px 13px;
-      font-size: 0.8rem;
-      line-height: 1.2;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .path-card,
-    .path-cta {
-      transition: none;
-    }
-  }
-}
-
-@layer dark-theme {
-  html[data-theme="dark"] .path-card {
-    border-color: var(--theme-line, rgba(172, 214, 187, 0.16));
-    background: var(--theme-surface, #13221b);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  html[data-theme="dark"] .path-card--semi {
-    --path-accent: #79c78d;
-  }
-
-  html[data-theme="dark"] .path-card--piantine {
-    --path-accent: #e0c06a;
-  }
-
-  html[data-theme="dark"] .path-card--orto {
-    --path-accent: #69b77d;
-  }
-
-  html[data-theme="dark"] .path-cta {
-    color: #0f2318;
-  }
-
-  html[data-theme="dark"] .path-card:hover {
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-  }
-}
 
 /* Quarta scelta dell'hero: non è un quarto livello, è l'uscita per chi ha già
    semi o piantine. Un separatore "oppure" la stacca dai tre livelli, le tre
    icone anticipano le tre strade e la freccia in basso dice che si scende. */
-@layer base {
-  .hero-cfg-alt {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-  }
-
-  .hero-cfg-alt-or {
-    flex: none;
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .hero-cfg-alt-link {
-    flex: 1;
-    min-width: 0;
-    gap: 11px;
-    padding: 0.6rem 0.85rem 0.6rem 0.7rem;
-    border-style: dashed;
-    border-color: rgba(255, 255, 255, 0.34);
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .hero-cfg-alt-link:hover {
-    border-style: solid;
-    background: rgba(255, 255, 255, 0.16);
-  }
-
-  /* Le tre icone sovrapposte annunciano che dietro c'è una scelta fra tre. */
-  .hero-cfg-alt-icons {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-  }
-
-  .hero-cfg-alt-icons span {
-    display: grid;
-    width: 27px;
-    height: 27px;
-    border: 1.5px solid rgba(20, 48, 30, 0.5);
-    border-radius: 50%;
-    background: #f3f8ee;
-    font-size: 13px;
-    place-items: center;
-  }
-
-  .hero-cfg-alt-icons span + span {
-    margin-left: -9px;
-  }
-
-  .hero-cfg-alt-link .hero-cfg-catalog-copy {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .hero-cfg-alt-link .hero-cfg-catalog-copy strong {
-    font-size: 0.92rem;
-    line-height: 1.15;
-  }
-
-  .hero-cfg-alt-link .hero-cfg-catalog-copy small {
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 0.74rem;
-    font-weight: 500;
-    line-height: 1.28;
-  }
-
-  /* La freccia punta in basso: la sezione è più giù nella pagina. */
-  .hero-cfg-alt-link .hero-cfg-catalog-arrow {
-    flex: none;
-    font-size: 1.05rem;
-  }
-
-  .hero-cfg-alt-link:hover .hero-cfg-catalog-arrow {
-    transform: translateY(3px);
-  }
-
-  @media (max-width: 660px) {
-    .hero-cfg-alt {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 7px;
-    }
-
-    .hero-cfg-alt-or {
-      text-align: center;
-    }
-
-    .hero-cfg-alt-link {
-      min-height: 54px;
-    }
-
-    .hero-cfg-alt-icons span {
-      width: 24px;
-      height: 24px;
-      font-size: 12px;
-    }
-  }
-}
-
-@layer dark-theme {
-  html[data-theme="dark"] .hero-cfg-alt {
-    border-top-color: rgba(255, 255, 255, 0.14);
-  }
-
-  html[data-theme="dark"] .hero-cfg-alt-icons span {
-    border-color: rgba(0, 0, 0, 0.45);
-    background: #dcebd6;
-  }
-}
 
 /* Distintivo "gratis" accanto a Il mio orto: nel menu le prime due voci
    portano a un acquisto, la terza no, e la differenza va vista subito. */
@@ -7083,13 +6249,13 @@
 
   .nav-link--orto::after {
     content: "gratis";
-    padding: 2px 7px;
+    padding: 2px 6px;
     border-radius: 999px;
     background: rgba(47, 107, 58, 0.14);
     color: #2f6b3a;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.03em;
     line-height: 1.6;
     text-transform: uppercase;
   }
@@ -7099,23 +6265,6 @@
   }
 
   /* Riga finale della terza strada: lo dice a parole, non solo con l'etichetta. */
-  .path-card--tool .path-note {
-    display: block;
-    margin: -4px 0 10px;
-    color: var(--muted);
-    font-size: 0.8rem;
-    font-style: italic;
-    line-height: 1.4;
-  }
-
-  @media (max-width: 660px) {
-    .path-card--tool .path-note {
-      grid-column: 1 / -1;
-      margin: -1px 0 0;
-      font-size: 0.7rem;
-      line-height: 1.3;
-    }
-  }
 }
 
 @layer dark-theme {
@@ -7129,15 +6278,6 @@
    L'hero viene anche accorciato di poco, così il bordo della fascia
    "Tre strade" si intravede e si capisce che sotto c'è dell'altro. */
 @layer base {
-  .hero-promise {
-    max-width: 44ch;
-    margin: 0.6rem auto 0;
-    color: var(--muted);
-    font-size: clamp(0.95rem, 1.7vw, 1.1rem);
-    line-height: 1.45;
-    text-align: center;
-  }
-
   .hero-immersive {
     min-height: min(100vh, 880px);
   }
@@ -7146,19 +6286,6 @@
     .hero-immersive {
       min-height: 90vh;
     }
-  }
-
-  @media (max-width: 660px) {
-    .hero-promise {
-      margin-top: 0.5rem;
-      font-size: 0.92rem;
-    }
-  }
-}
-
-@layer dark-theme {
-  html[data-theme="dark"] .hero-promise {
-    color: rgba(233, 243, 236, 0.78);
   }
 }
 
@@ -7174,12 +6301,12 @@
 
   .nav-link--vivaio[data-count]::after {
     content: attr(data-count);
-    min-width: 19px;
+    min-width: 20px;
     padding: 1px 6px;
     border-radius: 999px;
     background: #c9962f;
     color: #2a1d02;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 800;
     line-height: 1.6;
     text-align: center;
@@ -7192,31 +6319,12 @@
 /* Homepage: una sola scelta primaria nell'hero, tre ingressi rapidi sotto e
    contenuti secondari progressivi su schermi piccoli. */
 @layer polish {
-  @media (min-width: 661px) {
-    .site-header #mainNav > .nav-link--menu-home {
-      display: inline-flex;
-    }
-
-    .site-header .nav-header-home {
-      display: none;
-    }
-
-    .site-header .nav-links {
-      gap: clamp(0.2rem, 0.7vw, 0.65rem);
-    }
-
-    .site-header .nav-links > .nav-link {
-      font-size: clamp(0.72rem, 0.86vw, 0.84rem);
-    }
-
-    .site-header .nav-link--menu-home {
-      padding-inline: 0.5rem;
-    }
-
-    .site-header .nav-link--menu-home .nav-link-icon {
-      display: none;
-    }
-  }
+  /* Qui la home ridefiniva il proprio menu: nascondeva l'icona della voce
+     «Home», le dava un padding suo e rimpiccioliva tutte le voci. Erano
+     rattoppi nati quando la voce compariva solo su questa pagina. Ora il menu
+     è lo stesso ovunque e le regole valgono per tutti in base.css: qui non
+     serve più niente, e senza queste righe la home smette di essere l'unica
+     pagina con «Home» senza casetta. */
 
   .hero-immersive {
     min-height: auto;
@@ -7228,225 +6336,14 @@
     }
   }
 
-  .hero-content {
-    gap: 0;
-    padding-top: clamp(1.8rem, 4vh, 3rem);
-    padding-bottom: clamp(1.8rem, 4vh, 3rem);
-  }
 
-  .hero-headline {
-    max-width: 19ch;
-    margin-bottom: 0.55rem;
-    text-wrap: balance;
-  }
 
-  .hero-promise {
-    margin-top: 0;
-  }
 
-  .hero-cfg {
-    width: min(100%, 1050px);
-    margin-top: clamp(1.15rem, 2.6vh, 1.7rem);
-  }
-
-  .hero-cfg-inner {
-    min-height: 390px;
-    grid-template-columns: minmax(310px, 0.9fr) minmax(360px, 1.1fr);
-    gap: clamp(1.5rem, 3.5vw, 3.3rem);
-    padding: clamp(1.35rem, 2.8vw, 2.2rem);
-  }
-
-  .hero-cfg-visual {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-cfg-visual .hcg {
-    width: 100%;
-    max-width: 410px;
-  }
-
-  .hero-cfg-primary {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    justify-content: center;
-    color: #fff;
-  }
-
-  .hero-cfg-eyebrow {
-    display: inline-flex;
-    align-self: flex-start;
-    margin-bottom: 0.65rem;
-    padding: 0.3rem 0.62rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.09);
-    color: #a8edc5;
-    font-size: 0.7rem;
-    font-weight: 750;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .hero-cfg-primary-title {
-    max-width: 18ch;
-    margin: 0;
-    color: #fff;
-    font-size: clamp(1.55rem, 2.3vw, 2.15rem);
-    line-height: 1.08;
-    text-wrap: balance;
-  }
-
-  .hero-cfg-primary-copy {
-    max-width: 49ch;
-    margin: 0.75rem 0 0;
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 0.93rem;
-    line-height: 1.5;
-  }
-
-  .hero-cfg-benefits {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 0.85rem;
-    margin: 1rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .hero-cfg-benefits li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.38rem;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.76rem;
-    font-weight: 600;
-  }
-
-  .hero-cfg-benefits li::before {
-    content: "✓";
-    display: grid;
-    width: 18px;
-    height: 18px;
-    flex: none;
-    border-radius: 50%;
-    background: #8fe0b4;
-    color: #153b27;
-    font-size: 0.7rem;
-    font-weight: 800;
-    place-items: center;
-  }
-
-  .hero-cfg-primary-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    margin-top: 1.2rem;
-  }
-
-  .hero-cfg-primary-cta {
-    display: inline-flex;
-    min-height: 48px;
-    align-items: center;
-    justify-content: center;
-    gap: 0.7rem;
-    padding: 0.78rem 1.1rem;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 14px;
-    background: #f4cd67;
-    color: #213617;
-    font-size: 0.9rem;
-    font-weight: 750;
-    line-height: 1.15;
-    text-decoration: none;
-    box-shadow: 0 8px 22px rgba(11, 31, 19, 0.24);
-    transition:
-      transform 0.16s ease,
-      box-shadow 0.16s ease,
-      background 0.16s ease;
-  }
-
-  .hero-cfg-primary-cta:hover {
-    background: #ffdb78;
-    box-shadow: 0 12px 28px rgba(11, 31, 19, 0.3);
-    transform: translateY(-2px);
-  }
-
-  .hero-cfg-primary-cta:focus-visible,
-  .hero-cfg-guide-link:focus-visible,
-  .hero-cfg-direct-link:focus-visible {
-    outline: 3px solid #a8edc5;
-    outline-offset: 3px;
-  }
-
-  .hero-cfg-guide-link {
-    display: inline-flex;
-    min-height: 42px;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.25rem;
-    color: rgba(255, 255, 255, 0.86);
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.32);
-    text-underline-offset: 0.24em;
-  }
-
-  .hero-cfg-guide-link > span:first-child {
-    display: grid;
-    width: 25px;
-    height: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    place-items: center;
-  }
-
-  .hero-cfg-direct-link {
-    display: flex;
-    width: 100%;
-    min-height: auto;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1rem;
-    padding: 0.72rem 0 0;
-    border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 0;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.74rem;
-    text-decoration: none;
-  }
-
-  .hero-cfg-direct-link:hover {
-    border-color: rgba(255, 255, 255, 0.28);
-    background: transparent;
-    color: #fff;
-  }
-
-  .hero-scroll-hint {
-    display: none;
-  }
-
-  .paths-section {
-    margin-top: clamp(1.4rem, 3.5vw, 2.6rem);
-  }
-
-  .paths-head {
-    margin-bottom: clamp(1rem, 2vw, 1.4rem);
-  }
-
-  .path-card {
-    min-height: 250px;
-  }
 
   .companions-heading,
+
   #kitHeading,
+
   #contactsHeading {
     margin: 0;
   }
@@ -7459,225 +6356,16 @@
     display: none !important;
   }
 
-  @media (min-width: 661px) and (max-width: 900px) {
-    .site-header .nav-header-home {
-      display: inline-flex;
-    }
 
-    .hero-content {
-      padding-inline: 1rem;
-    }
-
-    .hero-cfg-inner {
-      min-height: 0;
-      grid-template-columns: minmax(250px, 0.82fr) minmax(330px, 1.18fr);
-      gap: 1.4rem;
-      padding: 1.35rem;
-    }
-
-    .hero-cfg-visual .hcg {
-      max-width: 310px;
-    }
-
-    .hero-cfg-primary-title {
-      font-size: clamp(1.45rem, 3.3vw, 1.8rem);
-    }
-
-    .hero-cfg-primary-actions {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .paths-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .path-card--tool {
-      min-height: 0;
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      grid-template-rows: auto auto auto;
-      column-gap: 1.1rem;
-      align-items: center;
-    }
-
-    .path-card--tool .path-ico {
-      grid-column: 1;
-      grid-row: 1 / -1;
-      margin: 0;
-    }
-
-    .path-card--tool h3,
-    .path-card--tool p,
-    .path-card--tool .path-note {
-      grid-column: 2;
-    }
-
-    .path-card--tool .path-cta {
-      grid-column: 3;
-      grid-row: 1 / -1;
-      margin-right: 0.2rem;
-    }
-  }
 
   @media (max-width: 660px) {
     .hero-immersive {
       min-height: auto;
     }
 
-    .hero-content {
-      gap: 0;
-      padding: 1rem 0.9rem 1.35rem;
-    }
 
-    .hero-headline {
-      max-width: 13ch;
-      margin: 0 auto 0.55rem;
-      font-size: clamp(1.95rem, 9vw, 2.2rem);
-      line-height: 1.04;
-    }
 
-    .hero-promise {
-      max-width: 36ch;
-      font-size: 0.88rem;
-      line-height: 1.42;
-    }
 
-    .hero-cfg {
-      margin-top: 1rem;
-    }
-
-    .hero-cfg-inner {
-      min-height: 0;
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-      padding: 0.85rem 0.85rem 1rem;
-      border-radius: 22px;
-    }
-
-    .hero-cfg-visual {
-      order: -1;
-    }
-
-    .hero-cfg-visual .hcg {
-      max-width: 235px;
-    }
-
-    .hero-cfg-eyebrow {
-      margin-bottom: 0.5rem;
-      font-size: 0.62rem;
-    }
-
-    .hero-cfg-primary-title {
-      max-width: 22ch;
-      font-size: 1.35rem;
-    }
-
-    .hero-cfg-primary-copy {
-      margin-top: 0.55rem;
-      font-size: 0.8rem;
-      line-height: 1.42;
-    }
-
-    .hero-cfg-benefits {
-      gap: 0.4rem 0.7rem;
-      margin-top: 0.75rem;
-    }
-
-    .hero-cfg-benefits li {
-      font-size: 0.68rem;
-    }
-
-    .hero-cfg-primary-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.25rem;
-      margin-top: 0.85rem;
-    }
-
-    .hero-cfg-primary-cta {
-      width: 100%;
-      min-height: 46px;
-      padding-inline: 0.9rem;
-      font-size: 0.84rem;
-    }
-
-    .hero-cfg-guide-link {
-      justify-content: center;
-      min-height: 36px;
-      padding-bottom: 0;
-      font-size: 0.72rem;
-    }
-
-    .hero-cfg-guide-link > span:first-child {
-      width: 22px;
-      height: 22px;
-    }
-
-    .hero-cfg-direct-link {
-      margin-top: 0.65rem;
-      padding-top: 0.6rem;
-      font-size: 0.68rem;
-    }
-
-    .paths-section {
-      width: min(100% - 1.5rem, 1180px);
-      margin-top: 1.25rem;
-    }
-
-    .paths-title {
-      font-size: 1.65rem;
-    }
-
-    .paths-lead {
-      font-size: 0.9rem;
-    }
-
-    .paths-grid {
-      gap: 8px;
-    }
-
-    .path-card {
-      min-height: 0;
-      row-gap: 5px;
-      padding: 13px 14px 12px;
-      border-radius: 18px;
-    }
-
-    .path-ico {
-      width: 34px;
-      height: 34px;
-      margin: 0;
-      border-radius: 11px;
-      font-size: 17px;
-    }
-
-    .path-card h3 {
-      margin: 0;
-      padding-right: 6.25rem;
-      font-size: 1.02rem;
-      line-height: 1.08;
-    }
-
-    .path-card p {
-      margin: 0;
-      font-size: 0.78rem;
-      line-height: 1.32;
-    }
-
-    .path-card--tool .path-note {
-      margin: 0;
-      font-size: 0.68rem;
-      line-height: 1.26;
-    }
-
-    .path-cta {
-      justify-self: start;
-      padding: 6px 12px;
-      font-size: 0.76rem;
-    }
 
     #abbinamenti-grid .abbinamento-card:nth-child(n + 2) {
       display: none;
@@ -7728,206 +6416,115 @@
    controlli veri e tutti i testi informativi restano sopra la soglia minima
    di 12 px (14 px per azioni e contenuti che richiedono lettura). */
 @layer polish {
-  .site-header .nav-brand-copy small {
-    font-size: 12px;
-  }
-
   .site-header .nav-links > .nav-link {
     font-size: clamp(12px, 0.86vw, 13.5px);
   }
 
-  .hero-cfg-primary-cta {
-    font-size: 14px;
-  }
-
-  .hero-cfg-primary-actions {
-    align-items: stretch;
-  }
-
-  .hero-cfg-guide-link {
-    min-height: 48px;
-    justify-content: center;
-    padding: 0.72rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.32);
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 750;
-    line-height: 1.2;
-    text-decoration: none;
-    transition:
-      background 0.16s ease,
-      border-color 0.16s ease,
-      transform 0.16s ease;
-  }
-
-  .hero-cfg-guide-link:hover {
-    border-color: rgba(255, 255, 255, 0.58);
-    background: rgba(255, 255, 255, 0.18);
-    transform: translateY(-2px);
-  }
-
-  .hero-cfg-guide-link > span:first-child {
-    width: 28px;
-    height: 28px;
-    border-color: rgba(255, 255, 255, 0.38);
-    background: rgba(255, 255, 255, 0.14);
-    font-size: 13px;
-    font-weight: 800;
-  }
-
-  .hero-cfg-direct-link {
-    min-height: 48px;
-    margin-top: 0.75rem;
-    padding: 0.72rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 13px;
-    background: rgba(8, 31, 19, 0.18);
-    color: rgba(255, 255, 255, 0.92);
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-
-  .hero-cfg-direct-link:hover {
-    border-color: rgba(255, 255, 255, 0.42);
-    background: rgba(255, 255, 255, 0.12);
-  }
-
-  .hero-cfg-direct-link > span:last-child {
-    display: grid;
-    width: 28px;
-    height: 28px;
-    flex: none;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
-    font-size: 14px;
-    place-items: center;
-    transition: transform 0.16s ease;
-  }
-
-  .hero-cfg-direct-link:hover > span:last-child {
-    transform: translateY(3px);
-  }
-
-  .hero-cfg-eyebrow,
-  .path-tag,
   .compact-badge,
-  .section-kicker,
+
   .contatti-label,
+
   .kit-photo-lbl,
+
   .footer-nav-title,
+
   .footer-legal-title,
+
   .footer-tip-kicker {
     font-size: 12px;
   }
 
-  .hero-cfg-benefits li,
-  .path-card--tool .path-note {
-    font-size: 13px;
-  }
-
-  .path-card p,
   .compact-note,
+
   .compact-name,
-  .path-cta,
+
   .cookie-accept-btn,
+
   .cookie-reject-btn,
+
   .footer-nav-list a,
+
   .footer-legal-list a {
     font-size: 14px;
   }
 
   .footer-company-info,
+
   .footer-gdpr-copy,
+
   .footer-gdpr-links a,
+
   .footer-app-version {
     font-size: 12px;
     line-height: 1.45;
   }
 
   .cart-count,
+
   .catalog-mobile-filter-copy small,
+
   .compact-facts-row span,
+
   .abbin-card-topline span,
+
   .kit-meta-row span,
-  .kit-meta-row b,
-  .hcg-card-name,
-  .hcg-card-meta,
-  .hcg-card-qty {
+
+  .kit-meta-row b {
     font-size: 12px;
   }
 
   .site-header .cart-count,
+
   .hcg-harvest-reveal {
     font-size: 12px;
   }
 
   .catalog-filter-label,
+
   .hero-zone-btn small,
+
   .category-count,
+
   .catalog-filter-note,
+
   .chip-count,
+
   .catalog-filter-step,
+
   .category-ico,
+
   .category-label {
     font-size: 12px;
   }
 
   @media (max-width: 660px) {
-    .hero-cfg-primary-actions {
-      gap: 0.55rem;
-    }
-
-    .hero-cfg-guide-link {
-      width: 100%;
-      min-height: 46px;
-      padding: 0.62rem 0.9rem;
-      font-size: 14px;
-    }
-
-    .hero-cfg-guide-link > span:first-child {
-      width: 27px;
-      height: 27px;
-    }
-
-    .hero-cfg-direct-link {
-      min-height: 48px;
-      margin-top: 0.6rem;
-      padding: 0.68rem 0.8rem;
-      font-size: 14px;
-    }
-
-    .hero-cfg-eyebrow,
-    .path-tag,
     .compact-badge,
-    .section-kicker,
+
     .contatti-label,
+
     .kit-photo-lbl,
+
     .footer-nav-title,
+
     .footer-legal-title,
+
     .footer-tip-kicker {
       font-size: 12px;
     }
 
-    .path-card p,
     .compact-note,
+
     .compact-name,
-    .path-cta,
+
     .cookie-accept-btn,
+
     .cookie-reject-btn,
+
     .footer-nav-list a,
+
     .footer-legal-list a {
       font-size: 14px;
     }
 
-    /* Nel plastico della serra i micro-dati non sono controlli: su telefono
-       li togliamo invece di lasciarli illeggibili dentro tessere molto strette. */
-    .hcg-card-name,
-    .hcg-card-meta,
-    .hcg-card-qty {
-      display: none;
-    }
   }
 }

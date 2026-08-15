@@ -1139,16 +1139,20 @@ function renderHero() {
     ?.classList.toggle("active", state.riscaldata);
   applyDynamicStaticText();
 
-  const plants = diversePlants(seminabili(), 8);
+  /* Piante di sfondo: sono un margine botanico, non un motivo sparso.
+     Prima erano otto e alcune cadevano a `left: 12%` o `right: 15%`, che su
+     un portatile da 1366 px finisce dentro la colonna del testo: si vedevano
+     macchie verdi dietro al titolo e sembravano capitate lì per caso. Ora
+     sono cinque, tutte agganciate ai bordi e volutamente tagliate fuori
+     campo, e sono più grandi perché a quell'opacità devono leggersi come
+     carta decorata, non come oggetti. */
+  const plants = diversePlants(seminabili(), 5);
   const positions = [
-    { top: "8%", right: "3%", size: 160, opacity: 0.2, dur: 7, delay: 0 },
-    { top: "22%", right: "15%", size: 92, opacity: 0.16, dur: 5.5, delay: 1.4 },
-    { top: "62%", right: "2%", size: 118, opacity: 0.18, dur: 8, delay: 2.7 },
-    { top: "80%", right: "20%", size: 78, opacity: 0.15, dur: 6, delay: 0.6 },
-    { top: "10%", left: "2%", size: 78, opacity: 0.16, dur: 5, delay: 3.3 },
-    { top: "48%", left: "5%", size: 104, opacity: 0.18, dur: 7.5, delay: 1.1 },
-    { top: "78%", left: "12%", size: 86, opacity: 0.16, dur: 6.5, delay: 4.1 },
-    { top: "30%", left: "22%", size: 66, opacity: 0.14, dur: 9, delay: 2.0 },
+    { top: "-5%", left: "-4%", size: 215, opacity: 0.42, dur: 8, delay: 0 },
+    { top: "36%", left: "-6%", size: 152, opacity: 0.34, dur: 6.5, delay: 1.6 },
+    { top: "74%", left: "0%", size: 124, opacity: 0.3, dur: 9, delay: 3.1 },
+    { top: "4%", right: "-5%", size: 196, opacity: 0.38, dur: 7.5, delay: 0.8 },
+    { top: "60%", right: "-3%", size: 168, opacity: 0.32, dur: 6, delay: 2.4 },
   ];
   const wrap = document.getElementById("heroBgPlants");
   let previousEmoji = "";
@@ -1563,7 +1567,8 @@ function toggleCompanions() {
   if (label) {
     const hiddenCount = Math.max(
       0,
-      document.querySelectorAll("#abbinamenti-grid .abbinamento-card").length - 1,
+      document.querySelectorAll("#abbinamenti-grid .abbinamento-card").length -
+        1,
     );
     label.textContent = expanded
       ? t("companions.show_less")
@@ -4528,21 +4533,69 @@ if (catalogSearchLink) {
     BEDS.forEach((b) => {
       s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="url(#hcgSoil)"/>`;
       s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="url(#hcgSoilSpecks)" opacity=".62"/>`;
+      s += bedDimensions(b);
     });
     s += `</g>`;
     svg.innerHTML = defs + s;
   }
 
+  // Quote delle aiuole, con la stessa convenzione del plastico vero nel
+  // configuratore: filo orizzontale con due tacche sul lato lungo, filo
+  // verticale sul lato corto, numero in chiaro contornato di scuro perché
+  // il fondo è terra. Qui i valori sono indicativi — questa serra è
+  // un'illustrazione, non il progetto dell'utente — quindi le misure sono
+  // ricavate dalle proporzioni del disegno e arrotondate ai dieci centimetri.
+  const CM_PER_UNIT = 2;
+  const roundTen = (units) => Math.round((units * CM_PER_UNIT) / 10) * 10;
+
+  function bedDimensions(bed) {
+    const inset = 3.4;
+    /* Le quote sono un dettaglio, non un contenuto: chi guarda deve capire
+       che la serra è misurata, non leggere i numeri. Prima erano bianche
+       piene con un contorno scuro spesso e saltavano all'occhio più delle
+       piante. Ora sono più piccole, semitrasparenti e con un alone
+       appena accennato. */
+    const size = Math.max(5.4, Math.min(7.2, Math.min(bed.w, bed.h) * 0.105));
+    const line = "rgba(243,247,236,.34)";
+    const fill = "rgba(240,246,232,.62)";
+    const halo = 'stroke="rgba(24,43,29,.34)" stroke-width="1.2"';
+    const font = `font-family="DM Sans,sans-serif" font-size="${size}" font-weight="800" fill="${fill}" paint-order="stroke" ${halo} stroke-linejoin="round"`;
+
+    const x1 = bed.x + inset;
+    const x2 = bed.x + bed.w - inset;
+    const yBase = bed.y + bed.h - inset;
+    const cx = bed.x + bed.w / 2;
+
+    const vx = bed.x + bed.w - inset;
+    const y1 = bed.y + inset;
+    const y2 = bed.y + bed.h - inset;
+    const cy = bed.y + bed.h / 2;
+
+    let g = `<g pointer-events="none">`;
+    // Larghezza, sul lato orizzontale.
+    g += `<line x1="${x1}" y1="${yBase}" x2="${x2}" y2="${yBase}" stroke="${line}" stroke-width=".55"/>`;
+    g += `<line x1="${x1}" y1="${yBase - 2.6}" x2="${x1}" y2="${yBase + 2.6}" stroke="${line}" stroke-width=".55"/>`;
+    g += `<line x1="${x2}" y1="${yBase - 2.6}" x2="${x2}" y2="${yBase + 2.6}" stroke="${line}" stroke-width=".55"/>`;
+    g += `<text x="${cx}" y="${yBase - 2.2}" text-anchor="middle" ${font}>${roundTen(bed.w)} cm</text>`;
+    // Profondità, sul lato verticale.
+    g += `<line x1="${vx}" y1="${y1}" x2="${vx}" y2="${y2}" stroke="${line}" stroke-width=".55"/>`;
+    g += `<line x1="${vx - 2.6}" y1="${y1}" x2="${vx + 2.6}" y2="${y1}" stroke="${line}" stroke-width=".55"/>`;
+    g += `<line x1="${vx - 2.6}" y1="${y2}" x2="${vx + 2.6}" y2="${y2}" stroke="${line}" stroke-width=".55"/>`;
+    g += `<text x="${vx - 2.2}" y="${cy}" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 ${vx - 2.2} ${cy})" ${font}>${roundTen(bed.h)} cm</text>`;
+    g += `</g>`;
+    return g;
+  }
+
   // Aggiunge una pianta alla mappa
-  function addPlant(cx, cy, plant, r, seed) {
+  function addPlant(cx, cy, plant, r, seed, immediate = false) {
     const rng = makeRng(seed);
     const visualR = r;
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     // Il punto resta fissato nello spazio della serra: a crescere è soltanto
     // il contenuto interno, mai la posizione della pianta.
     g.setAttribute("transform", `translate(${cx} ${cy})`);
-    g.style.opacity = "0";
-    g.style.transition = "opacity 0.22s ease";
+    g.style.opacity = immediate ? "1" : "0";
+    g.style.transition = immediate ? "none" : "opacity 0.22s ease";
     const label =
       r >= 9 && shouldShowHarvestVector(plant)
         ? `<text class="hcg-harvest-reveal" y="${-visualR * 0.28}" text-anchor="middle" dominant-baseline="central" font-size="${Math.max(visualR * 1.2, 8) * 0.8}" style="pointer-events:none;user-select:none;font-family:system-ui">${plant.emoji}</text>`
@@ -4554,6 +4607,7 @@ if (catalogSearchLink) {
       ${label}
     </g>`;
     svg.appendChild(g);
+    if (immediate) return;
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         g.style.opacity = "1";
@@ -5173,9 +5227,10 @@ if (catalogSearchLink) {
       ?.addEventListener("click", toggleCatalogFilters);
 
     document
-      .querySelectorAll(
-        ".hero-cfg-level, .hero-cfg-open-preconfig, .nav-link--configuratore",
-      )
+      // .hero-cfg-level era la scelta del livello dentro la vecchia hero:
+      // il livello ora si sceglie nel configuratore, quindi restano solo
+      // l'invito della hero e la voce di menu.
+      .querySelectorAll(".hero-cfg-open-preconfig, .nav-link--configuratore")
       .forEach((link) => {
         link.addEventListener("click", function (e) {
           e.preventDefault();

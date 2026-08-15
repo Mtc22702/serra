@@ -1445,8 +1445,7 @@
 }
 
 /* Modali e calendario */
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     :where(
@@ -1465,8 +1464,7 @@
     background: #1e3027;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] #calendarModal .projects-backdrop {
     background: rgba(3, 10, 7, 0.72);
@@ -1697,8 +1695,7 @@
     color: #173823;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] .spacing-svg {
     --spacing-diagram-bg: #20332a;
@@ -1707,15 +1704,11 @@
   }
 }
 @layer base {
-  @media (max-width: 720px) {
-  }
   @layer dark-theme {
     html[data-theme="dark"] .nav-links {
       background: #192820;
       border-color: var(--dark-border);
     }
-  }
-  @layer base {
   }
 }
 @layer dark-theme {
@@ -2010,8 +2003,7 @@
 }
 
 /* Catalogo e footer */
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .catalog-pro-section .top-add-btn {
     background: linear-gradient(135deg, #36975a, #267846);
@@ -2102,8 +2094,7 @@
     border-color: #8370a4;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body footer.footer-botanico {
     background: linear-gradient(180deg, #0e2018 0%, #091710 100%);
@@ -2268,10 +2259,7 @@
     border-color: rgba(176, 48, 32, 0.48);
   }
 }
-@layer dark-theme {
-  }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2324,8 +2312,7 @@
     box-shadow: 0 10px 24px rgba(8, 46, 23, 0.38);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2377,8 +2364,7 @@
     border-color: rgba(173, 224, 188, 0.46);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2414,8 +2400,7 @@
     border-color: #d0797c;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2455,8 +2440,7 @@
     border-color: #8ddda4;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2507,8 +2491,7 @@
     color: var(--serra-white);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2554,8 +2537,7 @@
     outline-offset: 3px;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2582,8 +2564,7 @@
     color: #ffd878;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .percorso-cta-btn--earth {
     background: #8a5a32;
@@ -2602,8 +2583,7 @@
     border-color: #c8a557;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .diff-easy {
     background: #214832;
@@ -2642,34 +2622,7 @@
       gap: 0.5rem;
       padding-inline: 0.5rem;
     }
-    .site-header .nav-brand {
-      min-width: 0;
-      overflow: hidden;
-      gap: 0.42rem;
-      padding-right: 0;
-    }
-    .site-header .nav-brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-    }
-    .site-header .nav-brand img {
-      width: 25px;
-      height: 25px;
-    }
-    .site-header .nav-brand-copy {
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-    .site-header .nav-brand-text {
-      max-width: none;
-      font-size: 0.93rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .site-header .nav-brand-copy small {
-      display: none;
-    }
+
     .site-header .nav-actions {
       flex: 0 0 auto;
       gap: 0.42rem;
@@ -2740,14 +2693,6 @@
   }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
-  @media (max-width: 400px) {
-    .site-header .nav-brand-mark {
-      display: inline-grid;
-    }
-    .site-header .nav-brand-text {
-      font-size: 0.88rem;
-    }
-  }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 340px) {
@@ -2760,16 +2705,7 @@
       align-content: center;
       gap: 0;
     }
-    .site-header .nav-brand {
-      grid-column: 1;
-      grid-row: 1;
-      justify-self: start;
-      overflow: visible;
-    }
-    .site-header .nav-brand-text {
-      overflow: visible;
-      text-overflow: clip;
-    }
+
     .site-header .nav-actions {
       grid-column: 1;
       grid-row: 2;
@@ -2857,10 +2793,6 @@
   }
 
   @media (max-width: 380px) {
-    .site-header .nav-brand-text {
-      max-width: 112px;
-    }
-
     .site-header .nav-actions {
       gap: 0.22rem;
     }
@@ -3279,16 +3211,6 @@
       display: none;
     }
 
-    .site-header .nav-brand {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 1;
-      max-width: calc(100vw - 9rem);
-      margin: 0;
-      transform: translate(-50%, -50%);
-    }
-
     .site-header .nav-menu-toggle {
       left: 0.68rem;
       top: 50%;
@@ -3652,7 +3574,11 @@
   .orto-task.is-late {
     background: linear-gradient(
       100deg,
-      color-mix(in srgb, var(--task-accent, var(--orto-green)) 7%, var(--orto-surface)),
+      color-mix(
+        in srgb,
+        var(--task-accent, var(--orto-green)) 7%,
+        var(--orto-surface)
+      ),
       var(--orto-surface) 55%
     );
   }
@@ -4690,13 +4616,13 @@
 @layer base {
   .nav-link--vivaio[data-count]::after {
     content: attr(data-count);
-    min-width: 19px;
+    min-width: 20px;
     margin-left: 6px;
     padding: 1px 6px;
     border-radius: 999px;
     background: #c9962f;
     color: #2a1d02;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 800;
     line-height: 1.6;
     text-align: center;
@@ -4719,13 +4645,13 @@
 
   .nav-link--orto::after {
     content: "gratis";
-    padding: 2px 7px;
+    padding: 2px 6px;
     border-radius: 999px;
     background: rgba(47, 107, 58, 0.14);
     color: #2f6b3a;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.03em;
     line-height: 1.6;
     text-transform: uppercase;
   }
@@ -4757,5 +4683,697 @@
 
   .orto-notif p {
     font-size: 14px;
+  }
+}
+
+/* Orto e vivaio — riallineamento grafico alla home.
+ *
+ * Viene concatenato dopo pages/orto.css dentro serra-orto.css e
+ * serra-vivaio.css, quindi vince a parità di livello e specificità. Sta in un
+ * file separato perché le due pagine erano rimaste sulla vecchia palette
+ * verdina mentre la home è passata alla carta calda, e perché una parte dei
+ * componenti (schede, pulsanti, dialoghi) è condivisa fra orto e vivaio: qui
+ * si tocca una volta e cambiano entrambe.
+ *
+ * Struttura: superficie e token → intestazione → linguette → giornata →
+ * attività → schede → dialoghi → tema scuro → adattamenti.
+ */
+
+@layer base, dark-theme, polish, components;
+
+@layer base {
+  /* ---------- superficie e token ----------
+     I nomi --orto-* restano: li usano centinaia di regole in orto.css. Cambia
+     solo il valore, e con quello cambia tutta la pagina. Sono gli stessi
+     colori della home: carta calda per il fondo, carta chiara per le schede
+     un tono sopra, così i riquadri si staccano senza bisogno di ombre. */
+  .orto-page {
+    --orto-ink: #1a2f21;
+    --orto-ink-soft: #354a3b;
+    --orto-muted: #5f6f62;
+    --orto-surface: #fffdf6;
+    --orto-surface-2: #faf7ee;
+    --orto-line: rgba(31, 58, 38, 0.14);
+    --orto-line-strong: rgba(31, 58, 38, 0.26);
+    --orto-green: #2f6b3a;
+    --orto-green-dk: #1f3a26;
+    --orto-green-lt: #3a762e;
+    /* L'ambra di prima stava a 3,4:1 sulla carta: sotto la soglia AA. */
+    --orto-amber: #8a631c;
+    --orto-r: 16px;
+    --orto-r-lg: 22px;
+    --orto-shadow-sm: 0 2px 8px rgba(24, 53, 36, 0.06);
+    --orto-shadow: 0 12px 30px rgba(24, 53, 36, 0.1);
+    --orto-shadow-lg: 0 20px 48px rgba(24, 53, 36, 0.14);
+    background: #f4f0e3;
+    color: var(--orto-ink);
+  }
+
+  /* Stessa colonna della home: le due pagine si aprono una dopo l'altra e i
+     bordi del contenuto devono cadere allo stesso posto. */
+  .orto-wrap {
+    max-width: none;
+    width: min(100% - clamp(2.3rem, 8vw, 5rem), 1180px);
+    padding: calc(var(--nav-h, 76px) + clamp(1.2rem, 3.5vw, 2.4rem)) 0
+      clamp(5rem, 12vw, 7rem);
+  }
+
+  /* ---------- intestazione di pagina ---------- */
+
+  .orto-page-head {
+    max-width: 60ch;
+    margin-bottom: clamp(1.5rem, 3.5vw, 2.4rem);
+  }
+
+  .orto-page-title {
+    margin-top: 0.15rem;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.018em;
+    color: var(--orto-ink);
+    text-wrap: balance;
+  }
+
+  .orto-page-lead {
+    margin-top: 0.55rem;
+    color: var(--orto-muted);
+    font-size: 1rem;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  /* ---------- linguette ----------
+     Erano tre etichette su un filetto: dicevano dove si può andare, non cosa
+     ci si trova. Ora ognuna porta icona, nome, una riga di stato e il proprio
+     numero, e la selezionata è una scheda sollevata sulla carta. Il numero è
+     la ragione per cui uno ci clicca: «Da piantare 6» è un invito, «Da
+     piantare» da solo no. */
+  .orto-viewbar {
+    margin-bottom: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .orto-tabs {
+    display: grid;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .orto-tab {
+    position: relative;
+    display: grid;
+    align-items: center;
+    gap: 0 11px;
+    min-height: 62px;
+    padding: 11px 13px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r);
+    background: var(--orto-surface-2);
+    color: var(--orto-ink);
+    text-align: left;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .orto-tab:hover {
+    border-color: color-mix(in srgb, var(--orto-green) 45%, transparent);
+    background: var(--orto-surface);
+  }
+
+  /* La selezionata si stacca dalla carta e prende il filo verde in alto:
+     un solo segnale, ma di due tipi, così si vede anche a colpo d'occhio
+     periferico. */
+  .orto-tab.is-active {
+    border-color: color-mix(in srgb, var(--orto-green) 55%, transparent);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-tab::after {
+    position: absolute;
+    top: -1px;
+    right: 14px;
+    left: 14px;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--orto-green);
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    content: "";
+  }
+
+  .orto-tab.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .orto-tab-ico {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    background: color-mix(in srgb, var(--orto-green) 11%, transparent);
+    font-size: 17px;
+    place-items: center;
+  }
+
+  .orto-tab-copy {
+    display: block;
+    min-width: 0;
+  }
+
+  .orto-tab-name {
+    display: block;
+    color: var(--orto-ink);
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* La riga di stato è quello che trasforma una voce di menu in
+     un'informazione: «tutto a posto» oppure «2 in ritardo». */
+  .orto-tab-note {
+    display: block;
+    overflow: hidden;
+    margin-top: 1px;
+    color: var(--orto-muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .orto-tab-note.is-late {
+    color: #a8461f;
+  }
+
+  .orto-tab-badge {
+    display: inline-grid;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.13);
+    color: var(--orto-green);
+    font-size: 12px;
+    font-weight: 700;
+    place-items: center;
+  }
+
+  .orto-tab.is-active .orto-tab-badge {
+    background: var(--orto-green);
+    color: #fffdf6;
+  }
+
+  /* ---------- la giornata ----------
+     Prima era un pannello verde scuro con anello, tre statistiche e un
+     riquadro notifica: molta cornice sopra la cosa che conta, cioè l'elenco
+     delle attività. Ora è una fascia chiara e bassa. */
+  .orto-hero {
+    padding: clamp(1.1rem, 2.6vw, 1.6rem) clamp(1.1rem, 2.6vw, 1.7rem);
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    color: var(--orto-ink);
+    box-shadow: none;
+  }
+
+  .orto-hero::before,
+  .orto-hero::after {
+    display: none;
+  }
+
+  .orto-hero-inner {
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .orto-hero-date {
+    color: var(--orto-muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .orto-hero h2 {
+    margin-top: 0.4rem;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.014em;
+    color: var(--orto-ink);
+  }
+
+  .orto-hero-sub {
+    margin-top: 0.3rem;
+    color: var(--orto-muted);
+    font-size: 0.95rem;
+  }
+
+  .orto-hero-stats {
+    gap: 8px 22px;
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-hero-stats span {
+    color: var(--orto-muted);
+  }
+
+  .orto-hero-stats b {
+    color: var(--orto-ink);
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+  }
+
+  .orto-hero-stats small {
+    color: var(--orto-muted);
+    font-size: 12px;
+  }
+
+  /* L'anello resta, ma è un dato accanto agli altri e non un'illustrazione. */
+  .orto-ring-wrap {
+    grid-template-columns: auto;
+    gap: 0;
+  }
+
+  /* Il riquadro delle notifiche ripeteva a parole l'elenco che sta subito
+     sotto. Tolto: due volte la stessa informazione a dieci pixel di
+     distanza. */
+  .orto-notif {
+    display: none;
+  }
+
+  /* ---------- intestazioni di elenco ---------- */
+
+  .orto-section-head {
+    align-items: center;
+    margin: clamp(1.6rem, 3.5vw, 2.2rem) 0 0.8rem;
+  }
+
+  .orto-section-head h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--orto-ink);
+  }
+
+  .orto-count {
+    display: inline-grid;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background: rgba(47, 107, 58, 0.12);
+    color: var(--orto-green);
+    font-size: 12px;
+    font-weight: 700;
+    place-items: center;
+  }
+
+  /* ---------- attività ---------- */
+
+  .orto-task {
+    gap: 13px;
+    margin-bottom: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r);
+    background: var(--orto-surface);
+    box-shadow: none;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease;
+  }
+
+  .orto-task:hover {
+    border-color: color-mix(
+      in srgb,
+      var(--task-accent, #2f6b3a) 45%,
+      transparent
+    );
+  }
+
+  /* Il filo di colore a sinistra c'era già: qui si accorcia perché con gli
+     angoli più stretti arrivava a filo del bordo. */
+  .orto-task::before {
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .orto-task.is-late {
+    border-color: rgba(168, 70, 31, 0.34);
+    background: #fff9f5;
+  }
+
+  .orto-task.is-done {
+    background: var(--orto-surface-2);
+    opacity: 0.72;
+  }
+
+  .orto-task-label {
+    color: var(--orto-ink);
+    font-size: 0.98rem;
+    font-weight: 650;
+  }
+
+  .orto-task-label em {
+    color: var(--orto-muted);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .orto-task-meta {
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
+  /* La casella resta 27 × 27 px — la spunta disegnata dentro è tarata su
+     quella misura — ma il bersaglio si allarga a 44 px con un'area invisibile
+     attorno: il quadratino da toccare era più piccolo del minimo per il dito.
+     Lo stato acceso continua a leggersi da data-on, come lo scrive orto.js. */
+  .orto-check {
+    position: relative;
+  }
+
+  .orto-check::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    content: "";
+  }
+
+  .orto-snooze {
+    flex: none;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--orto-ink-soft);
+    font-size: 12.5px;
+    font-weight: 650;
+  }
+
+  .orto-snooze:hover {
+    border-color: var(--orto-green);
+    background: rgba(47, 107, 58, 0.08);
+  }
+
+  .orto-task-thumb {
+    border-radius: 12px;
+  }
+
+  /* ---------- schede di coltura e di dispensa ---------- */
+
+  .orto-view-head h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.014em;
+    color: var(--orto-ink);
+  }
+
+  .orto-view-head p {
+    margin-top: 0.3rem;
+    color: var(--orto-muted);
+    font-size: 0.97rem;
+  }
+
+  .orto-card {
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    box-shadow: none;
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.22s ease,
+      border-color 0.18s ease;
+  }
+
+  .orto-card:hover {
+    border-color: rgba(47, 107, 58, 0.4);
+    box-shadow: var(--orto-shadow);
+    transform: translateY(-3px);
+  }
+
+  .orto-card-titles h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+  }
+
+  .orto-stat {
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r);
+    background: var(--orto-surface);
+    box-shadow: none;
+  }
+
+  .orto-stat b {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+  }
+
+  .orto-stat small {
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
+  .orto-empty {
+    border-color: var(--orto-line-strong);
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface-2);
+  }
+
+  .orto-empty h4 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--orto-ink);
+  }
+
+  .orto-empty p {
+    color: var(--orto-muted);
+  }
+
+  .orto-welcome {
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+  }
+
+  .orto-welcome h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.014em;
+  }
+
+  /* ---------- pulsanti ---------- */
+
+  .orto-btn {
+    min-height: var(--button-min-height, 44px);
+    padding: 0 20px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .orto-btn--sm {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 0.9rem;
+  }
+
+  .orto-btn--ghost {
+    border: 1px solid var(--orto-line-strong);
+    background: transparent;
+    color: var(--orto-ink);
+  }
+
+  .orto-btn--ghost:hover {
+    border-color: var(--orto-green);
+    background: rgba(47, 107, 58, 0.08);
+  }
+
+  /* Azione che toglie qualcosa: rossa, e solo dentro un dialogo di conferma. */
+  .orto-btn--danger {
+    border: 1px solid var(--button-danger-border, rgba(176, 48, 32, 0.32));
+    background: var(--button-danger-bg, #fff3f1);
+    color: var(--button-danger-text, #9f2f24);
+  }
+
+  .orto-btn--danger:hover {
+    background: var(--button-danger-bg-hover, #ffe8e4);
+  }
+
+  /* ---------- dialoghi ---------- */
+
+  .orto-dialog {
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+  }
+
+  .orto-dialog-head h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    color: var(--orto-ink);
+  }
+
+  .orto-dialog-head p {
+    color: var(--orto-muted);
+    font-size: 0.95rem;
+  }
+
+  .orto-dialog--confirm {
+    max-width: 460px;
+  }
+
+  .orto-field label {
+    color: var(--orto-ink-soft);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .orto-field-hint,
+  .orto-field-error {
+    font-size: 12.5px;
+  }
+
+  /* ---------- scala minima ----------
+     La pagina aveva nove regole fra 9 e 11,5 px: l'anello, le statistiche
+     della giornata, le etichette delle fasi, i chip. Il progetto fissa 12 px
+     come minimo per qualsiasi testo leggibile, e qui non erano decorazioni ma
+     dati. La riga «Semi / Piantina» del dialogo aveva per giunta il titolo
+     grande quanto il suo suggerimento: la classe c'era, lo stile no. */
+  .orto-ring-txt small,
+  .orto-hero-stats small,
+  .orto-tab-badge,
+  .orto-chip,
+  .orto-phase-labels,
+  .orto-count,
+  .orto-field-hint,
+  .orto-welcome-kicker,
+  .orto-origin span {
+    font-size: 12px;
+  }
+
+  .orto-origin .orto-origin-title {
+    margin-bottom: 1px;
+    color: var(--orto-ink);
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+/* ---------- tema scuro ---------- */
+
+@layer dark-theme {
+  html[data-theme="dark"] .orto-page {
+    --orto-ink: #e9f2ea;
+    --orto-ink-soft: #cfdfd3;
+    --orto-muted: #9db0a3;
+    --orto-surface: #12211a;
+    --orto-surface-2: #16281e;
+    --orto-line: rgba(160, 205, 176, 0.16);
+    --orto-line-strong: rgba(160, 205, 176, 0.3);
+    --orto-green: #7cc48d;
+    --orto-green-lt: #8fd39d;
+    --orto-amber: #dbb45e;
+    background: #0c1812;
+  }
+
+  html[data-theme="dark"] .orto-tab-badge {
+    background: rgba(124, 196, 141, 0.16);
+    color: #8fd39d;
+  }
+
+  html[data-theme="dark"] .orto-tab.is-active .orto-tab-badge {
+    background: #7cc48d;
+    color: #0c1812;
+  }
+
+  html[data-theme="dark"] .orto-tab-note.is-late {
+    color: #e8a184;
+  }
+
+  html[data-theme="dark"] .orto-count {
+    background: rgba(124, 196, 141, 0.16);
+    color: #8fd39d;
+  }
+
+  html[data-theme="dark"] .orto-task.is-late {
+    border-color: rgba(226, 140, 99, 0.34);
+    background: #1f1a15;
+  }
+
+  html[data-theme="dark"] .orto-card:hover {
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.44);
+  }
+
+  html[data-theme="dark"] .orto-btn--danger {
+    border-color: rgba(226, 140, 99, 0.4);
+    background: rgba(226, 140, 99, 0.14);
+    color: #f0b49a;
+  }
+}
+
+/* ---------- adattamenti ---------- */
+
+@layer polish {
+  @media (max-width: 720px) {
+    .orto-wrap {
+      width: min(100% - 1.8rem, 1180px);
+      padding-top: calc(var(--nav-h, 62px) + 1rem);
+    }
+
+    /* Su telefono le tre schede si impilano: affiancate resterebbero larghe
+       un centimetro e la riga di stato sparirebbe nei puntini. */
+    .orto-tabs {
+      gap: 7px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .orto-tab {
+      min-height: 56px;
+    }
+
+    .orto-hero-inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .orto-ring-wrap {
+      justify-self: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orto-tab::after,
+    .orto-task,
+    .orto-card,
+    .orto-check,
+    .orto-snooze {
+      transition: none;
+    }
   }
 }

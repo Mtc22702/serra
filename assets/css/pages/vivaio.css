@@ -756,7 +756,11 @@
   html[data-theme="dark"] .viv-hero {
     border-color: rgba(137, 203, 153, 0.14);
     background:
-      radial-gradient(440px 210px at 4% 0%, rgba(77, 149, 93, 0.13), transparent 72%),
+      radial-gradient(
+        440px 210px at 4% 0%,
+        rgba(77, 149, 93, 0.13),
+        transparent 72%
+      ),
       linear-gradient(145deg, #1b2d23 0%, #15251c 100%);
     box-shadow: 0 20px 46px rgba(0, 0, 0, 0.25);
   }
@@ -956,4 +960,26 @@
 
 /* Prezzi, filtri e promesse di servizio restano leggibili su tutti i device. */
 @layer polish {
+}
+
+/* ---------- scala minima del vivaio ----------
+   Undici regole stavano fra 9,5 e 11,5 px: prezzi, unità di vendita, spese di
+   spedizione, la data della fascia alta. Non sono decorazioni, sono i dati su
+   cui si decide un acquisto. Il progetto fissa 12 px come minimo per
+   qualsiasi testo leggibile (vedi design-qa.md) e qui non era rispettato.
+   Va in coda al foglio perché deve vincere sulle regole qui sopra. */
+@layer base {
+  .viv-chip small,
+  .viv-qty-value small,
+  .viv-card-foot,
+  .viv-remove,
+  .viv-save-photo,
+  .viv-unit,
+  .viv-unit-price,
+  .viv-hero .orto-hero-date,
+  .viv-visual-label,
+  .viv-shipping,
+  .viv-hero .viv-stat-copy small {
+    font-size: 12px;
+  }
 }

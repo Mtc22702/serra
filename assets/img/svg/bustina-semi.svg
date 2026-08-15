@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Bustina di semi">
+  <!-- Bustina di semi. Serviva un oggetto che dicesse «semi»: prima la scheda
+       usava l'illustrazione di un pomodoro adulto, che è il risultato, non il
+       punto di partenza. Palette allineata agli altri disegni dell'app. -->
+  <defs>
+    <linearGradient id="bs-carta" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e4"/>
+      <stop offset="1" stop-color="#f0e4c8"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="32" cy="57" rx="19" ry="3.4" fill="#1f3a26" opacity=".12"/>
+  <!-- corpo della bustina, leggermente inclinato -->
+  <g transform="rotate(-4 32 32)">
+    <rect x="15" y="10" width="34" height="43" rx="3.2" fill="url(#bs-carta)" stroke="#8a7550" stroke-width="1.6"/>
+    <!-- risvolto superiore incollato -->
+    <path d="M15 10h34v7.5H15z" fill="#e6d6b2" stroke="#8a7550" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M18.5 13.8h27" stroke="#b39f74" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="2.4 3"/>
+    <!-- finestra con il germoglio stampato -->
+    <rect x="20" y="22" width="24" height="17" rx="2.2" fill="#eaf2e2" stroke="#a8b795" stroke-width="1.2"/>
+    <path d="M32 37.5v-7.2" stroke="#3f7d33" stroke-width="1.9" stroke-linecap="round"/>
+    <path d="M32 32.4c-2.6-.6-4.4-2.6-4.6-5.2 2.7-.1 4.6 1.6 5 4" fill="#5da845"/>
+    <path d="M32 30.9c2.2-1.2 3.2-3.5 2.6-5.9-2.4.6-3.6 2.5-3.6 4.7" fill="#82c25e"/>
+    <!-- riga del nome e riga del peso -->
+    <path d="M20 44h24M20 48.2h15" stroke="#a8946a" stroke-width="1.7" stroke-linecap="round"/>
+  </g>
+  <!-- semi caduti fuori dalla bustina -->
+  <g fill="#7a5c33">
+    <ellipse cx="47.5" cy="49.5" rx="2.5" ry="1.9" transform="rotate(24 47.5 49.5)"/>
+    <ellipse cx="53" cy="53.4" rx="2.2" ry="1.7" transform="rotate(-14 53 53.4)"/>
+    <ellipse cx="45" cy="54.6" rx="1.9" ry="1.5" transform="rotate(40 45 54.6)"/>
+  </g>
+  <g fill="#9c7845">
+    <ellipse cx="47" cy="49" rx="1" ry=".7" transform="rotate(24 47 49)"/>
+    <ellipse cx="52.5" cy="52.9" rx=".9" ry=".6" transform="rotate(-14 52.5 52.9)"/>
+  </g>
+</svg>

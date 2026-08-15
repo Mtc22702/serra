@@ -175,13 +175,6 @@
           </div>
         </nav>
         <div class="nav-actions">
-          <a
-            href="index.html"
-            class="nav-header-home"
-            aria-label="Home"
-            data-orto-key="nav.home"
-            >🏠 Home</a
-          >
           <button
             class="nav-menu-toggle"
             type="button"
@@ -249,12 +242,30 @@
     </header>
 
     <main class="orto-wrap">
+      <!-- Intestazione di pagina. Prima non c'era: si atterrava direttamente
+           su tre linguette, senza sapere dove si fosse né a cosa servisse la
+           pagina. Stesso occhiello e stessa faccia delle sezioni della home. -->
+      <header class="orto-page-head">
+        <span class="section-kicker" data-orto-key="page.kicker"
+          >Terza tappa · strumento gratuito</span
+        >
+        <h1 class="orto-page-title" data-orto-key="page.title">Il mio orto</h1>
+        <p class="orto-page-lead" data-orto-key="page.lead">
+          Registra cosa hai piantato e ti diciamo cosa fare, settimana per
+          settimana, fino alla raccolta. Funziona anche con piante comprate
+          altrove.
+        </p>
+      </header>
+
       <!-- Selettore delle tre viste: attività del giorno, colture seguite, listino -->
       <div class="orto-viewbar">
         <!-- Volutamente un div e non un <nav>: in base.css il tag nav è la
              navigazione principale fissa, e un secondo nav ne erediterebbe il
              posizionamento coprendo l'intestazione. -->
         <div class="orto-tabs" role="tablist" aria-label="Sezioni dell'orto">
+          <!-- Ogni linguetta porta il proprio numero: prima ce l'aveva solo
+               «Oggi», e le altre due non dicevano se dentro ci fosse qualcosa.
+               Il numero è la ragione per cui uno ci clicca. -->
           <button
             class="orto-tab is-active"
             type="button"
@@ -262,7 +273,11 @@
             aria-selected="true"
             data-orto-view="oggi"
           >
-            <span data-orto-key="tab.oggi">Oggi</span>
+            <span class="orto-tab-ico" aria-hidden="true">☀️</span>
+            <span class="orto-tab-copy">
+              <span class="orto-tab-name" data-orto-key="tab.oggi">Oggi</span>
+              <span class="orto-tab-note" id="ortoOggiNote"></span>
+            </span>
             <span class="orto-tab-badge" id="ortoTodayBadge" hidden>0</span>
           </button>
           <button
@@ -272,7 +287,14 @@
             aria-selected="false"
             data-orto-view="colture"
           >
-            <span data-orto-key="tab.colture">Colture</span>
+            <span class="orto-tab-ico" aria-hidden="true">🌿</span>
+            <span class="orto-tab-copy">
+              <span class="orto-tab-name" data-orto-key="tab.colture"
+                >Colture</span
+              >
+              <span class="orto-tab-note" id="ortoColtureNote"></span>
+            </span>
+            <span class="orto-tab-badge" id="ortoColtureBadge" hidden>0</span>
           </button>
           <button
             class="orto-tab"
@@ -281,17 +303,16 @@
             aria-selected="false"
             data-orto-view="dispensa"
           >
-            <span data-orto-key="tab.dispensa">Da piantare</span>
+            <span class="orto-tab-ico" aria-hidden="true">📦</span>
+            <span class="orto-tab-copy">
+              <span class="orto-tab-name" data-orto-key="tab.dispensa"
+                >Da piantare</span
+              >
+              <span class="orto-tab-note" id="ortoDispensaNote"></span>
+            </span>
+            <span class="orto-tab-badge" id="ortoDispensaBadge" hidden>0</span>
           </button>
         </div>
-        <!-- Contesto: qui non si vende, si coltiva ciò che si possiede già. -->
-        <p class="orto-tool-note">
-          <span aria-hidden="true">🛠️</span>
-          <span data-orto-key="page.tool_note"
-            >Strumento gratuito per i semi e le piantine che hai già. Qui non si
-            compra nulla.</span
-          >
-        </p>
       </div>
 
       <!-- Contenuto generato da orto.js in base alla vista attiva -->
@@ -381,8 +402,13 @@
           >
             Aggiungi all'orto
           </button>
+          <!-- formnovalidate: senza, il browser convalida i campi obbligatori
+               anche quando si annulla, e il dialogo restava bloccato finché
+               non si sceglieva una pianta. Il valore resta "cancel", che è
+               quello che orto.js legge da event.submitter. -->
           <button
             type="submit"
+            formnovalidate
             class="orto-btn orto-btn--ghost"
             value="cancel"
             data-orto-key="dlg.cancel"
@@ -440,8 +466,13 @@
           >
             Metti a dimora
           </button>
+          <!-- formnovalidate: senza, il browser convalida i campi obbligatori
+               anche quando si annulla, e il dialogo restava bloccato finché
+               non si sceglieva una pianta. Il valore resta "cancel", che è
+               quello che orto.js legge da event.submitter. -->
           <button
             type="submit"
+            formnovalidate
             class="orto-btn orto-btn--ghost"
             value="cancel"
             data-orto-key="dlg.cancel"
@@ -514,8 +545,98 @@
           >
             Salva
           </button>
+          <!-- formnovalidate: senza, il browser convalida i campi obbligatori
+               anche quando si annulla, e il dialogo restava bloccato finché
+               non si sceglieva una pianta. Il valore resta "cancel", che è
+               quello che orto.js legge da event.submitter. -->
           <button
             type="submit"
+            formnovalidate
+            class="orto-btn orto-btn--ghost"
+            value="cancel"
+            data-orto-key="dlg.cancel"
+          >
+            Annulla
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Registrazione della raccolta. Prima si usava window.prompt: fuori dal
+         disegno della pagina, senza tastiera numerica sul telefono e bloccato
+         da alcuni browser dentro un gesto dell'utente. -->
+    <dialog class="orto-dialog" id="ortoHarvestDialog">
+      <div class="orto-dialog-head">
+        <h3 data-orto-key="harvest.title">Registra la raccolta</h3>
+        <p>
+          <span id="ortoHarvestWho"></span> —
+          <span data-orto-key="harvest.sub"
+            >Diventerà la stima per l'anno prossimo.</span
+          >
+        </p>
+      </div>
+      <form method="dialog" class="orto-dialog-body" id="ortoHarvestForm">
+        <div class="orto-field" style="max-width: 180px">
+          <label for="ortoHarvestKg" data-orto-key="harvest.kg"
+            >Quanti kg hai raccolto?</label
+          >
+          <input
+            type="number"
+            id="ortoHarvestKg"
+            min="0"
+            step="0.1"
+            value="1"
+            required
+          />
+        </div>
+        <div class="orto-row" style="margin-top: 18px">
+          <button
+            type="submit"
+            class="orto-btn"
+            value="ok"
+            data-orto-key="harvest.confirm"
+          >
+            Registra
+          </button>
+          <button
+            type="submit"
+            formnovalidate
+            class="orto-btn orto-btn--ghost"
+            value="cancel"
+            data-orto-key="dlg.cancel"
+          >
+            Annulla
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Conferma prima di eliminare: la rimozione cancella anche lo storico
+         delle attività di quella coltura, e non si può annullare. -->
+    <dialog class="orto-dialog orto-dialog--confirm" id="ortoRemoveDialog">
+      <div class="orto-dialog-head">
+        <h3 data-orto-key="remove.title">Eliminare questa coltura?</h3>
+        <p>
+          <span id="ortoRemoveWho"></span> —
+          <span data-orto-key="remove.sub"
+            >Spariscono anche le attività già svolte. Non si può
+            annullare.</span
+          >
+        </p>
+      </div>
+      <form method="dialog" class="orto-dialog-body" id="ortoRemoveForm">
+        <div class="orto-row">
+          <button
+            type="submit"
+            class="orto-btn orto-btn--danger"
+            value="ok"
+            data-orto-key="remove.confirm"
+          >
+            Elimina
+          </button>
+          <button
+            type="submit"
+            formnovalidate
             class="orto-btn orto-btn--ghost"
             value="cancel"
             data-orto-key="dlg.cancel"

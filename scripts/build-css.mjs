@@ -5,20 +5,30 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cssDir = path.join(root, "assets/css");
 const bundles = {
-  "serra-home.css": "pages/home.css",
+  // La hero e i percorsi sono stati rifatti da zero: stanno in un file a
+  // parte, concatenato dopo, così non si sedimentano sopra home.css.
+  "serra-home.css": ["pages/home.css", "pages/home-hero.css"],
   "serra-configuratore.css": "pages/configuratore.css",
   "serra-account.css": "pages/account.css",
   "serra-guida.css": "pages/guida.css",
   "serra-order-confirmation.css": "pages/ordine-confermato.css",
   // Un bundle può indicare più sorgenti: vengono concatenate nell'ordine dato.
   // I bundle storici restano a sorgente singola, con lo stesso risultato di prima.
-  "serra-orto.css": ["pages/_fondazioni.css", "pages/orto.css"],
+  // orto-v2 riallinea orto e vivaio alla grafica della home. Va in coda a
+  // entrambi i bundle perché i componenti (schede, pulsanti, dialoghi) sono
+  // condivisi: se lo mettessimo solo nell'orto, il vivaio resterebbe indietro.
+  "serra-orto.css": [
+    "pages/_fondazioni.css",
+    "pages/orto.css",
+    "pages/orto-v2.css",
+  ],
   // Il vivaio riusa i componenti della sezione orto e aggiunge il vassoio.
   "serra-vivaio.css": [
     "pages/_fondazioni.css",
     "pages/orto.css",
-    "pages/vivaio.css"
-  ]
+    "pages/orto-v2.css",
+    "pages/vivaio.css",
+  ],
 };
 
 const isExternalUrl = (value) =>
@@ -28,7 +38,7 @@ async function inlineCss(file, outputFile) {
   const source = await readFile(file, "utf8");
   const withoutLayerDeclaration = source.replace(
     /^\s*@layer\s+base\s*,\s*dark-theme\s*;\s*$/gm,
-    ""
+    "",
   );
   const withImports = await replaceAsync(
     withoutLayerDeclaration,
@@ -37,9 +47,9 @@ async function inlineCss(file, outputFile) {
       const importedPath = imported.split("?")[0];
       return inlineCss(
         path.resolve(path.dirname(file), importedPath),
-        outputFile
+        outputFile,
       );
-    }
+    },
   );
 
   return withImports.replace(
@@ -52,14 +62,14 @@ async function inlineCss(file, outputFile) {
         .split(path.sep)
         .join("/");
       return `url(${quote}${relativeUrl}${quote})`;
-    }
+    },
   );
 }
 
 async function replaceAsync(value, expression, callback) {
   const matches = [...value.matchAll(expression)];
   const replacements = await Promise.all(
-    matches.map((match) => callback(...match))
+    matches.map((match) => callback(...match)),
   );
   let offset = 0;
   return matches.reduce((result, match, index) => {
@@ -79,10 +89,10 @@ for (const [bundleName, entry] of Object.entries(bundles)) {
   const outputFile = path.join(cssDir, bundleName);
   const sources = Array.isArray(entry) ? entry : [entry];
   const parts = await Promise.all(
-    sources.map((source) => readFile(path.join(cssDir, source), "utf8"))
+    sources.map((source) => readFile(path.join(cssDir, source), "utf8")),
   );
   await writeFile(
     outputFile,
-    `/* File generato con npm run build:css: modificare il CSS completo in pages/. */\n${parts.join("\n")}`
+    `/* File generato con npm run build:css: modificare il CSS completo in pages/. */\n${parts.join("\n")}`,
   );
 }

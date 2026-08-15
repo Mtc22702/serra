@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Piantina in vasetto">
+  <!-- Piantina già cresciuta nel vasetto di semina. Serviva un oggetto che
+       dicesse «piantina pronta da trapiantare»: prima la scheda usava
+       l'illustrazione di una lattuga adulta, che non distingue il vivaio dal
+       catalogo dei semi. Il vasetto è il segno che la fa riconoscere. -->
+  <defs>
+    <linearGradient id="pv-vaso" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c98b5f"/>
+      <stop offset="1" stop-color="#9d6438"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="32" cy="57.5" rx="17" ry="3.2" fill="#1f3a26" opacity=".12"/>
+  <!-- fusto -->
+  <path d="M32 40V25.5" stroke="#417f34" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- foglie: due paia più il germoglio in cima, il profilo di una piantina
+       pronta per il trapianto -->
+  <path d="M31.4 33.6c-3.9-.5-6.9-3-7.9-6.6 4-.9 7.6.9 9.1 4.5" fill="#5da845"/>
+  <path d="M32.6 31.2c3.7-1 6.3-3.7 6.9-7.3-3.9-.4-7.1 1.7-8.3 5.3" fill="#7bbc57"/>
+  <path d="M31.5 25.6c-3-1.2-4.9-3.9-5-7.2 3.3.2 5.7 2.2 6.5 5.3" fill="#4e9a3b"/>
+  <path d="M32.5 24.3c2.9-1.6 4.4-4.4 4.1-7.6-3.2.7-5.3 2.9-5.7 6.1" fill="#8ac966"/>
+  <path d="M32 19.6c-.9-2.6-.3-5.2 1.6-7.2 1.5 2.2 1.5 4.8.1 7" fill="#a5d97b"/>
+  <!-- vasetto biodegradabile, il segno che dice «vivaio» -->
+  <path d="M20.5 40h23l-2.8 15.2a2.6 2.6 0 0 1-2.6 2.1H25.9a2.6 2.6 0 0 1-2.6-2.1z" fill="url(#pv-vaso)" stroke="#7c4a26" stroke-width="1.6" stroke-linejoin="round"/>
+  <rect x="18.4" y="36.6" width="27.2" height="5" rx="2.5" fill="#d29a6c" stroke="#7c4a26" stroke-width="1.6"/>
+  <!-- terriccio a filo del bordo -->
+  <path d="M22.6 41.6h18.8l-.5 2.6H23.1z" fill="#5c4029" opacity=".55"/>
+  <!-- scanalature del vasetto -->
+  <path d="M28 44.4l-.8 10M36 44.4l.8 10" stroke="#7c4a26" stroke-width="1.1" stroke-linecap="round" opacity=".45"/>
+</svg>

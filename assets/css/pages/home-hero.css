@@ -1,0 +1,1237 @@
+/* Home — hero, percorsi, fasce di collegamento e ritmo della pagina.
+ *
+ * Viene concatenato dopo pages/home.css dentro serra-home.css, quindi vince
+ * a parità di livello e specificità. Sta in un file separato perché la hero è
+ * stata rifatta da zero quando l'app ha smesso di vendere solo semi: tenerla
+ * qui evita di sedimentare altre regole sopra le settemila di home.css.
+ *
+ * Struttura: misura di pagina → hero → percorsi → fasce → adattamenti.
+ */
+
+@layer base, dark-theme, polish, components;
+
+@layer base {
+  /* ---------- misura unica della pagina ----------
+     Prima ogni sezione aveva la sua: catalogo 1140 con 2rem di padding
+     (1076 effettivi), abbinamenti 1140, kit 1140, contatti 1040, percorsi
+     1180. I bordi del contenuto non erano mai allineati e la pagina sembrava
+     montata a pezzi. Ora la colonna è una sola. */
+  :root {
+    --page-wrap: 1180px;
+    --page-gutter: clamp(1.15rem, 4vw, 2.5rem);
+    --section-gap: clamp(2.75rem, 7vw, 5rem);
+  }
+
+  .page-wrap {
+    width: min(100% - (var(--page-gutter) * 2), var(--page-wrap));
+    margin-inline: auto;
+  }
+
+  /* Il percorso ha un id perché ci si possa arrivare da un link diretto:
+     senza questo scostamento finirebbe sotto l'intestazione fissa, come già
+     previsto per le altre quattro ancore della pagina. */
+  #percorsi {
+    scroll-margin-top: calc(var(--nav-h) + 28px);
+  }
+
+  /* Le sezioni storiche vengono riportate sulla stessa colonna senza
+     toccare i loro fogli d'origine. */
+  .stagione-section,
+  .kit-section {
+    max-width: none;
+    padding-inline: var(--page-gutter);
+  }
+
+  .abbinamenti-section,
+  .contatti-section {
+    padding-inline: var(--page-gutter);
+  }
+
+  .catalog-pro-shell,
+  .abbinamenti-inner,
+  .contatti-inner,
+  .kit-section > .kit-card {
+    width: min(100%, var(--page-wrap));
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  /* ---------- superficie della pagina ----------
+     La hero è su carta calda mentre il corpo restava sul verdino #e2ede2:
+     il passaggio si vedeva come uno scalino. Il fondo diventa carta, ma un
+     tono sotto le schede — che restano il livello più chiaro — se no le
+     schede bianche ci sparirebbero dentro. Lo stacco (1,12) è persino
+     leggermente superiore a quello che avevano sul verde (1,18 con il
+     bordo che faceva il resto del lavoro). */
+  body {
+    background: #f4f0e3;
+  }
+
+  /* Le due fasce a tutta larghezza erano bianco freddo: accanto alla carta
+     calda sembravano scolorite. Stesso disegno, temperatura allineata, e
+     restano più chiare del fondo per continuare ad alternarsi. */
+  .abbinamenti-section {
+    border-top: 1px solid rgba(45, 106, 79, 0.12);
+    border-bottom: 1px solid rgba(45, 106, 79, 0.12);
+    background:
+      linear-gradient(180deg, #fdfaf1 0%, #fffdf6 100%),
+      linear-gradient(
+        90deg,
+        rgba(45, 106, 79, 0.05),
+        transparent 42%,
+        rgba(231, 111, 81, 0.04)
+      );
+  }
+
+  .contatti-section {
+    border-top: 1px solid rgba(45, 106, 79, 0.12);
+    background: linear-gradient(180deg, #fffdf6 0%, #fdfaf1 100%);
+  }
+
+  /* ---------- ritmo verticale ----------
+     Le quattro sezioni storiche avevano quattro respiri diversi
+     (2/3, 3,25/3, 3/2,4 e 3/3,2 rem). Adesso è uno solo, e le fasce di
+     collegamento respirano meno perché sono intermezzi, non capitoli. */
+  .stagione-section,
+  .abbinamenti-section,
+  .kit-section,
+  .contatti-section {
+    padding-block: var(--section-gap);
+  }
+
+  /* ---------- occhiello e titolo di sezione ----------
+     Il maiuscoletto verde chiaro stava a 3,28:1 sulla carta: sotto la
+     soglia AA per un testo di 12 px. Il verde d'insegna la supera e in più
+     lega gli occhielli al filetto della hero, così tutta la pagina ha una
+     sola firma. */
+  .section-kicker {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 0.45rem;
+    color: #2f6b3a;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .section-kicker::before {
+    flex: none;
+    width: clamp(18px, 3vw, 34px);
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+    content: "";
+  }
+
+  /* Una sola misura per tutti i titoli di sezione. Prima erano tre — 3,2rem
+     per il catalogo, 2,1 per il kit, 1,8 per abbinamenti e contatti — e la
+     pagina sembrava montata da tre progetti diversi. */
+
+  .catalog-pro-section .stagione-title,
+  .kit-info .section-heading,
+  .abbinamenti-section .section-heading,
+  .contatti-inner > .section-heading {
+    margin-bottom: 0.5rem;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.8rem, 3.6vw, 2.7rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.016em;
+    text-align: left;
+    text-wrap: balance;
+  }
+
+  /* Il titolo del catalogo è generato: «97 piante per agosto». Il limite
+     serve solo a non farlo diventare una riga lunghissima sul desktop. */
+  .catalog-pro-section .stagione-title {
+    max-width: 24ch;
+  }
+
+  /* ---------- hero ---------- */
+
+  /* La classe .hero-immersive resta sulla sezione perché porta lo scostamento
+     dall'intestazione fissa e la trama a pallini; qui vengono neutralizzate
+     solo le proprietà di impaginazione che imponevano l'altezza piena. */
+  .hero-v2 {
+    position: relative;
+    display: block;
+    min-height: 0;
+    /* L'intestazione è fissa: il primo elemento della pagina deve scostarsi
+       di --nav-h, altrimenti ci finisce sotto. */
+    /* Misurato a 1366 × 768, il formato di portatile più diffuso: con i
+       valori di prima i pulsanti delle tappe finivano a 753 px, cioè sotto
+       la piega su un'area utile di circa 668. Ogni riduzione qui sotto serve
+       a farceli entrare. */
+    padding-top: calc(var(--nav-h) + clamp(1rem, 3vw, 2.25rem));
+    padding-bottom: clamp(2rem, 5vw, 3.75rem);
+    /* La carta calda toglie il velo verdino che appiattiva tutto. */
+    background:
+      radial-gradient(
+        90% 120% at 88% 4%,
+        rgba(116, 198, 157, 0.16),
+        transparent 58%
+      ),
+      /* Finisce esattamente sul fondo della pagina: nessuno scalino al
+         confine con la sezione successiva. */
+        linear-gradient(180deg, #fffdf6 0%, #f4f0e3 100%);
+  }
+
+  /* Le piante restano ai margini (le posizioni sono in home.js) e una
+     vignetta le sfuma verso il centro: così la colonna del testo resta su
+     carta pulita qualunque sia la larghezza dello schermo, senza dover
+     inseguire i punti di rottura. */
+  .hero-v2 .hero-bg-plants {
+    opacity: 0.26;
+    mask: linear-gradient(
+      90deg,
+      #000 0%,
+      transparent 22%,
+      transparent 78%,
+      #000 100%
+    );
+  }
+
+  /* La trama a pallini di .hero-immersive era tarata sul verdino: sulla carta
+     calda risultava fredda e un po' meccanica. */
+  .hero-v2::before {
+    background-image: radial-gradient(
+      circle,
+      rgba(90, 74, 44, 0.07) 1.4px,
+      transparent 1.4px
+    );
+    background-size: 26px 26px;
+    /* Si dissolve dove comincia il percorso: la trama accompagna il titolo,
+       poi lascia il campo alle tappe. */
+    mask: linear-gradient(180deg, #000 0%, #000 34%, transparent 72%);
+  }
+
+  /* La hero è in due fasce sovrapposte: sopra il messaggio con il plastico,
+     sotto il percorso a tutta larghezza. Il percorso ha bisogno di tutta la
+     colonna per stare su tre tappe affiancate. */
+  .hero-v2-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: clamp(1.5rem, 3.2vw, 2.25rem);
+  }
+
+  /* Il plastico non sta più qui accanto: è sceso nella tappa 1, di cui è il
+     risultato. La fascia alta resta essenziale e introduce subito le scelte. */
+  .hero-v2-copy {
+    display: block;
+  }
+
+  /* Occhiello: filetto più maiuscoletto, la firma editoriale della pagina. */
+  .hero-v2-eyebrow {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    color: #5f6f62;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .hero-v2-eyebrow::before {
+    width: clamp(22px, 4vw, 42px);
+    height: 1px;
+    background: rgba(31, 58, 38, 0.28);
+    content: "";
+  }
+
+  .hero-v2-title {
+    margin-top: 0.85rem;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+    font-weight: 500;
+    line-height: 1.03;
+    letter-spacing: -0.021em;
+    color: #1a2f21;
+    text-wrap: balance;
+  }
+
+  .hero-v2-title em {
+    display: block;
+    color: #2f6b3a;
+    font-style: normal;
+  }
+
+  /* ---------- selettore di intenti ----------
+     Sostituisce il pulsante unico verso il configuratore. È una frase con
+     quattro finali: il verbo appartiene all'utente e le quattro opzioni sono
+     intenzioni, non reparti del negozio. Senza questo blocco, chi entrava
+     vedeva un solo modo di usare l'app e doveva scorrere per scoprire che ce
+     n'erano altri tre. */
+
+  /* La prima opzione è quella consigliata a chi non sa: leggermente più
+     marcata, ma non tanto da far sembrare le altre di serie B. */
+
+  /* Il sottotitolo è la vera chiave: dice in quale situazione ti trovi,
+     non cosa vende l'opzione. */
+
+  /* ---------- il plastico, riquadrato ---------- */
+
+  /* Dentro la tappa 1, sotto le azioni: il pulsante resta in alto e
+     l'illustrazione è quello che si trova scorrendo di poco — il piano che
+     si otterrà premendolo. */
+  .hero-v2-visual {
+    position: relative;
+    margin-top: 0;
+  }
+
+  /* La cornice avvolge solo il disegno: la didascalia le sta sotto, fuori,
+     come in una tavola stampata. */
+  .hero-v2-visual .hcg {
+    display: block;
+    padding: clamp(0.7rem, 1.4vw, 1.05rem);
+    border: 1px solid rgba(31, 58, 38, 0.14);
+    border-radius: 20px;
+    background: linear-gradient(170deg, #fffdf6, rgba(47, 107, 58, 0.08));
+    box-shadow: 0 16px 38px rgba(24, 53, 36, 0.11);
+    max-width: none;
+  }
+
+  /* Didascalia: dichiara che è un esempio. Il plastico mostra misure precise
+     e senza questa riga, chi apre la pagina la prima volta, lo scambia per la
+     propria serra. */
+  .hero-v2-caption {
+    margin-top: 0.6rem;
+    color: #5f6f62;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  /* ---------- il percorso ----------
+     Tre ingressi alternativi, contenuti in un unico pannello. Le schede hanno
+     pari altezza e la stessa scansione: situazione, promessa, prova, azione. */
+  .journey-wrap {
+    --journey-gap: clamp(0.75rem, 1.5vw, 1.1rem);
+    padding: clamp(1.15rem, 2.5vw, 1.8rem);
+    border: 1px solid rgba(31, 58, 38, 0.14);
+    border-radius: clamp(22px, 3vw, 30px);
+    background: rgba(255, 253, 246, 0.56);
+    box-shadow: 0 18px 50px rgba(24, 53, 36, 0.06);
+  }
+
+  .journey {
+    display: grid;
+    gap: var(--journey-gap);
+    align-items: stretch;
+    list-style: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .journey-step {
+    --journey-accent: #2f6b3a;
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 505px;
+    padding: clamp(1.15rem, 2vw, 1.5rem);
+    overflow: hidden;
+    border: 1px solid rgba(31, 58, 38, 0.14);
+    border-radius: 20px;
+    background: rgba(255, 253, 246, 0.94);
+    box-shadow: 0 10px 28px rgba(24, 53, 36, 0.065);
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.22s ease,
+      transform 0.18s ease;
+  }
+
+  .journey-step:hover {
+    border-color: rgba(47, 107, 58, 0.3);
+    box-shadow: 0 16px 34px rgba(24, 53, 36, 0.1);
+    transform: translateY(-3px);
+  }
+
+  /* La condizione: è quello che trasforma le tre colonne da passi in
+     alternative. «Se…» descrive dove ti trovi, un numero descrive cosa devi
+     fare. La cronologia non si perde — sta nelle tre condizioni, che si
+     succedono naturalmente — ma smette di essere un obbligo disegnato. */
+  .journey-when {
+    display: block;
+    color: var(--journey-accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .journey-step--buy {
+    --journey-accent: #3a762e;
+    background: rgba(255, 250, 238, 0.96);
+  }
+
+  .journey-step--grow {
+    --journey-accent: #2f6b3a;
+    border-color: rgba(47, 107, 58, 0.2);
+    background: rgba(239, 246, 238, 0.9);
+    box-shadow: 0 4px 14px rgba(24, 53, 36, 0.045);
+  }
+
+  /* L'ultima card rappresenta un ambiente di lavoro, non un'altra azione
+     del percorso: resta allineata alle altre ma non si solleva come loro. */
+  .journey-step--grow:hover {
+    border-color: rgba(47, 107, 58, 0.3);
+    box-shadow: 0 6px 18px rgba(24, 53, 36, 0.065);
+    transform: none;
+  }
+
+  .journey-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 10px;
+    align-items: baseline;
+    margin-top: 0.05rem;
+  }
+
+  .journey-head h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.45rem, 2.2vw, 1.8rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    color: #1a2f21;
+  }
+
+  /* Etichette di stato: facoltativa, due modi, gratuito. Sono il modo più
+     breve per dire che la tappa 1 si può saltare e la 3 non si paga. */
+  .journey-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .journey-badge--pick {
+    color: #3a762e;
+  }
+
+  .journey-badge--free {
+    border-color: transparent;
+    background: rgba(47, 107, 58, 0.13);
+    color: #2f6b3a;
+  }
+
+  .journey-body > p {
+    margin-top: 0;
+    color: #5f6f62;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  .journey-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.72rem;
+    min-width: 0;
+  }
+
+  .journey-feature {
+    margin-top: auto;
+  }
+
+  /* Il plastico resta il segno distintivo del configuratore, ma diventa una
+     miniatura: comunica il risultato senza allungare la prima scheda. */
+  .journey-plan-preview .hero-v2-visual .hcg {
+    width: min(100%, 220px);
+    margin-inline: auto;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(24, 53, 36, 0.14);
+  }
+
+  .journey-plan-preview .hcg-glass,
+  .journey-plan-preview .hcg-glare {
+    border-radius: 13px;
+  }
+
+  .journey-plan-preview .hcg-glass {
+    box-shadow:
+      0 12px 26px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(255, 255, 255, 0.07),
+      inset 0 2px 10px rgba(255, 255, 255, 0.1);
+    transform: rotate(-1.5deg);
+  }
+
+  /* Nella miniatura il pannello animato non può conservare la densità del
+     plastico grande. Mostra soltanto nome e quantità, con una colonna più
+     larga: così le quattro colture restano leggibili senza spezzarsi. */
+  .journey-plan-preview .hcg-peek {
+    width: 62%;
+  }
+
+  .journey-plan-preview .hcg-peek-fade-left {
+    flex-basis: 12px;
+  }
+
+  .journey-plan-preview .hcg-peek-inner {
+    gap: 0;
+    padding-block: 5px;
+  }
+
+  .journey-plan-preview .hcg-card {
+    gap: 3px;
+    padding: 4px 5px;
+  }
+
+  .journey-plan-preview .hcg-card-ico {
+    flex-basis: 15px;
+    font-size: 11px;
+  }
+
+  .journey-plan-preview .hcg-card-name {
+    display: block;
+    font-size: 8.5px;
+    line-height: 1.05;
+  }
+
+  .journey-plan-preview .hcg-card-meta {
+    display: none;
+  }
+
+  .journey-plan-preview .hcg-card-qty {
+    display: block;
+    font-size: 8px;
+    line-height: 1;
+  }
+
+  .journey-plan-preview .hero-v2-caption {
+    margin-top: 0.45rem;
+    font-size: 11px;
+  }
+
+  /* Il terzo ingresso mostra una porzione reale dell'app dentro una cornice:
+     la grammatica da finestra rende evidente che si sta aprendo un tool. */
+  .journey-care-preview {
+    display: block;
+    min-height: 176px;
+    overflow: hidden;
+    border: 1px solid rgba(47, 107, 58, 0.11);
+    border-radius: 16px;
+    background: #dce8d9;
+    box-shadow: none;
+  }
+
+  .journey-tool-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 34px;
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(47, 107, 58, 0.1);
+    background: #edf3eb;
+  }
+
+  .journey-tool-bar img {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    opacity: 0.76;
+  }
+
+  .journey-tool-bar strong {
+    display: block;
+    color: #405645;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    opacity: 0.82;
+  }
+
+  .journey-tool-screen {
+    position: relative;
+    height: 142px;
+    overflow: hidden;
+    background: #cad9c7;
+  }
+
+  .journey-tool-screen::after {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: rgba(37, 82, 49, 0.07);
+    content: "";
+    mix-blend-mode: multiply;
+  }
+
+  .journey-tool-screen img {
+    width: 112%;
+    height: 100%;
+    margin-left: -6%;
+    object-fit: cover;
+    object-position: 50% 32%;
+    filter: saturate(0.52) contrast(0.88) brightness(1.03);
+  }
+
+  .journey-cta-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+  }
+
+  .journey-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .journey-cta {
+    display: inline-flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--button-min-height);
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: var(--button-primary-fill);
+    color: var(--button-primary-text);
+    font-size: 0.96rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(47, 107, 58, 0.2);
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.2s ease,
+      background 0.16s ease;
+  }
+
+  .journey-cta:hover {
+    background: var(--button-primary-fill-hover);
+    box-shadow: 0 12px 26px rgba(47, 107, 58, 0.26);
+    transform: translateY(-2px);
+  }
+
+  .journey-actions .journey-cta:only-child {
+    width: 100%;
+  }
+
+  /* La tappa 3 non è un acquisto: stessa forma, riempimento più tenue, così
+     non compete con l'azione che porta soldi ma resta un pulsante vero. */
+  .journey-cta--soft {
+    border-color: rgba(47, 107, 58, 0.3);
+    border-radius: 14px;
+    background: rgba(47, 107, 58, 0.11);
+    color: #245733;
+    box-shadow: none;
+  }
+
+  .journey-cta--soft:hover {
+    background: rgba(47, 107, 58, 0.18);
+    box-shadow: none;
+  }
+
+  .journey-quiet {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--button-min-height);
+    padding: 0 14px;
+    border-radius: 999px;
+    color: #354a3b;
+    font-size: 0.93rem;
+    font-weight: 650;
+    text-decoration: underline;
+    text-decoration-color: rgba(31, 58, 38, 0.3);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.16s ease;
+  }
+
+  .journey-quiet:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Le due opzioni si impilano: la card centrale è stretta, quindi la colonna
+     rende etichetta, prezzo e area cliccabile più facili da leggere. */
+  .journey-pair {
+    display: grid;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* “Oppure” resta una congiunzione esplicita, appoggiata a due filetti
+     orizzontali che collegano visivamente entrambe le opzioni. */
+  .journey-or {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    color: #5f6f62;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 0.88rem;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .journey-or::before,
+  .journey-or::after {
+    flex: 1;
+    width: auto;
+    min-height: 0;
+    height: 1px;
+    background: rgba(31, 58, 38, 0.16);
+    content: "";
+  }
+
+  /* Ogni scelta è una riga completa: illustrazione, testo e freccia. */
+  .journey-pick {
+    --pick-accent: #3a762e;
+    display: grid;
+    gap: 0 12px;
+    align-items: center;
+    min-height: 92px;
+    padding: 14px 15px;
+    border: 1px solid rgba(47, 107, 58, 0.3);
+    border-radius: 15px;
+    background: #edf4e9;
+    color: inherit;
+    text-decoration: none;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    transition:
+      border-color 0.16s ease,
+      transform 0.18s ease,
+      box-shadow 0.22s ease;
+  }
+
+  .journey-pick--piantine {
+    --pick-accent: #8a631c;
+    border-color: rgba(138, 99, 28, 0.32);
+    background: #f6eedc;
+  }
+
+  .journey-pick:hover {
+    border-color: var(--pick-accent);
+    box-shadow: 0 12px 28px rgba(24, 53, 36, 0.14);
+    transform: translateY(-2px);
+  }
+
+  .journey-pick:focus-visible {
+    outline: 3px solid var(--pick-accent);
+    outline-offset: 3px;
+  }
+
+  .journey-pick-illo {
+    grid-area: auto;
+    width: 40px;
+    height: auto;
+  }
+
+  .journey-pick .journey-arrow {
+    grid-area: auto;
+    align-self: center;
+    justify-self: auto;
+    color: var(--pick-accent);
+    font-weight: 700;
+  }
+
+  .journey-pick-copy {
+    display: block;
+    grid-area: auto;
+    min-width: 0;
+  }
+
+  .journey-pick-copy b {
+    display: block;
+    color: #1a2f21;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .journey-pick-copy small {
+    display: block;
+    margin-top: 2px;
+    color: #5f6f62;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .journey-arrow {
+    transition: transform 0.18s ease;
+  }
+
+  .journey-cta:hover .journey-arrow,
+  .journey-pick:hover .journey-arrow {
+    transform: translateX(3px);
+  }
+
+  /* ---------- fasce di collegamento ---------- */
+
+  .bridge {
+    padding-block: clamp(2rem, 4.5vw, 3.25rem);
+    padding-inline: var(--page-gutter);
+  }
+
+  .bridge-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.1rem, 3vw, 2.5rem);
+    align-items: center;
+    padding: clamp(1.5rem, 3.2vw, 2.4rem) clamp(1.35rem, 3.2vw, 2.6rem);
+    border-radius: 26px;
+  }
+
+  .bridge-body {
+    flex: 1 1 min(100%, 36ch);
+  }
+
+  .bridge-title {
+    margin-top: 0.55rem;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.4rem, 2.9vw, 2rem);
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+  }
+
+  .bridge-copy {
+    margin-top: 0.5rem;
+    max-width: 52ch;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .bridge-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    align-items: center;
+  }
+
+  .bridge-cta {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--button-min-height);
+    padding: 0 22px;
+    border-radius: 999px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .bridge-cta:hover {
+    box-shadow: 0 12px 26px rgba(24, 53, 36, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Vivaio: caldo, è comunque un acquisto. */
+  .bridge--vivaio .bridge-inner {
+    border: 1px solid rgba(138, 99, 28, 0.24);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 250, 235, 0.96),
+      rgba(250, 242, 224, 0.94)
+    );
+  }
+
+  .bridge--vivaio .section-kicker {
+    color: #8a631c;
+  }
+
+  .bridge--vivaio .bridge-title {
+    color: #1a2f21;
+  }
+
+  .bridge--vivaio .bridge-copy {
+    color: #5f6f62;
+  }
+
+  .bridge--vivaio .bridge-cta {
+    background: #8a631c;
+    color: #fffdf6;
+  }
+
+  /* Orto: verde pieno, per staccare lo strumento dal negozio. */
+  .bridge--orto .bridge-inner {
+    background:
+      radial-gradient(
+        120% 160% at 100% 0%,
+        rgba(124, 196, 141, 0.22),
+        transparent 62%
+      ),
+      #1f3a26;
+    color: #eef6ef;
+  }
+
+  .bridge--orto .section-kicker {
+    color: rgba(238, 246, 239, 0.76);
+  }
+
+  .bridge--orto .bridge-title {
+    color: #fffdf6;
+  }
+
+  .bridge--orto .bridge-copy {
+    color: rgba(238, 246, 239, 0.82);
+  }
+
+  .bridge--orto .bridge-cta {
+    background: var(--button-on-dark-bg);
+    color: var(--button-on-dark-text);
+  }
+
+  .bridge--orto .bridge-cta:hover {
+    background: var(--button-on-dark-bg-hover);
+  }
+
+  .bridge-free {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 11px;
+    border: 1px solid rgba(238, 246, 239, 0.42);
+    border-radius: 999px;
+    color: rgba(238, 246, 239, 0.9);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+}
+
+/* ---------- tema scuro ---------- */
+
+@layer dark-theme {
+  html[data-theme="dark"] .hero-v2 {
+    background:
+      radial-gradient(
+        90% 120% at 88% 4%,
+        rgba(124, 196, 141, 0.12),
+        transparent 58%
+      ),
+      linear-gradient(180deg, #0c1812 0%, #12211a 100%);
+  }
+
+  html[data-theme="dark"] .hero-v2 .hero-bg-plants {
+    opacity: 0.4;
+  }
+
+  html[data-theme="dark"] .section-kicker {
+    color: #8fd39d;
+  }
+
+  html[data-theme="dark"] body {
+    background: #0c1812;
+  }
+
+  html[data-theme="dark"] .contatti-section {
+    border-top-color: rgba(160, 205, 176, 0.14);
+    background: linear-gradient(180deg, #0c1812 0%, #101d17 100%);
+  }
+
+  html[data-theme="dark"] .hero-v2-eyebrow {
+    color: #9db0a3;
+  }
+
+  html[data-theme="dark"] .hero-v2-eyebrow::before {
+    background: rgba(160, 205, 176, 0.3);
+  }
+
+  html[data-theme="dark"] .hero-v2-title {
+    color: #e9f2ea;
+  }
+
+  html[data-theme="dark"] .hero-v2-title em {
+    color: #8fd39d;
+  }
+
+  html[data-theme="dark"] .hero-v2-visual .hcg {
+    border-color: rgba(160, 205, 176, 0.16);
+    background: linear-gradient(170deg, #12211a, rgba(124, 196, 141, 0.08));
+    box-shadow: 0 20px 46px rgba(0, 0, 0, 0.44);
+  }
+
+  html[data-theme="dark"] .hero-v2-caption {
+    color: #9db0a3;
+  }
+
+  html[data-theme="dark"] .hero-v2::before {
+    background-image: radial-gradient(
+      circle,
+      rgba(160, 205, 176, 0.08) 1.4px,
+      transparent 1.4px
+    );
+  }
+
+  /* ---------- percorso, tema scuro ---------- */
+
+  html[data-theme="dark"] .journey-wrap {
+    border-color: rgba(160, 205, 176, 0.16);
+    background: rgba(18, 33, 26, 0.72);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  html[data-theme="dark"] .journey-step {
+    --journey-accent: #7cc48d;
+    border-color: rgba(160, 205, 176, 0.18);
+    background: #12211a;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+
+  html[data-theme="dark"] .journey-step:hover {
+    border-color: rgba(143, 211, 157, 0.42);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+  }
+
+  html[data-theme="dark"] .journey-step--buy {
+    --journey-accent: #8fd39d;
+  }
+
+  html[data-theme="dark"] .journey-head h2,
+  html[data-theme="dark"] .journey-pick-copy b {
+    color: #e9f2ea;
+  }
+
+  html[data-theme="dark"] .journey-body > p,
+  html[data-theme="dark"] .journey-or,
+  html[data-theme="dark"] .journey-pick-copy small {
+    color: #9db0a3;
+  }
+
+  html[data-theme="dark"] .journey-care-preview {
+    border-color: rgba(124, 196, 141, 0.2);
+    background: #132119;
+    box-shadow: none;
+  }
+
+  html[data-theme="dark"] .journey-tool-bar {
+    border-bottom-color: rgba(160, 205, 176, 0.1);
+    background: #17271d;
+  }
+
+  html[data-theme="dark"] .journey-tool-bar strong {
+    color: #e9f2ea;
+  }
+
+  html[data-theme="dark"] .journey-tool-screen img {
+    filter: saturate(0.46) contrast(0.86) brightness(0.72);
+  }
+
+  html[data-theme="dark"] .journey-tool-screen::after {
+    background: rgba(5, 18, 10, 0.14);
+  }
+
+  html[data-theme="dark"] .journey-step--grow {
+    background: #14261c;
+  }
+
+  html[data-theme="dark"] .journey-when {
+    color: var(--journey-accent);
+  }
+
+  html[data-theme="dark"] .journey-badge--pick {
+    color: #8fd39d;
+  }
+
+  html[data-theme="dark"] .journey-badge--free {
+    background: rgba(124, 196, 141, 0.16);
+    color: #8fd39d;
+  }
+
+  html[data-theme="dark"] .journey-cta--soft {
+    border-color: rgba(124, 196, 141, 0.34);
+    background: rgba(124, 196, 141, 0.14);
+    color: #b6e4c2;
+  }
+
+  html[data-theme="dark"] .journey-cta--soft:hover {
+    background: rgba(124, 196, 141, 0.22);
+  }
+
+  html[data-theme="dark"] .journey-quiet {
+    color: #cfdfd3;
+    text-decoration-color: rgba(160, 205, 176, 0.36);
+  }
+
+  html[data-theme="dark"] .journey-pick {
+    --pick-accent: #8fd39d;
+    border-color: rgba(143, 211, 157, 0.42);
+    background: #183022;
+  }
+
+  html[data-theme="dark"] .journey-pick--piantine {
+    --pick-accent: #dbb45e;
+    border-color: rgba(219, 180, 94, 0.42);
+    background: #302817;
+  }
+
+  html[data-theme="dark"] .journey-pick:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.44);
+  }
+
+  html[data-theme="dark"] .bridge--vivaio .bridge-inner {
+    border-color: rgba(219, 180, 94, 0.26);
+    background: linear-gradient(135deg, #1d2b1f, #1a2a20);
+  }
+
+  html[data-theme="dark"] .bridge--vivaio .section-kicker {
+    color: #dbb45e;
+  }
+
+  html[data-theme="dark"] .bridge--vivaio .bridge-title {
+    color: #e9f2ea;
+  }
+
+  html[data-theme="dark"] .bridge--vivaio .bridge-copy {
+    color: #9db0a3;
+  }
+
+  html[data-theme="dark"] .bridge--vivaio .bridge-cta {
+    background: #dbb45e;
+    color: #22190a;
+  }
+
+  html[data-theme="dark"] .bridge--orto .bridge-inner {
+    border: 1px solid rgba(160, 205, 176, 0.16);
+    background:
+      radial-gradient(
+        120% 160% at 100% 0%,
+        rgba(124, 196, 141, 0.14),
+        transparent 62%
+      ),
+      #16281d;
+  }
+}
+
+/* ---------- adattamenti ai formati ---------- */
+
+@layer polish {
+  /* Sotto il portatile le tre tappe non stanno più affiancate senza
+     spezzare le righe: passano in colonna e il filo diventa verticale.
+     Il senso di sequenza si conserva, cambia solo la direzione. */
+  @media (max-width: 1040px) {
+    .journey {
+      gap: clamp(1.1rem, 3vw, 1.45rem);
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* In colonna ogni card conserva la propria superficie e il proprio ritmo. */
+    .journey-step {
+      min-height: 0;
+      padding-top: clamp(1.1rem, 3vw, 1.5rem);
+      padding-bottom: clamp(1.1rem, 3vw, 1.5rem);
+    }
+
+    .journey-feature {
+      margin-top: 0.35rem;
+    }
+  }
+
+  @media (max-width: 980px) {
+    /* A una colonna sola la tappa 1 è larga tutta la pagina: senza un limite
+       il plastico diventerebbe enorme. */
+    .hero-v2-visual .hcg {
+      max-width: 320px;
+    }
+  }
+
+  /* Sul telefono le due opzioni restano impilate e mantengono un'area touch
+     comoda, con “oppure” fra due filetti orizzontali. */
+  @media (max-width: 620px) {
+    .journey-wrap {
+      padding: 0.85rem;
+      border-radius: 22px;
+    }
+
+    /* Durante lo scroll ogni ingresso deve essere percepito come un blocco
+       autonomo, senza che ombre e bordi delle card si tocchino. */
+    .journey {
+      gap: 1.5rem;
+    }
+
+    .journey-plan-preview .hero-v2-visual .hcg {
+      width: min(100%, 190px);
+    }
+
+    /* Larghezza piena: il contenuto torna in riga, come nelle altre schede. */
+    .journey-pick {
+      gap: 0 11px;
+      min-height: 80px;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .journey-cta,
+    .journey-quiet {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+
+    .bridge-inner {
+      align-items: flex-start;
+    }
+
+    .bridge-actions {
+      width: 100%;
+    }
+
+    .bridge-cta {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .journey-cta,
+    .journey-pick,
+    .journey-arrow,
+    .bridge-cta {
+      transition: none;
+    }
+
+    /* Il plastico continua a raccontare il ciclo anche con movimento ridotto,
+       ma sostituisce crescita e scorrimento con semplici dissolvenze. */
+    .journey-plan-preview .hcg-peek {
+      opacity: 0;
+      transform: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .journey-plan-preview .hcg-peek.hcg-peek--in {
+      opacity: 1;
+    }
+
+    .journey-plan-preview .hcg-card {
+      transform: none;
+      transition: opacity 0.2s ease;
+    }
+  }
+}
+
+@layer dark-theme {
+  /* Il filo verticale e i filetti dell'«oppure» seguono la palette scura
+     solo ai formati in cui esistono. */
+
+  html[data-theme="dark"] .journey-or::before,
+  html[data-theme="dark"] .journey-or::after {
+    background: rgba(160, 205, 176, 0.2);
+  }
+}

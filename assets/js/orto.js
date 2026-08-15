@@ -44,9 +44,20 @@
       "nav.carrello": "Carrello",
       "nav.main_aria": "Navigazione principale",
       "nav.cart_aria": "Apri carrello",
-      "page.tool_note":
-        "Strumento gratuito per i semi e le piantine che hai già. Qui non si compra nulla.",
+      // Intestazione della pagina: prima non c'era, si atterrava sulle
+      // linguette senza sapere dove si fosse.
+      "page.kicker": "Terza tappa · strumento gratuito",
+      "page.title": "Il mio orto",
+      "page.lead":
+        "Registra cosa hai piantato e ti diciamo cosa fare, settimana per settimana, fino alla raccolta. Funziona anche con piante comprate altrove.",
       "tab.oggi": "Oggi",
+      "tab.oggi_todo": "da fare adesso",
+      "tab.oggi_late": "{n} in ritardo",
+      "tab.oggi_clear": "tutto a posto",
+      "tab.colture_note": "in crescita",
+      "tab.colture_empty": "ancora niente",
+      "tab.dispensa_note": "in attesa",
+      "tab.dispensa_empty": "dispensa vuota",
       "tab.colture": "Colture",
       "tab.dispensa": "Da piantare",
 
@@ -70,10 +81,6 @@
       "hero.stat_done": "fatte oggi",
       "hero.stat_late": "da recuperare",
       "hero.ring": "giornata",
-      "notif.title": "Notifica delle 07:30",
-      "notif.text": "Oggi nell'orto: {lista}.",
-      "notif.more": " e altre {n} attività",
-      "notif.none": "Tutto fatto per oggi. Goditi la serra.",
 
       "section.late": "Da recuperare",
       "section.today": "Oggi",
@@ -220,7 +227,15 @@
       "toast.no_orders": "Nessun nuovo acquisto da importare",
       "toast.archived": "Archiviata",
       "toast.planted": "{n} × {nome} nel tuo orto",
-      "harvest.prompt": "Quanti kg hai raccolto?",
+      // Dialoghi delle azioni che non si possono annullare.
+      "harvest.title": "Registra la raccolta",
+      "harvest.sub": "Diventerà la stima per l'anno prossimo.",
+      "harvest.kg": "Quanti kg hai raccolto?",
+      "harvest.confirm": "Registra",
+      "remove.title": "Eliminare questa coltura?",
+      "remove.sub":
+        "Spariscono anche le attività già svolte. Non si può annullare.",
+      "remove.confirm": "Elimina",
       "cart.aria": "Apri carrello",
       "cart.label": "Carrello",
     },
@@ -243,9 +258,18 @@
       "nav.carrello": "Coș",
       "nav.main_aria": "Navigare principală",
       "nav.cart_aria": "Deschide coșul",
-      "page.tool_note":
-        "Instrument gratuit pentru semințele și răsadurile pe care le ai deja. Aici nu se cumpără nimic.",
+      "page.kicker": "A treia etapă · instrument gratuit",
+      "page.title": "Grădina mea",
+      "page.lead":
+        "Notează ce ai plantat și îți spunem ce ai de făcut, săptămână de săptămână, până la recoltare. Funcționează și cu plante cumpărate în altă parte.",
       "tab.oggi": "Astăzi",
+      "tab.oggi_todo": "de făcut acum",
+      "tab.oggi_late": "{n} întârziate",
+      "tab.oggi_clear": "totul în regulă",
+      "tab.colture_note": "în creștere",
+      "tab.colture_empty": "încă nimic",
+      "tab.dispensa_note": "în așteptare",
+      "tab.dispensa_empty": "cămară goală",
       "tab.colture": "Culturi",
       "tab.dispensa": "De plantat",
 
@@ -269,10 +293,6 @@
       "hero.stat_done": "făcute azi",
       "hero.stat_late": "de recuperat",
       "hero.ring": "ziua",
-      "notif.title": "Notificare la 07:30",
-      "notif.text": "Astăzi în grădină: {lista}.",
-      "notif.more": " și încă {n} activități",
-      "notif.none": "Totul e făcut pentru azi. Bucură-te de seră.",
 
       "section.late": "De recuperat",
       "section.today": "Astăzi",
@@ -420,7 +440,13 @@
       "toast.no_orders": "Nicio achiziție nouă de importat",
       "toast.archived": "Arhivată",
       "toast.planted": "{n} × {nome} în grădina ta",
-      "harvest.prompt": "Câte kg ai recoltat?",
+      "harvest.title": "Înregistrează recolta",
+      "harvest.sub": "Va deveni estimarea pentru anul viitor.",
+      "harvest.kg": "Câte kg ai recoltat?",
+      "harvest.confirm": "Înregistrează",
+      "remove.title": "Ștergi această cultură?",
+      "remove.sub": "Dispar și activitățile deja făcute. Nu se poate anula.",
+      "remove.confirm": "Șterge",
       "cart.aria": "Deschide coșul",
       "cart.label": "Coș",
     },
@@ -474,7 +500,9 @@
   let garden = { colture: [], fatti: {}, rinviati: {} };
   let inventory = { voci: [] };
   let vocePendente = null; // voce della dispensa in corso di messa a dimora
-  let colturaInModifica = null; // voce della dispensa in corso di messa a dimora
+  let colturaInModifica = null; // coltura aperta nel dialogo di modifica
+  let colturaDaRimuovere = null; // coltura in attesa di conferma di rimozione
+  let colturaDaRaccogliere = null; // coltura di cui si sta registrando la resa
 
   const app = document.getElementById("ortoApp");
   const toastEl = document.getElementById("ortoToast");
@@ -720,18 +748,6 @@
     const percentuale = totale
       ? Math.round((fatti.length / totale) * 100)
       : 100;
-    const elenco = diOggi
-      .slice(0, 2)
-      .map(
-        (task) =>
-          `${taskLabel(task).toLowerCase()} ${plantName(task.pianta).toLowerCase()}`,
-      )
-      .join(", ");
-    const testoNotifica = diOggi.length
-      ? t("notif.text", { lista: elenco }) +
-        (diOggi.length > 2 ? t("notif.more", { n: diOggi.length - 2 }) : "")
-      : t("notif.none");
-
     app.innerHTML = `
       <section class="orto-hero">
         <div class="orto-hero-inner">
@@ -759,13 +775,12 @@
               <span><b>${arretrati.length}</b><small>${t("hero.stat_late")}</small></span>
             </div>
           </div>
+          <!-- Il riquadro delle notifiche elencava a parole le stesse
+               attività che stanno subito sotto: tolto. Resta l'anello, che
+               è l'unico dato che l'elenco non dà a colpo d'occhio. -->
           <div class="orto-ring-wrap">
             <div class="orto-ring">${ringSvg(percentuale)}
               <span class="orto-ring-txt"><b>${percentuale}%</b><small>${t("hero.ring")}</small></span>
-            </div>
-            <div class="orto-notif">
-              <span class="orto-notif-ico" aria-hidden="true">🔔</span>
-              <span><b>${t("notif.title")}</b><p>${escape(testoNotifica)}</p></span>
             </div>
           </div>
         </div>
@@ -1056,12 +1071,49 @@
       button.setAttribute("aria-selected", String(attivo));
       button.classList.toggle("is-active", attivo);
     });
-    const badge = document.getElementById("ortoTodayBadge");
-    if (badge) {
-      const n = datiOggi().diOggi.length;
+    /* Ogni linguetta porta il proprio numero e una riga di stato. Prima il
+       conteggio c'era solo su «Oggi»: le altre due non lasciavano capire se
+       dentro ci fosse qualcosa, e si aprivano alla cieca. */
+    const { diOggi, arretrati } = datiOggi();
+    const attive = inventory.voci.filter(
+      (v) => !v.archiviata && BYID[v.plantId],
+    ).length;
+    const conteggi = [
+      ["ortoTodayBadge", diOggi.length],
+      ["ortoColtureBadge", garden.colture.length],
+      ["ortoDispensaBadge", attive],
+    ];
+    conteggi.forEach(([id, n]) => {
+      const badge = document.getElementById(id);
+      if (!badge) return;
       badge.hidden = !n;
       badge.textContent = String(n);
-    }
+    });
+    const note = [
+      [
+        "ortoOggiNote",
+        arretrati.length
+          ? t("tab.oggi_late", { n: arretrati.length })
+          : diOggi.length
+            ? t("tab.oggi_todo")
+            : t("tab.oggi_clear"),
+      ],
+      [
+        "ortoColtureNote",
+        garden.colture.length ? t("tab.colture_note") : t("tab.colture_empty"),
+      ],
+      [
+        "ortoDispensaNote",
+        attive ? t("tab.dispensa_note") : t("tab.dispensa_empty"),
+      ],
+    ];
+    note.forEach(([id, testo]) => {
+      const nodo = document.getElementById(id);
+      if (nodo) nodo.textContent = testo;
+    });
+    document
+      .getElementById("ortoOggiNote")
+      ?.classList.toggle("is-late", arretrati.length > 0);
     if (view === "colture") renderColture();
     else if (view === "dispensa") renderDispensa();
     else renderOggi();
@@ -1247,30 +1299,30 @@
       toast(t("toast.snoozed"));
       return render();
     }
+    // La rimozione porta via anche lo storico: si chiede conferma.
     if (action === "remove-coltura") {
-      garden.colture = garden.colture.filter(
-        (c) => c.id !== trigger.dataset.colturaId,
+      const coltura = garden.colture.find(
+        (c) => c.id === trigger.dataset.colturaId,
       );
-      saveGarden();
-      toast(t("toast.removed"));
-      return render();
+      if (!coltura) return;
+      colturaDaRimuovere = coltura.id;
+      const chi = document.getElementById("ortoRemoveWho");
+      if (chi) chi.textContent = plantName(BYID[coltura.plantId]);
+      document.getElementById("ortoRemoveDialog")?.showModal();
+      return;
     }
     if (action === "register-harvest") {
       const coltura = garden.colture.find(
         (c) => c.id === trigger.dataset.colturaId,
       );
-      const kg = window.prompt(t("harvest.prompt"), "1,5");
-      if (kg && coltura) {
-        coltura.eventi.push({
-          data: E.iso(new Date()),
-          tipo: "raccolta",
-          quantitaKg: kg,
-        });
-        coltura.stato = "raccolta";
-        saveGarden();
-        toast(t("toast.harvest"));
-      }
-      return render();
+      if (!coltura) return;
+      colturaDaRaccogliere = coltura.id;
+      const chi = document.getElementById("ortoHarvestWho");
+      if (chi) chi.textContent = plantName(BYID[coltura.plantId]);
+      const kg = document.getElementById("ortoHarvestKg");
+      if (kg) kg.value = "1";
+      document.getElementById("ortoHarvestDialog")?.showModal();
+      return;
     }
     if (action === "import-orders") return importaDaOrdini();
     if (action === "archive-voce") {
@@ -1380,6 +1432,65 @@
         toast(t("toast.added", { nome }));
       }, 0);
     });
+
+  // Conferma della raccolta: la resa registrata diventa la stima dell'anno
+  // successivo, quindi va salvata sulla coltura giusta anche se nel frattempo
+  // la vista è cambiata.
+  document
+    .getElementById("ortoHarvestForm")
+    ?.addEventListener("submit", (event) => {
+      const id = colturaDaRaccogliere;
+      colturaDaRaccogliere = null;
+      if ((event.submitter && event.submitter.value === "cancel") || !id)
+        return;
+      const coltura = garden.colture.find((c) => c.id === id);
+      if (!coltura) return;
+      const kg = document.getElementById("ortoHarvestKg").value;
+      coltura.eventi.push({
+        data: E.iso(new Date()),
+        tipo: "raccolta",
+        quantitaKg: kg,
+      });
+      coltura.stato = "raccolta";
+      saveGarden();
+      setTimeout(() => {
+        render();
+        toast(t("toast.harvest"));
+      }, 0);
+    });
+
+  // Conferma della rimozione.
+  document
+    .getElementById("ortoRemoveForm")
+    ?.addEventListener("submit", (event) => {
+      const id = colturaDaRimuovere;
+      colturaDaRimuovere = null;
+      if ((event.submitter && event.submitter.value === "cancel") || !id)
+        return;
+      garden.colture = garden.colture.filter((c) => c.id !== id);
+      saveGarden();
+      setTimeout(() => {
+        render();
+        toast(t("toast.removed"));
+      }, 0);
+    });
+
+  /* Chiusura con Esc o cliccando fuori: il dialogo si chiude senza passare
+     dall'invio, quindi lo stato in sospeso va azzerato a mano. Senza questo,
+     una coltura scelta e poi abbandonata restava in memoria. */
+  [
+    ["ortoAddDialog", null],
+    ["ortoPlantDialog", () => (vocePendente = null)],
+    ["ortoEditDialog", () => (colturaInModifica = null)],
+    ["ortoHarvestDialog", () => (colturaDaRaccogliere = null)],
+    ["ortoRemoveDialog", () => (colturaDaRimuovere = null)],
+  ].forEach(([id, reset]) => {
+    const dialogo = document.getElementById(id);
+    if (!dialogo || !reset) return;
+    dialogo.addEventListener("close", () => {
+      if (dialogo.returnValue !== "ok") reset();
+    });
+  });
 
   /* Salvataggio della modifica. Se cambia la data cambia anche l'identità
      delle attività (id = coltura|tipo|data): le spunte e i rinvii della vecchia

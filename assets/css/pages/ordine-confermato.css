@@ -1444,8 +1444,7 @@
 }
 
 /* Modali e calendario */
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     :where(
@@ -1464,8 +1463,7 @@
     background: #1e3027;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] #calendarModal .projects-backdrop {
     background: rgba(3, 10, 7, 0.72);
@@ -1696,8 +1694,7 @@
     color: #173823;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] .spacing-svg {
     --spacing-diagram-bg: #20332a;
@@ -1706,15 +1703,11 @@
   }
 }
 @layer base {
-  @media (max-width: 720px) {
-  }
   @layer dark-theme {
     html[data-theme="dark"] .nav-links {
       background: #192820;
       border-color: var(--dark-border);
     }
-  }
-  @layer base {
   }
 }
 @layer dark-theme {
@@ -2009,8 +2002,7 @@
 }
 
 /* Catalogo e footer */
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .catalog-pro-section .top-add-btn {
     background: linear-gradient(135deg, #36975a, #267846);
@@ -2101,8 +2093,7 @@
     border-color: #8370a4;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body footer.footer-botanico {
     background: linear-gradient(180deg, #0e2018 0%, #091710 100%);
@@ -2267,10 +2258,7 @@
     border-color: rgba(176, 48, 32, 0.48);
   }
 }
-@layer dark-theme {
-  }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2323,8 +2311,7 @@
     box-shadow: 0 10px 24px rgba(8, 46, 23, 0.38);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2376,8 +2363,7 @@
     border-color: rgba(173, 224, 188, 0.46);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2413,8 +2399,7 @@
     border-color: #d0797c;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2454,8 +2439,7 @@
     border-color: #8ddda4;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2506,8 +2490,7 @@
     color: var(--serra-white);
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2553,8 +2536,7 @@
     outline-offset: 3px;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"]
     body
@@ -2581,8 +2563,7 @@
     color: #ffd878;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .percorso-cta-btn--earth {
     background: #8a5a32;
@@ -2601,8 +2582,7 @@
     border-color: #c8a557;
   }
 }
-@layer base {
-}
+
 @layer dark-theme {
   html[data-theme="dark"] body .diff-easy {
     background: #214832;
@@ -2641,34 +2621,7 @@
       gap: 0.5rem;
       padding-inline: 0.5rem;
     }
-    .site-header .nav-brand {
-      min-width: 0;
-      overflow: hidden;
-      gap: 0.42rem;
-      padding-right: 0;
-    }
-    .site-header .nav-brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-    }
-    .site-header .nav-brand img {
-      width: 25px;
-      height: 25px;
-    }
-    .site-header .nav-brand-copy {
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-    .site-header .nav-brand-text {
-      max-width: none;
-      font-size: 0.93rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .site-header .nav-brand-copy small {
-      display: none;
-    }
+
     .site-header .nav-actions {
       flex: 0 0 auto;
       gap: 0.42rem;
@@ -2739,14 +2692,6 @@
   }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
-  @media (max-width: 400px) {
-    .site-header .nav-brand-mark {
-      display: inline-grid;
-    }
-    .site-header .nav-brand-text {
-      font-size: 0.88rem;
-    }
-  }
 
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (max-width: 340px) {
@@ -2759,16 +2704,7 @@
       align-content: center;
       gap: 0;
     }
-    .site-header .nav-brand {
-      grid-column: 1;
-      grid-row: 1;
-      justify-self: start;
-      overflow: visible;
-    }
-    .site-header .nav-brand-text {
-      overflow: visible;
-      text-overflow: clip;
-    }
+
     .site-header .nav-actions {
       grid-column: 1;
       grid-row: 2;
@@ -2856,10 +2792,6 @@
   }
 
   @media (max-width: 380px) {
-    .site-header .nav-brand-text {
-      max-width: 112px;
-    }
-
     .site-header .nav-actions {
       gap: 0.22rem;
     }
@@ -3036,10 +2968,48 @@
     gap: 1px;
   }
 
+  /* Stessi valori di .site-header .nav-brand-text in base.css: il marchio
+     deve avere la stessa faccia in tutta l'app. */
   .confirmation-brand-copy strong {
     font-family: "Fraunces", Georgia, serif;
-    font-size: 19px;
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
     line-height: 1.05;
+  }
+
+  /* Gli stessi scaglioni delle altre pagine: prima il formato ridotto
+     scattava a 560 px invece che a 660, e il marchio rimpiccioliva in un
+     punto diverso rispetto al resto dell'app. */
+  @media (max-width: 660px) {
+    .confirmation-brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+    }
+
+    .confirmation-brand img {
+      width: 25px;
+      height: 25px;
+    }
+
+    .confirmation-brand-copy strong {
+      font-size: 0.93rem;
+    }
+
+    .confirmation-brand-copy small {
+      display: none;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .confirmation-brand-mark {
+      display: inline-grid;
+    }
+
+    .confirmation-brand-copy strong {
+      font-size: 0.88rem;
+    }
   }
 
   .confirmation-brand-copy small {
@@ -3389,20 +3359,6 @@
     .confirmation-header-inner {
       min-height: 58px;
       border-radius: 17px;
-    }
-
-    .confirmation-brand-mark {
-      width: 38px;
-      height: 38px;
-    }
-
-    .confirmation-brand img {
-      width: 28px;
-      height: 28px;
-    }
-
-    .confirmation-brand-copy small {
-      display: none;
     }
 
     .confirmation-main {
