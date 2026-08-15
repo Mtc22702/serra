@@ -5345,17 +5345,121 @@
     .orto-wrap {
       width: min(100% - 1.8rem, 1180px);
       padding-top: calc(var(--nav-h, 62px) + 1rem);
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
     }
 
-    /* Su telefono le tre schede si impilano: affiancate resterebbero larghe
-       un centimetro e la riga di stato sparirebbe nei puntini. */
+    /* Barra di navigazione mobile: tre destinazioni sempre raggiungibili,
+       ma abbastanza compatte da non coprire il contenuto dell'orto. */
     .orto-tabs {
-      gap: 7px;
-      grid-template-columns: minmax(0, 1fr);
+      right: 10px;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      left: 10px;
+      width: auto;
+      max-width: 520px;
+      margin-inline: auto;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid color-mix(in srgb, var(--orto-line) 82%, transparent);
+      border-radius: 20px;
+      background: color-mix(in srgb, var(--orto-surface) 92%, transparent);
+      box-shadow:
+        0 18px 42px rgba(24, 46, 32, 0.2),
+        0 3px 10px rgba(24, 46, 32, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      backdrop-filter: blur(18px) saturate(1.15);
+      -webkit-backdrop-filter: blur(18px) saturate(1.15);
     }
 
     .orto-tab {
-      min-height: 56px;
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+      min-height: 64px;
+      padding: 6px 4px 7px;
+      border: 0;
+      border-radius: 15px;
+      background: transparent;
+      text-align: center;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: 28px minmax(0, 1fr);
+      justify-items: center;
+    }
+
+    .orto-tab:hover {
+      border-color: transparent;
+      background: color-mix(in srgb, var(--orto-green) 8%, transparent);
+    }
+
+    .orto-tab.is-active {
+      border-color: transparent;
+      background: linear-gradient(155deg, #43864c, var(--orto-green-dk));
+      box-shadow: 0 7px 16px rgba(31, 76, 43, 0.26);
+    }
+
+    .orto-tab::after {
+      display: none;
+    }
+
+    .orto-tab-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      font-size: 15px;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .orto-tab.is-active .orto-tab-ico {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .orto-tab-copy {
+      width: 100%;
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .orto-tab-name {
+      overflow: hidden;
+      color: var(--orto-ink);
+      font-size: 0.78rem;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .orto-tab-note {
+      overflow: hidden;
+      margin-top: 1px;
+      font-size: 0.75rem;
+      line-height: 1.1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .orto-tab.is-active .orto-tab-name,
+    .orto-tab.is-active .orto-tab-note,
+    .orto-tab.is-active .orto-tab-note.is-late {
+      color: #fff;
+    }
+
+    .orto-tab-badge {
+      position: absolute;
+      top: 5px;
+      right: max(5px, calc(50% - 31px));
+      min-width: 18px;
+      height: 18px;
+      padding-inline: 5px;
+      border: 2px solid var(--orto-surface);
+      font-size: 12px;
+      box-shadow: 0 2px 6px rgba(24, 46, 32, 0.16);
+    }
+
+    .orto-tab.is-active .orto-tab-badge {
+      border-color: var(--orto-green-dk);
+      background: #fff;
+      color: var(--orto-green-dk);
     }
 
     .orto-hero-inner {
@@ -5364,6 +5468,17 @@
 
     .orto-ring-wrap {
       justify-self: start;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .orto-tab-note {
+      display: none;
+    }
+
+    .orto-tab {
+      min-height: 58px;
+      grid-template-rows: 28px auto;
     }
   }
 

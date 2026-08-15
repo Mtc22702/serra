@@ -825,6 +825,12 @@
         // l'utente e da dove entra. Le tappe non sono alternative fra loro.
         // Le tre condizioni sostituiscono i numeri: parallele fra loro, si
         // leggono come alternative invece che come passi da eseguire.
+        "journey.choice_kicker": "Scegli un'opzione",
+        "journey.choice_hint":
+          "Parti dalla situazione che ti assomiglia di più",
+        "journey.choice_count": "2 opzioni + 1 strumento",
+        "journey.option_label": "Opzione",
+        "journey.tool_label": "Strumento di supporto",
         "journey.step1_when": "Se non sai cosa piantare",
         "journey.step2_when": "Se devi ancora procurartele",
         "journey.step3_when": "Se le piante ce le hai già",
@@ -844,6 +850,7 @@
         "journey.piantine_hint": "già cresciute · in 48 h",
         "journey.or": "oppure",
         "journey.step3_title": "Coltiva",
+        "journey.step3_badge": "gratuito",
         "journey.step3_copy":
           "Registra le colture che hai già e ricevi promemoria settimanali per acqua, concime e raccolta.",
         "journey.step3_proof":
@@ -1311,6 +1318,12 @@
         "hero.headline_b": "Apoi cultiv-o cu adevărat.",
         "hero.eyebrow_now": "· alege de unde pornești",
         "hero.plan_caption": "Exemplu de plan · 4 straturi, 12 m²",
+        "journey.choice_kicker": "Alege o opțiune",
+        "journey.choice_hint":
+          "Pornește de la situația care ți se potrivește cel mai bine",
+        "journey.choice_count": "2 opțiuni + 1 instrument",
+        "journey.option_label": "Opțiunea",
+        "journey.tool_label": "Instrument de sprijin",
         "journey.step1_when": "Dacă nu știi ce să plantezi",
         "journey.step2_when": "Dacă încă trebuie să le procuri",
         "journey.step3_when": "Dacă le ai deja",
@@ -1330,6 +1343,7 @@
         "journey.piantine_hint": "deja crescute · în 48 h",
         "journey.or": "sau",
         "journey.step3_title": "Cultivă",
+        "journey.step3_badge": "gratuit",
         "journey.step3_copy":
           "Înregistrează culturile pe care le ai deja și primești mementouri săptămânale pentru udare, fertilizare și recoltare.",
         "journey.step3_proof":

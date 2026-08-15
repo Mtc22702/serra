@@ -6847,8 +6847,58 @@
     padding: clamp(1.15rem, 2.5vw, 1.8rem);
     border: 1px solid rgba(31, 58, 38, 0.14);
     border-radius: clamp(22px, 3vw, 30px);
-    background: rgba(255, 253, 246, 0.56);
-    box-shadow: 0 18px 50px rgba(24, 53, 36, 0.06);
+    background:
+      radial-gradient(
+        70% 120% at 0% 0%,
+        rgba(107, 170, 101, 0.12),
+        transparent 68%
+      ),
+      rgba(255, 253, 246, 0.72);
+    box-shadow:
+      0 24px 65px rgba(24, 53, 36, 0.09),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  }
+
+  /* Una breve intestazione trasforma il gruppo da semplice sequenza di
+     contenuti in un selettore: prima di leggere le card è già chiaro che
+     bisogna sceglierne una. */
+  .journey-choice-head {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: clamp(0.9rem, 1.8vw, 1.2rem);
+    padding-inline: 0.25rem;
+  }
+
+  .journey-choice-kicker {
+    display: block;
+    color: #1f4f2c;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    font-weight: 650;
+    line-height: 1.1;
+  }
+
+  .journey-choice-head p {
+    margin-top: 0.25rem;
+    color: #657267;
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .journey-choice-count {
+    flex: none;
+    padding: 6px 11px;
+    border: 1px solid rgba(47, 107, 58, 0.2);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.74);
+    color: #31593a;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(24, 53, 36, 0.07);
   }
 
   .journey {
@@ -6867,20 +6917,96 @@
     min-height: 505px;
     padding: clamp(1.15rem, 2vw, 1.5rem);
     overflow: hidden;
-    border: 1px solid rgba(31, 58, 38, 0.14);
+    border: 1px solid rgba(31, 58, 38, 0.18);
     border-radius: 20px;
-    background: rgba(255, 253, 246, 0.94);
-    box-shadow: 0 10px 28px rgba(24, 53, 36, 0.065);
+    background: rgba(255, 253, 246, 0.97);
+    box-shadow:
+      0 14px 32px rgba(24, 53, 36, 0.1),
+      0 3px 8px rgba(24, 53, 36, 0.055),
+      inset 0 1px 0 rgba(255, 255, 255, 0.92);
     transition:
       border-color 0.18s ease,
       box-shadow 0.22s ease,
       transform 0.18s ease;
   }
 
+  .journey-step::before {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    height: 5px;
+    background: linear-gradient(90deg, #2f6b3a, #78b86c);
+    content: "";
+  }
+
+  .journey-step::after {
+    position: absolute;
+    top: -54px;
+    right: -54px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(82, 151, 79, 0.08);
+    content: "";
+    pointer-events: none;
+  }
+
   .journey-step:hover {
-    border-color: rgba(47, 107, 58, 0.3);
-    box-shadow: 0 16px 34px rgba(24, 53, 36, 0.1);
-    transform: translateY(-3px);
+    border-color: rgba(47, 107, 58, 0.42);
+    box-shadow:
+      0 22px 44px rgba(24, 53, 36, 0.16),
+      0 5px 12px rgba(24, 53, 36, 0.07);
+    transform: translateY(-5px);
+  }
+
+  .journey-step:focus-within {
+    border-color: rgba(47, 107, 58, 0.52);
+    box-shadow:
+      0 22px 44px rgba(24, 53, 36, 0.14),
+      0 0 0 4px rgba(67, 130, 70, 0.12);
+  }
+
+  .journey-option-mark {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    align-self: flex-start;
+    padding: 4px 9px 4px 5px;
+    border: 1px solid rgba(47, 107, 58, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.78);
+    color: #45604a;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .journey-option-mark > span:first-child {
+    display: grid;
+    width: 25px;
+    height: 25px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--journey-accent);
+    color: #fff;
+    font-size: 0.62rem;
+    box-shadow: 0 3px 8px rgba(24, 53, 36, 0.18);
+  }
+
+  .journey-option-mark--tool {
+    border-color: rgba(47, 107, 58, 0.14);
+    background: rgba(255, 255, 255, 0.58);
+    color: #58705d;
+  }
+
+  .journey-option-mark--tool > span:first-child {
+    background: rgba(47, 107, 58, 0.14);
+    color: #2f6b3a;
+    box-shadow: none;
   }
 
   /* La condizione: è quello che trasforma le tre colonne da passi in
@@ -6898,7 +7024,24 @@
 
   .journey-step--buy {
     --journey-accent: #3a762e;
-    background: rgba(255, 250, 238, 0.96);
+    border-color: rgba(151, 111, 35, 0.27);
+    background: linear-gradient(
+      155deg,
+      rgba(255, 253, 246, 0.98),
+      rgba(247, 238, 211, 0.96)
+    );
+    box-shadow:
+      0 16px 36px rgba(105, 78, 25, 0.13),
+      0 3px 8px rgba(24, 53, 36, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94);
+  }
+
+  .journey-step--buy::before {
+    background: linear-gradient(90deg, #739142, #d0a145);
+  }
+
+  .journey-step--buy::after {
+    background: rgba(208, 161, 69, 0.1);
   }
 
   .journey-step--grow {
@@ -6906,6 +7049,11 @@
     border-color: rgba(47, 107, 58, 0.2);
     background: rgba(239, 246, 238, 0.9);
     box-shadow: 0 4px 14px rgba(24, 53, 36, 0.045);
+  }
+
+  .journey-step--grow::before {
+    height: 3px;
+    opacity: 0.55;
   }
 
   /* L'ultima card rappresenta un ambiente di lavoro, non un'altra azione
@@ -7516,8 +7664,30 @@
 
   html[data-theme="dark"] .journey-wrap {
     border-color: rgba(160, 205, 176, 0.16);
-    background: rgba(18, 33, 26, 0.72);
+    background:
+      radial-gradient(
+        70% 120% at 0% 0%,
+        rgba(124, 196, 141, 0.1),
+        transparent 68%
+      ),
+      rgba(18, 33, 26, 0.82);
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  html[data-theme="dark"] .journey-choice-kicker {
+    color: #dceadf;
+  }
+
+  html[data-theme="dark"] .journey-choice-head p {
+    color: #9db0a3;
+  }
+
+  html[data-theme="dark"] .journey-choice-count,
+  html[data-theme="dark"] .journey-option-mark {
+    border-color: rgba(160, 205, 176, 0.22);
+    background: rgba(20, 40, 29, 0.88);
+    color: #bed0c2;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
   }
 
   html[data-theme="dark"] .journey-step {
@@ -7684,12 +7854,17 @@
       gap: 0.65rem clamp(1.25rem, 3vw, 2rem);
       align-items: start;
       grid-template-areas:
+        "option preview"
         "when preview"
         "head preview"
         "copy preview"
         ". actions";
       grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-rows: auto auto auto 1fr auto;
+    }
+
+    .journey-step--grow .journey-option-mark {
+      grid-area: option;
     }
 
     .journey-step--grow .journey-when {
@@ -7729,6 +7904,12 @@
     .journey-wrap {
       padding: 0.85rem;
       border-radius: 22px;
+    }
+
+    .journey-choice-head {
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: flex-start;
     }
 
     /* Durante lo scroll ogni ingresso deve essere percepito come un blocco

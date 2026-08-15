@@ -6784,14 +6784,25 @@ body {
   .guide-page-header .site-header-inner {
     position: relative;
     min-height: 60px;
+    padding-inline: 0;
     grid-template-columns: 1fr auto;
     grid-template-rows: 1fr;
+  }
+
+  /* Il marchio condiviso conserva sul desktop un padding solo a destra.
+     Con il posizionamento assoluto mobile quel padding entra nel calcolo del
+     50% e sposta visivamente il logo: qui il box torna simmetrico. */
+  .guide-page-header .nav-brand {
+    left: 50%;
+    padding-inline: 0;
+    transform: translate(-50%, -50%);
   }
 
   .guide-page-header .nav-actions {
     grid-column: 2;
     grid-row: 1;
     width: 100%;
+    padding-right: 0.5rem;
     justify-content: flex-end;
   }
 

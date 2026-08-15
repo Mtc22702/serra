@@ -310,12 +310,29 @@
           </div>
 
           <div class="journey-wrap" id="percorsi">
+            <div class="journey-choice-head">
+              <div>
+                <span class="journey-choice-kicker" data-i18n="journey.choice_kicker"
+                  >Scegli un'opzione</span
+                >
+                <p data-i18n="journey.choice_hint">
+                  Parti dalla situazione che ti assomiglia di più
+                </p>
+              </div>
+              <span class="journey-choice-count" data-i18n="journey.choice_count"
+                >2 opzioni + 1 strumento</span
+              >
+            </div>
             <ol class="journey" aria-labelledby="heroTitle">
-              <!-- Tre ingressi equivalenti: le schede hanno la stessa altezza
-                   e portano l'azione in fondo, così si confrontano prima le
-                   situazioni e poi si sceglie dove entrare. -->
+              <!-- Due opzioni iniziali e uno strumento successivo: le schede
+                   mantengono la stessa altezza, mentre le etichette chiariscono
+                   che Coltiva ha una funzione diversa. -->
               <li class="journey-step journey-step--plan">
                 <div class="journey-body">
+                  <span class="journey-option-mark">
+                    <span aria-hidden="true">01</span>
+                    <span data-i18n="journey.option_label">Opzione</span>
+                  </span>
                   <span class="journey-when" data-i18n="journey.step1_when"
                     >Se non sai cosa piantare</span
                   >
@@ -370,6 +387,10 @@
                    cosa. -->
               <li class="journey-step journey-step--buy">
                 <div class="journey-body">
+                  <span class="journey-option-mark">
+                    <span aria-hidden="true">02</span>
+                    <span data-i18n="journey.option_label">Opzione</span>
+                  </span>
                   <span class="journey-when" data-i18n="journey.step2_when"
                     >Se devi ancora procurartele</span
                   >
@@ -431,11 +452,16 @@
                 </div>
               </li>
 
-              <!-- Tappa 3: viene dopo, ed è gratis. Detto sia con l'etichetta
-                   sia a parole, perché è l'equivoco che manda in confusione
-                   chi arriva la prima volta. -->
+              <!-- Coltiva viene dopo ed è un tool gratuito, non una terza
+                   scelta equivalente alle due decisioni iniziali. -->
               <li class="journey-step journey-step--grow">
                 <div class="journey-body">
+                  <span class="journey-option-mark journey-option-mark--tool">
+                    <span aria-hidden="true">✦</span>
+                    <span data-i18n="journey.tool_label"
+                      >Strumento di supporto</span
+                    >
+                  </span>
                   <span class="journey-when" data-i18n="journey.step3_when"
                     >Se le piante ce le hai già</span
                   >
@@ -443,8 +469,8 @@
                     <h2 data-i18n="journey.step3_title">Coltiva</h2>
                     <span
                       class="journey-badge journey-badge--free"
-                      data-i18n="paths.orto_tag"
-                      >strumento gratuito</span
+                      data-i18n="journey.step3_badge"
+                      >gratuito</span
                     >
                   </div>
                   <p data-i18n="journey.step3_copy">
