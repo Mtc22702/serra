@@ -95,7 +95,7 @@
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
           <span class="nav-brand-mark"
-            ><img src="assets/img/svg/logo.svg" alt=""
+            ><img src="assets/img/svg/logo.svg" alt="" width="34" height="34"
           /></span>
           <span class="nav-brand-copy">
             <strong class="nav-brand-text">Orto in Serra</strong>
@@ -295,11 +295,6 @@
         <div class="hero-bg-plants" id="heroBgPlants"></div>
         <div class="hero-v2-inner page-wrap">
           <div class="hero-v2-copy">
-            <span class="hero-v2-eyebrow">
-              <span id="heroCfgMonth">Agosto</span>
-              <span data-i18n="hero.eyebrow_now">· scegli da dove partire</span>
-            </span>
-            <span id="heroTagline" hidden></span>
             <!-- Titolo spezzato in due nodi: la seconda parte è evidenziata,
                    e ogni nodo ha la sua chiave perché la traduzione sostituisce
                    il testo e cancellerebbe qualsiasi tag interno. -->
@@ -307,20 +302,30 @@
               <span data-i18n="hero.headline_a">Progetta la serra.</span>
               <em data-i18n="hero.headline_b">Poi coltivala davvero.</em>
             </h1>
+            <!-- Una riga sola fra il titolo e le tre schede: dice cosa fa
+                 l'app a chi non lo sa già. La chiave esisteva ed era rimasta
+                 senza posto in pagina. -->
+            <p class="hero-v2-lead" data-i18n="hero.promise">
+              Dal progetto al raccolto, con indicazioni adatte al tuo clima.
+            </p>
           </div>
 
           <div class="journey-wrap" id="percorsi">
             <div class="journey-choice-head">
               <div>
-                <span class="journey-choice-kicker" data-i18n="journey.choice_kicker"
+                <span
+                  class="journey-choice-kicker"
+                  data-i18n="journey.choice_kicker"
                   >Scegli un'opzione</span
                 >
-                <p data-i18n="journey.choice_hint">
-                  Parti dalla situazione che ti assomiglia di più
-                </p>
               </div>
-              <span class="journey-choice-count" data-i18n="journey.choice_count"
-                >2 opzioni + 1 strumento</span
+              <!-- Prima qui c'era «2 opzioni + 1 strumento»: la stessa cosa
+                   che dicono già i marcatori 01, 02 e ✦ dentro le schede.
+                   Al suo posto le due informazioni che le schede non danno. -->
+              <span
+                class="journey-choice-count"
+                data-i18n="journey.choice_count"
+                >Piantine in 48 h · «Il mio orto» è gratis</span
               >
             </div>
             <ol class="journey" aria-labelledby="heroTitle">
@@ -331,19 +336,29 @@
                 <div class="journey-body">
                   <span class="journey-option-mark">
                     <span aria-hidden="true">01</span>
-                    <span data-i18n="journey.option_label">Opzione</span>
+                    <span data-i18n="journey.step1_when"
+                      >Se non sai cosa piantare</span
+                    >
                   </span>
-                  <span class="journey-when" data-i18n="journey.step1_when"
-                    >Se non sai cosa piantare</span
-                  >
                   <div class="journey-head">
                     <h2 data-i18n="journey.step1_title">Progetta</h2>
+                    <!-- Le altre due schede avevano un distintivo, questa no.
+                         Qui dice la cosa che uno vuole sapere prima di
+                         cliccare: quanto ci mette. -->
+                    <span
+                      class="journey-badge journey-badge--time"
+                      data-i18n="journey.step1_badge"
+                      >3 domande · 2 minuti</span
+                    >
                   </div>
                   <p data-i18n="journey.step1_copy">
                     Tre domande su spazio, clima e tempo: ottieni un piano su
                     misura, modificabile quando vuoi.
                   </p>
-                  <div class="journey-feature journey-plan-preview" aria-hidden="true">
+                  <div
+                    class="journey-feature journey-plan-preview"
+                    aria-hidden="true"
+                  >
                     <div class="hero-v2-visual">
                       <div class="hcg">
                         <div class="hcg-glass">
@@ -389,11 +404,10 @@
                 <div class="journey-body">
                   <span class="journey-option-mark">
                     <span aria-hidden="true">02</span>
-                    <span data-i18n="journey.option_label">Opzione</span>
+                    <span data-i18n="journey.step2_when"
+                      >Se devi ancora procurartele</span
+                    >
                   </span>
-                  <span class="journey-when" data-i18n="journey.step2_when"
-                    >Se devi ancora procurartele</span
-                  >
                   <div class="journey-head">
                     <h2 data-i18n="journey.step2_title">Procurati le piante</h2>
                     <span
@@ -415,12 +429,15 @@
                         class="journey-pick-illo"
                         src="assets/img/svg/bustina-semi.svg"
                         alt=""
-                        loading="lazy"
+                        width="64"
+                        height="64"
+                        loading="eager"
+                        decoding="async"
                       />
                       <span class="journey-pick-copy">
                         <b data-i18n="journey.semi_label">I semi</b>
                         <small data-i18n="journey.semi_hint"
-                          >97 varietà · da 1,90 €</small
+                          >97 varietà · da 2,20 €</small
                         >
                       </span>
                       <span class="journey-arrow" aria-hidden="true">→</span>
@@ -438,7 +455,10 @@
                         class="journey-pick-illo"
                         src="assets/img/svg/piantina-vaso.svg"
                         alt=""
-                        loading="lazy"
+                        width="64"
+                        height="64"
+                        loading="eager"
+                        decoding="async"
                       />
                       <span class="journey-pick-copy">
                         <b data-i18n="journey.piantine_label">Le piantine</b>
@@ -447,6 +467,17 @@
                         >
                       </span>
                       <span class="journey-arrow" aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                  <!-- Le altre due schede chiudono con una riga d'azione: qui
+                       non c'era e i tre fondi non si allineavano. Non serve
+                       un secondo pulsante — le due righe sopra sono già la
+                       scelta — ma la domanda che uno si fa a quel punto. -->
+                  <div class="journey-actions">
+                    <a class="journey-quiet" href="guida.html#seme-o-piantina">
+                      <span data-i18n="journey.step2_help"
+                        >Seme o piantina?</span
+                      >
                     </a>
                   </div>
                 </div>
@@ -458,13 +489,10 @@
                 <div class="journey-body">
                   <span class="journey-option-mark journey-option-mark--tool">
                     <span aria-hidden="true">✦</span>
-                    <span data-i18n="journey.tool_label"
-                      >Strumento di supporto</span
+                    <span data-i18n="journey.step3_when"
+                      >Se le piante ce le hai già</span
                     >
                   </span>
-                  <span class="journey-when" data-i18n="journey.step3_when"
-                    >Se le piante ce le hai già</span
-                  >
                   <div class="journey-head">
                     <h2 data-i18n="journey.step3_title">Coltiva</h2>
                     <span
@@ -477,12 +505,18 @@
                     Registra le colture che hai già e ricevi promemoria
                     settimanali per acqua, concime e raccolta.
                   </p>
-                  <div class="journey-feature journey-care-preview" aria-hidden="true">
+                  <div
+                    class="journey-feature journey-care-preview"
+                    aria-hidden="true"
+                  >
                     <div class="journey-tool-bar">
                       <img
                         src="assets/img/icons/orto-in-serra-180-v2.png"
                         alt=""
-                        loading="lazy"
+                        width="180"
+                        height="180"
+                        loading="eager"
+                        decoding="async"
                       />
                       <strong data-i18n="journey.step3_preview_title"
                         >La tua settimana</strong
@@ -492,7 +526,11 @@
                       <img
                         src="assets/img/previews/il-mio-orto-mobile.png"
                         alt=""
-                        loading="lazy"
+                        width="430"
+                        height="932"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
                       />
                     </div>
                   </div>
@@ -502,6 +540,9 @@
                         class="journey-cta-icon"
                         src="assets/img/icons/orto-in-serra-180-v2.png"
                         alt=""
+                        width="180"
+                        height="180"
+                        decoding="async"
                       />
                       <span data-i18n="paths.orto_cta">Apri Il mio orto</span>
                     </a>

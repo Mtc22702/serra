@@ -31,18 +31,18 @@
     /* I neutri invece derivano: nel tema scuro il blocco in fondo al file li
        sovrascrive comunque, quindi la derivazione vale per il tema chiaro. */
     --orto-ink: var(--text);
-    --orto-ink-soft: #46584b;
+    --orto-ink-soft: #46554a;
     --orto-muted: var(--muted);
-    --orto-surface: var(--white);
-    --orto-surface-2: var(--sand-lt);
-    --orto-line: var(--border);
-    --orto-line-strong: #cfd9c9;
+    --orto-surface: var(--surface-1);
+    --orto-surface-2: var(--surface-2);
+    --orto-line: var(--surface-line);
+    --orto-line-strong: var(--surface-line-strong);
     --orto-amber: #b5860f;
-    --orto-shadow-sm: 0 2px 6px rgba(24, 46, 32, 0.06);
-    --orto-shadow: 0 8px 24px rgba(24, 46, 32, 0.1);
-    --orto-shadow-lg: 0 18px 44px rgba(24, 46, 32, 0.16);
-    --orto-r: 18px;
-    --orto-r-lg: 26px;
+    --orto-shadow-sm: var(--elev-1);
+    --orto-shadow: var(--elev-2);
+    --orto-shadow-lg: var(--elev-3);
+    --orto-r: var(--radius-lg);
+    --orto-r-lg: var(--radius-xl);
     color: var(--orto-ink);
   }
 
@@ -68,7 +68,7 @@
     gap: 4px;
     padding: 5px;
     border: 1px solid var(--orto-line);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-sm);
   }
@@ -79,7 +79,7 @@
     gap: 7px;
     padding: 9px 16px;
     border: 0;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: transparent;
     color: var(--orto-ink-soft);
     cursor: pointer;
@@ -95,16 +95,16 @@
   }
 
   .orto-tab.is-active {
-    background: linear-gradient(160deg, #3d8148, var(--orto-green-dk));
+    background: linear-gradient(160deg, #43804d, var(--orto-green-dk));
     color: #fff;
-    box-shadow: 0 4px 12px rgba(31, 76, 43, 0.3);
+    box-shadow: var(--elev-2);
   }
 
   .orto-tab-badge {
     min-width: 20px;
     padding: 1px 6px;
-    border-radius: 999px;
-    background: #a8452c;
+    border-radius: var(--radius-pill);
+    background: #a8472b;
     color: #fff;
     font-size: 11px;
     font-weight: 800;
@@ -122,7 +122,7 @@
         rgba(123, 182, 97, 0.4),
         transparent 65%
       ),
-      linear-gradient(150deg, #2f6b3a, #16341f);
+      linear-gradient(150deg, #2f6b3a, #14301d);
     color: #fff;
     box-shadow: var(--orto-shadow-lg);
   }
@@ -173,7 +173,7 @@
   .orto-hero-stats > span {
     padding: 10px 11px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.07);
   }
 
@@ -257,7 +257,7 @@
     width: 34px;
     height: 34px;
     flex: none;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.16);
     place-items: center;
   }
@@ -294,7 +294,7 @@
 
   .orto-count {
     padding: 2px 9px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface-2);
     color: var(--orto-muted);
     font-size: 11.5px;
@@ -374,7 +374,7 @@
     height: 27px;
     flex: none;
     border: 2px solid var(--orto-line-strong);
-    border-radius: 9px;
+    border-radius: var(--radius-sm);
     background: var(--orto-surface);
     cursor: pointer;
     transition:
@@ -410,7 +410,7 @@
     width: 40px;
     height: 40px;
     flex: none;
-    border-radius: 13px;
+    border-radius: var(--radius-md);
     background: color-mix(
       in srgb,
       var(--task-accent, var(--orto-green)) 13%,
@@ -458,7 +458,7 @@
   .orto-snooze {
     padding: 7px 13px;
     border: 1px solid var(--orto-line);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface);
     color: var(--orto-muted);
     cursor: pointer;
@@ -565,8 +565,8 @@
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(9, 24, 14, 0.05) 30%,
-      rgba(9, 24, 14, 0.72)
+      rgba(9, 20, 16, 0.05) 30%,
+      rgba(9, 20, 16, 0.72)
     );
   }
 
@@ -584,10 +584,10 @@
     padding: 3px;
     border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 50%;
-    background: rgba(18, 38, 26, 0.42);
+    background: rgba(19, 34, 27, 0.42);
     backdrop-filter: blur(3px) saturate(1.05);
     -webkit-backdrop-filter: blur(3px) saturate(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--elev-2);
   }
 
   .orto-card-titles {
@@ -621,7 +621,7 @@
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-size: 11px;
     font-weight: 750;
     letter-spacing: 0.04em;
@@ -652,7 +652,7 @@
     position: relative;
     height: 7px;
     margin: 6px 0 0;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface-2);
   }
 
@@ -661,7 +661,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: linear-gradient(90deg, var(--orto-green-lt), var(--orto-green));
   }
 
@@ -673,7 +673,7 @@
     border: 3px solid var(--orto-surface);
     border-radius: 50%;
     background: var(--orto-green-dk);
-    box-shadow: 0 2px 7px rgba(24, 46, 32, 0.35);
+    box-shadow: var(--elev-1);
     transform: translate(-50%, -50%);
   }
 
@@ -710,7 +710,7 @@
     gap: 10px;
     margin-top: 4px;
     padding: 11px 13px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: var(--orto-surface-2);
     font-size: 13px;
   }
@@ -720,7 +720,7 @@
     width: 30px;
     height: 30px;
     flex: none;
-    border-radius: 9px;
+    border-radius: var(--radius-sm);
     background: var(--orto-surface);
     font-size: 15px;
     place-items: center;
@@ -743,7 +743,7 @@
     display: flex;
     gap: 4px;
     padding: 4px;
-    border-radius: 13px;
+    border-radius: var(--radius-md);
     background: var(--orto-surface-2);
   }
 
@@ -755,7 +755,7 @@
     gap: 1px;
     padding: 8px 6px;
     border: 0;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--orto-ink-soft);
     cursor: pointer;
@@ -807,7 +807,7 @@
 
   .orto-save {
     padding: 6px 11px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: linear-gradient(140deg, #f6c85a, #e2a92c);
     color: #4a3405;
     font-size: 12px;
@@ -817,7 +817,7 @@
 
   .orto-note {
     padding: 11px 13px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface));
     font-size: 12.5px;
     line-height: 1.4;
@@ -858,21 +858,21 @@
     gap: 7px;
     padding: 10px 17px;
     border: 1.5px solid var(--orto-green);
-    border-radius: 999px;
-    background: linear-gradient(160deg, #3d8148, var(--orto-green-dk));
+    border-radius: var(--radius-pill);
+    background: linear-gradient(160deg, #43804d, var(--orto-green-dk));
     color: #fff;
     cursor: pointer;
     font: inherit;
     font-size: 14px;
     font-weight: 650;
-    box-shadow: 0 4px 12px rgba(31, 76, 43, 0.26);
+    box-shadow: var(--elev-2);
     transition:
       transform 0.14s ease,
       box-shadow 0.18s ease;
   }
 
   .orto-btn:hover {
-    box-shadow: 0 8px 20px rgba(31, 76, 43, 0.34);
+    box-shadow: var(--elev-2);
     transform: translateY(-2px);
   }
 
@@ -922,7 +922,7 @@
     width: 42px;
     height: 42px;
     flex: none;
-    border-radius: 13px;
+    border-radius: var(--radius-md);
     background: var(--orto-surface-2);
     font-size: 19px;
     place-items: center;
@@ -955,12 +955,12 @@
   }
 
   .orto-dialog::backdrop {
-    background: rgba(10, 24, 15, 0.58);
+    background: rgba(9, 20, 16, 0.58);
   }
 
   .orto-dialog-head {
     padding: 20px 24px 16px;
-    background: linear-gradient(150deg, #2f6b3a, #16341f);
+    background: linear-gradient(150deg, #2f6b3a, #14301d);
     color: #fff;
   }
 
@@ -995,7 +995,7 @@
     width: 100%;
     padding: 11px 13px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: var(--orto-surface);
     color: inherit;
     font: inherit;
@@ -1004,7 +1004,7 @@
   .orto-field-error {
     display: block;
     margin-top: 6px;
-    color: #a8452c;
+    color: #a8472b;
     font-size: 12px;
     font-weight: 650;
   }
@@ -1036,7 +1036,7 @@
     margin: 0;
     padding: 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-size: 13px;
     font-weight: 650;
@@ -1074,7 +1074,7 @@
     left: 50%;
     z-index: 60;
     padding: 13px 20px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-green-dk);
     color: #fff;
     box-shadow: var(--orto-shadow-lg);
@@ -1100,7 +1100,7 @@
 
     .orto-hero {
       padding: 17px;
-      border-radius: 22px;
+      border-radius: var(--radius-xl);
     }
 
     .orto-hero h2 {
@@ -1127,7 +1127,7 @@
     .orto-hero-stats > span {
       min-width: 0;
       padding: 7px 8px;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
     }
 
     .orto-hero-stats b {
@@ -1164,13 +1164,13 @@
       max-width: none;
       gap: 8px;
       padding: 9px 10px;
-      border-radius: 13px;
+      border-radius: var(--radius-md);
     }
 
     .orto-notif-ico {
       width: 28px;
       height: 28px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-size: 13px;
     }
 
@@ -1200,7 +1200,7 @@
       left: 12px;
       z-index: 50;
       justify-content: space-around;
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
       box-shadow: var(--orto-shadow-lg);
     }
 
@@ -1223,17 +1223,17 @@
 /* Varianti scure: stessi selettori del resto dell'app. */
 @layer dark-theme {
   html[data-theme="dark"] .orto-page {
-    --orto-ink: #eaf2e9;
-    --orto-ink-soft: #c3d2c4;
-    --orto-muted: #9bab9d;
-    --orto-surface: #17281d;
-    --orto-surface-2: #1d3325;
-    --orto-line: #2b4030;
-    --orto-line-strong: #3a5340;
-    --orto-amber: #d8a72a;
-    --orto-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
-    --orto-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
-    --orto-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+    --orto-ink: #edf5ef;
+    --orto-ink-soft: #c6d5ca;
+    --orto-muted: #9db0a3;
+    --orto-surface: var(--surface-1);
+    --orto-surface-2: var(--surface-2);
+    --orto-line: var(--surface-line);
+    --orto-line-strong: var(--surface-line-strong);
+    --orto-amber: #d69e2e;
+    --orto-shadow-sm: var(--elev-1);
+    --orto-shadow: var(--elev-2);
+    --orto-shadow-lg: var(--elev-3);
   }
 
   html[data-theme="dark"] .orto-note b {
@@ -1242,7 +1242,7 @@
 
   html[data-theme="dark"] .orto-chip--seme {
     background: rgba(255, 255, 255, 0.86);
-    color: #1f4c2b;
+    color: #214832;
   }
 
   html[data-theme="dark"] .orto-btn--ghost {
@@ -1264,7 +1264,7 @@
     margin: 0;
     padding: 8px 13px;
     border: 1px dashed var(--orto-line-strong);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     color: var(--orto-muted);
     font-size: 12.5px;
     line-height: 1.35;
@@ -1272,7 +1272,7 @@
 
   @media (max-width: 720px) {
     .orto-tool-note {
-      border-radius: 14px;
+      border-radius: var(--radius-md);
     }
   }
 }
@@ -1306,7 +1306,7 @@
     height: 82px;
     margin: 0 auto 18px;
     border-radius: 50%;
-    background: linear-gradient(150deg, #e8f4e2, #cfe8c8);
+    background: linear-gradient(150deg, #e5eee3, #d0ecd0);
     font-size: 36px;
     place-items: center;
   }
@@ -1374,7 +1374,7 @@
 
 @layer dark-theme {
   html[data-theme="dark"] .orto-welcome-ico {
-    background: linear-gradient(150deg, #23402c, #1a3122);
+    background: linear-gradient(150deg, #263c31, #1d3027);
   }
 
   html[data-theme="dark"] .orto-welcome-shop a {
@@ -1389,9 +1389,9 @@
     min-width: 20px;
     margin-left: 6px;
     padding: 1px 6px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: #c9962f;
-    color: #2a1d02;
+    color: #2a1d05;
     font-size: 12px;
     font-weight: 800;
     line-height: 1.6;
@@ -1416,7 +1416,7 @@
   .nav-link--orto::after {
     content: "gratis";
     padding: 2px 6px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: rgba(47, 107, 58, 0.14);
     color: #2f6b3a;
     font-size: 12px;
@@ -1433,7 +1433,7 @@
 
 @layer dark-theme {
   html[data-theme="dark"] .nav-link--orto::after {
-    background: rgba(115, 191, 138, 0.22);
+    background: rgba(124, 196, 141, 0.22);
     color: #a8e6a3;
   }
 }

@@ -8,7 +8,7 @@
 (() => {
   const copy = {
     it: {
-      "page.title": "Guida · Orto in Serra",
+      "page.title": "Come usare Orto in Serra · Guida",
       "aria.main_nav": "Navigazione principale",
       "aria.cart": "Apri carrello",
       "aria.tabs": "Scegli il tuo livello di esperienza",
@@ -26,10 +26,14 @@
       "nav.theme_hint": "Chiaro / scuro",
       "nav.language": "Lingua",
       "hero.kicker": "GUIDA ALL'APP",
-      "hero.title": "Scegli come progettare la tua serra.",
+      "hero.title": "Dal progetto al raccolto, spiegato.",
       "hero.intro":
-        "Tre percorsi chiari, dal primo progetto alla composizione libera. Parti dal livello che ti somiglia di più.",
-      "hero.picker_title": "Da dove vuoi partire?",
+        "La guida copre i tre momenti dell'app: disegnare la serra, decidere se partire dal seme o dalla piantina, seguire l'orto fino alla raccolta.",
+      "aria.toc": "Indice della guida",
+      "toc.design": "1 · Progettare la serra",
+      "toc.buy": "2 · Seme o piantina?",
+      "toc.grow": "3 · Seguire l'orto",
+      "hero.picker_title": "Progettare la serra: da dove parti?",
       "hero.picker_hint": "Potrai cambiare percorso in qualsiasi momento.",
       "tab.novizio": "Principiante",
       "tab.novizio_hint": "Ti guido passo passo",
@@ -85,10 +89,64 @@
       "expert.s5p":
         "Controlla spazio e compatibilità, poi genera la lista dei semi.",
       "expert.cta": "Apri modalità esperto",
-      help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore."
+      help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore.",
+      // Capitolo 2. I numeri arrivano dal catalogo (db/products.json) e vanno
+      // ricontrollati se cambiano listino o disponibilità: 97 varietà a seme,
+      // 64 anche in piantina, bustina più economica 2,20 €, piantine 1,10–1,90 €.
+      "compare.kicker": "PROCURARSI LE PIANTE",
+      "compare.title": "Seme o piantina?",
+      "compare.lead":
+        "Stessa pianta, due punti di partenza. Il seme costa poco e ha tutta la scelta; la piantina fa risparmiare tre settimane e le cure più delicate. Sotto, la differenza in numeri.",
+      "compare.row_cost": "Quanto costa",
+      "compare.row_time": "Quando raccogli",
+      "compare.row_choice": "Quanta scelta",
+      "compare.row_care": "Cosa ti chiede",
+      "compare.seme_title": "Dal seme",
+      "compare.seme_sub": "Una bustina, molte piante, e la semina la fai tu.",
+      "compare.seme_cost":
+        "Da 2,20 € la bustina, con 100 semi in media: pochi centesimi a pianta.",
+      "compare.seme_time":
+        "Ciclo completo: alla raccolta arrivi tre o quattro settimane dopo la piantina.",
+      "compare.seme_choice":
+        "Tutte le 97 varietà del catalogo, in qualsiasi mese.",
+      "compare.seme_care":
+        "Semenzaio, luce e temperatura costanti nelle prime settimane: è la fase in cui si perde qualche piantina.",
+      "compare.seme_when":
+        "<b>Scegli il seme se</b> hai tempo davanti, vuoi varietà che in vivaio non esistono o ti interessa proprio la semina.",
+      "compare.seme_cta": "Vai al catalogo semi",
+      "compare.piantina_title": "Dalla piantina",
+      "compare.piantina_sub": "Già cresciuta in vaso, pronta da trapiantare.",
+      "compare.piantina_cost":
+        "Da 1,10 a 1,90 € a piantina, in vassoi da sei; l'ordine parte da due vassoi.",
+      "compare.piantina_time":
+        "Da venti a trenta giorni prima: la parte lenta l'ha già fatta il vivaio.",
+      "compare.piantina_choice":
+        "64 varietà, e solo nei mesi in cui il trapianto ha senso.",
+      "compare.piantina_care":
+        "Di essere in casa alla consegna, entro 48 ore, e di trapiantare nei giorni successivi.",
+      "compare.piantina_when":
+        "<b>Scegli la piantina se</b> sei in ritardo sulla stagione, è la tua prima serra o vuoi poche piante di specie difficili.",
+      "compare.piantina_cta": "Vai al vivaio piantine",
+      "compare.mix":
+        "<b>Si possono mescolare.</b> Molti orti partono dalla piantina per pomodori, peperoni e melanzane — le specie che dal seme richiedono più cure — e dal seme per insalate, ravanelli e aromatiche, che germinano in pochi giorni.",
+      // Capitolo 3.
+      "grow.kicker": "DOPO LA SEMINA",
+      "grow.title": "Seguire l'orto fino alla raccolta",
+      "grow.lead":
+        "«Il mio orto» è lo strumento gratuito che tiene il conto al posto tuo: cosa hai piantato, cosa serve questa settimana, cosa è in ritardo. Funziona anche con piante comprate altrove.",
+      "grow.s1t": "Registra cosa hai piantato",
+      "grow.s1p":
+        "Dagli ordini arriva già tutto; il resto lo aggiungi a mano, anche se viene da un altro vivaio.",
+      "grow.s2t": "Guarda la settimana",
+      "grow.s2p":
+        "Acqua, concime e raccolta compaiono nel giorno giusto. Quello che salti resta in vista come da recuperare.",
+      "grow.s3t": "Segna la raccolta",
+      "grow.s3p":
+        "Quando chiudi una coltura, lo spazio torna libero nel piano e la stagione successiva riparte da lì.",
+      "grow.cta": "Apri «Il mio orto»",
     },
     ro: {
-      "page.title": "Ghid · Orto in Serra",
+      "page.title": "Cum folosești Orto in Serra · Ghid",
       "aria.main_nav": "Navigare principală",
       "aria.cart": "Deschide coșul",
       "aria.tabs": "Alege nivelul tău de experiență",
@@ -106,10 +164,14 @@
       "nav.theme_hint": "Luminos / întunecat",
       "nav.language": "Limbă",
       "hero.kicker": "GHIDUL APLICAȚIEI",
-      "hero.title": "Alege cum vrei să îți proiectezi sera.",
+      "hero.title": "De la proiect la recoltă, explicat.",
       "hero.intro":
-        "Trei trasee clare, de la primul proiect la compoziția liberă. Începe cu nivelul care ți se potrivește.",
-      "hero.picker_title": "De unde vrei să începi?",
+        "Ghidul acoperă cele trei momente ale aplicației: proiectarea serei, alegerea între sămânță și răsad, urmărirea grădinii până la recoltă.",
+      "aria.toc": "Cuprinsul ghidului",
+      "toc.design": "1 · Proiectarea serei",
+      "toc.buy": "2 · Sămânță sau răsad?",
+      "toc.grow": "3 · Urmărirea grădinii",
+      "hero.picker_title": "Proiectarea serei: de unde începi?",
       "hero.picker_hint": "Poți schimba traseul în orice moment.",
       "tab.novizio": "Începător",
       "tab.novizio_hint": "Te ghidez pas cu pas",
@@ -166,8 +228,58 @@
       "expert.s5p":
         "Controlează spațiul și compatibilitatea, apoi generează lista de semințe.",
       "expert.cta": "Deschide modul expert",
-      help: "<b>Poți schimba nivelul oricând.</b> Setările serei rămân disponibile în configurator."
-    }
+      help: "<b>Poți schimba nivelul oricând.</b> Setările serei rămân disponibile în configurator.",
+      "compare.kicker": "CUM ÎȚI IEI PLANTELE",
+      "compare.title": "Sămânță sau răsad?",
+      "compare.lead":
+        "Aceeași plantă, două puncte de plecare. Sămânța costă puțin și îți dă toată gama; răsadul îți economisește trei săptămâni și îngrijirile cele mai delicate. Mai jos, diferența în cifre.",
+      "compare.row_cost": "Cât costă",
+      "compare.row_time": "Când recoltezi",
+      "compare.row_choice": "Câtă varietate",
+      "compare.row_care": "Ce îți cere",
+      "compare.seme_title": "De la sămânță",
+      "compare.seme_sub": "Un plic, multe plante, iar semănatul îl faci tu.",
+      "compare.seme_cost":
+        "De la 2,20 € plicul, cu 100 de semințe în medie: câțiva cenți de plantă.",
+      "compare.seme_time":
+        "Ciclu complet: ajungi la recoltă cu trei-patru săptămâni după răsad.",
+      "compare.seme_choice":
+        "Toate cele 97 de soiuri din catalog, în orice lună.",
+      "compare.seme_care":
+        "Răsadniță, lumină și temperatură constante în primele săptămâni: aici se pierd câteva fire.",
+      "compare.seme_when":
+        "<b>Alege sămânța dacă</b> ai timp înainte, vrei soiuri care nu există ca răsad sau te interesează chiar semănatul.",
+      "compare.seme_cta": "Mergi la catalogul de semințe",
+      "compare.piantina_title": "De la răsad",
+      "compare.piantina_sub": "Deja crescut în ghiveci, gata de plantat.",
+      "compare.piantina_cost":
+        "De la 1,10 la 1,90 € răsadul, în tăvi de șase; comanda pornește de la două tăvi.",
+      "compare.piantina_time":
+        "Cu douăzeci până la treizeci de zile mai devreme: partea lentă a făcut-o pepiniera.",
+      "compare.piantina_choice":
+        "64 de soiuri, și doar în lunile în care plantarea are sens.",
+      "compare.piantina_care":
+        "Să fii acasă la livrare, în 48 de ore, și să plantezi în zilele următoare.",
+      "compare.piantina_when":
+        "<b>Alege răsadul dacă</b> ești în întârziere față de sezon, e prima ta seră sau vrei puține plante din specii pretențioase.",
+      "compare.piantina_cta": "Mergi la răsaduri",
+      "compare.mix":
+        "<b>Se pot combina.</b> Multe grădini pornesc de la răsad pentru roșii, ardei și vinete — speciile care din sămânță cer cea mai multă grijă — și de la sămânță pentru salate, ridichi și plante aromatice, care răsar în câteva zile.",
+      "grow.kicker": "DUPĂ SEMĂNAT",
+      "grow.title": "Urmărește grădina până la recoltă",
+      "grow.lead":
+        "„Grădina mea” este instrumentul gratuit care ține socoteala în locul tău: ce ai plantat, ce trebuie făcut săptămâna asta, ce a rămas în urmă. Merge și cu plante cumpărate din altă parte.",
+      "grow.s1t": "Înregistrează ce ai plantat",
+      "grow.s1p":
+        "Din comenzi vine deja totul; restul adaugi manual, chiar dacă vine de la altă pepinieră.",
+      "grow.s2t": "Uită-te la săptămână",
+      "grow.s2p":
+        "Apa, îngrășământul și recolta apar în ziua potrivită. Ce sari rămâne vizibil, de recuperat.",
+      "grow.s3t": "Marchează recolta",
+      "grow.s3p":
+        "Când închizi o cultură, spațiul se eliberează în plan și sezonul următor pornește de acolo.",
+      "grow.cta": "Deschide „Grădina mea”",
+    },
   };
   const tabs = [...document.querySelectorAll(".guide-tab")];
   const routes = [...document.querySelectorAll(".guide-route")];
@@ -175,7 +287,7 @@
   const tabMeta = {
     novizio: { icon: "🌱", hint: "tab.novizio_hint" },
     intermedio: { icon: "🌿", hint: "tab.intermedio_hint" },
-    esperto: { icon: "🧭", hint: "tab.esperto_hint" }
+    esperto: { icon: "🧭", hint: "tab.esperto_hint" },
   };
   // Compatibilità con il markup memorizzato nella cache.
   tabs.forEach((tab) => {
@@ -200,6 +312,12 @@
     document.querySelectorAll("[data-guide-key]").forEach((element) => {
       const value = copy[lang][element.dataset.guideKey];
       if (value) element.innerHTML = value;
+    });
+    // Le etichette che non sono testo visibile (l'indice della pagina, per
+    // esempio) restavano in italiano anche in romeno.
+    document.querySelectorAll("[data-guide-key-aria]").forEach((element) => {
+      const value = copy[lang][element.dataset.guideKeyAria];
+      if (value) element.setAttribute("aria-label", value);
     });
     const languageSelect = document.getElementById("guideLangSelect");
     if (languageSelect) languageSelect.value = lang;
@@ -233,7 +351,10 @@
       route.hidden = !active;
       route.classList.toggle("is-active", active);
     });
-    history.replaceState(null, "", `?livello=${activeLevel}`);
+    // L'ancora va conservata: dalla home si arriva su #seme-o-piantina e
+    // questa riga, riscrivendo l'indirizzo, la cancellava — un ricaricamento
+    // riportava in cima alla guida invece che al capitolo giusto.
+    history.replaceState(null, "", `?livello=${activeLevel}${location.hash}`);
     if (focus)
       document
         .getElementById(`guide-${activeLevel}`)
@@ -241,7 +362,7 @@
   }
 
   tabs.forEach((tab) =>
-    tab.addEventListener("click", () => selectRoute(tab.dataset.guide, true))
+    tab.addEventListener("click", () => selectRoute(tab.dataset.guide, true)),
   );
   document
     .querySelector(".guide-tabs")

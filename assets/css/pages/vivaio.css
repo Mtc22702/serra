@@ -49,7 +49,7 @@
     flex: 0 1 260px;
     padding: 0 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface-2);
     color: inherit;
     cursor: pointer;
@@ -71,7 +71,7 @@
     min-height: 34px;
     padding: 0 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface-2);
     color: inherit;
     cursor: pointer;
@@ -145,7 +145,7 @@
     margin-bottom: 14px;
     padding: 10px 14px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
     font-size: 12.5px;
   }
@@ -181,12 +181,24 @@
     grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
   }
 
+  /* La foto era alta 112 px, e ci vivono tre cose sovrapposte: il chip del
+     vassoio in alto, il risparmio in giorni a destra e il nome della pianta
+     in basso. Con un nome su due righe — «Cavolo cappuccio rosso» in una
+     colonna da 215 px lo è quasi sempre — il titolo saliva fin sotto il chip
+     e le due scritte si accavallavano. Qui c'è lo spazio perché due righe di
+     nome e il chip non si tocchino mai. */
   .viv-grid .orto-card-photo {
-    height: 112px;
+    height: 152px;
   }
 
   .viv-grid .orto-card-titles h3 {
     font-size: 17px;
+    /* E se un nome dovesse comunque andare a tre righe, si ferma a due:
+       la fascia scura in basso ha una fine, il testo deve averla anche lui. */
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .viv-grid .orto-card-body {
@@ -205,7 +217,7 @@
     margin-bottom: 14px;
     padding: 10px 15px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-sm);
   }
@@ -231,7 +243,7 @@
     gap: 2px;
     padding: 3px;
     border: 1.5px solid var(--orto-line);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-surface-2);
   }
 
@@ -277,7 +289,7 @@
     gap: 4px;
     padding: 4px;
     border: 1.5px solid color-mix(in srgb, var(--orto-green) 35%, transparent);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface));
     grid-template-columns: 34px 1fr 34px;
   }
@@ -360,7 +372,7 @@
   }
 
   .viv-remove:hover {
-    color: #a8452c;
+    color: #a8472b;
   }
 
   /* Il vantaggio in giorni sta sulla foto: nella scheda stretta la riga del
@@ -371,7 +383,7 @@
     top: 11px;
     right: 11px;
     padding: 4px 9px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: linear-gradient(140deg, #f6c85a, #e2a92c);
     color: #4a3405;
     font-size: 11px;
@@ -397,7 +409,7 @@
     margin: -6px 0 10px;
     padding: 4px 9px;
     align-self: flex-start;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface-2));
     color: var(--orto-muted);
     font-size: 11.5px;
@@ -429,11 +441,12 @@
         color-mix(in srgb, var(--orto-green) 10%, transparent),
         transparent 72%
       ),
-      linear-gradient(145deg, #f8fbf5 0%, #eef5ea 100%);
+      linear-gradient(145deg, #fcfdf9 0%, #edf5ef 100%);
     color: var(--orto-ink);
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.9) inset,
-      0 18px 46px rgba(31, 58, 38, 0.13);
+    /* Il gradino più alto è dei pannelli che stanno sopra la pagina — dialoghi
+       e tendine. Un'intestazione fa parte della pagina: sta al secondo, come
+       la fascia della giornata nell'orto. */
+    box-shadow: var(--elev-2);
   }
 
   .viv-hero::before {
@@ -483,7 +496,7 @@
     min-height: 28px;
     padding: 0 11px;
     border: 1px solid color-mix(in srgb, var(--orto-green) 22%, transparent);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--orto-green) 8%, #fff);
     color: var(--orto-green);
     font-size: 10px;
@@ -519,13 +532,13 @@
     margin-top: 14px;
     padding: 0 15px;
     border: 1px solid color-mix(in srgb, var(--orto-green) 28%, transparent);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--orto-green);
     color: #fff;
     font-size: 12.5px;
     font-weight: 700;
     text-decoration: none;
-    box-shadow: 0 7px 18px rgba(35, 94, 52, 0.2);
+    box-shadow: var(--elev-2);
     transition:
       transform 0.16s ease,
       background 0.16s ease,
@@ -533,8 +546,8 @@
   }
 
   .viv-hero-cta:hover {
-    background: #245c32;
-    box-shadow: 0 10px 22px rgba(35, 94, 52, 0.26);
+    background: #245733;
+    box-shadow: var(--elev-2);
     transform: translateY(-1px);
   }
 
@@ -550,17 +563,15 @@
     grid-column: 2;
     grid-row: 1 / span 2;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
     background:
       radial-gradient(
         circle at 50% 34%,
         rgba(196, 244, 169, 0.28),
         transparent 48%
       ),
-      linear-gradient(150deg, #397d49 0%, #1c4b2a 68%, #143620 100%);
-    box-shadow:
-      0 16px 32px rgba(22, 66, 35, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      linear-gradient(150deg, #347f4d 0%, #214832 68%, #14301d 100%);
+    box-shadow: var(--elev-3);
   }
 
   .viv-visual-label {
@@ -570,8 +581,8 @@
     z-index: 2;
     padding: 5px 9px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 999px;
-    background: rgba(10, 41, 22, 0.28);
+    border-radius: var(--radius-pill);
+    background: rgba(8, 46, 23, 0.28);
     color: rgba(255, 255, 255, 0.9);
     font-size: 9.5px;
     font-weight: 750;
@@ -584,7 +595,7 @@
     height: auto;
     max-height: 205px;
     flex: none;
-    filter: drop-shadow(0 15px 20px rgba(7, 27, 14, 0.2));
+    filter: drop-shadow(0 15px 20px rgba(11, 26, 19, 0.2));
   }
 
   .viv-art-leaf {
@@ -673,9 +684,12 @@
     margin: 0;
     padding: 8px 10px;
     border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 12px;
-    background: rgba(9, 35, 19, 0.48);
-    color: rgba(255, 255, 255, 0.88);
+    border-radius: var(--radius-md);
+    /* Il velo al 48% lasciava passare l'illustrazione chiara e il testo
+       bianco ci finiva sopra a poco più di 2:1. Il fondo diventa pieno: la
+       scritta sulla consegna è un'informazione, non una decorazione. */
+    background: rgba(11, 26, 19, 0.86);
+    color: #fff;
     font-size: 10px;
     line-height: 1.28;
     backdrop-filter: blur(8px);
@@ -684,7 +698,7 @@
   .viv-shipping .orto-notif-ico {
     width: 28px;
     height: 28px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.13);
   }
 
@@ -706,7 +720,7 @@
     gap: 9px;
     padding: 9px 10px;
     border: 1px solid color-mix(in srgb, var(--orto-green) 13%, transparent);
-    border-radius: 13px;
+    border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.72);
     grid-template-columns: auto minmax(0, 1fr);
   }
@@ -715,7 +729,7 @@
     display: grid;
     width: 30px;
     height: 30px;
-    border-radius: 9px;
+    border-radius: var(--radius-sm);
     background: color-mix(in srgb, var(--orto-green) 9%, #fff);
     font-size: 14px;
     place-items: center;
@@ -754,25 +768,25 @@
   }
 
   html[data-theme="dark"] .viv-hero {
-    border-color: rgba(137, 203, 153, 0.14);
+    border-color: rgba(139, 198, 154, 0.14);
     background:
       radial-gradient(
         440px 210px at 4% 0%,
-        rgba(77, 149, 93, 0.13),
+        rgba(73, 142, 86, 0.13),
         transparent 72%
       ),
-      linear-gradient(145deg, #1b2d23 0%, #15251c 100%);
-    box-shadow: 0 20px 46px rgba(0, 0, 0, 0.25);
+      linear-gradient(145deg, #182a21 0%, #13221b 100%);
+    box-shadow: var(--elev-2);
   }
 
   html[data-theme="dark"] .viv-hero-stat {
-    border-color: rgba(151, 211, 165, 0.13);
+    border-color: rgba(151, 216, 170, 0.13);
     background: rgba(255, 255, 255, 0.045);
   }
 
   html[data-theme="dark"] .viv-stat-icon,
   html[data-theme="dark"] .viv-hero .orto-hero-date {
-    background: rgba(121, 197, 139, 0.1);
+    background: rgba(124, 196, 141, 0.1);
   }
 
   @media (max-width: 980px) {
@@ -806,7 +820,7 @@
       grid-template-rows: auto auto auto;
       gap: 13px;
       padding: 18px;
-      border-radius: 18px;
+      border-radius: var(--radius-lg);
     }
 
     .viv-hero h1 {
@@ -855,7 +869,7 @@
       grid-row: 3;
       grid-template-columns: 120px minmax(0, 1fr);
       padding: 10px;
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
     }
 
     .viv-visual-label {

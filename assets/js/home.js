@@ -1124,8 +1124,10 @@ function renderHero() {
   if (heroCfgMonth) {
     heroCfgMonth.textContent = NOMI_MESI[state.mese - 1];
   }
-  document.getElementById("heroTagline").textContent =
-    STAGIONE_QUOTE[state.mese];
+  // La frase di stagione (#heroTagline) era scritta dentro uno span vuoto e
+  // nascosto: nessuno la leggeva, ma bastava togliere quello span dalla
+  // pagina perché questa riga interrompesse tutto il rendering della hero.
+  // Le frasi restano in STAGIONE_QUOTE, pronte se torneranno in pagina.
   document.querySelectorAll(".hero-zone-btn").forEach((b) => {
     const selected = b.dataset.zone === state.zona;
     b.classList.toggle("active", selected);

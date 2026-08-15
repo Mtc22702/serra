@@ -828,7 +828,7 @@
         "journey.choice_kicker": "Scegli un'opzione",
         "journey.choice_hint":
           "Parti dalla situazione che ti assomiglia di più",
-        "journey.choice_count": "2 opzioni + 1 strumento",
+        "journey.choice_count": "Piantine in 48 h · «Il mio orto» è gratis",
         "journey.option_label": "Opzione",
         "journey.tool_label": "Strumento di supporto",
         "journey.step1_when": "Se non sai cosa piantare",
@@ -837,15 +837,16 @@
         "journey.step1_title": "Progetta",
         "journey.step1_copy":
           "Tre domande su spazio, clima e tempo: ottieni un piano su misura, modificabile quando vuoi.",
-        "journey.step1_proof":
-          "Un piano completo, pronto in pochi minuti.",
+        "journey.step1_proof": "Un piano completo, pronto in pochi minuti.",
+        "journey.step1_badge": "3 domande · 2 minuti",
         "journey.step1_cta": "Crea il piano",
         "journey.step2_title": "Procurati le piante",
         "journey.step2_badge": "due modi",
+        "journey.step2_help": "Seme o piantina?",
         "journey.step2_copy":
           "Dal seme costa meno, dalla piantina guadagni fino a un mese sulla raccolta.",
         "journey.semi_label": "I semi",
-        "journey.semi_hint": "97 varietà · da 1,90 €",
+        "journey.semi_hint": "97 varietà · da 2,20 €",
         "journey.piantine_label": "Le piantine",
         "journey.piantine_hint": "già cresciute · in 48 h",
         "journey.or": "oppure",
@@ -1321,7 +1322,7 @@
         "journey.choice_kicker": "Alege o opțiune",
         "journey.choice_hint":
           "Pornește de la situația care ți se potrivește cel mai bine",
-        "journey.choice_count": "2 opțiuni + 1 instrument",
+        "journey.choice_count": "Răsaduri în 48 h · „Grădina mea” e gratis",
         "journey.option_label": "Opțiunea",
         "journey.tool_label": "Instrument de sprijin",
         "journey.step1_when": "Dacă nu știi ce să plantezi",
@@ -1330,15 +1331,16 @@
         "journey.step1_title": "Planifică",
         "journey.step1_copy":
           "Trei întrebări despre spațiu, climă și timp: primești un plan pe măsura ta, pe care îl poți modifica oricând.",
-        "journey.step1_proof":
-          "Un plan complet, gata în doar câteva minute.",
+        "journey.step1_proof": "Un plan complet, gata în doar câteva minute.",
+        "journey.step1_badge": "3 întrebări · 2 minute",
         "journey.step1_cta": "Creează planul",
         "journey.step2_title": "Procură-ți plantele",
         "journey.step2_badge": "două moduri",
+        "journey.step2_help": "Sămânță sau răsad?",
         "journey.step2_copy":
           "De la sămânță costă mai puțin, de la răsad câștigi până la o lună la recoltare.",
         "journey.semi_label": "Semințele",
-        "journey.semi_hint": "97 de soiuri · de la 1,90 €",
+        "journey.semi_hint": "97 de soiuri · de la 2,20 €",
         "journey.piantine_label": "Răsadurile",
         "journey.piantine_hint": "deja crescute · în 48 h",
         "journey.or": "sau",

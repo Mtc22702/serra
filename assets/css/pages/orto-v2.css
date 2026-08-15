@@ -20,24 +20,24 @@
      colori della home: carta calda per il fondo, carta chiara per le schede
      un tono sopra, così i riquadri si staccano senza bisogno di ombre. */
   .orto-page {
-    --orto-ink: #1a2f21;
-    --orto-ink-soft: #354a3b;
-    --orto-muted: #5f6f62;
-    --orto-surface: #fffdf6;
-    --orto-surface-2: #faf7ee;
-    --orto-line: rgba(31, 58, 38, 0.14);
-    --orto-line-strong: rgba(31, 58, 38, 0.26);
+    --orto-ink: #182a21;
+    --orto-ink-soft: #34443b;
+    --orto-muted: #5f6f60;
+    --orto-surface: var(--surface-1);
+    --orto-surface-2: var(--surface-2);
+    --orto-line: var(--surface-line);
+    --orto-line-strong: var(--surface-line-strong);
     --orto-green: #2f6b3a;
     --orto-green-dk: #1f3a26;
     --orto-green-lt: #3a762e;
     /* L'ambra di prima stava a 3,4:1 sulla carta: sotto la soglia AA. */
     --orto-amber: #8a631c;
-    --orto-r: 16px;
-    --orto-r-lg: 22px;
-    --orto-shadow-sm: 0 2px 8px rgba(24, 53, 36, 0.06);
-    --orto-shadow: 0 12px 30px rgba(24, 53, 36, 0.1);
-    --orto-shadow-lg: 0 20px 48px rgba(24, 53, 36, 0.14);
-    background: #f4f0e3;
+    --orto-r: var(--radius-lg);
+    --orto-r-lg: var(--radius-xl);
+    --orto-shadow-sm: var(--elev-1);
+    --orto-shadow: var(--elev-2);
+    --orto-shadow-lg: var(--elev-3);
+    background: #f1ece7;
     color: var(--orto-ink);
   }
 
@@ -152,7 +152,7 @@
     display: grid;
     width: 34px;
     height: 34px;
-    border-radius: 11px;
+    border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--orto-green) 11%, transparent);
     font-size: 17px;
     place-items: center;
@@ -193,7 +193,7 @@
     min-width: 24px;
     height: 24px;
     padding: 0 7px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: rgba(47, 107, 58, 0.13);
     color: var(--orto-green);
     font-size: 12px;
@@ -216,7 +216,9 @@
     border-radius: var(--orto-r-lg);
     background: var(--orto-surface);
     color: var(--orto-ink);
-    box-shadow: none;
+    /* La fascia della giornata è la prima cosa della pagina: sta un gradino
+       sopra le attività che elenca, non allo stesso livello. */
+    box-shadow: var(--elev-2);
   }
 
   .orto-hero::before,
@@ -309,7 +311,7 @@
     min-width: 22px;
     height: 22px;
     padding: 0 7px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: rgba(47, 107, 58, 0.12);
     color: var(--orto-green);
     font-size: 12px;
@@ -326,10 +328,14 @@
     border: 1px solid var(--orto-line);
     border-radius: var(--orto-r);
     background: var(--orto-surface);
-    box-shadow: none;
+    /* Le attività erano completamente piatte sulla carta: con dieci righe
+       una sotto l'altra si leggevano come un elenco, non come cose da
+       spuntare. Il gradino più basso basta a staccarle. */
+    box-shadow: var(--elev-1);
     transition:
       border-color 0.16s ease,
-      background 0.16s ease;
+      background 0.16s ease,
+      box-shadow 0.2s ease;
   }
 
   .orto-task:hover {
@@ -351,7 +357,7 @@
 
   .orto-task.is-late {
     border-color: rgba(168, 70, 31, 0.34);
-    background: #fff9f5;
+    background: #fffdf6;
   }
 
   .orto-task.is-done {
@@ -399,7 +405,7 @@
     min-height: 34px;
     padding: 0 12px;
     border: 1px solid var(--orto-line-strong);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: transparent;
     color: var(--orto-ink-soft);
     font-size: 12.5px;
@@ -412,7 +418,7 @@
   }
 
   .orto-task-thumb {
-    border-radius: 12px;
+    border-radius: var(--radius-md);
   }
 
   /* ---------- schede di coltura e di dispensa ---------- */
@@ -436,7 +442,7 @@
     border: 1px solid var(--orto-line);
     border-radius: var(--orto-r-lg);
     background: var(--orto-surface);
-    box-shadow: none;
+    box-shadow: var(--elev-2);
     transition:
       transform 0.18s ease,
       box-shadow 0.22s ease,
@@ -505,7 +511,7 @@
   .orto-btn {
     min-height: var(--button-min-height, 44px);
     padding: 0 20px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-weight: 700;
   }
 
@@ -529,8 +535,8 @@
   /* Azione che toglie qualcosa: rossa, e solo dentro un dialogo di conferma. */
   .orto-btn--danger {
     border: 1px solid var(--button-danger-border, rgba(176, 48, 32, 0.32));
-    background: var(--button-danger-bg, #fff3f1);
-    color: var(--button-danger-text, #9f2f24);
+    background: var(--button-danger-bg, #fff4e8);
+    color: var(--button-danger-text, #a03820);
   }
 
   .orto-btn--danger:hover {
@@ -602,36 +608,36 @@
 
 @layer dark-theme {
   html[data-theme="dark"] .orto-page {
-    --orto-ink: #e9f2ea;
-    --orto-ink-soft: #cfdfd3;
+    --orto-ink: #edf5ef;
+    --orto-ink-soft: #d0ddd1;
     --orto-muted: #9db0a3;
-    --orto-surface: #12211a;
-    --orto-surface-2: #16281e;
-    --orto-line: rgba(160, 205, 176, 0.16);
-    --orto-line-strong: rgba(160, 205, 176, 0.3);
-    --orto-green: #7cc48d;
-    --orto-green-lt: #8fd39d;
+    --orto-surface: var(--surface-1);
+    --orto-surface-2: var(--surface-2);
+    --orto-line: var(--surface-line);
+    --orto-line-strong: var(--surface-line-strong);
+    --orto-green: #72c58a;
+    --orto-green-lt: #8bd49e;
     --orto-amber: #dbb45e;
-    background: #0c1812;
+    background: #0b1a13;
   }
 
   html[data-theme="dark"] .orto-tab-badge {
     background: rgba(124, 196, 141, 0.16);
-    color: #8fd39d;
+    color: #8bd49e;
   }
 
   html[data-theme="dark"] .orto-tab.is-active .orto-tab-badge {
-    background: #7cc48d;
-    color: #0c1812;
+    background: #72c58a;
+    color: #0b1a13;
   }
 
   html[data-theme="dark"] .orto-tab-note.is-late {
-    color: #e8a184;
+    color: #f0a087;
   }
 
   html[data-theme="dark"] .orto-count {
     background: rgba(124, 196, 141, 0.16);
-    color: #8fd39d;
+    color: #8bd49e;
   }
 
   html[data-theme="dark"] .orto-task.is-late {
@@ -640,7 +646,7 @@
   }
 
   html[data-theme="dark"] .orto-card:hover {
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.44);
+    box-shadow: var(--elev-hover);
   }
 
   html[data-theme="dark"] .orto-btn--danger {
@@ -657,17 +663,118 @@
     .orto-wrap {
       width: min(100% - 1.8rem, 1180px);
       padding-top: calc(var(--nav-h, 62px) + 1rem);
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
     }
 
-    /* Su telefono le tre schede si impilano: affiancate resterebbero larghe
-       un centimetro e la riga di stato sparirebbe nei puntini. */
+    /* Barra di navigazione mobile: tre destinazioni sempre raggiungibili,
+       ma abbastanza compatte da non coprire il contenuto dell'orto. */
     .orto-tabs {
-      gap: 7px;
-      grid-template-columns: minmax(0, 1fr);
+      right: 10px;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      left: 10px;
+      width: auto;
+      max-width: 520px;
+      margin-inline: auto;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid color-mix(in srgb, var(--orto-line) 82%, transparent);
+      border-radius: var(--radius-xl);
+      background: color-mix(in srgb, var(--orto-surface) 92%, transparent);
+      box-shadow: var(--elev-3);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      backdrop-filter: blur(18px) saturate(1.15);
+      -webkit-backdrop-filter: blur(18px) saturate(1.15);
     }
 
     .orto-tab {
-      min-height: 56px;
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+      min-height: 64px;
+      padding: 6px 4px 7px;
+      border: 0;
+      border-radius: var(--radius-lg);
+      background: transparent;
+      text-align: center;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: 28px minmax(0, 1fr);
+      justify-items: center;
+    }
+
+    .orto-tab:hover {
+      border-color: transparent;
+      background: color-mix(in srgb, var(--orto-green) 8%, transparent);
+    }
+
+    .orto-tab.is-active {
+      border-color: transparent;
+      background: linear-gradient(155deg, #43804d, var(--orto-green-dk));
+      box-shadow: var(--elev-2);
+    }
+
+    .orto-tab::after {
+      display: none;
+    }
+
+    .orto-tab-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .orto-tab.is-active .orto-tab-ico {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .orto-tab-copy {
+      width: 100%;
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .orto-tab-name {
+      overflow: hidden;
+      color: var(--orto-ink);
+      font-size: 0.78rem;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .orto-tab-note {
+      overflow: hidden;
+      margin-top: 1px;
+      font-size: 0.75rem;
+      line-height: 1.1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .orto-tab.is-active .orto-tab-name,
+    .orto-tab.is-active .orto-tab-note,
+    .orto-tab.is-active .orto-tab-note.is-late {
+      color: #fff;
+    }
+
+    .orto-tab-badge {
+      position: absolute;
+      top: 5px;
+      right: max(5px, calc(50% - 31px));
+      min-width: 18px;
+      height: 18px;
+      padding-inline: 5px;
+      border: 2px solid var(--orto-surface);
+      font-size: 12px;
+      box-shadow: var(--elev-1);
+    }
+
+    .orto-tab.is-active .orto-tab-badge {
+      border-color: var(--orto-green-dk);
+      background: #fff;
+      color: var(--orto-green-dk);
     }
 
     .orto-hero-inner {
@@ -676,6 +783,17 @@
 
     .orto-ring-wrap {
       justify-self: start;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .orto-tab-note {
+      display: none;
+    }
+
+    .orto-tab {
+      min-height: 58px;
+      grid-template-rows: 28px auto;
     }
   }
 

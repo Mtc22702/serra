@@ -57,14 +57,14 @@
   }
 
   /* ---------- superficie della pagina ----------
-     La hero è su carta calda mentre il corpo restava sul verdino #e2ede2:
+     La hero è su carta calda mentre il corpo restava sul verdino #e5eee3:
      il passaggio si vedeva come uno scalino. Il fondo diventa carta, ma un
      tono sotto le schede — che restano il livello più chiaro — se no le
      schede bianche ci sparirebbero dentro. Lo stacco (1,12) è persino
      leggermente superiore a quello che avevano sul verde (1,18 con il
      bordo che faceva il resto del lavoro). */
   body {
-    background: #f4f0e3;
+    background: #f1ece7;
   }
 
   /* Le due fasce a tutta larghezza erano bianco freddo: accanto alla carta
@@ -74,7 +74,7 @@
     border-top: 1px solid rgba(45, 106, 79, 0.12);
     border-bottom: 1px solid rgba(45, 106, 79, 0.12);
     background:
-      linear-gradient(180deg, #fdfaf1 0%, #fffdf6 100%),
+      linear-gradient(180deg, #fffdf6 0%, #fffdf6 100%),
       linear-gradient(
         90deg,
         rgba(45, 106, 79, 0.05),
@@ -85,7 +85,7 @@
 
   .contatti-section {
     border-top: 1px solid rgba(45, 106, 79, 0.12);
-    background: linear-gradient(180deg, #fffdf6 0%, #fdfaf1 100%);
+    background: linear-gradient(180deg, #fffdf6 0%, #fffdf6 100%);
   }
 
   /* ---------- ritmo verticale ----------
@@ -165,7 +165,10 @@
        valori di prima i pulsanti delle tappe finivano a 753 px, cioè sotto
        la piega su un'area utile di circa 668. Ogni riduzione qui sotto serve
        a farceli entrare. */
-    padding-top: calc(var(--nav-h) + clamp(1rem, 3vw, 2.25rem));
+    /* Sopra --nav-h resta solo il respiro minimo che tiene il titolo
+       staccato dall'intestazione: prima ce n'era il doppio, pensato per
+       l'occhiello che oggi non c'è più. */
+    padding-top: calc(var(--nav-h) + clamp(0.4rem, 1.2vw, 0.9rem));
     padding-bottom: clamp(2rem, 5vw, 3.75rem);
     /* La carta calda toglie il velo verdino che appiattiva tutto. */
     background:
@@ -176,7 +179,7 @@
       ),
       /* Finisce esattamente sul fondo della pagina: nessuno scalino al
          confine con la sezione successiva. */
-        linear-gradient(180deg, #fffdf6 0%, #f4f0e3 100%);
+        linear-gradient(180deg, #fffdf6 0%, #f1ece7 100%);
   }
 
   /* Le piante restano ai margini (le posizioni sono in home.js) e una
@@ -229,7 +232,7 @@
     display: inline-flex;
     gap: 10px;
     align-items: center;
-    color: #5f6f62;
+    color: #5f6f60;
     font-size: 12.5px;
     font-weight: 700;
     letter-spacing: 0.13em;
@@ -244,13 +247,16 @@
   }
 
   .hero-v2-title {
-    margin-top: 0.85rem;
+    /* Gli 0,85 rem servivano a staccare il titolo dall'occhiello che stava
+       sopra. Tolto quello, restava solo un buco fra l'intestazione e la
+       prima riga. */
+    margin-top: 0;
     font-family: "Fraunces", Georgia, serif;
     font-size: clamp(2.1rem, 4.6vw, 3.4rem);
     font-weight: 500;
     line-height: 1.03;
     letter-spacing: -0.021em;
-    color: #1a2f21;
+    color: #182a21;
     text-wrap: balance;
   }
 
@@ -258,6 +264,18 @@
     display: block;
     color: #2f6b3a;
     font-style: normal;
+  }
+
+  /* La riga che spiega: sta sotto il titolo e sopra le schede, e non deve
+     competere con nessuno dei due. Larghezza limitata perché una riga lunga
+     quanto la pagina non si legge, si scorre. */
+  .hero-v2-lead {
+    max-width: 52ch;
+    margin-top: 0.7rem;
+    color: #46554a;
+    font-size: clamp(1rem, 1.5vw, 1.12rem);
+    line-height: 1.5;
+    text-wrap: pretty;
   }
 
   /* ---------- selettore di intenti ----------
@@ -300,7 +318,7 @@
      propria serra. */
   .hero-v2-caption {
     margin-top: 0.6rem;
-    color: #5f6f62;
+    color: #5f6f60;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -315,8 +333,56 @@
     padding: clamp(1.15rem, 2.5vw, 1.8rem);
     border: 1px solid rgba(31, 58, 38, 0.14);
     border-radius: clamp(22px, 3vw, 30px);
-    background: rgba(255, 253, 246, 0.56);
-    box-shadow: 0 18px 50px rgba(24, 53, 36, 0.06);
+    background:
+      radial-gradient(
+        70% 120% at 0% 0%,
+        rgba(107, 170, 101, 0.12),
+        transparent 68%
+      ),
+      rgba(255, 253, 246, 0.72);
+    box-shadow: var(--elev-2);
+  }
+
+  /* Una breve intestazione trasforma il gruppo da semplice sequenza di
+     contenuti in un selettore: prima di leggere le card è già chiaro che
+     bisogna sceglierne una. */
+  .journey-choice-head {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: clamp(0.9rem, 1.8vw, 1.2rem);
+    padding-inline: 0.25rem;
+  }
+
+  .journey-choice-kicker {
+    display: block;
+    color: #214832;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    font-weight: 650;
+    line-height: 1.1;
+  }
+
+  .journey-choice-head p {
+    margin-top: 0.25rem;
+    color: #5f6f60;
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .journey-choice-count {
+    flex: none;
+    padding: 6px 11px;
+    border: 1px solid rgba(47, 107, 58, 0.2);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.74);
+    color: #2f5b34;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    box-shadow: var(--elev-2);
   }
 
   .journey {
@@ -335,20 +401,91 @@
     min-height: 505px;
     padding: clamp(1.15rem, 2vw, 1.5rem);
     overflow: hidden;
-    border: 1px solid rgba(31, 58, 38, 0.14);
-    border-radius: 20px;
-    background: rgba(255, 253, 246, 0.94);
-    box-shadow: 0 10px 28px rgba(24, 53, 36, 0.065);
+    border: 1px solid rgba(31, 58, 38, 0.18);
+    border-radius: var(--radius-xl);
+    background: rgba(255, 253, 246, 0.97);
+    box-shadow: var(--elev-3);
     transition:
       border-color 0.18s ease,
       box-shadow 0.22s ease,
       transform 0.18s ease;
   }
 
+  .journey-step::before {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    height: 5px;
+    background: linear-gradient(90deg, #2f6b3a, #78b86c);
+    content: "";
+  }
+
+  .journey-step::after {
+    position: absolute;
+    top: -54px;
+    right: -54px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(82, 151, 79, 0.08);
+    content: "";
+    pointer-events: none;
+  }
+
   .journey-step:hover {
-    border-color: rgba(47, 107, 58, 0.3);
-    box-shadow: 0 16px 34px rgba(24, 53, 36, 0.1);
-    transform: translateY(-3px);
+    border-color: rgba(47, 107, 58, 0.42);
+    box-shadow: var(--elev-3);
+    transform: translateY(-5px);
+  }
+
+  .journey-step:focus-within {
+    border-color: rgba(47, 107, 58, 0.52);
+    box-shadow:
+      0 0 0 4px rgba(67, 130, 70, 0.12),
+      var(--elev-3);
+  }
+
+  .journey-option-mark {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    align-self: flex-start;
+    padding: 4px 9px 4px 5px;
+    border: 1px solid rgba(47, 107, 58, 0.18);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.78);
+    color: #456152;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .journey-option-mark > span:first-child {
+    display: grid;
+    width: 25px;
+    height: 25px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--journey-accent);
+    color: #fff;
+    font-size: 0.62rem;
+    box-shadow: var(--elev-1);
+  }
+
+  .journey-option-mark--tool {
+    border-color: rgba(47, 107, 58, 0.14);
+    background: rgba(255, 255, 255, 0.58);
+    color: #5f6f60;
+  }
+
+  .journey-option-mark--tool > span:first-child {
+    background: rgba(47, 107, 58, 0.14);
+    color: #2f6b3a;
+    box-shadow: none;
   }
 
   /* La condizione: è quello che trasforma le tre colonne da passi in
@@ -366,21 +503,40 @@
 
   .journey-step--buy {
     --journey-accent: #3a762e;
-    background: rgba(255, 250, 238, 0.96);
+    border-color: rgba(151, 111, 35, 0.27);
+    background: linear-gradient(
+      155deg,
+      rgba(255, 253, 246, 0.98),
+      rgba(241, 234, 204, 0.96)
+    );
+    box-shadow: var(--elev-3);
+  }
+
+  .journey-step--buy::before {
+    background: linear-gradient(90deg, #6f943d, #d9a441);
+  }
+
+  .journey-step--buy::after {
+    background: rgba(217, 164, 65, 0.1);
   }
 
   .journey-step--grow {
     --journey-accent: #2f6b3a;
     border-color: rgba(47, 107, 58, 0.2);
-    background: rgba(239, 246, 238, 0.9);
-    box-shadow: 0 4px 14px rgba(24, 53, 36, 0.045);
+    background: rgba(237, 245, 239, 0.9);
+    box-shadow: var(--elev-2);
+  }
+
+  .journey-step--grow::before {
+    height: 3px;
+    opacity: 0.55;
   }
 
   /* L'ultima card rappresenta un ambiente di lavoro, non un'altra azione
      del percorso: resta allineata alle altre ma non si solleva come loro. */
   .journey-step--grow:hover {
     border-color: rgba(47, 107, 58, 0.3);
-    box-shadow: 0 6px 18px rgba(24, 53, 36, 0.065);
+    box-shadow: var(--elev-2);
     transform: none;
   }
 
@@ -398,7 +554,7 @@
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.012em;
-    color: #1a2f21;
+    color: #182a21;
   }
 
   /* Etichette di stato: facoltativa, due modi, gratuito. Sono il modo più
@@ -408,7 +564,7 @@
     align-items: center;
     padding: 3px 10px;
     border: 1px solid currentColor;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -425,9 +581,19 @@
     color: #2f6b3a;
   }
 
+  /* Il distintivo della prima scheda dice una durata, non una qualità:
+     resta il più sommesso dei tre, senza contorno e in tondo minuscolo. */
+  .journey-badge--time {
+    border-color: transparent;
+    background: var(--surface-2);
+    color: #46554a;
+    letter-spacing: 0.03em;
+    text-transform: none;
+  }
+
   .journey-body > p {
     margin-top: 0;
-    color: #5f6f62;
+    color: #5f6f60;
     font-size: 0.95rem;
     line-height: 1.5;
     text-wrap: pretty;
@@ -517,57 +683,91 @@
 
   /* Il terzo ingresso mostra una porzione reale dell'app dentro una cornice:
      la grammatica da finestra rende evidente che si sta aprendo un tool. */
+  /* L'anteprima dello strumento era un riquadro verdino piatto con dentro
+     uno screenshot scolorito: non sembrava l'app, sembrava un segnaposto.
+     Adesso è una finestrella vera — barra chiara con i tre pallini, schermo
+     incassato, ombra sotto — e lo screenshot ha ripreso colore. */
   .journey-care-preview {
+    position: relative;
     display: block;
     min-height: 176px;
     overflow: hidden;
-    border: 1px solid rgba(47, 107, 58, 0.11);
-    border-radius: 16px;
-    background: #dce8d9;
-    box-shadow: none;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    box-shadow: var(--elev-2);
   }
 
   .journey-tool-bar {
+    position: relative;
     display: flex;
     gap: 8px;
     align-items: center;
-    min-height: 34px;
-    padding: 5px 10px;
-    border-bottom: 1px solid rgba(47, 107, 58, 0.1);
-    background: #edf3eb;
+    min-height: 36px;
+    padding: 5px 10px 5px 44px;
+    border-bottom: 1px solid var(--surface-line);
+    background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
+  }
+
+  /* I tre pallini: due pixel di convenzione che bastano a far leggere il
+     riquadro come una finestra dell'applicazione invece che come un'immagine
+     qualsiasi incollata nella scheda. */
+  .journey-tool-bar::before {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2f6b3a;
+    box-shadow:
+      10px 0 0 rgba(47, 107, 58, 0.42),
+      20px 0 0 rgba(47, 107, 58, 0.22);
+    content: "";
+    opacity: 0.75;
+    transform: translateY(-50%);
   }
 
   .journey-tool-bar img {
     width: 22px;
     height: 22px;
     border-radius: 6px;
-    opacity: 0.76;
+    box-shadow: var(--elev-1);
+    opacity: 1;
   }
 
   .journey-tool-bar strong {
     display: block;
-    color: #405645;
+    color: #263c31;
     font-size: 0.72rem;
     font-weight: 750;
     letter-spacing: 0.02em;
     line-height: 1;
-    opacity: 0.82;
+    opacity: 1;
   }
 
   .journey-tool-screen {
     position: relative;
     height: 142px;
     overflow: hidden;
-    background: #cad9c7;
+    background: var(--surface-2);
+    /* Lo schermo è incassato di un capello dentro la finestra. */
+    box-shadow: inset 0 1px 3px rgba(31, 58, 38, 0.12);
   }
 
+  /* Sfumatura in basso: l'immagine finisce dentro la carta invece di essere
+     tagliata di netto, e il taglio non compete con il pulsante che segue. */
   .journey-tool-screen::after {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: rgba(37, 82, 49, 0.07);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      transparent 26%,
+      color-mix(in srgb, var(--surface-1) 62%, transparent) 100%
+    );
     content: "";
-    mix-blend-mode: multiply;
   }
 
   .journey-tool-screen img {
@@ -576,13 +776,15 @@
     margin-left: -6%;
     object-fit: cover;
     object-position: 50% 32%;
-    filter: saturate(0.52) contrast(0.88) brightness(1.03);
+    /* Era a saturate(.52): l'app sembrava spenta. Adesso è quasi il colore
+       vero, appena calmato per non gridare più del titolo della scheda. */
+    filter: saturate(0.92) contrast(0.96);
   }
 
   .journey-cta-icon {
     width: 24px;
     height: 24px;
-    border-radius: 7px;
+    border-radius: var(--radius-sm);
   }
 
   .journey-actions {
@@ -601,7 +803,7 @@
     min-height: var(--button-min-height);
     padding: 0 20px;
     border: 1px solid transparent;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--button-primary-fill);
     color: var(--button-primary-text);
     font-size: 0.96rem;
@@ -628,7 +830,7 @@
      non compete con l'azione che porta soldi ma resta un pulsante vero. */
   .journey-cta--soft {
     border-color: rgba(47, 107, 58, 0.3);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     background: rgba(47, 107, 58, 0.11);
     color: #245733;
     box-shadow: none;
@@ -644,8 +846,8 @@
     align-items: center;
     min-height: var(--button-min-height);
     padding: 0 14px;
-    border-radius: 999px;
-    color: #354a3b;
+    border-radius: var(--radius-pill);
+    color: #34443b;
     font-size: 0.93rem;
     font-weight: 650;
     text-decoration: underline;
@@ -676,7 +878,7 @@
     gap: 12px;
     align-items: center;
     justify-content: center;
-    color: #5f6f62;
+    color: #5f6f60;
     font-family: "Fraunces", Georgia, serif;
     font-size: 0.88rem;
     font-style: italic;
@@ -693,36 +895,66 @@
     content: "";
   }
 
-  /* Ogni scelta è una riga completa: illustrazione, testo e freccia. */
+  /* Ogni scelta è una riga completa: illustrazione, testo e freccia.
+     Erano due rettangoli tinti quasi uguali, e a colpo d'occhio sembravano
+     una didascalia in due parti invece che due pulsanti. Adesso ognuna ha
+     tre segnali suoi: il filo di colore a sinistra che la marca (verde il
+     seme, ambra la piantina), il disco chiaro che stacca il disegno dal
+     fondo e la freccia dentro un bottone tondo, che è la parte che dice
+     «di qui si va da qualche parte». */
   .journey-pick {
     --pick-accent: #3a762e;
+    --pick-tint: rgba(47, 107, 58, 0.07);
+    position: relative;
     display: grid;
-    gap: 0 12px;
+    gap: 0 13px;
     align-items: center;
     min-height: 92px;
-    padding: 14px 15px;
-    border: 1px solid rgba(47, 107, 58, 0.3);
-    border-radius: 15px;
-    background: #edf4e9;
+    padding: 14px 15px 14px 19px;
+    overflow: hidden;
+    border: 1px solid rgba(47, 107, 58, 0.24);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(120deg, var(--pick-tint), rgba(255, 255, 255, 0) 62%),
+      var(--surface-1);
     color: inherit;
     text-decoration: none;
-    grid-template-columns: 42px minmax(0, 1fr) auto;
+    box-shadow: var(--elev-1);
+    grid-template-columns: 46px minmax(0, 1fr) auto;
     transition:
       border-color 0.16s ease,
       transform 0.18s ease,
       box-shadow 0.22s ease;
   }
 
+  /* Il filo verticale: due pixel di colore che al passaggio si allargano.
+     È il modo più economico per dire «questa è quella dei semi» senza
+     aggiungere un'altra etichetta. */
+  .journey-pick::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: var(--pick-accent);
+    content: "";
+    transition: width 0.18s ease;
+  }
+
   .journey-pick--piantine {
-    --pick-accent: #8a631c;
-    border-color: rgba(138, 99, 28, 0.32);
-    background: #f6eedc;
+    --pick-accent: #b5860f;
+    --pick-tint: rgba(201, 150, 47, 0.12);
+    border-color: rgba(138, 99, 28, 0.26);
   }
 
   .journey-pick:hover {
-    border-color: var(--pick-accent);
-    box-shadow: 0 12px 28px rgba(24, 53, 36, 0.14);
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--pick-accent) 55%, transparent);
+    box-shadow: var(--elev-hover);
+    transform: var(--lift-hover);
+  }
+
+  .journey-pick:hover::before {
+    width: 6px;
   }
 
   .journey-pick:focus-visible {
@@ -730,18 +962,45 @@
     outline-offset: 3px;
   }
 
+  /* Il disegno sta su un dischetto di carta: prima galleggiava sul tinto e
+     le due illustrazioni, che hanno pesi molto diversi, sembravano una
+     stampata e l'altra sbiadita. */
   .journey-pick-illo {
     grid-area: auto;
-    width: 40px;
-    height: auto;
+    box-sizing: border-box;
+    width: 46px;
+    height: 46px;
+    padding: 6px;
+    border: 1px solid color-mix(in srgb, var(--pick-accent) 22%, transparent);
+    border-radius: 50%;
+    background: var(--surface-1);
+    box-shadow: var(--elev-1);
+    object-fit: contain;
   }
 
   .journey-pick .journey-arrow {
+    display: grid;
     grid-area: auto;
+    width: 30px;
+    height: 30px;
     align-self: center;
     justify-self: auto;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--pick-accent) 12%, transparent);
     color: var(--pick-accent);
     font-weight: 700;
+    transition:
+      background 0.18s ease,
+      color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  /* Al passaggio la freccia si riempie: è l'unico elemento che cambia stato
+     in modo netto, così si capisce che tutta la riga è un pulsante. */
+  .journey-pick:hover .journey-arrow {
+    background: var(--pick-accent);
+    color: var(--surface-1);
   }
 
   .journey-pick-copy {
@@ -752,7 +1011,7 @@
 
   .journey-pick-copy b {
     display: block;
-    color: #1a2f21;
+    color: #182a21;
     font-family: "Fraunces", Georgia, serif;
     font-size: 1.05rem;
     font-weight: 600;
@@ -762,7 +1021,7 @@
   .journey-pick-copy small {
     display: block;
     margin-top: 2px;
-    color: #5f6f62;
+    color: #5f6f60;
     font-size: 12.5px;
     font-weight: 600;
     line-height: 1.3;
@@ -790,7 +1049,7 @@
     gap: clamp(1.1rem, 3vw, 2.5rem);
     align-items: center;
     padding: clamp(1.5rem, 3.2vw, 2.4rem) clamp(1.35rem, 3.2vw, 2.6rem);
-    border-radius: 26px;
+    border-radius: var(--radius-2xl);
   }
 
   .bridge-body {
@@ -828,7 +1087,7 @@
     justify-content: center;
     min-height: var(--button-min-height);
     padding: 0 22px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-size: 0.98rem;
     font-weight: 700;
     text-decoration: none;
@@ -838,7 +1097,7 @@
   }
 
   .bridge-cta:hover {
-    box-shadow: 0 12px 26px rgba(24, 53, 36, 0.2);
+    box-shadow: var(--elev-2);
     transform: translateY(-2px);
   }
 
@@ -848,7 +1107,7 @@
     background: linear-gradient(
       135deg,
       rgba(255, 250, 235, 0.96),
-      rgba(250, 242, 224, 0.94)
+      rgba(245, 240, 226, 0.94)
     );
   }
 
@@ -857,11 +1116,11 @@
   }
 
   .bridge--vivaio .bridge-title {
-    color: #1a2f21;
+    color: #182a21;
   }
 
   .bridge--vivaio .bridge-copy {
-    color: #5f6f62;
+    color: #5f6f60;
   }
 
   .bridge--vivaio .bridge-cta {
@@ -878,11 +1137,11 @@
         transparent 62%
       ),
       #1f3a26;
-    color: #eef6ef;
+    color: #edf5ef;
   }
 
   .bridge--orto .section-kicker {
-    color: rgba(238, 246, 239, 0.76);
+    color: rgba(237, 245, 239, 0.76);
   }
 
   .bridge--orto .bridge-title {
@@ -890,7 +1149,7 @@
   }
 
   .bridge--orto .bridge-copy {
-    color: rgba(238, 246, 239, 0.82);
+    color: rgba(237, 245, 239, 0.82);
   }
 
   .bridge--orto .bridge-cta {
@@ -906,13 +1165,57 @@
     display: inline-flex;
     align-items: center;
     padding: 4px 11px;
-    border: 1px solid rgba(238, 246, 239, 0.42);
-    border-radius: 999px;
-    color: rgba(238, 246, 239, 0.9);
+    border: 1px solid rgba(237, 245, 239, 0.42);
+    border-radius: var(--radius-pill);
+    color: rgba(237, 245, 239, 0.9);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+  }
+
+  /* ---------- tre schede, una sola griglia ----------
+     Le colonne stavano in piedi con `min-height: 505px`: un puntello tarato
+     a occhio sul testo italiano, che con una traduzione più lunga o un
+     carattere diverso torna a sfasarsi. Con subgrid le cinque righe —
+     marcatore, titolo, testo, anteprima, azioni — sono le stesse per tutte
+     e tre: le anteprime partono alla stessa quota e i pulsanti cadono
+     sulla stessa riga da soli, qualunque cosa ci sia scritto sopra.
+     Vale solo sul desktop, dove le tre schede stanno davvero affiancate. */
+  @media (min-width: 1041px) {
+    @supports (grid-template-rows: subgrid) {
+      .journey {
+        grid-template-rows: auto auto auto 1fr auto;
+      }
+
+      .journey-step {
+        display: grid;
+        min-height: 0;
+        row-gap: 0.72rem;
+        grid-row: span 5;
+        grid-template-rows: subgrid;
+      }
+
+      /* Il contenitore sparisce come scatola e i suoi figli diventano le
+         righe della scheda: è l'unico modo perché il titolo della prima
+         scheda e quello della terza stiano sulla stessa riga. */
+      .journey-body {
+        display: contents;
+      }
+
+      .journey-body > * {
+        min-width: 0;
+      }
+
+      .journey-feature {
+        align-self: stretch;
+        margin-top: 0;
+      }
+
+      .journey-actions {
+        align-self: end;
+      }
+    }
   }
 }
 
@@ -926,7 +1229,7 @@
         rgba(124, 196, 141, 0.12),
         transparent 58%
       ),
-      linear-gradient(180deg, #0c1812 0%, #12211a 100%);
+      linear-gradient(180deg, #0b1a13 0%, #13221b 100%);
   }
 
   html[data-theme="dark"] .hero-v2 .hero-bg-plants {
@@ -934,16 +1237,16 @@
   }
 
   html[data-theme="dark"] .section-kicker {
-    color: #8fd39d;
+    color: #8bd49e;
   }
 
   html[data-theme="dark"] body {
-    background: #0c1812;
+    background: #0b1a13;
   }
 
   html[data-theme="dark"] .contatti-section {
     border-top-color: rgba(160, 205, 176, 0.14);
-    background: linear-gradient(180deg, #0c1812 0%, #101d17 100%);
+    background: linear-gradient(180deg, #0b1a13 0%, #0b1a13 100%);
   }
 
   html[data-theme="dark"] .hero-v2-eyebrow {
@@ -955,11 +1258,15 @@
   }
 
   html[data-theme="dark"] .hero-v2-title {
-    color: #e9f2ea;
+    color: #edf5ef;
   }
 
   html[data-theme="dark"] .hero-v2-title em {
-    color: #8fd39d;
+    color: #8bd49e;
+  }
+
+  html[data-theme="dark"] .hero-v2-lead {
+    color: #a9b9ae;
   }
 
   html[data-theme="dark"] .hero-v2-visual .hcg {
@@ -984,29 +1291,51 @@
 
   html[data-theme="dark"] .journey-wrap {
     border-color: rgba(160, 205, 176, 0.16);
-    background: rgba(18, 33, 26, 0.72);
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+    background:
+      radial-gradient(
+        70% 120% at 0% 0%,
+        rgba(124, 196, 141, 0.1),
+        transparent 68%
+      ),
+      rgba(19, 34, 27, 0.82);
+    box-shadow: var(--elev-2);
+  }
+
+  html[data-theme="dark"] .journey-choice-kicker {
+    color: #d6e7da;
+  }
+
+  html[data-theme="dark"] .journey-choice-head p {
+    color: #9db0a3;
+  }
+
+  html[data-theme="dark"] .journey-choice-count,
+  html[data-theme="dark"] .journey-option-mark {
+    border-color: rgba(160, 205, 176, 0.22);
+    background: rgba(23, 39, 31, 0.88);
+    color: #b9d8c1;
+    box-shadow: var(--elev-2);
   }
 
   html[data-theme="dark"] .journey-step {
-    --journey-accent: #7cc48d;
+    --journey-accent: #72c58a;
     border-color: rgba(160, 205, 176, 0.18);
-    background: #12211a;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    background: #13221b;
+    box-shadow: var(--elev-2);
   }
 
   html[data-theme="dark"] .journey-step:hover {
-    border-color: rgba(143, 211, 157, 0.42);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+    border-color: rgba(139, 212, 158, 0.42);
+    box-shadow: var(--elev-3);
   }
 
   html[data-theme="dark"] .journey-step--buy {
-    --journey-accent: #8fd39d;
+    --journey-accent: #8bd49e;
   }
 
   html[data-theme="dark"] .journey-head h2,
   html[data-theme="dark"] .journey-pick-copy b {
-    color: #e9f2ea;
+    color: #edf5ef;
   }
 
   html[data-theme="dark"] .journey-body > p,
@@ -1017,29 +1346,43 @@
 
   html[data-theme="dark"] .journey-care-preview {
     border-color: rgba(124, 196, 141, 0.2);
-    background: #132119;
-    box-shadow: none;
+    background: var(--surface-1);
+    box-shadow: var(--elev-2);
   }
 
   html[data-theme="dark"] .journey-tool-bar {
     border-bottom-color: rgba(160, 205, 176, 0.1);
-    background: #17271d;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface-1));
+  }
+
+  html[data-theme="dark"] .journey-tool-bar::before {
+    background: #8bd49e;
+    box-shadow:
+      10px 0 0 rgba(139, 212, 158, 0.42),
+      20px 0 0 rgba(139, 212, 158, 0.22);
   }
 
   html[data-theme="dark"] .journey-tool-bar strong {
-    color: #e9f2ea;
+    color: #edf5ef;
   }
 
+  /* Al buio lo screenshot resta chiaro: va abbassato di luminosità, ma non
+     spento come prima — era diventato una macchia grigia. */
   html[data-theme="dark"] .journey-tool-screen img {
-    filter: saturate(0.46) contrast(0.86) brightness(0.72);
+    filter: saturate(0.8) contrast(0.92) brightness(0.84);
   }
 
   html[data-theme="dark"] .journey-tool-screen::after {
-    background: rgba(5, 18, 10, 0.14);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 26%,
+      color-mix(in srgb, var(--surface-1) 66%, transparent) 100%
+    );
   }
 
   html[data-theme="dark"] .journey-step--grow {
-    background: #14261c;
+    background: #13221b;
   }
 
   html[data-theme="dark"] .journey-when {
@@ -1047,18 +1390,23 @@
   }
 
   html[data-theme="dark"] .journey-badge--pick {
-    color: #8fd39d;
+    color: #8bd49e;
   }
 
   html[data-theme="dark"] .journey-badge--free {
     background: rgba(124, 196, 141, 0.16);
-    color: #8fd39d;
+    color: #8bd49e;
+  }
+
+  html[data-theme="dark"] .journey-badge--time {
+    background: var(--surface-2);
+    color: #c6d5ca;
   }
 
   html[data-theme="dark"] .journey-cta--soft {
     border-color: rgba(124, 196, 141, 0.34);
     background: rgba(124, 196, 141, 0.14);
-    color: #b6e4c2;
+    color: #b9ebc8;
   }
 
   html[data-theme="dark"] .journey-cta--soft:hover {
@@ -1066,29 +1414,36 @@
   }
 
   html[data-theme="dark"] .journey-quiet {
-    color: #cfdfd3;
+    color: #d0ddd1;
     text-decoration-color: rgba(160, 205, 176, 0.36);
   }
 
   html[data-theme="dark"] .journey-pick {
-    --pick-accent: #8fd39d;
-    border-color: rgba(143, 211, 157, 0.42);
-    background: #183022;
+    --pick-accent: #8bd49e;
+    --pick-tint: rgba(139, 212, 158, 0.12);
+    border-color: rgba(139, 212, 158, 0.28);
   }
 
   html[data-theme="dark"] .journey-pick--piantine {
     --pick-accent: #dbb45e;
-    border-color: rgba(219, 180, 94, 0.42);
-    background: #302817;
+    --pick-tint: rgba(219, 180, 94, 0.14);
+    border-color: rgba(219, 180, 94, 0.28);
   }
 
-  html[data-theme="dark"] .journey-pick:hover {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.44);
+  /* Al buio il dischetto non può essere bianco: userebbe più luce del
+     disegno che contiene. Prende la carta scura del tema. */
+  html[data-theme="dark"] .journey-pick-illo {
+    border-color: color-mix(in srgb, var(--pick-accent) 26%, transparent);
+    background: var(--surface-2);
+  }
+
+  html[data-theme="dark"] .journey-pick:hover .journey-arrow {
+    color: #0b1a13;
   }
 
   html[data-theme="dark"] .bridge--vivaio .bridge-inner {
     border-color: rgba(219, 180, 94, 0.26);
-    background: linear-gradient(135deg, #1d2b1f, #1a2a20);
+    background: linear-gradient(135deg, #182a21, #182a21);
   }
 
   html[data-theme="dark"] .bridge--vivaio .section-kicker {
@@ -1096,7 +1451,7 @@
   }
 
   html[data-theme="dark"] .bridge--vivaio .bridge-title {
-    color: #e9f2ea;
+    color: #edf5ef;
   }
 
   html[data-theme="dark"] .bridge--vivaio .bridge-copy {
@@ -1105,7 +1460,7 @@
 
   html[data-theme="dark"] .bridge--vivaio .bridge-cta {
     background: #dbb45e;
-    color: #22190a;
+    color: #2a1d05;
   }
 
   html[data-theme="dark"] .bridge--orto .bridge-inner {
@@ -1116,7 +1471,7 @@
         rgba(124, 196, 141, 0.14),
         transparent 62%
       ),
-      #16281d;
+      #17271f;
   }
 }
 
@@ -1152,7 +1507,7 @@
       gap: 0.65rem clamp(1.25rem, 3vw, 2rem);
       align-items: start;
       grid-template-areas:
-        "when preview"
+        "option preview"
         "head preview"
         "copy preview"
         ". actions";
@@ -1160,8 +1515,9 @@
       grid-template-rows: auto auto 1fr auto;
     }
 
+    .journey-step--grow .journey-option-mark,
     .journey-step--grow .journey-when {
-      grid-area: when;
+      grid-area: option;
     }
 
     .journey-step--grow .journey-head {
@@ -1196,7 +1552,13 @@
   @media (max-width: 620px) {
     .journey-wrap {
       padding: 0.85rem;
-      border-radius: 22px;
+      border-radius: var(--radius-xl);
+    }
+
+    .journey-choice-head {
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: flex-start;
     }
 
     /* Durante lo scroll ogni ingresso deve essere percepito come un blocco
@@ -1213,7 +1575,13 @@
     .journey-pick {
       gap: 0 11px;
       min-height: 80px;
-      grid-template-columns: 38px minmax(0, 1fr) auto;
+      grid-template-columns: 40px minmax(0, 1fr) auto;
+    }
+
+    .journey-pick-illo {
+      width: 40px;
+      height: 40px;
+      padding: 5px;
     }
   }
 
@@ -1254,7 +1622,45 @@
     }
   }
 
+  /* ---------- ingresso delle schede ----------
+     Le tre schede comparivano tutte insieme, già ferme: la prima schermata
+     sembrava un'immagine. Entrano una dopo l'altra da sotto, in mezzo
+     secondo scarso, nell'ordine in cui vanno lette. È l'unica animazione
+     della hero, e finisce prima che uno abbia deciso dove cliccare. */
+  @keyframes journey-step-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* `backwards` e non `both`: a fine corsa l'animazione smette di valere e
+     la scheda torna alle sue regole. Con `both` la trasformazione finale
+     resterebbe applicata per sempre e il sollevamento al passaggio del
+     mouse non avrebbe più effetto. */
+  .journey-step {
+    animation: journey-step-in 0.42s cubic-bezier(0.22, 0.78, 0.28, 1) backwards;
+  }
+
+  .journey-step:nth-child(2) {
+    animation-delay: 90ms;
+  }
+
+  .journey-step:nth-child(3) {
+    animation-delay: 180ms;
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    /* Con movimento ridotto le schede ci sono e basta. */
+    .journey-step {
+      animation: none;
+    }
+
     .journey-cta,
     .journey-pick,
     .journey-arrow,

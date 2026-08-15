@@ -50,7 +50,7 @@
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
           <span class="nav-brand-mark"
-            ><img src="assets/img/svg/logo.svg" alt=""
+            ><img src="assets/img/svg/logo.svg" alt="" width="34" height="34"
           /></span>
           <span class="nav-brand-copy">
             <strong class="nav-brand-text">Orto in Serra</strong>
@@ -438,9 +438,12 @@
               <span class="account-eyebrow" data-i18n-acc="dash.account_eyebrow"
                 >Il tuo spazio</span
               >
-              <h2 id="userNameTitle" data-i18n-acc="dash.loading_generic">
+              <!-- È l'unico titolo della pagina: era un h2 e il documento
+                   restava senza h1, quindi chi naviga con la tastiera o con
+                   uno screen reader non aveva un punto di partenza. -->
+              <h1 id="userNameTitle" data-i18n-acc="dash.loading_generic">
                 Caricamento...
-              </h2>
+              </h1>
               <p id="userEmailSub">utente@ortoinserra.it</p>
             </div>
           </div>

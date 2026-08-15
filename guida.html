@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2f6b3a" />
-    <title>Come usare Orto in Serra</title>
+    <title>Come usare Orto in Serra · Guida</title>
     <link
       rel="icon"
       href="assets/img/icons/orto-in-serra-192-v2.png"
@@ -49,7 +49,7 @@
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
           <span class="nav-brand-mark"
-            ><img src="assets/img/svg/logo.svg" alt=""
+            ><img src="assets/img/svg/logo.svg" alt="" width="34" height="34"
           /></span>
           <span class="nav-brand-copy">
             <strong class="nav-brand-text">Orto in Serra</strong>
@@ -200,21 +200,41 @@
           src="assets/img/svg/logo.svg"
           alt=""
           aria-hidden="true"
+          width="210"
+          height="210"
+          decoding="async"
         />
         <div class="guide-hero-copy">
           <p class="guide-kicker" data-guide-key="hero.kicker">GUIDA ALL'APP</p>
           <h1 id="guideTitle" data-guide-key="hero.title">
-            Scegli come progettare la tua serra.
+            Dal progetto al raccolto, spiegato.
           </h1>
           <p class="guide-hero-intro" data-guide-key="hero.intro">
-            Tre percorsi chiari, dal primo progetto alla composizione libera.
-            Parti dal livello che ti somiglia di più.
+            La guida copre i tre momenti dell'app: disegnare la serra, decidere
+            se partire dal seme o dalla piantina, seguire l'orto fino alla
+            raccolta.
           </p>
+          <!-- Indice: la pagina si è allungata e ci si arriva anche da link
+               diretti (dalla home, per esempio, si atterra sul confronto fra
+               seme e piantina). Senza un indice non si capisce di stare
+               dentro un documento più lungo. -->
+          <nav class="guide-toc" data-guide-key-aria="aria.toc">
+            <a href="#progettare" data-guide-key="toc.design"
+              >1 · Progettare la serra</a
+            >
+            <a href="#seme-o-piantina" data-guide-key="toc.buy"
+              >2 · Seme o piantina?</a
+            >
+            <a href="#coltivare" data-guide-key="toc.grow"
+              >3 · Seguire l'orto</a
+            >
+          </nav>
         </div>
-        <div class="guide-path-picker">
+        <div class="guide-path-picker" id="progettare">
           <div class="guide-path-picker-head">
+            <span class="guide-chapter-mark" aria-hidden="true">1</span>
             <strong data-guide-key="hero.picker_title"
-              >Da dove vuoi partire?</strong
+              >Progettare la serra: da dove parti?</strong
             >
             <span data-guide-key="hero.picker_hint"
               >Potrai cambiare percorso in qualsiasi momento.</span
@@ -524,6 +544,225 @@
           serra restano disponibili nel configuratore.
         </p>
       </aside>
+
+      <!-- Capitolo 2: la decisione che viene subito dopo il progetto. Ci si
+           arriva dalla home, dalla scheda «Procurati le piante»: prima quel
+           link portava qui in cima, cioè a tre percorsi che parlano del
+           configuratore e non rispondono alla domanda. I numeri di questa
+           sezione vengono dal catalogo (db/products.json): 97 varietà a
+           seme, 64 anche in piantina, vassoi sempre da sei. -->
+      <section
+        class="guide-chapter guide-compare-section"
+        id="seme-o-piantina"
+        aria-labelledby="compareTitle"
+      >
+        <header class="guide-chapter-head">
+          <span class="guide-chapter-mark" aria-hidden="true">2</span>
+          <div>
+            <p class="guide-kicker" data-guide-key="compare.kicker">
+              PROCURARSI LE PIANTE
+            </p>
+            <h2 id="compareTitle" data-guide-key="compare.title">
+              Seme o piantina?
+            </h2>
+            <p class="guide-chapter-lead" data-guide-key="compare.lead">
+              Stessa pianta, due punti di partenza. Il seme costa poco e ha
+              tutta la scelta; la piantina fa risparmiare tre settimane e le
+              cure più delicate. Sotto, la differenza in numeri.
+            </p>
+          </div>
+        </header>
+
+        <div class="guide-compare">
+          <article class="guide-compare-col guide-compare-col--seme">
+            <header>
+              <span class="guide-compare-ico" aria-hidden="true">
+                <img
+                  src="assets/img/svg/bustina-semi.svg"
+                  alt=""
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                />
+              </span>
+              <h3 data-guide-key="compare.seme_title">Dal seme</h3>
+              <p data-guide-key="compare.seme_sub">
+                Una bustina, molte piante, e la semina la fai tu.
+              </p>
+            </header>
+            <dl>
+              <div>
+                <dt data-guide-key="compare.row_cost">Quanto costa</dt>
+                <dd data-guide-key="compare.seme_cost">
+                  Da 2,20 € la bustina, con 100 semi in media: pochi centesimi a
+                  pianta.
+                </dd>
+              </div>
+              <div>
+                <dt data-guide-key="compare.row_time">Quando raccogli</dt>
+                <dd data-guide-key="compare.seme_time">
+                  Ciclo completo: alla raccolta arrivi tre o quattro settimane
+                  dopo la piantina.
+                </dd>
+              </div>
+              <div>
+                <dt data-guide-key="compare.row_choice">Quanta scelta</dt>
+                <dd data-guide-key="compare.seme_choice">
+                  Tutte le 97 varietà del catalogo, in qualsiasi mese.
+                </dd>
+              </div>
+              <div>
+                <dt data-guide-key="compare.row_care">Cosa ti chiede</dt>
+                <dd data-guide-key="compare.seme_care">
+                  Semenzaio, luce e temperatura costanti nelle prime settimane:
+                  è la fase in cui si perde qualche piantina.
+                </dd>
+              </div>
+            </dl>
+            <p class="guide-compare-when" data-guide-key="compare.seme_when">
+              <b>Scegli il seme se</b> hai tempo davanti, vuoi varietà che in
+              vivaio non esistono o ti interessa proprio la semina.
+            </p>
+            <a class="guide-cta guide-cta--inline" href="index.html#stagione">
+              <span data-guide-key="compare.seme_cta"
+                >Vai al catalogo semi</span
+              >
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+
+          <article class="guide-compare-col guide-compare-col--piantina">
+            <header>
+              <span class="guide-compare-ico" aria-hidden="true">
+                <img
+                  src="assets/img/svg/piantina-vaso.svg"
+                  alt=""
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                />
+              </span>
+              <h3 data-guide-key="compare.piantina_title">Dalla piantina</h3>
+              <p data-guide-key="compare.piantina_sub">
+                Già cresciuta in vaso, pronta da trapiantare.
+              </p>
+            </header>
+            <dl>
+              <div>
+                <dt data-guide-key="compare.row_cost">Quanto costa</dt>
+                <dd data-guide-key="compare.piantina_cost">
+                  Da 1,10 a 1,90 € a piantina, in vassoi da sei; l'ordine parte
+                  da due vassoi.
+                </dd>
+              </div>
+              <div>
+                <dt data-guide-key="compare.row_time">Quando raccogli</dt>
+                <dd data-guide-key="compare.piantina_time">
+                  Da venti a trenta giorni prima: la parte lenta l'ha già fatta
+                  il vivaio.
+                </dd>
+              </div>
+              <div>
+                <dt data-guide-key="compare.row_choice">Quanta scelta</dt>
+                <dd data-guide-key="compare.piantina_choice">
+                  64 varietà, e solo nei mesi in cui il trapianto ha senso.
+                </dd>
+              </div>
+              <div>
+                <dt data-guide-key="compare.row_care">Cosa ti chiede</dt>
+                <dd data-guide-key="compare.piantina_care">
+                  Di essere in casa alla consegna, entro 48 ore, e di
+                  trapiantare nei giorni successivi.
+                </dd>
+              </div>
+            </dl>
+            <p
+              class="guide-compare-when"
+              data-guide-key="compare.piantina_when"
+            >
+              <b>Scegli la piantina se</b> sei in ritardo sulla stagione, è la
+              tua prima serra o vuoi poche piante di specie difficili.
+            </p>
+            <a class="guide-cta guide-cta--inline" href="vivaio.html">
+              <span data-guide-key="compare.piantina_cta"
+                >Vai al vivaio piantine</span
+              >
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        </div>
+
+        <aside class="guide-help">
+          <span aria-hidden="true">💡</span>
+          <p data-guide-key="compare.mix">
+            <b>Si possono mescolare.</b> Molti orti partono dalla piantina per
+            pomodori, peperoni e melanzane — le specie che dal seme richiedono
+            più cure — e dal seme per insalate, ravanelli e aromatiche, che
+            germinano in pochi giorni.
+          </p>
+        </aside>
+      </section>
+
+      <!-- Capitolo 3: cosa succede dopo l'acquisto. Era la parte assente:
+           la guida finiva al carrello, mentre l'app accompagna fino alla
+           raccolta. -->
+      <section class="guide-chapter" id="coltivare" aria-labelledby="growTitle">
+        <header class="guide-chapter-head">
+          <span class="guide-chapter-mark" aria-hidden="true">3</span>
+          <div>
+            <p class="guide-kicker" data-guide-key="grow.kicker">
+              DOPO LA SEMINA
+            </p>
+            <h2 id="growTitle" data-guide-key="grow.title">
+              Seguire l'orto fino alla raccolta
+            </h2>
+            <p class="guide-chapter-lead" data-guide-key="grow.lead">
+              «Il mio orto» è lo strumento gratuito che tiene il conto al posto
+              tuo: cosa hai piantato, cosa serve questa settimana, cosa è in
+              ritardo. Funziona anche con piante comprate altrove.
+            </p>
+          </div>
+        </header>
+        <ol class="guide-steps">
+          <li>
+            <span class="step-no">1</span>
+            <div>
+              <h3 data-guide-key="grow.s1t">Registra cosa hai piantato</h3>
+              <p data-guide-key="grow.s1p">
+                Dagli ordini arriva già tutto; il resto lo aggiungi a mano,
+                anche se viene da un altro vivaio.
+              </p>
+            </div>
+            <span class="step-icon">🌱</span>
+          </li>
+          <li>
+            <span class="step-no">2</span>
+            <div>
+              <h3 data-guide-key="grow.s2t">Guarda la settimana</h3>
+              <p data-guide-key="grow.s2p">
+                Acqua, concime e raccolta compaiono nel giorno giusto. Quello
+                che salti resta in vista come da recuperare.
+              </p>
+            </div>
+            <span class="step-icon">📅</span>
+          </li>
+          <li>
+            <span class="step-no">3</span>
+            <div>
+              <h3 data-guide-key="grow.s3t">Segna la raccolta</h3>
+              <p data-guide-key="grow.s3p">
+                Quando chiudi una coltura, lo spazio torna libero nel piano e la
+                stagione successiva riparte da lì.
+              </p>
+            </div>
+            <span class="step-icon">🧺</span>
+          </li>
+        </ol>
+        <a class="guide-cta" href="orto.html">
+          <span data-guide-key="grow.cta">Apri «Il mio orto»</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </section>
     </main>
 
     <!-- Bootstrap: base.js prepara tema e lingua, guida.js aggiorna il contenuto, boot-sw la cache. -->
