@@ -1123,16 +1123,14 @@
 /* ---------- adattamenti ai formati ---------- */
 
 @layer polish {
-  /* Sotto il portatile le tre tappe non stanno più affiancate senza
-     spezzare le righe: passano in colonna e il filo diventa verticale.
-     Il senso di sequenza si conserva, cambia solo la direzione. */
+  /* Sul tablet due colonne mantengono le card leggibili senza trasformare
+     ogni scelta in una fascia quasi vuota larga quanto lo schermo. */
   @media (max-width: 1040px) {
     .journey {
       gap: clamp(1.1rem, 3vw, 1.45rem);
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /* In colonna ogni card conserva la propria superficie e il proprio ritmo. */
     .journey-step {
       min-height: 0;
       padding-top: clamp(1.1rem, 3vw, 1.5rem);
@@ -1141,6 +1139,47 @@
 
     .journey-feature {
       margin-top: 0.35rem;
+    }
+
+    /* Il tool è una destinazione diversa dalle due scelte principali: occupa
+       la riga seguente e usa lo spazio orizzontale invece di allungarsi. */
+    .journey-step--grow {
+      grid-column: 1 / -1;
+    }
+
+    .journey-step--grow .journey-body {
+      display: grid;
+      gap: 0.65rem clamp(1.25rem, 3vw, 2rem);
+      align-items: start;
+      grid-template-areas:
+        "when preview"
+        "head preview"
+        "copy preview"
+        ". actions";
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+      grid-template-rows: auto auto 1fr auto;
+    }
+
+    .journey-step--grow .journey-when {
+      grid-area: when;
+    }
+
+    .journey-step--grow .journey-head {
+      grid-area: head;
+    }
+
+    .journey-step--grow .journey-body > p {
+      grid-area: copy;
+    }
+
+    .journey-step--grow .journey-care-preview {
+      align-self: stretch;
+      margin-top: 0;
+      grid-area: preview;
+    }
+
+    .journey-step--grow .journey-actions {
+      grid-area: actions;
     }
   }
 
@@ -1179,6 +1218,22 @@
   }
 
   @media (max-width: 720px) {
+    .journey {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .journey-step--grow {
+      grid-column: auto;
+    }
+
+    .journey-step--grow .journey-body {
+      display: flex;
+    }
+
+    .journey-step--grow .journey-care-preview {
+      margin-top: 0.35rem;
+    }
+
     .journey-cta,
     .journey-quiet {
       flex: 1 1 100%;
