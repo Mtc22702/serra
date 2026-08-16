@@ -4718,26 +4718,51 @@
      che scorreva tutto insieme: nel dialogo di inserimento, che ora contiene la
      griglia delle piante, i pulsanti di conferma sarebbero finiti fuori campo. */
   .orto-dialog {
-    margin: auto;
-    width: min(470px, 94vw);
-    max-height: min(92vh, 760px);
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
     padding: 0;
     overflow: hidden;
     border: 0;
-    border-radius: var(--orto-r-lg);
-    background: var(--orto-surface);
+    background: transparent;
     color: var(--orto-ink);
-    box-shadow: var(--orto-shadow-lg);
   }
 
   .orto-dialog[open] {
     display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Il dialogo nativo occupa sempre l'intera top-layer; il pannello visibile
+     è un figlio. Safari iOS calcola in modo inaffidabile un <dialog> che è al
+     tempo stesso top-layer e bottom-sheet, soprattutto con la barra indirizzi
+     dinamica o in modalità app. Separare i due ruoli mantiene il pannello
+     dentro la viewport visuale. */
+  .orto-dialog-sheet {
+    display: flex;
+    width: min(470px, 94vw);
+    max-height: min(92vh, 760px);
+    max-height: min(92dvh, 760px);
+    overflow: hidden;
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-lg);
     flex-direction: column;
   }
 
   /* Il selettore delle piante ha bisogno di più larghezza: sotto i 470px la
      griglia scende a due colonne e si legge poco. */
   .orto-dialog--wide {
+    width: 100%;
+  }
+
+  .orto-dialog--wide .orto-dialog-sheet {
     width: min(620px, 94vw);
   }
 
@@ -4750,14 +4775,9 @@
      Su iPhone il dialogo non ferma lo scorrimento di ciò che sta sotto: il
      dito trascinava la pagina dietro il pannello e, appena un campo prendeva
      il fuoco, la tastiera faceva scorrere il documento portandosi via il
-     pannello. La classe la mette orto.js all'apertura, con `top` negativo pari
-     alla posizione da cui si è partiti, e la toglie alla chiusura ripristinando
-     lo scorrimento. */
+     pannello. Il dialogo ora intercetta l'intera viewport; questa classe evita
+     inoltre che lo sfondo reagisca ai gesti residui. */
   body.orto-dialog-open {
-    position: fixed;
-    left: 0;
-    right: 0;
-    width: 100%;
     overflow: hidden;
     overscroll-behavior: none;
   }
@@ -5507,7 +5527,7 @@
     background: var(--button-danger-bg-hover, #ffe8e4);
   }
 
-  .orto-dialog--confirm {
+  .orto-dialog--confirm .orto-dialog-sheet {
     max-width: 460px;
   }
 
@@ -6008,17 +6028,16 @@
      con la maniglia che dichiara da dove è arrivato. */
   .orto-dialog,
   .orto-dialog--wide {
-    /* L'ancoraggio è dichiarato, non lasciato al margine automatico: su iOS
-       `margin: auto auto 0` misurava il fondo della finestra grande, quella
-       con la barra degli indirizzi ritratta, e il pannello finiva per metà
-       sotto il bordo dello schermo. */
-    position: fixed;
-    inset: auto 0 0;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .orto-dialog-sheet,
+  .orto-dialog--wide .orto-dialog-sheet {
     width: 100%;
     max-width: none;
     max-height: 92vh;
     max-height: 92dvh;
-    margin: 0;
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
     animation: orto-sheet 0.26s cubic-bezier(0.2, 0.7, 0.3, 1);
   }
@@ -6119,7 +6138,7 @@
 @layer polish {
 @media (prefers-reduced-motion: reduce) {
   .orto-stock,
-  .orto-dialog,
+  .orto-dialog-sheet,
   .orto-pick,
   .orto-day {
     animation: none;

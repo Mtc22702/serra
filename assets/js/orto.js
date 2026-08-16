@@ -1837,11 +1837,9 @@
   });
 
   /* ---------- apertura dei dialoghi ----------
-     Su iPhone il pannello si apriva storto: la pagina sotto continuava a
-     scorrere sotto il dito e, appena un campo prendeva il fuoco, la tastiera
-     faceva scorrere il documento portandosi via il pannello ancorato in basso.
-     Ogni apertura passa da qui: la posizione della pagina viene congelata e
-     ripristinata alla chiusura dell'ultimo dialogo aperto. */
+     Il <dialog> occupa l'intera top-layer e il pannello visibile è un figlio:
+     così Safari iOS non deve posizionare un bottom-sheet direttamente. Mentre
+     è aperto blocchiamo lo sfondo e conserviamo il punto di scorrimento. */
   let scrollCongelato = 0;
 
   function apriDialogo(id) {
@@ -1849,7 +1847,6 @@
     if (!dialogo) return null;
     if (!document.body.classList.contains("orto-dialog-open")) {
       scrollCongelato = window.scrollY || window.pageYOffset || 0;
-      document.body.style.top = `-${scrollCongelato}px`;
       document.body.classList.add("orto-dialog-open");
     }
     if (typeof dialogo.showModal === "function") dialogo.showModal();
@@ -1863,7 +1860,6 @@
     if (document.querySelector("dialog.orto-dialog[open]")) return;
     if (!document.body.classList.contains("orto-dialog-open")) return;
     document.body.classList.remove("orto-dialog-open");
-    document.body.style.top = "";
     window.scrollTo(0, scrollCongelato);
   }
 

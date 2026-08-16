@@ -62,7 +62,7 @@
     <link rel="stylesheet" href="assets/css/base.css?v=20260816-header-grid" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-orto.css?v=20260816-orto-ux"
+      href="assets/css/serra-orto.css?v=20260816-dialog-ios"
     />
   </head>
   <body class="orto-page">
@@ -406,6 +406,7 @@
       id="ortoAddDialog"
       aria-labelledby="ortoAddTitle"
     >
+      <div class="orto-dialog-sheet">
       <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head">
         <div class="orto-dialog-heading">
@@ -579,6 +580,7 @@
           </button>
         </div>
       </form>
+      </div>
     </dialog>
 
     <!-- Messa a dimora parziale: da venti piantine se ne piantano cinque oggi -->
@@ -587,6 +589,7 @@
       id="ortoPlantDialog"
       aria-labelledby="ortoPlantTitle"
     >
+      <div class="orto-dialog-sheet">
       <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head">
         <div class="orto-dialog-heading">
@@ -662,6 +665,7 @@
           </button>
         </div>
       </form>
+      </div>
     </dialog>
 
     <!-- Correzione di una coltura già registrata: data, quantità, posizione -->
@@ -670,6 +674,7 @@
       id="ortoEditDialog"
       aria-labelledby="ortoEditTitle"
     >
+      <div class="orto-dialog-sheet">
       <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head">
         <div class="orto-dialog-heading">
@@ -758,6 +763,7 @@
           </button>
         </div>
       </form>
+      </div>
     </dialog>
 
     <!-- Registrazione della raccolta. Prima si usava window.prompt: fuori dal
@@ -768,6 +774,7 @@
       id="ortoHarvestDialog"
       aria-labelledby="ortoHarvestTitle"
     >
+      <div class="orto-dialog-sheet">
       <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head">
         <div class="orto-dialog-heading">
@@ -827,6 +834,7 @@
           </button>
         </div>
       </form>
+      </div>
     </dialog>
 
     <!-- Conferma prima di eliminare: la rimozione cancella anche lo storico
@@ -836,6 +844,7 @@
       id="ortoRemoveDialog"
       aria-labelledby="ortoRemoveTitle"
     >
+      <div class="orto-dialog-sheet">
       <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head orto-dialog-head--danger">
         <div class="orto-dialog-heading">
@@ -882,12 +891,13 @@
           </button>
         </div>
       </form>
+      </div>
     </dialog>
 
     <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; orto.js disegna. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/serra-care-engine.js" defer></script>
-    <script src="assets/js/orto.js?v=20260816-orto-ux" defer></script>
+    <script src="assets/js/orto.js?v=20260816-dialog-ios" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>
