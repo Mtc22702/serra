@@ -3282,18 +3282,58 @@
      comando rimasto è la ✕. */
   .orto-howto {
     margin-bottom: clamp(1.1rem, 2.5vw, 1.6rem);
-    padding: 13px 16px 15px;
     border: 1px dashed var(--orto-line-strong);
     border-radius: var(--orto-r);
     background: color-mix(in srgb, var(--orto-green) 4%, transparent);
   }
 
-  .orto-howto-head {
+  .orto-howto-summary {
     display: flex;
+    min-height: 48px;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 12px;
+    padding: 10px 14px;
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    list-style: none;
+    text-transform: uppercase;
+  }
+
+  .orto-howto-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .orto-howto-summary-action {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--orto-surface);
+    font-size: 15px;
+    place-items: center;
+    transition: transform 0.18s ease;
+  }
+
+  .orto-howto[open] .orto-howto-summary-action {
+    transform: rotate(180deg);
+  }
+
+  .orto-howto-content {
+    padding: 0 16px 15px;
+  }
+
+  .orto-howto-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    min-height: 0;
+    margin: -4px 0 4px;
   }
 
   .orto-howto-title {
@@ -3310,7 +3350,7 @@
     width: 32px;
     height: 32px;
     flex: none;
-    margin: -6px -6px -6px 0;
+    margin: 0 -6px 0 0;
     border: 1px solid transparent;
     border-radius: var(--radius-md);
     background: transparent;
@@ -4973,7 +5013,10 @@
     margin: 10px 0;
     padding-bottom: 2px;
     overflow-x: auto;
+    padding-right: 34px;
+    scroll-padding-inline: 4px 34px;
     scrollbar-width: none;
+    mask-image: linear-gradient(90deg, #000 0 calc(100% - 34px), transparent);
   }
 
   .orto-picker-chips::-webkit-scrollbar {
@@ -5110,6 +5153,27 @@
     color: var(--orto-muted);
     font-size: 12.5px;
     line-height: 1.35;
+  }
+
+  .orto-favorite {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: 50%;
+    background: var(--orto-surface);
+    color: #8a6a20;
+    cursor: pointer;
+    font: inherit;
+    font-size: 22px;
+    place-items: center;
+  }
+
+  .orto-favorite.is-active {
+    border-color: #c9962f;
+    background: #fff6d9;
+    color: #8a5b00;
   }
 
   /* Anteprima: l'unica informazione che l'utente non può dedurre da solo prima
@@ -5657,6 +5721,21 @@
     box-shadow: var(--orto-shadow-lg);
   }
 
+  /* Sul telefono la spiegazione parte chiusa: resta una riga chiara e
+     l'azione primaria del primo avvio entra nella prima schermata. */
+  .orto-howto {
+    margin-bottom: 0.85rem;
+  }
+
+  .orto-howto-summary {
+    min-height: 46px;
+    padding: 8px 12px;
+  }
+
+  .orto-howto-content {
+    padding: 0 12px 12px;
+  }
+
   .orto-tab {
     flex: 1;
     justify-content: center;
@@ -5902,7 +5981,7 @@
     display: grid;
     gap: 3px;
     min-width: 0;
-    min-height: 64px;
+    min-height: 56px;
     padding: 6px 4px 7px;
     border: 0;
     border-radius: var(--radius-lg);
@@ -5911,6 +5990,14 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: 28px minmax(0, 1fr);
     justify-items: center;
+  }
+
+  .orto-tab-note {
+    display: none;
+  }
+
+  .orto-tab-copy {
+    align-self: center;
   }
 
   .orto-tab:hover {
@@ -6067,6 +6154,43 @@
 
   .orto-picker-grid {
     grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  }
+
+  .orto-welcome {
+    margin-top: 0;
+    padding: 22px 16px 18px;
+  }
+
+  .orto-welcome-ico {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  .orto-welcome h2 {
+    margin-block: 5px 7px;
+    font-size: 22px;
+  }
+
+  .orto-welcome-text {
+    margin-bottom: 14px;
+    font-size: 13.5px;
+  }
+
+  .orto-welcome-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .orto-welcome-actions .orto-btn:first-child {
+    grid-column: 1 / -1;
+    min-height: 48px;
+  }
+
+  .orto-welcome-shop {
+    margin-top: 14px;
+    padding-top: 12px;
   }
 
   /* Striscia dei giorni: caselle un filo più strette, così sullo schermo di un

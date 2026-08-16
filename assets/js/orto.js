@@ -232,9 +232,13 @@
       "dlg.plant_ph": "Cerca una pianta",
       "dlg.family_all": "Tutte",
       "dlg.family_season": "Di stagione",
+      "dlg.family_recent": "Recenti",
+      "dlg.family_favorites": "Preferite",
       "dlg.family_aria": "Filtra per famiglia",
       "dlg.plant_list_aria": "Piante disponibili",
       "dlg.in_season": "di stagione",
+      "dlg.favorite_add": "Aggiungi ai preferiti",
+      "dlg.favorite_remove": "Rimuovi dai preferiti",
       "dlg.no_match": "Nessuna pianta con questo nome. Prova con meno lettere.",
       "dlg.plant_missing": "Scegli prima una pianta dall'elenco qui sopra.",
       "dlg.change_plant": "Cambia",
@@ -497,9 +501,13 @@
       "dlg.plant_ph": "Caută o plantă",
       "dlg.family_all": "Toate",
       "dlg.family_season": "De sezon",
+      "dlg.family_recent": "Recente",
+      "dlg.family_favorites": "Favorite",
       "dlg.family_aria": "Filtrează după familie",
       "dlg.plant_list_aria": "Plante disponibile",
       "dlg.in_season": "de sezon",
+      "dlg.favorite_add": "Adaugă la favorite",
+      "dlg.favorite_remove": "Elimină din favorite",
       "dlg.no_match": "Nicio plantă cu acest nume. Încearcă cu mai puține litere.",
       "dlg.plant_missing": "Alege întâi o plantă din lista de mai sus.",
       "dlg.change_plant": "Schimbă",
@@ -1439,6 +1447,12 @@
     } catch (_) {}
     box.hidden = chiusa;
     if (chiusa) return;
+    if (!box.dataset.responsiveReady) {
+      /* Il riepilogo resta compatto su ogni formato: l'azione principale
+         dell'orto deve comparire senza scorrere anche su tablet e desktop. */
+      box.open = false;
+      box.dataset.responsiveReady = "true";
+    }
     box.querySelectorAll("[data-orto-step]").forEach((passo) => {
       passo.classList.toggle("is-current", passo.dataset.ortoStep === view);
     });
@@ -1612,11 +1626,35 @@
      un campo vuoto. Ora si sceglie guardando: ricerca, famiglie, foto, e le
      piante che si seminano in questo mese messe in cima. Stesse tre leve del
      vivaio e del catalogo semi, così il gesto è già noto. */
+  const RECENT_PLANTS_KEY = "serra.orto.recent-plants";
+  const FAVORITE_PLANTS_KEY = "serra.orto.favorite-plants";
   let pickerQuery = "";
-  let pickerFamily = ""; // "" tutte · "stagione" · altrimenti un tipo
+  let pickerFamily = "stagione";
   let piantaScelta = null;
 
   const diStagione = (plant, mese) => (plant.mesi || []).includes(mese);
+
+  function plantIdsSalvati(key) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "[]");
+      return Array.isArray(value) ? value.filter((id) => BYID[id]) : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function salvaPlantIds(key, ids) {
+    try {
+      localStorage.setItem(key, JSON.stringify(ids.slice(0, 8)));
+    } catch (_) {}
+  }
+
+  function ricordaPianta(id) {
+    salvaPlantIds(RECENT_PLANTS_KEY, [
+      id,
+      ...plantIdsSalvati(RECENT_PLANTS_KEY).filter((value) => value !== id),
+    ]);
+  }
 
   function pianteFiltrate() {
     const mese = new Date().getMonth() + 1;
@@ -1624,8 +1662,20 @@
     let out = PLANTS.slice();
     if (pickerFamily === "stagione")
       out = out.filter((p) => diStagione(p, mese));
-    else if (pickerFamily) out = out.filter((p) => p.tipo === pickerFamily);
+    else if (pickerFamily === "recenti") {
+      const recenti = plantIdsSalvati(RECENT_PLANTS_KEY);
+      out = out.filter((p) => recenti.includes(p.id));
+    } else if (pickerFamily === "preferite") {
+      const preferite = plantIdsSalvati(FAVORITE_PLANTS_KEY);
+      out = out.filter((p) => preferite.includes(p.id));
+    } else if (pickerFamily) out = out.filter((p) => p.tipo === pickerFamily);
     if (q) out = out.filter((p) => plantName(p).toLowerCase().includes(q));
+    if (pickerFamily === "recenti" || pickerFamily === "preferite") {
+      const order = plantIdsSalvati(
+        pickerFamily === "recenti" ? RECENT_PLANTS_KEY : FAVORITE_PLANTS_KEY,
+      );
+      return out.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+    }
     // Senza una ricerca in corso le piante di stagione vengono per prime: è
     // quasi sempre quello che si sta cercando in questo momento dell'anno.
     return out.sort((a, b) => {
@@ -1660,9 +1710,17 @@
         aria-pressed="${pickerFamily === valore}">
         <span>${escape(etichetta)}</span><small>${n}</small></button>`;
 
+    const recenti = plantIdsSalvati(RECENT_PLANTS_KEY);
+    const preferite = plantIdsSalvati(FAVORITE_PLANTS_KEY);
     chips.innerHTML =
-      chip("", t("dlg.family_all"), PLANTS.length) +
       (inStagione ? chip("stagione", t("dlg.family_season"), inStagione) : "") +
+      (recenti.length
+        ? chip("recenti", t("dlg.family_recent"), recenti.length)
+        : "") +
+      (preferite.length
+        ? chip("preferite", t("dlg.family_favorites"), preferite.length)
+        : "") +
+      chip("", t("dlg.family_all"), PLANTS.length) +
       famigliePicker()
         .map(({ tipo, n }) => chip(tipo, t("tipo." + tipo), n))
         .join("");
@@ -1714,6 +1772,16 @@
     if (nome) nome.textContent = plantName(plant);
     const nota = document.getElementById("ortoPickedNote");
     if (nota) nota.textContent = plantNota(plant) || t("tipo." + plant.tipo);
+    const favorite = document.getElementById("ortoFavoritePlant");
+    if (favorite) {
+      const active = plantIdsSalvati(FAVORITE_PLANTS_KEY).includes(plant.id);
+      favorite.classList.toggle("is-active", active);
+      favorite.setAttribute("aria-pressed", String(active));
+      const label = t(active ? "dlg.favorite_remove" : "dlg.favorite_add");
+      favorite.setAttribute("aria-label", label);
+      favorite.title = label;
+      favorite.textContent = active ? "★" : "☆";
+    }
     aggiornaAnteprima();
   }
 
@@ -2008,10 +2076,24 @@
     }
     if (action === "pick-plant") {
       piantaScelta = trigger.dataset.plantId;
+      ricordaPianta(piantaScelta);
       mostraSceltaPianta();
       // Il fuoco va sulla scelta successiva, non sulla data: su telefono
       // aprirebbe subito il calendario nascondendo il resto del dialogo.
       document.querySelector('input[name="ortoOrigine"]:checked')?.focus();
+      return;
+    }
+    if (action === "toggle-favorite" && piantaScelta) {
+      const ids = plantIdsSalvati(FAVORITE_PLANTS_KEY);
+      const active = ids.includes(piantaScelta);
+      salvaPlantIds(
+        FAVORITE_PLANTS_KEY,
+        active
+          ? ids.filter((id) => id !== piantaScelta)
+          : [piantaScelta, ...ids],
+      );
+      mostraSceltaPianta();
+      renderPicker();
       return;
     }
     if (action === "clear-plant") {
@@ -2023,7 +2105,11 @@
     if (action === "open-add") {
       piantaScelta = null;
       pickerQuery = "";
-      pickerFamily = "";
+      pickerFamily = PLANTS.some((p) =>
+        diStagione(p, new Date().getMonth() + 1),
+      )
+        ? "stagione"
+        : "";
       const ricerca = document.getElementById("ortoPlantSearch");
       if (ricerca) ricerca.value = "";
       renderPicker();

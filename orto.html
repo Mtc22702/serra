@@ -59,10 +59,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/base.css?v=20260816-header-grid" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260816-uiux" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-orto.css?v=20260816-dialog-ios"
+      href="assets/css/serra-orto.css?v=20260816-uiux"
     />
   </head>
   <body class="orto-page">
@@ -263,11 +263,13 @@
            qualche parte ci pensano le linguette, che restano l'unico comando.
            Si chiude una volta sola: la scelta resta nel browser
            (`serra.orto.howto`), quindi non ricompare a ogni visita. -->
-      <section class="orto-howto" id="ortoHowto" hidden>
+      <details class="orto-howto" id="ortoHowto" hidden open>
+        <summary class="orto-howto-summary">
+          <span data-orto-key="howto.title">Come funziona, in tre passi</span>
+          <span class="orto-howto-summary-action" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="orto-howto-content">
         <div class="orto-howto-head">
-          <p class="orto-howto-title" data-orto-key="howto.title">
-            Come funziona, in tre passi
-          </p>
           <button
             class="orto-howto-close"
             type="button"
@@ -310,7 +312,8 @@
         <!-- Dove si comincia: una riga sola, in fondo, che dice quale
              linguetta guardare per prima invece di lasciarlo intuire. -->
         <p class="orto-howto-hint" id="ortoHowtoHint"></p>
-      </section>
+        </div>
+      </details>
 
       <!-- Selettore delle tre viste: attività del giorno, colture seguite, dispensa -->
       <div class="orto-viewbar">
@@ -480,6 +483,15 @@
                 <b id="ortoPickedName"></b>
                 <small id="ortoPickedNote"></small>
               </span>
+              <button
+                type="button"
+                class="orto-favorite"
+                id="ortoFavoritePlant"
+                data-orto-action="toggle-favorite"
+                aria-pressed="false"
+              >
+                ☆
+              </button>
               <button
                 type="button"
                 class="orto-btn orto-btn--ghost orto-btn--sm"
@@ -897,7 +909,7 @@
     <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; orto.js disegna. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/serra-care-engine.js" defer></script>
-    <script src="assets/js/orto.js?v=20260816-dialog-ios" defer></script>
+    <script src="assets/js/orto.js?v=20260816-uiux" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

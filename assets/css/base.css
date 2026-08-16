@@ -220,7 +220,10 @@
   }
 
   /* Navigazione principale */
-  nav {
+  /* La posizione fissa appartiene solo alla navigazione dell'intestazione.
+     Il vecchio selettore `nav` coinvolgeva anche indici e navigazioni interne
+     (in particolare l'indice della Guida), sovrapponendole al contenuto. */
+  .site-header .nav-links {
     position: fixed;
     top: 0;
     left: 0;

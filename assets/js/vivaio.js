@@ -60,6 +60,7 @@
       "search.placeholder": "Cerca una piantina…",
       "search.none": "Nessuna piantina corrisponde a “{q}”.",
       "filters.aria": "Filtri del vivaio",
+      "filters.toggle": "Filtri e ordinamento",
       "filters.family": "Famiglia",
       "filters.all": "Tutte",
       "filters.sort_aria": "Ordina le piantine",
@@ -88,6 +89,7 @@
       "cat.per_plant": "a piantina · vaso ø7",
       "cat.per_tray": "al vassoio · {n} piantine",
       "cat.each": "{prezzo} a piantina · vaso ø7",
+      "cat.price_summary": "{n} piantine · {prezzo} cad.",
       "cat.hint_tray": "Si acquista a vassoio intero",
       "cat.lot": "vassoio da {n}",
       "cat.cycle": "{tipo} · ciclo {n} giorni",
@@ -152,6 +154,7 @@
       "search.placeholder": "Caută un răsad…",
       "search.none": "Niciun răsad nu corespunde cu „{q}”.",
       "filters.aria": "Filtre pepinieră",
+      "filters.toggle": "Filtre și ordonare",
       "filters.family": "Familie",
       "filters.all": "Toate",
       "filters.sort_aria": "Ordonează răsadurile",
@@ -180,6 +183,7 @@
       "cat.per_plant": "per răsad · ghiveci ø7",
       "cat.per_tray": "pe tavă · {n} răsaduri",
       "cat.each": "{prezzo} pe răsad · ghiveci ø7",
+      "cat.price_summary": "{n} răsaduri · {prezzo} buc.",
       "cat.hint_tray": "Se cumpără la tavă întreagă",
       "cat.lot": "tavă de {n}",
       "cat.cycle": "{tipo} · ciclu {n} zile",
@@ -398,6 +402,16 @@
         aria-pressed="${tipoAttivo === tipo}">
         <span>${escape(etichetta)}</span><small>${n}</small></button>`;
     return `
+      <details class="viv-filter-shell" open>
+        <summary class="viv-filter-summary">
+          <span>${escape(t("filters.toggle"))}</span>
+          <b>${escape(
+            visibili.length === 1
+              ? t("filters.count_one")
+              : t("filters.count", { n: visibili.length }),
+          )}</b>
+          <span class="viv-filter-chevron" aria-hidden="true">⌄</span>
+        </summary>
       <section class="viv-toolbar" aria-label="${escape(t("filters.aria"))}">
         <div class="viv-toolbar-row">
           <label class="viv-search">
@@ -437,7 +451,8 @@
               : ""
           }
         </div>
-      </section>`;
+      </section>
+      </details>`;
   }
 
   function render() {
@@ -556,15 +571,15 @@
           </span>
         </div>
         <div class="orto-card-body">
-          <!-- Si compra a vassoio: in evidenza il prezzo che si paga davvero,
-               sotto il prezzo unitario per poter confrontare. -->
+          <!-- Prezzo pagato e confronto unitario stanno sulla stessa riga:
+               si legge più in fretta e non si ripete il formato del lotto. -->
           <div class="orto-price-row viv-price-row">
             <span class="orto-price">${money(prezzoVassoio)}</span>
-            <small class="viv-unit">${t("cat.per_tray", { n: lotto })}</small>
+            <small class="viv-unit">${t("cat.price_summary", {
+              n: lotto,
+              prezzo: money(piantina.prezzo),
+            })}</small>
           </div>
-          <div class="viv-unit-price">${t("cat.each", {
-            prezzo: money(piantina.prezzo),
-          })}</div>
           <div class="orto-note">${t("cat.harvest_earlier", {
             data: fmtData(raccolta),
             n: risparmio,
@@ -606,10 +621,7 @@
                    </div>`
                 : `<button class="orto-btn orto-btn--block" type="button"
                      data-viv-action="add" data-plant="${plant.id}"
-                     aria-label="${escape(t("cat.add"))} ${escape(plantName(plant))}">${t("cat.add")}</button>
-                   <span class="viv-card-foot viv-card-foot--hint">${t(
-                     "cat.hint_tray",
-                   )}</span>`
+                     aria-label="${escape(t("cat.add"))} ${escape(plantName(plant))}">${t("cat.add")}</button>`
             }
         </div>
       </article>`;

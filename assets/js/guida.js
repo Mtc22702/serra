@@ -31,10 +31,13 @@
       "hero.intro":
         "Come si usa l'applicazione, nell'ordine in cui la incontri: progettare la serra, comprare semi e piantine, seguire l'orto fino alla raccolta, regolare account e preferenze.",
       "aria.toc": "Indice della guida",
-      "toc.design": "1 · Progettare la serra",
-      "toc.buy": "2 · Comprare le piante",
-      "toc.grow": "3 · Seguire l'orto",
-      "toc.settings": "4 · Account e preferenze",
+      "toc.label": "Cosa vuoi fare?",
+      "toc.design": "1 · Progettare",
+      "toc.buy": "2 · Comprare",
+      "toc.grow": "3 · Coltivare",
+      "toc.settings": "4 · Account e app",
+      "chapter.open": "Mostra capitolo",
+      "chapter.close": "Riduci capitolo",
       "hero.picker_title": "Progettare la serra: da dove parti?",
       "hero.picker_hint": "Potrai cambiare percorso in qualsiasi momento.",
       "tab.novizio": "Principiante",
@@ -209,10 +212,13 @@
       "hero.intro":
         "Cum se folosește aplicația, în ordinea în care o întâlnești: proiectarea serei, cumpărarea semințelor și a răsadurilor, urmărirea grădinii până la recoltă, reglarea contului și a preferințelor.",
       "aria.toc": "Cuprinsul ghidului",
-      "toc.design": "1 · Proiectarea serei",
-      "toc.buy": "2 · Cumpărarea plantelor",
-      "toc.grow": "3 · Urmărirea grădinii",
-      "toc.settings": "4 · Cont și preferințe",
+      "toc.label": "Ce vrei să faci?",
+      "toc.design": "1 · Proiectează",
+      "toc.buy": "2 · Cumpără",
+      "toc.grow": "3 · Cultivă",
+      "toc.settings": "4 · Cont și aplicație",
+      "chapter.open": "Arată capitolul",
+      "chapter.close": "Restrânge capitolul",
       "hero.picker_title": "Proiectarea serei: de unde începi?",
       "hero.picker_hint": "Poți schimba traseul în orice moment.",
       "tab.novizio": "Începător",
@@ -379,6 +385,58 @@
         <small data-guide-key="${meta.hint}"></small>
       </span>
     `;
+  });
+
+  /* I capitoli lunghi diventano richiudibili: sul telefono resta visibile la
+     mappa della guida, mentre tablet e desktop conservano la lettura estesa. */
+  const chapters = [...document.querySelectorAll(".guide-chapter")];
+  chapters.forEach((chapter, index) => {
+    const head = chapter.querySelector(":scope > .guide-chapter-head");
+    if (!head || chapter.querySelector(":scope > .guide-chapter-content")) return;
+    const content = document.createElement("div");
+    content.className = "guide-chapter-content";
+    content.id = `${chapter.id || `guideChapter${index + 2}`}Content`;
+    while (head.nextSibling) content.append(head.nextSibling);
+    chapter.append(content);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "guide-chapter-toggle";
+    button.setAttribute("aria-controls", content.id);
+    button.setAttribute("aria-expanded", "true");
+    button.dataset.guideKey = "chapter.close";
+    head.append(button);
+
+    const isPhone = window.matchMedia("(max-width: 660px)").matches;
+    const requestedChapter = location.hash === `#${chapter.id}`;
+    if (isPhone && !requestedChapter) {
+      content.hidden = true;
+      button.setAttribute("aria-expanded", "false");
+      button.dataset.guideKey = "chapter.open";
+    }
+
+    button.addEventListener("click", () => {
+      content.hidden = !content.hidden;
+      const expanded = !content.hidden;
+      button.setAttribute("aria-expanded", String(expanded));
+      button.dataset.guideKey = expanded ? "chapter.close" : "chapter.open";
+      const lang = document.documentElement.lang === "ro" ? "ro" : "it";
+      button.textContent = copy[lang][button.dataset.guideKey];
+    });
+  });
+
+  document.querySelectorAll(".guide-toc a").forEach((link) => {
+    link.addEventListener("click", () => {
+      const chapter = document.querySelector(link.getAttribute("href"));
+      const content = chapter?.querySelector(":scope > .guide-chapter-content");
+      const button = chapter?.querySelector(":scope > .guide-chapter-head .guide-chapter-toggle");
+      if (!content || !button) return;
+      content.hidden = false;
+      button.setAttribute("aria-expanded", "true");
+      button.dataset.guideKey = "chapter.close";
+      const lang = document.documentElement.lang === "ro" ? "ro" : "it";
+      button.textContent = copy[lang]["chapter.close"];
+    });
   });
 
   function applyLanguage(value) {
