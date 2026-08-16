@@ -240,7 +240,10 @@
   );
 
   // Aggiorna l'etichetta del pulsante menu quando cambia la lingua della pagina.
-  new MutationObserver(() => {
+  // Va eseguita anche subito, non solo alle variazioni: le pagine che scrivono
+  // lang="ro" già nel markup (script anti-lampeggio) non producono alcuna
+  // mutazione, e l'etichetta sarebbe rimasta in italiano per sempre.
+  function syncMenuLabel() {
     const open = document.body.classList.contains("nav-menu-open");
     toggle.setAttribute(
       "aria-label",
@@ -252,7 +255,9 @@
           ? "Chiudi menu"
           : "Apri menu",
     );
-  }).observe(document.documentElement, {
+  }
+  syncMenuLabel();
+  new MutationObserver(syncMenuLabel).observe(document.documentElement, {
     attributes: true,
     attributeFilter: ["lang"],
   });
@@ -828,7 +833,6 @@
         "journey.choice_kicker": "Scegli un'opzione",
         "journey.choice_hint":
           "Parti dalla situazione che ti assomiglia di più",
-        "journey.choice_count": "Piantine in 48 h · «Il mio orto» è gratis",
         "journey.option_label": "Opzione",
         "journey.tool_label": "Strumento di supporto",
         "journey.step1_when": "Se non sai cosa piantare",
@@ -1322,7 +1326,6 @@
         "journey.choice_kicker": "Alege o opțiune",
         "journey.choice_hint":
           "Pornește de la situația care ți se potrivește cel mai bine",
-        "journey.choice_count": "Răsaduri în 48 h · „Grădina mea” e gratis",
         "journey.option_label": "Opțiunea",
         "journey.tool_label": "Instrument de sprijin",
         "journey.step1_when": "Dacă nu știi ce să plantezi",

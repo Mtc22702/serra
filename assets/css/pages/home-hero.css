@@ -371,19 +371,8 @@
     line-height: 1.35;
   }
 
-  .journey-choice-count {
-    flex: none;
-    padding: 6px 11px;
-    border: 1px solid rgba(47, 107, 58, 0.2);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.74);
-    color: #2f5b34;
-    font-size: 0.72rem;
-    font-weight: 750;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    box-shadow: var(--elev-2);
-  }
+  /* .journey-choice-count è stata rimossa dal markup: la riga ripeteva le
+     informazioni già presenti nelle tre schede sotto. */
 
   .journey {
     display: grid;
@@ -1309,7 +1298,6 @@
     color: #9db0a3;
   }
 
-  html[data-theme="dark"] .journey-choice-count,
   html[data-theme="dark"] .journey-option-mark {
     border-color: rgba(160, 205, 176, 0.22);
     background: rgba(23, 39, 31, 0.88);

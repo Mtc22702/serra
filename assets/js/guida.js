@@ -11,6 +11,7 @@
       "page.title": "Come usare Orto in Serra · Guida",
       "aria.main_nav": "Navigazione principale",
       "aria.cart": "Apri carrello",
+      "aria.brand": "Orto in Serra, home",
       "aria.tabs": "Scegli il tuo livello di esperienza",
       "nav.home": "🏠 Home",
       "nav.brand_sub": "Coltiva con un piano",
@@ -28,11 +29,12 @@
       "hero.kicker": "GUIDA ALL'APP",
       "hero.title": "Dal progetto al raccolto, spiegato.",
       "hero.intro":
-        "La guida copre i tre momenti dell'app: disegnare la serra, decidere se partire dal seme o dalla piantina, seguire l'orto fino alla raccolta.",
+        "Come si usa l'applicazione, nell'ordine in cui la incontri: progettare la serra, comprare semi e piantine, seguire l'orto fino alla raccolta, regolare account e preferenze.",
       "aria.toc": "Indice della guida",
       "toc.design": "1 · Progettare la serra",
-      "toc.buy": "2 · Seme o piantina?",
+      "toc.buy": "2 · Comprare le piante",
       "toc.grow": "3 · Seguire l'orto",
+      "toc.settings": "4 · Account e preferenze",
       "hero.picker_title": "Progettare la serra: da dove parti?",
       "hero.picker_hint": "Potrai cambiare percorso in qualsiasi momento.",
       "tab.novizio": "Principiante",
@@ -90,65 +92,104 @@
         "Controlla spazio e compatibilità, poi genera la lista dei semi.",
       "expert.cta": "Apri modalità esperto",
       help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore.",
-      // Capitolo 2. I numeri arrivano dal catalogo (db/products.json) e vanno
-      // ricontrollati se cambiano listino o disponibilità: 97 varietà a seme,
-      // 64 anche in piantina, bustina più economica 2,20 €, piantine 1,10–1,90 €.
-      "compare.kicker": "PROCURARSI LE PIANTE",
-      "compare.title": "Seme o piantina?",
+      // Capitolo 2. Descrive le due pagine di acquisto e il percorso
+      // carrello → ordine → «Da piantare». Volutamente senza prezzi né numero
+      // di varietà: quei dati vivono nel listino (db/products.json) e nelle
+      // schede del catalogo, dove restano aggiornati da soli. Ripeterli qui
+      // significherebbe avere due verità e una che invecchia.
+      "compare.kicker": "I DUE NEGOZI DELL'APP",
+      "compare.title": "Dove si comprano semi e piantine",
       "compare.lead":
-        "Stessa pianta, due punti di partenza. Il seme costa poco e ha tutta la scelta; la piantina fa risparmiare tre settimane e le cure più delicate. Sotto, la differenza in numeri.",
-      "compare.row_cost": "Quanto costa",
-      "compare.row_time": "Quando raccogli",
-      "compare.row_choice": "Quanta scelta",
-      "compare.row_care": "Cosa ti chiede",
-      "compare.seme_title": "Dal seme",
-      "compare.seme_sub": "Una bustina, molte piante, e la semina la fai tu.",
-      "compare.seme_cost":
-        "Da 2,20 € la bustina, con 100 semi in media: pochi centesimi a pianta.",
-      "compare.seme_time":
-        "Ciclo completo: alla raccolta arrivi tre o quattro settimane dopo la piantina.",
-      "compare.seme_choice":
-        "Tutte le 97 varietà del catalogo, in qualsiasi mese.",
-      "compare.seme_care":
-        "Semenzaio, luce e temperatura costanti nelle prime settimane: è la fase in cui si perde qualche piantina.",
+        "L'app ha due punti vendita e una sola meccanica: scegli, aggiungi al carrello, confermi l'ordine. Quello che compri ricompare da solo in «Il mio orto», nella scheda «Da piantare».",
+      "compare.row_where": "Dove si trova",
+      "compare.row_do": "Cosa puoi fare",
+      "compare.row_add": "Come si ordina",
+      "compare.row_detail": "Se vuoi i dettagli",
+      "compare.seme_title": "Catalogo semi",
+      "compare.seme_sub":
+        "Vive dentro la home, nella sezione dei semi di stagione.",
+      "compare.seme_where":
+        "Voce «🌿 Catalogo semi» del menu, oppure scorri la home fino alla sezione dei semi.",
+      "compare.seme_do":
+        "Filtri per mese e per tipo, campo di ricerca, e «Tutto il catalogo» per vedere anche ciò che è fuori stagione.",
+      "compare.seme_add":
+        "Il pulsante di aggiunta su ogni scheda mette la bustina nel carrello; le quantità si regolano lì.",
+      "compare.seme_detail":
+        "Aprendo una scheda trovi semina, cure e raccolta di quella pianta: è lì che stanno le informazioni botaniche.",
       "compare.seme_when":
-        "<b>Scegli il seme se</b> hai tempo davanti, vuoi varietà che in vivaio non esistono o ti interessa proprio la semina.",
+        "<b>Scorciatoia:</b> se hai già progettato una serra, il configuratore genera la lista dei semi che ti servono e la aggiunge al carrello in un passaggio solo.",
       "compare.seme_cta": "Vai al catalogo semi",
-      "compare.piantina_title": "Dalla piantina",
-      "compare.piantina_sub": "Già cresciuta in vaso, pronta da trapiantare.",
-      "compare.piantina_cost":
-        "Da 1,10 a 1,90 € a piantina, in vassoi da sei; l'ordine parte da due vassoi.",
-      "compare.piantina_time":
-        "Da venti a trenta giorni prima: la parte lenta l'ha già fatta il vivaio.",
-      "compare.piantina_choice":
-        "64 varietà, e solo nei mesi in cui il trapianto ha senso.",
-      "compare.piantina_care":
-        "Di essere in casa alla consegna, entro 48 ore, e di trapiantare nei giorni successivi.",
+      "compare.piantina_title": "Vivaio piantine",
+      "compare.piantina_sub":
+        "È una pagina a sé, con un vassoio al posto del carrello.",
+      "compare.piantina_where":
+        "Voce «🪴 Vivaio piantine» del menu, raggiungibile da qualsiasi pagina.",
+      "compare.piantina_do":
+        "L'elenco mostra solo ciò che ha senso trapiantare nel mese in corso; i filtri in alto lo restringono ancora.",
+      "compare.piantina_add":
+        "Le piantine finiscono nel vassoio, che resta visibile mentre scegli e mostra sempre il totale.",
+      "compare.piantina_detail":
+        "Ogni scheda dice quanto tempo fa risparmiare rispetto al seme e quando arriva la consegna.",
       "compare.piantina_when":
-        "<b>Scegli la piantina se</b> sei in ritardo sulla stagione, è la tua prima serra o vuoi poche piante di specie difficili.",
+        "<b>Il vassoio non si perde:</b> resta salvato anche se chiudi la pagina, e il conteggio compare accanto alla voce di menu finché non confermi.",
       "compare.piantina_cta": "Vai al vivaio piantine",
+      "compare.s1t": "Apri il carrello",
+      "compare.s1p":
+        "L'icona in alto a destra è la stessa in tutta l'app e raccoglie semi e piantine insieme.",
+      "compare.s2t": "Controlla e conferma",
+      "compare.s2p":
+        "Regoli le quantità, compili i dati di consegna e confermi: l'ordine viene archiviato nella tua Area Personale.",
+      "compare.s3t": "Ritrovi tutto in «Il mio orto»",
+      "compare.s3p":
+        "Nella scheda «Da piantare» il pulsante «Importa dai miei ordini» porta dentro le voci, pronte da mettere a dimora.",
       "compare.mix":
-        "<b>Si possono mescolare.</b> Molti orti partono dalla piantina per pomodori, peperoni e melanzane — le specie che dal seme richiedono più cure — e dal seme per insalate, ravanelli e aromatiche, che germinano in pochi giorni.",
-      // Capitolo 3.
-      "grow.kicker": "DOPO LA SEMINA",
+        "<b>Un carrello solo.</b> Semi e piantine si ordinano insieme, ma restano distinti in «Il mio orto»: da una bustina puoi seminare più volte, mentre le piantine si contano una a una.",
+      // Capitolo 3: i comandi della pagina «Il mio orto», uno per uno.
+      "grow.kicker": "LO STRUMENTO GRATUITO",
       "grow.title": "Seguire l'orto fino alla raccolta",
       "grow.lead":
-        "«Il mio orto» è lo strumento gratuito che tiene il conto al posto tuo: cosa hai piantato, cosa serve questa settimana, cosa è in ritardo. Funziona anche con piante comprate altrove.",
-      "grow.s1t": "Registra cosa hai piantato",
+        "«Il mio orto» non vende niente: tiene il conto al posto tuo di cosa hai piantato, di cosa serve oggi e di cosa è rimasto indietro. Funziona anche con piante comprate altrove.",
+      "grow.s1t": "Le tre schede in alto",
       "grow.s1p":
-        "Dagli ordini arriva già tutto; il resto lo aggiungi a mano, anche se viene da un altro vivaio.",
-      "grow.s2t": "Guarda la settimana",
+        "«Oggi» elenca le attività del giorno, «Colture» quelle che stai seguendo, «Da piantare» ciò che hai comprato e non è ancora in terra. Il numero accanto a ogni nome dice quanto c'è dentro.",
+      "grow.s2t": "Registra una coltura",
       "grow.s2p":
-        "Acqua, concime e raccolta compaiono nel giorno giusto. Quello che salti resta in vista come da recuperare.",
-      "grow.s3t": "Segna la raccolta",
+        "«＋ Aggiungi coltura» chiede pianta, data, quantità e posizione. Da quei quattro dati l'app costruisce da sola il calendario di cura fino alla raccolta.",
+      "grow.s3t": "Spunta o rimanda",
       "grow.s3p":
-        "Quando chiudi una coltura, lo spazio torna libero nel piano e la stagione successiva riparte da lì.",
+        "Nella scheda «Oggi» il quadratino segna l'attività come fatta e «Domani» la sposta di un giorno. Quello che salti resta in vista sotto «Da recuperare».",
+      "grow.s4t": "Correggi quando serve",
+      "grow.s4p":
+        "«Modifica» cambia data, quantità e posizione di una coltura già inserita: il calendario viene ricalcolato da capo.",
+      "grow.s5t": "Chiudi il ciclo",
+      "grow.s5p":
+        "«Registra raccolta» salva i chili raccolti e diventa la stima dell'anno prossimo. «Esporta nel calendario» porta le scadenze sul telefono, anche senza notifiche.",
       "grow.cta": "Apri «Il mio orto»",
+      // Capitolo 4: i comandi comuni a tutte le pagine.
+      "settings.kicker": "IN OGNI PAGINA",
+      "settings.title": "Account, lingua, tema e uso offline",
+      "settings.lead":
+        "Quattro comandi identici in tutta l'applicazione: stanno nell'intestazione in alto e, sui telefoni, dentro il menu ☰.",
+      "settings.s1t": "Area Personale",
+      "settings.s1p":
+        "Raccoglie i tuoi ordini e i dati di consegna. Serve anche a «Il mio orto»: senza accesso il pulsante «Importa dai miei ordini» non ha niente da leggere.",
+      "settings.s2t": "Lingua",
+      "settings.s2p":
+        "Il selettore IT / RO cambia l'intera applicazione, non solo la pagina aperta, e la scelta resta salvata sul dispositivo.",
+      "settings.s3t": "Tema chiaro o scuro",
+      "settings.s3p":
+        "Il pulsante ☾ / ☀ commuta i colori. Alla prima apertura l'app segue l'impostazione del sistema operativo.",
+      "settings.s4t": "Uso offline",
+      "settings.s4p":
+        "Puoi installare l'app dal browser e riaprirla senza rete: l'ultima versione visitata delle pagine resta disponibile.",
+      "settings.note":
+        "<b>Dove finiscono i tuoi dati.</b> Carrello, vassoio e «Il mio orto» sono salvati nel browser che stai usando: su un altro dispositivo ripartono vuoti. Gli ordini invece restano nell'Area Personale e li ritrovi ovunque tu acceda.",
     },
     ro: {
       "page.title": "Cum folosești Orto in Serra · Ghid",
       "aria.main_nav": "Navigare principală",
       "aria.cart": "Deschide coșul",
+      "aria.brand": "Orto in Serra, pagina principală",
       "aria.tabs": "Alege nivelul tău de experiență",
       "nav.home": "🏠 Acasă",
       "nav.brand_sub": "Cultivă cu un plan",
@@ -166,11 +207,12 @@
       "hero.kicker": "GHIDUL APLICAȚIEI",
       "hero.title": "De la proiect la recoltă, explicat.",
       "hero.intro":
-        "Ghidul acoperă cele trei momente ale aplicației: proiectarea serei, alegerea între sămânță și răsad, urmărirea grădinii până la recoltă.",
+        "Cum se folosește aplicația, în ordinea în care o întâlnești: proiectarea serei, cumpărarea semințelor și a răsadurilor, urmărirea grădinii până la recoltă, reglarea contului și a preferințelor.",
       "aria.toc": "Cuprinsul ghidului",
       "toc.design": "1 · Proiectarea serei",
-      "toc.buy": "2 · Sămânță sau răsad?",
+      "toc.buy": "2 · Cumpărarea plantelor",
       "toc.grow": "3 · Urmărirea grădinii",
+      "toc.settings": "4 · Cont și preferințe",
       "hero.picker_title": "Proiectarea serei: de unde începi?",
       "hero.picker_hint": "Poți schimba traseul în orice moment.",
       "tab.novizio": "Începător",
@@ -229,56 +271,91 @@
         "Controlează spațiul și compatibilitatea, apoi generează lista de semințe.",
       "expert.cta": "Deschide modul expert",
       help: "<b>Poți schimba nivelul oricând.</b> Setările serei rămân disponibile în configurator.",
-      "compare.kicker": "CUM ÎȚI IEI PLANTELE",
-      "compare.title": "Sămânță sau răsad?",
+      "compare.kicker": "CELE DOUĂ MAGAZINE ALE APLICAȚIEI",
+      "compare.title": "De unde cumperi semințe și răsaduri",
       "compare.lead":
-        "Aceeași plantă, două puncte de plecare. Sămânța costă puțin și îți dă toată gama; răsadul îți economisește trei săptămâni și îngrijirile cele mai delicate. Mai jos, diferența în cifre.",
-      "compare.row_cost": "Cât costă",
-      "compare.row_time": "Când recoltezi",
-      "compare.row_choice": "Câtă varietate",
-      "compare.row_care": "Ce îți cere",
-      "compare.seme_title": "De la sămânță",
-      "compare.seme_sub": "Un plic, multe plante, iar semănatul îl faci tu.",
-      "compare.seme_cost":
-        "De la 2,20 € plicul, cu 100 de semințe în medie: câțiva cenți de plantă.",
-      "compare.seme_time":
-        "Ciclu complet: ajungi la recoltă cu trei-patru săptămâni după răsad.",
-      "compare.seme_choice":
-        "Toate cele 97 de soiuri din catalog, în orice lună.",
-      "compare.seme_care":
-        "Răsadniță, lumină și temperatură constante în primele săptămâni: aici se pierd câteva fire.",
+        "Aplicația are două puncte de vânzare și o singură mecanică: alegi, adaugi în coș, confirmi comanda. Ce cumperi reapare singur în „Grădina mea”, în fila „De plantat”.",
+      "compare.row_where": "Unde se găsește",
+      "compare.row_do": "Ce poți face",
+      "compare.row_add": "Cum comanzi",
+      "compare.row_detail": "Dacă vrei detalii",
+      "compare.seme_title": "Catalogul de semințe",
+      "compare.seme_sub":
+        "Stă în pagina principală, în secțiunea semințelor de sezon.",
+      "compare.seme_where":
+        "Opțiunea „🌿 Catalog semințe” din meniu sau derulează pagina principală până la secțiunea semințelor.",
+      "compare.seme_do":
+        "Filtre după lună și după tip, câmp de căutare și „Tot catalogul” pentru a vedea și ce este în afara sezonului.",
+      "compare.seme_add":
+        "Butonul de adăugare de pe fiecare fișă pune plicul în coș; cantitățile se reglează acolo.",
+      "compare.seme_detail":
+        "Deschizând o fișă găsești semănatul, îngrijirile și recolta plantei: acolo stau informațiile botanice.",
       "compare.seme_when":
-        "<b>Alege sămânța dacă</b> ai timp înainte, vrei soiuri care nu există ca răsad sau te interesează chiar semănatul.",
+        "<b>Scurtătură:</b> dacă ai proiectat deja o seră, configuratorul generează lista de semințe necesare și o adaugă în coș dintr-un singur pas.",
       "compare.seme_cta": "Mergi la catalogul de semințe",
-      "compare.piantina_title": "De la răsad",
-      "compare.piantina_sub": "Deja crescut în ghiveci, gata de plantat.",
-      "compare.piantina_cost":
-        "De la 1,10 la 1,90 € răsadul, în tăvi de șase; comanda pornește de la două tăvi.",
-      "compare.piantina_time":
-        "Cu douăzeci până la treizeci de zile mai devreme: partea lentă a făcut-o pepiniera.",
-      "compare.piantina_choice":
-        "64 de soiuri, și doar în lunile în care plantarea are sens.",
-      "compare.piantina_care":
-        "Să fii acasă la livrare, în 48 de ore, și să plantezi în zilele următoare.",
+      "compare.piantina_title": "Pepiniera de răsaduri",
+      "compare.piantina_sub":
+        "Este o pagină separată, cu o tavă în loc de coș.",
+      "compare.piantina_where":
+        "Opțiunea „🪴 Răsaduri” din meniu, accesibilă din orice pagină.",
+      "compare.piantina_do":
+        "Lista arată doar ce are sens să plantezi în luna curentă; filtrele de sus o restrâng și mai mult.",
+      "compare.piantina_add":
+        "Răsadurile ajung în tavă, care rămâne vizibilă cât timp alegi și arată mereu totalul.",
+      "compare.piantina_detail":
+        "Fiecare fișă spune cât timp economisești față de sămânță și când sosește livrarea.",
       "compare.piantina_when":
-        "<b>Alege răsadul dacă</b> ești în întârziere față de sezon, e prima ta seră sau vrei puține plante din specii pretențioase.",
+        "<b>Tava nu se pierde:</b> rămâne salvată și dacă închizi pagina, iar numărul apare lângă opțiunea din meniu până confirmi.",
       "compare.piantina_cta": "Mergi la răsaduri",
+      "compare.s1t": "Deschide coșul",
+      "compare.s1p":
+        "Pictograma din dreapta sus este aceeași în toată aplicația și adună la un loc semințele și răsadurile.",
+      "compare.s2t": "Verifică și confirmă",
+      "compare.s2p":
+        "Reglezi cantitățile, completezi datele de livrare și confirmi: comanda este arhivată în Zona ta personală.",
+      "compare.s3t": "Regăsești tot în „Grădina mea”",
+      "compare.s3p":
+        "În fila „De plantat”, butonul „Importă din comenzile mele” aduce înăuntru pozițiile, gata de plantat.",
       "compare.mix":
-        "<b>Se pot combina.</b> Multe grădini pornesc de la răsad pentru roșii, ardei și vinete — speciile care din sămânță cer cea mai multă grijă — și de la sămânță pentru salate, ridichi și plante aromatice, care răsar în câteva zile.",
-      "grow.kicker": "DUPĂ SEMĂNAT",
+        "<b>Un singur coș.</b> Semințele și răsadurile se comandă împreună, dar rămân distincte în „Grădina mea”: dintr-un plic poți semăna de mai multe ori, în timp ce răsadurile se numără unul câte unul.",
+      "grow.kicker": "INSTRUMENTUL GRATUIT",
       "grow.title": "Urmărește grădina până la recoltă",
       "grow.lead":
-        "„Grădina mea” este instrumentul gratuit care ține socoteala în locul tău: ce ai plantat, ce trebuie făcut săptămâna asta, ce a rămas în urmă. Merge și cu plante cumpărate din altă parte.",
-      "grow.s1t": "Înregistrează ce ai plantat",
+        "„Grădina mea” nu vinde nimic: ține socoteala în locul tău a ceea ce ai plantat, a ce trebuie făcut azi și a ce a rămas în urmă. Merge și cu plante cumpărate din altă parte.",
+      "grow.s1t": "Cele trei file de sus",
       "grow.s1p":
-        "Din comenzi vine deja totul; restul adaugi manual, chiar dacă vine de la altă pepinieră.",
-      "grow.s2t": "Uită-te la săptămână",
+        "„Astăzi” listează activitățile zilei, „Culturi” pe cele pe care le urmărești, „De plantat” ce ai cumpărat și nu este încă în pământ. Numărul de lângă fiecare nume spune cât e înăuntru.",
+      "grow.s2t": "Înregistrează o cultură",
       "grow.s2p":
-        "Apa, îngrășământul și recolta apar în ziua potrivită. Ce sari rămâne vizibil, de recuperat.",
-      "grow.s3t": "Marchează recolta",
+        "„＋ Adaugă cultură” cere planta, data, cantitatea și poziția. Din aceste patru date aplicația construiește singură calendarul de îngrijire până la recoltă.",
+      "grow.s3t": "Bifează sau amână",
       "grow.s3p":
-        "Când închizi o cultură, spațiul se eliberează în plan și sezonul următor pornește de acolo.",
+        "În fila „Astăzi”, pătrățelul marchează activitatea ca făcută, iar „Mâine” o mută cu o zi. Ce sari rămâne vizibil sub „De recuperat”.",
+      "grow.s4t": "Corectează când e nevoie",
+      "grow.s4p":
+        "„Modifică” schimbă data, cantitatea și poziția unei culturi deja introduse: calendarul este recalculat de la zero.",
+      "grow.s5t": "Închide ciclul",
+      "grow.s5p":
+        "„Înregistrează recolta” salvează kilogramele strânse și devine estimarea de anul viitor. „Exportă în calendar” duce termenele pe telefon, chiar și fără notificări.",
       "grow.cta": "Deschide „Grădina mea”",
+      "settings.kicker": "ÎN FIECARE PAGINĂ",
+      "settings.title": "Cont, limbă, temă și folosire offline",
+      "settings.lead":
+        "Patru comenzi identice în toată aplicația: stau în antetul de sus și, pe telefon, în meniul ☰.",
+      "settings.s1t": "Zona personală",
+      "settings.s1p":
+        "Adună comenzile tale și datele de livrare. Este utilă și pentru „Grădina mea”: fără autentificare, butonul „Importă din comenzile mele” nu are ce citi.",
+      "settings.s2t": "Limba",
+      "settings.s2p":
+        "Selectorul IT / RO schimbă întreaga aplicație, nu doar pagina deschisă, iar alegerea rămâne salvată pe dispozitiv.",
+      "settings.s3t": "Temă luminoasă sau întunecată",
+      "settings.s3p":
+        "Butonul ☾ / ☀ comută culorile. La prima deschidere, aplicația urmează setarea sistemului de operare.",
+      "settings.s4t": "Folosire offline",
+      "settings.s4p":
+        "Poți instala aplicația din browser și o poți redeschide fără rețea: ultima versiune vizitată a paginilor rămâne disponibilă.",
+      "settings.note":
+        "<b>Unde ajung datele tale.</b> Coșul, tava și „Grădina mea” sunt salvate în browserul pe care îl folosești: pe alt dispozitiv pornesc goale. Comenzile, în schimb, rămân în Zona personală și le regăsești oriunde te autentifici.",
     },
   };
   const tabs = [...document.querySelectorAll(".guide-tab")];
@@ -335,7 +412,18 @@
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
     });
+    // La cortina anti-lampeggio resta finché i testi non sono a posto.
+    document.documentElement.classList.remove("serra-i18n-pending");
   }
+
+  /* Stesso contratto delle altre pagine: se la lingua cambia in un'altra
+     scheda dell'applicazione, questa si allinea senza ricaricare. Mancava, e
+     la guida restava nella lingua con cui era stata aperta. */
+  window.addEventListener("storage", (event) => {
+    if (event.key !== "ois.lang") return;
+    const next = event.newValue === "ro" ? "ro" : "it";
+    if (next !== document.documentElement.lang) applyLanguage(next);
+  });
 
   function selectRoute(level, focus = false) {
     const available = routes.some((route) => route.dataset.route === level);

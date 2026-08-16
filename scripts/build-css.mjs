@@ -14,19 +14,15 @@ const bundles = {
   "serra-order-confirmation.css": "pages/ordine-confermato.css",
   // Un bundle può indicare più sorgenti: vengono concatenate nell'ordine dato.
   // I bundle storici restano a sorgente singola, con lo stesso risultato di prima.
-  // orto-v2 riallinea orto e vivaio alla grafica della home. Va in coda a
-  // entrambi i bundle perché i componenti (schede, pulsanti, dialoghi) sono
-  // condivisi: se lo mettessimo solo nell'orto, il vivaio resterebbe indietro.
-  "serra-orto.css": [
-    "pages/_fondazioni.css",
-    "pages/orto.css",
-    "pages/orto-v2.css",
-  ],
-  // Il vivaio riusa i componenti della sezione orto e aggiunge il vassoio.
+  // Qui c'era anche pages/orto-v2.css, uno strato che riscriveva orto.css
+  // sovrapponendosi: i due file sono stati fusi in pages/orto.css, dove ogni
+  // selettore compare una volta sola.
+  "serra-orto.css": ["pages/_fondazioni.css", "pages/orto.css"],
+  // Il vivaio riusa i componenti della sezione orto (schede, pulsanti,
+  // dialoghi) e aggiunge il vassoio: stessa base, un file in più in coda.
   "serra-vivaio.css": [
     "pages/_fondazioni.css",
     "pages/orto.css",
-    "pages/orto-v2.css",
     "pages/vivaio.css",
   ],
 };

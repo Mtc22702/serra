@@ -21,13 +21,19 @@
   const GARDEN_KEY = "serra.garden.v1";
   // Dispensa: ciò che è stato acquistato e non ancora piantato.
   const INVENTORY_KEY = "serra.inventory.v1";
+  // Striscia «come funziona»: si chiude una volta e non torna più.
+  const HOWTO_KEY = "serra.orto.howto";
 
   /* ============================================================
      Dizionario della pagina (namespace proprio, come guida.js)
      ============================================================ */
   const COPY = {
     it: {
-      "page.title": "Il mio orto · Orto in Serra",
+      // Titolo della scheda del browser. Sta su una chiave distinta da
+      // "page.title": quella è l'intestazione visibile della pagina e, avendo
+      // lo stesso nome, sovrascriveva questa lasciando la scheda senza il
+      // nome dell'applicazione.
+      "doc.title": "Il mio orto · Orto in Serra",
       "nav.brand_sub": "Coltiva con un piano",
       "nav.home": "🏠 Home",
       "nav.menu_explore": "Esplora",
@@ -44,9 +50,6 @@
       "nav.carrello": "Carrello",
       "nav.main_aria": "Navigazione principale",
       "nav.cart_aria": "Apri carrello",
-      // Intestazione della pagina: prima non c'era, si atterrava sulle
-      // linguette senza sapere dove si fosse.
-      "page.kicker": "Terza tappa · strumento gratuito",
       "page.title": "Il mio orto",
       "page.lead":
         "Registra cosa hai piantato e ti diciamo cosa fare, settimana per settimana, fino alla raccolta. Funziona anche con piante comprate altrove.",
@@ -54,9 +57,11 @@
       "tab.oggi_todo": "da fare adesso",
       "tab.oggi_late": "{n} in ritardo",
       "tab.oggi_clear": "tutto a posto",
-      "tab.colture_note": "in crescita",
+      // Le due righe di stato dicono la differenza fra le due schede: una
+      // elenca ciò che è già in terra, l'altra ciò che non lo è ancora.
+      "tab.colture_note": "già in terra",
       "tab.colture_empty": "ancora niente",
-      "tab.dispensa_note": "in attesa",
+      "tab.dispensa_note": "non ancora in terra",
       "tab.dispensa_empty": "dispensa vuota",
       "tab.colture": "Colture",
       "tab.dispensa": "Da piantare",
@@ -80,12 +85,17 @@
       "hero.stat_colture": "colture",
       "hero.stat_done": "fatte oggi",
       "hero.stat_late": "da recuperare",
-      "hero.ring": "giornata",
+      "hero.ring": "svolte",
+      "hero.ring_aria": "{n} attività svolte su {tot} previste per oggi",
 
       "section.late": "Da recuperare",
       "section.today": "Oggi",
       "section.done": "Fatto oggi",
       "task.snooze": "Domani",
+      "task.mark": "Segna come fatta",
+      "task.unmark": "Togli la spunta",
+      "task.mark_aria": "Segna come fatta: {cosa}, {nome}",
+      "task.unmark_aria": "Togli la spunta: {cosa}, {nome}",
       "task.late_days": "in ritardo di {n} giorni",
       "task.late_day": "in ritardo di 1 giorno",
       "task.last_days": "ultima volta {n} giorni fa",
@@ -93,6 +103,7 @@
       "today.empty_title": "Nessuna attività per oggi",
       "today.empty_text":
         "Le prossime scadenze di ogni coltura le trovi nella scheda “Colture”.",
+      "today.empty_cta": "Vedi le colture",
 
       "task.germinazione": "Controlla la germinazione",
       "task.attecchimento": "Assesta la piantina",
@@ -141,7 +152,9 @@
 
       "colture.title": "Le mie colture",
       "colture.sub":
-        "Ogni coltura genera da sola il proprio calendario di cura fino alla raccolta.",
+        "Le piante già messe a dimora. Ognuna genera da sola il proprio calendario di cura fino alla raccolta.",
+      "colture.crosslink": "Hai {n} voci comprate e non ancora piantate.",
+      "colture.crosslink_cta": "Vai a «Da piantare»",
       "colture.add": "＋ Aggiungi coltura",
       "colture.import": "Importa dalla mia serra",
       "colture.ics": "Esporta nel calendario (.ics)",
@@ -155,16 +168,19 @@
       "colture.cycle_done": "Ciclo completato",
       "colture.register": "Registra raccolta",
       "colture.remove": "Rimuovi",
+      "colture.remove_aria": "Rimuovi la coltura di {nome}",
       "colture.from_seed": "da seme",
       "colture.from_plant": "da piantina",
       "colture.plants": "{n} piante",
       "colture.empty_title": "Non stai ancora seguendo nulla",
       "colture.empty_text":
-        "Aggiungi una coltura, oppure importa in un tocco le aiuole di una serra che hai già progettato.",
+        "Aggiungi una coltura, importa le aiuole di una serra che hai già progettato, oppure parti da ciò che hai in «Da piantare».",
 
       "disp.title": "Da piantare",
       "disp.sub":
-        "Semi e piantine che hai già e non hai ancora messo a dimora. Puoi piantarne un po' per volta, scegliendo ogni volta la data.",
+        "Il magazzino: semi e piantine che possiedi e non sono ancora in terra. Qui non c'è nessun calendario, solo quanto ti resta.",
+      "disp.crosslink": "Appena pianti qualcosa, compare fra le colture con il suo calendario.",
+      "disp.crosslink_cta": "Vai a «Colture»",
       "disp.import": "Importa dai miei ordini",
       "disp.add_manual": "＋ Aggiungi a mano",
       "disp.empty_title": "Non hai nulla in attesa",
@@ -193,8 +209,39 @@
       "plant.position": "Posizione (facoltativa)",
       "plant.confirm": "Metti a dimora",
 
-      "dlg.plant_ph": "Scrivi un nome, es. pomodoro",
-      "dlg.plant_unknown": "Non trovo questa pianta nel catalogo.",
+      // Selettore visivo del dialogo «Aggiungi una coltura».
+      "dlg.step_plant": "Quale pianta?",
+      "dlg.step_when": "Quando e quante",
+      "dlg.plant_ph": "Cerca una pianta",
+      "dlg.family_all": "Tutte",
+      "dlg.family_season": "Di stagione",
+      "dlg.family_aria": "Filtra per famiglia",
+      "dlg.plant_list_aria": "Piante disponibili",
+      "dlg.in_season": "di stagione",
+      "dlg.no_match": "Nessuna pianta con questo nome. Prova con meno lettere.",
+      "dlg.plant_missing": "Scegli prima una pianta dall'elenco qui sopra.",
+      "dlg.change_plant": "Cambia",
+      "dlg.close": "Chiudi",
+      "dlg.preview": "{nome} {origine}: raccolta stimata intorno al {data}.",
+      "dlg.preview_perenne":
+        "{nome} è una perenne: nessuna data di fine, il calendario continua di stagione in stagione.",
+      // Striscia «come funziona»: tre passi, uno per linguetta.
+      "howto.title": "Come funziona, in tre passi",
+      "howto.close": "Nascondi la spiegazione",
+      "howto.s1t": "Registra cosa hai",
+      "howto.s1p": "Semi e piantine, comprati qui o altrove.",
+      "howto.s2t": "Segui la giornata",
+      "howto.s2p": "Ogni mattina trovi solo ciò che serve oggi.",
+      "howto.s3t": "Arriva alla raccolta",
+      "howto.s3p": "Ogni coltura ha il suo calendario fino alla fine.",
+      // La riga finale cambia con quello che c'è nell'orto: a chi non ha nulla
+      // dice come partire, agli altri dove guardare per primo.
+      "howto.start_empty":
+        "<b>Da dove si comincia:</b> aggiungi la prima coltura qui sotto, oppure importa quello che hai già comprato.",
+      "howto.start_stock":
+        "<b>Da dove si comincia:</b> apri «Da piantare» e metti a dimora ciò che hai già.",
+      "howto.start_today":
+        "<b>Da dove si comincia:</b> «Oggi» è la linguetta da guardare ogni mattina, le altre due servono quando cambia qualcosa.",
       "edit.title": "Modifica coltura",
       "edit.confirm": "Salva",
       "edit.note":
@@ -203,7 +250,6 @@
       "toast.edited": "Coltura aggiornata",
       "dlg.title": "Aggiungi una coltura",
       "dlg.sub": "Da qui parte il calendario di cura fino alla raccolta.",
-      "dlg.plant": "Pianta",
       "dlg.origin": "Sei partito da…",
       "dlg.seed": "Semi",
       "dlg.seed_hint": "ciclo completo",
@@ -236,12 +282,10 @@
       "remove.sub":
         "Spariscono anche le attività già svolte. Non si può annullare.",
       "remove.confirm": "Elimina",
-      "cart.aria": "Apri carrello",
-      "cart.label": "Carrello",
     },
 
     ro: {
-      "page.title": "Grădina mea · Orto in Serra",
+      "doc.title": "Grădina mea · Orto in Serra",
       "nav.brand_sub": "Cultivă cu un plan",
       "nav.home": "🏠 Acasă",
       "nav.menu_explore": "Explorează",
@@ -258,7 +302,6 @@
       "nav.carrello": "Coș",
       "nav.main_aria": "Navigare principală",
       "nav.cart_aria": "Deschide coșul",
-      "page.kicker": "A treia etapă · instrument gratuit",
       "page.title": "Grădina mea",
       "page.lead":
         "Notează ce ai plantat și îți spunem ce ai de făcut, săptămână de săptămână, până la recoltare. Funcționează și cu plante cumpărate în altă parte.",
@@ -266,9 +309,9 @@
       "tab.oggi_todo": "de făcut acum",
       "tab.oggi_late": "{n} întârziate",
       "tab.oggi_clear": "totul în regulă",
-      "tab.colture_note": "în creștere",
+      "tab.colture_note": "deja plantate",
       "tab.colture_empty": "încă nimic",
-      "tab.dispensa_note": "în așteptare",
+      "tab.dispensa_note": "încă neplantate",
       "tab.dispensa_empty": "cămară goală",
       "tab.colture": "Culturi",
       "tab.dispensa": "De plantat",
@@ -292,12 +335,17 @@
       "hero.stat_colture": "culturi",
       "hero.stat_done": "făcute azi",
       "hero.stat_late": "de recuperat",
-      "hero.ring": "ziua",
+      "hero.ring": "făcute",
+      "hero.ring_aria": "{n} activități făcute din {tot} prevăzute pentru azi",
 
       "section.late": "De recuperat",
       "section.today": "Astăzi",
       "section.done": "Făcut azi",
       "task.snooze": "Mâine",
+      "task.mark": "Marchează ca făcută",
+      "task.unmark": "Scoate bifa",
+      "task.mark_aria": "Marchează ca făcută: {cosa}, {nome}",
+      "task.unmark_aria": "Scoate bifa: {cosa}, {nome}",
       "task.late_days": "întârziere de {n} zile",
       "task.late_day": "întârziere de o zi",
       "task.last_days": "ultima dată acum {n} zile",
@@ -305,6 +353,7 @@
       "today.empty_title": "Nicio activitate pentru azi",
       "today.empty_text":
         "Următoarele termene ale fiecărei culturi le găsești în fila „Culturi”.",
+      "today.empty_cta": "Vezi culturile",
 
       "task.germinazione": "Verifică germinația",
       "task.attecchimento": "Așază răsadul",
@@ -346,7 +395,9 @@
       "fase.germinazione": "Germinație",
       "fase.crescita": "Creștere",
       "fase.raccolta": "Recoltare",
-      "fase.dimora": "La locul definitiv",
+      // Etichetta di una barra a quattro colonne strette: «La locul definitiv»
+      // ci andava a capo tre volte.
+      "fase.dimora": "Plantat",
       "fase.attecchimento": "Prindere",
       "fase.sviluppo": "Dezvoltare",
       "fase.impianto": "Plantare",
@@ -354,7 +405,9 @@
 
       "colture.title": "Culturile mele",
       "colture.sub":
-        "Fiecare cultură își generează singură calendarul de îngrijire până la recoltare.",
+        "Plantele deja puse în pământ. Fiecare își generează singură calendarul de îngrijire până la recoltare.",
+      "colture.crosslink": "Ai {n} poziții cumpărate și încă neplantate.",
+      "colture.crosslink_cta": "Mergi la „De plantat”",
       "colture.add": "＋ Adaugă cultură",
       "colture.import": "Importă din sera mea",
       "colture.ics": "Exportă în calendar (.ics)",
@@ -368,16 +421,19 @@
       "colture.cycle_done": "Ciclu încheiat",
       "colture.register": "Înregistrează recolta",
       "colture.remove": "Elimină",
+      "colture.remove_aria": "Elimină cultura de {nome}",
       "colture.from_seed": "din sămânță",
       "colture.from_plant": "din răsad",
       "colture.plants": "{n} plante",
       "colture.empty_title": "Încă nu urmărești nimic",
       "colture.empty_text":
-        "Adaugă o cultură sau importă dintr-o atingere parcelele unei sere deja proiectate.",
+        "Adaugă o cultură, importă parcelele unei sere deja proiectate sau pornește de la ce ai în „De plantat”.",
 
       "disp.title": "De plantat",
       "disp.sub":
-        "Semințe și răsaduri pe care le ai deja și nu le-ai pus încă în pământ. Poți planta pe rând, alegând de fiecare dată data.",
+        "Depozitul: semințe și răsaduri pe care le ai și care nu sunt încă în pământ. Aici nu există niciun calendar, doar cât ți-a rămas.",
+      "disp.crosslink": "Imediat ce plantezi ceva, apare printre culturi cu propriul calendar.",
+      "disp.crosslink_cta": "Mergi la „Culturi”",
       "disp.import": "Importă din comenzile mele",
       "disp.add_manual": "＋ Adaugă manual",
       "disp.empty_title": "Nu ai nimic în așteptare",
@@ -406,8 +462,35 @@
       "plant.position": "Poziție (opțional)",
       "plant.confirm": "Pune în pământ",
 
-      "dlg.plant_ph": "Scrie un nume, ex. roșie",
-      "dlg.plant_unknown": "Nu găsesc această plantă în catalog.",
+      "dlg.step_plant": "Ce plantă?",
+      "dlg.step_when": "Când și câte",
+      "dlg.plant_ph": "Caută o plantă",
+      "dlg.family_all": "Toate",
+      "dlg.family_season": "De sezon",
+      "dlg.family_aria": "Filtrează după familie",
+      "dlg.plant_list_aria": "Plante disponibile",
+      "dlg.in_season": "de sezon",
+      "dlg.no_match": "Nicio plantă cu acest nume. Încearcă cu mai puține litere.",
+      "dlg.plant_missing": "Alege întâi o plantă din lista de mai sus.",
+      "dlg.change_plant": "Schimbă",
+      "dlg.close": "Închide",
+      "dlg.preview": "{nome} {origine}: recoltare estimată în jurul datei de {data}.",
+      "dlg.preview_perenne":
+        "{nome} este o plantă perenă: nu are dată de final, calendarul continuă din sezon în sezon.",
+      "howto.title": "Cum funcționează, în trei pași",
+      "howto.close": "Ascunde explicația",
+      "howto.s1t": "Notează ce ai",
+      "howto.s1p": "Semințe și răsaduri, cumpărate aici sau în altă parte.",
+      "howto.s2t": "Urmărește ziua",
+      "howto.s2p": "În fiecare dimineață găsești doar ce trebuie făcut azi.",
+      "howto.s3t": "Ajungi la recoltă",
+      "howto.s3p": "Fiecare cultură are calendarul ei până la final.",
+      "howto.start_empty":
+        "<b>De unde începi:</b> adaugă prima cultură mai jos sau importă ce ai cumpărat deja.",
+      "howto.start_stock":
+        "<b>De unde începi:</b> deschide „De plantat” și pune în pământ ce ai deja.",
+      "howto.start_today":
+        "<b>De unde începi:</b> „Astăzi” este fila de urmărit în fiecare dimineață, celelalte două sunt pentru când se schimbă ceva.",
       "edit.title": "Modifică cultura",
       "edit.confirm": "Salvează",
       "edit.note":
@@ -416,7 +499,6 @@
       "toast.edited": "Cultură actualizată",
       "dlg.title": "Adaugă o cultură",
       "dlg.sub": "De aici pornește calendarul de îngrijire până la recoltare.",
-      "dlg.plant": "Plantă",
       "dlg.origin": "Ai pornit de la…",
       "dlg.seed": "Semințe",
       "dlg.seed_hint": "ciclu complet",
@@ -447,8 +529,6 @@
       "remove.title": "Ștergi această cultură?",
       "remove.sub": "Dispar și activitățile deja făcute. Nu se poate anula.",
       "remove.confirm": "Șterge",
-      "cart.aria": "Deschide coșul",
-      "cart.label": "Coș",
     },
   };
 
@@ -707,9 +787,12 @@
     /* Due cerchi sovrapposti: la traccia tenue dice quanto è lunga la giornata,
        l'arco verde quanto ne è stato fatto. Senza la traccia, a zero per cento
        non resterebbe nulla intorno al numero. */
+    /* I colori stanno nel CSS (.orto-ring-track/.orto-ring-arc): erano scritti
+       qui in bianco e verde chiarissimo, tarati sulla vecchia fascia verde
+       scura, e sulla carta chiara l'anello spariva. */
     return `<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
-      <circle cx="66" cy="66" r="${r}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10"/>
-      <circle cx="66" cy="66" r="${r}" fill="none" stroke="#a8e6a3" stroke-width="10"
+      <circle class="orto-ring-track" cx="66" cy="66" r="${r}" fill="none" stroke-width="10"/>
+      <circle class="orto-ring-arc" cx="66" cy="66" r="${r}" fill="none" stroke-width="10"
         stroke-linecap="round" stroke-dasharray="${c}"
         stroke-dashoffset="${c - (c * percentuale) / 100}"/>
     </svg>`;
@@ -778,9 +861,14 @@
           <!-- Il riquadro delle notifiche elencava a parole le stesse
                attività che stanno subito sotto: tolto. Resta l'anello, che
                è l'unico dato che l'elenco non dà a colpo d'occhio. -->
+          <!-- L'anello diceva «giornata», che non spiega cosa stia contando.
+               Ora l'etichetta nomina la cosa misurata e la stessa frase è
+               disponibile per chi non vede il grafico. -->
           <div class="orto-ring-wrap">
-            <div class="orto-ring">${ringSvg(percentuale)}
-              <span class="orto-ring-txt"><b>${percentuale}%</b><small>${t("hero.ring")}</small></span>
+            <div class="orto-ring" role="img"
+              aria-label="${escape(t("hero.ring_aria", { n: fatti.length, tot: totale }))}">
+              ${ringSvg(percentuale)}
+              <span class="orto-ring-txt" aria-hidden="true"><b>${percentuale}%</b><small>${t("hero.ring")}</small></span>
             </div>
           </div>
         </div>
@@ -798,7 +886,11 @@
         diOggi.length
           ? diOggi.map((task, i) => taskRow(task, i)).join("")
           : `<div class="orto-empty"><span class="orto-empty-ico">🌿</span>
-              <h4>${t("today.empty_title")}</h4><p>${t("today.empty_text")}</p></div>`
+              <h4>${t("today.empty_title")}</h4><p>${t("today.empty_text")}</p>
+              <div class="orto-empty-actions">
+                <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
+                  data-orto-view="colture">${t("today.empty_cta")}</button>
+              </div></div>`
       }
 
       ${
@@ -844,7 +936,13 @@
         <button class="orto-check" type="button" data-orto-action="toggle-task"
           data-task-id="${escape(task.id)}" data-on="${fatto ? 1 : 0}"
           aria-pressed="${fatto ? "true" : "false"}"
-          aria-label="${escape(taskLabel(task))}"></button>
+          title="${escape(t(fatto ? "task.unmark" : "task.mark"))}"
+          aria-label="${escape(
+            t(fatto ? "task.unmark_aria" : "task.mark_aria", {
+              cosa: taskLabel(task),
+              nome: plantName(plant),
+            }),
+          )}"></button>
         <span class="orto-task-ico" aria-hidden="true">${ICONE[task.tipo] || "🌿"}</span>
         <span class="orto-task-body">
           <span class="orto-task-label">${escape(taskLabel(task))} <em>· ${escape(plantName(plant))}</em></span>
@@ -875,6 +973,12 @@
       { vicine: 0, piante: 0 },
     );
 
+    // Voci comprate e non ancora piantate: se ce ne sono, questa vista lo dice
+    // e ci porta, invece di lasciare due elenchi che si ignorano.
+    const inAttesa = inventory.voci.filter(
+      (v) => !v.archiviata && BYID[v.plantId],
+    ).length;
+
     app.innerHTML = `
       <div class="orto-view-head">
         <div>
@@ -892,11 +996,27 @@
         <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="import-greenhouse">${t("colture.import")}</button>
         <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="export-ics">${t("colture.ics")}</button>
       </div>
+      ${
+        inAttesa
+          ? `<p class="orto-crosslink">
+              <span class="orto-crosslink-ico" aria-hidden="true">📦</span>
+              <span>${t("colture.crosslink", { n: inAttesa })}</span>
+              <button class="orto-link" type="button" data-orto-view="dispensa">${
+                t("colture.crosslink_cta") + " →"
+              }</button>
+            </p>`
+          : ""
+      }
       <div class="orto-grid">${
         garden.colture.length
           ? garden.colture.map(colturaCard).join("")
           : `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">🌱</span>
-              <h4>${t("colture.empty_title")}</h4><p>${t("colture.empty_text")}</p></div>`
+              <h4>${t("colture.empty_title")}</h4><p>${t("colture.empty_text")}</p>
+              <div class="orto-empty-actions">
+                <button class="orto-btn" type="button" data-orto-action="open-add">${t("colture.add")}</button>
+                <button class="orto-btn orto-btn--ghost" type="button"
+                  data-orto-action="import-greenhouse">${t("colture.import")}</button>
+              </div></div>`
       }</div>`;
   }
 
@@ -919,6 +1039,9 @@
     const fasi = E.fasi(coltura, plant, product);
     const attuale =
       fasi.filter((f) => f.at * 100 <= percentuale).pop() || fasi[0];
+    // Raccolta in corso o entro una settimana: è il momento in cui l'azione
+    // principale della scheda cambia.
+    const raccoltaOra = mancano === null || mancano <= 7;
 
     return `
       <article class="orto-card" style="animation-delay:${Math.min(index, 8) * 45}ms">
@@ -966,18 +1089,36 @@
                 : `<b>${t("colture.cycle_done")}</b>`
             }</span>
           </div>
+          <!-- Le tre azioni avevano lo stesso peso, compresa quella che
+               cancella. Ora la principale è quella che serve adesso — a raccolta
+               vicina è «Registra raccolta» — e l'eliminazione è un'icona, che si
+               trova quando la si cerca senza invitare a premerla. -->
           <div class="orto-card-actions">
+            <button class="orto-btn ${raccoltaOra ? "" : "orto-btn--ghost "}orto-btn--sm" type="button"
+              data-orto-action="${raccoltaOra ? "register-harvest" : "edit-coltura"}"
+              data-coltura-id="${escape(coltura.id)}">${
+                raccoltaOra ? t("colture.register") : t("colture.edit")
+              }</button>
             <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-              data-orto-action="edit-coltura" data-coltura-id="${escape(coltura.id)}">${t("colture.edit")}</button>
-            <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-              data-orto-action="register-harvest" data-coltura-id="${escape(coltura.id)}">${t("colture.register")}</button>
-            <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-              data-orto-action="remove-coltura" data-coltura-id="${escape(coltura.id)}">${t("colture.remove")}</button>
+              data-orto-action="${raccoltaOra ? "edit-coltura" : "register-harvest"}"
+              data-coltura-id="${escape(coltura.id)}">${
+                raccoltaOra ? t("colture.edit") : t("colture.register")
+              }</button>
+            <button class="orto-icon-btn" type="button"
+              data-orto-action="remove-coltura" data-coltura-id="${escape(coltura.id)}"
+              title="${escape(t("colture.remove"))}"
+              aria-label="${escape(t("colture.remove_aria", { nome: plantName(plant) }))}">
+              <span aria-hidden="true">🗑</span></button>
           </div>
         </div>
       </article>`;
   }
 
+  /* La dispensa non è un secondo elenco di colture: è il magazzino di ciò che
+     si possiede e non è ancora in terra. Prima le due viste usavano la stessa
+     scheda — foto grande, distintivo, barra di avanzamento — e a colpo d'occhio
+     sembravano fare la stessa cosa. Qui le voci sono righe da inventario: niente
+     foto, niente barra di crescita, in evidenza la quantità che resta. */
   function renderDispensa() {
     const attive = inventory.voci.filter(
       (v) => !v.archiviata && BYID[v.plantId],
@@ -995,12 +1136,29 @@
             data-orto-action="open-add">${t("disp.add_manual")}</button>
         </div>
       </div>
-      <div class="orto-grid">${
+      ${
         attive.length
-          ? attive.map(voceCard).join("")
-          : `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">📦</span>
-              <h4>${t("disp.empty_title")}</h4><p>${t("disp.empty_text")}</p></div>`
-      }</div>`;
+          ? `<p class="orto-crosslink">
+              <span class="orto-crosslink-ico" aria-hidden="true">🌱</span>
+              <span>${t("disp.crosslink")}</span>
+              <button class="orto-link" type="button" data-orto-view="colture">${
+                t("disp.crosslink_cta") + " →"
+              }</button>
+            </p>`
+          : ""
+      }
+      ${
+        attive.length
+          ? `<div class="orto-stock-list">${attive.map(voceCard).join("")}</div>`
+          : `<div class="orto-empty"><span class="orto-empty-ico">📦</span>
+              <h4>${t("disp.empty_title")}</h4><p>${t("disp.empty_text")}</p>
+              <div class="orto-empty-actions">
+                <button class="orto-btn" type="button"
+                  data-orto-action="import-orders">${t("disp.import")}</button>
+                <button class="orto-btn orto-btn--ghost" type="button"
+                  data-orto-action="open-add">${t("disp.add_manual")}</button>
+              </div></div>`
+      }`;
   }
 
   function voceCard(voce, index) {
@@ -1008,6 +1166,7 @@
     const product = PRODUCTS[voce.plantId] || {};
     const piantina = voce.variante === "piantina";
     const rimaste = residuo(voce);
+    const esaurita = piantina && rimaste === 0;
     const unita = piantina
       ? t("disp.plugs", { n: voce.qta })
       : t("disp.packet", { n: product.semi?.semiPerBustina ?? "—" });
@@ -1028,49 +1187,80 @@
             : "—",
         })
       : t("disp.from_manual");
-    const percentuale =
-      piantina && voce.qta ? ((voce.qtaPiantata || 0) / voce.qta) * 100 : 0;
 
     return `
-      <article class="orto-card" style="animation-delay:${Math.min(index, 8) * 45}ms">
-        <div class="orto-card-photo">
-          <img class="orto-card-bg" src="${photoSrc(plant.id)}" alt="" loading="lazy" />
-          <span class="orto-badges">
-            <span class="orto-chip orto-chip--${piantina ? "piantina" : "seme"}">
-              ${piantina ? t("colture.from_plant") : t("colture.from_seed")}</span>
-          </span>
-          <img class="orto-card-svg" src="${svgSrc(plant.id)}" alt="" loading="lazy" />
-          <span class="orto-card-titles">
-            <h3>${escape(plantName(plant))}</h3>
-            <small>${unita}</small>
-          </span>
+      <article class="orto-stock${esaurita ? " is-empty" : ""}"
+        style="animation-delay:${Math.min(index, 8) * 40}ms">
+        <span class="orto-stock-ico" aria-hidden="true">
+          <img src="${svgSrc(plant.id)}" alt="" width="34" height="34" loading="lazy" />
+        </span>
+        <div class="orto-stock-body">
+          <h3 class="orto-stock-name">
+            ${escape(plantName(plant))}
+            <span class="orto-chip orto-chip--${piantina ? "piantina" : "seme"}">${
+              piantina ? t("colture.from_plant") : t("colture.from_seed")
+            }</span>
+          </h3>
+          <!-- Le piantine si contano una a una, le bustine no: la riga forte è
+               «quante restano» per le prime e «quante semine» per le seconde. -->
+          <p class="orto-stock-count">${stato}</p>
+          <p class="orto-stock-meta">${unita} · ${provenienza}</p>
         </div>
-        <div class="orto-card-body">
-          ${
-            piantina
-              ? `<div class="orto-track"><i style="width:${percentuale}%"></i></div>`
-              : ""
-          }
-          <div class="orto-meta-row" style="border-top:0">
-            <span>${provenienza}</span><b>${stato}</b>
-          </div>
-          <div class="orto-card-actions">
-            <button class="orto-btn orto-btn--sm" type="button"
-              data-orto-action="plant-from-stock" data-voce-id="${escape(voce.id)}"
-              ${piantina && rimaste === 0 ? "disabled" : ""}>${t("disp.plant_now")}</button>
-            <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-              data-orto-action="archive-voce" data-voce-id="${escape(voce.id)}">${t("disp.archive")}</button>
-          </div>
+        <div class="orto-stock-actions">
+          <button class="orto-btn orto-btn--sm" type="button"
+            data-orto-action="plant-from-stock" data-voce-id="${escape(voce.id)}"
+            ${esaurita ? "disabled" : ""}>${t("disp.plant_now")}</button>
+          <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
+            data-orto-action="archive-voce" data-voce-id="${escape(voce.id)}">${t("disp.archive")}</button>
         </div>
       </article>`;
   }
 
+  /* La striscia dei tre passi: è una didascalia, non un comando. Evidenzia il
+     passo corrispondente alla vista aperta — così dice anche dove ci si trova —
+     e chiude con la riga che suggerisce da quale linguetta cominciare, scelta
+     in base a cosa c'è davvero nell'orto di chi guarda. */
+  function syncHowto() {
+    const box = document.getElementById("ortoHowto");
+    if (!box) return;
+    let chiusa = false;
+    try {
+      chiusa = localStorage.getItem(HOWTO_KEY) === "off";
+    } catch (_) {}
+    box.hidden = chiusa;
+    if (chiusa) return;
+    box.querySelectorAll("[data-orto-step]").forEach((passo) => {
+      passo.classList.toggle("is-current", passo.dataset.ortoStep === view);
+    });
+    const suggerimento = document.getElementById("ortoHowtoHint");
+    if (!suggerimento) return;
+    const inAttesa = inventory.voci.filter(
+      (v) => !v.archiviata && BYID[v.plantId],
+    ).length;
+    const chiave = !garden.colture.length && !inAttesa
+      ? "howto.start_empty"
+      : inAttesa
+        ? "howto.start_stock"
+        : "howto.start_today";
+    suggerimento.innerHTML = t(chiave);
+  }
+
   function render() {
-    document.querySelectorAll("[data-orto-view]").forEach((button) => {
+    // Le linguette sono un tablist: una sola resta raggiungibile con Tab, le
+    // altre con le frecce. Prima erano tutte nel giro di tabulazione e nessuna
+    // rispondeva alla tastiera direzionale.
+    const linguette = [...document.querySelectorAll(".orto-tab")];
+    linguette.forEach((button) => {
       const attivo = button.dataset.ortoView === view;
       button.setAttribute("aria-selected", String(attivo));
       button.classList.toggle("is-active", attivo);
+      button.tabIndex = attivo ? 0 : -1;
     });
+    const attiva = linguette.find((b) => b.dataset.ortoView === view);
+    if (attiva && app) app.setAttribute("aria-labelledby", attiva.id);
+    // Il pannello ricorda quale vista sta mostrando anche fuori dalle linguette
+    // (la striscia dei passi ci porta senza passare da lì).
+    syncHowto();
     /* Ogni linguetta porta il proprio numero e una riga di stato. Prima il
        conteggio c'era solo su «Oggi»: le altre due non lasciavano capire se
        dentro ci fosse qualcosa, e si aprivano alla cieca. */
@@ -1125,7 +1315,7 @@
   function applyLanguage(value) {
     lang = normalizeLang(value);
     document.documentElement.lang = lang;
-    document.title = t("page.title");
+    document.title = t("doc.title");
     document.querySelectorAll("[data-orto-key]").forEach((el) => {
       const text = t(el.dataset.ortoKey);
       if (text.includes("<")) el.innerHTML = text;
@@ -1155,7 +1345,8 @@
     try {
       localStorage.setItem("ois.lang", lang);
     } catch (_) {}
-    riempiSelectPiante();
+    renderPicker();
+    if (piantaScelta) mostraSceltaPianta();
     render();
     document.documentElement.classList.remove("serra-i18n-pending");
   }
@@ -1193,29 +1384,143 @@
     saveGarden();
   }
 
-  // Elenco dei nomi per il campo con suggerimenti: con 97 varietà un menu a
-  // tendina costringe a scorrere, un campo che filtra no.
-  let NOME_A_ID = {};
-  function riempiSelectPiante() {
-    const elenco = document.getElementById("ortoPlantList");
-    if (!elenco) return;
-    NOME_A_ID = {};
-    elenco.innerHTML = PLANTS.map((p) => {
-      const nome = plantName(p);
-      NOME_A_ID[nome.toLowerCase()] = p.id;
-      return `<option value="${escape(nome)}"></option>`;
-    }).join("");
+  /* ============================================================
+     Selettore della pianta (dialogo «Aggiungi una coltura»)
+     ============================================================
+     Qui c'era un campo di testo con un `datalist`: bisognava sapere in anticipo
+     il nome di una delle 97 piante, e chi non lo sapeva restava fermo davanti a
+     un campo vuoto. Ora si sceglie guardando: ricerca, famiglie, foto, e le
+     piante che si seminano in questo mese messe in cima. Stesse tre leve del
+     vivaio e del catalogo semi, così il gesto è già noto. */
+  let pickerQuery = "";
+  let pickerFamily = ""; // "" tutte · "stagione" · altrimenti un tipo
+  let piantaScelta = null;
+
+  const diStagione = (plant, mese) => (plant.mesi || []).includes(mese);
+
+  function pianteFiltrate() {
+    const mese = new Date().getMonth() + 1;
+    const q = pickerQuery.trim().toLowerCase();
+    let out = PLANTS.slice();
+    if (pickerFamily === "stagione")
+      out = out.filter((p) => diStagione(p, mese));
+    else if (pickerFamily) out = out.filter((p) => p.tipo === pickerFamily);
+    if (q) out = out.filter((p) => plantName(p).toLowerCase().includes(q));
+    // Senza una ricerca in corso le piante di stagione vengono per prime: è
+    // quasi sempre quello che si sta cercando in questo momento dell'anno.
+    return out.sort((a, b) => {
+      const sa = diStagione(a, mese) ? 0 : 1;
+      const sb = diStagione(b, mese) ? 0 : 1;
+      return sa - sb || plantName(a).localeCompare(plantName(b), locale());
+    });
   }
 
-  // Accetta il nome esatto oppure un inizio di parola non ambiguo.
-  function risolviPianta(valore) {
-    const cercato = (valore || "").trim().toLowerCase();
-    if (!cercato) return null;
-    if (NOME_A_ID[cercato]) return NOME_A_ID[cercato];
-    const candidati = Object.keys(NOME_A_ID).filter((n) =>
-      n.startsWith(cercato),
-    );
-    return candidati.length === 1 ? NOME_A_ID[candidati[0]] : null;
+  // Un filtro che non porta a nulla è peggio di nessun filtro: le famiglie
+  // elencate sono solo quelle che hanno almeno una pianta.
+  function famigliePicker() {
+    const conta = {};
+    PLANTS.forEach((p) => (conta[p.tipo] = (conta[p.tipo] || 0) + 1));
+    return Object.keys(conta)
+      .sort((a, b) => conta[b] - conta[a])
+      .map((tipo) => ({ tipo, n: conta[tipo] }));
+  }
+
+  function renderPicker() {
+    const chips = document.getElementById("ortoPlantChips");
+    const grid = document.getElementById("ortoPlantGrid");
+    const vuoto = document.getElementById("ortoPlantNone");
+    if (!chips || !grid) return;
+    const mese = new Date().getMonth() + 1;
+    const inStagione = PLANTS.filter((p) => diStagione(p, mese)).length;
+
+    const chip = (valore, etichetta, n) =>
+      `<button type="button" class="orto-chipfilter${
+        pickerFamily === valore ? " is-active" : ""
+      }" data-orto-action="pick-family" data-family="${escape(valore)}"
+        aria-pressed="${pickerFamily === valore}">
+        <span>${escape(etichetta)}</span><small>${n}</small></button>`;
+
+    chips.innerHTML =
+      chip("", t("dlg.family_all"), PLANTS.length) +
+      (inStagione ? chip("stagione", t("dlg.family_season"), inStagione) : "") +
+      famigliePicker()
+        .map(({ tipo, n }) => chip(tipo, t("tipo." + tipo), n))
+        .join("");
+
+    const elenco = pianteFiltrate();
+    grid.innerHTML = elenco
+      .map(
+        (p) => `
+        <button type="button" class="orto-pick" role="option" aria-selected="false"
+          data-orto-action="pick-plant" data-plant-id="${escape(p.id)}">
+          <img src="${photoSrc(p.id)}" alt="" loading="lazy" width="64" height="64" />
+          <span class="orto-pick-name">${escape(plantName(p))}</span>
+          ${
+            diStagione(p, mese)
+              ? `<span class="orto-pick-tag">${t("dlg.in_season")}</span>`
+              : ""
+          }
+        </button>`,
+      )
+      .join("");
+    if (vuoto) {
+      vuoto.hidden = elenco.length > 0;
+      vuoto.textContent = t("dlg.no_match");
+    }
+  }
+
+  // Aggiorna il dialogo dopo la scelta: il riepilogo prende il posto della
+  // griglia e compaiono i passi 2 e 3, che prima chiedevano data e quantità
+  // di una pianta che non era ancora stata nominata.
+  function mostraSceltaPianta() {
+    const picker = document.getElementById("ortoPicker");
+    const scelta = document.getElementById("ortoPicked");
+    const dettagli = document.getElementById("ortoAddDetails");
+    const conferma = document.getElementById("ortoAddConfirm");
+    const errore = document.getElementById("ortoPlantError");
+    const plant = piantaScelta ? BYID[piantaScelta] : null;
+    if (picker) picker.hidden = !!plant;
+    if (scelta) scelta.hidden = !plant;
+    if (dettagli) dettagli.hidden = !plant;
+    if (conferma) conferma.disabled = !plant;
+    if (errore && plant) errore.hidden = true;
+    if (!plant) return;
+    const img = document.getElementById("ortoPickedImg");
+    if (img) {
+      img.src = photoSrc(plant.id);
+      img.alt = "";
+    }
+    const nome = document.getElementById("ortoPickedName");
+    if (nome) nome.textContent = plantName(plant);
+    const nota = document.getElementById("ortoPickedNote");
+    if (nota) nota.textContent = plantNota(plant) || t("tipo." + plant.tipo);
+    aggiornaAnteprima();
+  }
+
+  /* L'anteprima dice cosa succederà prima di confermare: quando si raccoglie è
+     la sola cosa che l'utente non può dedurre da solo, e cambia con l'origine e
+     con la data. */
+  function aggiornaAnteprima() {
+    const nodo = document.getElementById("ortoAddPreview");
+    if (!nodo) return;
+    const plant = piantaScelta ? BYID[piantaScelta] : null;
+    if (!plant) return void (nodo.textContent = "");
+    const origine =
+      document.querySelector('input[name="ortoOrigine"]:checked')?.value ||
+      "seme";
+    const valore = document.getElementById("ortoDate")?.value;
+    const inizio = valore ? E.parseDate(valore) : E.startOfToday();
+    const gg = E.giorniARaccolta(plant, PRODUCTS[plant.id], origine);
+    nodo.textContent = gg
+      ? t("dlg.preview", {
+          nome: plantName(plant),
+          origine:
+            origine === "piantina"
+              ? t("colture.from_plant")
+              : t("colture.from_seed"),
+          data: fmtData(E.addDays(inizio, gg)),
+        })
+      : t("dlg.preview_perenne", { nome: plantName(plant) });
   }
 
   // Legge le aiuole della serra attiva senza modificarle.
@@ -1265,11 +1570,48 @@
     toast(t("toast.ics", { n: tasks.length }));
   }
 
+  /* Frecce, Home e Fine sulle linguette: il comportamento che ci si aspetta da
+     un tablist e che qui mancava del tutto. */
+  document.querySelector(".orto-tabs")?.addEventListener("keydown", (event) => {
+    const linguette = [...document.querySelectorAll(".orto-tab")];
+    const corrente = linguette.indexOf(document.activeElement);
+    if (corrente < 0) return;
+    const tasti = ["ArrowLeft", "ArrowRight", "Home", "End"];
+    if (!tasti.includes(event.key)) return;
+    event.preventDefault();
+    const prossimo =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? linguette.length - 1
+          : (corrente +
+              (event.key === "ArrowRight" ? 1 : -1) +
+              linguette.length) %
+            linguette.length;
+    view = linguette[prossimo].dataset.ortoView;
+    render();
+    linguette[prossimo].focus();
+  });
+
+  /* Clic sullo sfondo scuro: chiude il dialogo, come in ogni pannello dell'app.
+     Il bersaglio dell'evento è il <dialog> stesso solo quando si tocca fuori
+     dal riquadro, perché il contenuto sta tutto dentro elementi figli. */
+  document.querySelectorAll("dialog.orto-dialog").forEach((dialogo) => {
+    dialogo.addEventListener("click", (event) => {
+      if (event.target === dialogo) dialogo.close("cancel");
+    });
+  });
+
   document.addEventListener("click", (event) => {
     const viewBtn = event.target.closest("[data-orto-view]");
     if (viewBtn) {
       view = viewBtn.dataset.ortoView;
-      return render();
+      render();
+      // Chi arriva dalla striscia dei passi non ha il fuoco sulle linguette:
+      // portarlo sul pannello evita di ripartire dall'inizio della pagina.
+      if (!viewBtn.classList.contains("orto-tab"))
+        app?.focus({ preventScroll: true });
+      return;
     }
     const trigger = event.target.closest("[data-orto-action]");
     if (!trigger) return;
@@ -1360,15 +1702,56 @@
       document.getElementById("ortoPlantDialog")?.showModal();
       return;
     }
+    // Chiusura esplicita: la ✕ dell'intestazione. Passa da close("cancel")
+    // così i gestori di chiusura azzerano lo stato in sospeso come farebbe Esc.
+    if (action === "close-dialog") {
+      document.getElementById(trigger.dataset.dialog)?.close("cancel");
+      return;
+    }
+    if (action === "dismiss-howto") {
+      try {
+        localStorage.setItem(HOWTO_KEY, "off");
+      } catch (_) {}
+      syncHowto();
+      return;
+    }
+    if (action === "pick-family") {
+      pickerFamily = trigger.dataset.family || "";
+      renderPicker();
+      return;
+    }
+    if (action === "pick-plant") {
+      piantaScelta = trigger.dataset.plantId;
+      mostraSceltaPianta();
+      // Il fuoco va sulla scelta successiva, non sulla data: su telefono
+      // aprirebbe subito il calendario nascondendo il resto del dialogo.
+      document.querySelector('input[name="ortoOrigine"]:checked')?.focus();
+      return;
+    }
+    if (action === "clear-plant") {
+      piantaScelta = null;
+      mostraSceltaPianta();
+      document.getElementById("ortoPlantSearch")?.focus();
+      return;
+    }
     if (action === "open-add") {
-      riempiSelectPiante();
-      const campoPianta = document.getElementById("ortoPlantInput");
-      if (campoPianta) campoPianta.value = "";
-      const errore = document.getElementById("ortoPlantError");
-      if (errore) errore.hidden = true;
+      piantaScelta = null;
+      pickerQuery = "";
+      pickerFamily = "";
+      const ricerca = document.getElementById("ortoPlantSearch");
+      if (ricerca) ricerca.value = "";
+      renderPicker();
+      mostraSceltaPianta();
       const dataInput = document.getElementById("ortoDate");
       if (dataInput) dataInput.value = E.iso(new Date());
+      const quantita = document.getElementById("ortoQty");
+      if (quantita) quantita.value = "4";
+      const posizione = document.getElementById("ortoPosition");
+      if (posizione) posizione.value = "";
       document.getElementById("ortoAddDialog")?.showModal();
+      // Su schermo largo la tastiera è già pronta per filtrare; su telefono
+      // il fuoco su un campo di ricerca non apre nulla di invasivo.
+      ricerca?.focus();
       return;
     }
     // Correzione di una coltura già inserita: capita di sbagliare la data.
@@ -1396,36 +1779,46 @@
     if (action === "export-ics") return esportaIcs();
   });
 
+  // Ricerca e cambi di opzione dentro il dialogo: la griglia si filtra mentre
+  // si digita, l'anteprima si aggiorna a ogni scelta.
+  document.getElementById("ortoPlantSearch")?.addEventListener("input", (e) => {
+    pickerQuery = e.target.value;
+    renderPicker();
+  });
+  document.getElementById("ortoAddForm")?.addEventListener("change", (e) => {
+    if (e.target.name === "ortoOrigine" || e.target.id === "ortoDate")
+      aggiornaAnteprima();
+  });
+
   document
     .getElementById("ortoAddForm")
     ?.addEventListener("submit", (event) => {
       if (event.submitter && event.submitter.value === "cancel") return;
-      const campo = document.getElementById("ortoPlantInput");
       const errore = document.getElementById("ortoPlantError");
-      const plantId = risolviPianta(campo.value);
-      if (!plantId) {
+      if (!piantaScelta || !BYID[piantaScelta]) {
         // method="dialog": senza preventDefault il dialogo si chiuderebbe comunque.
         event.preventDefault();
         if (errore) {
-          errore.textContent = t("dlg.plant_unknown");
+          errore.textContent = t("dlg.plant_missing");
           errore.hidden = false;
         }
-        campo.focus();
-        campo.select();
+        document.getElementById("ortoPlantSearch")?.focus();
         return;
       }
       if (errore) errore.hidden = true;
+      const plantId = piantaScelta;
       const origine =
         document.querySelector('input[name="ortoOrigine"]:checked')?.value ||
         "seme";
       aggiungiColtura(
         plantId,
         origine,
-        document.getElementById("ortoDate").value,
+        document.getElementById("ortoDate").value || E.iso(new Date()),
         document.getElementById("ortoQty").value,
         document.getElementById("ortoPosition").value.trim(),
       );
       const nome = plantName(BYID[plantId]);
+      piantaScelta = null;
       setTimeout(() => {
         view = "colture";
         render();
@@ -1479,7 +1872,7 @@
      dall'invio, quindi lo stato in sospeso va azzerato a mano. Senza questo,
      una coltura scelta e poi abbandonata restava in memoria. */
   [
-    ["ortoAddDialog", null],
+    ["ortoAddDialog", () => (piantaScelta = null)],
     ["ortoPlantDialog", () => (vocePendente = null)],
     ["ortoEditDialog", () => (colturaInModifica = null)],
     ["ortoHarvestDialog", () => (colturaDaRaccogliere = null)],

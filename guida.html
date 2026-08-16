@@ -30,6 +30,31 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
+    <!-- Lingua iniziale: stesso contratto di orto.html. Senza, la guida si
+         apriva sempre in italiano e passava al romeno solo quando guida.js
+         aveva finito di girare — un lampeggio su ogni caricamento, e i testi
+         restavano italiani se lo script tardava. -->
+    <style>
+      html.serra-i18n-pending body {
+        visibility: hidden;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var lang = localStorage.getItem("ois.lang");
+          if (lang === "it" || lang === "ro") {
+            document.documentElement.lang = lang;
+          }
+          if (lang === "ro") {
+            document.documentElement.classList.add("serra-i18n-pending");
+            window.setTimeout(function () {
+              document.documentElement.classList.remove("serra-i18n-pending");
+            }, 1200);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -47,7 +72,12 @@
          e carrello a destra, come nel resto dell'app. -->
     <header class="site-header guide-page-header">
       <div class="site-header-inner">
-        <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
+        <a
+          href="index.html"
+          class="nav-brand"
+          data-guide-key-aria="aria.brand"
+          aria-label="Orto in Serra, home"
+        >
           <span class="nav-brand-mark"
             ><img src="assets/img/svg/logo.svg" alt="" width="34" height="34"
           /></span>
@@ -210,23 +240,26 @@
             Dal progetto al raccolto, spiegato.
           </h1>
           <p class="guide-hero-intro" data-guide-key="hero.intro">
-            La guida copre i tre momenti dell'app: disegnare la serra, decidere
-            se partire dal seme o dalla piantina, seguire l'orto fino alla
-            raccolta.
+            Come si usa l'applicazione, nell'ordine in cui la incontri:
+            progettare la serra, comprare semi e piantine, seguire l'orto fino
+            alla raccolta, regolare account e preferenze.
           </p>
           <!-- Indice: la pagina si è allungata e ci si arriva anche da link
-               diretti (dalla home, per esempio, si atterra sul confronto fra
-               seme e piantina). Senza un indice non si capisce di stare
-               dentro un documento più lungo. -->
+               diretti (dalla home, per esempio, si atterra sul capitolo degli
+               acquisti). Senza un indice non si capisce di stare dentro un
+               documento più lungo. -->
           <nav class="guide-toc" data-guide-key-aria="aria.toc">
             <a href="#progettare" data-guide-key="toc.design"
               >1 · Progettare la serra</a
             >
             <a href="#seme-o-piantina" data-guide-key="toc.buy"
-              >2 · Seme o piantina?</a
+              >2 · Comprare le piante</a
             >
             <a href="#coltivare" data-guide-key="toc.grow"
               >3 · Seguire l'orto</a
+            >
+            <a href="#impostazioni" data-guide-key="toc.settings"
+              >4 · Account e preferenze</a
             >
           </nav>
         </div>
@@ -545,12 +578,12 @@
         </p>
       </aside>
 
-      <!-- Capitolo 2: la decisione che viene subito dopo il progetto. Ci si
-           arriva dalla home, dalla scheda «Procurati le piante»: prima quel
-           link portava qui in cima, cioè a tre percorsi che parlano del
-           configuratore e non rispondono alla domanda. I numeri di questa
-           sezione vengono dal catalogo (db/products.json): 97 varietà a
-           seme, 64 anche in piantina, vassoi sempre da sei. -->
+      <!-- Capitolo 2: dove si comprano semi e piantine e come funziona il
+           passaggio carrello → ordine → «Da piantare». Ci si arriva dalla home,
+           dalla scheda «Procurati le piante».
+           Qui si spiega l'applicazione, non le piante: prezzi, numero di
+           varietà e consigli agronomici stanno nelle schede del catalogo, che
+           sono l'unico posto in cui restano allineati al listino. -->
       <section
         class="guide-chapter guide-compare-section"
         id="seme-o-piantina"
@@ -560,15 +593,15 @@
           <span class="guide-chapter-mark" aria-hidden="true">2</span>
           <div>
             <p class="guide-kicker" data-guide-key="compare.kicker">
-              PROCURARSI LE PIANTE
+              I DUE NEGOZI DELL'APP
             </p>
             <h2 id="compareTitle" data-guide-key="compare.title">
-              Seme o piantina?
+              Dove si comprano semi e piantine
             </h2>
             <p class="guide-chapter-lead" data-guide-key="compare.lead">
-              Stessa pianta, due punti di partenza. Il seme costa poco e ha
-              tutta la scelta; la piantina fa risparmiare tre settimane e le
-              cure più delicate. Sotto, la differenza in numeri.
+              L'app ha due punti vendita e una sola meccanica: scegli, aggiungi
+              al carrello, confermi l'ordine. Quello che compri ricompare da
+              solo in «Il mio orto», nella scheda «Da piantare».
             </p>
           </div>
         </header>
@@ -585,43 +618,45 @@
                   loading="lazy"
                 />
               </span>
-              <h3 data-guide-key="compare.seme_title">Dal seme</h3>
+              <h3 data-guide-key="compare.seme_title">Catalogo semi</h3>
               <p data-guide-key="compare.seme_sub">
-                Una bustina, molte piante, e la semina la fai tu.
+                Vive dentro la home, nella sezione dei semi di stagione.
               </p>
             </header>
             <dl>
               <div>
-                <dt data-guide-key="compare.row_cost">Quanto costa</dt>
-                <dd data-guide-key="compare.seme_cost">
-                  Da 2,20 € la bustina, con 100 semi in media: pochi centesimi a
-                  pianta.
+                <dt data-guide-key="compare.row_where">Dove si trova</dt>
+                <dd data-guide-key="compare.seme_where">
+                  Voce «🌿 Catalogo semi» del menu, oppure scorri la home fino
+                  alla sezione dei semi.
                 </dd>
               </div>
               <div>
-                <dt data-guide-key="compare.row_time">Quando raccogli</dt>
-                <dd data-guide-key="compare.seme_time">
-                  Ciclo completo: alla raccolta arrivi tre o quattro settimane
-                  dopo la piantina.
+                <dt data-guide-key="compare.row_do">Cosa puoi fare</dt>
+                <dd data-guide-key="compare.seme_do">
+                  Filtri per mese e per tipo, campo di ricerca, e «Tutto il
+                  catalogo» per vedere anche ciò che è fuori stagione.
                 </dd>
               </div>
               <div>
-                <dt data-guide-key="compare.row_choice">Quanta scelta</dt>
-                <dd data-guide-key="compare.seme_choice">
-                  Tutte le 97 varietà del catalogo, in qualsiasi mese.
+                <dt data-guide-key="compare.row_add">Come si ordina</dt>
+                <dd data-guide-key="compare.seme_add">
+                  Il pulsante di aggiunta su ogni scheda mette la bustina nel
+                  carrello; le quantità si regolano lì.
                 </dd>
               </div>
               <div>
-                <dt data-guide-key="compare.row_care">Cosa ti chiede</dt>
-                <dd data-guide-key="compare.seme_care">
-                  Semenzaio, luce e temperatura costanti nelle prime settimane:
-                  è la fase in cui si perde qualche piantina.
+                <dt data-guide-key="compare.row_detail">Se vuoi i dettagli</dt>
+                <dd data-guide-key="compare.seme_detail">
+                  Aprendo una scheda trovi semina, cure e raccolta di quella
+                  pianta: è lì che stanno le informazioni botaniche.
                 </dd>
               </div>
             </dl>
             <p class="guide-compare-when" data-guide-key="compare.seme_when">
-              <b>Scegli il seme se</b> hai tempo davanti, vuoi varietà che in
-              vivaio non esistono o ti interessa proprio la semina.
+              <b>Scorciatoia:</b> se hai già progettato una serra, il
+              configuratore genera la lista dei semi che ti servono e la
+              aggiunge al carrello in un passaggio solo.
             </p>
             <a class="guide-cta guide-cta--inline" href="index.html#stagione">
               <span data-guide-key="compare.seme_cta"
@@ -642,37 +677,38 @@
                   loading="lazy"
                 />
               </span>
-              <h3 data-guide-key="compare.piantina_title">Dalla piantina</h3>
+              <h3 data-guide-key="compare.piantina_title">Vivaio piantine</h3>
               <p data-guide-key="compare.piantina_sub">
-                Già cresciuta in vaso, pronta da trapiantare.
+                È una pagina a sé, con un vassoio al posto del carrello.
               </p>
             </header>
             <dl>
               <div>
-                <dt data-guide-key="compare.row_cost">Quanto costa</dt>
-                <dd data-guide-key="compare.piantina_cost">
-                  Da 1,10 a 1,90 € a piantina, in vassoi da sei; l'ordine parte
-                  da due vassoi.
+                <dt data-guide-key="compare.row_where">Dove si trova</dt>
+                <dd data-guide-key="compare.piantina_where">
+                  Voce «🪴 Vivaio piantine» del menu, raggiungibile da qualsiasi
+                  pagina.
                 </dd>
               </div>
               <div>
-                <dt data-guide-key="compare.row_time">Quando raccogli</dt>
-                <dd data-guide-key="compare.piantina_time">
-                  Da venti a trenta giorni prima: la parte lenta l'ha già fatta
-                  il vivaio.
+                <dt data-guide-key="compare.row_do">Cosa puoi fare</dt>
+                <dd data-guide-key="compare.piantina_do">
+                  L'elenco mostra solo ciò che ha senso trapiantare nel mese in
+                  corso; i filtri in alto lo restringono ancora.
                 </dd>
               </div>
               <div>
-                <dt data-guide-key="compare.row_choice">Quanta scelta</dt>
-                <dd data-guide-key="compare.piantina_choice">
-                  64 varietà, e solo nei mesi in cui il trapianto ha senso.
+                <dt data-guide-key="compare.row_add">Come si ordina</dt>
+                <dd data-guide-key="compare.piantina_add">
+                  Le piantine finiscono nel vassoio, che resta visibile mentre
+                  scegli e mostra sempre il totale.
                 </dd>
               </div>
               <div>
-                <dt data-guide-key="compare.row_care">Cosa ti chiede</dt>
-                <dd data-guide-key="compare.piantina_care">
-                  Di essere in casa alla consegna, entro 48 ore, e di
-                  trapiantare nei giorni successivi.
+                <dt data-guide-key="compare.row_detail">Se vuoi i dettagli</dt>
+                <dd data-guide-key="compare.piantina_detail">
+                  Ogni scheda dice quanto tempo fa risparmiare rispetto al seme
+                  e quando arriva la consegna.
                 </dd>
               </div>
             </dl>
@@ -680,8 +716,9 @@
               class="guide-compare-when"
               data-guide-key="compare.piantina_when"
             >
-              <b>Scegli la piantina se</b> sei in ritardo sulla stagione, è la
-              tua prima serra o vuoi poche piante di specie difficili.
+              <b>Il vassoio non si perde:</b> resta salvato anche se chiudi la
+              pagina, e il conteggio compare accanto alla voce di menu finché
+              non confermi.
             </p>
             <a class="guide-cta guide-cta--inline" href="vivaio.html">
               <span data-guide-key="compare.piantina_cta"
@@ -692,34 +729,71 @@
           </article>
         </div>
 
+        <!-- Il passaggio che nessuna delle due pagine racconta per intero:
+             dal carrello all'ordine, e dall'ordine alla scheda «Da piantare». -->
+        <ol class="guide-steps">
+          <li>
+            <span class="step-no">1</span>
+            <div>
+              <h3 data-guide-key="compare.s1t">Apri il carrello</h3>
+              <p data-guide-key="compare.s1p">
+                L'icona in alto a destra è la stessa in tutta l'app e raccoglie
+                semi e piantine insieme.
+              </p>
+            </div>
+            <span class="step-icon">🛒</span>
+          </li>
+          <li>
+            <span class="step-no">2</span>
+            <div>
+              <h3 data-guide-key="compare.s2t">Controlla e conferma</h3>
+              <p data-guide-key="compare.s2p">
+                Regoli le quantità, compili i dati di consegna e confermi:
+                l'ordine viene archiviato nella tua Area Personale.
+              </p>
+            </div>
+            <span class="step-icon">✓</span>
+          </li>
+          <li>
+            <span class="step-no">3</span>
+            <div>
+              <h3 data-guide-key="compare.s3t">Ritrovi tutto in «Il mio orto»</h3>
+              <p data-guide-key="compare.s3p">
+                Nella scheda «Da piantare» il pulsante «Importa dai miei ordini»
+                porta dentro le voci, pronte da mettere a dimora.
+              </p>
+            </div>
+            <span class="step-icon">📦</span>
+          </li>
+        </ol>
+
         <aside class="guide-help">
           <span aria-hidden="true">💡</span>
           <p data-guide-key="compare.mix">
-            <b>Si possono mescolare.</b> Molti orti partono dalla piantina per
-            pomodori, peperoni e melanzane — le specie che dal seme richiedono
-            più cure — e dal seme per insalate, ravanelli e aromatiche, che
-            germinano in pochi giorni.
+            <b>Un carrello solo.</b> Semi e piantine si ordinano insieme, ma
+            restano distinti in «Il mio orto»: da una bustina puoi seminare più
+            volte, mentre le piantine si contano una a una.
           </p>
         </aside>
       </section>
 
       <!-- Capitolo 3: cosa succede dopo l'acquisto. Era la parte assente:
            la guida finiva al carrello, mentre l'app accompagna fino alla
-           raccolta. -->
+           raccolta. Qui si descrivono i comandi della pagina, uno per uno. -->
       <section class="guide-chapter" id="coltivare" aria-labelledby="growTitle">
         <header class="guide-chapter-head">
           <span class="guide-chapter-mark" aria-hidden="true">3</span>
           <div>
             <p class="guide-kicker" data-guide-key="grow.kicker">
-              DOPO LA SEMINA
+              LO STRUMENTO GRATUITO
             </p>
             <h2 id="growTitle" data-guide-key="grow.title">
               Seguire l'orto fino alla raccolta
             </h2>
             <p class="guide-chapter-lead" data-guide-key="grow.lead">
-              «Il mio orto» è lo strumento gratuito che tiene il conto al posto
-              tuo: cosa hai piantato, cosa serve questa settimana, cosa è in
-              ritardo. Funziona anche con piante comprate altrove.
+              «Il mio orto» non vende niente: tiene il conto al posto tuo di
+              cosa hai piantato, di cosa serve oggi e di cosa è rimasto
+              indietro. Funziona anche con piante comprate altrove.
             </p>
           </div>
         </header>
@@ -727,32 +801,58 @@
           <li>
             <span class="step-no">1</span>
             <div>
-              <h3 data-guide-key="grow.s1t">Registra cosa hai piantato</h3>
+              <h3 data-guide-key="grow.s1t">Le tre schede in alto</h3>
               <p data-guide-key="grow.s1p">
-                Dagli ordini arriva già tutto; il resto lo aggiungi a mano,
-                anche se viene da un altro vivaio.
+                «Oggi» elenca le attività del giorno, «Colture» quelle che stai
+                seguendo, «Da piantare» ciò che hai comprato e non è ancora in
+                terra. Il numero accanto a ogni nome dice quanto c'è dentro.
+              </p>
+            </div>
+            <span class="step-icon">🗂️</span>
+          </li>
+          <li>
+            <span class="step-no">2</span>
+            <div>
+              <h3 data-guide-key="grow.s2t">Registra una coltura</h3>
+              <p data-guide-key="grow.s2p">
+                «＋ Aggiungi coltura» chiede pianta, data, quantità e posizione.
+                Da quei quattro dati l'app costruisce da sola il calendario di
+                cura fino alla raccolta.
               </p>
             </div>
             <span class="step-icon">🌱</span>
           </li>
           <li>
-            <span class="step-no">2</span>
+            <span class="step-no">3</span>
             <div>
-              <h3 data-guide-key="grow.s2t">Guarda la settimana</h3>
-              <p data-guide-key="grow.s2p">
-                Acqua, concime e raccolta compaiono nel giorno giusto. Quello
-                che salti resta in vista come da recuperare.
+              <h3 data-guide-key="grow.s3t">Spunta o rimanda</h3>
+              <p data-guide-key="grow.s3p">
+                Nella scheda «Oggi» il quadratino segna l'attività come fatta e
+                «Domani» la sposta di un giorno. Quello che salti resta in vista
+                sotto «Da recuperare».
               </p>
             </div>
             <span class="step-icon">📅</span>
           </li>
           <li>
-            <span class="step-no">3</span>
+            <span class="step-no">4</span>
             <div>
-              <h3 data-guide-key="grow.s3t">Segna la raccolta</h3>
-              <p data-guide-key="grow.s3p">
-                Quando chiudi una coltura, lo spazio torna libero nel piano e la
-                stagione successiva riparte da lì.
+              <h3 data-guide-key="grow.s4t">Correggi quando serve</h3>
+              <p data-guide-key="grow.s4p">
+                «Modifica» cambia data, quantità e posizione di una coltura già
+                inserita: il calendario viene ricalcolato da capo.
+              </p>
+            </div>
+            <span class="step-icon">✎</span>
+          </li>
+          <li>
+            <span class="step-no">5</span>
+            <div>
+              <h3 data-guide-key="grow.s5t">Chiudi il ciclo</h3>
+              <p data-guide-key="grow.s5p">
+                «Registra raccolta» salva i chili raccolti e diventa la stima
+                dell'anno prossimo. «Esporta nel calendario» porta le scadenze
+                sul telefono, anche senza notifiche.
               </p>
             </div>
             <span class="step-icon">🧺</span>
@@ -762,6 +862,87 @@
           <span data-guide-key="grow.cta">Apri «Il mio orto»</span>
           <span aria-hidden="true">→</span>
         </a>
+      </section>
+
+      <!-- Capitolo 4: i comandi che stanno in ogni pagina. Erano l'unica parte
+           dell'app che la guida non nominava, e sono quelli che si cercano per
+           primi quando qualcosa non torna (lingua sbagliata, tema, ordini). -->
+      <section
+        class="guide-chapter"
+        id="impostazioni"
+        aria-labelledby="settingsTitle"
+      >
+        <header class="guide-chapter-head">
+          <span class="guide-chapter-mark" aria-hidden="true">4</span>
+          <div>
+            <p class="guide-kicker" data-guide-key="settings.kicker">
+              IN OGNI PAGINA
+            </p>
+            <h2 id="settingsTitle" data-guide-key="settings.title">
+              Account, lingua, tema e uso offline
+            </h2>
+            <p class="guide-chapter-lead" data-guide-key="settings.lead">
+              Quattro comandi identici in tutta l'applicazione: stanno
+              nell'intestazione in alto e, sui telefoni, dentro il menu ☰.
+            </p>
+          </div>
+        </header>
+        <ol class="guide-steps">
+          <li>
+            <span class="step-no">1</span>
+            <div>
+              <h3 data-guide-key="settings.s1t">Area Personale</h3>
+              <p data-guide-key="settings.s1p">
+                Raccoglie i tuoi ordini e i dati di consegna. Serve anche a «Il
+                mio orto»: senza accesso il pulsante «Importa dai miei ordini»
+                non ha niente da leggere.
+              </p>
+            </div>
+            <span class="step-icon">👤</span>
+          </li>
+          <li>
+            <span class="step-no">2</span>
+            <div>
+              <h3 data-guide-key="settings.s2t">Lingua</h3>
+              <p data-guide-key="settings.s2p">
+                Il selettore IT / RO cambia l'intera applicazione, non solo la
+                pagina aperta, e la scelta resta salvata sul dispositivo.
+              </p>
+            </div>
+            <span class="step-icon">🌐</span>
+          </li>
+          <li>
+            <span class="step-no">3</span>
+            <div>
+              <h3 data-guide-key="settings.s3t">Tema chiaro o scuro</h3>
+              <p data-guide-key="settings.s3p">
+                Il pulsante ☾ / ☀ commuta i colori. Alla prima apertura l'app
+                segue l'impostazione del sistema operativo.
+              </p>
+            </div>
+            <span class="step-icon">🌗</span>
+          </li>
+          <li>
+            <span class="step-no">4</span>
+            <div>
+              <h3 data-guide-key="settings.s4t">Uso offline</h3>
+              <p data-guide-key="settings.s4p">
+                Puoi installare l'app dal browser e riaprirla senza rete:
+                l'ultima versione visitata delle pagine resta disponibile.
+              </p>
+            </div>
+            <span class="step-icon">📶</span>
+          </li>
+        </ol>
+        <aside class="guide-help">
+          <span aria-hidden="true">💡</span>
+          <p data-guide-key="settings.note">
+            <b>Dove finiscono i tuoi dati.</b> Carrello, vassoio e «Il mio orto»
+            sono salvati nel browser che stai usando: su un altro dispositivo
+            ripartono vuoti. Gli ordini invece restano nell'Area Personale e li
+            ritrovi ovunque tu acceda.
+          </p>
+        </aside>
       </section>
     </main>
 

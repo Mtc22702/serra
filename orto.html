@@ -62,7 +62,7 @@
     <link rel="stylesheet" href="assets/css/base.css?v=20260814-8ce9b81c5fc8" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-orto.css?v=20260815-mobile-tabs-2"
+      href="assets/css/serra-orto.css?v=20260816-orto-ux"
     />
   </head>
   <body class="orto-page">
@@ -254,7 +254,65 @@
         </p>
       </header>
 
-      <!-- Selettore delle tre viste: attività del giorno, colture seguite, listino -->
+      <!-- Come funziona: i tre passi nell'ordine in cui si incontrano.
+           Erano tre pulsanti che portavano alle linguette, e siccome le
+           linguette sono a loro volta tre riquadri identici subito sotto, chi
+           arrivava per la prima volta si trovava davanti sei bersagli e nessuna
+           indicazione su quale premere. Ora è un testo: numeri legati da un
+           filo, nessuna cornice, nessun fondo. Spiega e basta — a portare da
+           qualche parte ci pensano le linguette, che restano l'unico comando.
+           Si chiude una volta sola: la scelta resta nel browser
+           (`serra.orto.howto`), quindi non ricompare a ogni visita. -->
+      <section class="orto-howto" id="ortoHowto" hidden>
+        <div class="orto-howto-head">
+          <p class="orto-howto-title" data-orto-key="howto.title">
+            Come funziona, in tre passi
+          </p>
+          <button
+            class="orto-howto-close"
+            type="button"
+            data-orto-action="dismiss-howto"
+            data-orto-key-aria="howto.close"
+            aria-label="Nascondi la spiegazione"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+        <ol class="orto-howto-steps">
+          <li data-orto-step="dispensa">
+            <span class="orto-howto-no" aria-hidden="true">1</span>
+            <span class="orto-howto-copy">
+              <b data-orto-key="howto.s1t">Registra cosa hai</b>
+              <small data-orto-key="howto.s1p"
+                >Semi e piantine, comprati qui o altrove.</small
+              >
+            </span>
+          </li>
+          <li data-orto-step="oggi">
+            <span class="orto-howto-no" aria-hidden="true">2</span>
+            <span class="orto-howto-copy">
+              <b data-orto-key="howto.s2t">Segui la giornata</b>
+              <small data-orto-key="howto.s2p"
+                >Ogni mattina trovi solo ciò che serve oggi.</small
+              >
+            </span>
+          </li>
+          <li data-orto-step="colture">
+            <span class="orto-howto-no" aria-hidden="true">3</span>
+            <span class="orto-howto-copy">
+              <b data-orto-key="howto.s3t">Arriva alla raccolta</b>
+              <small data-orto-key="howto.s3p"
+                >Ogni coltura ha il suo calendario fino alla fine.</small
+              >
+            </span>
+          </li>
+        </ol>
+        <!-- Dove si comincia: una riga sola, in fondo, che dice quale
+             linguetta guardare per prima invece di lasciarlo intuire. -->
+        <p class="orto-howto-hint" id="ortoHowtoHint"></p>
+      </section>
+
+      <!-- Selettore delle tre viste: attività del giorno, colture seguite, dispensa -->
       <div class="orto-viewbar">
         <!-- Volutamente un div e non un <nav>: in base.css il tag nav è la
              navigazione principale fissa, e un secondo nav ne erediterebbe il
@@ -267,7 +325,9 @@
             class="orto-tab is-active"
             type="button"
             role="tab"
+            id="ortoTabOggi"
             aria-selected="true"
+            aria-controls="ortoApp"
             data-orto-view="oggi"
           >
             <span class="orto-tab-ico" aria-hidden="true">☀️</span>
@@ -281,7 +341,10 @@
             class="orto-tab"
             type="button"
             role="tab"
+            id="ortoTabColture"
             aria-selected="false"
+            aria-controls="ortoApp"
+            tabindex="-1"
             data-orto-view="colture"
           >
             <span class="orto-tab-ico" aria-hidden="true">🌿</span>
@@ -297,7 +360,10 @@
             class="orto-tab"
             type="button"
             role="tab"
+            id="ortoTabDispensa"
             aria-selected="false"
+            aria-controls="ortoApp"
+            tabindex="-1"
             data-orto-view="dispensa"
           >
             <span class="orto-tab-ico" aria-hidden="true">📦</span>
@@ -313,7 +379,12 @@
       </div>
 
       <!-- Contenuto generato da orto.js in base alla vista attiva -->
-      <div id="ortoApp"></div>
+      <div
+        id="ortoApp"
+        role="tabpanel"
+        tabindex="-1"
+        aria-labelledby="ortoTabOggi"
+      ></div>
     </main>
 
     <!-- Messaggio temporaneo di conferma delle azioni -->
@@ -324,85 +395,169 @@
       aria-live="polite"
     ></div>
 
-    <!-- Inserimento di una nuova coltura nel diario -->
-    <dialog class="orto-dialog" id="ortoAddDialog">
+    <!-- Inserimento di una nuova coltura nel diario.
+         Prima qui c'era un campo di testo vuoto con un `datalist`: bisognava
+         indovinare il nome di una delle 97 piante e i suggerimenti comparivano
+         solo dopo aver digitato. Ora la scelta è visiva — ricerca, famiglie,
+         foto — e i campi su data e quantità compaiono solo dopo, quando hanno
+         un soggetto di cui parlare. -->
+    <dialog
+      class="orto-dialog orto-dialog--wide"
+      id="ortoAddDialog"
+      aria-labelledby="ortoAddTitle"
+    >
+      <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head">
-        <h3 data-orto-key="dlg.title">Aggiungi una coltura</h3>
-        <p data-orto-key="dlg.sub">
-          Da qui parte il calendario di cura fino alla raccolta.
-        </p>
+        <div class="orto-dialog-heading">
+          <h3 id="ortoAddTitle" data-orto-key="dlg.title">
+            Aggiungi una coltura
+          </h3>
+          <p data-orto-key="dlg.sub">
+            Da qui parte il calendario di cura fino alla raccolta.
+          </p>
+        </div>
+        <button
+          class="orto-dialog-close"
+          type="button"
+          data-orto-action="close-dialog"
+          data-dialog="ortoAddDialog"
+          data-orto-key-aria="dlg.close"
+          aria-label="Chiudi"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
       </div>
-      <form method="dialog" class="orto-dialog-body" id="ortoAddForm">
-        <div class="orto-field">
-          <label for="ortoPlantInput" data-orto-key="dlg.plant">Pianta</label>
-          <!-- Campo con suggerimenti invece di un elenco di 97 voci: si digita
-               e si filtra, ma resta un controllo nativo (accessibile, mobile). -->
-          <input
-            id="ortoPlantInput"
-            list="ortoPlantList"
-            autocomplete="off"
-            data-orto-key-ph="dlg.plant_ph"
-            placeholder="Scrivi un nome, es. pomodoro"
-            required
-          />
-          <datalist id="ortoPlantList"></datalist>
-          <small class="orto-field-error" id="ortoPlantError" hidden></small>
-        </div>
-        <div class="orto-field">
-          <label data-orto-key="dlg.origin">Sei partito da…</label>
-          <div class="orto-origin">
-            <label>
-              <input type="radio" name="ortoOrigine" value="seme" checked />
-              <span data-orto-key="dlg.seed" class="orto-origin-title"
-                >Semi</span
+      <form method="dialog" class="orto-dialog-form" id="ortoAddForm">
+        <div class="orto-dialog-body">
+          <!-- Passo 1: la pianta. Finché non è scelta, il resto non serve. -->
+          <section class="orto-step">
+            <p class="orto-step-head">
+              <span class="orto-step-no" aria-hidden="true">1</span>
+              <span data-orto-key="dlg.step_plant">Quale pianta?</span>
+            </p>
+
+            <div class="orto-picker" id="ortoPicker">
+              <!-- Ricerca e famiglie restano agganciate in alto mentre si
+                   scorre la griglia: con quasi cento piante, doverle riportare
+                   in vista per cambiare filtro è il gesto che si ripete di più. -->
+              <div class="orto-picker-head">
+                <label class="orto-picker-search">
+                  <span aria-hidden="true">⌕</span>
+                  <input
+                    type="search"
+                    id="ortoPlantSearch"
+                    autocomplete="off"
+                    data-orto-key-ph="dlg.plant_ph"
+                    data-orto-key-aria="dlg.plant_ph"
+                    placeholder="Cerca una pianta"
+                    aria-label="Cerca una pianta"
+                  />
+                </label>
+                <div
+                  class="orto-picker-chips"
+                  id="ortoPlantChips"
+                  role="group"
+                  data-orto-key-aria="dlg.family_aria"
+                  aria-label="Filtra per famiglia"
+                ></div>
+              </div>
+              <div
+                class="orto-picker-grid"
+                id="ortoPlantGrid"
+                role="listbox"
+                data-orto-key-aria="dlg.plant_list_aria"
+                aria-label="Piante disponibili"
+              ></div>
+              <p class="orto-picker-none" id="ortoPlantNone" hidden></p>
+            </div>
+
+            <!-- Riepilogo della scelta: prende il posto della griglia, così
+                 resta chiaro cosa si è selezionato senza scorrere indietro. -->
+            <div class="orto-picked" id="ortoPicked" hidden>
+              <img id="ortoPickedImg" src="" alt="" width="52" height="52" />
+              <span class="orto-picked-copy">
+                <b id="ortoPickedName"></b>
+                <small id="ortoPickedNote"></small>
+              </span>
+              <button
+                type="button"
+                class="orto-btn orto-btn--ghost orto-btn--sm"
+                data-orto-action="clear-plant"
+                data-orto-key="dlg.change_plant"
               >
-              <span data-orto-key="dlg.seed_hint">ciclo completo</span>
-            </label>
-            <label>
-              <input type="radio" name="ortoOrigine" value="piantina" />
-              <span data-orto-key="dlg.seedling" class="orto-origin-title"
-                >Piantina</span
-              >
-              <span data-orto-key="dlg.seedling_hint">già cresciuta</span>
-            </label>
+                Cambia
+              </button>
+            </div>
+            <small class="orto-field-error" id="ortoPlantError" hidden></small>
+          </section>
+
+          <!-- Passi 2 e 3: compaiono a scelta fatta. Nessun campo qui dentro è
+               `required`, altrimenti il browser proverebbe a mettere a fuoco un
+               campo nascosto e bloccherebbe l'invio senza spiegare perché: la
+               convalida la fa orto.js, che sa anche cosa scrivere. -->
+          <div class="orto-add-details" id="ortoAddDetails" hidden>
+            <section class="orto-step">
+              <p class="orto-step-head">
+                <span class="orto-step-no" aria-hidden="true">2</span>
+                <span data-orto-key="dlg.origin">Sei partito da…</span>
+              </p>
+              <div class="orto-origin">
+                <label>
+                  <input type="radio" name="ortoOrigine" value="seme" checked />
+                  <span data-orto-key="dlg.seed" class="orto-origin-title"
+                    >Semi</span
+                  >
+                  <span data-orto-key="dlg.seed_hint">ciclo completo</span>
+                </label>
+                <label>
+                  <input type="radio" name="ortoOrigine" value="piantina" />
+                  <span data-orto-key="dlg.seedling" class="orto-origin-title"
+                    >Piantina</span
+                  >
+                  <span data-orto-key="dlg.seedling_hint">già cresciuta</span>
+                </label>
+              </div>
+            </section>
+
+            <section class="orto-step">
+              <p class="orto-step-head">
+                <span class="orto-step-no" aria-hidden="true">3</span>
+                <span data-orto-key="dlg.step_when">Quando e quante</span>
+              </p>
+              <div class="orto-row">
+                <div class="orto-field">
+                  <label for="ortoDate" data-orto-key="dlg.date"
+                    >Data di semina / messa a dimora</label
+                  >
+                  <input type="date" id="ortoDate" />
+                </div>
+                <div class="orto-field orto-field--qty">
+                  <label for="ortoQty" data-orto-key="dlg.qty">Quante</label>
+                  <input type="number" id="ortoQty" min="1" value="4" />
+                </div>
+              </div>
+              <div class="orto-field">
+                <label for="ortoPosition" data-orto-key="dlg.position"
+                  >Posizione (facoltativa)</label
+                >
+                <input
+                  type="text"
+                  id="ortoPosition"
+                  data-orto-key-ph="dlg.position_ph"
+                  placeholder="es. Aiuola 2"
+                />
+              </div>
+            </section>
+
+            <!-- Anteprima: dice cosa succederà, prima di confermare. -->
+            <p class="orto-preview" id="ortoAddPreview" role="status"></p>
           </div>
         </div>
-        <div class="orto-row">
-          <div class="orto-field">
-            <label for="ortoDate" data-orto-key="dlg.date"
-              >Data di semina / messa a dimora</label
-            >
-            <input type="date" id="ortoDate" required />
-          </div>
-          <div class="orto-field" style="max-width: 120px">
-            <label for="ortoQty" data-orto-key="dlg.qty">Quante</label>
-            <input type="number" id="ortoQty" min="1" value="4" required />
-          </div>
-        </div>
-        <div class="orto-field">
-          <label for="ortoPosition" data-orto-key="dlg.position"
-            >Posizione (facoltativa)</label
-          >
-          <input
-            type="text"
-            id="ortoPosition"
-            data-orto-key-ph="dlg.position_ph"
-            placeholder="es. Aiuola 2"
-          />
-        </div>
-        <div class="orto-row" style="margin-top: 18px">
-          <button
-            type="submit"
-            class="orto-btn"
-            value="ok"
-            data-orto-key="dlg.confirm"
-          >
-            Aggiungi all'orto
-          </button>
-          <!-- formnovalidate: senza, il browser convalida i campi obbligatori
-               anche quando si annulla, e il dialogo restava bloccato finché
-               non si sceglieva una pianta. Il valore resta "cancel", che è
-               quello che orto.js legge da event.submitter. -->
+
+        <div class="orto-dialog-foot">
+          <!-- formnovalidate: senza, il browser convaliderebbe i campi anche
+               all'annullamento. Il valore resta "cancel", che è quello che
+               orto.js legge da event.submitter. -->
           <button
             type="submit"
             formnovalidate
@@ -412,49 +567,91 @@
           >
             Annulla
           </button>
+          <button
+            type="submit"
+            class="orto-btn"
+            id="ortoAddConfirm"
+            value="ok"
+            data-orto-key="dlg.confirm"
+            disabled
+          >
+            Aggiungi all'orto
+          </button>
         </div>
       </form>
     </dialog>
 
     <!-- Messa a dimora parziale: da venti piantine se ne piantano cinque oggi -->
-    <dialog class="orto-dialog" id="ortoPlantDialog">
+    <dialog
+      class="orto-dialog"
+      id="ortoPlantDialog"
+      aria-labelledby="ortoPlantTitle"
+    >
+      <span class="orto-dialog-grip" aria-hidden="true"></span>
       <div class="orto-dialog-head">
-        <h3 data-orto-key="plant.title">Metti a dimora</h3>
-        <p>
-          <span id="ortoPlantWho"></span> —
-          <span data-orto-key="plant.sub"
-            >Scegli quante piante avviare e quando.</span
-          >
-        </p>
+        <div class="orto-dialog-heading">
+          <h3 id="ortoPlantTitle" data-orto-key="plant.title">
+            Metti a dimora
+          </h3>
+          <!-- Il trattino di separazione è nel CSS (.orto-dialog-who): scritto
+               qui restava orfano finché orto.js non riempiva il nome. -->
+          <p>
+            <span class="orto-dialog-who" id="ortoPlantWho"></span>
+            <span data-orto-key="plant.sub"
+              >Scegli quante piante avviare e quando.</span
+            >
+          </p>
+        </div>
+        <button
+          class="orto-dialog-close"
+          type="button"
+          data-orto-action="close-dialog"
+          data-dialog="ortoPlantDialog"
+          data-orto-key-aria="dlg.close"
+          aria-label="Chiudi"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
       </div>
-      <form method="dialog" class="orto-dialog-body" id="ortoPlantForm">
-        <div class="orto-row">
-          <div class="orto-field">
-            <label for="ortoPlantQty" data-orto-key="plant.qty"
-              >Quante ne pianti ora</label
-            >
-            <input type="number" id="ortoPlantQty" min="1" value="4" required />
-            <small id="ortoPlantQtyHint" class="orto-field-hint"></small>
+      <form method="dialog" class="orto-dialog-form" id="ortoPlantForm">
+        <div class="orto-dialog-body">
+          <div class="orto-row">
+            <div class="orto-field">
+              <label for="ortoPlantQty" data-orto-key="plant.qty"
+                >Quante ne pianti ora</label
+              >
+              <input type="number" id="ortoPlantQty" min="1" value="4" />
+              <small id="ortoPlantQtyHint" class="orto-field-hint"></small>
+            </div>
+            <div class="orto-field">
+              <label for="ortoPlantDate" data-orto-key="plant.date"
+                >Data di semina / messa a dimora</label
+              >
+              <input type="date" id="ortoPlantDate" />
+            </div>
           </div>
           <div class="orto-field">
-            <label for="ortoPlantDate" data-orto-key="plant.date"
-              >Data di semina / messa a dimora</label
+            <label for="ortoPlantPosition" data-orto-key="plant.position"
+              >Posizione (facoltativa)</label
             >
-            <input type="date" id="ortoPlantDate" required />
+            <input
+              type="text"
+              id="ortoPlantPosition"
+              data-orto-key-ph="dlg.position_ph"
+              placeholder="es. Aiuola 2"
+            />
           </div>
         </div>
-        <div class="orto-field">
-          <label for="ortoPlantPosition" data-orto-key="plant.position"
-            >Posizione (facoltativa)</label
+        <div class="orto-dialog-foot">
+          <button
+            type="submit"
+            formnovalidate
+            class="orto-btn orto-btn--ghost"
+            value="cancel"
+            data-orto-key="dlg.cancel"
           >
-          <input
-            type="text"
-            id="ortoPlantPosition"
-            data-orto-key-ph="dlg.position_ph"
-            placeholder="es. Aiuola 2"
-          />
-        </div>
-        <div class="orto-row" style="margin-top: 18px">
+            Annulla
+          </button>
           <button
             type="submit"
             class="orto-btn"
@@ -463,10 +660,85 @@
           >
             Metti a dimora
           </button>
-          <!-- formnovalidate: senza, il browser convalida i campi obbligatori
-               anche quando si annulla, e il dialogo restava bloccato finché
-               non si sceglieva una pianta. Il valore resta "cancel", che è
-               quello che orto.js legge da event.submitter. -->
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Correzione di una coltura già registrata: data, quantità, posizione -->
+    <dialog
+      class="orto-dialog"
+      id="ortoEditDialog"
+      aria-labelledby="ortoEditTitle"
+    >
+      <span class="orto-dialog-grip" aria-hidden="true"></span>
+      <div class="orto-dialog-head">
+        <div class="orto-dialog-heading">
+          <h3 id="ortoEditTitle" data-orto-key="edit.title">
+            Modifica coltura
+          </h3>
+          <p><span class="orto-dialog-who" id="ortoEditWho"></span></p>
+        </div>
+        <button
+          class="orto-dialog-close"
+          type="button"
+          data-orto-action="close-dialog"
+          data-dialog="ortoEditDialog"
+          data-orto-key-aria="dlg.close"
+          aria-label="Chiudi"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+      <form method="dialog" class="orto-dialog-form" id="ortoEditForm">
+        <div class="orto-dialog-body">
+          <div class="orto-field">
+            <label data-orto-key="dlg.origin">Sei partito da…</label>
+            <div class="orto-origin">
+              <label>
+                <input type="radio" name="ortoEditOrigine" value="seme" />
+                <span data-orto-key="dlg.seed" class="orto-origin-title"
+                  >Semi</span
+                >
+                <span data-orto-key="dlg.seed_hint">ciclo completo</span>
+              </label>
+              <label>
+                <input type="radio" name="ortoEditOrigine" value="piantina" />
+                <span data-orto-key="dlg.seedling" class="orto-origin-title"
+                  >Piantina</span
+                >
+                <span data-orto-key="dlg.seedling_hint">già cresciuta</span>
+              </label>
+            </div>
+          </div>
+          <div class="orto-row">
+            <div class="orto-field">
+              <label for="ortoEditDate" data-orto-key="dlg.date"
+                >Data di semina / messa a dimora</label
+              >
+              <input type="date" id="ortoEditDate" />
+            </div>
+            <div class="orto-field orto-field--qty">
+              <label for="ortoEditQty" data-orto-key="dlg.qty">Quante</label>
+              <input type="number" id="ortoEditQty" min="1" />
+            </div>
+          </div>
+          <div class="orto-field">
+            <label for="ortoEditPosition" data-orto-key="dlg.position"
+              >Posizione (facoltativa)</label
+            >
+            <input
+              type="text"
+              id="ortoEditPosition"
+              data-orto-key-ph="dlg.position_ph"
+              placeholder="es. Aiuola 2"
+            />
+          </div>
+          <p class="orto-callout" data-orto-key="edit.note">
+            Cambiando la data, il calendario delle attività viene ricalcolato da
+            capo.
+          </p>
+        </div>
+        <div class="orto-dialog-foot">
           <button
             type="submit"
             formnovalidate
@@ -476,64 +748,6 @@
           >
             Annulla
           </button>
-        </div>
-      </form>
-    </dialog>
-
-    <!-- Correzione di una coltura già registrata: data, quantità, posizione -->
-    <dialog class="orto-dialog" id="ortoEditDialog">
-      <div class="orto-dialog-head">
-        <h3 data-orto-key="edit.title">Modifica coltura</h3>
-        <p><span id="ortoEditWho"></span></p>
-      </div>
-      <form method="dialog" class="orto-dialog-body" id="ortoEditForm">
-        <div class="orto-field">
-          <label data-orto-key="dlg.origin">Sei partito da…</label>
-          <div class="orto-origin">
-            <label>
-              <input type="radio" name="ortoEditOrigine" value="seme" />
-              <span data-orto-key="dlg.seed" class="orto-origin-title"
-                >Semi</span
-              >
-              <span data-orto-key="dlg.seed_hint">ciclo completo</span>
-            </label>
-            <label>
-              <input type="radio" name="ortoEditOrigine" value="piantina" />
-              <span data-orto-key="dlg.seedling" class="orto-origin-title"
-                >Piantina</span
-              >
-              <span data-orto-key="dlg.seedling_hint">già cresciuta</span>
-            </label>
-          </div>
-        </div>
-        <div class="orto-row">
-          <div class="orto-field">
-            <label for="ortoEditDate" data-orto-key="dlg.date"
-              >Data di semina / messa a dimora</label
-            >
-            <input type="date" id="ortoEditDate" required />
-          </div>
-          <div class="orto-field" style="max-width: 120px">
-            <label for="ortoEditQty" data-orto-key="dlg.qty">Quante</label>
-            <input type="number" id="ortoEditQty" min="1" required />
-          </div>
-        </div>
-        <div class="orto-field">
-          <label for="ortoEditPosition" data-orto-key="dlg.position"
-            >Posizione (facoltativa)</label
-          >
-          <input
-            type="text"
-            id="ortoEditPosition"
-            data-orto-key-ph="dlg.position_ph"
-            placeholder="es. Aiuola 2"
-          />
-        </div>
-        <p class="orto-field-hint" data-orto-key="edit.note">
-          Cambiando la data, il calendario delle attività viene ricalcolato da
-          capo.
-        </p>
-        <div class="orto-row" style="margin-top: 18px">
           <button
             type="submit"
             class="orto-btn"
@@ -542,10 +756,58 @@
           >
             Salva
           </button>
-          <!-- formnovalidate: senza, il browser convalida i campi obbligatori
-               anche quando si annulla, e il dialogo restava bloccato finché
-               non si sceglieva una pianta. Il valore resta "cancel", che è
-               quello che orto.js legge da event.submitter. -->
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Registrazione della raccolta. Prima si usava window.prompt: fuori dal
+         disegno della pagina, senza tastiera numerica sul telefono e bloccato
+         da alcuni browser dentro un gesto dell'utente. -->
+    <dialog
+      class="orto-dialog"
+      id="ortoHarvestDialog"
+      aria-labelledby="ortoHarvestTitle"
+    >
+      <span class="orto-dialog-grip" aria-hidden="true"></span>
+      <div class="orto-dialog-head">
+        <div class="orto-dialog-heading">
+          <h3 id="ortoHarvestTitle" data-orto-key="harvest.title">
+            Registra la raccolta
+          </h3>
+          <p>
+            <span class="orto-dialog-who" id="ortoHarvestWho"></span>
+            <span data-orto-key="harvest.sub"
+              >Diventerà la stima per l'anno prossimo.</span
+            >
+          </p>
+        </div>
+        <button
+          class="orto-dialog-close"
+          type="button"
+          data-orto-action="close-dialog"
+          data-dialog="ortoHarvestDialog"
+          data-orto-key-aria="dlg.close"
+          aria-label="Chiudi"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+      <form method="dialog" class="orto-dialog-form" id="ortoHarvestForm">
+        <div class="orto-dialog-body">
+          <div class="orto-field orto-field--qty">
+            <label for="ortoHarvestKg" data-orto-key="harvest.kg"
+              >Quanti kg hai raccolto?</label
+            >
+            <input
+              type="number"
+              id="ortoHarvestKg"
+              min="0"
+              step="0.1"
+              value="1"
+            />
+          </div>
+        </div>
+        <div class="orto-dialog-foot">
           <button
             type="submit"
             formnovalidate
@@ -555,38 +817,6 @@
           >
             Annulla
           </button>
-        </div>
-      </form>
-    </dialog>
-
-    <!-- Registrazione della raccolta. Prima si usava window.prompt: fuori dal
-         disegno della pagina, senza tastiera numerica sul telefono e bloccato
-         da alcuni browser dentro un gesto dell'utente. -->
-    <dialog class="orto-dialog" id="ortoHarvestDialog">
-      <div class="orto-dialog-head">
-        <h3 data-orto-key="harvest.title">Registra la raccolta</h3>
-        <p>
-          <span id="ortoHarvestWho"></span> —
-          <span data-orto-key="harvest.sub"
-            >Diventerà la stima per l'anno prossimo.</span
-          >
-        </p>
-      </div>
-      <form method="dialog" class="orto-dialog-body" id="ortoHarvestForm">
-        <div class="orto-field" style="max-width: 180px">
-          <label for="ortoHarvestKg" data-orto-key="harvest.kg"
-            >Quanti kg hai raccolto?</label
-          >
-          <input
-            type="number"
-            id="ortoHarvestKg"
-            min="0"
-            step="0.1"
-            value="1"
-            required
-          />
-        </div>
-        <div class="orto-row" style="margin-top: 18px">
           <button
             type="submit"
             class="orto-btn"
@@ -595,6 +825,44 @@
           >
             Registra
           </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Conferma prima di eliminare: la rimozione cancella anche lo storico
+         delle attività di quella coltura, e non si può annullare. -->
+    <dialog
+      class="orto-dialog orto-dialog--confirm"
+      id="ortoRemoveDialog"
+      aria-labelledby="ortoRemoveTitle"
+    >
+      <span class="orto-dialog-grip" aria-hidden="true"></span>
+      <div class="orto-dialog-head orto-dialog-head--danger">
+        <div class="orto-dialog-heading">
+          <h3 id="ortoRemoveTitle" data-orto-key="remove.title">
+            Eliminare questa coltura?
+          </h3>
+          <p>
+            <span class="orto-dialog-who" id="ortoRemoveWho"></span>
+            <span data-orto-key="remove.sub"
+              >Spariscono anche le attività già svolte. Non si può
+              annullare.</span
+            >
+          </p>
+        </div>
+        <button
+          class="orto-dialog-close"
+          type="button"
+          data-orto-action="close-dialog"
+          data-dialog="ortoRemoveDialog"
+          data-orto-key-aria="dlg.close"
+          aria-label="Chiudi"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+      <form method="dialog" class="orto-dialog-form" id="ortoRemoveForm">
+        <div class="orto-dialog-foot">
           <button
             type="submit"
             formnovalidate
@@ -604,25 +872,6 @@
           >
             Annulla
           </button>
-        </div>
-      </form>
-    </dialog>
-
-    <!-- Conferma prima di eliminare: la rimozione cancella anche lo storico
-         delle attività di quella coltura, e non si può annullare. -->
-    <dialog class="orto-dialog orto-dialog--confirm" id="ortoRemoveDialog">
-      <div class="orto-dialog-head">
-        <h3 data-orto-key="remove.title">Eliminare questa coltura?</h3>
-        <p>
-          <span id="ortoRemoveWho"></span> —
-          <span data-orto-key="remove.sub"
-            >Spariscono anche le attività già svolte. Non si può
-            annullare.</span
-          >
-        </p>
-      </div>
-      <form method="dialog" class="orto-dialog-body" id="ortoRemoveForm">
-        <div class="orto-row">
           <button
             type="submit"
             class="orto-btn orto-btn--danger"
@@ -631,15 +880,6 @@
           >
             Elimina
           </button>
-          <button
-            type="submit"
-            formnovalidate
-            class="orto-btn orto-btn--ghost"
-            value="cancel"
-            data-orto-key="dlg.cancel"
-          >
-            Annulla
-          </button>
         </div>
       </form>
     </dialog>
@@ -647,7 +887,7 @@
     <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; orto.js disegna. -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/serra-care-engine.js" defer></script>
-    <script src="assets/js/orto.js" defer></script>
+    <script src="assets/js/orto.js?v=20260816-orto-ux" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>
