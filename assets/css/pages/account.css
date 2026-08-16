@@ -3198,7 +3198,9 @@ html[data-theme="dark"] label {
   padding: 12px 16px;
   border-radius: var(--control-radius);
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-  background: var(--bg-input, #ffffff);
+  /* `background` per intero cancellerebbe la freccia che il layer
+     `coerenza` disegna sulle tendine: qui serve solo il colore. */
+  background-color: var(--bg-input, #ffffff);
   color: var(--text-color, var(--serra-text));
   transition: var(--transition-smooth);
   box-sizing: border-box;
@@ -4171,7 +4173,9 @@ html[data-theme="dark"] .admin-order-insight:hover {
   padding: 8px 12px;
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   border-radius: var(--control-radius);
-  background: var(--bg-input, var(--serra-white));
+  /* `background` per intero cancellerebbe la freccia che il layer
+     `coerenza` disegna sulle tendine: qui serve solo il colore. */
+  background-color: var(--bg-input, var(--serra-white));
   color: var(--text-color, #333);
   font: inherit;
 }
@@ -4245,7 +4249,9 @@ html[data-theme="dark"] .admin-orders-count {
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   border-radius: var(--control-radius);
   color: var(--text-color, #333);
-  background: var(--bg-input, var(--serra-white));
+  /* `background` per intero cancellerebbe la freccia che il layer
+     `coerenza` disegna sulle tendine: qui serve solo il colore. */
+  background-color: var(--bg-input, var(--serra-white));
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 700;

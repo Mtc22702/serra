@@ -225,6 +225,13 @@
        ✕ non può stare sotto al «+», per quanto lo si distanzi. */
     --control-gap: 8px;
     --control-gap-danger: 16px;
+
+    /* La freccia delle tendine. Una volta sola: quando una `<select>` esce dal
+       disegno nativo per poter avere l'altezza giusta (vedi il layer
+       `coerenza` in fondo al file) perde anche la freccia di sistema, e senza
+       quella non si capisce più che è una tendina. Il tema scuro la
+       ridichiara col proprio inchiostro. */
+    --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232f6b3a' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
   }
 
   /* Sul touch la densità non conviene: i controlli compatti tornano a 44 px
@@ -9801,6 +9808,9 @@ html[data-theme="dark"]
     --elev-hover:
       0 4px 10px rgba(0, 0, 0, 0.34), 0 22px 44px rgba(0, 0, 0, 0.4);
     --elev-focus: 0 0 0 4px rgba(139, 212, 158, 0.2);
+
+    /* Al buio la freccia verde scura delle tendine sparirebbe nel fondo. */
+    --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23edf5ef' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
   }
 
   /* Cassetto del carrello: gli sfondi tenui si perdono sul tema scuro. */
@@ -10368,6 +10378,58 @@ html[data-theme="dark"]
    i pannelli che stanno sopra il contenuto, i campi, l'anello di fuoco.
    ========================================================================= */
 @layer coerenza {
+  /* ============================================================
+     Le tendine: altezza vera anche su iPhone
+     ============================================================
+     Safari su iOS ignora `min-height` (e `height`) sulle `<select>` lasciate
+     al disegno nativo: il controllo si disegna alla propria altezza
+     intrinseca — il testo più i margini decisi dal sistema — qualunque cosa
+     dica il foglio di stile. Nei browser desktop la regola vale, quindi il
+     difetto non si vede finché non si apre la pagina dal telefono: era il
+     caso dell'ordinamento del vivaio, che misurava i suoi 44 px in Chrome e
+     ne mostrava una ventina su iPhone.
+
+     Per riprendere il controllo dell'altezza bisogna uscire dal disegno
+     nativo con `appearance: none`. Uscendone però sparisce anche la freccia,
+     e una tendina senza freccia smette di annunciare che si apre: quella qui
+     sotto è disegnata a mano e serve a rimetterla.
+
+     Sta nell'ultimo livello perché otto regole sparse in quattro fogli
+     dichiaravano un'altezza senza uscire dal disegno nativo — erano tutte
+     schiacciate su iPhone allo stesso modo — e perché diverse di quelle
+     regole impostano lo sfondo con la scorciatoia `background`, che
+     cancellerebbe la freccia se arrivasse dopo. */
+  select:not([multiple]):not([size]) {
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: var(--control-h-md);
+  }
+
+  /* La freccia va aggiunta solo dove non ce n'è già una disegnata a mano:
+     l'ordinamento del catalogo ne porta due (l'icona dell'ordinamento più il
+     chevron) e le impostazioni del configuratore hanno la propria. Una
+     regola cieca gliele cancellerebbe, perché `background-image` sostituisce
+     l'intera pila di livelli, non ci si aggiunge. */
+  select:not([multiple]):not([size]):not(.cat-sort-select):not(
+      .preconfig-select
+    ) {
+    /* Spazio a destra per la freccia: senza, il testo dell'opzione più lunga
+       le finisce sotto. */
+    padding-right: 34px;
+    background-image: var(--select-chevron);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 8px;
+  }
+
+  /* Gli elenchi a selezione multipla non sono tendine: si aprono già tutti e
+     non hanno niente da annunciare con una freccia. */
+  select[multiple],
+  select[size]:not([size="1"]) {
+    appearance: auto;
+    -webkit-appearance: auto;
+  }
+
   /* ============================================================
      Intestazione su telefono: marchio al centro, comandi ai bordi
      ============================================================
