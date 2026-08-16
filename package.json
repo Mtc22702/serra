@@ -10,7 +10,9 @@
     "audit:assets": "node scripts/audit-assets.mjs",
     "check:js": "node scripts/check-js.mjs",
     "check:html": "node scripts/check-html.mjs",
+    "check:shapes": "node scripts/check-control-shapes.mjs",
+    "check:targets": "node scripts/check-control-targets.mjs",
     "version:bump": "node scripts/bump-version.mjs",
-    "check": "npm run check:docs && npm run check:js && npm run check:html"
+    "check": "npm run check:docs && npm run check:js && npm run check:html && npm run check:shapes && npm run check:targets"
   }
 }

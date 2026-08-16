@@ -19,7 +19,9 @@
     --oro: var(--yellow, #d9a441);
     --ombra: var(--elev-3);
     --bordo: 1px solid var(--surface-line);
-    --raggio: var(--radius-sm, 8px);
+    /* `--raggio` e `--raggio-lg` non esistono più: erano alias locali (8 e
+       14 px) che duplicavano la scala di base.css e la sfalsavano di due
+       pixel. Le regole citano --radius-sm / --radius-lg. */
     /* Definisce bordo e ombra più marcati per pannelli e tendine aperti. */
     --ombra-aperta: var(--elev-4);
     --bordo-aperto: 1.5px solid var(--surface-line-strong);
@@ -487,7 +489,7 @@
   }
   .guided-plant-chips span {
     padding: 3px 7px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.08);
     color: #46554a;
     font-size: 10.5px;
@@ -523,7 +525,7 @@
     background: var(--serra-white);
     border: 1.5px solid rgba(31, 58, 38, 0.28);
     box-shadow: var(--elev-1);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     align-items: center;
     color: var(--inchiostro);
     transition:
@@ -613,7 +615,7 @@
   .btn.btn-sm-compact {
     padding: 7px 11px;
     font-size: 12.5px;
-    min-height: 36px;
+    min-height: var(--control-h-sm);
     white-space: nowrap;
   }
   .header-actions {
@@ -628,9 +630,9 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 42px;
+    min-height: var(--control-h-md);
     padding: 9px 17px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(31, 58, 38, 0.28);
     background: linear-gradient(180deg, #376f49, #285f3d);
     box-shadow: var(--elev-2);
@@ -669,7 +671,7 @@
     color: var(--verde-scuro);
     text-decoration: none;
     padding: 7px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid rgba(47, 107, 58, 0.35);
     background: rgba(47, 107, 58, 0.06);
     letter-spacing: 0.01em;
@@ -690,7 +692,7 @@
     gap: 8px;
     padding: 6px 8px 6px 10px;
     border: 1px solid rgba(31, 58, 38, 0.14);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 253, 246, 0.86);
     box-shadow: var(--elev-2);
   }
@@ -705,7 +707,7 @@
     width: auto;
     min-width: 112px;
     padding: 7px 30px 7px 9px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     font-size: 11px;
   }
   .modal-lang {
@@ -755,7 +757,7 @@
   .panel {
     background: var(--carta);
     border: var(--bordo);
-    border-radius: var(--raggio);
+    border-radius: var(--radius-sm);
     box-shadow: var(--ombra);
   }
   .actions-grid {
@@ -773,7 +775,7 @@
     margin-bottom: 10px;
     cursor: pointer;
     user-select: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: background 0.12s;
     margin-left: -4px;
     margin-right: -4px;
@@ -810,7 +812,7 @@
     align-items: center;
     gap: 10px;
     padding: 11px 12px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid rgba(31, 58, 38, 0.15);
     background: rgba(255, 255, 255, 0.68);
     color: var(--inchiostro);
@@ -947,7 +949,7 @@
     border-color: rgba(47, 107, 58, 0.22);
   }
   .panel--settings .crops-fill-main-btn {
-    min-height: 50px;
+    min-height: var(--control-h-lg);
     box-shadow: 0 10px 22px rgba(47, 107, 58, 0.2);
   }
   /* Rinforza bordo e ombra del pannello impostazioni quando è espanso. */
@@ -1026,7 +1028,7 @@
   select {
     width: 100%;
     padding: 9px 11px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     border: 1px solid rgba(31, 58, 38, 0.18);
     background: var(--serra-white);
     font-family: var(--sans);
@@ -1111,7 +1113,7 @@
     margin-bottom: 8px;
     cursor: pointer;
     user-select: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: background 0.12s;
     margin-left: -4px;
     margin-right: -4px;
@@ -1147,7 +1149,7 @@
     min-width: 0;
     padding: 7px 10px;
     border: 1.5px solid var(--verde);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background: var(--serra-white);
     color: var(--verde-scuro);
     font-size: 14px;
@@ -1172,10 +1174,10 @@
   .btn.crops-fill-main-btn {
     width: 100%;
     justify-content: center;
-    min-height: 46px;
+    min-height: var(--control-h-md);
     font-size: 14px;
     font-weight: 700;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     margin-bottom: 8px;
     gap: 8px;
   }
@@ -1340,10 +1342,10 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 38px;
+    min-height: var(--control-h-sm);
     padding: 8px 10px;
     border: 1.5px solid var(--verde);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: var(--serra-white);
     color: var(--verde-scuro);
     font-size: 11.5px;
@@ -1385,7 +1387,7 @@
     justify-content: center;
     width: 28px;
     height: 28px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(217, 164, 65, 0.16);
     border: 1px solid rgba(217, 164, 65, 0.28);
     color: #755a24;
@@ -1494,10 +1496,10 @@
     line-height: 1.3;
   }
   .novice-crops-note button {
-    min-height: 34px;
+    min-height: var(--control-h-sm);
     padding: 0 11px;
     border: 1px solid rgba(217, 164, 65, 0.38);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 253, 246, 0.95);
     color: var(--verde-scuro);
     font-size: 12px;
@@ -1595,7 +1597,7 @@
     margin-top: 8px;
   }
   .crops-history-row .crop-action-btn {
-    min-height: 44px;
+    min-height: var(--control-h-md);
     justify-content: center;
     gap: 8px;
   }
@@ -1608,7 +1610,7 @@
     gap: 10px;
     min-height: 62px;
     padding: 11px 12px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid transparent;
     background: var(--serra-white);
     text-align: left;
@@ -1740,9 +1742,9 @@
   }
   .panel-toggle {
     min-width: 76px;
-    height: 32px;
+    min-height: var(--control-h-sm);
     padding: 0 8px 0 10px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.26);
     background: transparent;
     color: var(--verde);
@@ -1829,7 +1831,7 @@
     min-width: 20px;
     height: 20px;
     padding: 0 5px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: var(--verde);
     color: var(--serra-white);
     font-size: 11px;
@@ -1858,7 +1860,7 @@
     overflow: hidden;
     padding: 10px;
     border: 1px solid rgba(47, 107, 58, 0.14);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background-color: rgba(242, 247, 240, 0.84);
     background-repeat: repeat;
     box-shadow: var(--elev-2);
@@ -1932,7 +1934,7 @@
     overflow: visible;
     padding: 11px;
     border: 1px solid rgba(91, 83, 66, 0.24);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background-color: #d8cfbd;
     background-image:
       linear-gradient(rgba(255, 253, 246, 0.48), rgba(245, 240, 226, 0.42)),
@@ -1963,7 +1965,7 @@
     margin-bottom: 0;
     padding: 7px 8px;
     border: 1px solid rgba(91, 83, 66, 0.14);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background: rgba(255, 253, 246, 0.76);
     box-shadow: var(--elev-1);
     backdrop-filter: blur(3px);
@@ -2043,7 +2045,7 @@
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     padding: 10px 14px;
     font-weight: 600;
     font-size: 14px;
@@ -2248,7 +2250,7 @@
     color: var(--verde);
     background: rgba(47, 107, 58, 0.12);
     border: 1px solid rgba(47, 107, 58, 0.24);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     padding: 1px 7px;
     white-space: nowrap;
     flex-shrink: 0;
@@ -2339,7 +2341,7 @@
     align-items: center;
     min-height: 18px;
     padding: 1px 6px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 9.5px;
     font-weight: 850;
     letter-spacing: 0;
@@ -2432,7 +2434,7 @@
     flex: 0 1 auto;
   }
   .view-print-btn {
-    min-height: 44px;
+    min-height: var(--control-h-md);
     padding-inline: 13px;
     white-space: nowrap;
   }
@@ -2456,7 +2458,7 @@
     gap: 11px;
     padding: 11px;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     color: var(--inchiostro);
     background: transparent;
     text-align: left;
@@ -2548,11 +2550,11 @@
   .saph-print-btn {
     display: none;
     flex-shrink: 0;
-    min-height: 32px;
+    min-height: var(--control-h-sm);
     width: 32px;
     padding: 0;
     justify-content: center;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
   }
 
   .stage-month-pill {
@@ -2561,7 +2563,7 @@
     align-items: center;
     gap: 10px;
     padding: 11px 14px 11px 12px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: var(--serra-white);
     border: 1.5px solid rgba(47, 107, 58, 0.2);
     box-shadow: var(--elev-2);
@@ -2645,7 +2647,7 @@
   .view-select-label {
     flex: none;
     padding: 4px 8px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius);
     background: rgba(47, 107, 58, 0.1);
     color: var(--verde);
     font-size: 10px;
@@ -2667,7 +2669,7 @@
     height: 100%;
     padding: 0;
     border: 0;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: transparent;
     box-shadow: none;
     color: transparent;
@@ -2702,7 +2704,7 @@
     align-items: flex-start;
     padding: 10px;
     border: 1px solid rgba(31, 58, 38, 0.13);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     background:
       linear-gradient(
         145deg,
@@ -2723,7 +2725,7 @@
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 13px;
+    border-radius: var(--radius-md);
     background: #b8c8a8;
     box-shadow:
       0 12px 28px rgba(20, 47, 29, 0.2),
@@ -3174,7 +3176,7 @@
   .count-ctl button {
     width: 34px;
     height: 34px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(31, 58, 38, 0.2);
     background: var(--serra-white);
     font-size: 18px;
@@ -3324,7 +3326,7 @@
     align-items: center;
     gap: 8px;
     padding: 5px 7px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.06);
     cursor: pointer;
     border: 1px solid transparent;
@@ -3392,7 +3394,7 @@
     font-size: 9.5px;
     font-weight: 700;
     padding: 1px 5px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     flex-shrink: 0;
     white-space: nowrap;
   }
@@ -3414,7 +3416,7 @@
     color: #b4452c;
     font-size: 14px;
     padding: 2px 5px;
-    border-radius: 6px;
+    border-radius: var(--control-radius-pill);
     flex-shrink: 0;
   }
   .bedchip .del:hover {
@@ -3501,7 +3503,7 @@
     place-items: center;
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: linear-gradient(
       145deg,
       rgba(47, 107, 58, 0.14),
@@ -3604,9 +3606,10 @@
     justify-content: center;
     gap: 6px;
     align-self: center;
+    min-height: var(--control-h-sm);
     padding: 7px 16px;
     border: 1.5px solid rgba(47, 107, 58, 0.22);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: transparent;
     color: #4a6e54;
     font-size: 12px;
@@ -3771,7 +3774,7 @@
     justify-content: space-between;
     margin-top: 10px;
     padding: 9px 12px;
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--radius-sm);
     border: 1.5px solid rgba(47, 107, 58, 0.26);
     background: rgba(47, 107, 58, 0.07);
     color: var(--verde-scuro, var(--serra-ink));
@@ -4284,7 +4287,7 @@
     }
     .lang-switch select {
       min-width: 126px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
     }
     .panel,
     .stage {
@@ -4364,7 +4367,7 @@
     }
     .panel-toggle {
       min-width: 40px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
       padding: 8px;
       background: transparent;
     }
@@ -4389,8 +4392,8 @@
     }
     input[type="number"],
     select {
-      min-height: 38px;
-      border-radius: var(--radius-sm);
+      min-height: var(--control-h-sm);
+      border-radius: var(--control-radius);
       font-size: 14px;
     }
     input[type="range"] {
@@ -4407,8 +4410,8 @@
       width: 34px;
     }
     .btn {
-      min-height: 44px;
-      border-radius: var(--radius-sm);
+      min-height: var(--control-h-md);
+      border-radius: var(--control-radius-pill);
       padding: 10px 11px;
       font-size: 13px;
     }
@@ -4479,7 +4482,7 @@
       max-width: 100%;
     }
     .scene svg {
-      border-radius: 7px;
+      border-radius: var(--radius-sm);
     }
     .scale-note {
       font-size: 11.5px;
@@ -4523,12 +4526,12 @@
       height: 42px;
     }
     .bedchip {
-      min-height: 52px;
+      min-height: var(--control-h-lg);
       padding: 8px;
     }
     .bedchip .del {
       min-width: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
     .btnrow.actions-grid {
       grid-template-columns: 1fr;
@@ -4622,12 +4625,12 @@
     #panelYield .panel-toggle--yield {
       align-self: stretch;
       width: 100%;
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0 10px;
       justify-content: flex-start;
       background: rgba(47, 107, 58, 0.06);
       border-color: rgba(47, 107, 58, 0.2);
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
     }
     #panelYield .panel-toggle--yield .panel-toggle-label {
       display: inline-flex;
@@ -4650,7 +4653,7 @@
       min-width: 62px;
       min-height: auto;
       border: 0;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius);
       background: transparent;
       color: var(--green);
       font-family: "DM Sans", sans-serif;
@@ -4662,14 +4665,14 @@
     .site-header .cart-btn {
       min-width: 68px;
       width: auto;
-      min-height: 42px;
+      min-height: var(--control-h-md);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.42rem;
       padding: 0.45rem 0.72rem;
       border: 1px solid rgba(45, 106, 79, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: var(--bg);
       color: var(--serra-white);
       font-family: "DM Sans", sans-serif;
@@ -4796,7 +4799,7 @@
     }
     .novice-crops-note button {
       width: 100%;
-      min-height: 36px;
+      min-height: var(--control-h-sm);
     }
     .veg.in + .veg.in {
       margin-top: 10px;
@@ -4833,12 +4836,12 @@
       gap: 2px;
       margin-bottom: 8px;
       padding: 2px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .veg-filter-tab {
-      min-height: 42px;
+      min-height: var(--control-h-md);
       padding: 6px 4px;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       column-gap: 4px;
     }
     .tab-ico {
@@ -4944,7 +4947,7 @@
       rgba(47, 107, 58, 0.05)
     );
     border: 1px solid rgba(47, 107, 58, 0.12);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     padding: 4px;
   }
   .veg-filter-tab {
@@ -4958,9 +4961,9 @@
     column-gap: 5px;
     row-gap: 1px;
     min-width: 0;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     padding: 7px 6px;
-    border-radius: 6px;
+    border-radius: var(--control-radius-pill);
     border: none;
     background: transparent;
     color: #7c8a7e;
@@ -4980,7 +4983,7 @@
     justify-content: center;
     width: 22px;
     height: 22px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.58);
     font-size: 14px;
     line-height: 1;
@@ -5005,7 +5008,7 @@
     font-weight: 800;
     background: rgba(47, 107, 58, 0.12);
     color: var(--verde);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     padding: 0 5px;
     min-width: 18px;
     text-align: center;
@@ -5070,10 +5073,10 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    min-height: 48px;
+    min-height: var(--control-h-md);
     padding: 0 0.8rem;
     border: 1px solid rgba(45, 106, 79, 0.2);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: #fcfdf9;
     box-shadow: var(--elev-1);
     transition:
@@ -5130,7 +5133,7 @@
     width: 28px;
     height: 28px;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background: rgba(45, 106, 79, 0.08);
     color: #6f7b72;
     font-size: 17px;
@@ -5285,7 +5288,7 @@
     display: flex;
     flex-direction: column;
     background: var(--carta, var(--serra-paper));
-    border-radius: calc(var(--raggio, 8px) * 1.5);
+    border-radius: var(--radius-md);
     box-shadow: var(--ombra, 0 12px 34px rgba(31, 58, 38, 0.2));
     border: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
     overflow: hidden;
@@ -5311,7 +5314,7 @@
     cursor: pointer;
     color: var(--verde-scuro, var(--serra-ink));
     padding: 6px 8px;
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--control-radius);
   }
   .projects-close:hover {
     background: rgba(31, 58, 38, 0.08);
@@ -5333,7 +5336,7 @@
     align-items: center;
     gap: 8px;
     padding: 6px;
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--radius-sm);
     border: 1px solid transparent;
   }
   .projects-item.is-active {
@@ -5347,7 +5350,7 @@
     background: transparent;
     cursor: pointer;
     padding: 6px 8px;
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--control-radius-pill);
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -5365,7 +5368,7 @@
     color: var(--verde, var(--serra-green));
     background: rgba(91, 156, 74, 0.18);
     padding: 1px 7px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     vertical-align: middle;
     margin-left: 6px;
   }
@@ -5383,7 +5386,7 @@
     cursor: pointer;
     font-size: 0.95rem;
     padding: 6px 8px;
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--radius-sm);
     color: var(--verde-scuro, var(--serra-ink));
   }
   .projects-act:hover {
@@ -5430,13 +5433,13 @@
   }
   .projects-new-btn {
     display: inline-flex;
-    min-height: 42px;
+    min-height: var(--control-h-md);
     align-items: center;
     justify-content: center;
     gap: 7px;
     padding: 0 15px;
     border: 1px solid var(--verde, var(--serra-green));
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: var(--verde, var(--serra-green));
     box-shadow: var(--elev-2);
     color: var(--serra-white);
@@ -5455,8 +5458,8 @@
   }
   #projectsModal .projects-close {
     display: grid;
-    width: 36px;
-    height: 36px;
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
     place-items: center;
     padding: 0;
     border: 1px solid rgba(31, 58, 38, 0.12);
@@ -5747,10 +5750,10 @@
   }
 
   .calendar-view-tab {
-    min-height: 38px;
+    min-height: var(--control-h-sm);
     padding: 7px 13px;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: transparent;
     color: var(--terra, #6b5440);
     font: inherit;
@@ -5819,13 +5822,13 @@
   .calendar-month-btn {
     position: relative;
     min-width: 54px;
-    min-height: 52px;
+    min-height: var(--control-h-lg);
     display: grid;
     place-items: center;
     gap: 1px;
     padding: 6px 4px;
     border: 1px solid rgba(31, 58, 38, 0.12);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.38);
     color: var(--terra, #6b5440);
     cursor: pointer;
@@ -6085,7 +6088,7 @@
     margin-top: 8px;
     padding: 8px 13px;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: var(--verde, var(--serra-green));
     color: var(--serra-white);
     font: inherit;
@@ -6250,7 +6253,7 @@
     font-size: 0.82rem;
     margin-top: 4px;
     padding: 4px 8px;
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--radius-sm);
     background: rgba(91, 156, 74, 0.12);
   }
   .veg--conflict {
@@ -6268,7 +6271,7 @@
   /* Contenitore richiudibile per i materiali extra facoltativi dell'ordine. */
   .materials-accordion {
     border: var(--bordo, 1px solid rgba(31, 58, 38, 0.12));
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--radius-sm);
     padding: 0;
     background: var(--carta, rgba(255, 255, 255, 0.4));
     transition:
@@ -6320,7 +6323,7 @@
   .materials-summary-badge {
     flex-shrink: 0;
     padding: 3px 9px;
-    border-radius: var(--radius-pill, 999px);
+    border-radius: var(--control-radius-pill);
     background: var(--verde, var(--serra-green));
     color: var(--serra-white);
     font-size: 0.7rem;
@@ -6347,7 +6350,7 @@
     gap: 5px;
     padding: 9px 10px;
     border: 1px solid rgba(31, 58, 38, 0.1);
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--radius-sm);
     transition:
       opacity 0.14s ease,
       background 0.14s ease,
@@ -6399,10 +6402,10 @@
   }
   .mat-qty input {
     width: 62px;
-    min-height: 40px;
+    min-height: var(--control-h-sm);
     padding: 3px 6px;
     border: var(--bordo, 1px solid rgba(31, 58, 38, 0.25));
-    border-radius: var(--raggio, 8px);
+    border-radius: var(--control-radius);
     font: inherit;
     text-align: right;
   }
@@ -6416,10 +6419,10 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    min-height: 40px;
+    min-height: var(--control-h-sm);
     padding: 5px 12px;
     border: 1.5px solid rgba(47, 107, 58, 0.3);
-    border-radius: var(--radius-pill, 999px);
+    border-radius: var(--control-radius-pill);
     cursor: pointer;
     white-space: nowrap;
     transition:
@@ -6601,7 +6604,7 @@
     font-size: 10.5px;
     font-weight: 700;
     padding: 2px 8px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.22);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: rgba(255, 255, 255, 0.92);
@@ -6642,9 +6645,9 @@
     width: 100%;
     font-size: 14.5px;
     font-weight: 700;
-    min-height: 52px;
+    min-height: var(--control-h-lg);
     padding: 13px 20px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: none;
     letter-spacing: 0.015em;
     transition:
@@ -6673,7 +6676,7 @@
     width: auto;
     min-width: 72px;
     padding: none;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius);
     font-size: 13px;
     font-weight: 600;
     text-align: center;
@@ -6901,10 +6904,10 @@
   .panel--plant-detail .detail-tab {
     --tab-color: var(--verde);
     min-width: 0;
-    min-height: 48px;
+    min-height: var(--control-h-md);
     padding: 6px 3px;
     border: 1px solid rgba(47, 107, 58, 0.11);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.76);
     color: #617a6c;
     font: inherit;
@@ -7236,7 +7239,7 @@
     margin-left: auto;
     width: 30px;
     height: 30px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7401,9 +7404,9 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
-    min-height: 38px;
+    min-height: var(--control-h-sm);
     padding: 7px 14px 7px 11px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid rgba(47, 107, 58, 0.28);
     background: #ffffff;
     color: var(--verde-scuro);
@@ -7928,7 +7931,7 @@
     position: relative;
     min-height: 14px;
     border: 1px solid rgba(75, 58, 43, 0.12);
-    border-radius: 6px;
+    border-radius: var(--control-radius-pill);
     background: rgba(216, 205, 184, 0.28);
     transition:
       background 0.18s,
@@ -8008,7 +8011,7 @@
     display: inline-flex;
     align-items: center;
     padding: 3px 10px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 12px;
     font-weight: 700;
   }
@@ -8103,7 +8106,7 @@
 
   .site-header .cart-btn {
     min-width: 86px;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     border-color: rgba(45, 106, 79, 0.2);
     background: rgba(45, 106, 79, 0.1);
     color: var(--green-dk);
@@ -8281,7 +8284,7 @@
       min-height: 64px;
       padding: 10px 12px;
       gap: 11px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       border-color: rgba(31, 58, 38, 0.16);
       background: rgba(255, 255, 255, 0.76);
       box-shadow: var(--elev-2);
@@ -8381,7 +8384,7 @@
       padding-bottom: 5px;
     }
     .panel--plant-detail .detail-tab {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       padding: 5px 1px;
       font-size: 8px;
     }
@@ -8438,25 +8441,25 @@
     }
 
     .site-header .nav-lang select {
-      min-height: 34px;
+      min-height: var(--control-h-sm);
     }
 
     .step-btn {
       width: 40px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
     }
 
     .stepper input[type="number"] {
-      min-height: 40px;
+      min-height: var(--control-h-sm);
     }
 
     .stepper-sm .step-btn {
       width: 36px;
-      min-height: 36px;
+      min-height: var(--control-h-sm);
     }
 
     .stepper-sm input[type="number"] {
-      min-height: 36px;
+      min-height: var(--control-h-sm);
     }
 
     .count-ctl button {
@@ -8467,10 +8470,10 @@
     .btn,
     .cart-btn-slot button,
     .panel--cart .btn {
-      min-height: 44px;
+      min-height: var(--control-h-md);
     }
     .yield-edit-crops-btn {
-      min-height: 40px;
+      min-height: var(--control-h-sm);
       padding: 8px 18px;
     }
 
@@ -8500,7 +8503,7 @@
     }
 
     .guided-intro-actions .mode-tab {
-      min-height: 54px;
+      min-height: var(--control-h-lg);
     }
   }
 
@@ -8554,13 +8557,12 @@
     --persona-nov: var(--pc-nov);
     --persona-int: var(--pc-int);
     --persona-exp: var(--pc-exp);
-    --raggio-lg: 14px;
   }
 
   .guided-intro {
     padding: 14px 18px;
     border-top-width: 4px;
-    border-radius: var(--raggio-lg);
+    border-radius: var(--radius-lg);
     background: linear-gradient(
       155deg,
       rgba(255, 253, 246, 0.99) 0%,
@@ -8664,7 +8666,7 @@
     justify-content: center;
     min-height: 30px;
     padding: 0 11px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.3);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -8967,7 +8969,7 @@
     gap: 8px;
     align-self: flex-start;
     padding: 9px 16px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: none;
     background: var(--verde);
     color: var(--serra-white);
@@ -9256,7 +9258,7 @@
     min-width: 18px;
     height: 18px;
     padding: 0 5px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.16);
     color: var(--verde-scuro);
     font-size: 10.5px;
@@ -9850,7 +9852,7 @@
     position: relative;
     padding: 0;
     border: 1px solid rgba(45, 106, 79, 0.16);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.72);
     color: #245733;
     box-shadow: var(--elev-2);
@@ -10191,7 +10193,7 @@
       width: 38px;
       height: 38px;
       flex-basis: 38px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .theme-toggle-icon {
       font-size: 19px;
@@ -12335,7 +12337,7 @@
       height: 40px;
       min-width: 44px;
       flex-basis: 44px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius);
       background: #2d6a4f;
       border: 1px solid #5da777;
       box-shadow: var(--elev-2);
@@ -12345,11 +12347,11 @@
       background: var(--serra-white);
     }
     .site-header .theme-toggle {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 40px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .theme-toggle-icon {
       font-size: 19px;
@@ -12376,10 +12378,10 @@
     .site-header .cart-btn {
       width: 62px;
       min-width: 62px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
       height: 40px;
       padding: 0;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .cart-icon {
       display: inline-flex;
@@ -12454,9 +12456,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -12481,7 +12483,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -12780,7 +12782,7 @@
     flex: 0 0 auto;
     min-height: 32px;
     padding: 0 10px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -12954,7 +12956,7 @@
     justify-content: center;
     min-height: 32px;
     padding: 0 11px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -13044,9 +13046,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -13071,7 +13073,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -13109,7 +13111,7 @@
     .cookie-accept-btn,
     .cookie-reject-btn {
       flex: none;
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0.34rem 0.52rem;
       font-size: 0.66rem;
     }
@@ -13638,7 +13640,7 @@
     .site-header .theme-toggle,
     .site-header .nav-lang,
     .site-header .cart-btn {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       height: 44px;
     }
 
@@ -13751,14 +13753,14 @@
       position: static;
       display: flex;
       width: 100%;
-      min-height: 54px;
+      min-height: var(--control-h-lg);
       margin: 0 0 0.65rem;
       padding: 0.55rem 0.7rem;
       align-items: center;
       justify-content: space-between;
       gap: 0.8rem;
       border: 1.5px solid rgba(45, 106, 79, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: rgba(255, 253, 246, 0.96);
       color: var(--green-dk);
       box-shadow: var(--elev-2);
@@ -13940,11 +13942,11 @@
     .site-header .nav-link:not(.cart-btn) {
       display: flex;
       align-items: center;
-      min-height: 50px;
+      min-height: var(--control-h-lg);
       padding: 0.74rem 0.8rem;
       gap: 0.65rem;
       border: 1px solid transparent;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       font-size: 0.93rem;
       font-weight: 650;
       transition:
@@ -14009,7 +14011,7 @@
       margin-top: 0.3rem;
       padding-top: calc(0.74rem + 0.3rem);
       border-top: 1px dashed rgba(107, 98, 84, 0.2);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
 
     /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
@@ -14126,7 +14128,7 @@
       flex: none;
       padding: 3px;
       gap: 2px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: #fff;
       border: 1px solid rgba(47, 107, 58, 0.16);
     }
@@ -14135,7 +14137,7 @@
       min-width: 38px;
       padding: 0.34rem 0.5rem;
       border: 0;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       background: transparent;
       color: #6f7b72;
       font-family: "DM Sans", sans-serif;
@@ -14420,7 +14422,7 @@
     min-height: 32px;
     padding: 0 11px;
     border: 1px solid rgba(47, 107, 58, 0.3);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.13);
     color: var(--verde-scuro);
     font-family: var(--sans);

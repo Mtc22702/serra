@@ -24,6 +24,12 @@
  * pagine (`cart-qty-less`, `cart-qty-more`, `remove-from-cart`), cambia solo
  * l'attributo che le trasporta.
  *
+ * Fa eccezione `annullabile()`, che è l'unico pezzo di questo file a mettere
+ * mano al DOM: costruisce da sé il proprio nodo. Sta qui perché togliere
+ * qualcosa dal carrello si può fare da tre pagine e l'annulla dev'essere lo
+ * stesso in tutte e tre — se vivesse nelle pagine sarebbe già divergente,
+ * come lo erano le righe del cassetto prima che questo file esistesse.
+ *
  * Espone window.SerraCartUI.
  */
 (function (global) {
@@ -65,6 +71,10 @@
       "qty.less_tray": "Togli un vassoio",
       "qty.more_tray": "Aggiungi un vassoio",
       "row.remove": "Togli dal carrello",
+      "row.remove_short": "Rimuovi",
+      "undo.removed": "{nome} tolta dal carrello",
+      "undo.cleared": "Carrello svuotato",
+      "undo.action": "Annulla",
       "note.delivery": "Consegna prevista <b>{data}</b>",
       "note.min_one": "Manca un vassoio all'ordine minimo",
       "note.min": "Mancano {n} vassoi all'ordine minimo",
@@ -105,6 +115,10 @@
       "qty.less_tray": "Scoate o tavă",
       "qty.more_tray": "Adaugă o tavă",
       "row.remove": "Scoate din coș",
+      "row.remove_short": "Scoate",
+      "undo.removed": "{nome} scos din coș",
+      "undo.cleared": "Coș golit",
+      "undo.action": "Anulează",
       "note.delivery": "Livrare estimată <b>{data}</b>",
       "note.min_one": "Mai lipsește o tavă până la comanda minimă",
       "note.min": "Mai lipsesc {n} tăvi până la comanda minimă",
@@ -175,6 +189,10 @@
     C()
       ? C().quantita(riga)
       : Number(riga.qta) || Number(riga.bustine) || 0;
+  /* Il passo minimo della riga: una bustina per i semi, un vassoio intero per
+     le piantine. Serve a sapere quando il «−» è arrivato al fondo. */
+  const passoRiga = (riga) =>
+    C() ? C().passo(riga) : isPiantina(riga) ? Number(riga.lotto) || 6 : 1;
 
   /* ---------- pezzi del cassetto ---------- */
 
@@ -221,13 +239,18 @@
             <b>${ctx.soldi(prezzo)}${piantina ? t("row.per_plug") : t("row.per_pack")}</b>
           </span>
         </span>
-        <span class="cart-item-side">
-          <span class="cart-item-qty" role="group" aria-label="${escape(t("qty.label"))}">
-            <button type="button" class="cart-qty-btn" ${bersaglio.replace("{azione}", "cart-qty-less")} aria-label="${escape(meno)}" title="${escape(meno)}">−</button>
-            <b class="cart-qty-value">${qta}</b>
-            <button type="button" class="cart-qty-btn" ${bersaglio.replace("{azione}", "cart-qty-more")} aria-label="${escape(piu)}" title="${escape(piu)}">+</button>
-          </span>
-          <button type="button" class="cart-item-remove" ${bersaglio.replace("{azione}", "remove-from-cart")} aria-label="${escape(t("row.remove"))}" title="${escape(t("row.remove"))}">✕</button>
+        <!-- Rimozione e quantità stanno su una riga propria, ai due capi
+             opposti. Prima la ✕ era 18 × 24 px e stava sette pixel sotto al
+             «+»: i loro centri distavano 41 px, meno di quanto sia largo un
+             polpastrello, quindi un tocco solo li copriva entrambi e quale
+             vincesse lo decideva il caso. Adesso fra i due c'è la larghezza
+             della riga, e la parola dice cosa succede — la ✕ da sola poteva
+             anche voler dire «chiudi». -->
+        <button type="button" class="cart-item-remove" ${bersaglio.replace("{azione}", "remove-from-cart")} aria-label="${escape(t("row.remove"))}" title="${escape(t("row.remove"))}">${t("row.remove_short")}</button>
+        <span class="cart-item-qty" role="group" aria-label="${escape(t("qty.label"))}">
+          <button type="button" class="cart-qty-btn" ${bersaglio.replace("{azione}", "cart-qty-less")} aria-label="${escape(meno)}" title="${escape(meno)}"${qta <= passoRiga(riga) ? " disabled" : ""}>−</button>
+          <b class="cart-qty-value">${qta}</b>
+          <button type="button" class="cart-qty-btn" ${bersaglio.replace("{azione}", "cart-qty-more")} aria-label="${escape(piu)}" title="${escape(piu)}">+</button>
         </span>
       </div>`;
   }
@@ -388,6 +411,73 @@
     );
   }
 
+  /* ============================================================
+     Annulla
+     ============================================================
+     Distanza e dimensione dei comandi rendono raro il tocco sbagliato; questo
+     lo rende innocuo. È la differenza fra «ho cancellato una pianta e devo
+     ricercarla nel listino» e «ho cancellato una pianta e la riprendo».
+
+     Due dettagli che decidono se serve davvero a qualcosa:
+     — il conto alla rovescia si ferma quando il puntatore ci passa sopra o il
+       fuoco ci entra dentro, se no sparisce proprio mentre ci si arriva;
+     — il messaggio è `role="status"`, quindi chi usa un lettore di schermo
+       viene avvisato che l'annulla esiste invece di trovarsi il carrello
+       cambiato sotto le mani senza spiegazioni.
+     ============================================================ */
+
+  let nodo = null;
+  let timer = 0;
+  let azione = null;
+
+  function chiudi() {
+    azione = null;
+    clearTimeout(timer);
+    if (nodo) nodo.classList.remove("is-on");
+  }
+
+  function costruisci() {
+    if (nodo) return nodo;
+    nodo = global.document.createElement("div");
+    nodo.className = "cart-undo";
+    nodo.setAttribute("role", "status");
+    nodo.innerHTML =
+      '<span class="cart-undo-text"></span>' +
+      '<button type="button" class="cart-undo-action"></button>';
+    nodo.querySelector(".cart-undo-action").addEventListener("click", () => {
+      const ripristina = azione;
+      chiudi();
+      if (ripristina) ripristina();
+    });
+    // Il tempo si ferma finché l'utente è lì sopra: sta decidendo.
+    const sospendi = () => clearTimeout(timer);
+    const riprendi = () => {
+      if (azione) timer = setTimeout(chiudi, 3200);
+    };
+    nodo.addEventListener("pointerenter", sospendi);
+    nodo.addEventListener("focusin", sospendi);
+    nodo.addEventListener("pointerleave", riprendi);
+    nodo.addEventListener("focusout", riprendi);
+    global.document.body.appendChild(nodo);
+    return nodo;
+  }
+
+  /* `onAnnulla` riceve indietro il controllo e deve rimettere le cose com'erano:
+     chi chiama fotografa il carrello prima di toccarlo e lo riscrive qui. */
+  function annullabile(opzioni) {
+    const conf = opzioni || {};
+    if (typeof conf.onAnnulla !== "function") return;
+    const el = costruisci();
+    el.querySelector(".cart-undo-text").textContent = conf.testo || "";
+    el.querySelector(".cart-undo-action").textContent =
+      conf.etichetta || "Annulla";
+    azione = conf.onAnnulla;
+    el.classList.add("is-on");
+    clearTimeout(timer);
+    // Sette secondi: il tempo di accorgersi dell'errore e di arrivarci sopra.
+    timer = setTimeout(chiudi, conf.durata || 7000);
+  }
+
   global.SerraCartUI = {
     CONSEGNA,
     COPY,
@@ -395,6 +485,8 @@
     corpo,
     rigaHtml,
     prossimaConsegna,
-    dataEstesa
+    dataEstesa,
+    annullabile,
+    chiudiAnnulla: chiudi
   };
 })(window);

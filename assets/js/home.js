@@ -1746,11 +1746,34 @@ function removeFromCart(id, variante) {
   // Con il carrello unico la stessa pianta può esserci due volte: come bustina
   // e come piantina. Si toglie solo la riga richiesta.
   const piantina = variante === "piantina";
+  // Fotografia di prima: è quello che l'annulla rimetterà a posto.
+  const prima = cart.slice();
   cart = window.SerraCart
     ? window.SerraCart.rimuovi(cart, id, piantina)
     : cart.filter((i) => !(i.id === id && isPiantinaItem(i) === piantina));
   refreshCartViews();
   showCartNudge(id, false);
+  offriAnnullaCarrello("undo.removed", { nome: plantName(id) }, prima);
+}
+
+/* L'annulla dopo una rimozione. Chi tocca il carrello per sbaglio deve poter
+   tornare indietro senza ricercare la pianta nel listino: il tocco sbagliato
+   è raro, ma quando capita non deve costare niente. Il ripristino riscrive
+   l'intero carrello di prima, così vale anche per «Svuota». */
+function offriAnnullaCarrello(chiave, valori, prima) {
+  const UI = window.SerraCartUI;
+  if (!UI || !UI.annullabile) return;
+  const lang = currentLang === "ro" ? "ro" : "it";
+  UI.annullabile({
+    testo: UI.testo(lang, chiave, valori),
+    etichetta: UI.testo(lang, "undo.action"),
+    // `refreshCartViews` chiama già `savePrefs`, che scrive il carrello e
+    // avvisa le altre schede aperte: qui basta rimettere l'array.
+    onAnnulla: () => {
+      cart = prima.slice();
+      refreshCartViews();
+    }
+  });
 }
 /* Quantità dal cassetto: le bustine si muovono di una alla volta, le piantine
    di un vassoio intero, perché è così che vengono spedite. Arrivata a zero la
@@ -1767,8 +1790,10 @@ function changeCartQty(id, variante, direzione) {
 // Svuota il carrello. È l'unico carrello dell'app: se ne va tutto, semi e
 // piantine, esattamente come dalle altre sezioni.
 function clearCart() {
+  const prima = cart.slice();
   cart = window.SerraCart ? window.SerraCart.svuota() : [];
   refreshCartViews();
+  if (prima.length) offriAnnullaCarrello("undo.cleared", null, prima);
 }
 // Le tre viste che dipendono dal carrello si aggiornano sempre insieme.
 function refreshCartViews() {

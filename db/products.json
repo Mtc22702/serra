@@ -1,6 +1,6 @@
 {
   "_nota": "Generato da npm run build:products. Il blocco 'semi' viene rigenerato da PACK_DATA (assets/js/home.js); il blocco 'piantina' è modificabile a mano e viene conservato.",
-  "generato": "2026-08-15",
+  "generato": "2026-08-16",
   "items": {
     "pomodoro": {
       "semi": {

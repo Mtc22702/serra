@@ -9620,9 +9620,10 @@ function updateConfCartUI() {
             <b>${formatMoney(m.bustine * m.prezzo)}</b>
           </span>
         </span>
-        <span class="cart-item-side">
-          <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}">✕</button>
-        </span>
+        <!-- Stessa rimozione delle righe di prodotto: parola invece di ✕ e
+             stessa casella della griglia, così le due specie di riga del
+             cassetto non si comportano in due modi diversi. -->
+        <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}">${tx("remove")}</button>
       </div>`;
           })
           .join("")}
@@ -9663,11 +9664,33 @@ function updateConfCartUI() {
 // bustina e come piantina: si toglie solo la variante indicata.
 function removeFromConfCart(id, variante) {
   const piantina = variante === "piantina";
+  // Fotografia di prima: è quello che l'annulla rimetterà a posto.
+  const prima = confCart.slice();
   confCart = window.SerraCart
     ? window.SerraCart.rimuovi(confCart, id, piantina)
     : confCart.filter((i) => !(i.id === id && confIsPiantina(i) === piantina));
   saveConfCart();
   updateConfCartUI();
+  offriAnnullaConfCart("undo.removed", { nome: plantNameById(id) || id }, prima);
+}
+
+/* Stesso annulla della home e del vivaio: il carrello è uno solo e togliere
+   una pianta deve costare uguale — cioè niente — da qualunque pagina. */
+function offriAnnullaConfCart(chiave, valori, prima) {
+  const UI = window.SerraCartUI;
+  if (!UI || !UI.annullabile) return;
+  const lang = (document.documentElement.lang || "it").startsWith("ro")
+    ? "ro"
+    : "it";
+  UI.annullabile({
+    testo: UI.testo(lang, chiave, valori),
+    etichetta: UI.testo(lang, "undo.action"),
+    onAnnulla: () => {
+      confCart = prima.slice();
+      saveConfCart();
+      updateConfCartUI();
+    }
+  });
 }
 /* Quantità dal cassetto: un passo è una bustina per i semi e un vassoio intero
    per le piantine. A zero la riga esce dal carrello. */
@@ -9687,9 +9710,11 @@ function changeConfCartQty(id, variante, direzione) {
 }
 // Svuota l'intero carrello: semi e piantine insieme, come dalle altre sezioni.
 function clearConfCart() {
+  const prima = confCart.slice();
   confCart = window.SerraCart ? window.SerraCart.svuota() : [];
   if (!window.SerraCart) saveConfCart();
   updateConfCartUI();
+  if (prima.length) offriAnnullaConfCart("undo.cleared", null, prima);
 }
 
 let confCartScrollLockCount = 0;

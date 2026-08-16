@@ -166,12 +166,73 @@
     --button-on-dark-text: #1f3a26;
     --button-on-dark-border: rgba(255, 255, 255, 0.6);
 
-    /* Geometria: prima i pulsanti d'azione avevano sette raggi diversi (da 6px
-       alla pillola) e sei pesi di carattere. Ora la forma è una sola; le
-       pillole restano ai chip dei filtri, che non sono azioni. */
-    --button-radius: 12px;
-    --button-min-height: 44px;
+    /* ---------- geometria dei controlli ----------
+       Una sola regola, applicata ovunque: la forma dice il ruolo.
+
+         pillola   cose che si premono o si attivano — CTA, chip, filtri,
+                   toggle, segmenti. Sono bersagli, non contenitori.
+         10 px     cose in cui si scrive o si sceglie da un elenco, e i
+                   comandi di servizio — input, select, textarea, campi
+                   di ricerca, pulsanti icona rettangolari.
+         tondo     solo i comandi icona quadrati: ± della quantità, chiudi.
+         16/22 px  contenitori — schede e pannelli (--radius-lg / --radius-xl).
+
+       Un'eccezione, e una sola: le righe-azione ricche — quelle alte più di
+       una sessantina di pixel, con illustrazione e due righe di testo, come
+       «I semi / Le piantine» nei percorsi della home — prendono il raggio
+       delle schede. Una pillola alta cento pixel non è un pulsante, è uno
+       stadio: la forma smetterebbe di dire qualcosa.
+
+       Questa nota c'era già e prometteva «una forma sola», ma non era mai
+       stata applicata: il CTA principale era pillola nella hero e 12 px
+       nella guida, le chip erano pillola nel vivaio e 8 px nel catalogo,
+       e in giro restavano raggi sciolti (6, 4, 13, 18, 20 px). Adesso i
+       valori stanno solo qui e le pagine li citano per nome, così la
+       prossima scheda non può inventarne un altro. */
+    --control-radius: 10px;
+    --control-radius-pill: var(--radius-pill);
+    --control-radius-round: 50%;
+
+    /* Tre altezze, non le diciannove che erano in circolazione. `md` è il
+       default e rispetta i 44 px raccomandati per il bersaglio tattile;
+       `sm` serve ai controlli densi dentro barre filtro e tabelle, dove
+       44 px spezzerebbero la riga. */
+    --control-h-sm: 40px;
+    --control-h-md: 44px;
+    --control-h-lg: 52px;
+
+    /* Alias storico: molte regole lo citano già ed è il nome giusto. */
+    --button-min-height: var(--control-h-md);
     --button-font-weight: 700;
+
+    /* ---------- distanza fra i comandi ----------
+       Due bersagli vicini non sono un problema di estetica ma di dita. Il
+       polpastrello che tocca lo schermo è un'ellisse larga una quarantina di
+       pixel: se i centri di due comandi distano meno di quello, un tocco solo
+       li copre entrambi e quale dei due vince lo decide il caso.
+
+       Nel carrello i centri di «+» e «✕ rimuovi» distavano 41 px, con il ✕
+       grande 18 × 24. Non serviva una mano incerta per cancellare una pianta
+       mentre se ne aumentava la quantità: bastava una mano normale.
+
+         --control-gap         fra comandi che fanno cose simili e reversibili
+                               (i due lati di uno stepper, due filtri)
+         --control-gap-danger  fra un comando distruttivo e qualunque altro
+
+       La regola che vale più dei due valori: un comando distruttivo non sta
+       sull'asse lungo cui si muove il dito per usare quello frequente. Nel
+       carrello si preme «+» ripetutamente e si scivola in basso — quindi il
+       ✕ non può stare sotto al «+», per quanto lo si distanzi. */
+    --control-gap: 8px;
+    --control-gap-danger: 16px;
+  }
+
+  /* Sul touch la densità non conviene: i controlli compatti tornano a 44 px
+     senza che le pagine debbano saperne nulla. */
+  @media (pointer: coarse) {
+    :root {
+      --control-h-sm: var(--control-h-md);
+    }
   }
   html {
     scroll-behavior: smooth;
@@ -261,7 +322,7 @@
   }
   .nav-link {
     padding: 0.4rem 0.85rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 0.87rem;
     font-weight: 500;
     text-decoration: none;
@@ -300,7 +361,7 @@
     gap: 0.4rem;
     min-width: 122px;
     padding: 0.44rem 1rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 0.87rem;
     font-weight: 500;
     background: var(--white);
@@ -494,7 +555,7 @@
     column-gap: 0.3rem;
     row-gap: 0;
     padding: 0.22rem 0.38rem;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(27, 67, 50, 0.12);
     background: rgba(255, 255, 255, 0.5);
     color: var(--muted);
@@ -697,7 +758,7 @@
 
     .hero-zone-btn {
       padding: 0.22rem 0.32rem;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       column-gap: 0.28rem;
     }
 
@@ -894,7 +955,7 @@
     width: 100%;
     height: 46px;
     border: 1.5px solid rgba(45, 106, 79, 0.18);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: var(--white);
     color: var(--text);
     font:
@@ -916,9 +977,9 @@
     justify-content: center;
     gap: 0.34rem;
     min-width: 0;
-    min-height: 46px;
+    min-height: var(--control-h-md);
     border: 1.5px solid transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: var(--white);
     color: var(--muted);
     padding: 0.38rem 0.5rem;
@@ -951,7 +1012,7 @@
     min-width: 22px;
     height: 18px;
     padding: 0 5px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(45, 106, 79, 0.09);
     color: var(--green);
     font-size: 0.7rem;
@@ -1015,9 +1076,9 @@
     justify-content: center;
     gap: 0.28rem;
     min-width: 78px;
-    min-height: 46px;
+    min-height: var(--control-h-md);
     border: 1px solid transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.58);
     color: var(--muted);
     padding: 0 0.65rem;
@@ -1167,7 +1228,7 @@
     color: #315a73;
     background: #eef7fb;
     border: 1px solid rgba(56, 132, 170, 0.28);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     padding: 1px 6px;
     white-space: nowrap;
     flex-shrink: 0;
@@ -1189,7 +1250,7 @@
   .top-add-btn {
     margin-top: auto;
     padding: 0.52rem;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid var(--lime);
     background: transparent;
     color: var(--green);
@@ -1314,7 +1375,7 @@
     letter-spacing: 0.03em;
     text-transform: uppercase;
     padding: 0.1rem 0.42rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     flex-shrink: 0;
   }
   .compact-facts-row {
@@ -1324,9 +1385,12 @@
     color: var(--muted);
     font-weight: 500;
   }
+  /* Era 34 px e diventava 40 solo sul telefono: ma è il pulsante che aggiunge
+     al carrello dalla griglia, cioè l'azione più ripetuta della pagina. Parte
+     già alla misura comoda, ovunque. */
   .compact-add-btn {
-    width: 34px;
-    height: 34px;
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
     border-radius: 50%;
     border: 2px solid var(--lime);
     background: transparent;
@@ -1505,9 +1569,9 @@
     align-items: center;
     justify-content: center;
     gap: 0.35rem;
-    min-height: 40px;
+    min-height: var(--control-h-sm);
     padding: 0.54rem 0.8rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(45, 106, 79, 0.18);
     background: var(--white);
     color: var(--green-dk);
@@ -1624,9 +1688,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     padding: 0.68rem 1rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     font-size: 0.9rem;
     font-weight: 800;
     font-family: "DM Sans", sans-serif;
@@ -1647,7 +1711,7 @@
     align-items: center;
     gap: 0.35rem;
     padding: 0.66rem 0.9rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(45, 106, 79, 0.14);
     background: rgba(255, 255, 255, 0.72);
     color: var(--green-dk);
@@ -1835,7 +1899,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.6rem 1.25rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     font-size: 0.88rem;
     font-weight: 600;
     text-decoration: none;
@@ -1880,7 +1944,7 @@
     color: rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     padding: 0.18rem 0.55rem;
   }
   .conf-cart-hint {
@@ -2264,7 +2328,7 @@
     z-index: 10;
     width: 42px;
     height: 42px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     border: 1px solid rgba(255, 255, 255, 0.62);
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(12px);
@@ -2340,10 +2404,10 @@
   .detail-tab {
     --tab-color: var(--green);
     min-width: 0;
-    min-height: 47px;
+    min-height: var(--control-h-md);
     padding: 0.42rem 0.28rem;
     border: 1px solid rgba(45, 106, 79, 0.11);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.74);
     color: #617a6c;
     font: inherit;
@@ -2690,7 +2754,7 @@
     margin-left: auto;
     width: 30px;
     height: 30px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3083,7 +3147,7 @@
     justify-content: center;
     padding: 0.34rem 0.12rem 0.28rem;
     border: 1px solid rgba(107, 98, 84, 0.16);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background: rgba(216, 205, 184, 0.28);
     cursor: default;
     transition:
@@ -3217,7 +3281,7 @@
     align-items: center;
     gap: 0.24rem;
     padding: 0.24rem 0.64rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 0.78rem;
     font-weight: 600;
     transition: transform 0.1s;
@@ -3332,7 +3396,7 @@
   .detail-add-btn {
     width: 100%;
     padding: 1rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: none;
     background: linear-gradient(135deg, var(--green), var(--green-dk));
     color: var(--serra-white);
@@ -3430,19 +3494,23 @@
     padding: 0.16rem 0.52rem;
     letter-spacing: 0.01em;
   }
+  /* «Svuota» e «chiudi» stavano a otto pixel: due comandi che si assomigliano
+     — entrambi fanno sparire quello che si sta guardando — ma uno chiude un
+     pannello e l'altro cancella la spesa. Fra i due ci va la distanza dei
+     comandi distruttivi. */
   .cart-header-actions {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--control-gap-danger);
     padding-top: 0.18rem;
   }
   .cart-clear-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 36px;
-    padding: 0 0.7rem;
-    border-radius: 6px;
+    min-height: var(--control-h-sm);
+    padding: 0 0.9rem;
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(82, 183, 136, 0.35);
     background: transparent;
     color: var(--green-md, #2d6a4f);
@@ -3587,14 +3655,42 @@
     color: #7a5410;
   }
 
+  /* Due righe: sopra l'identità del prodotto, sotto i comandi ai due capi
+     opposti. Era tutto su una riga sola e i comandi, cresciuti alla misura
+     comoda al dito, si mangiavano la colonna del testo: a 323 px lo stepper
+     finiva sopra al prezzo e «6 piantine · vaso ø7» si impilava una parola
+     per riga. Separare le due funzioni su due righe risolve la stretta e
+     mette la massima distanza possibile fra «rimuovi» e «+». */
   .cart-item {
-    display: flex;
+    display: grid;
     align-items: center;
-    gap: 0.8rem;
+    column-gap: 0.8rem;
+    row-gap: var(--control-gap);
     padding: 0.7rem 0.8rem;
     background: var(--sand-lt);
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "foto testo testo"
+      "togli togli quantita";
+  }
+
+  .cart-item > img,
+  .cart-item-glyph {
+    grid-area: foto;
+  }
+
+  .cart-item-copy {
+    grid-area: testo;
+  }
+
+  .cart-item-remove {
+    grid-area: togli;
+  }
+
+  .cart-item-qty {
+    grid-area: quantita;
   }
   /* La riga piantina si riconosce anche senza leggere: filetto sul bordo. */
   .cart-item--piantina {
@@ -3723,18 +3819,10 @@
     text-transform: uppercase;
     vertical-align: middle;
   }
-  /* Colonna di destra della riga: prima la quantità, poi la rimozione.
-     Ogni prodotto del carrello si regola qui, senza tornare al listino. */
-  .cart-item-side {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    flex-shrink: 0;
-  }
   .cart-item-qty {
     display: inline-flex;
     align-items: center;
+    justify-self: end;
     gap: 0.1rem;
     padding: 0.1rem;
     border: 1px solid var(--border);
@@ -3744,41 +3832,139 @@
   .cart-qty-btn {
     display: grid;
     place-items: center;
-    /* 28px: resta toccabile nel cassetto stretto dello smartphone. */
-    width: 28px;
-    height: 28px;
+    /* Erano 28 px con la giustificazione che «resta toccabile nel cassetto
+       stretto». Non lo era: 28 px sono sotto ogni soglia raccomandata, e
+       stretto o no il dito ha sempre la stessa larghezza. */
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
     padding: 0;
     border: none;
     border-radius: 50%;
     background: none;
     color: var(--green-dk);
     font: inherit;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1;
     cursor: pointer;
-    transition: background 0.13s ease;
+    transition:
+      background 0.13s ease,
+      opacity 0.13s ease;
   }
-  .cart-qty-btn:hover {
+  .cart-qty-btn:hover:not(:disabled) {
     background: rgba(45, 106, 79, 0.12);
   }
+
+  /* A quantità minima il «−» si spegne. Prima toglieva l'ultima bustina e la
+     riga spariva dal carrello: una cancellazione silenziosa, innescata dal
+     comando gemello di quello che si preme per aggiungere. Per togliere un
+     prodotto adesso c'è un solo modo, e ha la parola scritta sopra. */
+  .cart-qty-btn:disabled {
+    color: var(--muted);
+    cursor: default;
+    opacity: 0.4;
+  }
+
   .cart-qty-value {
     min-width: 2ch;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--green-dk);
     text-align: center;
   }
+
+  /* La rimozione: parola invece di simbolo, altezza comoda, ancorata al capo
+     sinistro della riga dei comandi. Resta grigia finché non la si tocca —
+     è un'uscita, non un invito. */
   .cart-item-remove {
-    background: none;
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: var(--control-h-sm);
+    padding: 0 10px 0 0;
     border: none;
-    font-size: 0.95rem;
-    cursor: pointer;
+    border-radius: var(--control-radius);
+    background: none;
     color: var(--muted);
-    padding: 0.2rem;
-    border-radius: 4px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 650;
+    text-decoration: underline;
+    text-decoration-color: rgba(31, 58, 38, 0.28);
+    text-underline-offset: 3px;
   }
-  .cart-item-remove:hover {
+  .cart-item-remove:hover,
+  .cart-item-remove:focus-visible {
     color: #b03020;
+    text-decoration-color: currentColor;
+  }
+
+  /* ---------- l'annulla ----------
+     Sopra al cassetto (che ha z-index alto) e sopra la barra di sistema del
+     telefono: se comparisse sotto al pollice non lo vedrebbe nessuno. */
+  .cart-undo {
+    position: fixed;
+    z-index: 2147483000;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    left: max(12px, env(safe-area-inset-left));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--control-gap-danger);
+    width: fit-content;
+    max-width: min(460px, calc(100% - 24px));
+    margin-inline: auto;
+    padding: 10px 10px 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--control-radius-pill);
+    background: #1f3a26;
+    color: #fffdf6;
+    font-size: 0.88rem;
+    box-shadow: var(--elev-4, 0 18px 44px rgba(15, 31, 21, 0.34));
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    pointer-events: none;
+  }
+
+  .cart-undo.is-on {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .cart-undo-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cart-undo-action {
+    flex: none;
+    min-height: var(--control-h-sm);
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: var(--control-radius-pill);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fffdf6;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+  }
+
+  .cart-undo-action:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cart-undo {
+      transition: none;
+      transform: none;
+    }
   }
   .cart-total-row {
     display: flex;
@@ -3836,7 +4022,7 @@
     align-items: center;
     gap: 0.55rem;
     padding: 0.68rem 1.1rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(45, 106, 79, 0.07);
     border: 1px solid rgba(45, 106, 79, 0.18);
     text-decoration: none;
@@ -3872,7 +4058,7 @@
     justify-content: center;
     width: 100%;
     padding: 0.85rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: none;
     background: var(--accent);
     color: var(--serra-white);
@@ -3904,7 +4090,7 @@
     margin-top: 0.45rem;
     padding: 0.6rem;
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: none;
     color: var(--green-dk);
     font-family: "DM Sans", sans-serif;
@@ -3974,11 +4160,11 @@
   .cart-nudge button {
     flex: 0 0 auto;
     border: none;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--serra-white);
     color: var(--green-dk);
     padding: 0.52rem 0.85rem;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     font:
       800 0.82rem "DM Sans",
       sans-serif;
@@ -4173,7 +4359,7 @@
       justify-content: center;
       column-gap: 0.3rem;
       row-gap: 0.1rem;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       padding: 0.32rem 0.4rem;
       min-height: unset;
       background: rgba(255, 255, 255, 0.82);
@@ -4495,7 +4681,7 @@
       font-size: 0.58rem;
     }
     .detail-tab {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       padding: 0.34rem 0.12rem;
       font-size: 0.52rem;
     }
@@ -4588,9 +4774,9 @@
     .site-header .cart-btn {
       width: 48px;
       min-width: 48px;
-      min-height: 44px;
+      min-height: var(--control-h-md);
       padding: 0.35rem 0.42rem;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       gap: 0.25rem;
     }
     .cart-label {
@@ -4626,7 +4812,7 @@
       display: inline-flex;
       flex: 0 0 auto;
       padding: 0.44rem 0.55rem;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       font-size: 0.76rem;
     }
     .cart-count {
@@ -4645,7 +4831,7 @@
       grid-template-columns: 1fr 1fr;
     }
     .catalog-chip {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       padding: 0.35rem 0.5rem;
     }
     .chip-lbl {
@@ -4654,7 +4840,7 @@
     .catalog-reset-btn {
       grid-column: 1 / -1;
       justify-content: center;
-      min-height: 36px;
+      min-height: var(--control-h-sm);
     }
     .cart-nudge {
       align-items: stretch;
@@ -4696,7 +4882,7 @@
   .nav-lang select {
     appearance: none;
     -webkit-appearance: none;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius);
     border: 1.5px solid var(--border);
     background: rgba(255, 255, 255, 0.65);
     font-size: 0.82rem;
@@ -4875,9 +5061,11 @@
     margin-top: 0.5rem;
   }
   .footer-social a {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
+    /* Comandi di servizio quadrati: stesso raggio dei pulsanti icona,
+       stessa misura comoda al dito degli altri bersagli. */
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
+    border-radius: var(--control-radius);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.18);
     display: inline-flex;
@@ -5041,7 +5229,7 @@
   }
   .cookie-accept-btn {
     padding: 0.48rem 1.2rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--lime);
     color: var(--green-dk);
     border: none;
@@ -5055,8 +5243,9 @@
     background: var(--serra-white);
   }
   .cookie-reject-btn {
+    min-height: var(--control-h-sm);
     padding: 0.48rem 1rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: transparent;
     color: rgba(255, 255, 255, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -5159,9 +5348,9 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 38px;
+    min-height: var(--control-h-sm);
     padding: 0.64rem 0.76rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     color: var(--green);
     font-size: 0.84rem;
     font-weight: 600;
@@ -5243,8 +5432,8 @@
   }
 
   .nav-prefs .theme-toggle {
-    width: 36px;
-    height: 36px;
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
     min-width: 36px;
   }
 
@@ -5260,12 +5449,12 @@
      di elenco, dove c'è spazio per l'etichetta estesa. */
   .site-header .nav-account-btn {
     display: inline-flex;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     align-items: center;
     gap: 0.42rem;
     padding: 0 0.7rem;
     border: 1px solid rgba(45, 106, 79, 0.14);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.72);
     box-shadow: var(--elev-2);
     color: var(--green-dk);
@@ -5361,7 +5550,7 @@
     min-width: 62px;
     min-height: auto;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background: transparent;
     color: var(--green);
     font-family: "DM Sans", sans-serif;
@@ -5373,14 +5562,14 @@
   .site-header .cart-btn {
     min-width: 76px;
     width: auto;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.42rem;
     padding: 0.45rem 0.72rem;
     border: 1px solid rgba(45, 106, 79, 0.22);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: var(--bg);
     color: var(--serra-white);
     font-family: "DM Sans", sans-serif;
@@ -5450,7 +5639,8 @@
     place-items: center;
     padding: 0;
     border: 1px solid rgba(45, 106, 79, 0.16);
-    border-radius: var(--radius-md);
+    /* Comando di servizio quadrato, come le altre icone della barra. */
+    border-radius: var(--control-radius);
     background: rgba(255, 255, 255, 0.76);
     color: var(--green-dk);
     cursor: pointer;
@@ -5614,11 +5804,11 @@
     .site-header .nav-link:not(.cart-btn) {
       display: flex;
       width: 100%;
-      min-height: 46px;
+      min-height: var(--control-h-md);
       align-items: center;
       justify-content: flex-start;
       padding: 0.78rem 0.92rem;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       font-size: 0.95rem;
     }
 
@@ -5674,15 +5864,15 @@
       width: 44px;
       height: 44px;
       flex-basis: 44px;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius);
     }
 
     .site-header .cart-btn {
       width: 44px;
       min-width: 44px;
-      min-height: 44px;
+      min-height: var(--control-h-md);
       padding: 0.32rem;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
     }
 
     .cart-label {
@@ -5743,7 +5933,7 @@
 
   .site-header .cart-btn {
     min-width: 86px;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     border-color: rgba(45, 106, 79, 0.2);
     background: rgba(45, 106, 79, 0.1);
     color: var(--green-dk);
@@ -5810,7 +6000,7 @@
     .cookie-accept-btn,
     .cookie-reject-btn {
       flex: none;
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0.34rem 0.52rem;
       font-size: 0.66rem;
     }
@@ -5909,7 +6099,7 @@
     .cart-checkout-btn,
     .cookie-accept-btn,
     .cookie-reject-btn {
-      min-height: 42px;
+      min-height: var(--control-h-md);
       padding-block: 0.72rem;
     }
 
@@ -5924,7 +6114,7 @@
     }
 
     .site-header .nav-lang select {
-      min-height: 34px;
+      min-height: var(--control-h-sm);
     }
 
     .footer-social a {
@@ -5937,7 +6127,7 @@
   @media (max-width: 660px) {
     .cookie-accept-btn,
     .cookie-reject-btn {
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0.34rem 0.54rem;
       font-size: 0.66rem;
     }
@@ -6072,8 +6262,8 @@
     border: 1px solid rgba(45, 106, 79, 0.08);
   }
   .catalog-pro-section .top-add-btn {
-    min-height: 42px;
-    border-radius: var(--radius-md);
+    min-height: var(--control-h-md);
+    border-radius: var(--control-radius-pill);
     background: linear-gradient(135deg, var(--green), var(--green-dk));
     border-color: transparent;
     color: var(--serra-white);
@@ -6156,9 +6346,9 @@
   }
   .catalog-pro-section .compact-add-btn {
     align-self: center;
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-md);
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
+    border-radius: var(--control-radius-pill);
     font-size: 1.05rem;
   }
   @media (max-width: 900px) {
@@ -6267,7 +6457,7 @@
   @media (max-width: 480px) {
     .catalog-search--pro .catalog-search-box {
       gap: 0.45rem;
-      min-height: 50px;
+      min-height: var(--control-h-lg);
       padding: 0 0.72rem;
     }
     .catalog-search-icon {
@@ -6293,7 +6483,7 @@
       min-width: 0;
       justify-content: center;
       padding: 0.38rem 0.45rem;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
       font-size: 0.72rem;
     }
     .catalog-scope--advanced .chip-lbl {
@@ -6390,7 +6580,7 @@
     column-gap: 0.38rem;
     row-gap: 0;
     padding: 0.58rem 0.88rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid rgba(45, 106, 79, 0.16);
     background: var(--serra-white);
     color: var(--green-dk);
@@ -6446,8 +6636,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.52rem;
+    min-height: var(--control-h-sm);
     padding: 0.5rem 0.84rem 0.5rem 0.6rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: 1.5px solid rgba(45, 106, 79, 0.16);
     background: var(--serra-white);
     cursor: pointer;
@@ -6509,7 +6700,7 @@
     opacity: 0.78;
     line-height: 1.45;
     padding: 0.38rem 0.52rem;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: rgba(45, 106, 79, 0.06);
     border: 1px solid rgba(45, 106, 79, 0.1);
   }
@@ -6529,7 +6720,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--green-dk);
     color: var(--serra-white);
     font-size: 0.74rem;
@@ -6559,7 +6750,7 @@
     display: inline-flex;
     align-items: center;
     padding: 2px 8px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--green-dk);
     color: var(--serra-white);
     font-size: 0.62rem;
@@ -6602,10 +6793,10 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    min-height: 58px;
+    min-height: var(--control-h-lg);
     padding: 0 1.1rem;
     border: 2px solid rgba(45, 106, 79, 0.35);
-    border-radius: var(--radius-lg);
+    border-radius: var(--control-radius);
     background: var(--serra-white);
     box-shadow: var(--elev-2);
     transition:
@@ -6745,9 +6936,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.34rem;
-    min-height: 34px;
+    min-height: var(--control-h-sm);
     padding: 0.38rem 0.56rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid var(--surface-line);
     background: var(--surface-1);
     color: var(--green-dk);
@@ -6813,8 +7004,8 @@
   }
   .catalog-scope--advanced .catalog-chip,
   .catalog-scope--advanced .catalog-reset-btn {
-    min-height: 42px;
-    border-radius: var(--radius-md);
+    min-height: var(--control-h-md);
+    border-radius: var(--control-radius-pill);
     white-space: nowrap;
   }
   .catalog-scope--advanced .catalog-chip {
@@ -6868,7 +7059,7 @@
     font-weight: 700;
     font-size: 0.72rem;
     padding: 0 4px;
-    border-radius: 6px;
+    border-radius: var(--control-radius-pill);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7196,7 +7387,7 @@
     padding: 0.5rem 0.65rem;
     border: 0;
     background: transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     font-size: 0.92rem;
     color: var(--text, #1f3a26);
     cursor: pointer;
@@ -7236,7 +7427,7 @@
     gap: 0.35rem;
     padding: 0.22rem 0.4rem 0.22rem 0.62rem;
     border: 1.5px solid var(--surface-line);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--surface-1);
     color: var(--green-dk);
     font-family: "DM Sans", sans-serif;
@@ -7302,7 +7493,7 @@
   .empty-cta {
     margin-top: 1.1rem;
     padding: 0.62rem 1.2rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     border: none;
     background: var(--green);
     color: var(--serra-white);
@@ -7334,7 +7525,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.7rem 1.5rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-family: "DM Sans", sans-serif;
     font-weight: 700;
     font-size: 0.86rem;
@@ -7428,11 +7619,11 @@
   }
   .catalog-hint-controls .cat-sort-select {
     flex: 0 0 auto;
-    min-height: 32px;
+    min-height: var(--control-h-sm);
     height: 32px;
     padding: 0 1.8rem 0 1.8rem;
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background-color: rgba(45, 106, 79, 0.07);
     color: var(--green-dk);
     font-family: "DM Sans", sans-serif;
@@ -7455,14 +7646,16 @@
     box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.18);
   }
 
+  /* Il selettore di vista era alto 32 px con due bersagli da 28: sotto la
+     soglia comoda al dito, e in una barra dove tutto il resto è a 40. */
   .catalog-layout-toggle {
     display: flex;
     gap: 2px;
     background: rgba(45, 106, 79, 0.07);
-    padding: 2px;
-    border-radius: var(--radius-sm);
+    padding: 3px;
+    border-radius: var(--control-radius-pill);
     align-items: center;
-    height: 32px;
+    min-height: var(--control-h-sm);
     border: none;
     flex-shrink: 0;
   }
@@ -7471,12 +7664,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     border: none;
     background: transparent;
     color: var(--muted);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     cursor: pointer;
     transition: all 0.16s ease;
   }
@@ -7503,8 +7696,15 @@
       justify-content: space-between;
       width: 100%;
     }
+    /* `flex: 1` da solo non bastava: un elemento flessibile non scende sotto
+       la propria larghezza minima intrinseca, e per una select è quella
+       dell'opzione più lunga più i 1,8 rem di spazio ai lati. Risultato: a
+       323 px la select misurava 263 px dentro a un contenitore da 260 e
+       spingeva il selettore di vista fuori dallo schermo. */
     .catalog-hint-controls .cat-sort-select {
       flex: 1;
+      min-width: 0;
+      padding-inline: 1.5rem;
     }
   }
 
@@ -7516,12 +7716,10 @@
     .catalog-hint-text {
       font-size: 0.75rem;
     }
-    .catalog-layout-toggle {
-      height: 28px;
-    }
-    .layout-toggle-btn {
-      width: 24px;
-      height: 24px;
+    /* Sugli schermi più stretti si stringe la select, non il selettore di
+       vista: quello è un bersaglio da premere e scendeva a 24 px. */
+    .catalog-hint-controls .cat-sort-select {
+      padding-inline: 1.15rem;
     }
   }
 
@@ -7655,7 +7853,7 @@
     font-weight: 700;
     letter-spacing: 0.02em;
     padding: 1px 6px;
-    border-radius: 5px;
+    border-radius: var(--control-radius-pill);
     flex-shrink: 0;
     line-height: 1.5;
   }
@@ -7691,7 +7889,7 @@
     color: var(--green-dk);
     font-size: 1.05rem;
     font-weight: 800;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     cursor: pointer;
     transition:
       background 0.14s,
@@ -7840,7 +8038,7 @@ html[data-theme="dark"]
     align-items: center;
     gap: 0.4rem;
     padding: 0.78rem 1.25rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.1);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: var(--serra-white);
@@ -7867,7 +8065,7 @@ html[data-theme="dark"]
   .hcg-glass {
     position: relative;
     aspect-ratio: 5 / 3.6;
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
     overflow: hidden;
     background:
       repeating-linear-gradient(
@@ -7896,7 +8094,7 @@ html[data-theme="dark"]
   .hcg-glare {
     position: absolute;
     inset: 0;
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
     background: linear-gradient(
       135deg,
       rgba(255, 255, 255, 0.14) 0%,
@@ -8084,7 +8282,7 @@ html[data-theme="dark"]
     transform: translateX(-50%);
     white-space: nowrap;
     padding: 0.3rem 0.7rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: rgba(15, 42, 28, 0.78);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #d7f2e2;
@@ -8129,7 +8327,7 @@ html[data-theme="dark"]
     flex-direction: column;
     align-items: flex-start;
     gap: 0.12rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     padding: 0.6rem 1.1rem;
     line-height: 1.2;
     justify-content: center;
@@ -8558,7 +8756,7 @@ html[data-theme="dark"]
     display: inline-flex;
     align-items: center;
     padding: 2px 7px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--serra-green);
     color: var(--serra-white);
     font-size: 9px;
@@ -8718,7 +8916,7 @@ html[data-theme="dark"]
     min-width: 116px;
   }
   .preconfig-vfield--path .preconfig-step-btn {
-    min-height: 32px;
+    min-height: var(--control-h-sm);
   }
   .preconfig-vfield--path .preconfig-step-input {
     padding-block: 4px;
@@ -8845,7 +9043,7 @@ html[data-theme="dark"]
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 40px;
+    min-height: var(--control-h-sm);
     -webkit-tap-highlight-color: transparent;
   }
   .preconfig-step-btn:active {
@@ -8882,7 +9080,7 @@ html[data-theme="dark"]
     width: 100%;
     padding: 8px 28px 8px 9px;
     border: 1px solid rgba(31, 58, 38, 0.18);
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius);
     background: var(--serra-white)
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232f6b3a' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")
       no-repeat right 9px center;
@@ -8949,13 +9147,32 @@ html[data-theme="dark"]
        il proprio, quindi qui non si fissa quello dello stato scelto: lo
        definisce solo il tema scuro, dove serve un chiaro unico per tutti. */
     --persona-text: #245733;
+
+    /* ---------- geometria delle schede di scelta ----------
+       Le tre schede del livello coltivatore compaiono in due posti: nella
+       modale delle impostazioni del configuratore (.pc-persona-card) e nella
+       guida (.guide-tab). Sono la stessa scelta, fatta due volte nello stesso
+       prodotto, quindi devono avere lo stesso aspetto.
+
+       Finora erano due copie degli stessi numeri, e infatti avevano già
+       cominciato a divergere: la guida si rimpiccioliva sul telefono mentre
+       il configuratore no, e l'unificazione delle forme le aveva rese pillole
+       da un lato e riquadri dall'altro. Adesso le misure stanno qui una volta
+       sola. Non sono controlli e non seguono la regola della pillola: sono
+       schede — riquadro, illustrazione e due righe di testo. */
+    --choice-card-radius: var(--radius-md);
+    --choice-card-min-h: 62px;
+    --choice-card-pad: 10px 14px 10px 16px;
+    --choice-card-gap: 11px;
+    --choice-card-ico: 43px;
+    --choice-cards-gap: 10px;
   }
   .pc-persona-cards {
     display: flex;
     flex-direction: column;
     /* Tre scelte alternative, non un elenco continuo: lo spazio fra loro deve
        leggersi. A 5px sembravano un blocco unico. */
-    gap: 10px;
+    gap: var(--choice-cards-gap);
   }
   /* Scelta del livello. Usa la scala `--persona-*` definita in cima al file:
      tinta leggera a riposo, riquadro dell'icona più carico a fare da segno di
@@ -8972,11 +9189,11 @@ html[data-theme="dark"]
     position: relative;
     display: flex;
     align-items: center;
-    gap: 11px;
-    min-height: 62px;
+    gap: var(--choice-card-gap);
+    min-height: var(--choice-card-min-h);
     text-align: left;
-    padding: 10px 14px 10px 16px;
-    border-radius: var(--radius-md);
+    padding: var(--choice-card-pad);
+    border-radius: var(--choice-card-radius);
     border: 1.5px solid var(--accent-edge);
     background: color-mix(
       in srgb,
@@ -9216,7 +9433,7 @@ html[data-theme="dark"]
       margin-bottom: 2px;
     }
     .preconfig-step-btn {
-      min-height: 32px;
+      min-height: var(--control-h-sm);
     }
     .preconfig-step-input {
       padding-block: 5px;
@@ -9312,7 +9529,7 @@ html[data-theme="dark"]
     justify-content: center;
     gap: 8px;
     padding: 12px 22px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: var(--serra-green);
     color: var(--serra-white);
     font-family: Fraunces, serif;
@@ -9885,7 +10102,12 @@ html[data-theme="dark"]
    pulsante nuovo significa aggiungerlo a una di queste tre.
    ========================================================================== */
 @layer components {
-  /* --- forma comune: stessa sagoma per tutti i ruoli. --- */
+  /* --- forma comune: stessa sagoma per tutti i ruoli. ---
+     Questo elenco è il posto giusto, ma citava `--button-radius`, un token
+     privato che valeva 12 px e che nessun'altra regola dell'app usava: i
+     pulsanti qui dentro erano quindi gli unici squadrati mentre quelli
+     scritti a mano nelle pagine erano pillole. Ora punta al token dei
+     controlli, lo stesso che usa tutto il resto. */
   :is(
     .detail-add-btn,
     .conf-cart-export-btn,
@@ -9915,7 +10137,7 @@ html[data-theme="dark"]
     .del,
     .crops-fill-main-btn
   ) {
-    border-radius: var(--button-radius);
+    border-radius: var(--control-radius-pill);
     font-weight: var(--button-font-weight);
   }
 

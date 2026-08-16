@@ -415,60 +415,73 @@
                     Dal seme costa meno, dalla piantina guadagni fino a un mese
                     sulla raccolta.
                   </p>
-                  <div class="journey-pair journey-feature">
-                    <a
-                      class="journey-pick journey-pick--semi hero-cfg-catalog-link"
-                      href="#stagione"
-                    >
-                      <img
-                        class="journey-pick-illo"
-                        src="assets/img/svg/bustina-semi.svg"
-                        alt=""
-                        width="64"
-                        height="64"
-                        loading="eager"
-                        decoding="async"
-                      />
-                      <span class="journey-pick-copy">
-                        <b data-i18n="journey.semi_label">I semi</b>
-                        <small data-i18n="journey.semi_hint"
-                          >97 varietà · da 2,20 €</small
-                        >
-                      </span>
-                      <span class="journey-arrow" aria-hidden="true">→</span>
-                    </a>
-
-                    <span class="journey-or" data-i18n="journey.or"
-                      >oppure</span
-                    >
-
-                    <a
-                      class="journey-pick journey-pick--piantine"
-                      href="vivaio.html"
-                    >
-                      <img
-                        class="journey-pick-illo"
-                        src="assets/img/svg/piantina-vaso.svg"
-                        alt=""
-                        width="64"
-                        height="64"
-                        loading="eager"
-                        decoding="async"
-                      />
-                      <span class="journey-pick-copy">
-                        <b data-i18n="journey.piantine_label">Le piantine</b>
-                        <small data-i18n="journey.piantine_hint"
-                          >già cresciute · in 48 h</small
-                        >
-                      </span>
-                      <span class="journey-arrow" aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                  <!-- Le altre due schede chiudono con una riga d'azione: qui
-                       non c'era e i tre fondi non si allineavano. Non serve
-                       un secondo pulsante — le due righe sopra sono già la
-                       scelta — ma la domanda che uno si fa a quel punto. -->
+                  <!-- Segnaposto: sul desktop le tre schede condividono le
+                       stesse righe (subgrid) e questa tappa non ha un'anteprima.
+                       Senza la casella vuota lo zoccolo salirebbe di una riga e
+                       i pulsanti non cadrebbero più alla quota delle altre due.
+                       Fuori dal desktop la casella è display:none. -->
+                  <div
+                    class="journey-feature journey-feature--slot"
+                    aria-hidden="true"
+                  ></div>
+                  <!-- La coppia semi/piantine sta dentro lo zoccolo d'azione,
+                       non più a metà scheda: è lei la chiamata all'azione di
+                       questa tappa, e adesso parte dalla stessa riga in cui
+                       partono i pulsanti delle altre due. -->
                   <div class="journey-actions">
+                    <div class="journey-pair">
+                      <a
+                        class="journey-pick journey-pick--semi hero-cfg-catalog-link"
+                        href="#stagione"
+                      >
+                        <img
+                          class="journey-pick-illo"
+                          src="assets/img/svg/bustina-semi.svg"
+                          alt=""
+                          width="64"
+                          height="64"
+                          loading="eager"
+                          decoding="async"
+                        />
+                        <span class="journey-pick-copy">
+                          <b data-i18n="journey.semi_label">I semi</b>
+                          <small data-i18n="journey.semi_hint"
+                            >97 varietà · da 2,20 €</small
+                          >
+                        </span>
+                        <span class="journey-arrow" aria-hidden="true">→</span>
+                      </a>
+
+                      <span class="journey-or" data-i18n="journey.or"
+                        >oppure</span
+                      >
+
+                      <a
+                        class="journey-pick journey-pick--piantine"
+                        href="vivaio.html"
+                      >
+                        <img
+                          class="journey-pick-illo"
+                          src="assets/img/svg/piantina-vaso.svg"
+                          alt=""
+                          width="64"
+                          height="64"
+                          loading="eager"
+                          decoding="async"
+                        />
+                        <span class="journey-pick-copy">
+                          <b data-i18n="journey.piantine_label">Le piantine</b>
+                          <small data-i18n="journey.piantine_hint"
+                            >già cresciute · in 48 h</small
+                          >
+                        </span>
+                        <span class="journey-arrow" aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                    <!-- Non serve un terzo pulsante: le due righe sopra sono
+                         già la scelta. Resta la domanda che uno si fa a quel
+                         punto, nella stessa posizione degli altri link
+                         discreti. -->
                     <a class="journey-quiet" href="guida.html#seme-o-piantina">
                       <span data-i18n="journey.step2_help"
                         >Seme o piantina?</span

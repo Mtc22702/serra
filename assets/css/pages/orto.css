@@ -48,8 +48,9 @@
     --orto-shadow-sm: var(--elev-1);
     --orto-shadow: var(--elev-2);
     --orto-shadow-lg: var(--elev-3);
-    --orto-r: var(--radius-lg);
-    --orto-r-lg: var(--radius-xl);
+    /* `--orto-r` e `--orto-r-lg` non esistono più: erano due alias locali di
+       --radius-lg e --radius-xl e servivano solo a far sembrare diversa una
+       geometria che era già condivisa. Le regole citano i token di base.css. */
     color: var(--orto-ink);
     background: #f1ece7;
   }
@@ -75,7 +76,7 @@
   .orto-howto {
     margin-bottom: clamp(1.1rem, 2.5vw, 1.6rem);
     border: 1px dashed var(--orto-line-strong);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--orto-green) 4%, transparent);
   }
 
@@ -144,7 +145,7 @@
     flex: none;
     margin: 0 -6px 0 0;
     border: 1px solid transparent;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: transparent;
     color: var(--orto-muted);
     cursor: pointer;
@@ -283,7 +284,7 @@
     gap: 0 11px;
     padding: 11px 13px;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r);
+    border-radius: var(--control-radius-pill);
     background: var(--orto-surface-2);
     color: var(--orto-ink);
     cursor: pointer;
@@ -316,7 +317,7 @@
   .orto-tab-badge {
     min-width: 24px;
     padding: 0 7px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.13);
     color: var(--orto-green);
     font-size: 12px;
@@ -335,7 +336,7 @@
     position: relative;
     overflow: hidden;
     padding: clamp(1.1rem, 2.6vw, 1.6rem) clamp(1.1rem, 2.6vw, 1.7rem);
-    border-radius: var(--orto-r-lg);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface);
     color: var(--orto-ink);
     box-shadow: var(--elev-2);
@@ -490,7 +491,7 @@
     max-width: 360px;
     padding: 11px 12px;
     border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.1);
   }
 
@@ -547,7 +548,7 @@
     flex: none;
     padding: 7px 4px 8px;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     background: var(--orto-surface);
     color: var(--orto-ink-soft);
     cursor: pointer;
@@ -642,7 +643,7 @@
     margin-top: 0.6rem;
     padding: 14px 16px;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r-lg);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface);
     box-shadow: var(--elev-1);
   }
@@ -720,7 +721,7 @@
     padding: 12px 14px;
     overflow: hidden;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     background: var(--orto-surface);
     box-shadow: var(--elev-1);
     animation: orto-rise 0.32s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
@@ -880,7 +881,7 @@
   .orto-empty {
     padding: 44px 26px;
     border: 1.5px dashed var(--orto-line-strong);
-    border-radius: var(--orto-r-lg);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface-2);
     text-align: center;
   }
@@ -952,7 +953,7 @@
   .orto-card {
     overflow: hidden;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r-lg);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface);
     box-shadow: var(--elev-2);
     animation: orto-rise 0.36s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
@@ -1041,7 +1042,7 @@
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 12px;
     font-weight: 750;
     letter-spacing: 0.04em;
@@ -1175,7 +1176,7 @@
     flex: none;
     margin-left: auto;
     border: 1px solid var(--orto-line);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: transparent;
     color: var(--orto-muted);
     cursor: pointer;
@@ -1224,7 +1225,7 @@
     gap: 14px;
     padding: 12px 14px;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     background: var(--orto-surface);
     box-shadow: var(--elev-1);
     grid-template-columns: 46px minmax(0, 1fr) auto;
@@ -1328,7 +1329,7 @@
     margin: 0 0 14px;
     padding: 9px 14px;
     border: 1px dashed var(--orto-line-strong);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     color: var(--orto-muted);
     font-size: 13px;
     line-height: 1.4;
@@ -1348,7 +1349,7 @@
     display: flex;
     gap: 4px;
     padding: 4px;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: var(--orto-surface-2);
   }
 
@@ -1360,7 +1361,7 @@
     gap: 1px;
     padding: 8px 6px;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     background: transparent;
     color: var(--orto-ink-soft);
     cursor: pointer;
@@ -1461,7 +1462,7 @@
     gap: 7px;
     padding: 0 20px;
     border: 1.5px solid var(--orto-green);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: linear-gradient(160deg, #43804d, var(--orto-green-dk));
     color: #fff;
     cursor: pointer;
@@ -1470,7 +1471,7 @@
     font-weight: 700;
     box-shadow: var(--elev-2);
     transition: transform 0.14s ease, box-shadow 0.18s ease;
-    min-height: var(--button-min-height, 44px);
+    min-height: var(--button-min-height);
   }
 
   .orto-btn:hover {
@@ -1492,7 +1493,7 @@
   .orto-btn--sm {
     padding: 0 14px;
     font-size: 0.9rem;
-    min-height: 38px;
+    min-height: var(--control-h-sm);
   }
 
   .orto-toolbar {
@@ -1515,7 +1516,7 @@
     gap: 13px;
     padding: 15px 17px;
     border: 1px solid var(--orto-line);
-    border-radius: var(--orto-r);
+    border-radius: var(--radius-lg);
     background: var(--orto-surface);
     box-shadow: none;
   }
@@ -1582,7 +1583,7 @@
     max-height: min(92vh, 760px);
     max-height: min(92dvh, 760px);
     overflow: hidden;
-    border-radius: var(--orto-r-lg);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-lg);
     flex-direction: column;
@@ -1675,7 +1676,7 @@
     height: 36px;
     flex: none;
     border: 1px solid transparent;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: transparent;
     color: var(--orto-ink-soft);
     cursor: pointer;
@@ -1784,7 +1785,7 @@
     gap: 8px;
     padding: 0 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: var(--orto-surface);
     color: var(--orto-muted);
   }
@@ -1822,7 +1823,7 @@
     flex: none;
     padding: 7px 12px;
     border: 1px solid var(--orto-line-strong);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--orto-surface);
     color: var(--orto-ink-soft);
     cursor: pointer;
@@ -2010,7 +2011,7 @@
     width: 100%;
     padding: 11px 13px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: var(--orto-surface);
     color: inherit;
     font: inherit;
@@ -2020,7 +2021,7 @@
     width: 100%;
     padding: 11px 13px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: var(--orto-surface);
     color: inherit;
     font: inherit;
@@ -2137,7 +2138,7 @@
     margin: 10px auto 0;
     padding: 46px 32px 40px;
     border: 1.5px dashed var(--orto-line-strong);
-    border-radius: var(--orto-r-lg);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-sm);
     text-align: center;
@@ -2773,10 +2774,10 @@
     display: grid;
     gap: 3px;
     min-width: 0;
-    min-height: 56px;
+    min-height: var(--control-h-lg);
     padding: 6px 4px 7px;
     border: 0;
-    border-radius: var(--radius-lg);
+    border-radius: var(--control-radius-pill);
     background: transparent;
     text-align: center;
     grid-template-columns: minmax(0, 1fr);
@@ -2977,7 +2978,7 @@
 
   .orto-welcome-actions .orto-btn:first-child {
     grid-column: 1 / -1;
-    min-height: 48px;
+    min-height: var(--control-h-md);
   }
 
   .orto-welcome-shop {
@@ -3044,7 +3045,7 @@
   }
 
   .orto-tab {
-    min-height: 58px;
+    min-height: var(--control-h-lg);
     grid-template-rows: 28px auto;
   }
 

@@ -879,6 +879,24 @@
     toastTimer = setTimeout(() => toastEl.classList.remove("is-on"), 2600);
   }
 
+  const nomePer = (id) => (BYID[id] ? plantName(BYID[id]) : "");
+
+  /* Stesso annulla della home e del configuratore: sta nel modulo condiviso
+     del carrello, così le tre pagine non ne fanno tre versioni diverse. */
+  function offriAnnulla(chiave, valori, prima) {
+    const UI = window.SerraCartUI;
+    if (!UI || !UI.annullabile) return;
+    UI.annullabile({
+      testo: UI.testo(lang, chiave, valori),
+      etichetta: UI.testo(lang, "undo.action"),
+      onAnnulla: () => {
+        cart = prima.slice();
+        saveCart();
+        render();
+      }
+    });
+  }
+
   // Crea un ordine con le stesse chiavi che l'Area Personale già legge.
   async function checkout() {
     const utente = window.SerraAPI?.getCurrentUser?.();
@@ -1014,17 +1032,23 @@
       // scritta nella riga.
       const piantina =
         action === "remove" || trigger.dataset.variante === "piantina";
+      // Fotografia di prima: è quello che l'annulla rimetterà a posto.
+      const prima = cart.slice();
       cart = C().rimuovi(cart, id, piantina);
       saveCart();
       render();
-      return toast(t("toast.removed"));
+      // Il messaggio semplice diceva «Rimossa» e basta: adesso porta con sé
+      // il modo per tornare indietro, come nelle altre due pagine.
+      return offriAnnulla("undo.removed", { nome: nomePer(id) }, prima);
     }
     // Il carrello è unico: "Svuota" lo svuota davvero, semi compresi. Per
     // togliere solo una parte ci sono i pulsanti riga per riga.
     if (action === "clear") {
+      const prima = cart.slice();
       cart = C().svuota();
       render();
-      return toast(t("toast.cleared"));
+      if (prima.length) offriAnnulla("undo.cleared", null, prima);
+      return;
     }
     if (action === "set-type") {
       const tipo = trigger.dataset.type || "";

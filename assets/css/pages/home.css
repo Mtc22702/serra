@@ -115,7 +115,7 @@
     position: relative;
     padding: 0;
     border: 1px solid rgba(45, 106, 79, 0.16);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.72);
     color: #245733;
     box-shadow: var(--elev-2);
@@ -451,7 +451,7 @@
       width: 38px;
       height: 38px;
       flex-basis: 38px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .theme-toggle-icon {
       font-size: 19px;
@@ -2491,7 +2491,7 @@
       height: 40px;
       min-width: 44px;
       flex-basis: 44px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius);
       background: #2d6a4f;
       border: 1px solid #5da777;
       box-shadow: var(--elev-2);
@@ -2501,11 +2501,11 @@
       background: var(--serra-white);
     }
     .site-header .theme-toggle {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 40px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .theme-toggle-icon {
       font-size: 19px;
@@ -2532,10 +2532,10 @@
     .site-header .cart-btn {
       width: 62px;
       min-width: 62px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
       height: 40px;
       padding: 0;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .cart-icon {
       display: inline-flex;
@@ -2610,9 +2610,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -2637,7 +2637,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -2932,7 +2932,7 @@
     flex: 0 0 auto;
     min-height: 32px;
     padding: 0 10px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -3106,7 +3106,7 @@
     justify-content: center;
     min-height: 32px;
     padding: 0 11px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -3196,9 +3196,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -3223,7 +3223,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -3261,7 +3261,7 @@
     .cookie-accept-btn,
     .cookie-reject-btn {
       flex: none;
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0.34rem 0.52rem;
       font-size: 0.66rem;
     }
@@ -3718,7 +3718,7 @@
     .site-header .theme-toggle,
     .site-header .nav-lang,
     .site-header .cart-btn {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       height: 44px;
     }
 
@@ -3799,14 +3799,14 @@
       position: static;
       display: flex;
       width: 100%;
-      min-height: 54px;
+      min-height: var(--control-h-lg);
       margin: 0 0 0.65rem;
       padding: 0.55rem 0.7rem;
       align-items: center;
       justify-content: space-between;
       gap: 0.8rem;
       border: 1.5px solid rgba(45, 106, 79, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: rgba(255, 253, 246, 0.96);
       color: var(--green-dk);
       box-shadow: var(--elev-2);
@@ -3988,11 +3988,11 @@
     .site-header .nav-link:not(.cart-btn) {
       display: flex;
       align-items: center;
-      min-height: 50px;
+      min-height: var(--control-h-lg);
       padding: 0.74rem 0.8rem;
       gap: 0.65rem;
       border: 1px solid transparent;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       font-size: 0.93rem;
       font-weight: 650;
       transition:
@@ -4057,7 +4057,7 @@
       margin-top: 0.3rem;
       padding-top: calc(0.74rem + 0.3rem);
       border-top: 1px dashed rgba(107, 98, 84, 0.2);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
 
     /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
@@ -4174,7 +4174,7 @@
       flex: none;
       padding: 3px;
       gap: 2px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: #fff;
       border: 1px solid rgba(47, 107, 58, 0.16);
     }
@@ -4183,7 +4183,7 @@
       min-width: 38px;
       padding: 0.34rem 0.5rem;
       border: 0;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       background: transparent;
       color: #6f7b72;
       font-family: "DM Sans", sans-serif;
@@ -4419,7 +4419,7 @@
     min-height: 32px;
     padding: 0 11px;
     border: 1px solid rgba(47, 107, 58, 0.3);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.13);
     color: var(--verde-scuro);
     font-family: var(--sans);
@@ -6126,7 +6126,7 @@
 
     .companions-toggle {
       display: inline-flex;
-      min-height: 44px;
+      min-height: var(--control-h-md);
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
@@ -6134,7 +6134,7 @@
       margin-top: 0.8rem;
       padding: 0.7rem 1rem;
       border: 1px solid rgba(47, 107, 58, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: rgba(255, 255, 255, 0.72);
       color: var(--green-dk, #2f6b3a);
       font-size: 0.82rem;

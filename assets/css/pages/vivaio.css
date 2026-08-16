@@ -28,7 +28,7 @@
     gap: 12px;
     padding: 14px 16px 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--orto-r-lg, 20px);
+    border-radius: var(--radius-xl);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-sm);
   }
@@ -60,12 +60,16 @@
     margin: 0;
   }
 
+  /* È una select: si sceglie da un elenco, non si preme. Prendeva la pillola
+     e finiva accanto alle chip dei filtri — che sono pillole per davvero —
+     rendendo indistinguibili due cose che fanno lavori diversi. */
   .viv-sort {
-    min-height: 44px;
+    min-height: var(--control-h-md);
     flex: 0 1 260px;
+    min-width: 0;
     padding: 0 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius);
     background: var(--orto-surface-2);
     color: inherit;
     cursor: pointer;
@@ -84,10 +88,10 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    min-height: 40px;
+    min-height: var(--control-h-sm);
     padding: 0 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--orto-surface-2);
     color: inherit;
     cursor: pointer;
@@ -233,7 +237,7 @@
     margin-bottom: 14px;
     padding: 10px 15px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-sm);
   }
@@ -358,12 +362,16 @@
     font-size: 10.5px;
   }
 
+  /* Il piede della scheda porta la conferma «✓ nel carrello» e il comando che
+     la disfa. Il comando distruttivo sta al capo opposto della riga rispetto
+     al «＋» del regolatore, che è appena sopra: erano a sei pixel l'uno
+     dall'altro, con il «rimuovi» alto diciannove. */
   .viv-card-foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    min-height: 18px;
+    gap: var(--control-gap-danger);
+    margin-top: 2px;
     font-size: 11.5px;
   }
 
@@ -378,6 +386,10 @@
   }
 
   .viv-remove {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-h-sm);
+    padding-left: 10px;
     border: 0;
     background: none;
     color: var(--orto-muted);
@@ -385,6 +397,7 @@
     font: inherit;
     font-size: 11.5px;
     text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .viv-remove:hover {
@@ -542,13 +555,13 @@
 
   .viv-hero-cta {
     display: inline-flex;
-    min-height: 44px;
+    min-height: var(--control-h-md);
     align-items: center;
     gap: 10px;
     margin-top: 14px;
     padding: 0 15px;
     border: 1px solid color-mix(in srgb, var(--orto-green) 28%, transparent);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--orto-green);
     color: #fff;
     font-size: 12.5px;
@@ -834,7 +847,7 @@
     .viv-filter-shell {
       overflow: hidden;
       border: 1.5px solid var(--orto-line);
-      border-radius: var(--orto-r-lg, 20px);
+      border-radius: var(--radius-xl);
       background: var(--orto-surface);
       box-shadow: var(--orto-shadow-sm);
     }
@@ -893,7 +906,7 @@
     }
 
     .viv-chip {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       flex: 0 0 auto;
     }
 
@@ -943,33 +956,52 @@
       font-size: 9.5px;
     }
 
+    /* Su smartphone l'etichetta restava assoluta sopra una griglia a una sola
+       riga: il `margin-top` sulla spedizione era l'unico spazio che la teneva
+       lontana e, appena il testo andava a capo, i due blocchi si sovrapponevano.
+       Qui l'etichetta entra nel flusso della griglia (colonna 2, riga 1) e la
+       spedizione occupa la riga sotto: nessun elemento può più finire addosso
+       a un altro, qualunque sia la lunghezza delle stringhe tradotte. */
     .viv-hero-visual {
-      min-height: 84px;
       display: grid;
+      min-height: 84px;
       align-items: center;
+      column-gap: 10px;
+      row-gap: 6px;
       grid-column: 1;
       grid-row: 3;
       grid-template-columns: 78px minmax(0, 1fr);
-      padding: 8px;
+      grid-template-rows: auto auto;
+      padding: 10px;
       border-radius: var(--radius-lg);
     }
 
     .viv-visual-label {
-      top: 10px;
-      right: 10px;
+      position: static;
+      top: auto;
+      right: auto;
       left: auto;
+      padding: 4px 8px;
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: start;
+      font-size: 9px;
     }
 
     .viv-hero-art {
       width: 78px;
       max-height: 78px;
+      align-self: center;
       grid-column: 1;
+      grid-row: 1 / span 2;
     }
 
     .viv-shipping {
       position: static;
       grid-column: 2;
-      margin-top: 20px;
+      grid-row: 2;
+      margin-top: 0;
+      padding: 7px 9px;
       font-size: 10.5px;
     }
   }

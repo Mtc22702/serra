@@ -190,7 +190,7 @@
     position: relative;
     padding: 0;
     border: 1px solid rgba(45, 106, 79, 0.16);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.72);
     color: #245733;
     box-shadow: var(--elev-2);
@@ -531,7 +531,7 @@
       width: 38px;
       height: 38px;
       flex-basis: 38px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .theme-toggle-icon {
       font-size: 19px;
@@ -2684,7 +2684,7 @@
       height: 40px;
       min-width: 44px;
       flex-basis: 44px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius);
       background: #2d6a4f;
       border: 1px solid #5da777;
       box-shadow: var(--elev-2);
@@ -2694,11 +2694,11 @@
       background: var(--serra-white);
     }
     .site-header .theme-toggle {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 40px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .theme-toggle-icon {
       font-size: 19px;
@@ -2725,10 +2725,10 @@
     .site-header .cart-btn {
       width: 62px;
       min-width: 62px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
       height: 40px;
       padding: 0;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .cart-icon {
       display: inline-flex;
@@ -2803,9 +2803,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -2830,7 +2830,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -3156,7 +3156,7 @@ html[data-theme="dark"] .auth-hint-demo summary::after {
 .auth-hint code {
   background: rgba(0, 0, 0, 0.06);
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   white-space: normal;
   overflow-wrap: anywhere;
 }
@@ -3197,7 +3197,7 @@ html[data-theme="dark"] label {
   font-family: var(--font-sans);
   font-size: 0.95rem;
   padding: 12px 16px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius);
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   background: var(--bg-input, #ffffff);
   color: var(--text-color, var(--serra-text));
@@ -3259,7 +3259,7 @@ html[data-theme="dark"] .modal-card select {
   font-size: 1rem;
   font-weight: 600;
   padding: 12px 24px;
-  border-radius: var(--radius-md);
+  border-radius: var(--control-radius-pill);
   border: none;
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -3300,12 +3300,14 @@ html[data-theme="dark"] .btn-outline {
 .btn-small {
   padding: 6px 12px;
   font-size: 0.85rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius-pill);
 }
+/* La spaziatura di questo pannello è la distanza fra le azioni rapide e la
+   zona «Annulla ordine»: è quella che conta. */
 .order-actions-panel {
   min-width: 238px;
   display: grid;
-  gap: 7px;
+  gap: var(--control-gap-danger);
   padding: 8px;
   border: 1px solid var(--border-color, rgba(47, 107, 58, 0.12));
   border-radius: var(--radius-md);
@@ -3314,18 +3316,18 @@ html[data-theme="dark"] .btn-outline {
 .order-quick-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px;
+  gap: var(--control-gap);
 }
 .order-compact-action {
   width: 100%;
-  min-height: 38px;
+  min-height: var(--control-h-sm);
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
   padding: 6px 7px;
   border: 1px solid var(--border-color, rgba(47, 107, 58, 0.16));
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius-pill);
   color: var(--text-dark, var(--serra-text));
   background: var(--bg-card, var(--serra-white));
   font: 750 0.67rem/1.15 var(--font-sans);
@@ -3384,18 +3386,21 @@ html[data-theme="dark"] .btn-outline {
   color: var(--c-green, var(--serra-green));
   background: rgba(47, 107, 58, 0.055);
 }
+/* «Annulla ordine» stava sei pixel sotto a «Stampa ricevuta»: il filetto
+   tratteggiato diceva che la zona era diversa, ma il dito non legge i
+   filetti. La distanza adesso la dice anche lo spazio. */
 .order-cancel-zone {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
-  margin-top: 1px;
-  padding: 6px 2px 0;
+  gap: var(--control-gap-danger);
+  margin-top: var(--control-gap);
+  padding: var(--control-gap-danger) 2px 0;
   border-top: 1px dashed rgba(190, 68, 61, 0.18);
 }
 .order-cancel-button {
-  min-height: 27px;
+  min-height: var(--control-h-sm);
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -3403,7 +3408,7 @@ html[data-theme="dark"] .btn-outline {
   padding: 3px 7px;
   color: #a83d38;
   border: 1px solid rgba(190, 68, 61, 0.2);
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius-pill);
   border-color: rgba(190, 68, 61, 0.22);
   background: transparent;
   font: 700 0.62rem/1 var(--font-sans);
@@ -3839,7 +3844,7 @@ html[data-theme="dark"] .data-table tr:hover {
 .status-badge {
   display: inline-block;
   padding: 4px 10px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--control-radius-pill);
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -3939,7 +3944,7 @@ html[data-theme="dark"] .badge-category {
 .admin-search-wrapper input {
   padding: 8px 14px;
   font-size: 0.9rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius);
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   background: var(--bg-input, var(--serra-white));
   color: var(--text-color, #333);
@@ -3973,7 +3978,10 @@ html[data-theme="dark"] .badge-category {
   padding: 10px 16px;
   color: var(--text-muted, var(--serra-slate));
   cursor: pointer;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  /* Tab attaccata al pannello: solo gli angoli alti, ma con il raggio dei
+     controlli — era l'ultimo punto dell'app con un raggio fuori scala. */
+  border-radius: var(--control-radius) var(--control-radius) 0 0;
+  min-height: var(--control-h-md);
   transition: var(--transition-smooth);
 }
 .admin-tab.active {
@@ -4159,11 +4167,11 @@ html[data-theme="dark"] .admin-order-insight:hover {
 }
 .admin-orders-toolbar input,
 .admin-orders-toolbar select {
-  min-height: 42px;
+  min-height: var(--control-h-md);
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius);
   background: var(--bg-input, var(--serra-white));
   color: var(--text-color, #333);
   font: inherit;
@@ -4233,10 +4241,10 @@ html[data-theme="dark"] .admin-orders-count {
 }
 .admin-order-status-select {
   width: 100%;
-  min-height: 38px;
+  min-height: var(--control-h-sm);
   padding: 7px 10px;
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-  border-radius: var(--radius-sm);
+  border-radius: var(--control-radius);
   color: var(--text-color, #333);
   background: var(--bg-input, var(--serra-white));
   font-family: var(--font-sans);
@@ -4248,19 +4256,20 @@ html[data-theme="dark"] .admin-orders-count {
 .admin-order-actions .admin-packing-btn {
   grid-column: 1 / -1;
 }
+/* Contiene un pulsante rosso: distanza da azione distruttiva. */
 .admin-order-secondary-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 6px;
+  gap: var(--control-gap-danger);
 }
 .admin-order-secondary-actions .btn {
-  min-height: 34px;
+  min-height: var(--control-h-sm);
   padding: 6px 10px;
   font-size: 0.8rem;
   font-weight: 700;
 }
 .admin-packing-btn {
-  min-height: 38px;
+  min-height: var(--control-h-sm);
   color: var(--serra-white);
   border: 1px solid var(--serra-green);
   background: linear-gradient(135deg, var(--serra-green), #43804d);
@@ -4439,7 +4448,7 @@ body.modal-open {
   flex: 0 0 auto;
   padding: 0;
   border: 1px solid var(--border-color, rgba(47, 107, 58, 0.14));
-  border-radius: var(--radius-md);
+  border-radius: var(--control-radius);
   color: var(--text-dark, var(--serra-text));
   background: var(--bg-card, var(--serra-white));
   font-size: 1.35rem;
@@ -4501,7 +4510,7 @@ html[data-theme="dark"] .modal-close-button {
 .order-edit-stepper input {
   width: 100%;
   height: 36px;
-  min-height: 36px;
+  min-height: var(--control-h-sm);
   margin: 0;
   padding: 0;
   border: 0;
@@ -4673,7 +4682,7 @@ html[data-theme="dark"] .order-items-disclosure summary:focus-visible {
   background: var(--bg-card-hover, rgba(0, 0, 0, 0.03));
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.07));
   padding: 6px 12px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--control-radius-pill);
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-dark, var(--serra-text));
@@ -5098,7 +5107,7 @@ html[data-theme="dark"] .order-item-qty {
     width: 17px;
     height: 17px;
     border: 1.5px solid #6f7b72;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     background: var(--serra-white);
   }
   .packing-quantity {
@@ -5305,7 +5314,7 @@ html[data-theme="dark"] .notification-content {
     flex: 1 1 180px;
     min-width: 0;
     white-space: normal;
-    border-radius: var(--radius-sm);
+    border-radius: var(--control-radius-pill);
     border: 1px solid var(--border-color, rgba(0, 0, 0, 0.06));
   }
 
@@ -5656,7 +5665,7 @@ html[data-theme="dark"] .notification-content {
   .order-item-pill {
     max-width: 100%;
     white-space: normal;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
   }
 
   .order-item-name {
@@ -5758,7 +5767,7 @@ html[data-theme="dark"] .notification-content {
   }
 
   .btn-small {
-    min-height: 44px;
+    min-height: var(--control-h-md);
     padding: 10px 12px;
   }
 
@@ -5983,7 +5992,7 @@ html[data-theme="dark"] .notification-content {
     flex: 0 0 auto;
     min-height: 32px;
     padding: 0 10px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -6157,7 +6166,7 @@ html[data-theme="dark"] .notification-content {
     justify-content: center;
     min-height: 32px;
     padding: 0 11px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -6247,9 +6256,9 @@ html[data-theme="dark"] .notification-content {
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -6274,7 +6283,7 @@ html[data-theme="dark"] .notification-content {
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -6312,7 +6321,7 @@ html[data-theme="dark"] .notification-content {
     .cookie-accept-btn,
     .cookie-reject-btn {
       flex: none;
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0.34rem 0.52rem;
       font-size: 0.66rem;
     }
@@ -6839,7 +6848,7 @@ html[data-theme="dark"] .notification-content {
     .site-header .theme-toggle,
     .site-header .nav-lang,
     .site-header .cart-btn {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       height: 44px;
     }
 
@@ -6952,14 +6961,14 @@ html[data-theme="dark"] .notification-content {
       position: static;
       display: flex;
       width: 100%;
-      min-height: 54px;
+      min-height: var(--control-h-lg);
       margin: 0 0 0.65rem;
       padding: 0.55rem 0.7rem;
       align-items: center;
       justify-content: space-between;
       gap: 0.8rem;
       border: 1.5px solid rgba(45, 106, 79, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: rgba(255, 253, 246, 0.96);
       color: var(--green-dk);
       box-shadow: var(--elev-2);
@@ -7141,11 +7150,11 @@ html[data-theme="dark"] .notification-content {
     .site-header .nav-link:not(.cart-btn) {
       display: flex;
       align-items: center;
-      min-height: 50px;
+      min-height: var(--control-h-lg);
       padding: 0.74rem 0.8rem;
       gap: 0.65rem;
       border: 1px solid transparent;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       font-size: 0.93rem;
       font-weight: 650;
       transition:
@@ -7210,7 +7219,7 @@ html[data-theme="dark"] .notification-content {
       margin-top: 0.3rem;
       padding-top: calc(0.74rem + 0.3rem);
       border-top: 1px dashed rgba(107, 98, 84, 0.2);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
 
     /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
@@ -7327,7 +7336,7 @@ html[data-theme="dark"] .notification-content {
       flex: none;
       padding: 3px;
       gap: 2px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: #fff;
       border: 1px solid rgba(47, 107, 58, 0.16);
     }
@@ -7336,7 +7345,7 @@ html[data-theme="dark"] .notification-content {
       min-width: 38px;
       padding: 0.34rem 0.5rem;
       border: 0;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       background: transparent;
       color: #6f7b72;
       font-family: "DM Sans", sans-serif;
@@ -7621,7 +7630,7 @@ html[data-theme="dark"] .notification-content {
     min-height: 32px;
     padding: 0 11px;
     border: 1px solid rgba(47, 107, 58, 0.3);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.13);
     color: var(--verde-scuro);
     font-family: var(--sans);

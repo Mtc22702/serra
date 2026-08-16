@@ -116,7 +116,7 @@
     position: relative;
     padding: 0;
     border: 1px solid rgba(45, 106, 79, 0.16);
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius-pill);
     background: rgba(255, 255, 255, 0.72);
     color: #245733;
     box-shadow: var(--elev-2);
@@ -452,7 +452,7 @@
       width: 38px;
       height: 38px;
       flex-basis: 38px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .theme-toggle-icon {
       font-size: 19px;
@@ -2492,7 +2492,7 @@
       height: 40px;
       min-width: 44px;
       flex-basis: 44px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius);
       background: #2d6a4f;
       border: 1px solid #5da777;
       box-shadow: var(--elev-2);
@@ -2502,11 +2502,11 @@
       background: var(--serra-white);
     }
     .site-header .theme-toggle {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 40px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .theme-toggle-icon {
       font-size: 19px;
@@ -2533,10 +2533,10 @@
     .site-header .cart-btn {
       width: 62px;
       min-width: 62px;
-      min-height: 40px;
+      min-height: var(--control-h-sm);
       height: 40px;
       padding: 0;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
     .site-header .cart-icon {
       display: inline-flex;
@@ -2611,9 +2611,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -2638,7 +2638,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -2933,7 +2933,7 @@
     flex: 0 0 auto;
     min-height: 32px;
     padding: 0 10px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -3107,7 +3107,7 @@
     justify-content: center;
     min-height: 32px;
     padding: 0 11px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     border: 1px solid rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.14);
     color: var(--verde-scuro);
@@ -3197,9 +3197,9 @@
     }
 
     .site-header .theme-toggle {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+      width: var(--control-h-sm);
+      height: var(--control-h-sm);
+      min-width: var(--control-h-sm);
       flex-basis: 38px;
     }
 
@@ -3224,7 +3224,7 @@
       width: 56px;
       min-width: 56px;
       height: 38px;
-      min-height: 38px;
+      min-height: var(--control-h-sm);
     }
 
     .site-header .cart-icon {
@@ -3262,7 +3262,7 @@
     .cookie-accept-btn,
     .cookie-reject-btn {
       flex: none;
-      min-height: 34px;
+      min-height: var(--control-h-sm);
       padding: 0.34rem 0.52rem;
       font-size: 0.66rem;
     }
@@ -3719,7 +3719,7 @@
     .site-header .theme-toggle,
     .site-header .nav-lang,
     .site-header .cart-btn {
-      min-height: 44px;
+      min-height: var(--control-h-md);
       height: 44px;
     }
 
@@ -3800,14 +3800,14 @@
       position: static;
       display: flex;
       width: 100%;
-      min-height: 54px;
+      min-height: var(--control-h-lg);
       margin: 0 0 0.65rem;
       padding: 0.55rem 0.7rem;
       align-items: center;
       justify-content: space-between;
       gap: 0.8rem;
       border: 1.5px solid rgba(45, 106, 79, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: rgba(255, 253, 246, 0.96);
       color: var(--green-dk);
       box-shadow: var(--elev-2);
@@ -3989,11 +3989,11 @@
     .site-header .nav-link:not(.cart-btn) {
       display: flex;
       align-items: center;
-      min-height: 50px;
+      min-height: var(--control-h-lg);
       padding: 0.74rem 0.8rem;
       gap: 0.65rem;
       border: 1px solid transparent;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       font-size: 0.93rem;
       font-weight: 650;
       transition:
@@ -4058,7 +4058,7 @@
       margin-top: 0.3rem;
       padding-top: calc(0.74rem + 0.3rem);
       border-top: 1px dashed rgba(107, 98, 84, 0.2);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
     }
 
     /* Raggruppa i controlli tema e lingua separandoli dai link di navigazione. */
@@ -4175,7 +4175,7 @@
       flex: none;
       padding: 3px;
       gap: 2px;
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: #fff;
       border: 1px solid rgba(47, 107, 58, 0.16);
     }
@@ -4184,7 +4184,7 @@
       min-width: 38px;
       padding: 0.34rem 0.5rem;
       border: 0;
-      border-radius: var(--radius-sm);
+      border-radius: var(--control-radius-pill);
       background: transparent;
       color: #6f7b72;
       font-family: "DM Sans", sans-serif;
@@ -4420,7 +4420,7 @@
     min-height: 32px;
     padding: 0 11px;
     border: 1px solid rgba(47, 107, 58, 0.3);
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: rgba(47, 107, 58, 0.13);
     color: var(--verde-scuro);
     font-family: var(--sans);
@@ -6127,7 +6127,7 @@
 
     .companions-toggle {
       display: inline-flex;
-      min-height: 44px;
+      min-height: var(--control-h-md);
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
@@ -6135,7 +6135,7 @@
       margin-top: 0.8rem;
       padding: 0.7rem 1rem;
       border: 1px solid rgba(47, 107, 58, 0.22);
-      border-radius: var(--radius-md);
+      border-radius: var(--control-radius-pill);
       background: rgba(255, 255, 255, 0.72);
       color: var(--green-dk, #2f6b3a);
       font-size: 0.82rem;
@@ -6549,7 +6549,7 @@
     display: block;
     padding: clamp(0.7rem, 1.4vw, 1.05rem);
     border: 1px solid rgba(31, 58, 38, 0.14);
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
     background: linear-gradient(170deg, #fffdf6, rgba(47, 107, 58, 0.08));
     box-shadow: 0 16px 38px rgba(24, 53, 36, 0.11);
     max-width: none;
@@ -6795,7 +6795,7 @@
     align-items: center;
     padding: 3px 10px;
     border: 1px solid currentColor;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -6838,8 +6838,17 @@
     min-width: 0;
   }
 
+  /* L'anteprima non si spinge più in fondo: adesso l'ancora bassa della scheda
+     è lo zoccolo d'azione, e due `margin-top: auto` nella stessa colonna flex
+     si sarebbero spartiti lo spazio libero lasciando un vuoto in mezzo. */
   .journey-feature {
-    margin-top: auto;
+    margin-top: 0.15rem;
+  }
+
+  /* Esiste solo per tenere la riga vuota della tappa 2 nel subgrid del
+     desktop: ovunque altro non deve occupare né spazio né gap. */
+  .journey-feature--slot {
+    display: none;
   }
 
   /* Il plastico resta il segno distintivo del configuratore, ma diventa una
@@ -6848,13 +6857,13 @@
     width: min(100%, 220px);
     margin-inline: auto;
     padding: 8px;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     box-shadow: 0 12px 28px rgba(24, 53, 36, 0.14);
   }
 
   .journey-plan-preview .hcg-glass,
   .journey-plan-preview .hcg-glare {
-    border-radius: 13px;
+    border-radius: var(--radius-md);
   }
 
   .journey-plan-preview .hcg-glass {
@@ -6962,7 +6971,7 @@
   .journey-tool-bar img {
     width: 22px;
     height: 22px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     box-shadow: var(--elev-1);
     opacity: 1;
   }
@@ -7018,27 +7027,40 @@
     border-radius: var(--radius-sm);
   }
 
+  /* ---------- lo zoccolo d'azione ---------- */
+
+  /* Prima le tre schede finivano in tre modi diversi: pillola stretta più
+     link nella prima, solo un link nella seconda, riquadro largo nella terza.
+     Scorrendo la fila in orizzontale non c'era una riga a cui l'occhio potesse
+     tornare per capire dove si clicca. Adesso `.journey-actions` è uno zoccolo:
+     stessa quota di partenza in tutte e tre (`margin-top: auto` più il filetto),
+     azione sempre a tutta larghezza, link discreto sempre sulla riga sotto.
+     A cambiare è solo il peso del riempimento, che dice il tipo di azione. */
   .journey-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin-top: 0;
+    display: grid;
+    gap: 9px;
+    justify-items: stretch;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(31, 58, 38, 0.14);
   }
 
   .journey-cta {
-    display: inline-flex;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
     gap: 9px;
     align-items: center;
     justify-content: center;
     min-height: var(--button-min-height);
     padding: 0 20px;
     border: 1px solid transparent;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     background: var(--button-primary-fill);
     color: var(--button-primary-text);
     font-size: 0.96rem;
     font-weight: 700;
+    text-align: center;
     text-decoration: none;
     box-shadow: 0 8px 20px rgba(47, 107, 58, 0.2);
     transition:
@@ -7053,15 +7075,11 @@
     transform: translateY(-2px);
   }
 
-  .journey-actions .journey-cta:only-child {
-    width: 100%;
-  }
-
-  /* La tappa 3 non è un acquisto: stessa forma, riempimento più tenue, così
-     non compete con l'azione che porta soldi ma resta un pulsante vero. */
+  /* La tappa 3 non è un acquisto: stessa forma e stessa larghezza dell'azione
+     principale — così la fila resta leggibile — ma riempimento tenue, perché
+     è uno strumento gratuito e non deve competere con «Crea il piano». */
   .journey-cta--soft {
-    border-color: rgba(47, 107, 58, 0.3);
-    border-radius: var(--radius-md);
+    border-color: rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.11);
     color: #245733;
     box-shadow: none;
@@ -7072,10 +7090,14 @@
     box-shadow: none;
   }
 
+  /* Il link discreto non sta più accanto al pulsante: lì rubava larghezza e
+     faceva sembrare le due cose alternative equivalenti. Sta sotto, centrato
+     sulla stessa colonna, dove si legge come nota a piè di scheda. */
   .journey-quiet {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    min-height: var(--button-min-height);
+    justify-content: center;
+    min-height: 38px;
     padding: 0 14px;
     border-radius: var(--radius-pill);
     color: #34443b;
@@ -7092,12 +7114,12 @@
   }
 
   /* Le due opzioni si impilano: la card centrale è stretta, quindi la colonna
-     rende etichetta, prezzo e area cliccabile più facili da leggere. */
+     rende etichetta, prezzo e area cliccabile più facili da leggere. Il
+     `margin-top: auto` è passato allo zoccolo, che ora le contiene. */
   .journey-pair {
     display: grid;
     align-items: stretch;
     gap: 8px;
-    margin-top: auto;
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -7140,10 +7162,12 @@
     display: grid;
     gap: 0 13px;
     align-items: center;
-    min-height: 92px;
-    padding: 14px 15px 14px 19px;
+    min-height: 84px;
+    padding: 13px 15px 13px 19px;
     overflow: hidden;
-    border: 1px solid rgba(47, 107, 58, 0.24);
+    /* Bordo più marcato del riquadro tenue della tappa 3: nella fila i tre
+       zoccoli si leggono come pieno · contornato · tenue. */
+    border: 1.5px solid rgba(47, 107, 58, 0.32);
     border-radius: var(--radius-lg);
     background:
       linear-gradient(120deg, var(--pick-tint), rgba(255, 255, 255, 0) 62%),
@@ -7318,7 +7342,7 @@
     justify-content: center;
     min-height: var(--button-min-height);
     padding: 0 22px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--control-radius-pill);
     font-size: 0.98rem;
     font-weight: 700;
     text-decoration: none;
@@ -7443,8 +7467,22 @@
         margin-top: 0;
       }
 
+      .journey-feature--slot {
+        display: block;
+      }
+
+      /* Ancorato in fondo: i tre zoccoli finiscono sulla stessa riga di base,
+         quindi i pulsanti delle tre schede si toccano con lo stesso bordo
+         inferiore anche se la tappa 2 ne impila due.
+
+         Le due righe sono fisse — azione sopra, link discreto sotto — e la
+         seconda resta riservata anche nella tappa 3, che il link non ce l'ha:
+         senza quella riserva il suo pulsante salirebbe di un gradino e non
+         cadrebbe più in linea con «Crea il piano». Serve solo qui: dove le
+         schede sono impilate la riga vuota sarebbe spazio morto. */
       .journey-actions {
         align-self: end;
+        grid-template-rows: auto minmax(38px, auto);
       }
     }
   }
@@ -7824,17 +7862,22 @@
       grid-column: auto;
     }
 
+    /* Torna una colonna semplice. `align-items: start`, che serviva alla
+       versione a due colonne del tablet, qui stringeva i figli sulla loro
+       larghezza naturale: lo zoccolo della tappa 3 risultava più corto di
+       quello delle altre due. */
     .journey-step--grow .journey-body {
       display: flex;
+      align-items: stretch;
     }
 
     .journey-step--grow .journey-care-preview {
       margin-top: 0.35rem;
     }
 
-    .journey-cta,
+    /* Lo zoccolo è già una griglia a colonna piena: qui basta ricordare che
+       anche il link discreto resta centrato sotto il pulsante. */
     .journey-quiet {
-      flex: 1 1 100%;
       justify-content: center;
     }
 
