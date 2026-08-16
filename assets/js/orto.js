@@ -1175,23 +1175,37 @@
       (v) => !v.archiviata && BYID[v.plantId],
     ).length;
 
+    // Con il diario vuoto le azioni stanno solo dentro il riquadro centrale:
+    // ripeterle in cima dava due «Aggiungi coltura» e due «Importa dalla mia
+    // serra» nella stessa schermata, e su telefono uno sopra l'altro. Ricompaiono
+    // in testa appena c'è una coltura da affiancare.
+    const vuoto = garden.colture.length === 0;
+
     app.innerHTML = `
       <div class="orto-view-head">
         <div>
           <h2>${t("colture.title")}</h2>
           <p>${t("colture.sub")}</p>
         </div>
-        <button class="orto-btn" type="button" data-orto-action="open-add">${t("colture.add")}</button>
+        ${
+          vuoto
+            ? ""
+            : `<button class="orto-btn" type="button" data-orto-action="open-add">${t("colture.add")}</button>`
+        }
       </div>
       <div class="orto-stats">
         <div class="orto-stat"><span class="orto-stat-ico">🌿</span><span><b>${garden.colture.length}</b><small>${t("colture.stat_active")}</small></span></div>
         <div class="orto-stat"><span class="orto-stat-ico">🪴</span><span><b>${riepilogo.piante}</b><small>${t("colture.stat_plants")}</small></span></div>
         <div class="orto-stat"><span class="orto-stat-ico">🧺</span><span><b>${riepilogo.vicine}</b><small>${t("colture.stat_soon")}</small></span></div>
       </div>
-      <div class="orto-toolbar">
+      ${
+        vuoto
+          ? ""
+          : `<div class="orto-toolbar">
         <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="import-greenhouse">${t("colture.import")}</button>
         <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="export-ics">${t("colture.ics")}</button>
-      </div>
+      </div>`
+      }
       ${
         inAttesa
           ? `<p class="orto-crosslink">
@@ -1822,6 +1836,37 @@
     document.querySelector(".orto-day.is-selected")?.focus();
   });
 
+  /* ---------- apertura dei dialoghi ----------
+     Su iPhone il pannello si apriva storto: la pagina sotto continuava a
+     scorrere sotto il dito e, appena un campo prendeva il fuoco, la tastiera
+     faceva scorrere il documento portandosi via il pannello ancorato in basso.
+     Ogni apertura passa da qui: la posizione della pagina viene congelata e
+     ripristinata alla chiusura dell'ultimo dialogo aperto. */
+  let scrollCongelato = 0;
+
+  function apriDialogo(id) {
+    const dialogo = document.getElementById(id);
+    if (!dialogo) return null;
+    if (!document.body.classList.contains("orto-dialog-open")) {
+      scrollCongelato = window.scrollY || window.pageYOffset || 0;
+      document.body.style.top = `-${scrollCongelato}px`;
+      document.body.classList.add("orto-dialog-open");
+    }
+    if (typeof dialogo.showModal === "function") dialogo.showModal();
+    else dialogo.setAttribute("open", "");
+    return dialogo;
+  }
+
+  function sbloccaPagina() {
+    // Un dialogo può aprirne un altro: si sblocca solo quando non ne resta
+    // nessuno aperto.
+    if (document.querySelector("dialog.orto-dialog[open]")) return;
+    if (!document.body.classList.contains("orto-dialog-open")) return;
+    document.body.classList.remove("orto-dialog-open");
+    document.body.style.top = "";
+    window.scrollTo(0, scrollCongelato);
+  }
+
   /* Clic sullo sfondo scuro: chiude il dialogo, come in ogni pannello dell'app.
      Il bersaglio dell'evento è il <dialog> stesso solo quando si tocca fuori
      dal riquadro, perché il contenuto sta tutto dentro elementi figli. */
@@ -1829,6 +1874,9 @@
     dialogo.addEventListener("click", (event) => {
       if (event.target === dialogo) dialogo.close("cancel");
     });
+    // La chiusura arriva da cinque strade diverse (✕, Annulla, Esc, sfondo,
+    // invio del modulo): lo sblocco sta qui, una volta sola.
+    dialogo.addEventListener("close", sbloccaPagina);
   });
 
   document.addEventListener("click", (event) => {
@@ -1887,7 +1935,7 @@
       colturaDaRimuovere = coltura.id;
       const chi = document.getElementById("ortoRemoveWho");
       if (chi) chi.textContent = plantName(BYID[coltura.plantId]);
-      document.getElementById("ortoRemoveDialog")?.showModal();
+      apriDialogo("ortoRemoveDialog");
       return;
     }
     if (action === "register-harvest") {
@@ -1900,7 +1948,7 @@
       if (chi) chi.textContent = plantName(BYID[coltura.plantId]);
       const kg = document.getElementById("ortoHarvestKg");
       if (kg) kg.value = "1";
-      document.getElementById("ortoHarvestDialog")?.showModal();
+      apriDialogo("ortoHarvestDialog");
       return;
     }
     if (action === "import-orders") return importaDaOrdini();
@@ -1936,7 +1984,7 @@
             : t("plant.qty_hint_plug", { n: rimaste });
       const data = document.getElementById("ortoPlantDate");
       if (data) data.value = E.iso(new Date());
-      document.getElementById("ortoPlantDialog")?.showModal();
+      apriDialogo("ortoPlantDialog");
       return;
     }
     // Chiusura esplicita: la ✕ dell'intestazione. Passa da close("cancel")
@@ -1990,10 +2038,11 @@
       if (quantita) quantita.value = "4";
       const posizione = document.getElementById("ortoPosition");
       if (posizione) posizione.value = "";
-      document.getElementById("ortoAddDialog")?.showModal();
-      // Su schermo largo la tastiera è già pronta per filtrare; su telefono
-      // il fuoco su un campo di ricerca non apre nulla di invasivo.
-      ricerca?.focus();
+      apriDialogo("ortoAddDialog");
+      // Il fuoco sulla ricerca solo dove la tastiera è già lì: su telefono
+      // apriva la tastiera di sistema, che riduce la finestra e faceva
+      // scivolare il pannello sotto il bordo dello schermo.
+      if (window.matchMedia("(min-width: 721px)").matches) ricerca?.focus();
       return;
     }
     // Correzione di una coltura già inserita: capita di sbagliare la data.
@@ -2014,7 +2063,7 @@
         `input[name="ortoEditOrigine"][value="${coltura.origine}"]`,
       );
       if (radio) radio.checked = true;
-      document.getElementById("ortoEditDialog")?.showModal();
+      apriDialogo("ortoEditDialog");
       return;
     }
     if (action === "import-greenhouse") return importaDaSerra();
