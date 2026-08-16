@@ -10143,6 +10143,108 @@ html[data-theme="dark"]
    i pannelli che stanno sopra il contenuto, i campi, l'anello di fuoco.
    ========================================================================= */
 @layer coerenza {
+  /* ============================================================
+     Intestazione su telefono: marchio al centro, comandi ai bordi
+     ============================================================
+     Il centraggio era ottenuto con `position: absolute; left: 50%` sul marchio,
+     e funzionava solo se tre condizioni restavano vere tutte insieme:
+     un antenato posizionato al posto giusto, il padding del marchio simmetrico,
+     e `max-width: calc(100vw - 9rem)` per non finire sotto i pulsanti. Le tre
+     regole però stavano sparse fra base.css e i sei fogli di pagina, che ne
+     riscrivevano dei pezzi ciascuno a modo proprio: nel foglio della guida c'è
+     ancora la nota di chi aveva dovuto rimettere il marchio al suo posto a mano.
+     Basta che una delle tre salti — un antenato che perde `position: relative`,
+     un padding asimmetrico ereditato dal desktop — e il marchio scivola a
+     sinistra sotto il pulsante del menu. In un browser desktop le tre condizioni
+     reggevano, su Safari mobile no.
+
+     Qui il centraggio lo fa la griglia. Marchio e comandi stanno nella stessa
+     cella: il primo centrato da `justify-self`, i secondi distesi da un bordo
+     all'altro. Niente posizionamento assoluto, niente dipendenza da chi sia
+     l'antenato posizionato, niente `100vw`. Sta nell'ultimo livello dichiarato
+     perché deve valere sopra le copie rimaste nei fogli di pagina. */
+  @media (max-width: 660px) {
+    .site-header-inner {
+      align-content: center;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto;
+      gap: 0;
+    }
+
+    .site-header .nav-brand,
+    .site-header .nav-actions {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    /* Il riquadro del marchio è simmetrico: il padding destro che serve sul
+       desktop, qui, spostava il logo di mezzo padding verso sinistra. */
+    .site-header .nav-brand {
+      position: static;
+      z-index: 1;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      min-width: 0;
+      max-width: calc(100% - 9.5rem);
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      justify-self: center;
+      transform: none;
+    }
+
+    /* I comandi passano sopra il marchio: se il nome è lungo e arriva a
+       sfiorarli, resta premibile il pulsante e non il logo. La fascia in sé non
+       intercetta il tocco, così il marchio resta cliccabile negli spazi vuoti. */
+    .site-header .nav-actions {
+      position: static;
+      z-index: 2;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.38rem;
+      padding: 0;
+      pointer-events: none;
+    }
+
+    .site-header .nav-actions > * {
+      pointer-events: auto;
+    }
+
+    /* Il pulsante del menu resta a sinistra senza uscire dal flusso: lo tiene
+       lì il margine automatico, non più `left` e `transform`.
+       La misura torna a 44px: nelle copie di orto e vivaio era scesa a 40 di
+       altezza, sotto il minimo che il progetto si è dato per un bersaglio da
+       toccare col dito. */
+    .site-header .nav-menu-toggle {
+      position: static;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      flex-basis: 44px;
+      order: -1;
+      margin: 0 auto 0 0;
+      transform: none;
+    }
+  }
+
+  /* Sotto i 340px non c'è larghezza per centrare: il marchio si accosta al
+     pulsante del menu invece di finirci sopra. */
+  @media (max-width: 340px) {
+    .site-header .nav-brand {
+      max-width: calc(100% - 7.5rem);
+      margin-left: 3.1rem;
+      justify-self: start;
+    }
+  }
+
   /* ---------- schede che rispondono al passaggio del mouse ----------
      Prima ogni pagina aveva la sua idea di «sollevata»: chi cambiava solo il
      bordo, chi saliva di 5 px, chi non faceva nulla. Un solo gesto, ovunque:

@@ -478,6 +478,161 @@
     line-height: 1.35;
   }
 
+  /* ---------- striscia dei giorni ----------
+     L'agenda rispondeva a una domanda sola, «cosa devo fare adesso»: per sapere
+     cosa sarebbe successo giovedì bisognava aprire le colture una a una. Qui i
+     giorni sono pulsanti bassi con il numero di attività ancora aperte, e si
+     scorrono col dito. Il pallino è il dato che conta: dice dove guardare senza
+     dover toccare niente. */
+  .orto-daystrip {
+    display: flex;
+    gap: 6px;
+    margin: clamp(1rem, 2.4vw, 1.5rem) 0 0.4rem;
+    padding: 4px 2px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .orto-daystrip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .orto-day {
+    position: relative;
+    display: grid;
+    width: 54px;
+    flex: none;
+    padding: 7px 4px 8px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r);
+    background: var(--orto-surface);
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    font: inherit;
+    justify-items: center;
+    scroll-snap-align: center;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      color 0.16s ease;
+  }
+
+  .orto-day:hover {
+    border-color: color-mix(in srgb, var(--orto-green) 45%, transparent);
+  }
+
+  .orto-day-dow {
+    color: var(--orto-muted);
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.1;
+    text-transform: lowercase;
+  }
+
+  .orto-day-num {
+    margin-top: 1px;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  /* Il numero di attività aperte. Quando non ce ne sono resta un punto tenue:
+     una casella vuota farebbe saltare l'allineamento delle altre. */
+  .orto-day-dot {
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    padding: 0 5px;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--orto-green) 15%, transparent);
+    color: var(--orto-green);
+    font-size: 12px;
+    font-weight: 700;
+    place-items: center;
+  }
+
+  .orto-day-dot.is-empty {
+    width: 5px;
+    height: 5px;
+    min-width: 0;
+    margin-top: 9px;
+    margin-bottom: 4px;
+    padding: 0;
+    background: var(--orto-line-strong);
+  }
+
+  /* Oggi resta riconoscibile anche quando si sta guardando un altro giorno. */
+  .orto-day.is-today .orto-day-num {
+    color: var(--orto-green);
+  }
+
+  .orto-day.is-selected {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    color: var(--orto-ink);
+  }
+
+  .orto-day.is-selected .orto-day-dow {
+    color: var(--orto-green);
+  }
+
+  .orto-day.is-selected .orto-day-dot {
+    background: var(--orto-green);
+    color: #fffdf6;
+  }
+
+  .orto-day.is-selected .orto-day-dot.is-empty {
+    background: color-mix(in srgb, var(--orto-green) 55%, transparent);
+  }
+
+  /* ---------- intestazione di un giorno diverso da oggi ----------
+     Più bassa della fascia di oggi: una data futura non ha una percentuale da
+     mostrare né arretrati da recuperare, solo un elenco. */
+  .orto-dayhead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 0.6rem;
+    padding: 14px 16px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--orto-r-lg);
+    background: var(--orto-surface);
+    box-shadow: var(--elev-1);
+  }
+
+  .orto-dayhead-when {
+    margin: 0;
+    color: var(--orto-green);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .orto-dayhead h2 {
+    margin: 0.25rem 0 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.014em;
+    line-height: 1.15;
+    color: var(--orto-ink);
+    text-transform: capitalize;
+  }
+
+  .orto-dayhead-sub {
+    margin: 0.25rem 0 0;
+    color: var(--orto-muted);
+    font-size: 0.93rem;
+  }
+
   /* ---------- intestazioni dell'elenco attività ---------- */
   .orto-section-head {
     display: flex;
@@ -2365,6 +2520,19 @@
     color: #0b1a13;
   }
 
+  html[data-theme="dark"] .orto-day-dot {
+    color: var(--orto-green-lt);
+  }
+
+  html[data-theme="dark"] .orto-day.is-selected .orto-day-dot {
+    color: #0b1a13;
+  }
+
+  html[data-theme="dark"] .orto-day.is-today .orto-day-num,
+  html[data-theme="dark"] .orto-dayhead-when {
+    color: var(--orto-green-lt);
+  }
+
   html[data-theme="dark"] .orto-track-cursor {
     border-color: var(--orto-surface);
   }
@@ -2647,6 +2815,17 @@
     grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
   }
 
+  /* Striscia dei giorni: caselle un filo più strette, così sullo schermo di un
+     telefono ne restano visibili cinque invece di quattro. */
+  .orto-day {
+    width: 50px;
+  }
+
+  .orto-daystrip {
+    margin-inline: -14px;
+    padding-inline: 14px;
+  }
+
   /* La striscia dei passi in colonna: tre voci affiancate su 360px darebbero
      tre parole tagliate. Il filo che le lega passa da orizzontale a verticale
      e scende lungo la colonna dei numeri. */
@@ -2706,7 +2885,8 @@
 @media (prefers-reduced-motion: reduce) {
   .orto-stock,
   .orto-dialog,
-  .orto-pick {
+  .orto-pick,
+  .orto-day {
     animation: none;
     transition: none;
   }

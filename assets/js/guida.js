@@ -151,13 +151,13 @@
         "«Il mio orto» non vende niente: tiene il conto al posto tuo di cosa hai piantato, di cosa serve oggi e di cosa è rimasto indietro. Funziona anche con piante comprate altrove.",
       "grow.s1t": "Le tre schede in alto",
       "grow.s1p":
-        "«Oggi» elenca le attività del giorno, «Colture» quelle che stai seguendo, «Da piantare» ciò che hai comprato e non è ancora in terra. Il numero accanto a ogni nome dice quanto c'è dentro.",
+        "«Agenda» elenca le attività del giorno e, scorrendo la striscia delle date, anche quelle dei giorni successivi. «Colture» raccoglie le piante che stai seguendo, «Da piantare» ciò che hai comprato e non è ancora in terra. Il numero accanto a ogni nome dice quanto c'è dentro.",
       "grow.s2t": "Registra una coltura",
       "grow.s2p":
         "«＋ Aggiungi coltura» chiede pianta, data, quantità e posizione. Da quei quattro dati l'app costruisce da sola il calendario di cura fino alla raccolta.",
       "grow.s3t": "Spunta o rimanda",
       "grow.s3p":
-        "Nella scheda «Oggi» il quadratino segna l'attività come fatta e «Domani» la sposta di un giorno. Quello che salti resta in vista sotto «Da recuperare».",
+        "In «Agenda» il quadratino segna l'attività come fatta e «Domani» la sposta di un giorno. Quello che salti resta in vista sotto «Da recuperare».",
       "grow.s4t": "Correggi quando serve",
       "grow.s4p":
         "«Modifica» cambia data, quantità e posizione di una coltura già inserita: il calendario viene ricalcolato da capo.",
@@ -324,13 +324,13 @@
         "„Grădina mea” nu vinde nimic: ține socoteala în locul tău a ceea ce ai plantat, a ce trebuie făcut azi și a ce a rămas în urmă. Merge și cu plante cumpărate din altă parte.",
       "grow.s1t": "Cele trei file de sus",
       "grow.s1p":
-        "„Astăzi” listează activitățile zilei, „Culturi” pe cele pe care le urmărești, „De plantat” ce ai cumpărat și nu este încă în pământ. Numărul de lângă fiecare nume spune cât e înăuntru.",
+        "„Agendă” listează activitățile zilei și, derulând banda datelor, și pe cele din zilele următoare. „Culturi” adună plantele pe care le urmărești, „De plantat” ce ai cumpărat și nu este încă în pământ. Numărul de lângă fiecare nume spune cât e înăuntru.",
       "grow.s2t": "Înregistrează o cultură",
       "grow.s2p":
         "„＋ Adaugă cultură” cere planta, data, cantitatea și poziția. Din aceste patru date aplicația construiește singură calendarul de îngrijire până la recoltă.",
       "grow.s3t": "Bifează sau amână",
       "grow.s3p":
-        "În fila „Astăzi”, pătrățelul marchează activitatea ca făcută, iar „Mâine” o mută cu o zi. Ce sari rămâne vizibil sub „De recuperat”.",
+        "În „Agendă”, pătrățelul marchează activitatea ca făcută, iar „Mâine” o mută cu o zi. Ce sari rămâne vizibil sub „De recuperat”.",
       "grow.s4t": "Corectează când e nevoie",
       "grow.s4p":
         "„Modifică” schimbă data, cantitatea și poziția unei culturi deja introduse: calendarul este recalculat de la zero.",

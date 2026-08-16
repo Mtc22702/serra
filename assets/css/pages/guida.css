@@ -6529,50 +6529,24 @@ body {
   font-family: "DM Sans", system-ui, sans-serif;
   background: linear-gradient(150deg, #e5eee3 0%, #f2f7f0 55%, #e5eee3 100%);
 }
-/* Header mobile coerente con le pagine operative dell'app. */
+/* L'intestazione su telefono non ha più regole proprie qui: il marchio è
+   centrato dalla griglia in base.css, nel livello `coerenza`, che vale per
+   tutte le pagine. Questo blocco esisteva per rimettere a posto a mano un
+   centraggio assoluto che si rompeva — con il padding riportato a zero e
+   `position: relative` aggiunto al contenitore — e ora sarebbe solo una
+   quarta copia divergente. L'unica cosa che resta è l'altezza ridotta
+   dell'intestazione della guida, che non ha la seconda riga di navigazione. */
 @media (max-width: 660px) {
   .guide-page-header {
     --nav-h: 60px;
   }
 
   .guide-page-header .site-header-inner {
-    position: relative;
     min-height: 60px;
-    padding-inline: 0;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr;
-  }
-
-  /* Il marchio condiviso conserva sul desktop un padding solo a destra.
-     Con il posizionamento assoluto mobile quel padding entra nel calcolo del
-     50% e sposta visivamente il logo: qui il box torna simmetrico. */
-  .guide-page-header .nav-brand {
-    left: 50%;
-    padding-inline: 0;
-    transform: translate(-50%, -50%);
-  }
-
-  .guide-page-header .nav-actions {
-    grid-column: 2;
-    grid-row: 1;
-    width: 100%;
-    padding-right: 0.5rem;
-    justify-content: flex-end;
   }
 
   .guide-page-header .nav-actions > .nav-prefs {
     display: none;
-  }
-
-  .guide-page-header .nav-menu-toggle,
-  .guide-page-header .nav-menu-toggle:hover,
-  .guide-page-header .nav-menu-toggle:focus,
-  .guide-page-header .nav-menu-toggle:focus-visible,
-  .guide-page-header .nav-menu-toggle:active,
-  .guide-page-header .nav-menu-toggle[aria-expanded="true"] {
-    left: 0.68rem;
-    top: 50%;
-    transform: translateY(-50%);
   }
 }
 /* Contenitore principale con spazio per l'header fisso. */

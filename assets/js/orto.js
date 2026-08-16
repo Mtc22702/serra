@@ -53,7 +53,10 @@
       "page.title": "Il mio orto",
       "page.lead":
         "Registra cosa hai piantato e ti diciamo cosa fare, settimana per settimana, fino alla raccolta. Funziona anche con piante comprate altrove.",
-      "tab.oggi": "Oggi",
+      "tab.oggi": "Agenda",
+      // La linguetta si chiama Agenda perché non mostra più solo oggi: la
+      // riga di stato continua però a parlare della giornata in corso, che
+      // resta la ragione per cui la si apre.
       "tab.oggi_todo": "da fare adesso",
       "tab.oggi_late": "{n} in ritardo",
       "tab.oggi_clear": "tutto a posto",
@@ -102,8 +105,22 @@
       "task.last_day": "ultima volta 1 giorno fa",
       "today.empty_title": "Nessuna attività per oggi",
       "today.empty_text":
-        "Le prossime scadenze di ogni coltura le trovi nella scheda “Colture”.",
+        "Scorri la striscia dei giorni per vedere cosa arriva, oppure apri “Colture” per il quadro completo.",
       "today.empty_cta": "Vedi le colture",
+
+      // Agenda: la striscia dei giorni e la giornata scelta.
+      "agenda.strip_aria": "Scegli il giorno da vedere",
+      "agenda.day_aria": "{data}: {n} attività da fare",
+      "agenda.tomorrow": "Domani",
+      "agenda.in_days": "Fra {n} giorni",
+      "agenda.day_free": "Niente in programma per questo giorno.",
+      "agenda.day_one": "Una cosa in programma.",
+      "agenda.day_many": "{n} cose in programma.",
+      "agenda.planned": "In programma",
+      "agenda.back_today": "Torna a oggi",
+      "agenda.free_title": "Giornata libera",
+      "agenda.free_text":
+        "Nessuna delle tue colture chiede qualcosa in questa data. Scorri la striscia per trovare il prossimo impegno.",
 
       "task.germinazione": "Controlla la germinazione",
       "task.attecchimento": "Assesta la piantina",
@@ -231,7 +248,7 @@
       "howto.s1t": "Registra cosa hai",
       "howto.s1p": "Semi e piantine, comprati qui o altrove.",
       "howto.s2t": "Segui la giornata",
-      "howto.s2p": "Ogni mattina trovi solo ciò che serve oggi.",
+      "howto.s2p": "Le attività del giorno, e con un tocco anche dei successivi.",
       "howto.s3t": "Arriva alla raccolta",
       "howto.s3p": "Ogni coltura ha il suo calendario fino alla fine.",
       // La riga finale cambia con quello che c'è nell'orto: a chi non ha nulla
@@ -241,7 +258,7 @@
       "howto.start_stock":
         "<b>Da dove si comincia:</b> apri «Da piantare» e metti a dimora ciò che hai già.",
       "howto.start_today":
-        "<b>Da dove si comincia:</b> «Oggi» è la linguetta da guardare ogni mattina, le altre due servono quando cambia qualcosa.",
+        "<b>Da dove si comincia:</b> «Agenda» è la linguetta da guardare ogni mattina; la striscia dei giorni dice anche cosa arriva dopo.",
       "edit.title": "Modifica coltura",
       "edit.confirm": "Salva",
       "edit.note":
@@ -305,7 +322,7 @@
       "page.title": "Grădina mea",
       "page.lead":
         "Notează ce ai plantat și îți spunem ce ai de făcut, săptămână de săptămână, până la recoltare. Funcționează și cu plante cumpărate în altă parte.",
-      "tab.oggi": "Astăzi",
+      "tab.oggi": "Agendă",
       "tab.oggi_todo": "de făcut acum",
       "tab.oggi_late": "{n} întârziate",
       "tab.oggi_clear": "totul în regulă",
@@ -352,8 +369,21 @@
       "task.last_day": "ultima dată acum o zi",
       "today.empty_title": "Nicio activitate pentru azi",
       "today.empty_text":
-        "Următoarele termene ale fiecărei culturi le găsești în fila „Culturi”.",
+        "Derulează banda zilelor ca să vezi ce urmează sau deschide „Culturi” pentru imaginea completă.",
       "today.empty_cta": "Vezi culturile",
+
+      "agenda.strip_aria": "Alege ziua pe care vrei să o vezi",
+      "agenda.day_aria": "{data}: {n} activități de făcut",
+      "agenda.tomorrow": "Mâine",
+      "agenda.in_days": "Peste {n} zile",
+      "agenda.day_free": "Nimic programat pentru această zi.",
+      "agenda.day_one": "Un lucru programat.",
+      "agenda.day_many": "{n} lucruri programate.",
+      "agenda.planned": "Programate",
+      "agenda.back_today": "Înapoi la azi",
+      "agenda.free_title": "Zi liberă",
+      "agenda.free_text":
+        "Niciuna dintre culturile tale nu cere ceva la această dată. Derulează banda pentru a găsi următoarea sarcină.",
 
       "task.germinazione": "Verifică germinația",
       "task.attecchimento": "Așază răsadul",
@@ -482,7 +512,7 @@
       "howto.s1t": "Notează ce ai",
       "howto.s1p": "Semințe și răsaduri, cumpărate aici sau în altă parte.",
       "howto.s2t": "Urmărește ziua",
-      "howto.s2p": "În fiecare dimineață găsești doar ce trebuie făcut azi.",
+      "howto.s2p": "Activitățile zilei și, cu o atingere, și ale zilelor următoare.",
       "howto.s3t": "Ajungi la recoltă",
       "howto.s3p": "Fiecare cultură are calendarul ei până la final.",
       "howto.start_empty":
@@ -490,7 +520,7 @@
       "howto.start_stock":
         "<b>De unde începi:</b> deschide „De plantat” și pune în pământ ce ai deja.",
       "howto.start_today":
-        "<b>De unde începi:</b> „Astăzi” este fila de urmărit în fiecare dimineață, celelalte două sunt pentru când se schimbă ceva.",
+        "<b>De unde începi:</b> „Agendă” este fila de urmărit în fiecare dimineață; banda zilelor arată și ce urmează.",
       "edit.title": "Modifică cultura",
       "edit.confirm": "Salvează",
       "edit.note":
@@ -779,6 +809,58 @@
   }
 
   /* ============================================================
+     Agenda: la giornata scelta, non solo quella di oggi
+     ============================================================
+     La vista rispondeva a una domanda sola — «cosa devo fare adesso» — e per
+     sapere cosa sarebbe successo giovedì bisognava aprire le colture una per
+     una e leggere la prossima scadenza di ciascuna. Il motore genera già tutto
+     il calendario di ogni coltura fino alla raccolta: qui viene solo indicizzato
+     per giorno.
+     Il giorno scelto vive in memoria e non viene salvato: riaprendo la pagina si
+     riparte da oggi, che è quasi sempre la domanda giusta. */
+  const GIORNI_AVANTI = 20;
+  let giornoScelto = null; // ISO; null significa «oggi»
+
+  const isoOggi = () => E.iso(E.startOfToday());
+  const isoScelto = () => giornoScelto || isoOggi();
+
+  // Finestra della striscia: da oggi in avanti. All'indietro non serve, perché
+  // ciò che è rimasto indietro compare comunque fra gli arretrati di oggi.
+  function giorniAgenda() {
+    const inizio = E.startOfToday();
+    const giorni = [];
+    for (let i = 0; i <= GIORNI_AVANTI; i++) giorni.push(E.iso(E.addDays(inizio, i)));
+    // Un giorno scelto fuori finestra (si può arrivarci solo da un rinvio)
+    // resta comunque raggiungibile.
+    if (giornoScelto && !giorni.includes(giornoScelto)) {
+      giorni.push(giornoScelto);
+      giorni.sort();
+    }
+    return giorni;
+  }
+
+  /* Una sola passata su tutte le attività: chiamare il motore una volta per
+     ciascuno dei ventun giorni della striscia significherebbe rigenerare il
+     calendario di ogni coltura ventun volte a ogni ridisegno. */
+  function indicizzaPerGiorno(giorni) {
+    const indice = {};
+    giorni.forEach((g) => (indice[g] = { previste: [], fatte: [] }));
+    tuttiITask().forEach((task) => {
+      const svolta = garden.fatti[task.id];
+      if (svolta) {
+        if (indice[svolta]) indice[svolta].fatte.push(task);
+        return;
+      }
+      const quando = E.iso(dataEffettiva(task));
+      if (indice[quando])
+        indice[quando].previste.push(
+          Object.assign({}, task, { quando: dataEffettiva(task) }),
+        );
+    });
+    return indice;
+  }
+
+  /* ============================================================
      Viste
      ============================================================ */
   function ringSvg(percentuale) {
@@ -823,9 +905,121 @@
       </section>`;
   }
 
-  function renderOggi() {
+  /* La striscia dei giorni: una data per pulsante, con il numero di attività
+     ancora da fare. È la parte che risponde alla domanda «e giovedì?» senza
+     aprire nulla. Scorre in orizzontale e il giorno scelto è sempre portato in
+     vista da JavaScript dopo il disegno. */
+  function stripGiorniHtml(giorni, indice) {
+    const oggi = isoOggi();
+    const scelto = isoScelto();
+    return `
+      <div class="orto-daystrip" role="tablist"
+        aria-label="${escape(t("agenda.strip_aria"))}">
+        ${giorni
+          .map((iso) => {
+            const data = E.parseDate(iso);
+            const n = indice[iso].previste.length;
+            const attivo = iso === scelto;
+            return `
+            <button type="button" class="orto-day${attivo ? " is-selected" : ""}${
+              iso === oggi ? " is-today" : ""
+            }" role="tab" aria-selected="${attivo}" tabindex="${attivo ? 0 : -1}"
+              data-orto-action="pick-day" data-day="${iso}"
+              aria-label="${escape(
+                t("agenda.day_aria", {
+                  data: data.toLocaleDateString(locale(), {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                  }),
+                  n,
+                }),
+              )}">
+              <span class="orto-day-dow" aria-hidden="true">${escape(
+                data.toLocaleDateString(locale(), { weekday: "short" }),
+              )}</span>
+              <span class="orto-day-num" aria-hidden="true">${data.getDate()}</span>
+              <span class="orto-day-dot${n ? "" : " is-empty"}" aria-hidden="true">${
+                n || ""
+              }</span>
+            </button>`;
+          })
+          .join("")}
+      </div>`;
+  }
+
+  function renderAgenda() {
     if (!garden.colture.length && !inventory.voci.some((v) => !v.archiviata))
       return renderBenvenuto();
+
+    const giorni = giorniAgenda();
+    const indice = indicizzaPerGiorno(giorni);
+    const scelto = isoScelto();
+    const oggiIso = isoOggi();
+    const strip = stripGiorniHtml(giorni, indice);
+
+    // Un giorno diverso da oggi non ha arretrati né anello: gli arretrati sono
+    // per definizione di oggi, e la percentuale di una giornata non ancora
+    // cominciata direbbe sempre zero.
+    if (scelto !== oggiIso) {
+      const data = E.parseDate(scelto);
+      const previste = indice[scelto].previste;
+      const fatte = indice[scelto].fatte;
+      const mancano = E.diffDays(data, E.startOfToday());
+      app.innerHTML = `
+        ${strip}
+        <section class="orto-dayhead">
+          <div>
+            <p class="orto-dayhead-when">${
+              mancano === 1
+                ? t("agenda.tomorrow")
+                : t("agenda.in_days", { n: mancano })
+            }</p>
+            <h2>${escape(
+              data.toLocaleDateString(locale(), {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              }),
+            )}</h2>
+            <p class="orto-dayhead-sub">${
+              previste.length === 0
+                ? t("agenda.day_free")
+                : previste.length === 1
+                  ? t("agenda.day_one")
+                  : t("agenda.day_many", { n: previste.length })
+            }</p>
+          </div>
+          <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
+            data-orto-action="pick-day" data-day="${oggiIso}">${t("agenda.back_today")}</button>
+        </section>
+
+        ${
+          previste.length
+            ? sectionHead(t("agenda.planned"), previste.length) +
+              previste.map((task, i) => taskRow(task, i)).join("")
+            : `<div class="orto-empty"><span class="orto-empty-ico">🌤️</span>
+                <h4>${t("agenda.free_title")}</h4><p>${t("agenda.free_text")}</p></div>`
+        }
+
+        ${
+          fatte.length
+            ? sectionHead(t("section.done"), fatte.length) +
+              fatte
+                .map((task, i) =>
+                  taskRow(
+                    Object.assign({}, task, { quando: task.data }),
+                    i,
+                    false,
+                    true,
+                  ),
+                )
+                .join("")
+            : ""
+        }`;
+      return;
+    }
+
     const { oggi, arretrati, diOggi, fatti } = datiOggi();
     const totale = diOggi.length + fatti.length;
     const percentuale = totale
@@ -873,6 +1067,8 @@
           </div>
         </div>
       </section>
+
+      ${strip}
 
       ${
         arretrati.length
@@ -1306,7 +1502,17 @@
       ?.classList.toggle("is-late", arretrati.length > 0);
     if (view === "colture") renderColture();
     else if (view === "dispensa") renderDispensa();
-    else renderOggi();
+    else renderAgenda();
+    // La striscia parte da oggi ma può essere scorsa: dopo ogni ridisegno il
+    // giorno scelto torna al centro, altrimenti selezionandone uno lontano si
+    // perderebbe di vista.
+    const giornoAttivo = app?.querySelector(".orto-day.is-selected");
+    if (giornoAttivo?.scrollIntoView)
+      giornoAttivo.scrollIntoView({
+        block: "nearest",
+        inline: "center",
+        behavior: "instant",
+      });
   }
 
   /* ============================================================
@@ -1593,6 +1799,29 @@
     linguette[prossimo].focus();
   });
 
+  /* Frecce sulla striscia dei giorni: stesso contratto delle linguette. */
+  document.addEventListener("keydown", (event) => {
+    const giorno = event.target.closest?.(".orto-day");
+    if (!giorno) return;
+    const tasti = ["ArrowLeft", "ArrowRight", "Home"];
+    if (!tasti.includes(event.key)) return;
+    event.preventDefault();
+    const giorni = [...document.querySelectorAll(".orto-day")];
+    const corrente = giorni.indexOf(giorno);
+    const prossimo =
+      event.key === "Home"
+        ? 0
+        : Math.min(
+            giorni.length - 1,
+            Math.max(0, corrente + (event.key === "ArrowRight" ? 1 : -1)),
+          );
+    const scelto = giorni[prossimo]?.dataset.day;
+    if (!scelto) return;
+    giornoScelto = scelto === isoOggi() ? null : scelto;
+    render();
+    document.querySelector(".orto-day.is-selected")?.focus();
+  });
+
   /* Clic sullo sfondo scuro: chiude il dialogo, come in ogni pannello dell'app.
      Il bersaglio dell'evento è il <dialog> stesso solo quando si tocca fuori
      dal riquadro, perché il contenuto sta tutto dentro elementi figli. */
@@ -1627,16 +1856,24 @@
       const id = trigger.dataset.taskId;
       if (garden.fatti[id]) delete garden.fatti[id];
       else {
-        garden.fatti[id] = E.iso(new Date());
+        // Si spunta il giorno che si sta guardando: se sto sistemando la
+        // giornata di giovedì, l'attività risulta fatta giovedì e non oggi,
+        // altrimenti sparirebbe dalla lista che sto compilando.
+        garden.fatti[id] = view === "oggi" ? isoScelto() : E.iso(new Date());
         trigger.dataset.on = "1";
       }
       saveGarden();
       return setTimeout(render, 190);
     }
     if (action === "snooze-task") {
-      garden.rinviati[trigger.dataset.taskId] = E.iso(
-        E.addDays(E.startOfToday(), 1),
-      );
+      // Rimanda di un giorno rispetto alla data dell'attività, non rispetto a
+      // oggi: nell'agenda si rinvia anche qualcosa che è in programma fra una
+      // settimana, e spostarla a domani non avrebbe senso.
+      const id = trigger.dataset.taskId;
+      const attuale = tuttiITask().find((task) => task.id === id);
+      const partenza = attuale ? dataEffettiva(attuale) : E.startOfToday();
+      const base = partenza > E.startOfToday() ? partenza : E.startOfToday();
+      garden.rinviati[id] = E.iso(E.addDays(base, 1));
       saveGarden();
       toast(t("toast.snoozed"));
       return render();
@@ -1714,6 +1951,11 @@
       } catch (_) {}
       syncHowto();
       return;
+    }
+    if (action === "pick-day") {
+      giornoScelto =
+        trigger.dataset.day === isoOggi() ? null : trigger.dataset.day;
+      return render();
     }
     if (action === "pick-family") {
       pickerFamily = trigger.dataset.family || "";
