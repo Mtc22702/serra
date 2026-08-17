@@ -1,10 +1,4 @@
-/**
- * Area account: autenticazione, profilo, ordini e strumenti amministrativi.
- * Dipende da base.js per API, traduzioni e utilità condivise.
- * Lo stato è privato alla IIFE: le azioni del DOM passano dal dispatcher
- * data-account-action, per evitare funzioni globali e accoppiamenti invisibili.
- * Le sezioni seguenti sono ordinate come: stato → eventi → rendering → azioni.
- */
+/* Area account: autenticazione, profilo, ordini e strumenti amministrativi. */
 
 // Gestisce autenticazione, cruscotti e azioni dell'area riservata per utenti e amministratori.
 (function () {
@@ -99,8 +93,6 @@
     return typedValue?.trim().toLocaleUpperCase(locale()) === confirmationValue;
   }
 
-  // I profili creati prima della separazione dei campi conservano il nome completo
-  // in `nome`: lo dividiamo solo per popolare l'interfaccia, senza perdere dati.
   function splitUserName(user) {
     const firstName = String(user?.nome || "").trim();
     const lastName = String(user?.cognome || "").trim();
@@ -141,8 +133,6 @@
     "Annullato",
   ];
 
-  // Gli eventuali vecchi ordini "Completato" restano leggibili e vengono
-  // presentati come spediti, senza alterare automaticamente lo storico.
   function normalizedOrderStatus(status) {
     return status === "Completato" ? "Spedito" : status || "In elaborazione";
   }
@@ -280,8 +270,7 @@
   // --- INIZIALIZZAZIONE ---
 
   // -----------------------------------------------------------------------------
-  // Area account — Delegazione eventi, avvio pagina e scelta della vista da mostrare.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Delegazione eventi, avvio pagina e scelta della vista da mostrare. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   function bindAccountEvents() {
@@ -291,8 +280,7 @@
 
       switch (control.dataset.accountAction) {
         case "set-language":
-          // I pulsanti IT/RO sono usati nel menu mobile; il select desktop
-          // resta gestito dall'evento `change` qui sotto.
+          // I pulsanti IT/RO sono usati nel menu mobile; il select desktop resta gestito dall'evento `change` qui sotto.
           if (control.tagName !== "SELECT") setLang(control.dataset.lang);
           break;
         case "open-cart":
@@ -440,7 +428,6 @@
   }
 
   async function initAccount() {
-    // Inizializza la lingua prima di qualunque testo renderizzato via JS
     const savedLang = localStorage.getItem("ois.lang");
     currentLang = savedLang === "ro" || savedLang === "it" ? savedLang : "it";
 
@@ -565,8 +552,7 @@
   }
 
   // -----------------------------------------------------------------------------
-  // Area account — Rendering dei progetti e degli ordini dell'utente autenticato.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Rendering dei progetti e degli ordini dell'utente autenticato. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   function renderUserDashboard() {
@@ -842,8 +828,7 @@
   }
 
   // -----------------------------------------------------------------------------
-  // Area account — Modifica, ricalcolo e annullamento degli ordini dell'utente.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Modifica, ricalcolo e annullamento degli ordini dell'utente. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   function orderEditMoney(value) {
@@ -985,8 +970,7 @@
   // --- INTERFACCIA AMMINISTRATORE ---
 
   // -----------------------------------------------------------------------------
-  // Area account — Dashboard amministrativa, catalogo e gestione operativa degli ordini.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Dashboard amministrativa, catalogo e gestione operativa degli ordini. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   function renderAdminDashboard() {
@@ -1209,8 +1193,7 @@
     }
   }
 
-  // Un ordine può essere eliminato in modo permanente solo dopo essere stato
-  // annullato, e solo dall'area amministrativa.
+  // Un ordine può essere eliminato in modo permanente solo dopo essere stato annullato, e solo dall'area amministrativa.
   async function deleteCancelledOrder(orderId) {
     if (currentUser?.role !== "admin") return;
 
@@ -1277,8 +1260,7 @@
 
   function updateAdminStats() {
     // -----------------------------------------------------------------------------
-    // Area account — Statistiche, grafici, utenti e dettaglio ordini amministrativo.
-    // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+    // Area account — Statistiche, grafici, utenti e dettaglio ordini amministrativo. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
     // -----------------------------------------------------------------------------
 
     const statsText = document.getElementById("adminStatsText");
@@ -1514,8 +1496,7 @@
   // --- AZIONI LOGIN / REGISTRAZIONE ---
 
   // -----------------------------------------------------------------------------
-  // Area account — Accesso, registrazione, profilo e schede amministrative.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Accesso, registrazione, profilo e schede amministrative. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   function switchAuthTab(tab) {
@@ -1746,8 +1727,7 @@
   // Aggiorna lo stato di un ordine dalla sezione amministrativa.
 
   // -----------------------------------------------------------------------------
-  // Area account — Gestione catalogo, piante e operazioni di backup.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Gestione catalogo, piante e operazioni di backup. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   async function handleToggleOrderStatus(orderId, nextStatus) {
@@ -2010,8 +1990,7 @@
   // Helper per emoji frutti di backup se manca
 
   // -----------------------------------------------------------------------------
-  // Area account — Anteprime e risoluzione delle immagini delle piante.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Anteprime e risoluzione delle immagini delle piante. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   function fruitEmoji(plantId) {
@@ -2146,8 +2125,7 @@
   }
 
   // -----------------------------------------------------------------------------
-  // Area account — Manuali, packing list, ricevute e stampa finale.
-  // Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
+  // Area account — Manuali, packing list, ricevute e stampa finale. Questo frammento viene assemblato da npm run build:js; non viene caricato da solo.
   // -----------------------------------------------------------------------------
 
   async function downloadOrderPlantManual(orderId, button) {

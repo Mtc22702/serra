@@ -1,19 +1,4 @@
-/**
- * "Il mio orto": diario colturale, attività del giorno e dispensa di ciò che
- * l'utente ha acquistato e non ha ancora messo a dimora.
- *
- * Qui NON si vende nulla: è una sezione di aiuto alla coltivazione per semi e
- * piantine che l'utente possiede già. L'acquisto delle piantine vive nella
- * sezione Vivaio (vivaio.html).
- *
- * Regole di convivenza con il resto dell'applicazione:
- * - non scrive mai nel carrello (`ois.cart`) né negli ordini: li legge soltanto;
- * - non ricalcola prezzi né quantità dei semi: legge db/products.json, che è
- *   generato da PACK_DATA e resta allineato per costruzione;
- * - tema chiaro/scuro: gestito interamente da base.js tramite `.theme-toggle`;
- * - lingua: stesso contratto delle altre pagine (`ois.lang`, evento `storage`),
- *   con dizionario proprio come fa la guida.
- */
+/* "Il mio orto": diario colturale, attività del giorno e dispensa di ciò che l'utente ha acquistato e non ha ancora messo a dimora. */
 (() => {
   const E = window.SerraCareEngine;
   if (!E) return;
@@ -24,15 +9,9 @@
   // Striscia «come funziona»: si chiude una volta e non torna più.
   const HOWTO_KEY = "serra.orto.howto";
 
-  /* ============================================================
-     Dizionario della pagina (namespace proprio, come guida.js)
-     ============================================================ */
   const COPY = {
     it: {
-      // Titolo della scheda del browser. Sta su una chiave distinta da
-      // "page.title": quella è l'intestazione visibile della pagina e, avendo
-      // lo stesso nome, sovrascriveva questa lasciando la scheda senza il
-      // nome dell'applicazione.
+      // Titolo della scheda del browser.
       "doc.title": "Il mio orto · Orto in Serra",
       "nav.brand_sub": "Coltiva con un piano",
       "nav.home": "🏠 Home",
@@ -54,14 +33,10 @@
       "page.lead":
         "Registra cosa hai piantato e ti diciamo cosa fare, settimana per settimana, fino alla raccolta. Funziona anche con piante comprate altrove.",
       "tab.oggi": "Agenda",
-      // La linguetta si chiama Agenda perché non mostra più solo oggi: la
-      // riga di stato continua però a parlare della giornata in corso, che
-      // resta la ragione per cui la si apre.
       "tab.oggi_todo": "da fare adesso",
       "tab.oggi_late": "{n} in ritardo",
       "tab.oggi_clear": "tutto a posto",
-      // Le due righe di stato dicono la differenza fra le due schede: una
-      // elenca ciò che è già in terra, l'altra ciò che non lo è ancora.
+      // Le due righe di stato dicono la differenza fra le due schede: una elenca ciò che è già in terra, l'altra ciò che non lo è ancora.
       "tab.colture_note": "già in terra",
       "tab.colture_empty": "ancora niente",
       "tab.dispensa_note": "non ancora in terra",
@@ -74,6 +49,7 @@
       "welcome.text":
         "Dimmi quali semi o piantine possiedi e da quando: penso io a ricordarti cosa fare, giorno per giorno, fino alla raccolta.",
       "welcome.add": "＋ Aggiungi una coltura",
+      "welcome.or": "oppure importa da",
       "welcome.orders": "Importa dai miei ordini",
       "welcome.greenhouse": "Importa dalla mia serra",
       "welcome.nothing": "Non hai ancora semi o piantine?",
@@ -255,8 +231,7 @@
       "howto.s2p": "Le attività del giorno, e con un tocco anche dei successivi.",
       "howto.s3t": "Arriva alla raccolta",
       "howto.s3p": "Ogni coltura ha il suo calendario fino alla fine.",
-      // La riga finale cambia con quello che c'è nell'orto: a chi non ha nulla
-      // dice come partire, agli altri dove guardare per primo.
+      // La riga finale cambia con quello che c'è nell'orto: a chi non ha nulla dice come partire, agli altri dove guardare per primo.
       "howto.start_empty":
         "<b>Da dove si comincia:</b> aggiungi la prima coltura qui sotto, oppure importa quello che hai già comprato.",
       "howto.start_stock":
@@ -342,6 +317,7 @@
       "welcome.text":
         "Spune-mi ce semințe sau răsaduri ai și de când: îți amintesc eu ce ai de făcut, zi de zi, până la recoltare.",
       "welcome.add": "＋ Adaugă o cultură",
+      "welcome.or": "sau importă din",
       "welcome.orders": "Importă din comenzile mele",
       "welcome.greenhouse": "Importă din sera mea",
       "welcome.nothing": "Încă nu ai semințe sau răsaduri?",
@@ -429,8 +405,7 @@
       "fase.germinazione": "Germinație",
       "fase.crescita": "Creștere",
       "fase.raccolta": "Recoltare",
-      // Etichetta di una barra a quattro colonne strette: «La locul definitiv»
-      // ci andava a capo tre volte.
+      // Etichetta di una barra a quattro colonne strette: «La locul definitiv» ci andava a capo tre volte.
       "fase.dimora": "Plantat",
       "fase.attecchimento": "Prindere",
       "fase.sviluppo": "Dezvoltare",
@@ -607,9 +582,7 @@
     cavoletti: "cavoletti_bruxelles",
   };
 
-  /* ============================================================
-     Stato
-     ============================================================ */
+  /* ============================================================ Stato ============================================================ */
   let lang = "it";
   let view = "oggi";
   let PLANTS = [];
@@ -697,9 +670,6 @@
     return t(task.notaKey, vars);
   }
 
-  /* ============================================================
-     Persistenza del diario (locale; in fase 3 si sincronizza col server)
-     ============================================================ */
   function loadGarden() {
     try {
       const raw = JSON.parse(localStorage.getItem(GARDEN_KEY) || "null");
@@ -781,9 +751,6 @@
     }
   }
 
-  /* ============================================================
-     Selettori derivati
-     ============================================================ */
   function tuttiITask() {
     return garden.colture.flatMap((c) => {
       const plant = BYID[c.plantId];
@@ -816,30 +783,18 @@
     };
   }
 
-  /* ============================================================
-     Agenda: la giornata scelta, non solo quella di oggi
-     ============================================================
-     La vista rispondeva a una domanda sola — «cosa devo fare adesso» — e per
-     sapere cosa sarebbe successo giovedì bisognava aprire le colture una per
-     una e leggere la prossima scadenza di ciascuna. Il motore genera già tutto
-     il calendario di ogni coltura fino alla raccolta: qui viene solo indicizzato
-     per giorno.
-     Il giorno scelto vive in memoria e non viene salvato: riaprendo la pagina si
-     riparte da oggi, che è quasi sempre la domanda giusta. */
   const GIORNI_AVANTI = 20;
   let giornoScelto = null; // ISO; null significa «oggi»
 
   const isoOggi = () => E.iso(E.startOfToday());
   const isoScelto = () => giornoScelto || isoOggi();
 
-  // Finestra della striscia: da oggi in avanti. All'indietro non serve, perché
-  // ciò che è rimasto indietro compare comunque fra gli arretrati di oggi.
+  // Finestra della striscia: da oggi in avanti.
   function giorniAgenda() {
     const inizio = E.startOfToday();
     const giorni = [];
     for (let i = 0; i <= GIORNI_AVANTI; i++) giorni.push(E.iso(E.addDays(inizio, i)));
-    // Un giorno scelto fuori finestra (si può arrivarci solo da un rinvio)
-    // resta comunque raggiungibile.
+    // Un giorno scelto fuori finestra (si può arrivarci solo da un rinvio) resta comunque raggiungibile.
     if (giornoScelto && !giorni.includes(giornoScelto)) {
       giorni.push(giornoScelto);
       giorni.sort();
@@ -847,9 +802,6 @@
     return giorni;
   }
 
-  /* Una sola passata su tutte le attività: chiamare il motore una volta per
-     ciascuno dei ventun giorni della striscia significherebbe rigenerare il
-     calendario di ogni coltura ventun volte a ogni ridisegno. */
   function indicizzaPerGiorno(giorni) {
     const indice = {};
     giorni.forEach((g) => (indice[g] = { previste: [], fatte: [] }));
@@ -868,18 +820,11 @@
     return indice;
   }
 
-  /* ============================================================
-     Viste
-     ============================================================ */
+  /* ============================================================ Viste ============================================================ */
   function ringSvg(percentuale) {
     const r = 58;
     const c = 2 * Math.PI * r;
-    /* Due cerchi sovrapposti: la traccia tenue dice quanto è lunga la giornata,
-       l'arco verde quanto ne è stato fatto. Senza la traccia, a zero per cento
-       non resterebbe nulla intorno al numero. */
-    /* I colori stanno nel CSS (.orto-ring-track/.orto-ring-arc): erano scritti
-       qui in bianco e verde chiarissimo, tarati sulla vecchia fascia verde
-       scura, e sulla carta chiara l'anello spariva. */
+    /* Due cerchi sovrapposti: la traccia tenue dice quanto è lunga la giornata, l'arco verde quanto ne è stato fatto. */
     return `<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
       <circle class="orto-ring-track" cx="66" cy="66" r="${r}" fill="none" stroke-width="10"/>
       <circle class="orto-ring-arc" cx="66" cy="66" r="${r}" fill="none" stroke-width="10"
@@ -888,8 +833,7 @@
     </svg>`;
   }
 
-  // Primo avvio: senza colture né dispensa la vista "Oggi" direbbe che va
-  // tutto bene quando in realtà non c'è nulla. Meglio chiedere da dove partire.
+  // Primo avvio: senza colture né dispensa la vista "Oggi" direbbe che va tutto bene quando in realtà non c'è nulla.
   function renderBenvenuto() {
     app.innerHTML = `
       <section class="orto-welcome">
@@ -898,11 +842,14 @@
         <h2>${t("welcome.title")}</h2>
         <p class="orto-welcome-text">${t("welcome.text")}</p>
         <div class="orto-welcome-actions">
-          <button class="orto-btn" type="button" data-orto-action="open-add">${t("welcome.add")}</button>
-          <button class="orto-btn orto-btn--ghost" type="button"
-            data-orto-action="import-orders">${t("welcome.orders")}</button>
-          <button class="orto-btn orto-btn--ghost" type="button"
-            data-orto-action="import-greenhouse">${t("welcome.greenhouse")}</button>
+          <button class="orto-btn orto-welcome-primary" type="button" data-orto-action="open-add">${t("welcome.add")}</button>
+          <p class="orto-welcome-or">${t("welcome.or")}</p>
+          <div class="orto-welcome-secondary">
+            <button class="orto-btn orto-btn--ghost" type="button"
+              data-orto-action="import-orders">${t("welcome.orders")}</button>
+            <button class="orto-btn orto-btn--ghost" type="button"
+              data-orto-action="import-greenhouse">${t("welcome.greenhouse")}</button>
+          </div>
         </div>
         <p class="orto-welcome-shop">
           <span>${t("welcome.nothing")}</span>
@@ -913,10 +860,7 @@
       </section>`;
   }
 
-  /* La striscia dei giorni: una data per pulsante, con il numero di attività
-     ancora da fare. È la parte che risponde alla domanda «e giovedì?» senza
-     aprire nulla. Scorre in orizzontale e il giorno scelto è sempre portato in
-     vista da JavaScript dopo il disegno. */
+  /* La striscia dei giorni: una data per pulsante, con il numero di attività ancora da fare. */
   function stripGiorniHtml(giorni, indice) {
     const oggi = isoOggi();
     const scelto = isoScelto();
@@ -966,9 +910,6 @@
     const oggiIso = isoOggi();
     const strip = stripGiorniHtml(giorni, indice);
 
-    // Un giorno diverso da oggi non ha arretrati né anello: gli arretrati sono
-    // per definizione di oggi, e la percentuale di una giornata non ancora
-    // cominciata direbbe sempre zero.
     if (scelto !== oggiIso) {
       const data = E.parseDate(scelto);
       const previste = indice[scelto].previste;
@@ -1177,16 +1118,10 @@
       { vicine: 0, piante: 0 },
     );
 
-    // Voci comprate e non ancora piantate: se ce ne sono, questa vista lo dice
-    // e ci porta, invece di lasciare due elenchi che si ignorano.
     const inAttesa = inventory.voci.filter(
       (v) => !v.archiviata && BYID[v.plantId],
     ).length;
 
-    // Con il diario vuoto le azioni stanno solo dentro il riquadro centrale:
-    // ripeterle in cima dava due «Aggiungi coltura» e due «Importa dalla mia
-    // serra» nella stessa schermata, e su telefono uno sopra l'altro. Ricompaiono
-    // in testa appena c'è una coltura da affiancare.
     const vuoto = garden.colture.length === 0;
 
     app.innerHTML = `
@@ -1257,8 +1192,7 @@
     const fasi = E.fasi(coltura, plant, product);
     const attuale =
       fasi.filter((f) => f.at * 100 <= percentuale).pop() || fasi[0];
-    // Raccolta in corso o entro una settimana: è il momento in cui l'azione
-    // principale della scheda cambia.
+    // Raccolta in corso o entro una settimana: è il momento in cui l'azione principale della scheda cambia.
     const raccoltaOra = mancano === null || mancano <= 7;
 
     return `
@@ -1332,11 +1266,7 @@
       </article>`;
   }
 
-  /* La dispensa non è un secondo elenco di colture: è il magazzino di ciò che
-     si possiede e non è ancora in terra. Prima le due viste usavano la stessa
-     scheda — foto grande, distintivo, barra di avanzamento — e a colpo d'occhio
-     sembravano fare la stessa cosa. Qui le voci sono righe da inventario: niente
-     foto, niente barra di crescita, in evidenza la quantità che resta. */
+  /* La dispensa non è un secondo elenco di colture: è il magazzino di ciò che si possiede e non è ancora in terra. */
   function renderDispensa() {
     const attive = inventory.voci.filter(
       (v) => !v.archiviata && BYID[v.plantId],
@@ -1434,10 +1364,7 @@
       </article>`;
   }
 
-  /* La striscia dei tre passi: è una didascalia, non un comando. Evidenzia il
-     passo corrispondente alla vista aperta — così dice anche dove ci si trova —
-     e chiude con la riga che suggerisce da quale linguetta cominciare, scelta
-     in base a cosa c'è davvero nell'orto di chi guarda. */
+  /* La striscia dei tre passi: è una didascalia, non un comando. */
   function syncHowto() {
     const box = document.getElementById("ortoHowto");
     if (!box) return;
@@ -1448,8 +1375,6 @@
     box.hidden = chiusa;
     if (chiusa) return;
     if (!box.dataset.responsiveReady) {
-      /* Il riepilogo resta compatto su ogni formato: l'azione principale
-         dell'orto deve comparire senza scorrere anche su tablet e desktop. */
       box.open = false;
       box.dataset.responsiveReady = "true";
     }
@@ -1470,9 +1395,7 @@
   }
 
   function render() {
-    // Le linguette sono un tablist: una sola resta raggiungibile con Tab, le
-    // altre con le frecce. Prima erano tutte nel giro di tabulazione e nessuna
-    // rispondeva alla tastiera direzionale.
+    // Le linguette sono un tablist: una sola resta raggiungibile con Tab, le altre con le frecce.
     const linguette = [...document.querySelectorAll(".orto-tab")];
     linguette.forEach((button) => {
       const attivo = button.dataset.ortoView === view;
@@ -1482,12 +1405,9 @@
     });
     const attiva = linguette.find((b) => b.dataset.ortoView === view);
     if (attiva && app) app.setAttribute("aria-labelledby", attiva.id);
-    // Il pannello ricorda quale vista sta mostrando anche fuori dalle linguette
-    // (la striscia dei passi ci porta senza passare da lì).
+    // Il pannello ricorda quale vista sta mostrando anche fuori dalle linguette (la striscia dei passi ci porta senza passare da lì).
     syncHowto();
-    /* Ogni linguetta porta il proprio numero e una riga di stato. Prima il
-       conteggio c'era solo su «Oggi»: le altre due non lasciavano capire se
-       dentro ci fosse qualcosa, e si aprivano alla cieca. */
+    /* Ogni linguetta porta il proprio numero e una riga di stato. */
     const { diOggi, arretrati } = datiOggi();
     const attive = inventory.voci.filter(
       (v) => !v.archiviata && BYID[v.plantId],
@@ -1531,9 +1451,6 @@
     if (view === "colture") renderColture();
     else if (view === "dispensa") renderDispensa();
     else renderAgenda();
-    // La striscia parte da oggi ma può essere scorsa: dopo ogni ridisegno il
-    // giorno scelto torna al centro, altrimenti selezionandone uno lontano si
-    // perderebbe di vista.
     const giornoAttivo = app?.querySelector(".orto-day.is-selected");
     if (giornoAttivo?.scrollIntoView)
       giornoAttivo.scrollIntoView({
@@ -1543,9 +1460,6 @@
       });
   }
 
-  /* ============================================================
-     Lingua — stesso contratto delle altre pagine
-     ============================================================ */
   function applyLanguage(value) {
     lang = normalizeLang(value);
     document.documentElement.lang = lang;
@@ -1591,9 +1505,7 @@
     if (next !== lang) applyLanguage(next);
   });
 
-  /* ============================================================
-     Azioni
-     ============================================================ */
+  /* ============================================================ Azioni ============================================================ */
   let toastTimer;
   function toast(message) {
     if (!toastEl) return;
@@ -1618,14 +1530,6 @@
     saveGarden();
   }
 
-  /* ============================================================
-     Selettore della pianta (dialogo «Aggiungi una coltura»)
-     ============================================================
-     Qui c'era un campo di testo con un `datalist`: bisognava sapere in anticipo
-     il nome di una delle 97 piante, e chi non lo sapeva restava fermo davanti a
-     un campo vuoto. Ora si sceglie guardando: ricerca, famiglie, foto, e le
-     piante che si seminano in questo mese messe in cima. Stesse tre leve del
-     vivaio e del catalogo semi, così il gesto è già noto. */
   const RECENT_PLANTS_KEY = "serra.orto.recent-plants";
   const FAVORITE_PLANTS_KEY = "serra.orto.favorite-plants";
   let pickerQuery = "";
@@ -1676,8 +1580,6 @@
       );
       return out.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
     }
-    // Senza una ricerca in corso le piante di stagione vengono per prime: è
-    // quasi sempre quello che si sta cercando in questo momento dell'anno.
     return out.sort((a, b) => {
       const sa = diStagione(a, mese) ? 0 : 1;
       const sb = diStagione(b, mese) ? 0 : 1;
@@ -1685,8 +1587,7 @@
     });
   }
 
-  // Un filtro che non porta a nulla è peggio di nessun filtro: le famiglie
-  // elencate sono solo quelle che hanno almeno una pianta.
+  // Un filtro che non porta a nulla è peggio di nessun filtro: le famiglie elencate sono solo quelle che hanno almeno una pianta.
   function famigliePicker() {
     const conta = {};
     PLANTS.forEach((p) => (conta[p.tipo] = (conta[p.tipo] || 0) + 1));
@@ -1747,9 +1648,6 @@
     }
   }
 
-  // Aggiorna il dialogo dopo la scelta: il riepilogo prende il posto della
-  // griglia e compaiono i passi 2 e 3, che prima chiedevano data e quantità
-  // di una pianta che non era ancora stata nominata.
   function mostraSceltaPianta() {
     const picker = document.getElementById("ortoPicker");
     const scelta = document.getElementById("ortoPicked");
@@ -1785,9 +1683,6 @@
     aggiornaAnteprima();
   }
 
-  /* L'anteprima dice cosa succederà prima di confermare: quando si raccoglie è
-     la sola cosa che l'utente non può dedurre da solo, e cambia con l'origine e
-     con la data. */
   function aggiornaAnteprima() {
     const nodo = document.getElementById("ortoAddPreview");
     if (!nodo) return;
@@ -1858,8 +1753,7 @@
     toast(t("toast.ics", { n: tasks.length }));
   }
 
-  /* Frecce, Home e Fine sulle linguette: il comportamento che ci si aspetta da
-     un tablist e che qui mancava del tutto. */
+  /* Frecce, Home e Fine sulle linguette: il comportamento che ci si aspetta da un tablist e che qui mancava del tutto. */
   document.querySelector(".orto-tabs")?.addEventListener("keydown", (event) => {
     const linguette = [...document.querySelectorAll(".orto-tab")];
     const corrente = linguette.indexOf(document.activeElement);
@@ -1904,10 +1798,7 @@
     document.querySelector(".orto-day.is-selected")?.focus();
   });
 
-  /* ---------- apertura dei dialoghi ----------
-     Il <dialog> occupa l'intera top-layer e il pannello visibile è un figlio:
-     così Safari iOS non deve posizionare un bottom-sheet direttamente. Mentre
-     è aperto blocchiamo lo sfondo e conserviamo il punto di scorrimento. */
+  /* ---------- apertura dei dialoghi ---------- */
   let scrollCongelato = 0;
 
   function apriDialogo(id) {
@@ -1923,23 +1814,19 @@
   }
 
   function sbloccaPagina() {
-    // Un dialogo può aprirne un altro: si sblocca solo quando non ne resta
-    // nessuno aperto.
+    // Un dialogo può aprirne un altro: si sblocca solo quando non ne resta nessuno aperto.
     if (document.querySelector("dialog.orto-dialog[open]")) return;
     if (!document.body.classList.contains("orto-dialog-open")) return;
     document.body.classList.remove("orto-dialog-open");
     window.scrollTo(0, scrollCongelato);
   }
 
-  /* Clic sullo sfondo scuro: chiude il dialogo, come in ogni pannello dell'app.
-     Il bersaglio dell'evento è il <dialog> stesso solo quando si tocca fuori
-     dal riquadro, perché il contenuto sta tutto dentro elementi figli. */
+  /* Clic sullo sfondo scuro: chiude il dialogo, come in ogni pannello dell'app. */
   document.querySelectorAll("dialog.orto-dialog").forEach((dialogo) => {
     dialogo.addEventListener("click", (event) => {
       if (event.target === dialogo) dialogo.close("cancel");
     });
-    // La chiusura arriva da cinque strade diverse (✕, Annulla, Esc, sfondo,
-    // invio del modulo): lo sblocco sta qui, una volta sola.
+    // La chiusura arriva da cinque strade diverse (✕, Annulla, Esc, sfondo, invio del modulo): lo sblocco sta qui, una volta sola.
     dialogo.addEventListener("close", sbloccaPagina);
   });
 
@@ -1948,8 +1835,6 @@
     if (viewBtn) {
       view = viewBtn.dataset.ortoView;
       render();
-      // Chi arriva dalla striscia dei passi non ha il fuoco sulle linguette:
-      // portarlo sul pannello evita di ripartire dall'inizio della pagina.
       if (!viewBtn.classList.contains("orto-tab"))
         app?.focus({ preventScroll: true });
       return;
@@ -1957,8 +1842,6 @@
     const trigger = event.target.closest("[data-orto-action]");
     if (!trigger) return;
     const action = trigger.dataset.ortoAction;
-    // Lingua dal menu mobile: sotto i 660px il selettore dell'intestazione è
-    // nascosto e questi due pulsanti sono l'unico modo per cambiarla.
     if (action === "set-language") {
       applyLanguage(trigger.dataset.lang);
       return;
@@ -1968,9 +1851,6 @@
       const id = trigger.dataset.taskId;
       if (garden.fatti[id]) delete garden.fatti[id];
       else {
-        // Si spunta il giorno che si sta guardando: se sto sistemando la
-        // giornata di giovedì, l'attività risulta fatta giovedì e non oggi,
-        // altrimenti sparirebbe dalla lista che sto compilando.
         garden.fatti[id] = view === "oggi" ? isoScelto() : E.iso(new Date());
         trigger.dataset.on = "1";
       }
@@ -1978,9 +1858,6 @@
       return setTimeout(render, 190);
     }
     if (action === "snooze-task") {
-      // Rimanda di un giorno rispetto alla data dell'attività, non rispetto a
-      // oggi: nell'agenda si rinvia anche qualcosa che è in programma fra una
-      // settimana, e spostarla a domani non avrebbe senso.
       const id = trigger.dataset.taskId;
       const attuale = tuttiITask().find((task) => task.id === id);
       const partenza = attuale ? dataEffettiva(attuale) : E.startOfToday();
@@ -2051,8 +1928,7 @@
       apriDialogo("ortoPlantDialog");
       return;
     }
-    // Chiusura esplicita: la ✕ dell'intestazione. Passa da close("cancel")
-    // così i gestori di chiusura azzerano lo stato in sospeso come farebbe Esc.
+    // Chiusura esplicita: la ✕ dell'intestazione.
     if (action === "close-dialog") {
       document.getElementById(trigger.dataset.dialog)?.close("cancel");
       return;
@@ -2078,8 +1954,7 @@
       piantaScelta = trigger.dataset.plantId;
       ricordaPianta(piantaScelta);
       mostraSceltaPianta();
-      // Il fuoco va sulla scelta successiva, non sulla data: su telefono
-      // aprirebbe subito il calendario nascondendo il resto del dialogo.
+      // Il fuoco va sulla scelta successiva, non sulla data: su telefono aprirebbe subito il calendario nascondendo il resto del dialogo.
       document.querySelector('input[name="ortoOrigine"]:checked')?.focus();
       return;
     }
@@ -2121,9 +1996,6 @@
       const posizione = document.getElementById("ortoPosition");
       if (posizione) posizione.value = "";
       apriDialogo("ortoAddDialog");
-      // Il fuoco sulla ricerca solo dove la tastiera è già lì: su telefono
-      // apriva la tastiera di sistema, che riduce la finestra e faceva
-      // scivolare il pannello sotto il bordo dello schermo.
       if (window.matchMedia("(min-width: 721px)").matches) ricerca?.focus();
       return;
     }
@@ -2152,8 +2024,6 @@
     if (action === "export-ics") return esportaIcs();
   });
 
-  // Ricerca e cambi di opzione dentro il dialogo: la griglia si filtra mentre
-  // si digita, l'anteprima si aggiorna a ogni scelta.
   document.getElementById("ortoPlantSearch")?.addEventListener("input", (e) => {
     pickerQuery = e.target.value;
     renderPicker();
@@ -2199,9 +2069,6 @@
       }, 0);
     });
 
-  // Conferma della raccolta: la resa registrata diventa la stima dell'anno
-  // successivo, quindi va salvata sulla coltura giusta anche se nel frattempo
-  // la vista è cambiata.
   document
     .getElementById("ortoHarvestForm")
     ?.addEventListener("submit", (event) => {
@@ -2241,9 +2108,6 @@
       }, 0);
     });
 
-  /* Chiusura con Esc o cliccando fuori: il dialogo si chiude senza passare
-     dall'invio, quindi lo stato in sospeso va azzerato a mano. Senza questo,
-     una coltura scelta e poi abbandonata restava in memoria. */
   [
     ["ortoAddDialog", () => (piantaScelta = null)],
     ["ortoPlantDialog", () => (vocePendente = null)],
@@ -2258,10 +2122,7 @@
     });
   });
 
-  /* Salvataggio della modifica. Se cambia la data cambia anche l'identità
-     delle attività (id = coltura|tipo|data): le spunte e i rinvii della vecchia
-     pianificazione non avrebbero più senso e vengono azzerati per quella sola
-     coltura. */
+  /* Salvataggio della modifica. */
   document
     .getElementById("ortoEditForm")
     ?.addEventListener("submit", (event) => {
@@ -2345,9 +2206,7 @@
     .getElementById("ortoLangSelect")
     ?.addEventListener("change", (event) => applyLanguage(event.target.value));
 
-  /* ============================================================
-     Avvio
-     ============================================================ */
+  /* ============================================================ Avvio ============================================================ */
   async function boot() {
     // Catalogo: stessa sorgente usata dal resto dell'app, con i suoi fallback.
     let plants = null;

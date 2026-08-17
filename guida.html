@@ -30,10 +30,7 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
-    <!-- Lingua iniziale: stesso contratto di orto.html. Senza, la guida si
-         apriva sempre in italiano e passava al romeno solo quando guida.js
-         aveva finito di girare — un lampeggio su ogni caricamento, e i testi
-         restavano italiani se lo script tardava. -->
+    <!-- Lingua iniziale: stesso contratto di orto.html, evita il lampeggio del testo italiano in romeno -->
     <style>
       html.serra-i18n-pending body {
         visibility: hidden;
@@ -62,10 +59,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/base.css?v=20260816-uiux" />
-    <link
-      rel="stylesheet"
-      href="assets/css/serra-guida.css?v=20260816-uiux"
-    />
+    <link rel="stylesheet" href="assets/css/serra-guida.css?v=20260816-uiux" />
   </head>
   <body>
     <!-- Intestazione condivisa: su mobile menu a sinistra, marchio al centro
@@ -244,10 +238,7 @@
             progettare la serra, comprare semi e piantine, seguire l'orto fino
             alla raccolta, regolare account e preferenze.
           </p>
-          <!-- Indice: la pagina si è allungata e ci si arriva anche da link
-               diretti (dalla home, per esempio, si atterra sul capitolo degli
-               acquisti). Senza un indice non si capisce di stare dentro un
-               documento più lungo. -->
+          <!-- Indice dei capitoli della guida -->
           <p class="guide-toc-label" data-guide-key="toc.label">
             Cosa vuoi fare?
           </p>
@@ -581,12 +572,7 @@
         </p>
       </aside>
 
-      <!-- Capitolo 2: dove si comprano semi e piantine e come funziona il
-           passaggio carrello → ordine → «Da piantare». Ci si arriva dalla home,
-           dalla scheda «Procurati le piante».
-           Qui si spiega l'applicazione, non le piante: prezzi, numero di
-           varietà e consigli agronomici stanno nelle schede del catalogo, che
-           sono l'unico posto in cui restano allineati al listino. -->
+      <!-- Capitolo 2: acquisto di semi e piantine, dal carrello all'ordine fino a "Da piantare" -->
       <section
         class="guide-chapter guide-compare-section"
         id="seme-o-piantina"
@@ -732,8 +718,7 @@
           </article>
         </div>
 
-        <!-- Il passaggio che nessuna delle due pagine racconta per intero:
-             dal carrello all'ordine, e dall'ordine alla scheda «Da piantare». -->
+        <!-- Passaggi dal carrello all'ordine, e dall'ordine alla scheda "Da piantare" -->
         <ol class="guide-steps">
           <li>
             <span class="step-no">1</span>
@@ -782,9 +767,7 @@
         </aside>
       </section>
 
-      <!-- Capitolo 3: cosa succede dopo l'acquisto. Era la parte assente:
-           la guida finiva al carrello, mentre l'app accompagna fino alla
-           raccolta. Qui si descrivono i comandi della pagina, uno per uno. -->
+      <!-- Capitolo 3: cosa succede dopo l'acquisto, fino alla raccolta -->
       <section class="guide-chapter" id="coltivare" aria-labelledby="growTitle">
         <header class="guide-chapter-head">
           <span class="guide-chapter-mark" aria-hidden="true">3</span>
@@ -871,9 +854,7 @@
         </a>
       </section>
 
-      <!-- Capitolo 4: i comandi che stanno in ogni pagina. Erano l'unica parte
-           dell'app che la guida non nominava, e sono quelli che si cercano per
-           primi quando qualcosa non torna (lingua sbagliata, tema, ordini). -->
+      <!-- Capitolo 4: comandi comuni a tutte le pagine (lingua, tema, ordini) -->
       <section
         class="guide-chapter"
         id="impostazioni"

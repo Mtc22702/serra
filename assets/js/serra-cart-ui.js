@@ -1,43 +1,8 @@
-/**
- * Il cassetto del carrello, disegnato una volta sola per tutta l'app.
- *
- * Il carrello è unico (`ois.cart`, vedi serra-cart.js) ma prima ogni pagina lo
- * disegnava a modo suo: la home e il configuratore con righe grandi e foto, il
- * vivaio con una lista compatta e testi che parlavano solo di piantine. Aprire
- * lo stesso carrello da due sezioni diverse dava due prodotti diversi, e le
- * bustine comprate altrove finivano in un pannello che le ignorava.
- *
- * Qui vive la struttura condivisa:
- *   riepilogo → gruppi (semi, piantine) → invito incrociato → totale
- *
- * Regole di composizione, decise perché il cassetto resti informativo senza
- * diventare rumoroso:
- *   - il riepilogo compare solo quando ha almeno due numeri da dire;
- *   - le intestazioni di gruppo compaiono solo quando i gruppi sono due;
- *   - consegna e ordine minimo seguono la merce viva, non la pagina: appaiono
- *     in qualunque cassetto contenga piantine, anche aperto dalla home;
- *   - l'invito incrociato compare solo se manca una delle due famiglie e
- *     sparisce da solo appena l'utente aggiunge quella che gli mancava.
- *
- * Non tocca il carrello e non legge il localStorage: riceve le righe già
- * pronte e restituisce HTML. Le azioni hanno gli stessi nomi in tutte le
- * pagine (`cart-qty-less`, `cart-qty-more`, `remove-from-cart`), cambia solo
- * l'attributo che le trasporta.
- *
- * Fa eccezione `annullabile()`, che è l'unico pezzo di questo file a mettere
- * mano al DOM: costruisce da sé il proprio nodo. Sta qui perché togliere
- * qualcosa dal carrello si può fare da tre pagine e l'annulla dev'essere lo
- * stesso in tutte e tre — se vivesse nelle pagine sarebbe già divergente,
- * come lo erano le righe del cassetto prima che questo file esistesse.
- *
- * Espone window.SerraCartUI.
- */
+/* Il cassetto del carrello, disegnato una volta sola per tutta l'app. */
 (function (global) {
   "use strict";
 
-  /* Regole commerciali della merce viva. Stanno qui, e non nel vivaio, perché
-     valgono per l'ordine: chi compone il carrello dalla home deve vedere lo
-     stesso vincolo di chi lo compone dal listino delle piantine. */
+  /* Regole commerciali della merce viva. */
   const CONSEGNA = {
     giornoSpedizione: 1, // lunedì
     anticipoMinimoGiorni: 2, // ordini raccolti fino a due giorni prima
@@ -161,8 +126,6 @@
         })[c]
     );
 
-  /* Prima partenza utile: il primo giorno di spedizione che rispetti il
-     preavviso minimo. La consegna è il giorno dopo la partenza. */
   function prossimaConsegna(oggi) {
     const giorno = oggi ? new Date(oggi) : new Date();
     giorno.setHours(0, 0, 0, 0);
@@ -189,8 +152,7 @@
     C()
       ? C().quantita(riga)
       : Number(riga.qta) || Number(riga.bustine) || 0;
-  /* Il passo minimo della riga: una bustina per i semi, un vassoio intero per
-     le piantine. Serve a sapere quando il «−» è arrivato al fondo. */
+  /* Il passo minimo della riga: una bustina per i semi, un vassoio intero per le piantine. */
   const passoRiga = (riga) =>
     C() ? C().passo(riga) : isPiantina(riga) ? Number(riga.lotto) || 6 : 1;
 
@@ -255,9 +217,7 @@
       </div>`;
   }
 
-  /* Riepilogo in cima. Con i soli semi direbbe un numero che è già scritto
-     nell'intestazione del cassetto, quindi compare solo quando ha almeno due
-     cose da dire. */
+  /* Riepilogo in cima. */
   function riepilogoHtml(semi, piantine, ctx) {
     const t = (k, v) => testo(ctx.lang, k, v);
     const bustine = semi.reduce((n, r) => n + quantita(r), 0);
@@ -275,8 +235,7 @@
       .join("")}</div>`;
   }
 
-  /* Note della merce viva: seguono le piantine, non la pagina. Chi compone
-     l'ordine dalla home vede lo stesso vincolo di chi lo compone dal vivaio. */
+  /* Note della merce viva: seguono le piantine, non la pagina. */
   function notePiantineHtml(piantine, ctx) {
     if (!piantine.length) return "";
     const t = (k, v) => testo(ctx.lang, k, v);
@@ -296,16 +255,12 @@
       }`;
   }
 
-  /* Invito incrociato: compare solo se manca una delle due famiglie e sparisce
-     da solo appena l'utente aggiunge quella che gli mancava. */
   function crossHtml(semi, piantine, ctx) {
     if (!semi.length === !piantine.length) return "";
     const t = (k) => testo(ctx.lang, k);
     const versoVivaio = semi.length && !piantine.length;
     const href = versoVivaio ? ctx.hrefPiantine : ctx.hrefSemi;
     if (!href) return "";
-    /* Quando la meta è nella pagina stessa il cassetto la coprirebbe: l'azione
-       permette a chi ospita il carrello di chiuderlo prima di scorrere. */
     return `<a class="cart-cross" href="${escape(href)}" ${ctx.attr}="cross-sell">
         <span class="cart-cross-ico" aria-hidden="true">${versoVivaio ? "🪴" : "🌿"}</span>
         <span class="cart-cross-copy">
@@ -345,23 +300,7 @@
     }</div>`;
   }
 
-  /**
-   * Disegna il corpo del cassetto.
-   *
-   * ctx:
-   *   righe            righe del carrello, già lette da SerraCart
-   *   lang             "it" | "ro"
-   *   attr             attributo delle azioni ("data-home-action", …)
-   *   nome(id)         nome localizzato, "" se la pianta non è nel catalogo
-   *   foto(id)         URL della foto, "" per ripiegare sull'emoji
-   *   nota(id)         sottotitolo delle bustine
-   *   prezzoBustina(id), semiPerBustina(id)
-   *   soldi(v)         formattatore di valuta
-   *   hrefSemi, hrefPiantine   mete dell'invito incrociato
-   *   extraHtml        sezione facoltativa (i materiali del configuratore)
-   *   extraTotale      totale della sezione facoltativa
-   *   extraLabel       etichetta della sezione facoltativa
-   */
+  /* Disegna il corpo del cassetto. */
   function corpo(ctx) {
     const righe = Array.isArray(ctx.righe) ? ctx.righe : [];
     const note = righe.filter((r) => ctx.nome(r.id));
@@ -384,8 +323,6 @@
       ) / 100;
     const extraTotale = Number(ctx.extraTotale) || 0;
 
-    /* Con i materiali in carrello il totale si scompone: l'utente deve poter
-       ritrovare la cifra dei prodotti accanto a quella degli accessori. */
     const totaleHtml = extraTotale
       ? `<div class="cart-total-row cart-total-row--sub">
           <span>${t("total.seeds")}</span><b>${ctx.soldi(totaleProdotti)}</b>
@@ -411,20 +348,6 @@
     );
   }
 
-  /* ============================================================
-     Annulla
-     ============================================================
-     Distanza e dimensione dei comandi rendono raro il tocco sbagliato; questo
-     lo rende innocuo. È la differenza fra «ho cancellato una pianta e devo
-     ricercarla nel listino» e «ho cancellato una pianta e la riprendo».
-
-     Due dettagli che decidono se serve davvero a qualcosa:
-     — il conto alla rovescia si ferma quando il puntatore ci passa sopra o il
-       fuoco ci entra dentro, se no sparisce proprio mentre ci si arriva;
-     — il messaggio è `role="status"`, quindi chi usa un lettore di schermo
-       viene avvisato che l'annulla esiste invece di trovarsi il carrello
-       cambiato sotto le mani senza spiegazioni.
-     ============================================================ */
 
   let nodo = null;
   let timer = 0;
@@ -462,8 +385,6 @@
     return nodo;
   }
 
-  /* `onAnnulla` riceve indietro il controllo e deve rimettere le cose com'erano:
-     chi chiama fotografa il carrello prima di toccarlo e lo riscrive qui. */
   function annullabile(opzioni) {
     const conf = opzioni || {};
     if (typeof conf.onAnnulla !== "function") return;

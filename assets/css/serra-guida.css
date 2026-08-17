@@ -1,10 +1,7 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Guida: sorgente degli stili dei percorsi, delle schede e dei controlli di navigazione.
- * Viene distribuito come serra-guida.css e caricato dopo base.css; modificare qui.
- */
+/* Guida: sorgente degli stili dei percorsi, delle schede e dei controlli di navigazione. */
 
-/* Fondazioni condivise: colori ricorrenti dell'interfaccia.
-   I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
+/* Fondazioni condivise: colori ricorrenti dell'interfaccia. */
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -4126,10 +4123,6 @@
     display: none;
   }
 
-  /* Icona ed etichetta dei link "Esplora": separate a runtime da nav.js così
-     la vista mobile può dare all'icona un trattamento a riquadro coerente con
-     le righe Tema/Lingua e le tab della guida. Su desktop resta solo lo
-     spazio tra icona e testo, invariato rispetto a prima. */
   .nav-link-icon {
     margin-right: 0.4em;
   }
@@ -5130,8 +5123,6 @@
       font-size: 0.66rem;
     }
 
-    /* La menzione "consigliato" non deve più comprimere la descrizione: ogni
-       elemento ha una propria area e l'azione resta sempre sulla destra. */
     .hero-cfg-level {
       display: grid;
       grid-template-columns: 42px minmax(0, 1fr) max-content;
@@ -5372,9 +5363,6 @@
     border-color: var(--verde);
     background: rgba(79, 154, 63, 0.12);
   }
-  /* Invito alla guida: più presente della semplice pillola precedente (le
-     cui variabili colore --verde/--verde-scuro non erano mai definite in
-     tema chiaro, rendendo icona e testo praticamente invisibili). */
   .hero-guide-link {
     display: inline-flex;
     align-items: center;
@@ -6315,7 +6303,6 @@
     }
   }
 
-  /* Base tipografica comune: leggibile prima di tutto, senza microtesti o pesi aggressivi. */
   body {
     font-weight: 400;
     letter-spacing: 0.002em;
@@ -6405,8 +6392,6 @@
     }
   }
 
-  /* Su mobile i passaggi restano affiancati, con spazio distribuito in base alla
-     lunghezza dell'etichetta invece di rimpicciolire troppo il testo. */
   @media (max-width: 660px) {
     .workflow-hub .journey-context-progress {
       display: flex;
@@ -6444,8 +6429,6 @@
     }
   }
 
-  /* Tablet e desktop: i passaggi restano compatti, ma non usano più il
-     microtesto ereditato dalla prima versione della barra guidata. */
   .workflow-hub .journey-context-step[data-journey-step="settings"],
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
@@ -6489,14 +6472,11 @@
     }
   }
 
-  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
-     mentre la ricerca è in corso. */
+  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile mentre la ricerca è in corso. */
   #catalogFilterToggle[hidden] {
     display: none !important;
   }
 
-  /* Questo layer viene caricato dopo gli stili base del catalogo: qui la
-     ricerca deve prevalere anche sulle regole che rendono visibili i controlli. */
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown))
     #catalogFilterToggle,
@@ -6530,13 +6510,6 @@ body {
   font-family: "DM Sans", system-ui, sans-serif;
   background: linear-gradient(150deg, #e5eee3 0%, #f2f7f0 55%, #e5eee3 100%);
 }
-/* L'intestazione su telefono non ha più regole proprie qui: il marchio è
-   centrato dalla griglia in base.css, nel livello `coerenza`, che vale per
-   tutte le pagine. Questo blocco esisteva per rimettere a posto a mano un
-   centraggio assoluto che si rompeva — con il padding riportato a zero e
-   `position: relative` aggiunto al contenitore — e ora sarebbe solo una
-   quarta copia divergente. L'unica cosa che resta è l'altezza ridotta
-   dell'intestazione della guida, che non ha la seconda riga di navigazione. */
 @media (max-width: 660px) {
   .guide-page-header {
     --nav-h: 60px;
@@ -6568,9 +6541,6 @@ main {
   border: 1px solid rgba(36, 87, 51, 0.14);
   border-radius: var(--radius-2xl);
   background: rgba(255, 253, 246, 0.82);
-  /* Come nel vivaio: l'intestazione della pagina non è un pannello
-     sovrapposto, quindi scende dal quarto gradino al secondo. Il pannello
-     del percorso, che le sta sotto, resta al terzo. */
   box-shadow: var(--elev-2);
   text-align: left;
 }
@@ -6660,9 +6630,6 @@ main {
     gap: 0.55rem;
     padding: 0.7rem 0.65rem 0.7rem 0.85rem;
   }
-  /* Le tre in fila sono più strette, ma l'illustrazione resta quella: è il
-     segno con cui si riconosce il livello, e rimpicciolirla qui l'avrebbe
-     fatta divergere di nuovo da quella del configuratore. */
   .guide-tab-icon {
     width: var(--choice-card-ico);
     height: var(--choice-card-ico);
@@ -6676,11 +6643,6 @@ main {
     font-size: 0.68rem;
   }
 }
-/* Le tre schede di livello di questa pagina sono la stessa scelta che il
-   configuratore propone nella modale delle impostazioni (.pc-persona-card in
-   base.css). Tinte e geometria arrivano entrambe dai token condivisi: erano
-   due copie degli stessi numeri e avevano già preso strade diverse — qui una
-   pillola compatta, là un riquadro generoso, per la stessa identica scelta. */
 .guide-tab {
   --guide-accent: var(--pc-nov);
   --guide-accent-text: #245733;
@@ -6717,10 +6679,6 @@ main {
     box-shadow 0.18s ease,
     background 0.16s ease;
 }
-/* Stesso gesto delle schede di livello nella home e nel configuratore: la
-   scheda cresce di poco e prende un alone del proprio colore. Prima qui
-   cambiava solo il fondo, e le stesse tre scelte rispondevano al mouse in
-   due modi diversi a seconda della pagina. */
 .guide-tab:hover {
   transform: scale(1.025);
   z-index: 1;
@@ -6851,8 +6809,6 @@ main {
   border: 1px solid rgba(36, 87, 51, 0.13);
   border-radius: var(--radius-xl);
   background: rgba(255, 253, 246, 0.88);
-  /* Intestazione e pannello del percorso sono due blocchi della stessa
-     pagina, uno sotto l'altro: stavano su due piani diversi senza motivo. */
   box-shadow: var(--elev-2);
 }
 .guide-route:focus {
@@ -7026,12 +6982,6 @@ main {
     max-width: 18ch;
     font-size: 0.62rem;
   }
-  /* Qui le tre schede si rimpicciolivano — 52 px d'altezza, icona a 33,
-     spazio fra loro a 3,5 — mentre le stesse tre nella modale del
-     configuratore restavano grandi. Sul telefono, che è dove si guardano
-     davvero, sembravano due componenti diversi per la stessa scelta.
-     Ora restano alla misura condivisa; si accorciano solo i due testi,
-     che è l'unica cosa che davvero non ci sta. */
   .guide-tab-body b {
     font-size: 0.95rem;
   }
@@ -7204,15 +7154,6 @@ html[data-theme="dark"] .guide-cta:hover {
   font-size: 12px;
 }
 
-/* ============================================================================
-   CAPITOLI DELLA GUIDA
-   La pagina è cresciuta: non è più solo il selettore dei tre percorsi del
-   configuratore, ma un documento in tre capitoli — progettare, procurarsi le
-   piante, coltivare. Servono un indice, un modo per numerare i capitoli e il
-   confronto fra seme e piantina, che è la ragione per cui dalla home si
-   atterra qui.
-   ========================================================================= */
-
 /* Indice: sta nell'introduzione e porta ai tre capitoli. */
 .guide-toc {
   display: grid;
@@ -7253,8 +7194,7 @@ html[data-theme="dark"] .guide-cta:hover {
   transform: translateY(-1px);
 }
 
-/* Ogni capitolo si può raggiungere da un link diretto: senza questo
-   scostamento il titolo finirebbe sotto l'intestazione fissa. */
+/* Ogni capitolo si può raggiungere da un link diretto: senza questo scostamento il titolo finirebbe sotto l'intestazione fissa. */
 .guide-chapter,
 #progettare {
   scroll-margin-top: calc(var(--nav-h, 76px) + 24px);
@@ -7306,8 +7246,6 @@ html[data-theme="dark"] .guide-cta:hover {
   display: none;
 }
 
-/* Il numero del capitolo: lo stesso segno dei marcatori 01/02 della home,
-   così le due pagine si riconoscono come parti della stessa app. */
 .guide-chapter-mark {
   display: grid;
   flex: none;
@@ -7348,10 +7286,7 @@ html[data-theme="dark"] .guide-cta:hover {
   text-wrap: pretty;
 }
 
-/* ---------- il confronto ----------
-   Due colonne parallele con le stesse quattro voci nello stesso ordine: è
-   quello che permette di leggerle in orizzontale — costo con costo, tempo
-   con tempo — invece di leggere due testi separati e doverli ricordare. */
+/* ---------- il confronto ---------- */
 .guide-compare {
   display: grid;
   gap: clamp(0.9rem, 2.2vw, 1.4rem);
@@ -7368,8 +7303,7 @@ html[data-theme="dark"] .guide-cta:hover {
   box-shadow: var(--elev-2);
 }
 
-/* Lo stesso filo di colore delle due righe di scelta nella home: verde il
-   seme, ambra la piantina. Chi arriva da lì ritrova il codice. */
+/* Lo stesso filo di colore delle due righe di scelta nella home: verde il seme, ambra la piantina. */
 .guide-compare-col {
   --compare-accent: #2f6b3a;
   position: relative;
@@ -7455,8 +7389,7 @@ html[data-theme="dark"] .guide-cta:hover {
   text-wrap: pretty;
 }
 
-/* La riga che tira le somme: è quella che uno cerca se non ha voglia di
-   leggere la tabella. */
+/* La riga che tira le somme: è quella che uno cerca se non ha voglia di leggere la tabella. */
 .guide-compare-when {
   margin: 1.1rem 0 0;
   padding: 0.8rem 0.9rem;
@@ -7471,8 +7404,7 @@ html[data-theme="dark"] .guide-cta:hover {
   color: var(--compare-accent);
 }
 
-/* Il pulsante di colonna resta in fondo anche se le due colonne hanno testi
-   di lunghezza diversa. */
+/* Il pulsante di colonna resta in fondo anche se le due colonne hanno testi di lunghezza diversa. */
 .guide-cta--inline {
   margin: auto 0 0;
   align-self: stretch;

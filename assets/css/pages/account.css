@@ -1,11 +1,7 @@
-/* Area riservata: sorgente degli stili di account, distribuito come serra-account.css.
- * Il bundle viene caricato dopo base.css: modificare qui, mantenendo l'ordine della cascata.
- */
+/* Area riservata: sorgente degli stili di account, distribuito come serra-account.css. */
 
-/* Fondazioni condivise: colori ricorrenti dell'interfaccia.
-   I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
-/* Modulo "Semi e piantine da piantare": ponte tra ordini e Il mio orto.
-   Disegnato da assets/js/account-orto.js; classi prefissate `toplant-`. */
+/* Fondazioni condivise: colori ricorrenti dell'interfaccia. */
+/* Modulo "Semi e piantine da piantare": ponte tra ordini e Il mio orto. */
 @layer base {
   .toplant-order {
     display: flex;
@@ -2944,12 +2940,8 @@
   --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --text-muted: #5f6f60;
-  /* Era definita solo per il tema scuro: di giorno tutta l'area account
-     ripiegava sul grigio neutro di ripiego (rgba(0,0,0,.06)) mentre il resto
-     dell'app usa il filetto verdino. Le schede sembravano di un'altra app. */
   --border-color: var(--surface-line);
   --bg-card: var(--surface-1);
-  /* Anche le tabelle: righe e intestazioni erano velate di nero puro. */
   --bg-card-hover: var(--surface-2);
   --bg-table-head: var(--surface-2);
   --bg-table-row-hover: var(--brand-050);
@@ -3198,8 +3190,7 @@ html[data-theme="dark"] label {
   padding: 12px 16px;
   border-radius: var(--control-radius);
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-  /* `background` per intero cancellerebbe la freccia che il layer
-     `coerenza` disegna sulle tendine: qui serve solo il colore. */
+  /* `background` per intero cancellerebbe la freccia che il layer `coerenza` disegna sulle tendine: qui serve solo il colore. */
   background-color: var(--bg-input, #ffffff);
   color: var(--text-color, var(--serra-text));
   transition: var(--transition-smooth);
@@ -3303,8 +3294,7 @@ html[data-theme="dark"] .btn-outline {
   font-size: 0.85rem;
   border-radius: var(--control-radius-pill);
 }
-/* La spaziatura di questo pannello è la distanza fra le azioni rapide e la
-   zona «Annulla ordine»: è quella che conta. */
+/* La spaziatura di questo pannello è la distanza fra le azioni rapide e la zona «Annulla ordine»: è quella che conta. */
 .order-actions-panel {
   min-width: 238px;
   display: grid;
@@ -3387,9 +3377,6 @@ html[data-theme="dark"] .btn-outline {
   color: var(--c-green, var(--serra-green));
   background: rgba(47, 107, 58, 0.055);
 }
-/* «Annulla ordine» stava sei pixel sotto a «Stampa ricevuta»: il filetto
-   tratteggiato diceva che la zona era diversa, ma il dito non legge i
-   filetti. La distanza adesso la dice anche lo spazio. */
 .order-cancel-zone {
   grid-column: 1 / -1;
   display: flex;
@@ -3470,8 +3457,6 @@ html[data-theme="dark"] .order-cancel-button {
     ),
     var(--bg-card, var(--serra-white));
   border-color: rgba(47, 107, 58, 0.13);
-  /* Eredita `.card`, che sta al terzo gradino: ma è l'intestazione della
-     pagina, e nelle altre sezioni le intestazioni stanno al secondo. */
   box-shadow: var(--elev-2);
 }
 html[data-theme="dark"] .account-hero {
@@ -3979,8 +3964,6 @@ html[data-theme="dark"] .badge-category {
   padding: 10px 16px;
   color: var(--text-muted, var(--serra-slate));
   cursor: pointer;
-  /* Tab attaccata al pannello: solo gli angoli alti, ma con il raggio dei
-     controlli — era l'ultimo punto dell'app con un raggio fuori scala. */
   border-radius: var(--control-radius) var(--control-radius) 0 0;
   min-height: var(--control-h-md);
   transition: var(--transition-smooth);
@@ -4173,8 +4156,7 @@ html[data-theme="dark"] .admin-order-insight:hover {
   padding: 8px 12px;
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   border-radius: var(--control-radius);
-  /* `background` per intero cancellerebbe la freccia che il layer
-     `coerenza` disegna sulle tendine: qui serve solo il colore. */
+  /* `background` per intero cancellerebbe la freccia che il layer `coerenza` disegna sulle tendine: qui serve solo il colore. */
   background-color: var(--bg-input, var(--serra-white));
   color: var(--text-color, #333);
   font: inherit;
@@ -4249,8 +4231,7 @@ html[data-theme="dark"] .admin-orders-count {
   border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   border-radius: var(--control-radius);
   color: var(--text-color, #333);
-  /* `background` per intero cancellerebbe la freccia che il layer
-     `coerenza` disegna sulle tendine: qui serve solo il colore. */
+  /* `background` per intero cancellerebbe la freccia che il layer `coerenza` disegna sulle tendine: qui serve solo il colore. */
   background-color: var(--bg-input, var(--serra-white));
   font-family: var(--font-sans);
   font-size: 0.85rem;
@@ -7068,10 +7049,6 @@ html[data-theme="dark"] .notification-content {
     display: none;
   }
 
-  /* Icona ed etichetta dei link "Esplora": separate a runtime da nav.js così
-     la vista mobile può dare all'icona un trattamento a riquadro coerente con
-     le righe Tema/Lingua e le tab della guida. Su desktop resta solo lo
-     spazio tra icona e testo, invariato rispetto a prima. */
   .nav-link-icon {
     margin-right: 0.4em;
   }
@@ -8072,8 +8049,6 @@ html[data-theme="dark"] .notification-content {
       font-size: 0.66rem;
     }
 
-    /* La menzione "consigliato" non deve più comprimere la descrizione: ogni
-       elemento ha una propria area e l'azione resta sempre sulla destra. */
     .hero-cfg-level {
       display: grid;
       grid-template-columns: 42px minmax(0, 1fr) max-content;
@@ -8314,9 +8289,6 @@ html[data-theme="dark"] .notification-content {
     border-color: var(--verde);
     background: rgba(79, 154, 63, 0.12);
   }
-  /* Invito alla guida: più presente della semplice pillola precedente (le
-     cui variabili colore --verde/--verde-scuro non erano mai definite in
-     tema chiaro, rendendo icona e testo praticamente invisibili). */
   .hero-guide-link {
     display: inline-flex;
     align-items: center;
@@ -9257,7 +9229,6 @@ html[data-theme="dark"] .notification-content {
     }
   }
 
-  /* Base tipografica comune: leggibile prima di tutto, senza microtesti o pesi aggressivi. */
   body {
     font-weight: 400;
     letter-spacing: 0.002em;
@@ -9366,8 +9337,6 @@ html[data-theme="dark"] .notification-content {
     }
   }
 
-  /* Su mobile i passaggi restano affiancati, con spazio distribuito in base alla
-     lunghezza dell'etichetta invece di rimpicciolire troppo il testo. */
   @media (max-width: 660px) {
     .workflow-hub .journey-context-progress {
       display: flex;
@@ -9405,8 +9374,6 @@ html[data-theme="dark"] .notification-content {
     }
   }
 
-  /* Tablet e desktop: i passaggi restano compatti, ma non usano più il
-     microtesto ereditato dalla prima versione della barra guidata. */
   .workflow-hub .journey-context-step[data-journey-step="settings"],
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
@@ -9450,14 +9417,11 @@ html[data-theme="dark"] .notification-content {
     }
   }
 
-  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
-     mentre la ricerca è in corso. */
+  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile mentre la ricerca è in corso. */
   #catalogFilterToggle[hidden] {
     display: none !important;
   }
 
-  /* Questo layer viene caricato dopo gli stili base del catalogo: qui la
-     ricerca deve prevalere anche sulle regole che rendono visibili i controlli. */
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown))
     #catalogFilterToggle,
@@ -9489,8 +9453,6 @@ html[data-theme="dark"] .notification-content {
   }
 }
 
-/* Distintivo "gratis" sulla voce Il mio orto: base.js riscrive il contenuto
-   dei link del menu, quindi il badge vive in uno pseudo-elemento. */
 @layer base {
   .nav-link--orto {
     display: inline-flex;

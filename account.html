@@ -171,8 +171,7 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
-               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <!-- Accesso rapido al profilo: solo icona su schermi stretti -->
           <a
             href="account.html"
             class="nav-account-btn"
@@ -185,7 +184,7 @@
               >Area Personale</span
             >
           </a>
-          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <!-- Blocco preferenze: tema e lingua -->
           <div class="nav-prefs">
             <button
               class="theme-toggle"
@@ -438,9 +437,7 @@
               <span class="account-eyebrow" data-i18n-acc="dash.account_eyebrow"
                 >Il tuo spazio</span
               >
-              <!-- È l'unico titolo della pagina: era un h2 e il documento
-                   restava senza h1, quindi chi naviga con la tastiera o con
-                   uno screen reader non aveva un punto di partenza. -->
+              <!-- Unico h1 della pagina, per l'accessibilità -->
               <h1 id="userNameTitle" data-i18n-acc="dash.loading_generic">
                 Caricamento...
               </h1>
@@ -827,9 +824,7 @@
             </div>
           </div>
 
-          <!-- Modulo aggiuntivo: porta gli acquisti in "Il mio orto".
-               Il contenuto è disegnato da account-orto.js, che non tocca
-               account.js né gli ordini: li legge soltanto. -->
+          <!-- Modulo aggiuntivo: porta gli acquisti in "Il mio orto", disegnato da account-orto.js (sola lettura di account.js e ordini) -->
           <div
             class="dashboard-card card span-2-large"
             id="accountToPlantCard"

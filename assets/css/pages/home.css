@@ -1,9 +1,6 @@
-/* Home: sorgente degli stili di catalogo, carrello, hero e configurazione rapida.
- * Viene distribuito come serra-home.css e caricato dopo base.css; modificare qui.
- */
+/* Home: sorgente degli stili di catalogo, carrello, hero e configurazione rapida. */
 
-/* Fondazioni condivise: colori ricorrenti dell'interfaccia.
-   I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
+/* Fondazioni condivise: colori ricorrenti dell'interfaccia. */
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -3901,10 +3898,6 @@
     display: none;
   }
 
-  /* Icona ed etichetta dei link "Esplora": separate a runtime da nav.js così
-     la vista mobile può dare all'icona un trattamento a riquadro coerente con
-     le righe Tema/Lingua e le tab della guida. Su desktop resta solo lo
-     spazio tra icona e testo, invariato rispetto a prima. */
   .nav-link-icon {
     margin-right: 0.4em;
   }
@@ -4651,15 +4644,6 @@
 
   /* Rende ogni profilo della hero una scelta primaria chiaramente selezionabile. */
 
-  /* Colore, bordo e rilievo delle tre scelte stanno in base.css, con il resto
-     dell'app: qui resta solo l'ingombro, che nella hero è un po' più generoso.
-     Prima questo blocco rifaceva tutto da capo — bordo di 2px e spessore
-     inferiore di 4px — e la stessa scheda risultava diversa a seconda della
-     pagina da cui la si guardava. */
-
-  /* Solo la misura: colore e contorno del riquadro vengono da base.css, dove
-     sono tarati per restare staccati dal riempimento di ogni livello. */
-
   /* "Consigliato" diventa un'etichetta, non un elemento cliccabile a sé. */
 
   /* L'azione è solo una freccia: nessun secondo pulsante dentro il pulsante. */
@@ -4837,9 +4821,6 @@
     border-color: var(--verde);
     background: rgba(79, 154, 63, 0.12);
   }
-  /* Invito alla guida: più presente della semplice pillola precedente (le
-     cui variabili colore --verde/--verde-scuro non erano mai definite in
-     tema chiaro, rendendo icona e testo praticamente invisibili). */
   .hero-guide-link {
     display: inline-flex;
     align-items: center;
@@ -5756,7 +5737,6 @@
     }
   }
 
-  /* Base tipografica comune: leggibile prima di tutto, senza microtesti o pesi aggressivi. */
   body {
     font-weight: 400;
     letter-spacing: 0.002em;
@@ -5863,8 +5843,6 @@
     }
   }
 
-  /* Su mobile i passaggi restano affiancati, con spazio distribuito in base alla
-     lunghezza dell'etichetta invece di rimpicciolire troppo il testo. */
   @media (max-width: 660px) {
     .workflow-hub .journey-context-progress {
       display: flex;
@@ -5902,8 +5880,6 @@
     }
   }
 
-  /* Tablet e desktop: i passaggi restano compatti, ma non usano più il
-     microtesto ereditato dalla prima versione della barra guidata. */
   .workflow-hub .journey-context-step[data-journey-step="settings"],
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
@@ -5947,14 +5923,11 @@
     }
   }
 
-  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
-     mentre la ricerca è in corso. */
+  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile mentre la ricerca è in corso. */
   #catalogFilterToggle[hidden] {
     display: none !important;
   }
 
-  /* Questo layer viene caricato dopo gli stili base del catalogo: qui la
-     ricerca deve prevalere anche sulle regole che rendono visibili i controlli. */
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown))
     #catalogFilterToggle,
@@ -5986,20 +5959,9 @@
   }
 }
 
-/* Le tre strade dell'app (sezione #percorsi): comprare semi, comprare piantine
-   oppure farsi seguire nella coltivazione di ciò che si possiede già.
-   È la prima cosa che l'utente incontra dopo l'hero. */
+/* Quarta scelta dell'hero: non è un quarto livello, è l'uscita per chi ha già semi o piantine. */
 
-/* Quarta scelta dell'hero: non è un quarto livello, è l'uscita per chi ha già
-   semi o piantine. Un separatore "oppure" la stacca dai tre livelli, le tre
-   icone anticipano le tre strade e la freccia in basso dice che si scende. */
-
-/* Distintivo "gratis" accanto a Il mio orto: nel menu le prime due voci
-   portano a un acquisto, la terza no, e la differenza va vista subito. */
 @layer base {
-  /* base.js riscrive il contenuto dei link del menu (icona + etichetta):
-     il distintivo deve quindi vivere in uno pseudo-elemento, che sopravvive
-     alla riscrittura. La traduzione passa dall'attributo lang del documento. */
   .nav-link--orto {
     display: inline-flex;
     align-items: center;
@@ -6033,9 +5995,7 @@
   }
 }
 
-/* Promessa dell'hero: la riga che riassume le tre cose che l'app fa.
-   L'hero viene anche accorciato di poco, così il bordo della fascia
-   "Tre strade" si intravede e si capisce che sotto c'è dell'altro. */
+/* Promessa dell'hero: la riga che riassume le tre cose che l'app fa. */
 @layer base {
   .hero-immersive {
     min-height: min(100vh, 880px);
@@ -6048,9 +6008,6 @@
   }
 }
 
-/* Contatore del vassoio piantine sul collegamento al vivaio: il numero arriva
-   dall'attributo data-count impostato da base.js, perché la navigazione
-   riscrive il contenuto dei link e un elemento figlio andrebbe perso. */
 @layer base {
   .nav-link--vivaio {
     display: inline-flex;
@@ -6072,19 +6029,8 @@
   }
 }
 
-/* Il suggerimento incrociato del carrello (`.cart-cross`) vive in base.css:
-   lo stesso cassetto compare in home, vivaio e configuratore. */
-
-/* Homepage: una sola scelta primaria nell'hero, tre ingressi rapidi sotto e
-   contenuti secondari progressivi su schermi piccoli. */
+/* Homepage: una sola scelta primaria nell'hero, tre ingressi rapidi sotto e contenuti secondari progressivi su schermi piccoli. */
 @layer polish {
-  /* Qui la home ridefiniva il proprio menu: nascondeva l'icona della voce
-     «Home», le dava un padding suo e rimpiccioliva tutte le voci. Erano
-     rattoppi nati quando la voce compariva solo su questa pagina. Ora il menu
-     è lo stesso ovunque e le regole valgono per tutti in base.css: qui non
-     serve più niente, e senza queste righe la home smette di essere l'unica
-     pagina con «Home» senza casetta. */
-
   .hero-immersive {
     min-height: auto;
   }
@@ -6159,9 +6105,6 @@
   }
 }
 
-/* Leggibilita della home: le azioni secondarie dell'hero devono sembrare
-   controlli veri e tutti i testi informativi restano sopra la soglia minima
-   di 12 px (14 px per azioni e contenuti che richiedono lettura). */
 @layer polish {
   .site-header .nav-links > .nav-link {
     font-size: clamp(12px, 0.86vw, 13.5px);

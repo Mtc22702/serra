@@ -1,9 +1,4 @@
-/**
- * Home: catalogo, filtri, carrello, hero animata e passaggio al configuratore.
- * Dipende da base.js e catalogo.js per dati piante, lingua, API, foto e navigazione.
- * Le sezioni sono ordinate in base al flusso utente: dati → catalogo → carrello
- * → interazioni → avvio. Il DOM viene aggiornato solo dal rendering dedicato.
- */
+/* Home: catalogo, filtri, carrello, hero animata e passaggio al configuratore. */
 
 // Catalogo condiviso
 const PLANTS = window.PLANTS;
@@ -644,8 +639,7 @@ let catalog = {
   seasonOnly: false,
   easyOnly: false,
   easyOnlyTouched: false,
-  // Il riscaldamento parte sempre spento; viene ripristinato solo dopo una
-  // scelta esplicita dell'utente in questa pagina.
+  // Il riscaldamento parte sempre spento; viene ripristinato solo dopo una scelta esplicita dell'utente in questa pagina.
   climatePreferenceTouched: false,
   sort: "season",
   layout: localStorage.getItem("serra.catalog.layout") || "grid",
@@ -963,15 +957,12 @@ function packPrice(id) {
 function seedsPerPack(id) {
   return PACK_DATA[id]?.seeds ?? 100;
 }
-// Il carrello è unico: la riga può essere una bustina di semi o un lotto di
-// piantine comprato nel vivaio. Questi helper distinguono i due casi.
+// Il carrello è unico: la riga può essere una bustina di semi o un lotto di piantine comprato nel vivaio.
 const isPiantinaItem = (i) => !!i && i.variante === "piantina";
 const itemQty = (i) =>
   isPiantinaItem(i)
     ? Number(i.qta) || Number(i.bustine) || 0
     : Number(i.bustine) || 0;
-// Il prezzo delle piantine viaggia nella riga: la home non conosce il listino
-// del vivaio e non deve caricarlo per fare un totale corretto.
 const itemUnitPrice = (i) =>
   isPiantinaItem(i) ? Number(i.prezzo) || 0 : packPrice(i.id);
 const cartTotal = () =>
@@ -1124,10 +1115,6 @@ function renderHero() {
   if (heroCfgMonth) {
     heroCfgMonth.textContent = NOMI_MESI[state.mese - 1];
   }
-  // La frase di stagione (#heroTagline) era scritta dentro uno span vuoto e
-  // nascosto: nessuno la leggeva, ma bastava togliere quello span dalla
-  // pagina perché questa riga interrompesse tutto il rendering della hero.
-  // Le frasi restano in STAGIONE_QUOTE, pronte se torneranno in pagina.
   document.querySelectorAll(".hero-zone-btn").forEach((b) => {
     const selected = b.dataset.zone === state.zona;
     b.classList.toggle("active", selected);
@@ -1141,13 +1128,7 @@ function renderHero() {
     ?.classList.toggle("active", state.riscaldata);
   applyDynamicStaticText();
 
-  /* Piante di sfondo: sono un margine botanico, non un motivo sparso.
-     Prima erano otto e alcune cadevano a `left: 12%` o `right: 15%`, che su
-     un portatile da 1366 px finisce dentro la colonna del testo: si vedevano
-     macchie verdi dietro al titolo e sembravano capitate lì per caso. Ora
-     sono cinque, tutte agganciate ai bordi e volutamente tagliate fuori
-     campo, e sono più grandi perché a quell'opacità devono leggersi come
-     carta decorata, non come oggetti. */
+  /* Piante di sfondo: sono un margine botanico, non un motivo sparso. */
   const plants = diversePlants(seminabili(), 5);
   const positions = [
     { top: "-5%", left: "-4%", size: 215, opacity: 0.42, dur: 8, delay: 0 },
@@ -1239,8 +1220,6 @@ function updateCatalogFilterToggle() {
     : `${count} ${count === 1 ? "filtro attivo" : "filtri attivi"}`;
 }
 
-// Mantiene raggiungibili filtri e ordinamento durante lo scorrimento del
-// catalogo mobile, senza renderli flottanti nell'hero o nelle sezioni finali.
 function syncMobileCatalogDock() {
   const section = document.getElementById("stagione");
   if (!section) return;
@@ -1313,8 +1292,6 @@ function renderEditorialPlants() {
     if (catalog.sort && catalog.sort !== "season")
       pills.push({ kind: "sort", label: t(`catalog.sort_${catalog.sort}`) });
     // L'ambito è scelto esclusivamente dai tre pulsanti nel gruppo “Tipo”.
-    // Qui riepiloghiamo soltanto i filtri aggiuntivi, per non ripetere
-    // “Tutto il catalogo” in una seconda barra senza azione.
     catalogStatus.hidden = !pills.length;
     if (!catalogStatus.hidden) {
       const remove = t("catalog.remove_filter");
@@ -1558,7 +1535,6 @@ function renderAbbinamenti() {
   }
 }
 
-// Su smartphone mostra prima la coppia consigliata e lascia le altre su richiesta.
 function toggleCompanions() {
   const section = document.getElementById("abbinamenti");
   const toggle = document.getElementById("companionsToggle");
@@ -1664,8 +1640,7 @@ function render() {
 function toggleCart(e, id) {
   e.stopPropagation();
   const added = !inCart(id);
-  // Si toglie solo la bustina: la piantina omonima comprata in vivaio è
-  // un'altra riga e non deve sparire insieme a questa.
+  // Si toglie solo la bustina: la piantina omonima comprata in vivaio è un'altra riga e non deve sparire insieme a questa.
   cart = added
     ? [...cart, { id, bustine: 1 }]
     : cart.filter((i) => !(i.id === id && !isPiantinaItem(i)));
@@ -1743,10 +1718,8 @@ function addKitAndPlan() {
 }
 // Rimuove dal carrello la coltura identificata dall'azione dell'utente.
 function removeFromCart(id, variante) {
-  // Con il carrello unico la stessa pianta può esserci due volte: come bustina
-  // e come piantina. Si toglie solo la riga richiesta.
+  // Con il carrello unico la stessa pianta può esserci due volte: come bustina e come piantina. Si toglie solo la riga richiesta.
   const piantina = variante === "piantina";
-  // Fotografia di prima: è quello che l'annulla rimetterà a posto.
   const prima = cart.slice();
   cart = window.SerraCart
     ? window.SerraCart.rimuovi(cart, id, piantina)
@@ -1756,10 +1729,7 @@ function removeFromCart(id, variante) {
   offriAnnullaCarrello("undo.removed", { nome: plantName(id) }, prima);
 }
 
-/* L'annulla dopo una rimozione. Chi tocca il carrello per sbaglio deve poter
-   tornare indietro senza ricercare la pianta nel listino: il tocco sbagliato
-   è raro, ma quando capita non deve costare niente. Il ripristino riscrive
-   l'intero carrello di prima, così vale anche per «Svuota». */
+/* L'annulla dopo una rimozione. */
 function offriAnnullaCarrello(chiave, valori, prima) {
   const UI = window.SerraCartUI;
   if (!UI || !UI.annullabile) return;
@@ -1767,17 +1737,13 @@ function offriAnnullaCarrello(chiave, valori, prima) {
   UI.annullabile({
     testo: UI.testo(lang, chiave, valori),
     etichetta: UI.testo(lang, "undo.action"),
-    // `refreshCartViews` chiama già `savePrefs`, che scrive il carrello e
-    // avvisa le altre schede aperte: qui basta rimettere l'array.
+    // `refreshCartViews` chiama già `savePrefs`, che scrive il carrello e avvisa le altre schede aperte: qui basta rimettere l'array.
     onAnnulla: () => {
       cart = prima.slice();
       refreshCartViews();
     }
   });
 }
-/* Quantità dal cassetto: le bustine si muovono di una alla volta, le piantine
-   di un vassoio intero, perché è così che vengono spedite. Arrivata a zero la
-   riga esce dal carrello: è la stessa cosa che premere "togli". */
 function changeCartQty(id, variante, direzione) {
   if (!window.SerraCart) return;
   const piantina = variante === "piantina";
@@ -1787,8 +1753,7 @@ function changeCartQty(id, variante, direzione) {
   cart = window.SerraCart.varia(cart, id, piantina, direzione * passo);
   refreshCartViews();
 }
-// Svuota il carrello. È l'unico carrello dell'app: se ne va tutto, semi e
-// piantine, esattamente come dalle altre sezioni.
+// Svuota il carrello. È l'unico carrello dell'app: se ne va tutto, semi e piantine, esattamente come dalle altre sezioni.
 function clearCart() {
   const prima = cart.slice();
   cart = window.SerraCart ? window.SerraCart.svuota() : [];
@@ -1802,10 +1767,6 @@ function refreshCartViews() {
   renderAbbinamenti();
   savePrefs();
 }
-/* Contenuto del cassetto: riepilogo, gruppi, note e invito incrociato stanno
-   nel modulo condiviso, così il carrello aperto dalla home è identico a quello
-   aperto dal vivaio o dal configuratore. Qui restano solo i dati che la home
-   conosce: catalogo, foto, listino delle bustine e formato valuta. */
 function cartDrawerHtml() {
   if (!window.SerraCartUI) return "";
   return window.SerraCartUI.corpo({
@@ -1880,8 +1841,7 @@ function updateCartUI() {
     items.hidden = false;
     foot.hidden = false;
     if (clearBtn) clearBtn.hidden = false;
-    // Il cassetto è lo stesso di vivaio e configuratore: vedi
-    // assets/js/serra-cart-ui.js. Qui si passano solo i dati della home.
+    // Il cassetto è lo stesso di vivaio e configuratore: vedi assets/js/serra-cart-ui.js. Qui si passano solo i dati della home.
     items.innerHTML = cartDrawerHtml();
   }
   if (currentDetail) {
@@ -1893,10 +1853,6 @@ function updateCartUI() {
     }
   }
 }
-/* Il suggerimento incrociato — chi ha solo semi scopre le piantine già
-   cresciute e viceversa — ora lo disegna il modulo condiviso, così compare con
-   la stessa regola in tutte e tre le sezioni: vedi crossHtml() in
-   assets/js/serra-cart-ui.js. */
 
 // Mostra un suggerimento temporaneo per richiamare l'attenzione sul carrello.
 function showCartNudge(id, added = true) {
@@ -1986,8 +1942,6 @@ function alertCheckout() {
     }
     return riga;
   });
-  // Arrotondato ai centesimi: la somma in virgola mobile salvava totali come
-  // 7.199999999999999 nell'ordine, poi mostrati arrotondati ma sbagliati nel dato.
   const totalVal = cartTotal();
 
   window.SerraAPI.getOrders().then((orders) => {
@@ -2040,8 +1994,7 @@ function alertCheckout() {
           JSON.stringify({ ...newOrder, source: "catalog" }),
         );
       } catch (error) {
-        // Il numero ordine nell'URL mantiene disponibile la conferma anche
-        // quando il browser non consente l'uso di sessionStorage.
+        // Il numero ordine nell'URL mantiene disponibile la conferma anche quando il browser non consente l'uso di sessionStorage.
       }
       window.location.href = `ordine-confermato.html?order=${encodeURIComponent(newOrder.id)}`;
     });
@@ -3367,11 +3320,7 @@ function closeDetail(e) {
   unlockDetailPageScroll();
   currentDetail = null;
 }
-// Le azioni della scheda sono gestite con delega sul documento. Non fermare
-// qui il click: su iOS (e su tutti i browser) impedirebbe ai pulsanti della
-// scheda, incluso “aggiungi al carrello”, di raggiungere il gestore comune.
-// La chiusura resta protetta da closeDetail(), che chiude solo quando il tap
-// avviene sullo sfondo dell'overlay.
+// Le azioni della scheda sono gestite con delega sul documento.
 document.getElementById("detailOverlay")?.addEventListener(
   "touchmove",
   (e) => {
@@ -3413,8 +3362,7 @@ document.getElementById("detailPanel")?.addEventListener(
 // File generato con npm run build:js: modificare i moduli in home/app/.
 
 // -----------------------------------------------------------------------------
-// Home — Eventi e filtri del catalogo, preferenze e clima.
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Home — Eventi e filtri del catalogo, preferenze e clima. Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 // Controlli catalogo
@@ -3425,9 +3373,7 @@ function bindHomeStaticActions() {
 
     switch (control.dataset.homeAction) {
       case "set-language":
-        // Il selettore desktop usa l'evento `change`: trattarlo anche al
-        // primo tap forza un render e chiude la tendina nativa su iPhone.
-        // I pulsanti IT/RO del menu mobile, invece, espongono `data-lang`.
+        // Il selettore desktop usa l'evento `change`: trattarlo anche al primo tap forza un render e chiude la tendina nativa su iPhone.
         if (control.tagName !== "SELECT") setLang(control.dataset.lang);
         break;
       case "open-cart":
@@ -3484,8 +3430,6 @@ function bindHomeStaticActions() {
       case "close-cart":
         closeCart();
         break;
-      // L'invito incrociato verso i semi punta al catalogo di questa pagina:
-      // il cassetto lo coprirebbe, quindi si chiude e lascia scorrere.
       case "cross-sell":
         closeCart();
         break;
@@ -3606,8 +3550,6 @@ function syncCatalogControls() {
   const easy = document.getElementById("catalogEasyOnly");
   if (search && search !== document.activeElement)
     search.value = catalog.search;
-  // Su smartphone, durante la ricerca togliamo il suggerimento dal flusso:
-  // i risultati restano così raggiungibili anche con la tastiera aperta.
   const hasSearchTerm = Boolean(catalog.search.trim());
   if (hint)
     hint.classList.toggle(
@@ -3717,7 +3659,6 @@ function updateCatalogSearchSuggestions() {
   list.hidden = false;
   input.setAttribute("aria-expanded", "true");
 }
-// escapeHtml è ora definita una sola volta in assets/js/shared/escape-html.js
 (function setupCatalogSearchSuggestionsClick() {
   document.addEventListener("mousedown", (e) => {
     const btn = e.target.closest("#catalogSearchSuggestions button[data-name]");
@@ -3863,8 +3804,6 @@ function resetCatalogFilters() {
 
 // Preferenze utente
 function savePrefs() {
-  // Il carrello passa da SerraCart: così il contatore in testata e le altre
-  // schede aperte ricevono l'evento `serra:cart-change` e restano allineati.
   if (window.SerraCart) window.SerraCart.scrivi(cart);
   else localStorage.setItem("ois.cart", JSON.stringify(cart));
   localStorage.setItem(
@@ -3900,15 +3839,12 @@ function loadPrefs() {
   try {
     const p = JSON.parse(localStorage.getItem("ois.prefs") || "{}");
     if (p.zona) state.zona = p.zona;
-    // Le preferenze delle versioni precedenti non possono accendere il
-    // riscaldamento di default. Ripristiniamo il valore solo se l'utente lo
-    // ha scelto esplicitamente nel catalogo.
+    // Le preferenze delle versioni precedenti non possono accendere il riscaldamento di default.
     if (p.climatePreferenceTouched === true) {
       state.riscaldata = Boolean(p.riscaldata);
       catalog.climatePreferenceTouched = true;
     }
-    // La configurazione condivisa non imposta più il filtro iniziale del
-    // catalogo: il comportamento predefinito resta sempre “spento”.
+    // La configurazione condivisa non imposta più il filtro iniziale del catalogo: il comportamento predefinito resta sempre “spento”.
     try {
       const shared = JSON.parse(
         localStorage.getItem("serra.config.v1") || "null",
@@ -3919,9 +3855,6 @@ function loadPrefs() {
         catalog.easyOnly = Boolean(p.easyOnly);
       }
     } catch (_) {}
-    // Il mese corrente viene ignorato in fase di caricamento per rimanere allineato con la data reale
-    // Carrello unico (semi + piantine): la normalizzazione e la migrazione dal
-    // vecchio vassoio separato stanno in assets/js/serra-cart.js.
     cart = window.SerraCart
       ? window.SerraCart.leggi()
       : JSON.parse(localStorage.getItem("ois.cart") || "[]").map((i) =>
@@ -3933,8 +3866,7 @@ function loadPrefs() {
 // Testi localizzati
 
 // -----------------------------------------------------------------------------
-// Home — Traduzioni della home, selezione lingua e consenso cookie.
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Home — Traduzioni della home, selezione lingua e consenso cookie. Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 const NOMI_MESI_RO = [
@@ -4011,7 +3943,6 @@ const T = window.SERRA_I18N?.index || { it: {}, ro: {} };
 
 let currentLang = "it";
 
-// Normalizza il codice della lingua prima di usarlo nei dizionari condivisi.
 function normalizeLang(lang) {
   return lang === "ro" || lang === "it" ? lang : "it";
 }
@@ -4116,15 +4047,12 @@ window.addEventListener(
   "scroll",
 
   // -----------------------------------------------------------------------------
-  // Home — Animazione della serra dimostrativa e ciclo visivo dell'hero.
-  // Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+  // Home — Animazione della serra dimostrativa e ciclo visivo dell'hero. Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
   // -----------------------------------------------------------------------------
 
   function () {
     const btn = document.getElementById("backToTop");
     if (!btn) return;
-    // Su telefono il pulsante fluttuante non deve coprire le prime card del
-    // catalogo: compare solo quando il ritorno in cima è davvero utile.
     const mobile = window.matchMedia("(max-width: 660px)").matches;
     btn.classList.toggle("visible", window.scrollY > (mobile ? 1800 : 420));
     syncMobileCatalogDock();
@@ -4152,9 +4080,6 @@ window.addEventListener(
   if (_initLang !== "it") {
     applyLang(_initLang);
   } else {
-    // Applica prima le etichette statiche e poi lo stato dinamico. In caso
-    // contrario la traduzione iniziale riscriveva “Riscaldamento spento” dopo
-    // il rendering, anche quando le preferenze indicavano una serra riscaldata.
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       const val = t(key);
@@ -4174,8 +4099,7 @@ window.addEventListener(
   document.documentElement.classList.remove("serra-i18n-pending");
 })();
 
-/* Apertura diretta del carrello da un'altra pagina: le sezioni senza pannello
-   proprio (Il mio orto) rimandano qui con ?cart=open. */
+/* Apertura diretta del carrello da un'altra pagina: le sezioni senza pannello proprio (Il mio orto) rimandano qui con ?cart=open. */
 (() => {
   if (new URLSearchParams(location.search).get("cart") !== "open") return;
   const apri = () => {
@@ -4202,10 +4126,6 @@ function scrollElementBelowNav(target, behavior = "smooth") {
   const partenza = window.scrollY;
   window.scrollTo({ top, behavior });
 
-  /* Rete di sicurezza: in alcune condizioni lo scorrimento morbido non produce
-     alcun movimento e il collegamento sembra rotto (l'indirizzo cambia, la
-     pagina resta ferma). Se dopo un momento non ci si è spostati, si applica il
-     salto immediato: meglio un salto secco che un link che non fa nulla. */
   window.setTimeout(() => {
     const fermo = Math.abs(window.scrollY - partenza) < 2;
     const nonArrivato = Math.abs(window.scrollY - top) > 2;
@@ -4348,8 +4268,6 @@ if (catalogSearchLink) {
   // Calcola le posizioni delle piante nell'aiuola
   function bedPlantPositions(bed) {
     const pts = [];
-    // I punti non sono più compressi al centro: mantengono un margine sicuro
-    // dal bordo, ma sfruttano più superficie dell'aiuola tra una pianta e l'altra.
     const insetX = Math.min(12, bed.w * 0.16);
     const insetY = Math.min(11, bed.h * 0.17);
     const usableW = Math.max(0, bed.w - insetX * 2);
@@ -4551,8 +4469,7 @@ if (catalogSearchLink) {
     s += `<rect x="13.5" y="11.5" width="193" height="137" rx="6.5" fill="#3a2710" stroke="rgba(35,66,67,.88)" stroke-width="1.2"/>`;
     s += `<g clip-path="url(#hcgInteriorClip)">`;
     s += `<rect x="14" y="12" width="192" height="136" fill="url(#hcgDirt)"/>`;
-    // Camminamento: bordo leggermente incassato, ghiaia con profondità e
-    // ciottoli irregolari, distinto dal terreno senza creare recinti.
+    // Camminamento: bordo leggermente incassato, ghiaia con profondità e ciottoli irregolari, distinto dal terreno senza creare recinti.
     s += `<rect x="95.8" y="12" width="14.4" height="136" fill="rgba(47,33,19,.3)"/>`;
     s += `<rect x="97" y="12" width="12" height="136" fill="url(#hcgPathBase)"/>`;
     s += `<rect x="97.7" y="12" width="10.6" height="136" fill="url(#hcgGravel)" opacity=".8"/>`;
@@ -4566,22 +4483,12 @@ if (catalogSearchLink) {
     svg.innerHTML = defs + s;
   }
 
-  // Quote delle aiuole, con la stessa convenzione del plastico vero nel
-  // configuratore: filo orizzontale con due tacche sul lato lungo, filo
-  // verticale sul lato corto, numero in chiaro contornato di scuro perché
-  // il fondo è terra. Qui i valori sono indicativi — questa serra è
-  // un'illustrazione, non il progetto dell'utente — quindi le misure sono
-  // ricavate dalle proporzioni del disegno e arrotondate ai dieci centimetri.
   const CM_PER_UNIT = 2;
   const roundTen = (units) => Math.round((units * CM_PER_UNIT) / 10) * 10;
 
   function bedDimensions(bed) {
     const inset = 3.4;
-    /* Le quote sono un dettaglio, non un contenuto: chi guarda deve capire
-       che la serra è misurata, non leggere i numeri. Prima erano bianche
-       piene con un contorno scuro spesso e saltavano all'occhio più delle
-       piante. Ora sono più piccole, semitrasparenti e con un alone
-       appena accennato. */
+    /* Le quote sono un dettaglio, non un contenuto: chi guarda deve capire che la serra è misurata, non leggere i numeri. */
     const size = Math.max(5.4, Math.min(7.2, Math.min(bed.w, bed.h) * 0.105));
     const line = "rgba(243,247,236,.34)";
     const fill = "rgba(240,246,232,.62)";
@@ -4618,8 +4525,7 @@ if (catalogSearchLink) {
     const rng = makeRng(seed);
     const visualR = r;
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    // Il punto resta fissato nello spazio della serra: a crescere è soltanto
-    // il contenuto interno, mai la posizione della pianta.
+    // Il punto resta fissato nello spazio della serra: a crescere è soltanto il contenuto interno, mai la posizione della pianta.
     g.setAttribute("transform", `translate(${cx} ${cy})`);
     g.style.opacity = immediate ? "1" : "0";
     g.style.transition = immediate ? "none" : "opacity 0.22s ease";
@@ -4731,8 +4637,7 @@ if (catalogSearchLink) {
 // Pre-configurazione
 (function () {
   // -----------------------------------------------------------------------------
-  // Home — Pannello di preconfigurazione e trasferimento al configuratore.
-  // Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+  // Home — Pannello di preconfigurazione e trasferimento al configuratore. Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
   // -----------------------------------------------------------------------------
 
   const CONFIG_KEY = "serra.config.v1";
@@ -4788,10 +4693,7 @@ if (catalogSearchLink) {
     return { w, l, path, zona, riscaldata, mese };
   }
 
-  // Inserisce la pre-configurazione anche nell'URL di ingresso. Il
-  // localStorage resta la memoria persistente, mentre questi parametri
-  // garantiscono il passaggio alla pagina successiva anche quando il browser
-  // blocca, svuota o isola la memoria locale durante la navigazione.
+  // Inserisce la pre-configurazione anche nell'URL di ingresso.
   function buildPreconfigTargetUrl(targetUrl, config) {
     const url = new URL(targetUrl, location.href);
     url.searchParams.set("preconfig", "1");
@@ -4861,10 +4763,7 @@ if (catalogSearchLink) {
       ) || zona;
     const heatedLabel = pcT("preconfig.serra_heated") || "🔥";
     const pathAbbr = pcT("preconfig.path_abbr");
-    /* Il riepilogo elencava solo i quattro campi che hanno un valore di
-       partenza, tacendo l'unico che manca davvero. Ora apre col livello: se non
-       è scelto lo dice, e diventa la lista di ciò che resta da fare invece di
-       un'eco di quello che si è già impostato. */
+    /* Il riepilogo elencava solo i quattro campi che hanno un valore di partenza, tacendo l'unico che manca davvero. */
     const scelto = document.querySelector(
       "#preconfigPersonaSection .pc-persona-card.is-active",
     );
@@ -5043,10 +4942,7 @@ if (catalogSearchLink) {
     populatePcMonths();
   }
 
-  /* Vero solo quando le misure a schermo sono ancora il ripiego del pannello e
-     l'utente non le ha toccate in questa sessione. Chi ha già una serra salvata
-     ha misure sue: segnalargliele sarebbe un falso allarme. Si spegne al primo
-     tocco su larghezza o lunghezza, non appena la sessione ne registra uno. */
+  /* Vero solo quando le misure a schermo sono ancora il ripiego del pannello e l'utente non le ha toccate in questa sessione. */
   let misureToccate = false;
   function misureDaControllare() {
     if (misureToccate) return false;
@@ -5058,8 +4954,7 @@ if (catalogSearchLink) {
     updatePreconfigCta();
   }
 
-  /* Porta lo sguardo sul passo 2 e lo fa notare una volta. Riusa la stessa
-     animazione del richiamo al livello, così i due inviti si somigliano. */
+  /* Porta lo sguardo sul passo 2 e lo fa notare una volta. */
   function richiamaMisure() {
     const campo = document.getElementById("preconfigSizesField");
     if (!campo) return;
@@ -5084,12 +4979,6 @@ if (catalogSearchLink) {
     const cta = document.getElementById("preconfigCta");
     if (!cta) return;
 
-    /* Due cose possono mancare, in ordine: il livello (obbligatorio, spegne il
-       pulsante) e uno sguardo alle misure (facoltativo, ma 3×5 m è un ripiego
-       che quasi nessuno ha davvero). La riga sotto il pulsante dice una cosa
-       sola per volta: prima il livello, poi le misure. Chi torna con una serra
-       già salvata non vede il secondo messaggio, perché quelle misure sono
-       sue. */
     const daControllare = misureDaControllare();
     const badge = document.getElementById("preconfigSizesBadge");
     if (badge) badge.hidden = !daControllare;
@@ -5159,8 +5048,7 @@ if (catalogSearchLink) {
 
     const target = new URL(targetUrl, location.href);
     const urlParams = target.searchParams;
-    // Il pannello può essere aperto anche dall'area personale: conserva la
-    // provenienza senza duplicare la UI della home.
+    // Il pannello può essere aperto anche dall'area personale: conserva la provenienza senza duplicare la UI della home.
     overlay.dataset.source = urlParams.get("source") || "index";
     const isSafeResumeEntry =
       overlay.dataset.source === "account" || urlParams.get("resume") === "1";
@@ -5229,8 +5117,6 @@ if (catalogSearchLink) {
     const overlay = document.getElementById("preconfigOverlay");
     if (!overlay) return;
     overlay.classList.remove("is-open");
-    // Su iOS il popup nativo di una select può interrompere una transizione:
-    // assicuriamo comunque la conclusione della chiusura del pannello.
     let closed = false;
     const onEnd = () => {
       if (closed) return;
@@ -5244,8 +5130,7 @@ if (catalogSearchLink) {
   }
 
   // -----------------------------------------------------------------------------
-  // Home — Avvio pagina, parametri URL e caricamento differito della mappa.
-  // Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+  // Home — Avvio pagina, parametri URL e caricamento differito della mappa. Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
   // -----------------------------------------------------------------------------
 
   function initHomeApp() {
@@ -5254,9 +5139,6 @@ if (catalogSearchLink) {
       ?.addEventListener("click", toggleCatalogFilters);
 
     document
-      // .hero-cfg-level era la scelta del livello dentro la vecchia hero:
-      // il livello ora si sceglie nel configuratore, quindi restano solo
-      // l'invito della hero e la voce di menu.
       .querySelectorAll(".hero-cfg-open-preconfig, .nav-link--configuratore")
       .forEach((link) => {
         link.addEventListener("click", function (e) {
@@ -5286,9 +5168,6 @@ if (catalogSearchLink) {
         updatePreconfigSummary();
       });
 
-    // Il foglio non deve mai trasformare un tap su un controllo nativo in un
-    // tap sul backdrop: questo evita la chiusura immediata dei menu a tendina
-    // su Safari iOS.
     document
       .getElementById("preconfigSheet")
       ?.addEventListener("click", (event) => event.stopPropagation());
@@ -5319,9 +5198,6 @@ if (catalogSearchLink) {
           updatePreconfigCta();
           // Il riepilogo apre col livello: va rifatto anche qui.
           updatePreconfigSummary();
-          /* Scelto il livello il pulsante si accende, e l'occhio va lì: è il
-             momento in cui si esce dal pannello senza aver guardato le misure.
-             Si porta il fuoco sul passo 2 e lo si fa notare una volta. */
           if (misureDaControllare()) richiamaMisure();
         });
       });
@@ -5343,10 +5219,6 @@ if (catalogSearchLink) {
         input.value = val;
         // Toccare larghezza o lunghezza vale come "le ho guardate".
         if (input.id === "pcW" || input.id === "pcL") segnaMisureToccate();
-        /* Il camminamento ha un secondo campo nascosto che syncPcPath() usa
-           per arrotondare ai cinque centimetri: finché il cursore era visibile
-           ci pensava lui a tenerli allineati, ora che è nascosto deve farlo
-           chi preme i pulsanti. */
         if (input.id === "pcPathNum") syncPcPath("num");
         else updatePreconfigSummary();
       });
@@ -5390,16 +5262,11 @@ if (catalogSearchLink) {
     document
       .getElementById("preconfigCta")
       ?.addEventListener("click", function (event) {
-        /* Manca la scelta del livello: invece di un avviso di sistema — che
-           interrompe e non mostra dove intervenire — si porta l'utente sulla
-           sezione e la si fa notare. L'animazione esisteva già nel CSS
-           (.preconfig-persona-shake) ma nessuno la usava. */
         if (this.classList.contains("preconfig-cta--disabled")) {
           event.preventDefault();
           const sezione = document.getElementById("preconfigPersonaSection");
           if (!sezione) return;
-          // Lo scorrimento è un di più: se il browser non lo offre, il
-          // richiamo visivo deve partire lo stesso.
+          // Lo scorrimento è un di più: se il browser non lo offre, il richiamo visivo deve partire lo stesso.
           try {
             sezione.scrollIntoView({ block: "nearest", behavior: "smooth" });
           } catch (_) {}
@@ -5418,8 +5285,6 @@ if (catalogSearchLink) {
           return;
         }
         const config = savePreconfigToStorage();
-        // Aggiornando l'href prima dell'azione predefinita conserviamo anche
-        // apertura in una nuova scheda e comandi standard del browser.
         this.href = buildPreconfigTargetUrl(this.href, config);
       });
 

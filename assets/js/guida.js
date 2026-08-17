@@ -1,8 +1,4 @@
-/**
- * Guida interattiva: contenuti localizzati e collegamento al percorso scelto.
- * Il file non conserva stato di dominio: legge lingua e tema dalle fondazioni
- * comuni e traduce solo gli elementi marcati nel markup della guida.
- */
+/* Guida interattiva: contenuti localizzati e collegamento al percorso scelto. */
 
 // Guida interattiva: applica lingua e collega il livello scelto al configuratore.
 (() => {
@@ -95,11 +91,7 @@
         "Controlla spazio e compatibilità, poi genera la lista dei semi.",
       "expert.cta": "Apri modalità esperto",
       help: "<b>Puoi cambiare livello in ogni momento.</b> Le impostazioni della serra restano disponibili nel configuratore.",
-      // Capitolo 2. Descrive le due pagine di acquisto e il percorso
-      // carrello → ordine → «Da piantare». Volutamente senza prezzi né numero
-      // di varietà: quei dati vivono nel listino (db/products.json) e nelle
-      // schede del catalogo, dove restano aggiornati da soli. Ripeterli qui
-      // significherebbe avere due verità e una che invecchia.
+      // Capitolo 2.
       "compare.kicker": "I DUE NEGOZI DELL'APP",
       "compare.title": "Dove si comprano semi e piantine",
       "compare.lead":
@@ -387,8 +379,6 @@
     `;
   });
 
-  /* I capitoli lunghi diventano richiudibili: sul telefono resta visibile la
-     mappa della guida, mentre tablet e desktop conservano la lettura estesa. */
   const chapters = [...document.querySelectorAll(".guide-chapter")];
   chapters.forEach((chapter, index) => {
     const head = chapter.querySelector(":scope > .guide-chapter-head");
@@ -448,8 +438,6 @@
       const value = copy[lang][element.dataset.guideKey];
       if (value) element.innerHTML = value;
     });
-    // Le etichette che non sono testo visibile (l'indice della pagina, per
-    // esempio) restavano in italiano anche in romeno.
     document.querySelectorAll("[data-guide-key-aria]").forEach((element) => {
       const value = copy[lang][element.dataset.guideKeyAria];
       if (value) element.setAttribute("aria-label", value);
@@ -474,9 +462,7 @@
     document.documentElement.classList.remove("serra-i18n-pending");
   }
 
-  /* Stesso contratto delle altre pagine: se la lingua cambia in un'altra
-     scheda dell'applicazione, questa si allinea senza ricaricare. Mancava, e
-     la guida restava nella lingua con cui era stata aperta. */
+  /* Stesso contratto delle altre pagine: se la lingua cambia in un'altra scheda dell'applicazione, questa si allinea senza ricaricare. */
   window.addEventListener("storage", (event) => {
     if (event.key !== "ois.lang") return;
     const next = event.newValue === "ro" ? "ro" : "it";
@@ -497,9 +483,6 @@
       route.hidden = !active;
       route.classList.toggle("is-active", active);
     });
-    // L'ancora va conservata: dalla home si arriva su #seme-o-piantina e
-    // questa riga, riscrivendo l'indirizzo, la cancellava — un ricaricamento
-    // riportava in cima alla guida invece che al capitolo giusto.
     history.replaceState(null, "", `?livello=${activeLevel}${location.hash}`);
     if (focus)
       document

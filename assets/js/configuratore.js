@@ -1,15 +1,7 @@
-/**
- * Configuratore: dati agronomici, stato persistente, calcoli, rendering e wizard.
- * Dipende da base.js e catalogo.js per traduzioni, API, strumenti e dati condivisi.
- * L'ordine delle sezioni è intenzionale: costanti → stato → dominio → UI → avvio.
- * Le modifiche allo stato devono passare dalle funzioni di persistenza per non
- * perdere progetti, carrello e storico salvati nel browser.
- */
+/* Configuratore: dati agronomici, stato persistente, calcoli, rendering e wizard. */
 
 // Raccoglie costanti, dizionari e dati statici necessari al configuratore.
 const WALL = 7;
-// Bordo libero tra pareti e terreno: compatto, ma sufficiente a mantenere
-// leggibile il perimetro della serra senza sottrarre troppo spazio coltivabile.
 const MARGIN = 7;
 const PATH = 34;
 const BED_GAP = 6;
@@ -384,8 +376,7 @@ const PLANT_RO = window.SERRA_I18N?.plants?.ro || {};
 // Contiene descrizioni localizzate per la scheda informativa delle piante.
 
 // -----------------------------------------------------------------------------
-// Dati e costanti del configuratore — sezione 2 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Dati e costanti del configuratore — sezione 2 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 const PLANT_DESC = {
@@ -705,8 +696,7 @@ const PLANT_DESC = {
 // Contiene istruzioni localizzate per semina, trapianto e raccolta delle colture.
 
 // -----------------------------------------------------------------------------
-// Dati e costanti del configuratore — sezione 3 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Dati e costanti del configuratore — sezione 3 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 const SOWING_GUIDE = {
@@ -1333,8 +1323,7 @@ const SOWING_GUIDE = {
 // Restituisce la foto della pianta usando il percorso salvato o il nome derivato dall'ID.
 
 // -----------------------------------------------------------------------------
-// Dati e costanti del configuratore — sezione 4 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Dati e costanti del configuratore — sezione 4 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function plantPhotoSrc(plant, id) {
@@ -1344,8 +1333,7 @@ function plantPhotoSrc(plant, id) {
 // Definisce i piani precompilati selezionabili per avviare rapidamente una serra.
 
 // -----------------------------------------------------------------------------
-// Dati e costanti del configuratore — sezione 5 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Dati e costanti del configuratore — sezione 5 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 const PRESETS = {
@@ -1509,9 +1497,7 @@ function readSavedConfig() {
   }
 }
 
-// Applica i valori consegnati direttamente dalla pre-configurazione della
-// home. Sono un fallback di navigazione: hanno precedenza sul salvataggio
-// locale soltanto quando l'URL dichiara esplicitamente preconfig=1.
+// Applica i valori consegnati direttamente dalla pre-configurazione della home.
 function applyBootPreconfigToState() {
   if (BOOT_PARAMS.get("preconfig") !== "1") return false;
 
@@ -1579,8 +1565,6 @@ function buildConfigPayload(done = true) {
       count: bed.count,
       layout: bed.layout || "blocco",
       countLocked: Boolean(bed.countLocked),
-      // I tappabuchi dipendono dalla colonna scelta dal motore: senza questo
-      // dato un refresh può ricomporre le stesse quantità lasciando dei vuoti.
       col: Number.isInteger(bed.col) ? bed.col : undefined,
     })),
     done,
@@ -1899,7 +1883,6 @@ function chooseLivello(liv) {
     });
   };
 
-  // Richiede conferma prima di sostituire il piano esistente.
   if (
     liv === "novizio" &&
     prev !== "novizio" &&
@@ -2862,16 +2845,14 @@ function applyLanguage() {
   setText("#modeExpertHint", "modeExpertHint");
   updateAllPanelToggles();
   fillMonths();
-  // Le voci dei progetti sono generate dinamicamente: riallineale anche se
-  // la lingua cambia mentre la modale è già aperta.
+  // Le voci dei progetti sono generate dinamicamente: riallineale anche se la lingua cambia mentre la modale è già aperta.
   renderProjectsModal();
 }
 
 // File generato con npm run build:js: modificare i moduli in conf/draw/.
 
 // -----------------------------------------------------------------------------
-// Disegno della scena e delle aiuole — sezione 1 di 6
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Disegno della scena e delle aiuole — sezione 1 di 6 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 // Dimensioni tile dei pattern SVG di sfondo
@@ -3220,8 +3201,7 @@ function speciesAccent(plant, r, rng) {
 // Disegno piantine
 
 // -----------------------------------------------------------------------------
-// Disegno della scena e delle aiuole — sezione 2 di 6
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Disegno della scena e delle aiuole — sezione 2 di 6 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function glyph(plant, r, rng, detail = "full") {
@@ -3643,8 +3623,7 @@ function fittedPlantRadius(plant, bed) {
 // Distribuisce gli indici emoji lungo le aiuole a serpente.
 
 // -----------------------------------------------------------------------------
-// Disegno della scena e delle aiuole — sezione 3 di 6
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Disegno della scena e delle aiuole — sezione 3 di 6 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function emojiSpreadIndexes(itemCount, cols, targetCount) {
@@ -3670,9 +3649,7 @@ function emojiSpreadIndexes(itemCount, cols, targetCount) {
   return result;
 }
 
-// Distribuisce le emoji in base alle coordinate reali delle piante. La scelta
-// progressiva del punto più lontano evita concentrazioni sulla stessa fila o
-// colonna e funziona anche con ultime righe incomplete.
+// Distribuisce le emoji in base alle coordinate reali delle piante.
 function spatialEmojiIndexes(items, targetCount) {
   const count = items.length;
   if (!targetCount || count === 0) return new Set();
@@ -3693,8 +3670,6 @@ function spatialEmojiIndexes(items, targetCount) {
     y: (item.pos.y - minY) / spanY,
   }));
 
-  // Un solo simbolo resta centrale; con più simboli partiamo da un estremo e
-  // copriamo progressivamente gli altri quadranti dell'aiuola.
   if (targetCount === 1) {
     const center = points.reduce((best, point) => {
       const distance = (point.x - 0.5) ** 2 + (point.y - 0.5) ** 2;
@@ -3746,26 +3721,20 @@ function fitLabelSize(text, width, height, sceneWidth, sceneHeight) {
 // Costruzione scena
 
 // -----------------------------------------------------------------------------
-// Disegno della scena e delle aiuole — sezione 4 di 6
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Disegno della scena e delle aiuole — sezione 4 di 6 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
   const harvestRevealDuration = 320;
-  // Il numero di glifi resta sempre identico alle piante reali. Limitiamo
-  // soltanto le animazioni simultanee, che aggiungono particelle, keyframe e
-  // trasformazioni SVG e possono saturare la memoria nelle grandi monoculture.
+  // Il numero di glifi resta sempre identico alle piante reali.
   const compactDevice =
     window.matchMedia?.("(max-width: 760px), (pointer: coarse)")?.matches ===
     true;
-  // Su smartphone la crescita resta ben leggibile ma leggermente piu lenta;
-  // il movimento continuo delle singole piante viene invece disattivato.
   const plantGrowthDuration = compactDevice ? 1540 : 1400;
   const maxAnimatedPlantsPerBed = compactDevice ? 220 : 400;
   const maxAnimatedPlantsPerScene = compactDevice ? 800 : 1600;
   const nightMode = document.documentElement.dataset.theme === "dark";
-  // Safari iOS può ignorare le animazioni CSS applicate ai gruppi SVG. In quel
-  // caso usiamo animateTransform, nativo SVG, per mantenere viva la scena.
+  // Safari iOS può ignorare le animazioni CSS applicate ai gruppi SVG.
   const platform = navigator.platform || "";
   const reduceMotion = window.matchMedia?.(
     "(prefers-reduced-motion: reduce)",
@@ -3918,8 +3887,6 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
     }
   });
 
-  // Piccoli punti di luce esclusivamente sui camminamenti laterali: decorativi,
-  // dietro alle aiuole e senza alcun legame con la disposizione delle piante.
   const pathMoteRng = rngFrom(4781);
   for (let moteIndex = 0; moteIndex < 6; moteIndex++) {
     const onLeft = moteIndex % 2 === 0;
@@ -3948,8 +3915,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
     });
 
     g += `<g class="bedhit" data-bed="${bed.idx}" role="button" tabindex="0" aria-label="${escapeSvg(bedActionLabel)}"><title>${escapeSvg(bedActionLabel)}</title>`;
-    // Terreno aperto: le aiuole sono delimitate naturalmente dai camminamenti,
-    // senza assi o contorni che simulino un recinto.
+    // Terreno aperto: le aiuole sono delimitate naturalmente dai camminamenti, senza assi o contorni che simulino un recinto.
     g += `<rect class="bed-soil" x="${bx}" y="${by}" width="${bed.w}" height="${bed.h}" fill="url(#soil)"/>`;
 
     // Overlay sotto a piante ed etichette: i dettagli restano sempre leggibili.
@@ -3972,8 +3938,6 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       animatePlants &&
       totalPlants <= maxAnimatedPlantsPerScene &&
       bedItems.length <= maxAnimatedPlantsPerBed;
-    // Ogni pianta parte da zero e raggiunge esclusivamente la dimensione finale
-    // già calcolata dal motore di riempimento per il proprio slot.
     const denseSceneLimit = Math.max(
       1,
       Math.round((bedItems.length / Math.max(1, totalPlants)) * 36),
@@ -3983,7 +3947,6 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       : new Set();
     animatedPlantTotal += growthIndexes.size;
     // Il movimento ambientale è distribuito e limitato nelle serre molto dense.
-    // La trasformazione resta sempre più piccola dell'ingombro finale del glifo.
     const aliveIndexes =
       animateThisBed && !compactDevice
         ? emojiSpreadIndexes(
@@ -4003,7 +3966,6 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       const usesNativeSway = isAlive && useSvgMotionFallback;
       const delay = staggerPlants ? Math.min(420, i * 28) : 0;
       // Tutti i valori restano entro il raggio grafico già calcolato per lo slot.
-      // Il terreno pulsa sotto la pianta, senza influenzare geometria o riempimento.
       const particleRng = rngFrom(
         (bed.idx + 1) * 12983 + sourceIndex * 271 + 17,
       );
@@ -4047,9 +4009,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
       }>${nativeGrowth}${glyph(bed.plant, rr, rng, glyphDetail)}</g>${leafSheen}</g></g>`;
       const fe = FRUIT_EMOJI[bed.plant.id];
       if (fe && emojiIndexes.has(i)) {
-        // Posizionamento e animazione vivono in due gruppi SVG distinti. In
-        // questo modo Safari iOS non può ricalcolare la trasformazione rispetto
-        // all'intera serra e spingere l'emoji da fuori scena.
+        // Posizionamento e animazione vivono in due gruppi SVG distinti.
         const fs = Math.max(rr * 0.72, 6);
         const emojiY = oy + pos.y - rr * 0.28;
         const emojiDelay = delay + plantGrowthDuration;
@@ -4071,8 +4031,6 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
     });
     const wM = `${(bed.w / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
     const hM = `${(bed.h / 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")} m`;
-    // Il nome resta separato dalle quote: ogni misura segue il lato reale
-    // dell'aiuola, con righelli fini appoggiati sul bordo e non sulle piante.
     const label = plantLabel;
     const labelSize = fitLabelSize(label, bed.w, bed.h, vbW, vbH);
     const labelCenterX = bx + bed.w / 2;
@@ -4176,8 +4134,7 @@ function buildScene({ animatePlants = false, staggerPlants = true } = {}) {
 // Genera il vetro e la struttura della serra
 
 // -----------------------------------------------------------------------------
-// Disegno della scena e delle aiuole — sezione 5 di 6
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Disegno della scena e delle aiuole — sezione 5 di 6 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function glassStructure(ox, oy, Wi, Li, PAD, totW, totH) {
@@ -4328,8 +4285,7 @@ function overlayStyleForPlant(p, kind) {
 // Disegna il rettangolo colorato dell'overlay sull'aiuola
 
 // -----------------------------------------------------------------------------
-// Disegno della scena e delle aiuole — sezione 6 di 6
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Disegno della scena e delle aiuole — sezione 6 di 6 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function overlayShape(bed, bx, by) {
@@ -4353,8 +4309,7 @@ function overlayShape(bed, bx, by) {
 // File generato con npm run build:js: modificare i moduli in conf/ui/.
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 1 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 1 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 // Genera le card delle colture con stato, quantità e azioni disponibili.
@@ -4636,8 +4591,6 @@ function renderFooter() {
 // Aggiorna scena, pannelli e riepilogo in base allo stato della configurazione.
 let lastRenderedCropSignature = null;
 let renderGeneration = 0;
-// La prima scena coltivata deve crescere indipendentemente dal punto di
-// ingresso: su mobile spesso il configuratore viene riaperto direttamente.
 const animateInitialCrops = true;
 
 function cropSignature() {
@@ -4648,8 +4601,7 @@ function cropSignature() {
 }
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 2 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 2 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function render() {
@@ -4688,8 +4640,6 @@ function render() {
 
   const built = buildScene({
     animatePlants: animatePlantGrowth,
-    // All'ingresso tutte le piante iniziano subito a crescere: lo stagger resta
-    // soltanto per le modifiche successive, quando rende leggibile il cambiamento.
     staggerPlants: !isInitialPlantRender,
   });
   const scene = document.getElementById("scene");
@@ -4756,8 +4706,6 @@ function render() {
     renderFooter();
 
     // Se la scheda pianta e aperta, riallinea anche i suoi contenuti dinamici.
-    // Serve in particolare al cambio lingua, perche le etichette della scheda
-    // non fanno parte dei nodi statici aggiornati da applyLanguage().
     const plantDetailPanelElement = document.getElementById("panelPlantDetail");
     if (
       plantDetailPanelElement &&
@@ -4772,9 +4720,6 @@ function render() {
   };
 
   if (isInitialPlantRender) {
-    // La prima immagine della serra deve arrivare al browser prima dei pannelli
-    // non essenziali. Il timer dentro requestAnimationFrame lascia avvenire un
-    // paint completo e riprende subito dopo con catalogo, riepilogo e footer.
     window.requestAnimationFrame(() =>
       window.setTimeout(renderSecondaryInterface, 0),
     );
@@ -4957,7 +4902,6 @@ function scheduleElementBelowHeader(
     if (delay) pendingPageScrollTimer = window.setTimeout(run, delay);
     else run();
   };
-  // Attende i font prima di calcolare la posizione di scroll.
   if (
     options.waitForFonts !== false &&
     document.fonts &&
@@ -5059,8 +5003,7 @@ function scrollStageIntoView(behavior = "auto") {
 // Chiude il pannello impostazioni dopo l'autocompletamento
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 3 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 3 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function collapseSettingsPanelAfterAutoPlan(options = {}) {
@@ -5411,8 +5354,7 @@ const CONFIG_DISEASE_GROUPS = {
 // Determina il gruppo malattie della pianta per ID
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 4 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 4 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function configDiseaseGroup(id) {
@@ -5824,8 +5766,7 @@ function configPestCatalog() {
 // Restituisce i prodotti specifici per i parassiti della pianta
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 5 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 5 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function configTargetedPestProducts(p) {
@@ -6099,8 +6040,6 @@ function closePlantDetailPanel() {
   }
 }
 
-// Su mobile mostra subito la miniatura disponibile e aggiorna la foto soltanto
-// dopo il download e la decodifica della versione di dettaglio.
 function upgradePlantDetailHeroImage(image, heroSrc) {
   if (!image || !heroSrc || image.src.endsWith(heroSrc)) return;
   const heroImage = new Image();
@@ -6123,8 +6062,7 @@ function upgradePlantDetailHeroImage(image, heroSrc) {
 // Costruisce la scheda dettagliata della pianta selezionata nel catalogo.
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 6 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 6 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function renderPlantDetailPanel(initialTab = "overview") {
@@ -6137,8 +6075,6 @@ function renderPlantDetailPanel(initialTab = "overview") {
   const b = state.beds[state.selected];
   const p = BYID[b.plantId];
   const resaTot = b.count * p.resa;
-  // Le dimensioni appartengono al layout calcolato, non al record della coltura:
-  // in questo modo seguono sempre il motore di riempimento corrente.
   const bedGeometry = computeLayout().beds[state.selected];
   const bedMeasureFormatter = new Intl.NumberFormat(
     state.lang === "ro" ? "ro-RO" : "it-IT",
@@ -6300,7 +6236,6 @@ function renderPlantDetailPanel(initialTab = "overview") {
   `;
   if (useProgressiveMobileHero && heroPhotoSrc !== photoSrc) {
     const heroImage = container.querySelector(".pdp-photo-full");
-    // Lascia completare il primo paint con la miniatura prima del download grande.
     window.requestAnimationFrame(() =>
       upgradePlantDetailHeroImage(heroImage, heroPhotoSrc),
     );
@@ -6555,8 +6490,7 @@ function projectExportFileName(extension) {
 // Aggrega le aiuole del progetto per nome e conteggio
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 7 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 7 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function aggregatedProjectBeds() {
@@ -6759,8 +6693,7 @@ async function exportProjectPdf() {
 // Genera il riepilogo per la stampa
 
 // -----------------------------------------------------------------------------
-// Rendering delle interfacce del configuratore — sezione 8 di 8
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Rendering delle interfacce del configuratore — sezione 8 di 8 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function renderPrintSummary() {
@@ -7236,8 +7169,7 @@ function materialsPrintHtml() {
 // File generato con npm run build:js: modificare i moduli in conf/engine/.
 
 // -----------------------------------------------------------------------------
-// Regole e calcoli del configuratore — sezione 1 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Regole e calcoli del configuratore — sezione 1 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 // Calcola i conteggi di piante e file rispettando spaziatura e dimensioni dell'aiuola.
@@ -7648,8 +7580,7 @@ function reduceFlexibleCropsForLockedChange(lockedPlantId) {
 // Applica la modifica bloccata e tenta l'adattamento
 
 // -----------------------------------------------------------------------------
-// Regole e calcoli del configuratore — sezione 2 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Regole e calcoli del configuratore — sezione 2 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function fitLockedCountChange(lockedPlantId, beforeSnapshot) {
@@ -7958,8 +7889,6 @@ function compactPathForAutoFill() {
   return state.path;
 }
 
-// Conserva l'ultima geometria manuale valida per poter rifiutare un
-// ridimensionamento che non può contenere le quantità bloccate dall'utente.
 let lastAcceptedGeometry = {
   larghezza: state.larghezza,
   lunghezza: state.lunghezza,
@@ -8068,8 +7997,7 @@ let redoStack = [];
 // Cattura lo snapshot completo per lo storico
 
 // -----------------------------------------------------------------------------
-// Regole e calcoli del configuratore — sezione 3 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Regole e calcoli del configuratore — sezione 3 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function captureHistorySnapshot() {
@@ -8476,8 +8404,7 @@ function autoCandidatePool() {
 // Garantisce almeno una pianta nel piano se possibile
 
 // -----------------------------------------------------------------------------
-// Regole e calcoli del configuratore — sezione 4 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Regole e calcoli del configuratore — sezione 4 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function ensureMinimalFill(candidates) {
@@ -8713,11 +8640,7 @@ function exportConfToCart() {
         Math.ceil(b.count / (PACK_DATA[b.plantId]?.seeds ?? 100)),
       ),
     }));
-  /* Il carrello è unico e può già contenere altro: bustine aggiunte dal
-     catalogo e piantine prese nel vivaio. Prima qui si faceva un setItem
-     secco, che cancellava tutto il resto. Ora le righe del piano si
-     sovrappongono a quelle dei semi già presenti (il piano è autorevole sulle
-     quantità) e lasciano intatto tutto il resto. */
+  /* Il carrello è unico e può già contenere altro: bustine aggiunte dal catalogo e piantine prese nel vivaio. */
   try {
     const carrello = window.SerraCart ? window.SerraCart.leggi() : [];
     const altre = carrello.filter(
@@ -8765,8 +8688,6 @@ function importCartToPlan(options = {}) {
   state.autoPlan = false;
   state.selected = state.beds.length ? 0 : -1;
   vegFilter = "in";
-  // Un carrello già composto corrisponde al percorso Intermedio: il piano è
-  // pronto, ma l'utente può personalizzare disposizione e quantità.
   setLivello("intermedio", { mapMode: false });
   autoBalanceLayout(true, true);
   if (historyBefore) recordHistorySnapshot(historyBefore);
@@ -8785,8 +8706,7 @@ function focusManualPlanningPath() {
 // Gestisce l'intent di avvio (preset, carrello, progetto)
 
 // -----------------------------------------------------------------------------
-// Regole e calcoli del configuratore — sezione 5 di 5
-// Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
+// Regole e calcoli del configuratore — sezione 5 di 5 Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
 // -----------------------------------------------------------------------------
 
 function applyBootIntent() {
@@ -8833,8 +8753,7 @@ function bindConfigStaticActions() {
 
     switch (control.dataset.confAction) {
       case "set-language":
-        // Il menu nativo dell'header deve cambiare solo a selezione conclusa:
-        // un render al primo tap chiuderebbe la tendina su Safari iOS.
+        // Il menu nativo dell'header deve cambiare solo a selezione conclusa: un render al primo tap chiuderebbe la tendina su Safari iOS.
         if (control.tagName !== "SELECT") confSetLang(control.dataset.lang);
         break;
       case "open-cart":
@@ -9329,7 +9248,6 @@ function initEvents() {
   });
 }
 
-// Carica e normalizza lo stato salvato prima del primo rendering.
 function applyConfigToState(saved) {
   if (!saved) return;
   if (saved.lang === "it" || saved.lang === "ro") state.lang = saved.lang;
@@ -9353,9 +9271,7 @@ function applyConfigToState(saved) {
   if (LIVELLI.has(saved.livello)) state.livello = saved.livello;
   state.beds = normalizeSavedBeds(saved.beds);
 
-  // Riproduce esattamente il piano salvato, comprese le colonne assegnate ai
-  // riempitori. Ribilancia soltanto salvataggi obsoleti o non più compatibili
-  // con la geometria corrente.
+  // Riproduce esattamente il piano salvato, comprese le colonne assegnate ai riempitori.
   if (computeLayout().overflow) {
     clearColumnAssignment();
     autoBalanceLayout(true, false);
@@ -9511,11 +9427,6 @@ function formatMoney(value) {
 
 let confCart = [];
 
-/* Il carrello è quello unico dell'app (`ois.cart`, gestito da serra-cart.js):
-   il configuratore lo legge e lo scrive con le stesse funzioni di home e
-   vivaio, così le piantine comprate in vivaio restano piantine anche qui.
-   Prima questo file leggeva il grezzo e trattava ogni riga come una bustina:
-   le piantine finivano a listino semi con il prezzo di ripiego. */
 const confIsPiantina = (riga) =>
   window.SerraCart
     ? window.SerraCart.isPiantina(riga)
@@ -9601,8 +9512,6 @@ function updateConfCartUI() {
     0,
   );
 
-  /* I materiali extra esistono solo qui: sono l'unica parte del cassetto che
-     il modulo condiviso non conosce e che quindi gli si passa già disegnata. */
   const materialRows = materials.length
     ? `<div class="cart-group cart-group--materiali">
         <div class="cart-group-head">
@@ -9630,8 +9539,7 @@ function updateConfCartUI() {
       </div>`
     : "";
 
-  // Riepilogo, gruppi, note della merce viva e invito incrociato: stessa
-  // struttura di home e vivaio, vedi assets/js/serra-cart-ui.js.
+  // Riepilogo, gruppi, note della merce viva e invito incrociato: stessa struttura di home e vivaio, vedi assets/js/serra-cart-ui.js.
   items.innerHTML = window.SerraCartUI
     ? window.SerraCartUI.corpo({
         righe: confCart,
@@ -9660,11 +9568,9 @@ function updateConfCartUI() {
     : "";
 }
 
-// Rimuove una voce dal carrello. La stessa pianta può esserci due volte, come
-// bustina e come piantina: si toglie solo la variante indicata.
+// Rimuove una voce dal carrello.
 function removeFromConfCart(id, variante) {
   const piantina = variante === "piantina";
-  // Fotografia di prima: è quello che l'annulla rimetterà a posto.
   const prima = confCart.slice();
   confCart = window.SerraCart
     ? window.SerraCart.rimuovi(confCart, id, piantina)
@@ -9674,8 +9580,6 @@ function removeFromConfCart(id, variante) {
   offriAnnullaConfCart("undo.removed", { nome: plantNameById(id) || id }, prima);
 }
 
-/* Stesso annulla della home e del vivaio: il carrello è uno solo e togliere
-   una pianta deve costare uguale — cioè niente — da qualunque pagina. */
 function offriAnnullaConfCart(chiave, valori, prima) {
   const UI = window.SerraCartUI;
   if (!UI || !UI.annullabile) return;
@@ -9692,8 +9596,7 @@ function offriAnnullaConfCart(chiave, valori, prima) {
     }
   });
 }
-/* Quantità dal cassetto: un passo è una bustina per i semi e un vassoio intero
-   per le piantine. A zero la riga esce dal carrello. */
+/* Quantità dal cassetto: un passo è una bustina per i semi e un vassoio intero per le piantine. A zero la riga esce dal carrello. */
 function changeConfCartQty(id, variante, direzione) {
   if (!window.SerraCart) return;
   const piantina = variante === "piantina";
@@ -9720,8 +9623,6 @@ function clearConfCart() {
 let confCartScrollLockCount = 0;
 let confCartScrollY = 0;
 
-// Blocca la pagina dietro il cassetto anche su Safari mobile, che ignora il
-// solo overflow:hidden del body durante lo scorrimento tattile.
 function lockConfCartPageScroll() {
   if (confCartScrollLockCount === 0) {
     confCartScrollY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -9806,9 +9707,7 @@ function alertConfCheckout() {
     return;
   }
 
-  /* Le righe entrano nell'ordine con i campi che l'Area Personale già legge
-     (`bustine`, `prezzo`). Le piantine conservano `variante` e prezzo proprio:
-     prima venivano fatturate al prezzo di una bustina di semi. */
+  /* Le righe entrano nell'ordine con i campi che l'Area Personale già legge (`bustine`, `prezzo`). */
   const seedItems = confCart.map((riga) => {
     const id = riga.id;
     const nome = BYID[id] ? plantText(BYID[id], "nome") : id;
@@ -9929,9 +9828,7 @@ window.addEventListener("storage", (event) => {
 
 window.addEventListener("serra:themechange", () => render());
 
-// Safari iOS può ripristinare il configuratore dalla page cache senza
-// rieseguire il bootstrap. In quel caso riallinea l'ingresso guidato dalla
-// home allo stato compatto previsto per il profilo Principiante.
+// Safari iOS può ripristinare il configuratore dalla page cache senza rieseguire il bootstrap.
 window.addEventListener("pageshow", (event) => {
   const bootContext = window.history.state?.serraConfiguratorBoot;
   const navigationType =
@@ -9952,8 +9849,6 @@ window.addEventListener("pageshow", (event) => {
 
 (async () => {
   // Il catalogo necessario al configuratore è già incluso in plants-data.js.
-  // La sincronizzazione con eventuali sorgenti esterne prosegue in background,
-  // senza trattenere il primo disegno della serra dietro a un timeout di rete.
   window.SerraAPI.bootstrapPlants();
 
   initConfig();

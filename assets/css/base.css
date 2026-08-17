@@ -1,13 +1,5 @@
-/* Fondazioni condivise: reset, token, tema, intestazione, piè di pagina e componenti comuni.
- * Viene caricato prima del foglio specifico di ogni pagina; le regole qui definite
- * non devono assumere una schermata particolare. Struttura: fondazioni → tema →
- * componenti → adattamenti viewport. Le personalizzazioni stanno in pages/.
- */
-/* `components` è l'ultimo livello: ci vive il sistema dei pulsanti, che deve
-   valere sopra le regole delle singole pagine. Senza, ogni foglio di pagina —
-   caricato dopo questo — riportava i suoi pulsanti al colore di casa propria.
-   I fogli di pagina ridichiarano solo i primi tre livelli: ridichiararli non
-   li riordina, quindi `components` resta comunque l'ultimo. */
+/* Fondazioni condivise: reset, token, tema, intestazione, piè di pagina e componenti comuni. */
+/* `components` è l'ultimo livello: ci vive il sistema dei pulsanti, che deve valere sopra le regole delle singole pagine. */
 @layer base, dark-theme, polish, components, coerenza;
 
 /* Punto di ingresso completo della pagina: nessun foglio correttivo esterno. */
@@ -46,8 +38,6 @@
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    /* Le schede grandi e i pannelli: prima oscillavano fra 17 e 30 px senza
-       una ragione, e due riquadri accostati avevano angoli diversi. */
     --radius-xl: 22px;
     --radius-2xl: 28px;
     --radius-pill: 999px;
@@ -55,11 +45,7 @@
     --shadow-md: 0 12px 34px rgba(31, 58, 38, 0.14);
     --shadow-lg: 0 20px 48px rgba(31, 58, 38, 0.18);
 
-    /* ---------- scala cromatica di marca ----------
-       Una sola rampa di verdi, una di inchiostri, una di superfici. Le pagine
-       erano nate in momenti diversi e ognuna aveva coniato il proprio verde
-       «quasi uguale»: qui i valori hanno un nome, così la prossima scheda non
-       ne inventa un altro. */
+    /* ---------- scala cromatica di marca ---------- */
     --brand-700: #245733;
     --brand-600: #2f6b3a;
     --brand-500: #376f49;
@@ -76,8 +62,6 @@
     --ink-400: #5f6f60;
     --ink-300: #6f7b72;
 
-    /* Riempimento acceso e testo che ci sta sopra: viaggiano in coppia,
-       perché al buio il verde si schiarisce e il bianco non basta più. */
     --fill-brand: #2f6b3a;
     --on-fill-brand: #fcfdf9;
 
@@ -87,9 +71,7 @@
     --clay-500: #c8643c;
     --danger-600: #b03020;
 
-    /* ---------- superfici ----------
-       Tre livelli e un fondo: la pagina sta sul fondo, le fasce sul livello 2,
-       le schede sul livello 1 (il più chiaro, così emergono). */
+    /* ---------- superfici ---------- */
     --surface-1: #fffdf6;
     --surface-2: #f2f7f0;
     --surface-3: #e5eee3;
@@ -97,12 +79,7 @@
     --surface-line: rgba(31, 58, 38, 0.14);
     --surface-line-strong: rgba(31, 58, 38, 0.26);
 
-    /* ---------- profondità ----------
-       Quattro gradini soli, dal riposo al pannello sopra tutto. Ogni gradino
-       somma un contatto corto (l'oggetto tocca la pagina), una diffusione
-       lunga (la distanza) e un filo di luce in alto (lo spessore del bordo).
-       Prima ogni scheda aveva la sua ombra improvvisata e la pagina non aveva
-       un piano coerente. */
+    /* ---------- profondità ---------- */
     --elev-1:
       0 1px 2px rgba(31, 58, 38, 0.05), 0 3px 8px rgba(31, 58, 38, 0.05);
     --elev-2:
@@ -120,19 +97,9 @@
     --elev-focus: 0 0 0 4px rgba(47, 107, 58, 0.14);
     --lift-hover: translateY(-3px);
 
-    /* ---------- sistema dei pulsanti ----------
-       Tre ruoli soli: principale (l'azione che fa avanzare), secondario (le
-       alternative) e distruttivo (toglie o svuota). Questi token stavano in sei
-       copie identiche dentro i fogli di pagina; ora vivono qui, nell'unico
-       foglio che tutte le pagine caricano, così non possono più divergere.
-       `--button-primary-fill` esiste perché il riempimento principale era
-       scritto a mano in otto modi diversi — angoli e fermate ogni volta un po'
-       differenti — e ora ha una forma sola. */
+    /* ---------- sistema dei pulsanti ---------- */
     --button-primary: var(--serra-green, #2f6b3a);
     --button-primary-hover: #347a3b;
-    /* Schiarita del passaggio col mouse: il #3f8a50 di prima portava il testo
-       bianco a 4,14:1, sotto la soglia AA. Questo è il verde più chiaro che la
-       rispetta ancora (4,72:1) e lo stacco dallo stato di riposo si vede. */
     --button-primary-lift: #347f4d;
     --button-primary-text: #fcfdf9;
     --button-primary-border: rgba(47, 107, 58, 0.42);
@@ -156,47 +123,17 @@
     --button-danger-text: #a03820;
     --button-danger-border: rgba(176, 48, 32, 0.32);
 
-    /* Principale sopra una superficie verde scura (la scheda della hero, i
-       riquadri pieni). Lì il verde su verde sparirebbe: si inverte in crema
-       con testo verde scuro, che è il modo in cui l'app già risolve il caso
-       altrove (.percorso-cta-btn--green, il pulsante della notifica carrello).
-       Prima la hero usava un giallo #f4cd67 che non appartiene alla palette. */
+    /* Principale sopra una superficie verde scura (la scheda della hero, i riquadri pieni). */
     --button-on-dark-bg: var(--serra-paper, #fffdf6);
     --button-on-dark-bg-hover: #ffffff;
     --button-on-dark-text: #1f3a26;
     --button-on-dark-border: rgba(255, 255, 255, 0.6);
 
-    /* ---------- geometria dei controlli ----------
-       Una sola regola, applicata ovunque: la forma dice il ruolo.
-
-         pillola   cose che si premono o si attivano — CTA, chip, filtri,
-                   toggle, segmenti. Sono bersagli, non contenitori.
-         10 px     cose in cui si scrive o si sceglie da un elenco, e i
-                   comandi di servizio — input, select, textarea, campi
-                   di ricerca, pulsanti icona rettangolari.
-         tondo     solo i comandi icona quadrati: ± della quantità, chiudi.
-         16/22 px  contenitori — schede e pannelli (--radius-lg / --radius-xl).
-
-       Un'eccezione, e una sola: le righe-azione ricche — quelle alte più di
-       una sessantina di pixel, con illustrazione e due righe di testo, come
-       «I semi / Le piantine» nei percorsi della home — prendono il raggio
-       delle schede. Una pillola alta cento pixel non è un pulsante, è uno
-       stadio: la forma smetterebbe di dire qualcosa.
-
-       Questa nota c'era già e prometteva «una forma sola», ma non era mai
-       stata applicata: il CTA principale era pillola nella hero e 12 px
-       nella guida, le chip erano pillola nel vivaio e 8 px nel catalogo,
-       e in giro restavano raggi sciolti (6, 4, 13, 18, 20 px). Adesso i
-       valori stanno solo qui e le pagine li citano per nome, così la
-       prossima scheda non può inventarne un altro. */
+    /* ---------- geometria dei controlli ---------- */
     --control-radius: 10px;
     --control-radius-pill: var(--radius-pill);
     --control-radius-round: 50%;
 
-    /* Tre altezze, non le diciannove che erano in circolazione. `md` è il
-       default e rispetta i 44 px raccomandati per il bersaglio tattile;
-       `sm` serve ai controlli densi dentro barre filtro e tabelle, dove
-       44 px spezzerebbero la riga. */
     --control-h-sm: 40px;
     --control-h-md: 44px;
     --control-h-lg: 52px;
@@ -205,37 +142,15 @@
     --button-min-height: var(--control-h-md);
     --button-font-weight: 700;
 
-    /* ---------- distanza fra i comandi ----------
-       Due bersagli vicini non sono un problema di estetica ma di dita. Il
-       polpastrello che tocca lo schermo è un'ellisse larga una quarantina di
-       pixel: se i centri di due comandi distano meno di quello, un tocco solo
-       li copre entrambi e quale dei due vince lo decide il caso.
-
-       Nel carrello i centri di «+» e «✕ rimuovi» distavano 41 px, con il ✕
-       grande 18 × 24. Non serviva una mano incerta per cancellare una pianta
-       mentre se ne aumentava la quantità: bastava una mano normale.
-
-         --control-gap         fra comandi che fanno cose simili e reversibili
-                               (i due lati di uno stepper, due filtri)
-         --control-gap-danger  fra un comando distruttivo e qualunque altro
-
-       La regola che vale più dei due valori: un comando distruttivo non sta
-       sull'asse lungo cui si muove il dito per usare quello frequente. Nel
-       carrello si preme «+» ripetutamente e si scivola in basso — quindi il
-       ✕ non può stare sotto al «+», per quanto lo si distanzi. */
+    /* ---------- distanza fra i comandi ---------- */
     --control-gap: 8px;
     --control-gap-danger: 16px;
 
-    /* La freccia delle tendine. Una volta sola: quando una `<select>` esce dal
-       disegno nativo per poter avere l'altezza giusta (vedi il layer
-       `coerenza` in fondo al file) perde anche la freccia di sistema, e senza
-       quella non si capisce più che è una tendina. Il tema scuro la
-       ridichiara col proprio inchiostro. */
+    /* La freccia delle tendine. */
     --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232f6b3a' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
   }
 
-  /* Sul touch la densità non conviene: i controlli compatti tornano a 44 px
-     senza che le pagine debbano saperne nulla. */
+  /* Sul touch la densità non conviene: i controlli compatti tornano a 44 px senza che le pagine debbano saperne nulla. */
   @media (pointer: coarse) {
     :root {
       --control-h-sm: var(--control-h-md);
@@ -288,9 +203,7 @@
   }
 
   /* Navigazione principale */
-  /* La posizione fissa appartiene solo alla navigazione dell'intestazione.
-     Il vecchio selettore `nav` coinvolgeva anche indici e navigazioni interne
-     (in particolare l'indice della Guida), sovrapponendole al contenuto. */
+  /* La posizione fissa appartiene solo alla navigazione dell'intestazione. */
   .site-header .nav-links {
     position: fixed;
     top: 0;
@@ -1392,9 +1305,6 @@
     color: var(--muted);
     font-weight: 500;
   }
-  /* Era 34 px e diventava 40 solo sul telefono: ma è il pulsante che aggiunge
-     al carrello dalla griglia, cioè l'azione più ripetuta della pagina. Parte
-     già alla misura comoda, ovunque. */
   .compact-add-btn {
     width: var(--control-h-sm);
     height: var(--control-h-sm);
@@ -3501,10 +3411,6 @@
     padding: 0.16rem 0.52rem;
     letter-spacing: 0.01em;
   }
-  /* «Svuota» e «chiudi» stavano a otto pixel: due comandi che si assomigliano
-     — entrambi fanno sparire quello che si sta guardando — ma uno chiude un
-     pannello e l'altro cancella la spesa. Fra i due ci va la distanza dei
-     comandi distruttivi. */
   .cart-header-actions {
     display: flex;
     align-items: center;
@@ -3575,9 +3481,7 @@
     gap: 0.65rem;
   }
 
-  /* Riepilogo in cima al cassetto. Compare solo quando ha almeno due numeri da
-     dire (vedi riepilogoHtml in assets/js/serra-cart-ui.js): con le sole
-     bustine ripeterebbe quello che c'è già nell'intestazione. */
+  /* Riepilogo in cima al cassetto. */
   .cart-summary {
     display: grid;
     grid-auto-flow: column;
@@ -3606,8 +3510,7 @@
     letter-spacing: 0.07em;
   }
 
-  /* Gruppi: semi, piantine, materiali. L'intestazione compare solo quando i
-     gruppi sono davvero due, altrimenti etichetterebbe l'ovvio. */
+  /* Gruppi: semi, piantine, materiali. */
   .cart-group {
     display: flex;
     flex-direction: column;
@@ -3636,8 +3539,7 @@
     font-weight: 600;
   }
 
-  /* Note dell'ordine: consegna, ordine minimo, "partono insieme". Seguono la
-     merce, non la pagina: appaiono in qualunque carrello contenga piantine. */
+  /* Note dell'ordine: consegna, ordine minimo, "partono insieme". */
   .cart-note {
     display: flex;
     align-items: flex-start;
@@ -3662,12 +3564,7 @@
     color: #7a5410;
   }
 
-  /* Due righe: sopra l'identità del prodotto, sotto i comandi ai due capi
-     opposti. Era tutto su una riga sola e i comandi, cresciuti alla misura
-     comoda al dito, si mangiavano la colonna del testo: a 323 px lo stepper
-     finiva sopra al prezzo e «6 piantine · vaso ø7» si impilava una parola
-     per riga. Separare le due funzioni su due righe risolve la stretta e
-     mette la massima distanza possibile fra «rimuovi» e «+». */
+  /* Due righe: sopra l'identità del prodotto, sotto i comandi ai due capi opposti. */
   .cart-item {
     display: grid;
     align-items: center;
@@ -3710,8 +3607,6 @@
     border-radius: var(--radius-sm);
     flex-shrink: 0;
   }
-  /* Ripiego quando la foto manca: stesso ingombro dell'immagine, così le righe
-     restano allineate fra loro. */
   .cart-item-glyph {
     display: grid;
     place-items: center;
@@ -3756,10 +3651,7 @@
     font-weight: 700;
     white-space: nowrap;
   }
-  /* Invito incrociato: chi ha solo semi scopre le piantine già cresciute, chi
-     ha solo piantine scopre il catalogo. Compare solo quando manca una delle
-     due famiglie e sparisce appena l'utente aggiunge quella che gli mancava —
-     la regola sta in crossHtml(), assets/js/serra-cart-ui.js. */
+  /* Invito incrociato: chi ha solo semi scopre le piantine già cresciute, chi ha solo piantine scopre il catalogo. */
   .cart-cross {
     display: flex;
     align-items: center;
@@ -3810,9 +3702,7 @@
     font-weight: 800;
   }
 
-  /* Riga piantina dentro il carrello: si distingue a colpo d'occhio dalle
-     bustine. Sta qui, e non nel foglio della home, perché lo stesso carrello
-     compare anche nel configuratore. */
+  /* Riga piantina dentro il carrello: si distingue a colpo d'occhio dalle bustine. */
   .cart-item-tag {
     display: inline-block;
     padding: 1px 7px;
@@ -3839,9 +3729,6 @@
   .cart-qty-btn {
     display: grid;
     place-items: center;
-    /* Erano 28 px con la giustificazione che «resta toccabile nel cassetto
-       stretto». Non lo era: 28 px sono sotto ogni soglia raccomandata, e
-       stretto o no il dito ha sempre la stessa larghezza. */
     width: var(--control-h-sm);
     height: var(--control-h-sm);
     padding: 0;
@@ -3861,10 +3748,7 @@
     background: rgba(45, 106, 79, 0.12);
   }
 
-  /* A quantità minima il «−» si spegne. Prima toglieva l'ultima bustina e la
-     riga spariva dal carrello: una cancellazione silenziosa, innescata dal
-     comando gemello di quello che si preme per aggiungere. Per togliere un
-     prodotto adesso c'è un solo modo, e ha la parola scritta sopra. */
+  /* A quantità minima il «−» si spegne. */
   .cart-qty-btn:disabled {
     color: var(--muted);
     cursor: default;
@@ -3879,9 +3763,6 @@
     text-align: center;
   }
 
-  /* La rimozione: parola invece di simbolo, altezza comoda, ancorata al capo
-     sinistro della riga dei comandi. Resta grigia finché non la si tocca —
-     è un'uscita, non un invito. */
   .cart-item-remove {
     display: inline-flex;
     align-items: center;
@@ -3906,9 +3787,7 @@
     text-decoration-color: currentColor;
   }
 
-  /* ---------- l'annulla ----------
-     Sopra al cassetto (che ha z-index alto) e sopra la barra di sistema del
-     telefono: se comparisse sotto al pollice non lo vedrebbe nessuno. */
+  /* ---------- l'annulla ---------- */
   .cart-undo {
     position: fixed;
     z-index: 2147483000;
@@ -4078,16 +3957,11 @@
     margin-top: 0.65rem;
     transition: background 0.16s;
   }
-  /* Sotto l'ordine minimo di vassoi la spedizione della merce viva non regge:
-     il pulsante resta visibile ma inerte, e il motivo è scritto fra le righe
-     delle piantine. Vedi disegnaCarrello() in assets/js/vivaio.js. */
   .cart-checkout-btn:disabled {
     background: var(--border);
     color: var(--muted);
     cursor: not-allowed;
   }
-  /* Azione secondaria del piè di pagina: riporta al listino senza chiudere il
-     discorso, quindi non compete con il pulsante d'acquisto. */
   .cart-edit-btn {
     display: inline-flex;
     align-items: center;
@@ -4112,8 +3986,6 @@
     border-color: var(--accent);
     background: rgba(45, 106, 79, 0.06);
   }
-  /* Riga di contesto sotto lo stato vuoto: dice perché il carrello è vuoto e
-     quale vincolo aspettarsi, invece di lasciare l'utente davanti al nulla. */
   .cart-empty-hint {
     max-width: 26ch;
     color: var(--muted);
@@ -5068,8 +4940,7 @@
     margin-top: 0.5rem;
   }
   .footer-social a {
-    /* Comandi di servizio quadrati: stesso raggio dei pulsanti icona,
-       stessa misura comoda al dito degli altri bersagli. */
+    /* Comandi di servizio quadrati: stesso raggio dei pulsanti icona, stessa misura comoda al dito degli altri bersagli. */
     width: var(--control-h-sm);
     height: var(--control-h-sm);
     border-radius: var(--control-radius);
@@ -5416,9 +5287,7 @@
     gap: 0.48rem;
   }
 
-  /* Cluster destro dell'intestazione: "le mie cose".
-     Tre unità e non cinque controlli sparsi — profilo, preferenze
-     (tema + lingua in un solo blocco) e carrello. */
+  /* Cluster destro dell'intestazione: "le mie cose". */
   .nav-prefs {
     display: flex;
     align-items: center;
@@ -5451,9 +5320,7 @@
     border-radius: 0;
   }
 
-  /* Il profilo esce dalla navigazione centrale: lì stanno solo i luoghi
-     dell'app, qui le cose dell'utente. Nel menu mobile resta invece una voce
-     di elenco, dove c'è spazio per l'etichetta estesa. */
+  /* Il profilo esce dalla navigazione centrale: lì stanno solo i luoghi dell'app, qui le cose dell'utente. */
   .site-header .nav-account-btn {
     display: inline-flex;
     min-height: var(--control-h-md);
@@ -5474,8 +5341,6 @@
       border-color 0.16s;
   }
 
-  /* Il carrello è un collegamento nelle pagine Orto e Vivaio: niente
-     sottolineatura, deve restare identico al pulsante delle altre pagine. */
   .site-header a.cart-btn {
     text-decoration: none;
   }
@@ -5514,8 +5379,6 @@
   }
 
   @media (max-width: 900px) {
-    /* Sotto i 900px il gruppo sparisce e i controlli tornano singoli,
-       esattamente come prima: le regole mobili esistenti continuano a valere. */
     .nav-prefs {
       display: contents;
     }
@@ -5525,10 +5388,6 @@
     }
   }
 
-  /* Sotto i 660px tema e lingua vivono nella sezione "Preferenze" del menu a
-     tendina: tenerli anche nell'intestazione significherebbe due comandi per
-     la stessa cosa, in una barra che su telefono deve restare essenziale
-     (marchio · carrello · menu). La guida fa eccezione perché non ha menu. */
   @media (max-width: 660px) {
     .site-header:not(.guide-page-header) .nav-actions > .nav-prefs {
       display: none;
@@ -5792,10 +5651,7 @@
       transform: translateY(0);
     }
 
-    /* Uscita verso un'altra pagina: il menu sparisce subito, senza transizione
-       e senza rimettere il body in flusso. Vedi closeMenuForNavigation() in
-       assets/js/base.js: rimandare il riflusso a dopo la navigazione è ciò che
-       toglie il ritardo fra il tocco e l'apertura della pagina. */
+    /* Uscita verso un'altra pagina: il menu sparisce subito, senza transizione e senza rimettere il body in flusso. */
     body.nav-menu-open.nav-menu-leaving .site-header .nav-links,
     body.nav-menu-open.nav-menu-leaving::before {
       display: none;
@@ -6298,8 +6154,6 @@
     box-shadow: var(--elev-3);
   }
 
-  /* Anche nelle due colonne del tablet il tipo resta una piccola etichetta
-     allineata alla destra del nome, senza saltare su una seconda riga. */
   @media (max-width: 1024px) {
     .catalog-pro-section .compact-name-row {
       display: grid;
@@ -6413,8 +6267,6 @@
       padding: 0.55rem 0.4rem 0.15rem;
       gap: 0.28rem;
     }
-    /* Nome e categoria condividono una riga stabile: la categoria non può più
-       scendere sotto il nome di alcune piante e restare a destra per altre. */
     .catalog-pro-section .compact-name-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) max-content;
@@ -6963,9 +6815,6 @@
     border-color: var(--surface-line-strong);
     box-shadow: var(--elev-2);
   }
-  /* Il filtro attivo è verde d'insegna come ogni altro selettore acceso
-     dell'app: prima qui era inchiostro, e lo stesso stato aveva due colori
-     a seconda della pagina in cui capitavi. */
   .catalog-category-chip.active {
     background: var(--fill-brand);
     border-color: var(--fill-brand);
@@ -7653,8 +7502,6 @@
     box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.18);
   }
 
-  /* Il selettore di vista era alto 32 px con due bersagli da 28: sotto la
-     soglia comoda al dito, e in una barra dove tutto il resto è a 40. */
   .catalog-layout-toggle {
     display: flex;
     gap: 2px;
@@ -7703,11 +7550,6 @@
       justify-content: space-between;
       width: 100%;
     }
-    /* `flex: 1` da solo non bastava: un elemento flessibile non scende sotto
-       la propria larghezza minima intrinseca, e per una select è quella
-       dell'opzione più lunga più i 1,8 rem di spazio ai lati. Risultato: a
-       323 px la select misurava 263 px dentro a un contenitore da 260 e
-       spingeva il selettore di vista fuori dallo schermo. */
     .catalog-hint-controls .cat-sort-select {
       flex: 1;
       min-width: 0;
@@ -7723,8 +7565,7 @@
     .catalog-hint-text {
       font-size: 0.75rem;
     }
-    /* Sugli schermi più stretti si stringe la select, non il selettore di
-       vista: quello è un bersaglio da premere e scendeva a 24 px. */
+    /* Sugli schermi più stretti si stringe la select, non il selettore di vista: quello è un bersaglio da premere e scendeva a 24 px. */
     .catalog-hint-controls .cat-sort-select {
       padding-inline: 1.15rem;
     }
@@ -8013,8 +7854,6 @@ html[data-theme="dark"]
   color: var(--serra-white) !important;
 }
 
-/* Regola finale: prevale sulle dimensioni desktop definite più sopra e
-   mantiene completi i nomi anche nella griglia a due colonne del tablet. */
 @media (min-width: 701px) and (max-width: 1024px) {
   .catalog-pro-section .compact-name {
     font-size: 0.78rem;
@@ -8503,8 +8342,7 @@ html[data-theme="dark"]
     width: min(480px, 100%);
     display: flex;
     flex-direction: column;
-    /* Cresciuto insieme allo spazio fra i passi: l'aria in più non deve
-       tradursi in scorrimento. */
+    /* Cresciuto insieme allo spazio fra i passi: l'aria in più non deve tradursi in scorrimento. */
     max-height: min(88dvh, 764px);
     overflow: hidden;
     overscroll-behavior: contain;
@@ -8715,19 +8553,12 @@ html[data-theme="dark"]
     flex-direction: column;
     gap: 4px;
   }
-  /* I campi non si comprimono. Erano figli di un contenitore flex in colonna,
-     quindi quando il contenuto superava l'altezza disponibile si schiacciavano
-     tutti insieme invece di far scorrere: con `overflow: hidden` addosso, gli
-     steppers finivano tagliati a metà. */
+  /* I campi non si comprimono. */
   .preconfig-body > * {
     flex: 0 0 auto;
   }
 
-  /* Respiro fra i passi. A 7px sopra l'etichetta i quattro blocchi si
-     leggevano come un elenco continuo: il titolo del passo stava più vicino al
-     campo precedente che al proprio. Portandolo a 12 la separazione diventa
-     evidente, e il pannello resta comunque in una schermata perché il tetto
-     d'altezza è cresciuto in proporzione. */
+  /* Respiro fra i passi. */
   .preconfig-section-label {
     font-size: 10px;
     font-weight: 700;
@@ -8739,7 +8570,6 @@ html[data-theme="dark"]
     align-items: center;
     gap: 6px;
   }
-  /* Il primo passo è già staccato dall'intestazione: non serve altro spazio. */
   .preconfig-body > *:first-child .preconfig-section-label,
   .preconfig-body > .preconfig-section-label:first-child {
     margin-top: 2px;
@@ -8887,13 +8717,6 @@ html[data-theme="dark"]
     gap: 10px;
   }
 
-  /* Camminamento: riga propria, perché non è una dimensione della serra ma la
-     misura del passaggio fra le aiuole. Etichetta a sinistra e regolatore a
-     destra sulla stessa riga, così costa un'altezza sola e il pannello resta
-     dentro la schermata.
-     È il campo secondario del passo: ha un valore ragionevole di partenza e
-     raramente si cambia, quindi sta più basso di tono delle misure — bordo più
-     tenue, ombra assente, regolatore ridotto. */
   .preconfig-vfield--path {
     padding: 6px 8px;
     border-color: rgba(47, 107, 58, 0.1);
@@ -8933,8 +8756,7 @@ html[data-theme="dark"]
   .preconfig-vfield--path .preconfig-fld-unit {
     font-size: 10.5px;
   }
-  /* Il velo chiaro sopra i ciottoli si scurisce: la texture resta leggibile
-     senza diventare una macchia chiara nel pannello notturno. */
+  /* Il velo chiaro sopra i ciottoli si scurisce: la texture resta leggibile senza diventare una macchia chiara nel pannello notturno. */
   html[data-theme="dark"] .preconfig-vfield--path {
     background-image:
       linear-gradient(rgba(20, 48, 29, 0.82), rgba(19, 34, 27, 0.86)),
@@ -8979,10 +8801,7 @@ html[data-theme="dark"]
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  /* Segno di quota accanto all'etichetta: freccia fra due sponde, orizzontale
-     per la larghezza e verticale per la lunghezza. È il simbolo che si usa sui
-     disegni tecnici, e dice "stai prendendo una misura" prima che si legga il
-     nome del campo. */
+  /* Segno di quota accanto all'etichetta: freccia fra due sponde, orizzontale per la larghezza e verticale per la lunghezza. */
   .preconfig-axis {
     flex: 0 0 auto;
     width: 15px;
@@ -8998,19 +8817,13 @@ html[data-theme="dark"]
     stroke: #a0c8a0;
   }
 
-  /* Etichetta e unità stanno sulla stessa riga: prima larghezza e lunghezza
-     mostravano numeri nudi mentre il campo accanto diceva "cm", e con quel
-     vicino i metri si leggevano come centimetri. */
   .preconfig-fld-row {
     display: flex;
     align-items: baseline;
     gap: 0.25rem;
     margin-bottom: 6px;
   }
-  /* Le etichette senza unità accanto — Zona, Serra — restano a sé: hanno
-     bisogno del loro stacco dal selettore sottostante. Prima ce l'avevano da
-     `.preconfig-fld`, che era un blocco con margine; da quando è in linea, per
-     poter affiancare l'unità, lo spazio va rimesso qui. */
+  /* Le etichette senza unità accanto — Zona, Serra — restano a sé: hanno bisogno del loro stacco dal selettore sottostante. */
   .preconfig-fld:not(.preconfig-fld-row > *) {
     display: block;
     margin-bottom: 6px;
@@ -9122,51 +8935,26 @@ html[data-theme="dark"]
     box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.2);
   }
 
-  /* I tre livelli di esperienza. I colori erano tre tinte a sé, vicine ma non
-     uguali a quelle dell'app: ora sono i token condivisi, così la progressione
-     verde → ambra → terracotta è la stessa che l'utente vede altrove. */
+  /* I tre livelli di esperienza. */
   :root {
     --pc-nov: var(--green-lt);
     --pc-int: var(--yellow);
     --pc-exp: var(--accent);
 
-    /* Scala del selettore di livello, usata sia dalle schede della home e del
-       configuratore sia dalle linguette della guida. È una via di mezzo fra le
-       due versioni provate: riempire ogni scheda del proprio colore rendeva la
-       scelta fatta indistinguibile dalle altre due, lasciarle trasparenti
-       toglieva ogni traccia del livello finché non lo si sceglieva.
-       Qui la tinta a riposo è leggera ma presente e il salto verso lo stato
-       scelto è di almeno 36 punti su 255, così si vede sempre dove si è.
-       A separare le tinte fra loro è soprattutto il riquadro dell'icona:
-       ambra e terracotta sono adiacenti e in trasparenza si confondono. */
+    /* Scala del selettore di livello, usata sia dalle schede della home e del configuratore sia dalle linguette della guida. */
     --persona-fill: 18%;
     --persona-fill-hover: 26%;
     --persona-fill-on: 36%;
     --persona-edge: 60%;
     --persona-ico: 55%;
     --persona-ico-on: 72%;
-    /* Le due basi con cui la tinta si mescola: la superficie della scheda e il
-       colore verso cui tira il bordo. Cambiano col tema, le percentuali no —
-       così le regole restano uniche e al buio non serve riscriverle. */
+    /* Le due basi con cui la tinta si mescola: la superficie della scheda e il colore verso cui tira il bordo. */
     --persona-base: var(--serra-paper, #fffdf6);
     --persona-edge-base: #14301d;
-    /* Inchiostro predefinito. Nel tema chiaro ogni livello lo sovrascrive con
-       il proprio, quindi qui non si fissa quello dello stato scelto: lo
-       definisce solo il tema scuro, dove serve un chiaro unico per tutti. */
+    /* Inchiostro predefinito. */
     --persona-text: #245733;
 
-    /* ---------- geometria delle schede di scelta ----------
-       Le tre schede del livello coltivatore compaiono in due posti: nella
-       modale delle impostazioni del configuratore (.pc-persona-card) e nella
-       guida (.guide-tab). Sono la stessa scelta, fatta due volte nello stesso
-       prodotto, quindi devono avere lo stesso aspetto.
-
-       Finora erano due copie degli stessi numeri, e infatti avevano già
-       cominciato a divergere: la guida si rimpiccioliva sul telefono mentre
-       il configuratore no, e l'unificazione delle forme le aveva rese pillole
-       da un lato e riquadri dall'altro. Adesso le misure stanno qui una volta
-       sola. Non sono controlli e non seguono la regola della pillola: sono
-       schede — riquadro, illustrazione e due righe di testo. */
+    /* ---------- geometria delle schede di scelta ---------- */
     --choice-card-radius: var(--radius-md);
     --choice-card-min-h: 62px;
     --choice-card-pad: 10px 14px 10px 16px;
@@ -9177,14 +8965,10 @@ html[data-theme="dark"]
   .pc-persona-cards {
     display: flex;
     flex-direction: column;
-    /* Tre scelte alternative, non un elenco continuo: lo spazio fra loro deve
-       leggersi. A 5px sembravano un blocco unico. */
+    /* Tre scelte alternative, non un elenco continuo: lo spazio fra loro deve leggersi. */
     gap: var(--choice-cards-gap);
   }
-  /* Scelta del livello. Usa la scala `--persona-*` definita in cima al file:
-     tinta leggera a riposo, riquadro dell'icona più carico a fare da segno di
-     riconoscimento, e la scheda scelta che prende barretta, bordo pieno e
-     sfondo più forte. */
+  /* Scelta del livello. */
   .pc-persona-card {
     --accent: var(--green-dk);
     --accent-text: var(--persona-text);
@@ -9234,8 +9018,6 @@ html[data-theme="dark"]
     opacity: 0;
     transition: opacity 0.18s ease;
   }
-  /* Nel tema chiaro ogni livello ha il proprio inchiostro, tarato sulla sua
-     tinta; al buio li sostituisce un unico chiaro (vedi blocco dark-theme). */
   .pc-persona-card--novizio {
     --accent: var(--pc-nov);
     --accent-text: var(--persona-text, #245733);
@@ -9248,9 +9030,6 @@ html[data-theme="dark"]
     --accent: var(--pc-exp);
     --accent-text: var(--persona-text-exp, #71311f);
   }
-  /* Al passaggio la scheda si stacca dal foglio: cresce di poco — il 2,5% è
-     percepibile senza spostare le vicine — e prende un alone del proprio
-     colore, che è il modo in cui il resto dell'app segna la messa a fuoco. */
   .pc-persona-card:hover {
     transform: scale(1.025);
     z-index: 1;
@@ -9268,11 +9047,7 @@ html[data-theme="dark"]
   .pc-persona-card:hover .pc-persona-ico {
     transform: scale(1.06);
   }
-  /* Il tocco riporta la scheda a terra. Serve anche da uscita sui dispositivi
-     tattili: lì `:hover` può restare attaccato dopo il tocco, e l'ingrandimento
-     rimarrebbe. Prima l'effetto era spento del tutto sotto `hover: none`, ma
-     quella condizione è vera anche nell'emulatore mobile del browser — dove si
-     prova col mouse — e sembrava semplicemente rotto. */
+  /* Il tocco riporta la scheda a terra. */
   .pc-persona-card:active {
     transform: scale(0.995);
   }
@@ -9303,9 +9078,6 @@ html[data-theme="dark"]
     opacity: 1;
   }
 
-  /* Riquadro dell'icona: è ciò che distingue davvero i tre livelli, perché
-     ambra e terracotta in trasparenza restano a una decina di punti l'una
-     dall'altra mentre qui stanno a trentasette. */
   .pc-persona-ico {
     flex: 0 0 auto;
     display: inline-flex;
@@ -9400,16 +9172,12 @@ html[data-theme="dark"]
     border: 1.5px dashed rgba(47, 107, 58, 0.25);
   }
 
-  /* Finché il livello manca, il riepilogo lo dichiara: la prima voce non è un
-     dato impostato ma quello che resta da fare. */
   .preconfig-summary--incompleto {
     color: #7a5410;
     font-weight: 650;
   }
 
-  /* Spiega il pulsante spento. Sta sotto, non dentro un avviso: si legge prima
-     di provare a premere. Il tono è ambra — non è un errore, è un passo che
-     manca ancora. */
+  /* Spiega il pulsante spento. */
   .preconfig-cta-hint {
     display: flex;
     align-items: center;
@@ -9445,8 +9213,7 @@ html[data-theme="dark"]
     .preconfig-step-input {
       padding-block: 5px;
     }
-    /* Nel pannello su schermo largo le tre scelte stanno più strette: si
-       riduce l'ingombro, non il rilievo. */
+    /* Nel pannello su schermo largo le tre scelte stanno più strette: si riduce l'ingombro, non il rilievo. */
     #preconfigPersonaSection .pc-persona-card {
       min-height: 54px;
       padding: 6px 12px;
@@ -9502,10 +9269,6 @@ html[data-theme="dark"]
     align-items: center;
   }
 
-  /* Il fondo aveva 36px di aria sotto il pulsante, pensati quando l'aiuto non
-     c'era: sommati alla riga "Scegli il tuo livello" spingevano il pannello
-     oltre la schermata. Restano solo quelli che servono a stare sopra la barra
-     di sistema. */
   .preconfig-footer {
     padding: 8px 14px calc(12px + env(safe-area-inset-bottom, 0px));
     display: flex;
@@ -9618,9 +9381,7 @@ html[data-theme="dark"]
   html[data-theme="dark"] .preconfig-priority-badge {
     background: #43804d;
   }
-  /* Variante d'avviso: non è un passo obbligatorio come il livello, è un valore
-     di ripiego da verificare. Ambra, come la riga sotto il pulsante, così i due
-     inviti si riconoscono come la stessa cosa detta in due posti. */
+  /* Variante d'avviso: non è un passo obbligatorio come il livello, è un valore di ripiego da verificare. */
   .preconfig-priority-badge--check {
     background: #f2dfa5;
     color: #7a5410;
@@ -9656,12 +9417,7 @@ html[data-theme="dark"]
       linear-gradient(rgba(20, 48, 29, 0.68), rgba(20, 48, 29, 0.76)),
       url(../img/svg/clima-pattern.svg);
   }
-  /* Al buio cambiano solo le basi e le forze della scala, non le regole.
-     Prima qui c'era un fondo verde piatto uguale per tutti e tre — la tinta
-     del livello arrivava al 18% soltanto sulla scheda scelta — e i tre
-     selettori erano di fatto indistinguibili. Su fondo scuro le tinte perdono
-     croma, quindi le percentuali salgono: al 32% i tre stanno a 23 punti su
-     255 l'uno dall'altro invece che a zero. */
+  /* Al buio cambiano solo le basi e le forze della scala, non le regole. */
   html[data-theme="dark"] {
     --persona-fill: 32%;
     --persona-fill-hover: 40%;
@@ -9751,14 +9507,9 @@ html[data-theme="dark"]
   }
 }
 
-/* Cluster destro dell'intestazione in tema scuro: il gruppo preferenze deve
-   avere un solo contorno, non uno per controllo. */
+/* Cluster destro dell'intestazione in tema scuro: il gruppo preferenze deve avere un solo contorno, non uno per controllo. */
 @layer dark-theme {
-  /* ---------- gli stessi token, di notte ----------
-     Al buio la profondità non può essere data da un'ombra più scura del
-     fondo: si vedrebbe appena. Le ombre restano per staccare l'oggetto dal
-     piano, ma il lavoro lo fa il filo di luce in alto, che sul tema scuro è
-     l'unico modo per far leggere lo spessore di una scheda. */
+  /* ---------- gli stessi token, di notte ---------- */
   html[data-theme="dark"] {
     --brand-700: #4f9f68;
     --brand-600: #69b77d;
@@ -9785,9 +9536,7 @@ html[data-theme="dark"]
     --clay-500: #e3b9a4;
     --danger-600: #f2bbb4;
 
-    /* Di notte la scala si rovescia: più un piano è in alto, più è chiaro.
-       È l'unico modo per far sentire l'altezza quando l'ombra, sul nero, non
-       si vede. L'ordine dei tre livelli resta quello del tema chiaro. */
+    /* Di notte la scala si rovescia: più un piano è in alto, più è chiaro. */
     --surface-1: #13221b;
     --surface-2: #182a21;
     --surface-3: #21362a;
@@ -9875,45 +9624,26 @@ html[data-theme="dark"]
   }
 }
 
-/* Chiarezza del menu mobile: Home è esplicita e "Il mio orto" dichiara la
-   propria funzione di assistente, senza rendere più affollato l'header desktop. */
 @layer polish {
   .site-header #mainNav .nav-link-tool-hint {
     display: none;
   }
 
-  /* «Home» è la prima voce del menu, prima di «Catalogo semi», con lo stesso
-     aspetto delle altre: è un luogo dell'app come gli altri. Prima era
-     nascosta sul desktop e al suo posto c'era un pulsante a parte accanto
-     all'area personale — due modi diversi di fare la stessa cosa, e in un
-     punto dove nessuno cerca la home. Quel pulsante è stato tolto. */
   .site-header #mainNav > .nav-link--menu-home {
     display: inline-flex;
     align-items: center;
   }
 
-  /* Ritorno alla home. Vive qui, nel foglio che tutte le pagine caricano,
-     perché deve avere la stessa forma e la stessa posizione ovunque: le
-     regole erano copiate nei fogli delle singole pagine e col tempo erano
-     divergite, così sulla home compariva a una larghezza e altrove a
-     un'altra. Le copie nei fogli di pagina sono state rimosse. */
+  /* Ritorno alla home. */
 
-  /* Visibile a tutte le larghezze da tablet in su, su ogni pagina. Per un
-     momento era nascosto sopra i 900 px, con l'idea che il marchio bastasse:
-     ma il marchio non si legge come «torna alla home», e sul desktop restava
-     solo lui. Sotto i 660 px sparisce perché lì il menu si chiude nel
-     pannello a scomparsa, che la voce «Home» ce l'ha per esteso. */
+  /* Visibile a tutte le larghezze da tablet in su, su ogni pagina. */
 
   @media (max-width: 660px) {
     .site-header #mainNav > .nav-link--menu-home {
       display: flex;
     }
 
-    /* Su telefono il marchio è il ritorno alla home e sta al centro
-       dell'intestazione, fra il pulsante del menu e il carrello. Anche
-       queste regole erano copiate in sei fogli di pagina: due copie ne
-       avevano perse dei pezzi, e il marchio finiva in una posizione
-       diversa a seconda della pagina. */
+    /* Su telefono il marchio è il ritorno alla home e sta al centro dell'intestazione, fra il pulsante del menu e il carrello. */
     .site-header .nav-brand {
       min-width: 0;
       overflow: hidden;
@@ -9976,8 +9706,6 @@ html[data-theme="dark"]
       white-space: normal;
     }
 
-    /* Il distintivo appartiene al titolo del tool: sulla stessa riga è più
-       facile da associare a “Il mio orto” e non sembra una voce separata. */
     .site-header #mainNav > .nav-link--orto::after {
       grid-column: 3;
       grid-row: 1;
@@ -10011,8 +9739,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Sui telefoni più stretti il marchio torna in colonna, senza il
-     centraggio assoluto: al centro non ci starebbe. */
+  /* Sui telefoni più stretti il marchio torna in colonna, senza il centraggio assoluto: al centro non ci starebbe. */
   @media (max-width: 340px) {
     .site-header .nav-brand {
       grid-column: 1;
@@ -10022,8 +9749,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* Marchio, logo e sottotitolo dell'intestazione. Erano ripetuti in tutti e
-     sei i fogli di pagina; qui stanno una volta sola e valgono ovunque. */
+  /* Marchio, logo e sottotitolo dell'intestazione. */
   @media (max-width: 660px) {
     .site-header .nav-brand-mark {
       width: 34px;
@@ -10096,28 +9822,8 @@ html[data-theme="dark"]
   }
 }
 
-/* ============================================================================
-   Sistema dei pulsanti — un solo posto per tutta l'app
-   ============================================================================
-   Prima ogni pagina ridefiniva i propri: il "completa acquisto" era arancione
-   qui e verde là, il "accetta" dei cookie usava un verde menta pallido, il
-   configuratore aveva --verde, l'area personale --c-green e il vivaio un
-   gradiente tutto suo. Nel tema scuro erano già uniformati da un unico elenco
-   di selettori; mancava il tema chiaro, dove vinceva sempre la regola della
-   pagina perché caricata dopo base.css.
-
-   Il livello `components` è l'ultimo dichiarato, quindi queste regole valgono
-   sopra quelle delle pagine senza bisogno di !important né di selettori gonfi.
-   Le liste qui sotto sono l'elenco autorevole di chi è cosa: aggiungere un
-   pulsante nuovo significa aggiungerlo a una di queste tre.
-   ========================================================================== */
 @layer components {
-  /* --- forma comune: stessa sagoma per tutti i ruoli. ---
-     Questo elenco è il posto giusto, ma citava `--button-radius`, un token
-     privato che valeva 12 px e che nessun'altra regola dell'app usava: i
-     pulsanti qui dentro erano quindi gli unici squadrati mentre quelli
-     scritti a mano nelle pagine erano pillole. Ora punta al token dei
-     controlli, lo stesso che usa tutto il resto. */
+  /* --- forma comune: stessa sagoma per tutti i ruoli. */
   :is(
     .detail-add-btn,
     .conf-cart-export-btn,
@@ -10151,8 +9857,7 @@ html[data-theme="dark"]
     font-weight: var(--button-font-weight);
   }
 
-  /* Bersaglio comodo al dito: solo per le azioni vere, non per i comandi
-     minuti come "Svuota" nell'intestazione del cassetto. */
+  /* Bersaglio comodo al dito: solo per le azioni vere, non per i comandi minuti come "Svuota" nell'intestazione del cassetto. */
   :is(
     .detail-add-btn,
     .conf-cart-export-btn,
@@ -10304,11 +10009,7 @@ html[data-theme="dark"]
 /* Varianti scure del sistema: i token si spostano, le regole restano quelle. */
 @layer components {
   html[data-theme="dark"] {
-    /* Al buio il rapporto si inverte: verde vivo e testo scuro sopra.
-       Tenendo il testo chiaro, il bianco sul verde si fermava a 2,98:1 e per
-       farlo passare bisognava scurire tanto il pulsante da confonderlo con la
-       superficie (3:1 appena). Così invece il testo sta a 5,6-6,9:1 e il
-       pulsante stacca dallo sfondo di 5,4-6,5:1. */
+    /* Al buio il rapporto si inverte: verde vivo e testo scuro sopra. */
     --button-primary: #38a169;
     --button-primary-hover: #48b76d;
     --button-primary-lift: #57c481;
@@ -10324,9 +10025,7 @@ html[data-theme="dark"]
     --button-danger-text: #f3c3c3;
     --button-danger-border: rgba(168, 90, 93, 0.6);
 
-    /* Nomi storici, ancora citati da alcune regole scure dentro i fogli di
-       pagina. Restano come alias dei token qui sopra: così quelle regole
-       continuano a funzionare e c'è comunque un solo valore da cambiare. */
+    /* Nomi storici, ancora citati da alcune regole scure dentro i fogli di pagina. */
     --button-secondary: var(--button-secondary-bg);
     --button-secondary-hover: var(--button-secondary-bg-hover);
     --button-danger: var(--button-danger-bg);
@@ -10346,8 +10045,6 @@ html[data-theme="dark"]
     color: #fae1d7;
   }
 
-  /* Alcune regole scure dentro i fogli di pagina aggiungono un'ombra al testo
-     pensata per il bianco: sotto il testo scuro sporca soltanto. */
   html[data-theme="dark"]
     :is(
       .detail-add-btn,
@@ -10369,52 +10066,17 @@ html[data-theme="dark"]
   }
 }
 
-/* ============================================================================
-   COERENZA — l'ultimo livello, quello che allinea le pagine fra loro.
-   Sta in fondo e in un layer suo perché deve avere l'ultima parola su regole
-   nate in sette momenti diversi, senza doverle riscrivere una per una.
-   Qui non si decidono colori o forme delle singole pagine: si decide come si
-   comportano le cose che tutte le pagine hanno — le schede quando le tocchi,
-   i pannelli che stanno sopra il contenuto, i campi, l'anello di fuoco.
-   ========================================================================= */
 @layer coerenza {
-  /* ============================================================
-     Le tendine: altezza vera anche su iPhone
-     ============================================================
-     Safari su iOS ignora `min-height` (e `height`) sulle `<select>` lasciate
-     al disegno nativo: il controllo si disegna alla propria altezza
-     intrinseca — il testo più i margini decisi dal sistema — qualunque cosa
-     dica il foglio di stile. Nei browser desktop la regola vale, quindi il
-     difetto non si vede finché non si apre la pagina dal telefono: era il
-     caso dell'ordinamento del vivaio, che misurava i suoi 44 px in Chrome e
-     ne mostrava una ventina su iPhone.
-
-     Per riprendere il controllo dell'altezza bisogna uscire dal disegno
-     nativo con `appearance: none`. Uscendone però sparisce anche la freccia,
-     e una tendina senza freccia smette di annunciare che si apre: quella qui
-     sotto è disegnata a mano e serve a rimetterla.
-
-     Sta nell'ultimo livello perché otto regole sparse in quattro fogli
-     dichiaravano un'altezza senza uscire dal disegno nativo — erano tutte
-     schiacciate su iPhone allo stesso modo — e perché diverse di quelle
-     regole impostano lo sfondo con la scorciatoia `background`, che
-     cancellerebbe la freccia se arrivasse dopo. */
   select:not([multiple]):not([size]) {
     appearance: none;
     -webkit-appearance: none;
     min-height: var(--control-h-md);
   }
 
-  /* La freccia va aggiunta solo dove non ce n'è già una disegnata a mano:
-     l'ordinamento del catalogo ne porta due (l'icona dell'ordinamento più il
-     chevron) e le impostazioni del configuratore hanno la propria. Una
-     regola cieca gliele cancellerebbe, perché `background-image` sostituisce
-     l'intera pila di livelli, non ci si aggiunge. */
   select:not([multiple]):not([size]):not(.cat-sort-select):not(
       .preconfig-select
     ) {
-    /* Spazio a destra per la freccia: senza, il testo dell'opzione più lunga
-       le finisce sotto. */
+    /* Spazio a destra per la freccia: senza, il testo dell'opzione più lunga le finisce sotto. */
     padding-right: 34px;
     background-image: var(--select-chevron);
     background-repeat: no-repeat;
@@ -10422,34 +10084,13 @@ html[data-theme="dark"]
     background-size: 12px 8px;
   }
 
-  /* Gli elenchi a selezione multipla non sono tendine: si aprono già tutti e
-     non hanno niente da annunciare con una freccia. */
+  /* Gli elenchi a selezione multipla non sono tendine: si aprono già tutti e non hanno niente da annunciare con una freccia. */
   select[multiple],
   select[size]:not([size="1"]) {
     appearance: auto;
     -webkit-appearance: auto;
   }
 
-  /* ============================================================
-     Intestazione su telefono: marchio al centro, comandi ai bordi
-     ============================================================
-     Il centraggio era ottenuto con `position: absolute; left: 50%` sul marchio,
-     e funzionava solo se tre condizioni restavano vere tutte insieme:
-     un antenato posizionato al posto giusto, il padding del marchio simmetrico,
-     e `max-width: calc(100vw - 9rem)` per non finire sotto i pulsanti. Le tre
-     regole però stavano sparse fra base.css e i sei fogli di pagina, che ne
-     riscrivevano dei pezzi ciascuno a modo proprio: nel foglio della guida c'è
-     ancora la nota di chi aveva dovuto rimettere il marchio al suo posto a mano.
-     Basta che una delle tre salti — un antenato che perde `position: relative`,
-     un padding asimmetrico ereditato dal desktop — e il marchio scivola a
-     sinistra sotto il pulsante del menu. In un browser desktop le tre condizioni
-     reggevano, su Safari mobile no.
-
-     Qui il centraggio lo fa la griglia. Marchio e comandi stanno nella stessa
-     cella: il primo centrato da `justify-self`, i secondi distesi da un bordo
-     all'altro. Niente posizionamento assoluto, niente dipendenza da chi sia
-     l'antenato posizionato, niente `100vw`. Sta nell'ultimo livello dichiarato
-     perché deve valere sopra le copie rimaste nei fogli di pagina. */
   @media (max-width: 660px) {
     .site-header-inner {
       align-content: center;
@@ -10464,8 +10105,6 @@ html[data-theme="dark"]
       grid-row: 1;
     }
 
-    /* Il riquadro del marchio è simmetrico: il padding destro che serve sul
-       desktop, qui, spostava il logo di mezzo padding verso sinistra. */
     .site-header .nav-brand {
       position: static;
       z-index: 1;
@@ -10482,9 +10121,7 @@ html[data-theme="dark"]
       transform: none;
     }
 
-    /* I comandi passano sopra il marchio: se il nome è lungo e arriva a
-       sfiorarli, resta premibile il pulsante e non il logo. La fascia in sé non
-       intercetta il tocco, così il marchio resta cliccabile negli spazi vuoti. */
+    /* I comandi passano sopra il marchio: se il nome è lungo e arriva a sfiorarli, resta premibile il pulsante e non il logo. */
     .site-header .nav-actions {
       position: static;
       z-index: 2;
@@ -10501,11 +10138,7 @@ html[data-theme="dark"]
       pointer-events: auto;
     }
 
-    /* Il pulsante del menu resta a sinistra senza uscire dal flusso: lo tiene
-       lì il margine automatico, non più `left` e `transform`.
-       La misura torna a 44px: nelle copie di orto e vivaio era scesa a 40 di
-       altezza, sotto il minimo che il progetto si è dato per un bersaglio da
-       toccare col dito. */
+    /* Il pulsante del menu resta a sinistra senza uscire dal flusso: lo tiene lì il margine automatico, non più `left` e `transform`. */
     .site-header .nav-menu-toggle {
       position: static;
       top: auto;
@@ -10522,8 +10155,6 @@ html[data-theme="dark"]
     }
   }
 
-  /* Sotto i 340px non c'è larghezza per centrare: il marchio si accosta al
-     pulsante del menu invece di finirci sopra. */
   @media (max-width: 340px) {
     .site-header .nav-brand {
       max-width: calc(100% - 7.5rem);
@@ -10532,10 +10163,7 @@ html[data-theme="dark"]
     }
   }
 
-  /* ---------- schede che rispondono al passaggio del mouse ----------
-     Prima ogni pagina aveva la sua idea di «sollevata»: chi cambiava solo il
-     bordo, chi saliva di 5 px, chi non faceva nulla. Un solo gesto, ovunque:
-     l'oggetto sale di tre pixel e la sua ombra passa al gradino successivo. */
+  /* ---------- schede che rispondono al passaggio del mouse ---------- */
   :where(
     .plant-card,
     .product-card,
@@ -10558,8 +10186,7 @@ html[data-theme="dark"]
       transform 0.18s ease;
   }
 
-  /* Solo dove c'è davvero qualcosa da toccare: una scheda che si alza ma non
-     porta da nessuna parte è una promessa non mantenuta. */
+  /* Solo dove c'è davvero qualcosa da toccare: una scheda che si alza ma non porta da nessuna parte è una promessa non mantenuta. */
   :where(
     .plant-card,
     .product-card,
@@ -10577,9 +10204,7 @@ html[data-theme="dark"]
     transform: var(--lift-hover);
   }
 
-  /* ---------- quello che sta sopra la pagina ----------
-     Tendine, dialoghi e pannelli di dettaglio sono l'unico livello che deve
-     staccarsi dal contenuto in modo netto: prendono il gradino più alto. */
+  /* ---------- quello che sta sopra la pagina ---------- */
   :where(
     .modal,
     .orto-dialog,
@@ -10593,9 +10218,7 @@ html[data-theme="dark"]
     box-shadow: var(--elev-4);
   }
 
-  /* ---------- campi ----------
-     Stessa carta delle schede, stesso bordo, stesso angolo. L'unica cosa che
-     cambia al fuoco è il bordo che si accende: l'alone lo dà il token. */
+  /* ---------- campi ---------- */
   :where(.orto-field, .fld, .field, .form-group, .preconfig-fld)
     :where(
       input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
@@ -10618,10 +10241,7 @@ html[data-theme="dark"]
     outline: none;
   }
 
-  /* ---------- anello di fuoco ----------
-     Sette pagine, sette anelli diversi (verde acqua, verde bosco, azzurro di
-     sistema). Da tastiera l'anello è l'unico modo per sapere dove si è: uno
-     solo, sempre lo stesso, sempre visibile su carta e su fondo scuro. */
+  /* ---------- anello di fuoco ---------- */
   :where(a, button, select, summary, [tabindex]):focus-visible {
     outline: 2px solid var(--brand-600);
     outline-offset: 2px;

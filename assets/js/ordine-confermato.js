@@ -1,8 +1,4 @@
-/**
- * Conferma ordine: recupera il riepilogo temporaneo, lo localizza e lo rende.
- * Legge i dati dalla sessione senza modificare il carrello o lo stato ordini;
- * base.js fornisce tema, API e strumenti condivisi della pagina.
- */
+/* Conferma ordine: recupera il riepilogo temporaneo, lo localizza e lo rende. */
 
 // Pagina di conferma ordine: riepilogo immediato, lingua e recupero dati.
 (() => {

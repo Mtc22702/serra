@@ -1,9 +1,4 @@
-/* Fondazioni condivise dalle pagine: token di colore, tema scuro,
- * intestazione, piè di pagina e controlli comuni.
- * Estratto invariato dal preambolo che i bundle di pagina già
- * contenevano identico; viene incluso via @import e integrato da
- * npm run build:css. Nessuna regola è stata modificata.
- */
+/* Fondazioni condivise dalle pagine: token di colore, tema scuro, intestazione, piè di pagina e controlli comuni. */
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -2859,14 +2854,7 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
- * Menu mobile: sezione "Preferenze"
- * Le pagine Orto e Vivaio usano lo stesso menu a tendina delle altre, ma i
- * suoi stili vivevano solo nei pacchetti di home/account/configuratore. Sono
- * copiati qui perché sotto i 660px tema e lingua spariscono dall'intestazione
- * e restano solo dentro il menu: senza queste regole i due controlli non
- * sarebbero raggiungibili.
- * ------------------------------------------------------------------------ */
+/* ---------- Menu mobile: sezione "Preferenze" ---------- */
 @layer base {
   .mobile-nav-section-title,
   .mobile-nav-preferences {
@@ -2879,8 +2867,7 @@
   }
 
   @media (max-width: 660px) {
-    /* Stessa disposizione delle altre pagine: marchio a sinistra, pulsante
-       menu al centro, carrello a destra. */
+    /* Stessa disposizione delle altre pagine: marchio a sinistra, pulsante menu al centro, carrello a destra. */
     .site-header .nav-actions {
       grid-column: 2;
       width: 100%;
@@ -3158,8 +3145,6 @@
   }
 }
 
-/* Header mobile: menu a sinistra, identità dell'app centrata, carrello a
-   destra — la stessa disposizione di home, area personale e configuratore. */
 @layer base {
   @media (max-width: 660px) {
     :root {

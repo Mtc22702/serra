@@ -1,10 +1,7 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Conferma ordine: sorgente degli stili del riepilogo e delle azioni successive.
- * Viene distribuito come serra-order-confirmation.css e caricato dopo base.css; modificare qui.
- */
+/* Conferma ordine: sorgente degli stili del riepilogo e delle azioni successive. */
 
-/* Fondazioni condivise: colori ricorrenti dell'interfaccia.
-   I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
+/* Fondazioni condivise: colori ricorrenti dell'interfaccia. */
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -2947,8 +2944,7 @@
     gap: 1px;
   }
 
-  /* Stessi valori di .site-header .nav-brand-text in base.css: il marchio
-     deve avere la stessa faccia in tutta l'app. */
+  /* Stessi valori di .site-header .nav-brand-text in base.css: il marchio deve avere la stessa faccia in tutta l'app. */
   .confirmation-brand-copy strong {
     font-family: "Fraunces", Georgia, serif;
     font-size: 1.08rem;
@@ -2957,9 +2953,6 @@
     line-height: 1.05;
   }
 
-  /* Gli stessi scaglioni delle altre pagine: prima il formato ridotto
-     scattava a 560 px invece che a 660, e il marchio rimpiccioliva in un
-     punto diverso rispetto al resto dell'app. */
   @media (max-width: 660px) {
     .confirmation-brand-mark {
       width: 34px;
@@ -3285,8 +3278,6 @@
     border: 1px solid var(--confirmation-line);
     border-radius: var(--radius-xl);
     background: rgba(255, 255, 255, 0.62);
-    /* «Cosa succede adesso» è un riquadro dentro il riepilogo: un gradino
-       sotto di quello, ma non appoggiato piatto sulla carta. */
     box-shadow: var(--elev-1);
   }
 

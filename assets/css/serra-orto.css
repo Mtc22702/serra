@@ -1,10 +1,5 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Fondazioni condivise dalle pagine: token di colore, tema scuro,
- * intestazione, piè di pagina e controlli comuni.
- * Estratto invariato dal preambolo che i bundle di pagina già
- * contenevano identico; viene incluso via @import e integrato da
- * npm run build:css. Nessuna regola è stata modificata.
- */
+/* Fondazioni condivise dalle pagine: token di colore, tema scuro, intestazione, piè di pagina e controlli comuni. */
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -2860,14 +2855,7 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
- * Menu mobile: sezione "Preferenze"
- * Le pagine Orto e Vivaio usano lo stesso menu a tendina delle altre, ma i
- * suoi stili vivevano solo nei pacchetti di home/account/configuratore. Sono
- * copiati qui perché sotto i 660px tema e lingua spariscono dall'intestazione
- * e restano solo dentro il menu: senza queste regole i due controlli non
- * sarebbero raggiungibili.
- * ------------------------------------------------------------------------ */
+/* ---------- Menu mobile: sezione "Preferenze" ---------- */
 @layer base {
   .mobile-nav-section-title,
   .mobile-nav-preferences {
@@ -2880,8 +2868,7 @@
   }
 
   @media (max-width: 660px) {
-    /* Stessa disposizione delle altre pagine: marchio a sinistra, pulsante
-       menu al centro, carrello a destra. */
+    /* Stessa disposizione delle altre pagine: marchio a sinistra, pulsante menu al centro, carrello a destra. */
     .site-header .nav-actions {
       grid-column: 2;
       width: 100%;
@@ -3159,8 +3146,6 @@
   }
 }
 
-/* Header mobile: menu a sinistra, identità dell'app centrata, carrello a
-   destra — la stessa disposizione di home, area personale e configuratore. */
 @layer base {
   @media (max-width: 660px) {
     :root {
@@ -3206,41 +3191,12 @@
   }
 }
 
-/* Il mio orto — e i componenti che il vivaio riusa: unico foglio della sezione.
- *
- * Fino a ieri erano due file. pages/orto.css conteneva la grafica originale e
- * pages/orto-v2.css la riscriveva sovrapponendosi, concatenato dopo nel bundle:
- * convivevano centinaia di dichiarazioni che ne annullavano altre poche righe
- * sopra, e per sapere il colore di un elemento bisognava leggerli entrambi e
- * ricostruire a mente la cascata. Qui ogni selettore compare una volta sola,
- * con il valore che si vede davvero: le dichiarazioni che perdevano sono state
- * tolte. La resa è stata verificata identica su tutti gli elementi delle pagine
- * orto e vivaio, nei due temi e a sei larghezze di schermo.
- *
- * Viene distribuito come serra-orto.css e — con pages/vivaio.css in coda — come
- * serra-vivaio.css, ed è caricato dopo base.css: modificare qui, mai i bundle.
- * Le fondazioni comuni (token, tema scuro, intestazione, piè di pagina) stanno
- * in pages/_fondazioni.css, che npm run build:css antepone a questo file.
- *
- * Tutte le classi sono prefissate con `orto-`, così non interferiscono con le
- * altre pagine. Ordine delle sezioni: token e superficie, intestazione di
- * pagina, linguette, la giornata, elenco attività, stati vuoti, schede,
- * controlli, dialoghi, messaggio temporaneo, adattamenti per schermo stretto,
- * tema scuro, rifiniture di leggibilità.
- */
+/* Il mio orto — e i componenti che il vivaio riusa: unico foglio della sezione. */
 
 @layer base, dark-theme, polish;
 
 @layer base {
-  /* ---------- superficie e token ----------
-     Cambiare un valore qui cambia tutta la pagina: i nomi `--orto-*` sono usati
-     da centinaia di regole più sotto. I neutri derivano dai token condivisi di
-     base.css, così questa sezione non può divergere dal resto dell'app; i verdi
-     restano espliciti perché fanno da riempimento sotto testo bianco (schede
-     attive, spunte, toast) e schiarirli al buio li renderebbe illeggibili.
-     Sono i colori della home: carta calda per il fondo, carta chiara un tono
-     sopra per le schede, che così si staccano senza bisogno di ombre.
-     Il tema scuro li sovrascrive nel blocco dedicato più in basso. */
+  /* ---------- superficie e token ---------- */
   .orto-page {
     --orto-green: #2f6b3a;
     --orto-green-dk: #1f3a26;
@@ -3256,31 +3212,20 @@
     --orto-shadow-sm: var(--elev-1);
     --orto-shadow: var(--elev-2);
     --orto-shadow-lg: var(--elev-3);
-    /* `--orto-r` e `--orto-r-lg` non esistono più: erano due alias locali di
-       --radius-lg e --radius-xl e servivano solo a far sembrare diversa una
-       geometria che era già condivisa. Le regole citano i token di base.css. */
     color: var(--orto-ink);
     background: #f1ece7;
   }
 
-  /* Stessa colonna della home: le due pagine si aprono una dopo l'altra e i
-     bordi del contenuto devono cadere allo stesso posto. Lo spazio in alto
-     compensa l'intestazione dell'app, che è fissa. */
+  /* Stessa colonna della home: le due pagine si aprono una dopo l'altra e i bordi del contenuto devono cadere allo stesso posto. */
   .orto-wrap {
     max-width: none;
     margin: 0 auto;
-    padding: calc(var(--nav-h, 76px) + clamp(1.2rem, 3.5vw, 2.4rem)) 0 clamp(5rem, 12vw, 7rem);
+    padding: calc(var(--nav-h, 76px) + clamp(1.2rem, 3.5vw, 2.4rem)) 0
+      clamp(5rem, 12vw, 7rem);
     width: min(100% - clamp(2.3rem, 8vw, 5rem), 1180px);
   }
 
-  /* ---------- come funziona ----------
-     I tre passi erano tre pulsanti con cornice e fondo, e le linguette sotto
-     sono a loro volta tre riquadri con cornice e fondo: chi apriva la pagina
-     per la prima volta vedeva sei bersagli uguali e nessun motivo per premere
-     l'uno invece dell'altro. Ora questa è una didascalia e si vede che lo è —
-     bordo tratteggiato come le altre note dell'app, nessuna cornice attorno ai
-     singoli passi, un filo che li lega a dire che vengono in fila. L'unico
-     comando rimasto è la ✕. */
+  /* ---------- come funziona ---------- */
   .orto-howto {
     margin-bottom: clamp(1.1rem, 2.5vw, 1.6rem);
     border: 1px dashed var(--orto-line-strong);
@@ -3383,8 +3328,6 @@
     gap: 10px;
   }
 
-  /* Il filo fra un numero e il successivo: dice «poi» senza scrivere una
-     freccia, e occupa lo spazio che prima era il bordo di due pulsanti. */
   .orto-howto-steps li + li::before {
     position: absolute;
     top: 12px;
@@ -3409,8 +3352,6 @@
     place-items: center;
   }
 
-  /* Il passo della vista aperta resta pieno: così la striscia dice anche dove
-     ci si trova, senza aggiungere un altro elemento premibile. */
   .orto-howto-steps li.is-current .orto-howto-no {
     border-color: var(--orto-green);
     background: var(--orto-green);
@@ -3442,8 +3383,6 @@
     line-height: 1.35;
   }
 
-  /* Da dove si comincia: la riga che manca a chi apre la pagina la prima
-     volta e ha davanti tre linguette tutte uguali. */
   .orto-howto-hint {
     margin: 12px 0 0;
     padding-top: 11px;
@@ -3462,14 +3401,7 @@
     font-weight: 700;
   }
 
-  /* ---------- linguette ----------
-     Erano tre etichette su un filetto: dicevano dove si può andare, non cosa ci
-     si trova. Ora ognuna porta icona, nome, una riga di stato e il proprio
-     numero, e la selezionata è una scheda sollevata sulla carta. Il numero è la
-     ragione per cui uno ci clicca: «Da piantare 6» è un invito, «Da piantare»
-     da solo no.
-     La barra è un blocco e non un contenitore flex: le linguette sono una
-     griglia a tre colonne uguali e devono occupare tutta la colonna. */
+  /* ---------- linguette ---------- */
   .orto-viewbar {
     display: block;
     margin-bottom: clamp(1.4rem, 3vw, 2rem);
@@ -3498,7 +3430,10 @@
     cursor: pointer;
     font: inherit;
     font-weight: 650;
-    transition: border-color 0.16s ease, background 0.16s ease, box-shadow 0.2s ease;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      box-shadow 0.2s ease;
     position: relative;
     min-height: 62px;
     text-align: left;
@@ -3510,13 +3445,8 @@
     border-color: color-mix(in srgb, var(--orto-green) 45%, transparent);
   }
 
-  /* La selezionata si stacca dalla carta e prende il filo verde in alto: un
-     solo segnale, ma di due tipi, così si vede anche a colpo d'occhio
-     periferico. */
   .orto-tab.is-active {
     background: var(--orto-surface);
-    /* Era #fff, ereditato da quando la linguetta attiva era verde scura: sulla
-       carta chiara resta bianco solo la variante mobile, più sotto. */
     color: var(--orto-ink);
     box-shadow: var(--orto-shadow-sm);
     border-color: color-mix(in srgb, var(--orto-green) 55%, transparent);
@@ -3535,11 +3465,7 @@
     place-items: center;
   }
 
-  /* ---------- la giornata ----------
-     Prima era un pannello verde scuro con anello, tre statistiche e un riquadro
-     notifica: molta cornice sopra la cosa che conta, cioè l'elenco delle
-     attività. Ora è una fascia chiara e bassa, un gradino sopra le attività che
-     elenca e non allo stesso livello. */
+  /* ---------- la giornata ---------- */
   .orto-hero {
     position: relative;
     overflow: hidden;
@@ -3551,10 +3477,7 @@
     border: 1px solid var(--orto-line);
   }
 
-  /* Due colonne: il testo della giornata a sinistra, l'anello a destra.
-     Lo sfondo della fascia è una tinta piatta — il disco decorativo che stava
-     in basso a destra tagliava la scheda con un arco di cerchio e competeva con
-     l'anello della percentuale, l'unico cerchio che qui deve farsi notare. */
+  /* Due colonne: il testo della giornata a sinistra, l'anello a destra. */
   .orto-hero-inner {
     position: relative;
     z-index: 1;
@@ -3600,9 +3523,7 @@
     border-top: 1px solid var(--orto-line);
   }
 
-  /* ---------- riquadri delle statistiche ----------
-     Bordo e fondo erano bianchi trasparenti: sulla carta non si vedevano più e
-     i tre numeri restavano a galleggiare senza contenitore. */
+  /* ---------- riquadri delle statistiche ---------- */
   .orto-hero-stats > span {
     padding: 10px 11px;
     border: 1px solid var(--orto-line);
@@ -3646,13 +3567,7 @@
     transform: rotate(-90deg);
   }
 
-  /* ---------- testo dentro l'anello ----------
-     Colonna flessibile e non griglia: con due elementi la griglia creava due
-     righe di pari altezza e la percentuale finiva a un quarto dall'alto invece
-     che al centro dell'anello.
-     I colori sono qui e non nel JavaScript — che scrive solo le classi
-     .orto-ring-track e .orto-ring-arc — perché seguono il tema: erano bianchi,
-     tarati sulla vecchia fascia verde, e sulla carta chiara sparivano. */
+  /* ---------- testo dentro l'anello ---------- */
   .orto-ring-txt {
     position: absolute;
     inset: 0;
@@ -3675,12 +3590,7 @@
     color: var(--orto-ink);
   }
 
-  /* ---------- scala minima ----------
-  La pagina aveva nove regole fra 9 e 11,5 px: l'anello, le statistiche
-  della giornata, le etichette delle fasi, i chip. Il progetto fissa 12 px
-  come minimo per qualsiasi testo leggibile, e qui non erano decorazioni ma
-  dati. La riga «Semi / Piantina» del dialogo aveva per giunta il titolo
-  grande quanto il suo suggerimento: la classe c'era, lo stile no. */
+  /* ---------- scala minima ---------- */
   .orto-ring-txt small {
     display: block;
     color: var(--orto-muted);
@@ -3690,9 +3600,7 @@
     text-transform: uppercase;
   }
 
-  /* Il riquadro delle notifiche ripeteva a parole l'elenco che sta subito
-  sotto. Tolto: due volte la stessa informazione a dieci pixel di
-  distanza. */
+  /* Il riquadro delle notifiche ripeteva a parole l'elenco che sta subito sotto. */
   .orto-notif {
     display: none;
     gap: 12px;
@@ -3727,12 +3635,7 @@
     line-height: 1.35;
   }
 
-  /* ---------- striscia dei giorni ----------
-     L'agenda rispondeva a una domanda sola, «cosa devo fare adesso»: per sapere
-     cosa sarebbe successo giovedì bisognava aprire le colture una a una. Qui i
-     giorni sono pulsanti bassi con il numero di attività ancora aperte, e si
-     scorrono col dito. Il pallino è il dato che conta: dice dove guardare senza
-     dover toccare niente. */
+  /* ---------- striscia dei giorni ---------- */
   .orto-daystrip {
     display: flex;
     gap: 6px;
@@ -3789,8 +3692,7 @@
     line-height: 1.15;
   }
 
-  /* Il numero di attività aperte. Quando non ce ne sono resta un punto tenue:
-     una casella vuota farebbe saltare l'allineamento delle altre. */
+  /* Il numero di attività aperte. */
   .orto-day-dot {
     display: grid;
     min-width: 18px;
@@ -3839,9 +3741,7 @@
     background: color-mix(in srgb, var(--orto-green) 55%, transparent);
   }
 
-  /* ---------- intestazione di un giorno diverso da oggi ----------
-     Più bassa della fascia di oggi: una data futura non ha una percentuale da
-     mostrare né arretrati da recuperare, solo un elenco. */
+  /* ---------- intestazione di un giorno diverso da oggi ---------- */
   .orto-dayhead {
     display: flex;
     flex-wrap: wrap;
@@ -3933,11 +3833,12 @@
     background: var(--orto-surface);
     box-shadow: var(--elev-1);
     animation: orto-rise 0.32s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
-    transition: border-color 0.16s ease, background 0.16s ease, box-shadow 0.2s ease;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      box-shadow 0.2s ease;
   }
 
-  /* Il filo di colore a sinistra c'era già: qui si accorcia perché con gli
-  angoli più stretti arrivava a filo del bordo. */
   .orto-task::before {
     content: "";
     position: absolute;
@@ -3952,7 +3853,11 @@
   .orto-task:hover {
     box-shadow: var(--orto-shadow);
     transform: translateY(-1px);
-    border-color: color-mix( in srgb, var(--task-accent, #2f6b3a) 45%, transparent );
+    border-color: color-mix(
+      in srgb,
+      var(--task-accent, #2f6b3a) 45%,
+      transparent
+    );
   }
 
   .orto-task.is-late {
@@ -3969,25 +3874,21 @@
     text-decoration: line-through;
   }
 
-/* Il pannello mobile entra dal basso; su schermo largo non è applicata. */
-@keyframes orto-sheet {
+  /* Il pannello mobile entra dal basso; su schermo largo non è applicata. */
+  @keyframes orto-sheet {
     from {
       opacity: 0;
       transform: translateY(14%);
     }
   }
 
-@keyframes orto-rise {
+  @keyframes orto-rise {
     from {
       opacity: 0;
       transform: translateY(9px);
     }
   }
 
-  /* La casella resta 27 × 27 px — la spunta disegnata dentro è tarata su
-  quella misura — ma il bersaglio si allarga a 44 px con un'area invisibile
-  attorno: il quadratino da toccare era più piccolo del minimo per il dito.
-  Lo stato acceso continua a leggersi da data-on, come lo scrive orto.js. */
   .orto-check {
     position: relative;
     width: 27px;
@@ -3997,7 +3898,10 @@
     border-radius: var(--radius-sm);
     background: var(--orto-surface);
     cursor: pointer;
-    transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      transform 0.12s ease;
   }
 
   .orto-check:hover {
@@ -4028,7 +3932,11 @@
     height: 40px;
     flex: none;
     border-radius: var(--radius-md);
-    background: color-mix( in srgb, var(--task-accent, var(--orto-green)) 13%, var(--orto-surface) );
+    background: color-mix(
+      in srgb,
+      var(--task-accent, var(--orto-green)) 13%,
+      var(--orto-surface)
+    );
     font-size: 18px;
     place-items: center;
   }
@@ -4165,7 +4073,10 @@
     background: var(--orto-surface);
     box-shadow: var(--elev-2);
     animation: orto-rise 0.36s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
-    transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.18s ease;
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.22s ease,
+      border-color 0.18s ease;
   }
 
   .orto-card:hover {
@@ -4190,13 +4101,13 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient( 180deg, rgba(9, 20, 16, 0.05) 30%, rgba(9, 20, 16, 0.72) );
+    background: linear-gradient(
+      180deg,
+      rgba(9, 20, 16, 0.05) 30%,
+      rgba(9, 20, 16, 0.72)
+    );
   }
 
-  /* Il disegno della pianta sta sopra la foto: alcune illustrazioni sono
-  chiarissime (cavolfiore, cipollotto) e su una foto luminosa sparivano.
-  Un dischetto scuro sotto e un contorno chiaro le tengono sempre leggibili,
-  senza cambiare i disegni. */
   .orto-card-svg {
     position: absolute;
     right: 10px;
@@ -4213,9 +4124,7 @@
     box-shadow: var(--elev-2);
   }
 
-  /* ---------- titoli sulle foto delle schede ----------
-  Il disegno della pianta occupa 70px a destra più 10 di margine: i titoli
-  si fermavano a 74 e i nomi lunghi finivano sotto il dischetto. */
+  /* ---------- titoli sulle foto delle schede ---------- */
   .orto-card-titles {
     position: absolute;
     z-index: 2;
@@ -4306,10 +4215,7 @@
     transform: translate(-50%, -50%);
   }
 
-  /* ---------- etichette delle fasi ----------
-  Erano quattro voci in `space-between` senza spazio minimo: con i nomi
-  lunghi («Attecchimento», «Germinație») si toccavano fino a sembrare un'unica
-  parola. Una griglia a colonne uguali dà a ciascuna il suo spazio. */
+  /* ---------- etichette delle fasi ---------- */
   .orto-phase-labels {
     display: grid;
     justify-content: space-between;
@@ -4375,8 +4281,7 @@
     margin-top: 13px;
   }
 
-  /* Azione distruttiva: si trova quando la si cerca, ma non invita a premerla
-     come facevano i tre pulsanti identici di prima. */
+  /* Azione distruttiva: si trova quando la si cerca, ma non invita a premerla come facevano i tre pulsanti identici di prima. */
   .orto-icon-btn {
     display: grid;
     width: 38px;
@@ -4403,8 +4308,7 @@
     color: var(--button-danger-text, #a03820);
   }
 
-  /* Uno stato vuoto senza un pulsante è un vicolo cieco: ogni vista dice cosa
-     si può fare per uscirne. */
+  /* Uno stato vuoto senza un pulsante è un vicolo cieco: ogni vista dice cosa si può fare per uscirne. */
   .orto-empty-actions {
     display: flex;
     flex-wrap: wrap;
@@ -4413,15 +4317,7 @@
     margin-top: 18px;
   }
 
-  /* ---------- magazzino: la vista «Da piantare» ----------
-     Le due viste facevano cose diverse — una segue le piante già in terra,
-     l'altra elenca quelle che non ci sono ancora — ma usavano la stessa scheda
-     a tessera con foto grande e barra di avanzamento: a colpo d'occhio
-     sembravano la stessa lista. Qui la dispensa cambia forma prima ancora che
-     contenuto: righe basse da inventario, il disegno della pianta al posto
-     della foto, e in evidenza l'unico dato che serve, cioè quanto resta.
-     Niente barra di crescita: quella parla di tempo, e qui il tempo non è
-     ancora cominciato. */
+  /* ---------- magazzino: la vista «Da piantare» ---------- */
   .orto-stock-list {
     display: grid;
     gap: 8px;
@@ -4485,9 +4381,7 @@
     line-height: 1.2;
   }
 
-  /* Il dato per cui si apre questa vista: quante piantine restano, quante
-     semine sono state fatte. Prima era una `<b>` in fondo a una riga di
-     metadati, alla stessa dimensione della provenienza dell'ordine. */
+  /* Il dato per cui si apre questa vista: quante piantine restano, quante semine sono state fatte. */
   .orto-stock-count {
     margin: 3px 0 0;
     color: var(--orto-ink-soft);
@@ -4513,8 +4407,7 @@
     gap: 8px;
   }
 
-  /* I distintivi seme/piantina nascono per stare sopra una foto: il bianco al
-     92% su carta chiara sparirebbe. Sulla riga prendono la versione piena. */
+  /* I distintivi seme/piantina nascono per stare sopra una foto: il bianco al 92% su carta chiara sparirebbe. */
   .orto-stock .orto-chip--seme {
     background: color-mix(in srgb, var(--orto-green) 12%, transparent);
     color: var(--orto-green);
@@ -4525,10 +4418,7 @@
     color: var(--orto-amber);
   }
 
-  /* ---------- rimando fra le due viste ----------
-     Il motivo per cui sembravano doppie è che nessuna delle due nominava
-     l'altra. Questa riga dice cosa succede al passaggio da una all'altra e ci
-     porta con un clic. */
+  /* ---------- rimando fra le due viste ---------- */
   .orto-crosslink {
     display: flex;
     flex-wrap: wrap;
@@ -4576,7 +4466,9 @@
     font: inherit;
     font-size: 13px;
     font-weight: 650;
-    transition: background 0.16s ease, color 0.16s ease;
+    transition:
+      background 0.16s ease,
+      color 0.16s ease;
   }
 
   .orto-seg button small {
@@ -4678,7 +4570,9 @@
     font-size: 14px;
     font-weight: 700;
     box-shadow: var(--elev-2);
-    transition: transform 0.14s ease, box-shadow 0.18s ease;
+    transition:
+      transform 0.14s ease,
+      box-shadow 0.18s ease;
     min-height: var(--button-min-height);
   }
 
@@ -4753,11 +4647,7 @@
     font-size: 12.5px;
   }
 
-  /* ---------- dialoghi ----------
-     Struttura in tre parti: intestazione fissa con il titolo e la ✕, corpo che
-     scorre, piedino con i pulsanti sempre visibile. Prima erano un blocco unico
-     che scorreva tutto insieme: nel dialogo di inserimento, che ora contiene la
-     griglia delle piante, i pulsanti di conferma sarebbero finiti fuori campo. */
+  /* ---------- dialoghi ---------- */
   .orto-dialog {
     position: fixed;
     inset: 0;
@@ -4780,11 +4670,7 @@
     justify-content: center;
   }
 
-  /* Il dialogo nativo occupa sempre l'intera top-layer; il pannello visibile
-     è un figlio. Safari iOS calcola in modo inaffidabile un <dialog> che è al
-     tempo stesso top-layer e bottom-sheet, soprattutto con la barra indirizzi
-     dinamica o in modalità app. Separare i due ruoli mantiene il pannello
-     dentro la viewport visuale. */
+  /* Il dialogo nativo occupa sempre l'intera top-layer; il pannello visibile è un figlio. */
   .orto-dialog-sheet {
     display: flex;
     width: min(470px, 94vw);
@@ -4797,8 +4683,7 @@
     flex-direction: column;
   }
 
-  /* Il selettore delle piante ha bisogno di più larghezza: sotto i 470px la
-     griglia scende a due colonne e si legge poco. */
+  /* Il selettore delle piante ha bisogno di più larghezza: sotto i 470px la griglia scende a due colonne e si legge poco. */
   .orto-dialog--wide {
     width: 100%;
   }
@@ -4812,12 +4697,7 @@
     backdrop-filter: blur(2px);
   }
 
-  /* ---------- pagina bloccata mentre un dialogo è aperto ----------
-     Su iPhone il dialogo non ferma lo scorrimento di ciò che sta sotto: il
-     dito trascinava la pagina dietro il pannello e, appena un campo prendeva
-     il fuoco, la tastiera faceva scorrere il documento portandosi via il
-     pannello. Il dialogo ora intercetta l'intera viewport; questa classe evita
-     inoltre che lo sfondo reagisca ai gesti residui. */
+  /* ---------- pagina bloccata mentre un dialogo è aperto ---------- */
   body.orto-dialog-open {
     overflow: hidden;
     overscroll-behavior: none;
@@ -4833,12 +4713,7 @@
     background: var(--orto-line-strong);
   }
 
-  /* ---------- intestazione dei dialoghi ----------
-     Il fondo era il gradiente verde scuro con testo bianco, mentre titolo e
-     sottotitolo erano già passati all'inchiostro scuro: il risultato era scuro
-     su scuro in tutti e cinque i dialoghi. Ora è carta, coerente col resto
-     della pagina, e ospita il pulsante di chiusura — che prima non c'era: si
-     usciva solo con Esc o con «Annulla». */
+  /* ---------- intestazione dei dialoghi ---------- */
   .orto-dialog-head {
     display: flex;
     align-items: flex-start;
@@ -4913,16 +4788,11 @@
     flex: 1;
     padding: 18px 20px 20px;
     overflow-y: auto;
-    /* Arrivati in fondo alla griglia delle piante lo scorrimento non deve
-       passare alla pagina sotto: è il gesto che su telefono faceva sparire
-       il pannello. */
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Piedino: il pulsante che conferma sta a destra e in evidenza, quello che
-     annulla resta di contorno. Prima erano affiancati con lo stesso peso e il
-     primo dell'ordine di lettura era la conferma. */
+  /* Piedino: il pulsante che conferma sta a destra e in evidenza, quello che annulla resta di contorno. */
   .orto-dialog-foot {
     display: flex;
     flex: none;
@@ -4941,10 +4811,7 @@
     transform: none;
   }
 
-  /* ---------- passi numerati dentro i dialoghi ----------
-     «Aggiungi una coltura» chiedeva quattro cose di seguito senza dire quante
-     fossero né in che ordine. I numeri sono gli stessi della striscia in cima
-     alla pagina: l'app usa un solo modo per dire «prima questo, poi quello». */
+  /* ---------- passi numerati dentro i dialoghi ---------- */
   .orto-step + .orto-step,
   .orto-add-details .orto-step:first-child {
     margin-top: 18px;
@@ -4975,10 +4842,7 @@
     place-items: center;
   }
 
-  /* ---------- selettore visivo delle piante ----------
-     Un solo contenitore che scorre, quello del dialogo: ricerca e famiglie si
-     agganciano in alto invece di creare una seconda area di scorrimento dentro
-     la prima, che sul trackpad e sul telefono è sempre ambigua. */
+  /* ---------- selettore visivo delle piante ---------- */
   .orto-picker-head {
     position: sticky;
     top: -1px;
@@ -5115,8 +4979,6 @@
     text-align: center;
   }
 
-  /* Scelta fatta: prende il posto della griglia, così non serve scorrere
-     indietro per ricordarsi cosa si è selezionato. */
   .orto-picked {
     display: flex;
     align-items: center;
@@ -5177,8 +5039,6 @@
     color: #8a5b00;
   }
 
-  /* Anteprima: l'unica informazione che l'utente non può dedurre da solo prima
-     di confermare, cioè quando arriverà a raccogliere. */
   .orto-preview {
     margin: 16px 0 0;
     padding: 11px 13px;
@@ -5278,7 +5138,10 @@
     cursor: pointer;
     font-size: 13px;
     text-align: center;
-    transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      color 0.16s ease;
   }
 
   .orto-origin input {
@@ -5316,7 +5179,9 @@
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, 20px);
-    transition: opacity 0.22s ease, transform 0.22s ease;
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease;
   }
 
   .orto-toast.is-on {
@@ -5337,10 +5202,6 @@
     line-height: 1.35;
   }
 
-  /* Primo avvio: è la scheda più grande della pagina e col fondo bianco pieno
-  era l'unica superficie dell'app a staccare così tanto dallo sfondo. Il
-  verde tenue nasce dagli stessi token del resto della sezione, quindi segue
-  anche il tema scuro senza colori scritti a mano. */
   .orto-welcome {
     max-width: 620px;
     margin: 10px auto 0;
@@ -5363,9 +5224,6 @@
     place-items: center;
   }
 
-  /* Sul fondo verde della scheda `--orto-muted` scende a 4,04:1, sotto la
-  soglia AA per il testo piccolo: kicker, descrizione e riga del negozio
-  usano il grigio più scuro, che risale a 6,78:1. */
   .orto-welcome-kicker {
     margin: 0;
     color: var(--orto-ink-soft);
@@ -5394,9 +5252,47 @@
 
   .orto-welcome-actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .orto-welcome-primary {
+    width: 100%;
+    min-height: var(--control-h-md);
+  }
+
+  .orto-welcome-or {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: var(--orto-ink-soft);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .orto-welcome-or::before,
+  .orto-welcome-or::after {
+    flex: 1;
+    height: 1px;
+    background: var(--orto-line);
+    content: "";
+  }
+
+  .orto-welcome-secondary {
+    display: flex;
+    gap: 12px;
+  }
+
+  .orto-welcome-secondary .orto-btn {
+    flex: 1;
+    min-width: 0;
+    padding-inline: 14px;
   }
 
   .orto-welcome-shop {
@@ -5527,8 +5423,7 @@
     line-height: 1.2;
   }
 
-  /* La riga di stato è quello che trasforma una voce di menu in
-  un'informazione: «tutto a posto» oppure «2 in ritardo». */
+  /* La riga di stato è quello che trasforma una voce di menu in un'informazione: «tutto a posto» oppure «2 in ritardo». */
   .orto-tab-note {
     display: block;
     overflow: hidden;
@@ -5611,8 +5506,6 @@
     stroke: var(--orto-green);
   }
 
-  /* Il nome della coltura è scritto da orto.js: quando il dialogo si apre
-  senza (o prima di) un nome, il trattino di separazione restava orfano. */
   .orto-dialog-who:not(:empty)::after {
     content: " — ";
   }
@@ -5630,146 +5523,137 @@
   .orto-phase-labels span:last-child {
     text-align: right;
   }
-
 }
 
 @layer base {
-@media (max-width: 720px) {
-  .orto-hero h2 {
-    margin: 4px 0 6px;
-  }
+  @media (max-width: 720px) {
+    .orto-hero h2 {
+      margin: 4px 0 6px;
+    }
 
-  .orto-hero-sub {
-    line-height: 1.4;
-  }
+    .orto-hero-sub {
+      line-height: 1.4;
+    }
 
-  .orto-hero-inner {
-    grid-template-columns: 1fr;
-  }
+    .orto-hero-inner {
+      grid-template-columns: 1fr;
+    }
 
-  .orto-hero-stats > span {
-    min-width: 0;
-    padding: 7px 8px;
-    border-radius: var(--radius-sm);
-  }
+    .orto-hero-stats > span {
+      min-width: 0;
+      padding: 7px 8px;
+      border-radius: var(--radius-sm);
+    }
 
-  .orto-hero-stats b {
-    font-size: 20px;
-  }
+    .orto-hero-stats b {
+      font-size: 20px;
+    }
 
-  .orto-hero-stats small {
-    display: block;
-    margin-top: 3px;
-    font-size: 9px;
-    line-height: 1.15;
-  }
+    .orto-hero-stats small {
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      line-height: 1.15;
+    }
 
-  /* L'anello resta a 104px anche su schermo stretto. Prima scendeva a 78px
-  insieme a un'etichetta da 8px, ma il ritocco di leggibilità in
-  @layer polish riporta quel testo a 12px: "GIORNATA" diventava più larga
-  del cerchio e ne usciva. Il diametro utile qui dentro è ~88px, mentre
-  l'etichetta ne misura circa 71: ci sta con un margine per parte. */
-  .orto-ring {
-    width: 104px;
-    height: 104px;
-  }
+    /* L'anello resta a 104px anche su schermo stretto. */
+    .orto-ring {
+      width: 104px;
+      height: 104px;
+    }
 
-  .orto-ring-txt b {
-    font-size: 22px;
-  }
+    .orto-ring-txt b {
+      font-size: 22px;
+    }
 
-  .orto-notif {
-    max-width: none;
-    gap: 8px;
-    padding: 9px 10px;
-    border-radius: var(--radius-md);
-  }
+    .orto-notif {
+      max-width: none;
+      gap: 8px;
+      padding: 9px 10px;
+      border-radius: var(--radius-md);
+    }
 
-  .orto-notif-ico {
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-  }
+    .orto-notif-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+    }
 
-  .orto-notif b {
-    font-size: 9.5px;
-  }
+    .orto-notif b {
+      font-size: 9.5px;
+    }
 
-  .orto-notif p {
-    margin-top: 1px;
-    font-size: 11.5px;
-    line-height: 1.3;
-  }
+    .orto-notif p {
+      margin-top: 1px;
+      font-size: 11.5px;
+      line-height: 1.3;
+    }
 
-  .orto-view-head h2 {
-    font-size: 24px;
-  }
+    .orto-view-head h2 {
+      font-size: 24px;
+    }
 
-  .orto-task-thumb {
-    display: none;
-  }
+    .orto-task-thumb {
+      display: none;
+    }
 
-  /* Le viste diventano barra di navigazione in basso. */
-  .orto-tabs {
-    position: fixed;
-    right: 12px;
-    bottom: 12px;
-    left: 12px;
-    z-index: 50;
-    justify-content: space-around;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--orto-shadow-lg);
-  }
+    /* Le viste diventano barra di navigazione in basso. */
+    .orto-tabs {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      z-index: 50;
+      justify-content: space-around;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--orto-shadow-lg);
+    }
 
-  /* Sul telefono la spiegazione parte chiusa: resta una riga chiara e
-     l'azione primaria del primo avvio entra nella prima schermata. */
-  .orto-howto {
-    margin-bottom: 0.85rem;
-  }
+    .orto-howto {
+      margin-bottom: 0.85rem;
+    }
 
-  .orto-howto-summary {
-    min-height: 46px;
-    padding: 8px 12px;
-  }
+    .orto-howto-summary {
+      min-height: 46px;
+      padding: 8px 12px;
+    }
 
-  .orto-howto-content {
-    padding: 0 12px 12px;
-  }
+    .orto-howto-content {
+      padding: 0 12px 12px;
+    }
 
-  .orto-tab {
-    flex: 1;
-    justify-content: center;
-    padding: 10px 8px;
-    font-size: 13px;
-  }
+    .orto-tab {
+      flex: 1;
+      justify-content: center;
+      padding: 10px 8px;
+      font-size: 13px;
+    }
 
-  .orto-tool-note {
-    border-radius: var(--radius-md);
-  }
+    .orto-tool-note {
+      border-radius: var(--radius-md);
+    }
 
-  .orto-welcome {
-    padding: 34px 20px 30px;
-  }
+    .orto-welcome {
+      padding: 34px 20px 30px;
+    }
 
-  .orto-welcome h2 {
-    font-size: 23px;
+    .orto-welcome h2 {
+      font-size: 23px;
+    }
   }
-
-}
 }
 
 @layer base {
-@media (prefers-reduced-motion: reduce) {
-  .orto-task {
-    animation: none;
-  }
+  @media (prefers-reduced-motion: reduce) {
+    .orto-task {
+      animation: none;
+    }
 
-  .orto-card {
-    animation: none;
+    .orto-card {
+      animation: none;
+    }
   }
-
-}
 }
 
 @layer dark-theme {
@@ -5803,8 +5687,7 @@
     color: var(--orto-ink);
   }
 
-  /* Magazzino: al buio i due distintivi hanno bisogno di più contrasto della
-     miscela al 12% che basta sulla carta. */
+  /* Magazzino: al buio i due distintivi hanno bisogno di più contrasto della miscela al 12% che basta sulla carta. */
   html[data-theme="dark"] .orto-stock .orto-chip--seme {
     background: rgba(124, 196, 141, 0.18);
     color: #8bd49e;
@@ -5819,9 +5702,6 @@
     color: var(--orto-green-lt);
   }
 
-  /* base.css dà a ogni input un fondo scuro pieno: dentro il campo di ricerca
-     del selettore, che ha già la sua cornice, si vedeva un rettangolo dentro
-     l'altro. Qui l'input torna trasparente e la cornice resta una sola. */
   html[data-theme="dark"] .orto-picker-search input {
     background-color: transparent;
     border-color: transparent;
@@ -5916,7 +5796,6 @@
   html[data-theme="dark"] .orto-dialog-head {
     border-bottom-color: var(--surface-line);
   }
-
 }
 
 @layer polish {
@@ -5947,348 +5826,331 @@
   .nav-link--orto::after {
     font-size: 12px;
   }
-
 }
 
 @layer polish {
-@media (max-width: 720px) {
-  .orto-wrap {
-    width: min(100% - 1.8rem, 1180px);
-    padding-top: calc(var(--nav-h, 62px) + 1rem);
-    padding-bottom: calc(108px + env(safe-area-inset-bottom));
-  }
+  @media (max-width: 720px) {
+    .orto-wrap {
+      width: min(100% - 1.8rem, 1180px);
+      padding-top: calc(var(--nav-h, 62px) + 1rem);
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
+    }
 
-  /* Barra di navigazione mobile: tre destinazioni sempre raggiungibili,
-  ma abbastanza compatte da non coprire il contenuto dell'orto. */
-  .orto-tabs {
-    right: 10px;
-    bottom: calc(10px + env(safe-area-inset-bottom));
-    left: 10px;
-    width: auto;
-    max-width: 520px;
-    margin-inline: auto;
-    gap: 4px;
-    padding: 5px;
-    border: 1px solid color-mix(in srgb, var(--orto-line) 82%, transparent);
-    border-radius: var(--radius-xl);
-    background: color-mix(in srgb, var(--orto-surface) 92%, transparent);
-    box-shadow: var(--elev-3);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    backdrop-filter: blur(18px) saturate(1.15);
-    -webkit-backdrop-filter: blur(18px) saturate(1.15);
-  }
+    /* Barra di navigazione mobile: tre destinazioni sempre raggiungibili, ma abbastanza compatte da non coprire il contenuto dell'orto. */
+    .orto-tabs {
+      right: 10px;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      left: 10px;
+      width: auto;
+      max-width: 520px;
+      margin-inline: auto;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid color-mix(in srgb, var(--orto-line) 82%, transparent);
+      border-radius: var(--radius-xl);
+      background: color-mix(in srgb, var(--orto-surface) 92%, transparent);
+      box-shadow: var(--elev-3);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      backdrop-filter: blur(18px) saturate(1.15);
+      -webkit-backdrop-filter: blur(18px) saturate(1.15);
+    }
 
-  .orto-tab {
-    display: grid;
-    gap: 3px;
-    min-width: 0;
-    min-height: var(--control-h-lg);
-    padding: 6px 4px 7px;
-    border: 0;
-    border-radius: var(--control-radius-pill);
-    background: transparent;
-    text-align: center;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 28px minmax(0, 1fr);
-    justify-items: center;
-  }
+    .orto-tab {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+      min-height: var(--control-h-lg);
+      padding: 6px 4px 7px;
+      border: 0;
+      border-radius: var(--control-radius-pill);
+      background: transparent;
+      text-align: center;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: 28px minmax(0, 1fr);
+      justify-items: center;
+    }
 
-  .orto-tab-note {
-    display: none;
-  }
+    .orto-tab-note {
+      display: none;
+    }
 
-  .orto-tab-copy {
-    align-self: center;
-  }
+    .orto-tab-copy {
+      align-self: center;
+    }
 
-  .orto-tab:hover {
-    border-color: transparent;
-    background: color-mix(in srgb, var(--orto-green) 8%, transparent);
-  }
+    .orto-tab:hover {
+      border-color: transparent;
+      background: color-mix(in srgb, var(--orto-green) 8%, transparent);
+    }
 
-  .orto-tab.is-active {
-    border-color: transparent;
-    background: linear-gradient(155deg, #43804d, var(--orto-green-dk));
-    box-shadow: var(--elev-2);
-  }
+    .orto-tab.is-active {
+      border-color: transparent;
+      background: linear-gradient(155deg, #43804d, var(--orto-green-dk));
+      box-shadow: var(--elev-2);
+    }
 
-  .orto-tab::after {
-    display: none;
-  }
+    .orto-tab::after {
+      display: none;
+    }
 
-  .orto-tab-ico {
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-sm);
-    font-size: 15px;
-    grid-column: 1;
-    grid-row: 1;
-  }
+    .orto-tab-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      grid-column: 1;
+      grid-row: 1;
+    }
 
-  .orto-tab.is-active .orto-tab-ico {
-    background: rgba(255, 255, 255, 0.16);
-  }
+    .orto-tab.is-active .orto-tab-ico {
+      background: rgba(255, 255, 255, 0.16);
+    }
 
-  .orto-tab-copy {
-    width: 100%;
-    grid-column: 1;
-    grid-row: 2;
-  }
+    .orto-tab-copy {
+      width: 100%;
+      grid-column: 1;
+      grid-row: 2;
+    }
 
-  .orto-tab-name {
-    overflow: hidden;
-    color: var(--orto-ink);
-    font-size: 0.78rem;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+    .orto-tab-name {
+      overflow: hidden;
+      color: var(--orto-ink);
+      font-size: 0.78rem;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
-  .orto-tab-note {
-    overflow: hidden;
-    margin-top: 1px;
-    font-size: 0.75rem;
-    line-height: 1.1;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+    .orto-tab-note {
+      overflow: hidden;
+      margin-top: 1px;
+      font-size: 0.75rem;
+      line-height: 1.1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
-  .orto-tab.is-active .orto-tab-name {
-    color: #fff;
-  }
+    .orto-tab.is-active .orto-tab-name {
+      color: #fff;
+    }
 
-  .orto-tab.is-active .orto-tab-note {
-    color: #fff;
-  }
+    .orto-tab.is-active .orto-tab-note {
+      color: #fff;
+    }
 
-  .orto-tab.is-active .orto-tab-note.is-late {
-    color: #fff;
-  }
+    .orto-tab.is-active .orto-tab-note.is-late {
+      color: #fff;
+    }
 
-  .orto-tab-badge {
-    position: absolute;
-    top: 5px;
-    right: max(5px, calc(50% - 31px));
-    min-width: 18px;
-    height: 18px;
-    padding-inline: 5px;
-    border: 2px solid var(--orto-surface);
-    font-size: 12px;
-    box-shadow: var(--elev-1);
-  }
+    .orto-tab-badge {
+      position: absolute;
+      top: 5px;
+      right: max(5px, calc(50% - 31px));
+      min-width: 18px;
+      height: 18px;
+      padding-inline: 5px;
+      border: 2px solid var(--orto-surface);
+      font-size: 12px;
+      box-shadow: var(--elev-1);
+    }
 
-  .orto-tab.is-active .orto-tab-badge {
-    border-color: var(--orto-green-dk);
-    background: #fff;
-    color: var(--orto-green-dk);
-  }
+    .orto-tab.is-active .orto-tab-badge {
+      border-color: var(--orto-green-dk);
+      background: #fff;
+      color: var(--orto-green-dk);
+    }
 
-  .orto-hero-inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
+    .orto-hero-inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
 
-  .orto-ring-wrap {
-    justify-self: start;
-  }
+    .orto-ring-wrap {
+      justify-self: start;
+    }
 
-  .orto-page:not(.viv-page) .orto-toast {
-    right: 12px;
-    bottom: calc(96px + env(safe-area-inset-bottom));
-    left: 12px;
-    max-width: none;
-    text-align: center;
-    transform: translateY(20px);
-  }
+    .orto-page:not(.viv-page) .orto-toast {
+      right: 12px;
+      bottom: calc(96px + env(safe-area-inset-bottom));
+      left: 12px;
+      max-width: none;
+      text-align: center;
+      transform: translateY(20px);
+    }
 
-  .orto-page:not(.viv-page) .orto-toast.is-on {
-    transform: translateY(0);
-  }
+    .orto-page:not(.viv-page) .orto-toast.is-on {
+      transform: translateY(0);
+    }
 
-  /* Anche nel vivaio il toast non deve uscire dallo schermo. */
-  .orto-toast {
-    max-width: calc(100vw - 24px);
-  }
+    /* Anche nel vivaio il toast non deve uscire dallo schermo. */
+    .orto-toast {
+      max-width: calc(100vw - 24px);
+    }
 
-  /* ---------- dialoghi come pannello dal basso ----------
-     Su telefono un riquadro centrato lascia il pollice lontano dai pulsanti e
-     si porta dietro margini che tolgono spazio alla griglia delle piante. Il
-     dialogo diventa un pannello ancorato al bordo inferiore, a tutta larghezza,
-     con la maniglia che dichiara da dove è arrivato. */
-  .orto-dialog,
-  .orto-dialog--wide {
-    align-items: flex-end;
-    justify-content: center;
-  }
+    /* ---------- dialoghi come pannello dal basso ---------- */
+    .orto-dialog,
+    .orto-dialog--wide {
+      align-items: flex-end;
+      justify-content: center;
+    }
 
-  .orto-dialog-sheet,
-  .orto-dialog--wide .orto-dialog-sheet {
-    width: 100%;
-    max-width: none;
-    max-height: 92vh;
-    max-height: 92dvh;
-    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-    animation: orto-sheet 0.26s cubic-bezier(0.2, 0.7, 0.3, 1);
-  }
+    .orto-dialog-sheet,
+    .orto-dialog--wide .orto-dialog-sheet {
+      width: 100%;
+      max-width: none;
+      max-height: 92vh;
+      max-height: 92dvh;
+      border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+      animation: orto-sheet 0.26s cubic-bezier(0.2, 0.7, 0.3, 1);
+    }
 
-  .orto-dialog-grip {
-    display: block;
-  }
+    .orto-dialog-grip {
+      display: block;
+    }
 
-  .orto-dialog-head {
-    padding: 12px 16px 14px;
-  }
+    .orto-dialog-head {
+      padding: 12px 16px 14px;
+    }
 
-  .orto-dialog-body {
-    padding: 16px 16px 18px;
-  }
+    .orto-dialog-body {
+      padding: 16px 16px 18px;
+    }
 
-  /* Il piedino tiene conto della barra di sistema: senza, su iPhone il pulsante
-     di conferma finisce sotto la riga della gestualità. */
-  .orto-dialog-foot {
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  }
+    /* Il piedino tiene conto della barra di sistema: senza, su iPhone il pulsante di conferma finisce sotto la riga della gestualità. */
+    .orto-dialog-foot {
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    }
 
-  .orto-dialog-foot .orto-btn {
-    flex: 1;
-    min-width: 0;
-  }
+    .orto-dialog-foot .orto-btn {
+      flex: 1;
+      min-width: 0;
+    }
 
-  .orto-picker-grid {
-    grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
-  }
+    .orto-picker-grid {
+      grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+    }
 
-  .orto-welcome {
-    margin-top: 0;
-    padding: 22px 16px 18px;
-  }
+    .orto-welcome {
+      margin-top: 0;
+      padding: 22px 16px 18px;
+    }
 
-  .orto-welcome-ico {
-    width: 52px;
-    height: 52px;
-    margin-bottom: 10px;
-    font-size: 24px;
-  }
+    .orto-welcome-ico {
+      width: 52px;
+      height: 52px;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
 
-  .orto-welcome h2 {
-    margin-block: 5px 7px;
-    font-size: 22px;
-  }
+    .orto-welcome h2 {
+      margin-block: 5px 7px;
+      font-size: 22px;
+    }
 
-  .orto-welcome-text {
-    margin-bottom: 14px;
-    font-size: 13.5px;
-  }
+    .orto-welcome-text {
+      margin-bottom: 14px;
+      font-size: 13.5px;
+    }
 
-  .orto-welcome-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+    .orto-welcome-actions {
+      gap: 14px;
+    }
 
-  .orto-welcome-actions .orto-btn:first-child {
-    grid-column: 1 / -1;
-    min-height: var(--control-h-md);
-  }
+    .orto-welcome-secondary {
+      flex-direction: column;
+    }
 
-  .orto-welcome-shop {
-    margin-top: 14px;
-    padding-top: 12px;
-  }
+    .orto-welcome-shop {
+      margin-top: 14px;
+      padding-top: 12px;
+    }
 
-  /* Striscia dei giorni: caselle un filo più strette, così sullo schermo di un
-     telefono ne restano visibili cinque invece di quattro. */
-  .orto-day {
-    width: 50px;
-  }
+    .orto-day {
+      width: 50px;
+    }
 
-  .orto-daystrip {
-    margin-inline: -14px;
-    padding-inline: 14px;
-  }
+    .orto-daystrip {
+      margin-inline: -14px;
+      padding-inline: 14px;
+    }
 
-  /* La striscia dei passi in colonna: tre voci affiancate su 360px darebbero
-     tre parole tagliate. Il filo che le lega passa da orizzontale a verticale
-     e scende lungo la colonna dei numeri. */
-  .orto-howto-steps {
-    gap: 12px;
-    grid-template-columns: minmax(0, 1fr);
-  }
+    /* La striscia dei passi in colonna: tre voci affiancate su 360px darebbero tre parole tagliate. */
+    .orto-howto-steps {
+      gap: 12px;
+      grid-template-columns: minmax(0, 1fr);
+    }
 
-  .orto-howto-steps li + li::before {
-    top: -12px;
-    left: 12px;
-    width: 1px;
-    height: 12px;
-  }
+    .orto-howto-steps li + li::before {
+      top: -12px;
+      left: 12px;
+      width: 1px;
+      height: 12px;
+    }
 
-  /* Magazzino: su schermo stretto le tre colonne non ci stanno. Il disegno
-     resta accanto al nome, i pulsanti passano sotto a tutta larghezza — sono
-     le due azioni per cui si è aperta la vista, non vanno compresse. */
-  .orto-stock {
-    gap: 4px 12px;
-    grid-template-columns: 42px minmax(0, 1fr);
-  }
+    /* Magazzino: su schermo stretto le tre colonne non ci stanno. */
+    .orto-stock {
+      gap: 4px 12px;
+      grid-template-columns: 42px minmax(0, 1fr);
+    }
 
-  .orto-stock-ico {
-    width: 42px;
-    height: 42px;
-    align-self: start;
-  }
+    .orto-stock-ico {
+      width: 42px;
+      height: 42px;
+      align-self: start;
+    }
 
-  .orto-stock-actions {
-    grid-column: 1 / -1;
-    margin-top: 4px;
-  }
+    .orto-stock-actions {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+    }
 
-  .orto-stock-actions .orto-btn {
-    flex: 1;
-    min-width: 0;
+    .orto-stock-actions .orto-btn {
+      flex: 1;
+      min-width: 0;
+    }
   }
-}
 }
 
 @layer polish {
-@media (max-width: 360px) {
-  .orto-tab-note {
-    display: none;
-  }
+  @media (max-width: 360px) {
+    .orto-tab-note {
+      display: none;
+    }
 
-  .orto-tab {
-    min-height: var(--control-h-lg);
-    grid-template-rows: 28px auto;
+    .orto-tab {
+      min-height: var(--control-h-lg);
+      grid-template-rows: 28px auto;
+    }
   }
-
-}
 }
 
 @layer polish {
-@media (prefers-reduced-motion: reduce) {
-  .orto-stock,
-  .orto-dialog-sheet,
-  .orto-pick,
-  .orto-day {
-    animation: none;
-    transition: none;
-  }
+  @media (prefers-reduced-motion: reduce) {
+    .orto-stock,
+    .orto-dialog-sheet,
+    .orto-pick,
+    .orto-day {
+      animation: none;
+      transition: none;
+    }
 
-  .orto-tab::after {
-    transition: none;
-  }
+    .orto-tab::after {
+      transition: none;
+    }
 
-  .orto-task {
-    transition: none;
-  }
+    .orto-task {
+      transition: none;
+    }
 
-  .orto-card {
-    transition: none;
-  }
+    .orto-card {
+      transition: none;
+    }
 
-  .orto-check {
-    transition: none;
-  }
+    .orto-check {
+      transition: none;
+    }
 
-  .orto-snooze {
-    transition: none;
+    .orto-snooze {
+      transition: none;
+    }
   }
-
-}
 }

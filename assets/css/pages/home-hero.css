@@ -1,21 +1,9 @@
-/* Home — hero, percorsi, fasce di collegamento e ritmo della pagina.
- *
- * Viene concatenato dopo pages/home.css dentro serra-home.css, quindi vince
- * a parità di livello e specificità. Sta in un file separato perché la hero è
- * stata rifatta da zero quando l'app ha smesso di vendere solo semi: tenerla
- * qui evita di sedimentare altre regole sopra le settemila di home.css.
- *
- * Struttura: misura di pagina → hero → percorsi → fasce → adattamenti.
- */
+/* Home — hero, percorsi, fasce di collegamento e ritmo della pagina. */
 
 @layer base, dark-theme, polish, components;
 
 @layer base {
-  /* ---------- misura unica della pagina ----------
-     Prima ogni sezione aveva la sua: catalogo 1140 con 2rem di padding
-     (1076 effettivi), abbinamenti 1140, kit 1140, contatti 1040, percorsi
-     1180. I bordi del contenuto non erano mai allineati e la pagina sembrava
-     montata a pezzi. Ora la colonna è una sola. */
+  /* ---------- misura unica della pagina ---------- */
   :root {
     --page-wrap: 1180px;
     --page-gutter: clamp(1.15rem, 4vw, 2.5rem);
@@ -27,15 +15,11 @@
     margin-inline: auto;
   }
 
-  /* Il percorso ha un id perché ci si possa arrivare da un link diretto:
-     senza questo scostamento finirebbe sotto l'intestazione fissa, come già
-     previsto per le altre quattro ancore della pagina. */
   #percorsi {
     scroll-margin-top: calc(var(--nav-h) + 28px);
   }
 
-  /* Le sezioni storiche vengono riportate sulla stessa colonna senza
-     toccare i loro fogli d'origine. */
+  /* Le sezioni storiche vengono riportate sulla stessa colonna senza toccare i loro fogli d'origine. */
   .stagione-section,
   .kit-section {
     max-width: none;
@@ -56,20 +40,11 @@
     margin-inline: auto;
   }
 
-  /* ---------- superficie della pagina ----------
-     La hero è su carta calda mentre il corpo restava sul verdino #e5eee3:
-     il passaggio si vedeva come uno scalino. Il fondo diventa carta, ma un
-     tono sotto le schede — che restano il livello più chiaro — se no le
-     schede bianche ci sparirebbero dentro. Lo stacco (1,12) è persino
-     leggermente superiore a quello che avevano sul verde (1,18 con il
-     bordo che faceva il resto del lavoro). */
+  /* ---------- superficie della pagina ---------- */
   body {
     background: #f1ece7;
   }
 
-  /* Le due fasce a tutta larghezza erano bianco freddo: accanto alla carta
-     calda sembravano scolorite. Stesso disegno, temperatura allineata, e
-     restano più chiare del fondo per continuare ad alternarsi. */
   .abbinamenti-section {
     border-top: 1px solid rgba(45, 106, 79, 0.12);
     border-bottom: 1px solid rgba(45, 106, 79, 0.12);
@@ -88,10 +63,7 @@
     background: linear-gradient(180deg, #fffdf6 0%, #fffdf6 100%);
   }
 
-  /* ---------- ritmo verticale ----------
-     Le quattro sezioni storiche avevano quattro respiri diversi
-     (2/3, 3,25/3, 3/2,4 e 3/3,2 rem). Adesso è uno solo, e le fasce di
-     collegamento respirano meno perché sono intermezzi, non capitoli. */
+  /* ---------- ritmo verticale ---------- */
   .stagione-section,
   .abbinamenti-section,
   .kit-section,
@@ -99,11 +71,7 @@
     padding-block: var(--section-gap);
   }
 
-  /* ---------- occhiello e titolo di sezione ----------
-     Il maiuscoletto verde chiaro stava a 3,28:1 sulla carta: sotto la
-     soglia AA per un testo di 12 px. Il verde d'insegna la supera e in più
-     lega gli occhielli al filetto della hero, così tutta la pagina ha una
-     sola firma. */
+  /* ---------- occhiello e titolo di sezione ---------- */
   .section-kicker {
     display: inline-flex;
     gap: 10px;
@@ -126,9 +94,7 @@
     content: "";
   }
 
-  /* Una sola misura per tutti i titoli di sezione. Prima erano tre — 3,2rem
-     per il catalogo, 2,1 per il kit, 1,8 per abbinamenti e contatti — e la
-     pagina sembrava montata da tre progetti diversi. */
+  /* Una sola misura per tutti i titoli di sezione. */
 
   .catalog-pro-section .stagione-title,
   .kit-info .section-heading,
@@ -144,30 +110,18 @@
     text-wrap: balance;
   }
 
-  /* Il titolo del catalogo è generato: «97 piante per agosto». Il limite
-     serve solo a non farlo diventare una riga lunghissima sul desktop. */
+  /* Il titolo del catalogo è generato: «97 piante per agosto». */
   .catalog-pro-section .stagione-title {
     max-width: 24ch;
   }
 
   /* ---------- hero ---------- */
 
-  /* La classe .hero-immersive resta sulla sezione perché porta lo scostamento
-     dall'intestazione fissa e la trama a pallini; qui vengono neutralizzate
-     solo le proprietà di impaginazione che imponevano l'altezza piena. */
   .hero-v2 {
     position: relative;
     display: block;
     min-height: 0;
-    /* L'intestazione è fissa: il primo elemento della pagina deve scostarsi
-       di --nav-h, altrimenti ci finisce sotto. */
-    /* Misurato a 1366 × 768, il formato di portatile più diffuso: con i
-       valori di prima i pulsanti delle tappe finivano a 753 px, cioè sotto
-       la piega su un'area utile di circa 668. Ogni riduzione qui sotto serve
-       a farceli entrare. */
-    /* Sopra --nav-h resta solo il respiro minimo che tiene il titolo
-       staccato dall'intestazione: prima ce n'era il doppio, pensato per
-       l'occhiello che oggi non c'è più. */
+    /* L'intestazione è fissa: il primo elemento della pagina deve scostarsi di --nav-h, altrimenti ci finisce sotto. */
     padding-top: calc(var(--nav-h) + clamp(0.4rem, 1.2vw, 0.9rem));
     padding-bottom: clamp(2rem, 5vw, 3.75rem);
     /* La carta calda toglie il velo verdino che appiattiva tutto. */
@@ -177,15 +131,10 @@
         rgba(116, 198, 157, 0.16),
         transparent 58%
       ),
-      /* Finisce esattamente sul fondo della pagina: nessuno scalino al
-         confine con la sezione successiva. */
+      /* Finisce esattamente sul fondo della pagina: nessuno scalino al confine con la sezione successiva. */
         linear-gradient(180deg, #fffdf6 0%, #f1ece7 100%);
   }
 
-  /* Le piante restano ai margini (le posizioni sono in home.js) e una
-     vignetta le sfuma verso il centro: così la colonna del testo resta su
-     carta pulita qualunque sia la larghezza dello schermo, senza dover
-     inseguire i punti di rottura. */
   .hero-v2 .hero-bg-plants {
     opacity: 0.26;
     mask: linear-gradient(
@@ -197,8 +146,7 @@
     );
   }
 
-  /* La trama a pallini di .hero-immersive era tarata sul verdino: sulla carta
-     calda risultava fredda e un po' meccanica. */
+  /* La trama a pallini di .hero-immersive era tarata sul verdino: sulla carta calda risultava fredda e un po' meccanica. */
   .hero-v2::before {
     background-image: radial-gradient(
       circle,
@@ -206,14 +154,11 @@
       transparent 1.4px
     );
     background-size: 26px 26px;
-    /* Si dissolve dove comincia il percorso: la trama accompagna il titolo,
-       poi lascia il campo alle tappe. */
+    /* Si dissolve dove comincia il percorso: la trama accompagna il titolo, poi lascia il campo alle tappe. */
     mask: linear-gradient(180deg, #000 0%, #000 34%, transparent 72%);
   }
 
-  /* La hero è in due fasce sovrapposte: sopra il messaggio con il plastico,
-     sotto il percorso a tutta larghezza. Il percorso ha bisogno di tutta la
-     colonna per stare su tre tappe affiancate. */
+  /* La hero è in due fasce sovrapposte: sopra il messaggio con il plastico, sotto il percorso a tutta larghezza. */
   .hero-v2-inner {
     position: relative;
     z-index: 2;
@@ -221,8 +166,7 @@
     gap: clamp(1.5rem, 3.2vw, 2.25rem);
   }
 
-  /* Il plastico non sta più qui accanto: è sceso nella tappa 1, di cui è il
-     risultato. La fascia alta resta essenziale e introduce subito le scelte. */
+  /* Il plastico non sta più qui accanto: è sceso nella tappa 1, di cui è il risultato. */
   .hero-v2-copy {
     display: block;
   }
@@ -247,9 +191,7 @@
   }
 
   .hero-v2-title {
-    /* Gli 0,85 rem servivano a staccare il titolo dall'occhiello che stava
-       sopra. Tolto quello, restava solo un buco fra l'intestazione e la
-       prima riga. */
+    /* Gli 0,85 rem servivano a staccare il titolo dall'occhiello che stava sopra. */
     margin-top: 0;
     font-family: "Fraunces", Georgia, serif;
     font-size: clamp(2.1rem, 4.6vw, 3.4rem);
@@ -266,9 +208,7 @@
     font-style: normal;
   }
 
-  /* La riga che spiega: sta sotto il titolo e sopra le schede, e non deve
-     competere con nessuno dei due. Larghezza limitata perché una riga lunga
-     quanto la pagina non si legge, si scorre. */
+  /* La riga che spiega: sta sotto il titolo e sopra le schede, e non deve competere con nessuno dei due. */
   .hero-v2-lead {
     max-width: 52ch;
     margin-top: 0.7rem;
@@ -278,31 +218,18 @@
     text-wrap: pretty;
   }
 
-  /* ---------- selettore di intenti ----------
-     Sostituisce il pulsante unico verso il configuratore. È una frase con
-     quattro finali: il verbo appartiene all'utente e le quattro opzioni sono
-     intenzioni, non reparti del negozio. Senza questo blocco, chi entrava
-     vedeva un solo modo di usare l'app e doveva scorrere per scoprire che ce
-     n'erano altri tre. */
+  /* ---------- selettore di intenti ---------- */
 
-  /* La prima opzione è quella consigliata a chi non sa: leggermente più
-     marcata, ma non tanto da far sembrare le altre di serie B. */
-
-  /* Il sottotitolo è la vera chiave: dice in quale situazione ti trovi,
-     non cosa vende l'opzione. */
+  /* Il sottotitolo è la vera chiave: dice in quale situazione ti trovi, non cosa vende l'opzione. */
 
   /* ---------- il plastico, riquadrato ---------- */
 
-  /* Dentro la tappa 1, sotto le azioni: il pulsante resta in alto e
-     l'illustrazione è quello che si trova scorrendo di poco — il piano che
-     si otterrà premendolo. */
   .hero-v2-visual {
     position: relative;
     margin-top: 0;
   }
 
-  /* La cornice avvolge solo il disegno: la didascalia le sta sotto, fuori,
-     come in una tavola stampata. */
+  /* La cornice avvolge solo il disegno: la didascalia le sta sotto, fuori, come in una tavola stampata. */
   .hero-v2-visual .hcg {
     display: block;
     padding: clamp(0.7rem, 1.4vw, 1.05rem);
@@ -313,9 +240,7 @@
     max-width: none;
   }
 
-  /* Didascalia: dichiara che è un esempio. Il plastico mostra misure precise
-     e senza questa riga, chi apre la pagina la prima volta, lo scambia per la
-     propria serra. */
+  /* Didascalia: dichiara che è un esempio. */
   .hero-v2-caption {
     margin-top: 0.6rem;
     color: #5f6f60;
@@ -325,9 +250,7 @@
     text-align: center;
   }
 
-  /* ---------- il percorso ----------
-     Tre ingressi alternativi, contenuti in un unico pannello. Le schede hanno
-     pari altezza e la stessa scansione: situazione, promessa, prova, azione. */
+  /* ---------- il percorso ---------- */
   .journey-wrap {
     --journey-gap: clamp(0.75rem, 1.5vw, 1.1rem);
     padding: clamp(1.15rem, 2.5vw, 1.8rem);
@@ -343,9 +266,6 @@
     box-shadow: var(--elev-2);
   }
 
-  /* Una breve intestazione trasforma il gruppo da semplice sequenza di
-     contenuti in un selettore: prima di leggere le card è già chiaro che
-     bisogna sceglierne una. */
   .journey-choice-head {
     display: flex;
     gap: 1rem;
@@ -371,13 +291,12 @@
     line-height: 1.35;
   }
 
-  /* .journey-choice-count è stata rimossa dal markup: la riga ripeteva le
-     informazioni già presenti nelle tre schede sotto. */
+  /* .journey-choice-count è stata rimossa dal markup: la riga ripeteva le informazioni già presenti nelle tre schede sotto. */
 
   .journey {
     display: grid;
     gap: var(--journey-gap);
-    align-items: stretch;
+    align-items: start;
     list-style: none;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -387,7 +306,6 @@
     position: relative;
     display: flex;
     min-width: 0;
-    min-height: 505px;
     padding: clamp(1.15rem, 2vw, 1.5rem);
     overflow: hidden;
     border: 1px solid rgba(31, 58, 38, 0.18);
@@ -477,10 +395,7 @@
     box-shadow: none;
   }
 
-  /* La condizione: è quello che trasforma le tre colonne da passi in
-     alternative. «Se…» descrive dove ti trovi, un numero descrive cosa devi
-     fare. La cronologia non si perde — sta nelle tre condizioni, che si
-     succedono naturalmente — ma smette di essere un obbligo disegnato. */
+  /* La condizione: è quello che trasforma le tre colonne da passi in alternative. */
   .journey-when {
     display: block;
     color: var(--journey-accent);
@@ -521,8 +436,6 @@
     opacity: 0.55;
   }
 
-  /* L'ultima card rappresenta un ambiente di lavoro, non un'altra azione
-     del percorso: resta allineata alle altre ma non si solleva come loro. */
   .journey-step--grow:hover {
     border-color: rgba(47, 107, 58, 0.3);
     box-shadow: var(--elev-2);
@@ -546,8 +459,7 @@
     color: #182a21;
   }
 
-  /* Etichette di stato: facoltativa, due modi, gratuito. Sono il modo più
-     breve per dire che la tappa 1 si può saltare e la 3 non si paga. */
+  /* Etichette di stato: facoltativa, due modi, gratuito. */
   .journey-badge {
     display: inline-flex;
     align-items: center;
@@ -570,8 +482,6 @@
     color: #2f6b3a;
   }
 
-  /* Il distintivo della prima scheda dice una durata, non una qualità:
-     resta il più sommesso dei tre, senza contorno e in tondo minuscolo. */
   .journey-badge--time {
     border-color: transparent;
     background: var(--surface-2);
@@ -580,7 +490,7 @@
     text-transform: none;
   }
 
-  .journey-body > p {
+  .journey-copy > p {
     margin-top: 0;
     color: #5f6f60;
     font-size: 0.95rem;
@@ -590,27 +500,22 @@
 
   .journey-body {
     display: flex;
-    flex: 1;
     flex-direction: column;
     gap: 0.72rem;
     min-width: 0;
   }
 
-  /* L'anteprima non si spinge più in fondo: adesso l'ancora bassa della scheda
-     è lo zoccolo d'azione, e due `margin-top: auto` nella stessa colonna flex
-     si sarebbero spartiti lo spazio libero lasciando un vuoto in mezzo. */
+  .journey-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.72rem;
+    min-width: 0;
+  }
+
   .journey-feature {
     margin-top: 0.15rem;
   }
 
-  /* Esiste solo per tenere la riga vuota della tappa 2 nel subgrid del
-     desktop: ovunque altro non deve occupare né spazio né gap. */
-  .journey-feature--slot {
-    display: none;
-  }
-
-  /* Il plastico resta il segno distintivo del configuratore, ma diventa una
-     miniatura: comunica il risultato senza allungare la prima scheda. */
   .journey-plan-preview .hero-v2-visual .hcg {
     width: min(100%, 220px);
     margin-inline: auto;
@@ -632,9 +537,7 @@
     transform: rotate(-1.5deg);
   }
 
-  /* Nella miniatura il pannello animato non può conservare la densità del
-     plastico grande. Mostra soltanto nome e quantità, con una colonna più
-     larga: così le quattro colture restano leggibili senza spezzarsi. */
+  /* Nella miniatura il pannello animato non può conservare la densità del plastico grande. */
   .journey-plan-preview .hcg-peek {
     width: 62%;
   }
@@ -679,12 +582,6 @@
     font-size: 11px;
   }
 
-  /* Il terzo ingresso mostra una porzione reale dell'app dentro una cornice:
-     la grammatica da finestra rende evidente che si sta aprendo un tool. */
-  /* L'anteprima dello strumento era un riquadro verdino piatto con dentro
-     uno screenshot scolorito: non sembrava l'app, sembrava un segnaposto.
-     Adesso è una finestrella vera — barra chiara con i tre pallini, schermo
-     incassato, ombra sotto — e lo screenshot ha ripreso colore. */
   .journey-care-preview {
     position: relative;
     display: block;
@@ -707,9 +604,6 @@
     background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
   }
 
-  /* I tre pallini: due pixel di convenzione che bastano a far leggere il
-     riquadro come una finestra dell'applicazione invece che come un'immagine
-     qualsiasi incollata nella scheda. */
   .journey-tool-bar::before {
     position: absolute;
     top: 50%;
@@ -753,8 +647,6 @@
     box-shadow: inset 0 1px 3px rgba(31, 58, 38, 0.12);
   }
 
-  /* Sfumatura in basso: l'immagine finisce dentro la carta invece di essere
-     tagliata di netto, e il taglio non compete con il pulsante che segue. */
   .journey-tool-screen::after {
     position: absolute;
     inset: 0;
@@ -774,8 +666,6 @@
     margin-left: -6%;
     object-fit: cover;
     object-position: 50% 32%;
-    /* Era a saturate(.52): l'app sembrava spenta. Adesso è quasi il colore
-       vero, appena calmato per non gridare più del titolo della scheda. */
     filter: saturate(0.92) contrast(0.96);
   }
 
@@ -787,19 +677,11 @@
 
   /* ---------- lo zoccolo d'azione ---------- */
 
-  /* Prima le tre schede finivano in tre modi diversi: pillola stretta più
-     link nella prima, solo un link nella seconda, riquadro largo nella terza.
-     Scorrendo la fila in orizzontale non c'era una riga a cui l'occhio potesse
-     tornare per capire dove si clicca. Adesso `.journey-actions` è uno zoccolo:
-     stessa quota di partenza in tutte e tre (`margin-top: auto` più il filetto),
-     azione sempre a tutta larghezza, link discreto sempre sulla riga sotto.
-     A cambiare è solo il peso del riempimento, che dice il tipo di azione. */
   .journey-actions {
     display: grid;
-    gap: 9px;
+    gap: 12px;
     justify-items: stretch;
-    margin-top: auto;
-    padding-top: 14px;
+    padding-top: 18px;
     border-top: 1px solid rgba(31, 58, 38, 0.14);
   }
 
@@ -833,9 +715,6 @@
     transform: translateY(-2px);
   }
 
-  /* La tappa 3 non è un acquisto: stessa forma e stessa larghezza dell'azione
-     principale — così la fila resta leggibile — ma riempimento tenue, perché
-     è uno strumento gratuito e non deve competere con «Crea il piano». */
   .journey-cta--soft {
     border-color: rgba(47, 107, 58, 0.32);
     background: rgba(47, 107, 58, 0.11);
@@ -848,9 +727,7 @@
     box-shadow: none;
   }
 
-  /* Il link discreto non sta più accanto al pulsante: lì rubava larghezza e
-     faceva sembrare le due cose alternative equivalenti. Sta sotto, centrato
-     sulla stessa colonna, dove si legge come nota a piè di scheda. */
+  /* Il link discreto non sta più accanto al pulsante: lì rubava larghezza e faceva sembrare le due cose alternative equivalenti. */
   .journey-quiet {
     display: flex;
     align-items: center;
@@ -871,18 +748,14 @@
     text-decoration-color: currentColor;
   }
 
-  /* Le due opzioni si impilano: la card centrale è stretta, quindi la colonna
-     rende etichetta, prezzo e area cliccabile più facili da leggere. Il
-     `margin-top: auto` è passato allo zoccolo, che ora le contiene. */
   .journey-pair {
     display: grid;
     align-items: stretch;
-    gap: 8px;
+    gap: 12px;
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* “Oppure” resta una congiunzione esplicita, appoggiata a due filetti
-     orizzontali che collegano visivamente entrambe le opzioni. */
+  /* “Oppure” resta una congiunzione esplicita, appoggiata a due filetti orizzontali che collegano visivamente entrambe le opzioni. */
   .journey-or {
     display: flex;
     flex-direction: row;
@@ -906,13 +779,7 @@
     content: "";
   }
 
-  /* Ogni scelta è una riga completa: illustrazione, testo e freccia.
-     Erano due rettangoli tinti quasi uguali, e a colpo d'occhio sembravano
-     una didascalia in due parti invece che due pulsanti. Adesso ognuna ha
-     tre segnali suoi: il filo di colore a sinistra che la marca (verde il
-     seme, ambra la piantina), il disco chiaro che stacca il disegno dal
-     fondo e la freccia dentro un bottone tondo, che è la parte che dice
-     «di qui si va da qualche parte». */
+  /* Ogni scelta è una riga completa: illustrazione, testo e freccia. */
   .journey-pick {
     --pick-accent: #3a762e;
     --pick-tint: rgba(47, 107, 58, 0.07);
@@ -920,11 +787,10 @@
     display: grid;
     gap: 0 13px;
     align-items: center;
-    min-height: 84px;
-    padding: 13px 15px 13px 19px;
+    min-height: 94px;
+    padding: 15px 15px 15px 19px;
     overflow: hidden;
-    /* Bordo più marcato del riquadro tenue della tappa 3: nella fila i tre
-       zoccoli si leggono come pieno · contornato · tenue. */
+    /* Bordo più marcato del riquadro tenue della tappa 3: nella fila i tre zoccoli si leggono come pieno · contornato · tenue. */
     border: 1.5px solid rgba(47, 107, 58, 0.32);
     border-radius: var(--radius-lg);
     background:
@@ -940,9 +806,7 @@
       box-shadow 0.22s ease;
   }
 
-  /* Il filo verticale: due pixel di colore che al passaggio si allargano.
-     È il modo più economico per dire «questa è quella dei semi» senza
-     aggiungere un'altra etichetta. */
+  /* Il filo verticale: due pixel di colore che al passaggio si allargano. */
   .journey-pick::before {
     position: absolute;
     top: 0;
@@ -975,9 +839,6 @@
     outline-offset: 3px;
   }
 
-  /* Il disegno sta su un dischetto di carta: prima galleggiava sul tinto e
-     le due illustrazioni, che hanno pesi molto diversi, sembravano una
-     stampata e l'altra sbiadita. */
   .journey-pick-illo {
     grid-area: auto;
     box-sizing: border-box;
@@ -1009,8 +870,6 @@
       transform 0.18s ease;
   }
 
-  /* Al passaggio la freccia si riempie: è l'unico elemento che cambia stato
-     in modo netto, così si capisce che tutta la riga è un pulsante. */
   .journey-pick:hover .journey-arrow {
     background: var(--pick-accent);
     color: var(--surface-1);
@@ -1187,63 +1046,6 @@
     text-transform: uppercase;
   }
 
-  /* ---------- tre schede, una sola griglia ----------
-     Le colonne stavano in piedi con `min-height: 505px`: un puntello tarato
-     a occhio sul testo italiano, che con una traduzione più lunga o un
-     carattere diverso torna a sfasarsi. Con subgrid le cinque righe —
-     marcatore, titolo, testo, anteprima, azioni — sono le stesse per tutte
-     e tre: le anteprime partono alla stessa quota e i pulsanti cadono
-     sulla stessa riga da soli, qualunque cosa ci sia scritto sopra.
-     Vale solo sul desktop, dove le tre schede stanno davvero affiancate. */
-  @media (min-width: 1041px) {
-    @supports (grid-template-rows: subgrid) {
-      .journey {
-        grid-template-rows: auto auto auto 1fr auto;
-      }
-
-      .journey-step {
-        display: grid;
-        min-height: 0;
-        row-gap: 0.72rem;
-        grid-row: span 5;
-        grid-template-rows: subgrid;
-      }
-
-      /* Il contenitore sparisce come scatola e i suoi figli diventano le
-         righe della scheda: è l'unico modo perché il titolo della prima
-         scheda e quello della terza stiano sulla stessa riga. */
-      .journey-body {
-        display: contents;
-      }
-
-      .journey-body > * {
-        min-width: 0;
-      }
-
-      .journey-feature {
-        align-self: stretch;
-        margin-top: 0;
-      }
-
-      .journey-feature--slot {
-        display: block;
-      }
-
-      /* Ancorato in fondo: i tre zoccoli finiscono sulla stessa riga di base,
-         quindi i pulsanti delle tre schede si toccano con lo stesso bordo
-         inferiore anche se la tappa 2 ne impila due.
-
-         Le due righe sono fisse — azione sopra, link discreto sotto — e la
-         seconda resta riservata anche nella tappa 3, che il link non ce l'ha:
-         senza quella riserva il suo pulsante salirebbe di un gradino e non
-         cadrebbe più in linea con «Crea il piano». Serve solo qui: dove le
-         schede sono impilate la riga vuota sarebbe spazio morto. */
-      .journey-actions {
-        align-self: end;
-        grid-template-rows: auto minmax(38px, auto);
-      }
-    }
-  }
 }
 
 /* ---------- tema scuro ---------- */
@@ -1364,7 +1166,7 @@
     color: #edf5ef;
   }
 
-  html[data-theme="dark"] .journey-body > p,
+  html[data-theme="dark"] .journey-copy > p,
   html[data-theme="dark"] .journey-or,
   html[data-theme="dark"] .journey-pick-copy small {
     color: #9db0a3;
@@ -1392,8 +1194,6 @@
     color: #edf5ef;
   }
 
-  /* Al buio lo screenshot resta chiaro: va abbassato di luminosità, ma non
-     spento come prima — era diventato una macchia grigia. */
   html[data-theme="dark"] .journey-tool-screen img {
     filter: saturate(0.8) contrast(0.92) brightness(0.84);
   }
@@ -1456,8 +1256,7 @@
     border-color: rgba(219, 180, 94, 0.28);
   }
 
-  /* Al buio il dischetto non può essere bianco: userebbe più luce del
-     disegno che contiene. Prende la carta scura del tema. */
+  /* Al buio il dischetto non può essere bianco: userebbe più luce del disegno che contiene. */
   html[data-theme="dark"] .journey-pick-illo {
     border-color: color-mix(in srgb, var(--pick-accent) 26%, transparent);
     background: var(--surface-2);
@@ -1504,8 +1303,6 @@
 /* ---------- adattamenti ai formati ---------- */
 
 @layer polish {
-  /* Sul tablet due colonne mantengono le card leggibili senza trasformare
-     ogni scelta in una fascia quasi vuota larga quanto lo schermo. */
   @media (max-width: 1040px) {
     .journey {
       gap: clamp(1.1rem, 3vw, 1.45rem);
@@ -1522,8 +1319,6 @@
       margin-top: 0.35rem;
     }
 
-    /* Il tool è una destinazione diversa dalle due scelte principali: occupa
-       la riga seguente e usa lo spazio orizzontale invece di allungarsi. */
     .journey-step--grow {
       grid-column: 1 / -1;
     }
@@ -1541,6 +1336,10 @@
       grid-template-rows: auto auto 1fr auto;
     }
 
+    .journey-step--grow .journey-copy {
+      display: contents;
+    }
+
     .journey-step--grow .journey-option-mark,
     .journey-step--grow .journey-when {
       grid-area: option;
@@ -1550,7 +1349,7 @@
       grid-area: head;
     }
 
-    .journey-step--grow .journey-body > p {
+    .journey-step--grow .journey-copy > p {
       grid-area: copy;
     }
 
@@ -1566,15 +1365,13 @@
   }
 
   @media (max-width: 980px) {
-    /* A una colonna sola la tappa 1 è larga tutta la pagina: senza un limite
-       il plastico diventerebbe enorme. */
+    /* A una colonna sola la tappa 1 è larga tutta la pagina: senza un limite il plastico diventerebbe enorme. */
     .hero-v2-visual .hcg {
       max-width: 320px;
     }
   }
 
-  /* Sul telefono le due opzioni restano impilate e mantengono un'area touch
-     comoda, con “oppure” fra due filetti orizzontali. */
+  /* Sul telefono le due opzioni restano impilate e mantengono un'area touch comoda, con “oppure” fra due filetti orizzontali. */
   @media (max-width: 620px) {
     .journey-wrap {
       padding: 0.85rem;
@@ -1587,8 +1384,7 @@
       align-items: flex-start;
     }
 
-    /* Durante lo scroll ogni ingresso deve essere percepito come un blocco
-       autonomo, senza che ombre e bordi delle card si tocchino. */
+    /* Durante lo scroll ogni ingresso deve essere percepito come un blocco autonomo, senza che ombre e bordi delle card si tocchino. */
     .journey {
       gap: 1.5rem;
     }
@@ -1620,21 +1416,21 @@
       grid-column: auto;
     }
 
-    /* Torna una colonna semplice. `align-items: start`, che serviva alla
-       versione a due colonne del tablet, qui stringeva i figli sulla loro
-       larghezza naturale: lo zoccolo della tappa 3 risultava più corto di
-       quello delle altre due. */
+    /* Torna una colonna semplice. */
     .journey-step--grow .journey-body {
       display: flex;
       align-items: stretch;
+    }
+
+    .journey-step--grow .journey-copy {
+      display: flex;
     }
 
     .journey-step--grow .journey-care-preview {
       margin-top: 0.35rem;
     }
 
-    /* Lo zoccolo è già una griglia a colonna piena: qui basta ricordare che
-       anche il link discreto resta centrato sotto il pulsante. */
+    /* Lo zoccolo è già una griglia a colonna piena: qui basta ricordare che anche il link discreto resta centrato sotto il pulsante. */
     .journey-quiet {
       justify-content: center;
     }
@@ -1653,11 +1449,7 @@
     }
   }
 
-  /* ---------- ingresso delle schede ----------
-     Le tre schede comparivano tutte insieme, già ferme: la prima schermata
-     sembrava un'immagine. Entrano una dopo l'altra da sotto, in mezzo
-     secondo scarso, nell'ordine in cui vanno lette. È l'unica animazione
-     della hero, e finisce prima che uno abbia deciso dove cliccare. */
+  /* ---------- ingresso delle schede ---------- */
   @keyframes journey-step-in {
     from {
       opacity: 0;
@@ -1670,10 +1462,7 @@
     }
   }
 
-  /* `backwards` e non `both`: a fine corsa l'animazione smette di valere e
-     la scheda torna alle sue regole. Con `both` la trasformazione finale
-     resterebbe applicata per sempre e il sollevamento al passaggio del
-     mouse non avrebbe più effetto. */
+  /* `backwards` e non `both`: a fine corsa l'animazione smette di valere e la scheda torna alle sue regole. */
   .journey-step {
     animation: journey-step-in 0.42s cubic-bezier(0.22, 0.78, 0.28, 1) backwards;
   }
@@ -1699,8 +1488,6 @@
       transition: none;
     }
 
-    /* Il plastico continua a raccontare il ciclo anche con movimento ridotto,
-       ma sostituisce crescita e scorrimento con semplici dissolvenze. */
     .journey-plan-preview .hcg-peek {
       opacity: 0;
       transform: none;
@@ -1719,8 +1506,7 @@
 }
 
 @layer dark-theme {
-  /* Il filo verticale e i filetti dell'«oppure» seguono la palette scura
-     solo ai formati in cui esistono. */
+  /* Il filo verticale e i filetti dell'«oppure» seguono la palette scura solo ai formati in cui esistono. */
 
   html[data-theme="dark"] .journey-or::before,
   html[data-theme="dark"] .journey-or::after {

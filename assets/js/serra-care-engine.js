@@ -1,16 +1,4 @@
-/**
- * Motore delle cure colturali: da una coltura registrata e dai campi già
- * presenti in db/plants.json ricava fasi, attività ricorrenti e data di
- * raccolta stimata.
- *
- * Il file è volutamente PURO: non tocca il DOM, non legge localStorage, non
- * conosce la lingua. Restituisce chiavi (`tipo`, `notaKey`, `notaVars`) che il
- * livello di presentazione traduce. Così lo stesso motore può servire la
- * pagina "Il mio orto", il configuratore e un eventuale job sul server.
- *
- * Non modifica nulla dell'applicazione esistente: espone solo
- * window.SerraCareEngine.
- */
+/* Motore delle cure colturali: da una coltura registrata e dai campi già presenti in db/plants.json ricava fasi, attività ricorrenti e data di raccolta stimata. */
 (function (global) {
   "use strict";
 
@@ -40,9 +28,7 @@
     return Math.round((a - b) / DAY);
   }
 
-  /* ---------- listino: variante piantina ----------
-     Derivata dal listino semi esistente senza modificarlo. Le regole
-     agronomiche sono documentate in docs/piano-piantine-e-mio-orto.md. */
+  /* ---------- listino: variante piantina ---------- */
   var VANTAGGIO_GIORNI = {
     frutto: 30,
     foglia: 20,
@@ -50,20 +36,16 @@
     legume: 0,
     radice: 0
   };
-  // Radici a fittone e legumi non tollerano il trapianto: niente piantina.
   var SENZA_PIANTINA = { radice: true, legume: true };
   var PACK_FALLBACK = { seeds: 100, price: 2.5 };
 
-  // Costruisce il listino a due varianti a partire dalle piante e dal
-  // listino semi già in uso (PACK_DATA), che resta la fonte di verità.
   function buildProducts(plants, packData) {
     var out = {};
     (plants || []).forEach(function (plant) {
       var pack = (packData && packData[plant.id]) || PACK_FALLBACK;
       var piantina = null;
       if (!SENZA_PIANTINA[plant.tipo] && plant.gg > 0) {
-        // Il vivaio vende per tutta la finestra di trapianto: mesi di semina
-        // più il mese successivo a ciascuno di essi.
+        // Il vivaio vende per tutta la finestra di trapianto: mesi di semina più il mese successivo a ciascuno di essi.
         var mesi = [];
         (plant.mesi || []).forEach(function (m) {
           [m, (m % 12) + 1].forEach(function (v) {
@@ -92,12 +74,10 @@
   var IRRIGAZIONE = { bassa: 4, media: 2, alta: 1 };
   var CONCIMAZIONE = { alta: 14, media: 21, bassa: 30 };
 
-  // Attività che decadono: se non si annaffia per dieci giorni non si
-  // accumulano dieci arretrati, ne resta uno solo.
+  // Attività che decadono: se non si annaffia per dieci giorni non si accumulano dieci arretrati, ne resta uno solo.
   var RICORRENTI = { irrigazione: true, concimazione: true, controllo: true, potatura: true };
 
-  // Cadenza di irrigazione corretta sul mese: in estate più fitta, in inverno
-  // più rada. In serra la correzione è volutamente prudente.
+  // Cadenza di irrigazione corretta sul mese: in estate più fitta, in inverno più rada. In serra la correzione è volutamente prudente.
   function passoIrrigazione(plant, mese) {
     var base = IRRIGAZIONE[plant.acqua] || 2;
     if (mese >= 6 && mese <= 8) base = Math.max(1, base - 1);
@@ -222,8 +202,6 @@
         ];
   }
 
-  // Delle attività ricorrenti sopravvive solo l'occorrenza più recente per
-  // coltura: evita il muro di arretrati che rende la lista inutilizzabile.
   function comprimiRicorrenti(tasks) {
     var visti = {};
     var out = [];

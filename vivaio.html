@@ -60,10 +60,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/base.css?v=20260816-uiux" />
-    <link
-      rel="stylesheet"
-      href="assets/css/serra-vivaio.css?v=20260816-uiux"
-    />
+    <link rel="stylesheet" href="assets/css/serra-vivaio.css?v=20260816-uiux" />
   </head>
   <!-- orto-page fornisce i token condivisi con la sezione "Il mio orto" -->
   <body class="orto-page viv-page">
@@ -120,8 +117,7 @@
             data-viv-key="nav.account"
             >👤 Area Personale</a
           >
-          <!-- Tema e lingua nel menu: sotto i 660px spariscono
-               dall'intestazione e restano solo qui. -->
+          <!-- Tema e lingua: visibili anche nel menu mobile sotto i 660px -->
           <div class="mobile-nav-preferences">
             <span
               class="mobile-nav-section-title"
@@ -185,8 +181,7 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
-               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <!-- Accesso rapido al profilo: solo icona su schermi stretti -->
           <a
             href="account.html"
             class="nav-account-btn"
@@ -198,7 +193,7 @@
               >Area Personale</span
             >
           </a>
-          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <!-- Blocco preferenze: tema e lingua -->
           <div class="nav-prefs">
             <button
               class="theme-toggle"
@@ -244,8 +239,7 @@
       <div id="vivaioApp"></div>
     </main>
 
-    <!-- Carrello a scomparsa: stessa struttura e stesse classi della home,
-         così l'interazione è identica in tutta l'app. -->
+    <!-- Carrello a scomparsa: stessa struttura e classi della home -->
     <div class="cart-overlay" id="vivaioCartOverlay">
       <div class="cart-backdrop" data-viv-action="close-cart"></div>
       <div
@@ -283,8 +277,7 @@
             </button>
           </div>
         </div>
-        <!-- Stessa struttura di index.html e configuratore.html: vuoto,
-             righe, piè di pagina. Le righe le disegna serra-cart-ui.js. -->
+        <!-- Stessa struttura di index.html e configuratore.html; le righe le disegna serra-cart-ui.js -->
         <div class="cart-empty" id="vivaioCartEmpty">
           <div class="cart-empty-icon">🪴</div>
           <div data-viv-key="cart.empty">Il carrello è vuoto.</div>

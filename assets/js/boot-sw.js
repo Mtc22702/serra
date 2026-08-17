@@ -1,8 +1,4 @@
-/**
- * Bootstrap offline: registra il Service Worker in produzione e lo rimuove in locale.
- * È caricato per ultimo da ogni pagina: non deve bloccare l'interfaccia né alterare
- * la navigazione. Le chiavi che iniziano con "serra-" sono il contratto della cache.
- */
+/* Bootstrap offline: registra il Service Worker in produzione e lo rimuove in locale. */
 if ("serviceWorker" in navigator) {
   const isLocalDev =
     location.hostname === "localhost" ||
@@ -39,16 +35,6 @@ if ("serviceWorker" in navigator) {
       })
       .catch(() => {});
   } else {
-    // Non forziamo più un location.reload() quando il nuovo worker prende
-    // il controllo (evento "controllerchange"): sw.js chiama skipWaiting()
-    // e clients.claim(), quindi l'attivazione può avvenire in QUALSIASI
-    // momento, anche a metà di una navigazione o mentre si apre una modale
-    // (es. il CTA di guida.html che porta a index.html?preconfig=...). Un
-    // reload forzato in quel momento interrompe il flusso: la modale si
-    // apre e "sparisce" subito dopo, dando l'impressione di un refresh
-    // improvviso (perché è letteralmente un refresh). Le navigazioni sono
-    // già network-first, quindi il prossimo caricamento prende comunque
-    // l'HTML aggiornato senza bisogno di forzare un reload qui.
     navigator.serviceWorker
       .register(window.serraAsset ? serraAsset("./sw.js") : "./sw.js", {
         updateViaCache: "none"

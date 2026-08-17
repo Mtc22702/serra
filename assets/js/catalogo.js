@@ -1,4 +1,4 @@
-/** Risorse catalogo: piante, foto, contenuti editoriali, sicurezza HTML e manuali. */
+/* Risorse catalogo: piante, foto, contenuti editoriali, sicurezza HTML e manuali. */
 // Archivio piante — gruppo 1 di 9.
 
 // Archivio condiviso delle piante
@@ -4266,8 +4266,6 @@ function resolvePlantPhoto(plant, id) {
   return `assets/img/photo/${id}.webp`;
 }
 
-// Avvia il download di una miniatura prima che il pannello che la usa diventi
-// visibile. Il browser riutilizza poi la stessa risorsa per catalogo e carrello.
 function preloadPlantPhoto(plant, id) {
   const src = resolvePlantPhoto(plant, id);
   if (!src || preloadedPlantPhotos.has(src) || typeof Image === "undefined")
@@ -4284,8 +4282,7 @@ if (typeof window !== "undefined") {
   window.preloadPlantPhoto = preloadPlantPhoto;
 }
 
-// Testi editoriali brevi e note agronomiche condivisi tra catalogo,
-// configuratore e manuali post-acquisto.
+// Testi editoriali brevi e note agronomiche condivisi tra catalogo, configuratore e manuali post-acquisto.
 (function (root) {
   const GROUPS = {
     it: {
@@ -5175,8 +5172,7 @@ if (typeof window !== "undefined") {
     );
   }
 
-  // Ritaglia la fotografia senza deformarla e la inserisce in una cornice
-  // coerente con le schede del manuale.
+  // Ritaglia la fotografia senza deformarla e la inserisce in una cornice coerente con le schede del manuale.
   function drawPhotoCover(ctx, image, x, y, w, h, radius) {
     ctx.save();
     roundedRect(ctx, x, y, w, h, radius);

@@ -1,7 +1,5 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
-/* Configuratore: sorgente degli stili di layout, wizard, serra e catalogo.
- * Viene distribuito come serra-configuratore.css e caricato dopo base.css; modificare qui.
- */
+/* Configuratore: sorgente degli stili di layout, wizard, serra e catalogo. */
 /* Fondazioni e introduzione */
 @layer base {
   :root {
@@ -19,9 +17,6 @@
     --oro: var(--yellow, #d9a441);
     --ombra: var(--elev-3);
     --bordo: 1px solid var(--surface-line);
-    /* `--raggio` e `--raggio-lg` non esistono più: erano alias locali (8 e
-       14 px) che duplicavano la scala di base.css e la sfalsavano di due
-       pixel. Le regole citano --radius-sm / --radius-lg. */
     /* Definisce bordo e ombra più marcati per pannelli e tendine aperti. */
     --ombra-aperta: var(--elev-4);
     --bordo-aperto: 1.5px solid var(--surface-line-strong);
@@ -2732,8 +2727,7 @@
       inset 0 0 0 1px rgba(31, 58, 38, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.55);
   }
-  /* Le serre molto dense mantengono tutti i glifi, ma usano una sola
-     dissolvenza composita al posto di migliaia di animazioni SVG. */
+  /* Le serre molto dense mantengono tutti i glifi, ma usano una sola dissolvenza composita al posto di migliaia di animazioni SVG. */
   .scene.scene--dense-reveal svg {
     animation: scene-dense-reveal 520ms ease-out both;
   }
@@ -2953,16 +2947,13 @@
     .scene.scene--dense-reveal svg {
       animation-duration: 572ms;
     }
-    /* Sui display compatti il dondolio e quasi impercettibile e mantiene
-       trasformazioni SVG continue: conserviamo soltanto la crescita. */
+    /* Sui display compatti il dondolio e quasi impercettibile e mantiene trasformazioni SVG continue: conserviamo soltanto la crescita. */
     .plant-glyph-shell--alive {
       animation: none;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    /* La crescita e la comparsa del raccolto comunicano il riempimento della
-       serra e restano transizioni singole. Riduciamo soltanto il movimento
-       decorativo o continuo, anche quando Chrome eredita questa preferenza. */
+    /* La crescita e la comparsa del raccolto comunicano il riempimento della serra e restano transizioni singole. */
     .plant-glyph-shell--alive,
     .plant-soil-bloom,
     .plant-soil-particle,
@@ -8549,11 +8540,6 @@
 /* Livelli di esperienza */
 @layer base {
   :root {
-    /* I tre livelli avevano qui una loro terna di verdi, ambre e terracotte,
-       vicina ma non uguale a quella della home e della guida: le stesse tre
-       scelte cambiavano colore da una pagina all'altra. Ora i nomi restano —
-       li usano tutte le regole sotto — ma il valore arriva dai token
-       condivisi di base.css. */
     --persona-nov: var(--pc-nov);
     --persona-int: var(--pc-int);
     --persona-exp: var(--pc-exp);
@@ -8708,12 +8694,6 @@
     display: none;
   }
 
-  /* Il selettore di livello del configuratore parlava una lingua sua: scheda
-     bianca, barretta sempre accesa, riempimento pieno sulla scelta. La home e
-     la guida usavano già la scala condivisa `--persona-*` di base.css — tinta
-     leggera a riposo, riquadro dell'icona come segno di riconoscimento,
-     barretta e tinta piena solo sulla scelta. Qui le regole passano alla
-     stessa scala: cambia il vestito, non il comportamento. */
   .persona-card {
     --accent: var(--verde);
     --accent-text: var(--persona-text, #245733);
@@ -8746,8 +8726,7 @@
       box-shadow 0.18s ease,
       background 0.16s ease;
   }
-  /* La barretta segna la scelta fatta: accesa su tutte e tre non segnava
-     niente. */
+  /* La barretta segna la scelta fatta: accesa su tutte e tre non segnava niente. */
   .persona-card::before {
     content: "";
     position: absolute;
@@ -8839,9 +8818,6 @@
     order: -1;
   }
 
-  /* Il riquadro dell'icona è ciò che distingue davvero i tre livelli: ambra e
-     terracotta, in trasparenza leggera, restano a una decina di punti l'una
-     dall'altra; qui, alla forza della scala condivisa, a trentasette. */
   .persona-card-ico {
     flex: 0 0 auto;
     display: inline-flex;
@@ -8877,10 +8853,6 @@
     width: 29px;
     height: 29px;
   }
-  /* Il disegno della piantina resta a colori: prima veniva reso bianco perché
-     il riquadro della scheda scelta era pieno di tinta, e il livello si
-     riconosceva solo dal fondo. Ora il riquadro è una tinta, e i tre disegni
-     — germoglio, pianta, cespuglio — tornano a essere leggibili. */
   .persona-card-body {
     flex: 1;
     min-width: 0;
@@ -8929,9 +8901,7 @@
     opacity: 0.9;
     transform: translateX(0);
   }
-  /* Il segno di spunta della scheda scelta: il tondo prende l'inchiostro del
-     livello, non la sua tinta piena. Sul giallo dell'intermedio il bianco
-     stava a 2,2:1 — la spunta si vedeva solo perché è grande. */
+  /* Il segno di spunta della scheda scelta: il tondo prende l'inchiostro del livello, non la sua tinta piena. */
   .persona-card.is-active .persona-card-go {
     display: inline-flex;
     align-items: center;
@@ -9739,8 +9709,7 @@
 
 /* Moduli CSS del tema globale */
 
-/* Fondazioni condivise: colori ricorrenti dell'interfaccia.
-   I token mantengono i valori esistenti, ma eliminano duplicazioni tra pagine. */
+/* Fondazioni condivise: colori ricorrenti dell'interfaccia. */
 :root {
   --serra-white: #fff;
   --serra-green: #2f6b3a;
@@ -11014,11 +10983,6 @@
   html[data-theme="dark"] .persona-pick-action {
     border: 1px solid rgba(111, 207, 151, 0.4);
   }
-  /* Al buio non serve riscrivere nulla: la scala `--persona-*` cambia da sola
-     basi e percentuali (vedi il blocco dark-theme di base.css). Prima qui
-     c'erano tre fondi grigio-verdi uguali per tutti e tre i livelli, e la
-     tinta del livello ricompariva solo sulla scheda scelta: i tre selettori
-     erano indistinguibili. Restano solo i testi. */
   html[data-theme="dark"] .persona-card {
     color: var(--dark-text);
   }
@@ -13418,10 +13382,6 @@
     gap: 0.58rem;
   }
 
-  /* Bordo e fondo traslucidi su bianco: restavano da quando la hero era
-     verde scura. Oggi la hero è su carta e queste due righe erano comunque
-     scavalcate dal blocco più avanti nel foglio — cioè codice che non
-     descriveva niente di visibile. Restano le sole misure. */
   .hero-cfg-level {
     min-height: 52px;
     padding-block: 0.55rem;
@@ -13855,10 +13815,6 @@
     display: none;
   }
 
-  /* Icona ed etichetta dei link "Esplora": separate a runtime da nav.js così
-     la vista mobile può dare all'icona un trattamento a riquadro coerente con
-     le righe Tema/Lingua e le tab della guida. Su desktop resta solo lo
-     spazio tra icona e testo, invariato rispetto a prima. */
   .nav-link-icon {
     margin-right: 0.4em;
   }
@@ -14676,11 +14632,7 @@
     gap: 8px;
   }
 
-  /* Le stesse tre schede, in versione compatta dentro la hero. Qui restano
-     solo le misure: colore, tinta e stati vengono da `.pc-persona-card`.
-     Prima questo blocco rifaceva da capo la tinta (7% a riposo, 12% al
-     passaggio, barretta sempre accesa) e le tre schede della hero non
-     coincidevano con le tre del pannello, che sono le stesse. */
+  /* Le stesse tre schede, in versione compatta dentro la hero. */
   .hero-cfg-level {
     min-height: 66px;
     padding: 6px 11px 6px 14px;
@@ -14839,8 +14791,6 @@
       font-size: 0.66rem;
     }
 
-    /* La menzione "consigliato" non deve più comprimere la descrizione: ogni
-       elemento ha una propria area e l'azione resta sempre sulla destra. */
     .hero-cfg-level {
       display: grid;
       grid-template-columns: 42px minmax(0, 1fr) max-content;
@@ -15081,9 +15031,6 @@
     border-color: var(--verde);
     background: rgba(79, 154, 63, 0.12);
   }
-  /* Invito alla guida: più presente della semplice pillola precedente (le
-     cui variabili colore --verde/--verde-scuro non erano mai definite in
-     tema chiaro, rendendo icona e testo praticamente invisibili). */
   .hero-guide-link {
     display: inline-flex;
     align-items: center;
@@ -15923,9 +15870,6 @@
       padding: 12px 13px 12px 15px;
     }
 
-    /* Anche nel pannello laterale la scheda scelta usa la scala condivisa:
-       aveva un gradiente e un alone colorati tarati a mano, che a fianco
-       delle stesse tre schede nella home sembravano un altro controllo. */
     .workflow-persona-panel .persona-card.is-active {
       border: 2px solid var(--accent-edge);
       background: color-mix(
@@ -16021,7 +15965,6 @@
     }
   }
 
-  /* Base tipografica comune: leggibile prima di tutto, senza microtesti o pesi aggressivi. */
   body {
     font-weight: 400;
     letter-spacing: 0.002em;
@@ -16130,8 +16073,6 @@
     }
   }
 
-  /* Su mobile i passaggi restano affiancati, con spazio distribuito in base alla
-     lunghezza dell'etichetta invece di rimpicciolire troppo il testo. */
   @media (max-width: 660px) {
     .workflow-hub .journey-context-progress {
       display: flex;
@@ -16169,8 +16110,6 @@
     }
   }
 
-  /* Tablet e desktop: i passaggi restano compatti, ma non usano più il
-     microtesto ereditato dalla prima versione della barra guidata. */
   .workflow-hub .journey-context-step[data-journey-step="settings"],
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-done,
   .workflow-hub .journey-context-step[data-journey-step="settings"].is-current {
@@ -16214,14 +16153,11 @@
     }
   }
 
-  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile
-     mentre la ricerca è in corso. */
+  /* Il pulsante filtri non deve recuperare display:flex dalle regole mobile mentre la ricerca è in corso. */
   #catalogFilterToggle[hidden] {
     display: none !important;
   }
 
-  /* Questo layer viene caricato dopo gli stili base del catalogo: qui la
-     ricerca deve prevalere anche sulle regole che rendono visibili i controlli. */
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown)) #catalogHint,
   .catalog-pro-shell:has(#catalogSearch:not(:placeholder-shown))
     #catalogFilterToggle,
@@ -16253,8 +16189,7 @@
   }
 }
 
-/* Micro-copy operativa del configuratore. Le annotazioni nella planimetria
-   SVG restano proporzionali allo zoom del disegno per evitare collisioni. */
+/* Micro-copy operativa del configuratore. */
 @layer polish {
   .journey-context-level-edit,
   .guided-brand-copy p,

@@ -5,6 +5,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orto in Serra · Coltiva con intelligenza</title>
+    <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
+    <meta name="theme-color" content="#2f6b3a" />
+
+    <!-- Icone e manifest PWA -->
+    <link
+      rel="icon"
+      href="assets/img/icons/orto-in-serra-192-v2.png"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/icons/orto-in-serra-180-v2.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Connessioni e risorse tipografiche usate dall'interfaccia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Script di configurazione e versioning -->
     <script>
       window.SERRA_APP_VERSION = "20260816-203216dddd48";
@@ -21,28 +45,8 @@
         return path + "?v=" + window.SERRA_ASSET_VERSION;
       };
     </script>
-    <!-- Connessioni e risorse tipografiche usate dall'interfaccia -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Icone e manifest PWA -->
-    <link
-      rel="icon"
-      href="assets/img/icons/orto-in-serra-192-v2.png"
-      type="image/png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="assets/img/icons/orto-in-serra-180-v2.png"
-    />
-    <link rel="manifest" href="manifest.json" />
-    <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
-    <meta name="theme-color" content="#2f6b3a" />
-    <!-- Gestione del tema (chiaro/scuro) -->
+
+    <!-- Gestione del tema (chiaro/scuro): deve girare prima dei fogli di stile per evitare un lampeggio -->
     <script>
       (function () {
         var saved = localStorage.getItem("serra-theme");
@@ -52,7 +56,8 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
-    <!-- Lingua iniziale -->
+
+    <!-- Lingua iniziale: deve girare prima dei fogli di stile per evitare un lampeggio -->
     <style>
       html.serra-i18n-pending body {
         visibility: hidden;
@@ -75,12 +80,14 @@
         } catch (e) {}
       })();
     </script>
+
     <!-- Fogli di stile principali -->
     <link rel="stylesheet" href="assets/css/base.css?v=20260816-header-grid" />
     <link
       rel="stylesheet"
       href="assets/css/serra-home.css?v=20260815-a31f6c7d9e20"
     />
+
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
@@ -117,8 +124,6 @@
             data-i18n="nav.home"
             >🏠 Home</a
           >
-          <!-- Solo le tre strade dell'app più il configuratore: Abbinamenti,
-               Kit del mese e Contatti restano raggiungibili dal piè di pagina. -->
           <a
             href="#stagione"
             class="nav-link nav-link--semi"
@@ -131,9 +136,7 @@
             data-i18n="nav.vivaio"
             >🪴 Vivaio piantine</a
           >
-          <!-- Il distintivo "gratis" arriva da CSS (::after in home.css):
-               base.js riscrive il contenuto dei link di questo menu dividendolo
-               in icona ed etichetta, quindi un elemento figlio verrebbe perso. -->
+          <!-- Distintivo "gratis" gestito in CSS (::after in home.css), non nel markup -->
           <a
             href="orto.html"
             class="nav-link nav-link--orto"
@@ -216,8 +219,7 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <!-- Profilo: fuori dalla navigazione centrale, che elenca solo i
-               luoghi dell'app. Su schermi stretti resta la sola icona. -->
+          <!-- Accesso rapido al profilo: solo icona su schermi stretti -->
           <a
             href="account.html"
             class="nav-account-btn"
@@ -229,7 +231,7 @@
               >Area Personale</span
             >
           </a>
-          <!-- Tema e lingua in un solo blocco: sono entrambi preferenze. -->
+          <!-- Blocco preferenze: tema e lingua -->
           <div class="nav-prefs">
             <button
               class="theme-toggle"
@@ -276,35 +278,15 @@
     </header>
 
     <main>
-      <!-- Hero unica. Contiene tutto ciò che un nuovo utente deve capire:
-           cosa fa l'app, quali possibilità ha, e da dove può entrare. Le
-           quattro destinazioni compaiono una volta sola, dentro il percorso:
-           prima erano ripetute — una volta come elenco di intenzioni nella
-           hero e una volta come sezione sotto — ed era di nuovo la stessa
-           lista due volte.
-
-           Il percorso è messo in fila e non affiancato perché le quattro
-           possibilità non sono alternative: progettare è un aiuto alla
-           decisione, semi e piantine sono due risposte alla stessa domanda,
-           e il diario di coltivazione viene dopo. Il filo che collega i tre
-           numeri lo dice senza scriverlo.
-
-           Il plastico animato (.hcg) è quello di sempre: markup e id
-           invariati, perché home.js li usa per disegnare aiuole e piante. -->
+      <!-- Sezione Hero: presentazione e percorso guidato verso semi, piantine e configuratore -->
       <section class="hero-immersive hero-v2" id="hero">
         <div class="hero-bg-plants" id="heroBgPlants"></div>
         <div class="hero-v2-inner page-wrap">
           <div class="hero-v2-copy">
-            <!-- Titolo spezzato in due nodi: la seconda parte è evidenziata,
-                   e ogni nodo ha la sua chiave perché la traduzione sostituisce
-                   il testo e cancellerebbe qualsiasi tag interno. -->
             <h1 class="hero-v2-title" id="heroTitle">
               <span data-i18n="hero.headline_a">Progetta la serra.</span>
               <em data-i18n="hero.headline_b">Poi coltivala davvero.</em>
             </h1>
-            <!-- Una riga sola fra il titolo e le tre schede: dice cosa fa
-                 l'app a chi non lo sa già. La chiave esisteva ed era rimasta
-                 senza posto in pagina. -->
             <p class="hero-v2-lead" data-i18n="hero.promise">
               Dal progetto al raccolto, con indicazioni adatte al tuo clima.
             </p>
@@ -319,16 +301,11 @@
                   >Scegli un'opzione</span
                 >
               </div>
-              <!-- Qui stava una riga di riepilogo («Piantine in 48 h · Il mio
-                   orto è gratis»): ripeteva informazioni che le schede sotto
-                   danno già, quindi è stata rimossa insieme alla sua chiave. -->
             </div>
             <ol class="journey" aria-labelledby="heroTitle">
-              <!-- Due opzioni iniziali e uno strumento successivo: le schede
-                   mantengono la stessa altezza, mentre le etichette chiariscono
-                   che Coltiva ha una funzione diversa. -->
               <li class="journey-step journey-step--plan">
                 <div class="journey-body">
+                <div class="journey-copy">
                   <span class="journey-option-mark">
                     <span aria-hidden="true">01</span>
                     <span data-i18n="journey.step1_when"
@@ -337,9 +314,6 @@
                   </span>
                   <div class="journey-head">
                     <h2 data-i18n="journey.step1_title">Progetta</h2>
-                    <!-- Le altre due schede avevano un distintivo, questa no.
-                         Qui dice la cosa che uno vuole sapere prima di
-                         cliccare: quanto ci mette. -->
                     <span
                       class="journey-badge journey-badge--time"
                       data-i18n="journey.step1_badge"
@@ -376,6 +350,7 @@
                       </p>
                     </div>
                   </div>
+                </div>
                   <div class="journey-actions">
                     <a
                       class="journey-cta hero-cfg-open-preconfig"
@@ -391,12 +366,9 @@
                 </div>
               </li>
 
-              <!-- Tappa 2: una tappa sola con due risposte. L'«oppure» in mezzo
-                   è il dettaglio che impedisce di leggerle come due strade
-                   diverse dell'app invece che come due modi di fare la stessa
-                   cosa. -->
               <li class="journey-step journey-step--buy">
                 <div class="journey-body">
+                <div class="journey-copy">
                   <span class="journey-option-mark">
                     <span aria-hidden="true">02</span>
                     <span data-i18n="journey.step2_when"
@@ -415,19 +387,7 @@
                     Dal seme costa meno, dalla piantina guadagni fino a un mese
                     sulla raccolta.
                   </p>
-                  <!-- Segnaposto: sul desktop le tre schede condividono le
-                       stesse righe (subgrid) e questa tappa non ha un'anteprima.
-                       Senza la casella vuota lo zoccolo salirebbe di una riga e
-                       i pulsanti non cadrebbero più alla quota delle altre due.
-                       Fuori dal desktop la casella è display:none. -->
-                  <div
-                    class="journey-feature journey-feature--slot"
-                    aria-hidden="true"
-                  ></div>
-                  <!-- La coppia semi/piantine sta dentro lo zoccolo d'azione,
-                       non più a metà scheda: è lei la chiamata all'azione di
-                       questa tappa, e adesso parte dalla stessa riga in cui
-                       partono i pulsanti delle altre due. -->
+                </div>
                   <div class="journey-actions">
                     <div class="journey-pair">
                       <a
@@ -478,10 +438,6 @@
                         <span class="journey-arrow" aria-hidden="true">→</span>
                       </a>
                     </div>
-                    <!-- Non serve un terzo pulsante: le due righe sopra sono
-                         già la scelta. Resta la domanda che uno si fa a quel
-                         punto, nella stessa posizione degli altri link
-                         discreti. -->
                     <a class="journey-quiet" href="guida.html#seme-o-piantina">
                       <span data-i18n="journey.step2_help"
                         >Seme o piantina?</span
@@ -491,10 +447,9 @@
                 </div>
               </li>
 
-              <!-- Coltiva viene dopo ed è un tool gratuito, non una terza
-                   scelta equivalente alle due decisioni iniziali. -->
               <li class="journey-step journey-step--grow">
                 <div class="journey-body">
+                <div class="journey-copy">
                   <span class="journey-option-mark journey-option-mark--tool">
                     <span aria-hidden="true">✦</span>
                     <span data-i18n="journey.step3_when"
@@ -542,6 +497,7 @@
                       />
                     </div>
                   </div>
+                </div>
                   <div class="journey-actions">
                     <a class="journey-cta journey-cta--soft" href="orto.html">
                       <img
@@ -553,6 +509,11 @@
                         decoding="async"
                       />
                       <span data-i18n="paths.orto_cta">Apri Il mio orto</span>
+                    </a>
+                    <a class="journey-quiet" href="guida.html#coltivare">
+                      <span data-i18n="journey.step3_help"
+                        >Come funziona "Il mio orto"?</span
+                      >
                     </a>
                   </div>
                 </div>
@@ -941,9 +902,7 @@
         </div>
       </section>
 
-      <!-- Ponte verso il vivaio. Chi ha appena sfogliato i semi è il pubblico
-           naturale delle piantine: senza questa fascia il vivaio esisteva solo
-           nella scheda in cima alla pagina. -->
+      <!-- Sezione ponte verso il vivaio -->
       <section
         class="bridge bridge--vivaio"
         aria-labelledby="bridgeVivaioTitle"
@@ -1058,10 +1017,6 @@
           <div class="kit-photos-grid" id="kitPhotos"></div>
         </div>
       </section>
-
-      <!-- Qui c'era una fascia verso Il mio orto: diceva le stesse cose della
-           tappa 3 del percorso, che è a inizio pagina. Tolta. Lo strumento
-           resta raggiungibile dal menu e dalla tappa 3. -->
 
       <!-- Sezione Contatti -->
       <section
@@ -1864,10 +1819,7 @@
           </div>
           <div class="preconfig-section-label" id="preconfigSizesLabel">
             <span data-i18n="preconfig.sizes_label">2. Misure interne</span>
-            <!-- Alla prima visita le misure sono un ripiego (3×5 m): il
-                 distintivo lo dice, e sparisce appena l'utente le tocca o se
-                 arriva con una serra già salvata. Lo accende updatePreconfigCta()
-                 in assets/js/home.js. -->
+            <!-- Distintivo misure di default: nascosto quando l'utente modifica i valori o carica una serra salvata (updatePreconfigCta() in home.js) -->
             <span
               class="preconfig-priority-badge preconfig-priority-badge--check"
               id="preconfigSizesBadge"
@@ -1993,9 +1945,7 @@
               />
             </div>
           </div>
-          <!-- Il camminamento ha una riga propria: non è una dimensione
-               della serra ma la misura del passaggio fra le aiuole. Il
-               fondo a ciottoli lo dice a colpo d'occhio. -->
+          <!-- Camminamento: misura del passaggio tra le aiuole, non una dimensione della serra -->
           <div class="preconfig-vfield preconfig-vfield--path">
             <div>
               <span class="preconfig-fld-row"
@@ -2036,8 +1986,7 @@
                   +
                 </button>
               </div>
-              <!-- Il cursore resta nascosto: syncPcPath() lo usa ancora per
-                     arrotondare il valore ai cinque centimetri. -->
+              <!-- Cursore nascosto ma usato da syncPcPath() per arrotondare ai 5 cm -->
               <input
                 type="range"
                 id="pcPath"
@@ -2135,8 +2084,7 @@
             <span data-i18n="preconfig.cta">Vai al configuratore</span>
             <span class="preconfig-cta-arrow" aria-hidden="true">→</span>
           </a>
-          <!-- Perché il pulsante è spento. Resta scritto finché manca la
-               scelta, invece di comparire in un avviso dopo il clic. -->
+          <!-- Testo visibile finché manca la scelta necessaria ad attivare il pulsante -->
           <p
             class="preconfig-cta-hint"
             id="preconfigCtaHint"

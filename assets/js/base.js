@@ -1,4 +1,4 @@
-/** Fondazioni condivise: tema, navigazione, traduzioni e API. */
+/* Fondazioni condivise: tema, navigazione, traduzioni e API. */
 // Gestione tema
 (function () {
   "use strict";
@@ -71,11 +71,7 @@
   });
 })();
 
-/* Contatore del carrello, valido su ogni pagina.
- * Il carrello è unico (`ois.cart`): qui si limita a tenere allineato il numero
- * mostrato nell'intestazione, così anche le pagine senza un proprio pannello
- * carrello (vivaio, il mio orto) dicono il vero.
- */
+/* Contatore del carrello, valido su ogni pagina. */
 (() => {
   function aggiorna() {
     const badge = document.getElementById("cartCount");
@@ -159,9 +155,7 @@
     else openMenu();
   });
 
-  /* Vero quando il collegamento porta davvero a un altro documento. Gli
-     ancoraggi interni alla pagina corrente non ricaricano nulla e vanno
-     trattati come una chiusura normale. */
+  /* Vero quando il collegamento porta davvero a un altro documento. */
   function portaAdAltraPagina(link) {
     if (link.target && link.target !== "_self") return false;
     if (link.hasAttribute("download")) return false;
@@ -181,13 +175,7 @@
     );
   }
 
-  /* Chiusura "a freddo", per le voci che portano altrove.
-     La chiusura normale rimette il body in flusso e ripristina lo scorrimento:
-     è un riflusso dell'intera pagina più il rifacimento del pannello sfocato,
-     e quel lavoro si infila fra il tocco e l'inizio della navigazione. Era il
-     ritardo percepito aprendo Vivaio o Il mio orto dal menu dello smartphone.
-     Qui il body resta com'è — la pagina sta per essere sostituita — e si
-     nasconde soltanto il menu, che è un semplice ridisegno. */
+  /* Chiusura "a freddo", per le voci che portano altrove. */
   const closeMenuForNavigation = () => {
     document.body.classList.add("nav-menu-leaving");
     toggle.setAttribute("aria-expanded", "false");
@@ -200,9 +188,6 @@
     });
   });
 
-  /* Col tasto "indietro" il browser può ripristinare la pagina dalla propria
-     cache esattamente come l'aveva lasciata: menu congelato e body bloccato.
-     Qui si rimette tutto a posto, così la pagina torna utilizzabile. */
   window.addEventListener("pageshow", () => {
     document.body.classList.remove("nav-menu-leaving");
     closeMenu();
@@ -240,9 +225,6 @@
   );
 
   // Aggiorna l'etichetta del pulsante menu quando cambia la lingua della pagina.
-  // Va eseguita anche subito, non solo alle variazioni: le pagine che scrivono
-  // lang="ro" già nel markup (script anti-lampeggio) non producono alcuna
-  // mutazione, e l'etichetta sarebbe rimasta in italiano per sempre.
   function syncMenuLabel() {
     const open = document.body.classList.contains("nav-menu-open");
     toggle.setAttribute(
@@ -262,11 +244,6 @@
     attributeFilter: ["lang"],
   });
 
-  // Separa l'icona iniziale dall'etichetta nelle voci "Esplora" del menu, cosi'
-  // il CSS puo' dare all'icona un trattamento a riquadro coerente col resto
-  // dell'app (senza toccare i dizionari di traduzione ne' i link del footer,
-  // che restano fuori da #mainNav). La funzione e' idempotente: puo' essere
-  // rieseguita ogni volta che il cambio lingua riscrive il testo dei link.
   function splitIconLabel(raw) {
     const trimmed = raw.trim();
     const spaceIndex = trimmed.indexOf(" ");
@@ -277,8 +254,6 @@
     };
   }
 
-  // Nel menu mobile chiarisce che "Il mio orto" non è una semplice pagina
-  // informativa, ma lo strumento che accompagna la coltivazione nel tempo.
   function ensureOrtoHint(link) {
     if (!link.classList.contains("nav-link--orto")) return;
     let hint = link.querySelector(".nav-link-tool-hint");
@@ -294,11 +269,6 @@
 
   function enhanceNavIcons() {
     menu.querySelectorAll(":scope > a.nav-link").forEach((link) => {
-      // Se è già stato diviso in icona+etichetta e nessuno l'ha riscritto nel
-      // frattempo (il cambio lingua sostituisce sempre l'intero testo,
-      // svuotando questi span), non rielaborarlo: leggere di nuovo il testo
-      // da due span già separati (senza lo spazio originale) spezzerebbe la
-      // divisione in un punto sbagliato.
       const alreadySplit =
         link.children.length >= 2 &&
         link.children[0].classList.contains("nav-link-icon") &&
@@ -325,8 +295,6 @@
 
   enhanceNavIcons();
 
-  // Ripete la separazione ogni volta che il cambio lingua riscrive il testo
-  // (si disconnette durante la propria modifica per evitare un loop).
   const navIconObserver = new MutationObserver(() => {
     navIconObserver.disconnect();
     enhanceNavIcons();
@@ -826,10 +794,7 @@
         "hero.headline_b": "Poi coltivala davvero.",
         "hero.eyebrow_now": "· scegli da dove partire",
         "hero.plan_caption": "Esempio di piano · 4 aiuole, 12 m²",
-        // Il percorso della home: unico componente che dice cosa può fare
-        // l'utente e da dove entra. Le tappe non sono alternative fra loro.
-        // Le tre condizioni sostituiscono i numeri: parallele fra loro, si
-        // leggono come alternative invece che come passi da eseguire.
+        // Il percorso della home: unico componente che dice cosa può fare l'utente e da dove entra.
         "journey.choice_kicker": "Scegli un'opzione",
         "journey.choice_hint":
           "Parti dalla situazione che ti assomiglia di più",
@@ -861,11 +826,8 @@
         "journey.step3_proof":
           "Acqua, nutrimento e raccolta sempre sotto controllo.",
         "journey.step3_preview_title": "La tua settimana",
-        // Selettore di intenti: il sottotitolo descrive la situazione
-        // dell'utente, non il prodotto. È quello che fa capire quale scegliere.
-        // Il flusso in tre tappe: spiega che le possibilità non sono
-        // alternative fra loro ma momenti diversi dello stesso percorso.
-        // Fasce che collegano il catalogo al vivaio e allo strumento gratuito.
+        "journey.step3_help": 'Come funziona "Il mio orto"?',
+        // Selettore di intenti: il sottotitolo descrive la situazione dell'utente, non il prodotto.
         "bridge.vivaio_kicker": "Non vuoi aspettare la germinazione?",
         "bridge.vivaio_title": "Le stesse varietà, già cresciute.",
         "bridge.vivaio_copy":
@@ -1108,8 +1070,6 @@
         "cart.in_cart": "✓&nbsp;Nel carrello",
         "cart.clear": "Svuota",
         "cart.remove": "Rimuovi",
-        // Quantità riga per riga nel cassetto: le bustine si contano a una a
-        // una, le piantine a vassoi interi perché così vengono spedite.
         "cart.qty_label": "Quantità",
         "cart.qty_less_pack": "Togli una bustina",
         "cart.qty_more_pack": "Aggiungi una bustina",
@@ -1354,6 +1314,7 @@
         "journey.step3_proof":
           "Udarea, fertilizarea și recoltarea, mereu sub control.",
         "journey.step3_preview_title": "Săptămâna ta",
+        "journey.step3_help": 'Cum funcționează "Grădina mea"?',
         "bridge.vivaio_kicker": "Nu vrei să aștepți germinarea?",
         "bridge.vivaio_title": "Aceleași soiuri, deja crescute.",
         "bridge.vivaio_copy":
@@ -3804,7 +3765,6 @@
         }
       }
 
-      // In assenza del server, controlla prima i dati salvati nel browser.
       try {
         const local = localStorage.getItem("serra.custom_plants");
         if (local) return JSON.parse(local);
@@ -3874,7 +3834,6 @@
         } catch (e) {}
       }
 
-      // In assenza del server, controlla prima i dati salvati nel browser.
       try {
         const local = localStorage.getItem("serra.users");
         if (local) return JSON.parse(local);
@@ -3945,7 +3904,6 @@
         } catch (e) {}
       }
 
-      // In assenza del server, controlla prima i dati salvati nel browser.
       try {
         const local = localStorage.getItem("serra.orders");
         if (local) return JSON.parse(local);
@@ -4011,9 +3969,6 @@
           : "Accedi";
       const btn = document.getElementById("navAccountBtn");
       if (btn) btn.textContent = `👤 ${etichetta}`;
-      // Pulsante del cluster destro: l'icona è un elemento a sé, quindi si
-      // riscrive solo l'etichetta. Su schermi stretti resta la sola icona,
-      // perciò l'etichetta accessibile va aggiornata comunque.
       document.querySelectorAll(".nav-account-btn").forEach((el) => {
         const label = el.querySelector(".nav-account-label");
         if (label) label.textContent = etichetta;

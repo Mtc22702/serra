@@ -1,17 +1,4 @@
-/**
- * Vivaio: la sezione dove si acquistano le piantine già cresciute.
- *
- * È una sezione a sé perché la merce è viva: disponibilità stagionale,
- * spedizione a inizio settimana, lotti da sei. Il carrello però è **unico**
- * (`ois.cart`, gestito da serra-cart.js): semi e piantine stanno insieme e
- * partono in un solo ordine.
- *
- * All'ordine, le righe entrano nello storico esistente con i campi che
- * l'Area Personale già legge (`bustine`, `prezzo`) più `variante: "piantina"`,
- * che le pagine vecchie ignorano senza accorgersene.
- *
- * Tema e lingua: stessi contratti delle altre pagine.
- */
+/* Vivaio: la sezione dove si acquistano le piantine già cresciute. */
 (() => {
   const E = window.SerraCareEngine;
   if (!E) return;
@@ -19,11 +6,6 @@
   // Carrello unico dell'utente: la lista è la stessa del catalogo semi.
   const C = () => window.SerraCart;
 
-  /* Regole commerciali della merce viva: le piantine partono a inizio settimana
-     e viaggiano solo a vassoi interi, quindi sotto una certa soglia la
-     spedizione non regge. Vivono in serra-cart-ui.js perché valgono per
-     l'ordine, non per questa pagina: chi compone il carrello dalla home deve
-     leggere lo stesso vincolo. Qui c'è solo il ripiego se il modulo manca. */
   const CONSEGNA = window.SerraCartUI?.CONSEGNA || {
     giornoSpedizione: 1, // lunedì
     anticipoMinimoGiorni: 2, // ordini raccolti fino a due giorni prima
@@ -255,8 +237,7 @@
   const BYID = {};
   let cart = [];
   let filtro = "";
-  // Filtri del listino: famiglia botanica e criterio d'ordinamento, come nel
-  // catalogo dei semi in home. Restano in memoria per la sessione.
+  // Filtri del listino: famiglia botanica e criterio d'ordinamento, come nel catalogo dei semi in home.
   let tipoAttivo = "";
   let ordine = "consigliati";
 
@@ -313,12 +294,7 @@
   const piantine = () => (C() ? C().soloPiantine(cart) : []);
   const qtaInCarrello = (id) => piantine().find((i) => i.id === id)?.qta || 0;
 
-  /* Il conteggio delle bustine, il totale e l'elenco del cassetto li fa ora il
-     modulo condiviso (serra-cart-ui.js): qui restano solo i numeri che servono
-     alla pagina fuori dal carrello — la hero e la barra di stato. */
 
-  // Prima partenza utile: il primo giorno di spedizione che rispetti il
-  // preavviso minimo. La consegna è il giorno dopo la partenza.
   const prossimaConsegna = () =>
     window.SerraCartUI
       ? window.SerraCartUI.prossimaConsegna()
@@ -371,8 +347,7 @@
     return copia; // consigliate: l'ordine del catalogo
   }
 
-  // Famiglie presenti davvero questo mese: un filtro che non porta a nulla
-  // è peggio che nessun filtro.
+  // Famiglie presenti davvero questo mese: un filtro che non porta a nulla è peggio che nessun filtro.
   function famiglie(lista) {
     const conta = {};
     lista.forEach((p) => {
@@ -627,16 +602,8 @@
       </article>`;
   }
 
-  /* Con il carrello a scomparsa le regole della merce viva (minimo, consegna)
-     resterebbero nascoste fino alla fine: questa barra le tiene sotto gli occhi
-     mentre si sceglie. */
-  /* Illustrazione della hero: una piantina con il pane di terra, cioè il
-     "răsad" — pronta da estrarre dall'alveolo e mettere a dimora. Disegnata a
-     mano in SVG per restare nitida a ogni dimensione e seguire il tema.
-     L'animazione è lieve e si spegne con prefers-reduced-motion. */
-  // Illustrazione della hero: una piantina sollevata dall'alveolo, con il pane
-  // di terra e le radici in vista. È il disegno che spiega in un colpo d'occhio
-  // che qui non si vendono semi ma piante già pronte da mettere a dimora.
+  /* Illustrazione della hero: una piantina con il pane di terra, cioè il "răsad" — pronta da estrarre dall'alveolo e mettere a dimora. */
+  // Illustrazione della hero: una piantina sollevata dall'alveolo, con il pane di terra e le radici in vista.
   function illustrazionePiantina() {
     return `
       <svg class="viv-hero-art" viewBox="0 0 260 230" role="img"
@@ -772,10 +739,6 @@
       </div>`;
   }
 
-  /* Il corpo del cassetto lo disegna il modulo condiviso: riepilogo, gruppi,
-     note della merce viva e invito incrociato sono gli stessi di home e
-     configuratore. Qui restano solo i dati che il vivaio conosce — catalogo,
-     foto, listino delle bustine — e le regole di apertura del pannello. */
   function disegnaCarrello() {
     const elenco = document.getElementById("vivaioCartItems");
     const vuoto = document.getElementById("vivaioCartEmpty");
@@ -797,16 +760,11 @@
         prezzoBustina: (id) => PRODUCTS[id]?.semi?.prezzo || 0,
         semiPerBustina: (id) => PRODUCTS[id]?.semi?.semiPerBustina || 100,
         soldi: money,
-        // Il catalogo semi vive nella home; le piantine sono il listino di
-        // questa stessa pagina, quindi basta scorrere fin lì.
         hrefSemi: "index.html#stagione",
         hrefPiantine: "#vivaioCatalog",
       });
     }
 
-    /* Sotto l'ordine minimo di vassoi la spedizione della merce viva non
-       regge: il pulsante resta visibile ma inerte, e il motivo è scritto
-       accanto alle righe delle piantine. */
     const compra = document.getElementById("vivaioCheckoutBtn");
     if (compra) {
       const sotto = piantine().length && vassoiInCarrello() < CONSEGNA.vassoiMinimi;
@@ -819,8 +777,7 @@
       riga.hidden = !n;
       riga.textContent = n ? t("cart.vars", { n }) : "";
     }
-    // Il pulsante svuota l'intero carrello: resta visibile finché c'è una
-    // riga qualsiasi, non solo una piantina.
+    // Il pulsante svuota l'intero carrello: resta visibile finché c'è una riga qualsiasi, non solo una piantina.
     const svuota = document.querySelector(".cart-clear-btn");
     if (svuota) svuota.hidden = !cart.length;
   }
@@ -881,8 +838,6 @@
 
   const nomePer = (id) => (BYID[id] ? plantName(BYID[id]) : "");
 
-  /* Stesso annulla della home e del configuratore: sta nel modulo condiviso
-     del carrello, così le tre pagine non ne fanno tre versioni diverse. */
   function offriAnnulla(chiave, valori, prima) {
     const UI = window.SerraCartUI;
     if (!UI || !UI.annullabile) return;
@@ -905,8 +860,7 @@
       setTimeout(() => (window.location.href = "account.html"), 900);
       return;
     }
-    /* Un carrello, un ordine: partono insieme bustine e piantine. Le righe
-       usano i campi che l'Area Personale già legge (bustine, prezzo). */
+    /* Un carrello, un ordine: partono insieme bustine e piantine. */
     const items = cart
       .filter((i) => BYID[i.id])
       .map((i) => {
@@ -974,11 +928,8 @@
     const trigger = event.target.closest("[data-viv-action]");
     if (!trigger) return;
     const action = trigger.dataset.vivAction;
-    // `data-plant` sulle schede del listino, `data-plant-id` sulle righe del
-    // cassetto condiviso: entrambe indicano la stessa pianta.
+    // `data-plant` sulle schede del listino, `data-plant-id` sulle righe del cassetto condiviso: entrambe indicano la stessa pianta.
     const id = trigger.dataset.plant || trigger.dataset.plantId;
-    // Lingua dal menu mobile: sotto i 660px il selettore dell'intestazione è
-    // nascosto e questi due pulsanti sono l'unico modo per cambiarla.
     if (action === "set-language") {
       applyLanguage(trigger.dataset.lang);
       return;
@@ -991,8 +942,7 @@
         found.qta += lotto;
         found.bustine = found.qta;
       } else {
-        // Il prezzo viaggia nella riga: la home mostra il totale senza dover
-        // conoscere il listino del vivaio.
+        // Il prezzo viaggia nella riga: la home mostra il totale senza dover conoscere il listino del vivaio.
         cart.push({
           id,
           variante: "piantina",
@@ -1014,9 +964,7 @@
       render();
       return;
     }
-    /* Righe del cassetto condiviso: stessi nomi d'azione di home e
-       configuratore. Il passo è una bustina per i semi e un vassoio intero per
-       le piantine, perché è così che i due prodotti viaggiano davvero. */
+    /* Righe del cassetto condiviso: stessi nomi d'azione di home e configuratore. */
     if (action === "cart-qty-more" || action === "cart-qty-less") {
       const piantina = trigger.dataset.variante === "piantina";
       const riga = C().trova(cart, id, piantina);
@@ -1028,21 +976,16 @@
       return;
     }
     if (action === "remove" || action === "remove-from-cart") {
-      // Dal listino si toglie sempre la piantina; dal cassetto, la variante
-      // scritta nella riga.
+      // Dal listino si toglie sempre la piantina; dal cassetto, la variante scritta nella riga.
       const piantina =
         action === "remove" || trigger.dataset.variante === "piantina";
-      // Fotografia di prima: è quello che l'annulla rimetterà a posto.
       const prima = cart.slice();
       cart = C().rimuovi(cart, id, piantina);
       saveCart();
       render();
-      // Il messaggio semplice diceva «Rimossa» e basta: adesso porta con sé
-      // il modo per tornare indietro, come nelle altre due pagine.
       return offriAnnulla("undo.removed", { nome: nomePer(id) }, prima);
     }
-    // Il carrello è unico: "Svuota" lo svuota davvero, semi compresi. Per
-    // togliere solo una parte ci sono i pulsanti riga per riga.
+    // Il carrello è unico: "Svuota" lo svuota davvero, semi compresi. Per togliere solo una parte ci sono i pulsanti riga per riga.
     if (action === "clear") {
       const prima = cart.slice();
       cart = C().svuota();
@@ -1063,8 +1006,6 @@
       render();
       return;
     }
-    // L'invito incrociato verso le piantine punta al listino di questa pagina:
-    // il cassetto lo coprirebbe, quindi si chiude e lascia scorrere.
     if (action === "cross-sell") {
       chiudiCarrello();
       return;
@@ -1096,8 +1037,7 @@
     render();
   });
 
-  // L'ordinamento vive nel corpo ridisegnato a ogni render: delega sul
-  // documento, come per i clic.
+  // L'ordinamento vive nel corpo ridisegnato a ogni render: delega sul documento, come per i clic.
   document.addEventListener("change", (event) => {
     if (event.target.id !== "vivSort") return;
     ordine = event.target.value;

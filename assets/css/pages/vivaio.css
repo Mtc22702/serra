@@ -1,13 +1,7 @@
-/* Vivaio: stili specifici della sezione che vende le piantine già cresciute.
- * Il bundle serra-vivaio.css è composto da _fondazioni.css (token, tema scuro,
- * intestazione) + orto.css (schede, pulsanti, hero: componenti condivisi dalle
- * due sezioni nuove) + questo file, che aggiunge solo il vassoio d'acquisto.
- * Le classi sono prefissate `viv-`.
- */
+/* Vivaio: stili specifici della sezione che vende le piantine già cresciute. */
 
 @layer base {
-  /* Ritmo verticale della pagina: hero → strumenti → listino, con lo stesso
-     respiro fra i blocchi. Prima la barra di ricerca toccava la hero. */
+  /* Ritmo verticale della pagina: hero → strumenti → listino, con lo stesso respiro fra i blocchi. */
   .viv-page #vivaioApp {
     display: flex;
     flex-direction: column;
@@ -20,8 +14,7 @@
     gap: 16px;
   }
 
-  /* Blocco strumenti: cerca, ordina, famiglie, conteggio. Stesso schema del
-     catalogo semi in home, in versione ridotta. */
+  /* Blocco strumenti: cerca, ordina, famiglie, conteggio. */
   .viv-toolbar {
     display: flex;
     flex-direction: column;
@@ -41,8 +34,7 @@
     border: 0;
   }
 
-  /* Su tablet e desktop i filtri restano sempre esposti: il riepilogo
-     richiudibile serve solo dove lo spazio verticale è più prezioso. */
+  /* Su tablet e desktop i filtri restano sempre esposti: il riepilogo richiudibile serve solo dove lo spazio verticale è più prezioso. */
   @media (min-width: 721px) {
     .viv-filter-shell:not([open]) > .viv-toolbar {
       display: flex;
@@ -60,9 +52,7 @@
     margin: 0;
   }
 
-  /* È una select: si sceglie da un elenco, non si preme. Prendeva la pillola
-     e finiva accanto alle chip dei filtri — che sono pillole per davvero —
-     rendendo indistinguibili due cose che fanno lavori diversi. */
+  /* È una select: si sceglie da un elenco, non si preme. */
   .viv-sort {
     min-height: var(--control-h-md);
     flex: 0 1 260px;
@@ -155,8 +145,6 @@
     margin-top: 0;
   }
 
-  /* Barra di stato sopra il listino: tiene visibili le regole della merce viva
-     (vassoi scelti, consegna, ordine minimo) anche a cassetto chiuso. */
   .viv-statusbar {
     display: flex;
     flex-wrap: wrap;
@@ -191,30 +179,20 @@
     margin-left: auto;
   }
 
-  /* Il cassetto del carrello non ha più stili propri qui: usa quelli condivisi
-     di base.css, gli stessi di home e configuratore. */
+  /* Il cassetto del carrello non ha più stili propri qui: usa quelli condivisi di base.css, gli stessi di home e configuratore. */
 
-  /* Schede più strette: con oltre trenta varietà due colonne obbligavano a
-     uno scorrimento lunghissimo. */
+  /* Schede più strette: con oltre trenta varietà due colonne obbligavano a uno scorrimento lunghissimo. */
   .viv-grid {
     gap: 14px;
     grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
   }
 
-  /* La foto era alta 112 px, e ci vivono tre cose sovrapposte: il chip del
-     vassoio in alto, il risparmio in giorni a destra e il nome della pianta
-     in basso. Con un nome su due righe — «Cavolo cappuccio rosso» in una
-     colonna da 215 px lo è quasi sempre — il titolo saliva fin sotto il chip
-     e le due scritte si accavallavano. Qui c'è lo spazio perché due righe di
-     nome e il chip non si tocchino mai. */
   .viv-grid .orto-card-photo {
     height: 152px;
   }
 
   .viv-grid .orto-card-titles h3 {
     font-size: 17px;
-    /* E se un nome dovesse comunque andare a tre righe, si ferma a due:
-       la fascia scura in basso ha una fine, il testo deve averla anche lui. */
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
@@ -294,8 +272,6 @@
     text-align: center;
   }
 
-  /* Piede della scheda: stessa altezza sia con il pulsante sia con il
-     regolatore, così le schede della griglia non ballano. */
   .viv-card-actions {
     display: flex;
     flex-direction: column;
@@ -338,8 +314,6 @@
     color: #fff;
   }
 
-  /* Al primo vassoio il meno si spegne: per togliere del tutto c'è "Togli",
-     così il regolatore non cancella mai una riga di nascosto. */
   .viv-qty-btn:disabled {
     color: var(--orto-muted);
     cursor: not-allowed;
@@ -362,10 +336,7 @@
     font-size: 10.5px;
   }
 
-  /* Il piede della scheda porta la conferma «✓ nel carrello» e il comando che
-     la disfa. Il comando distruttivo sta al capo opposto della riga rispetto
-     al «＋» del regolatore, che è appena sopra: erano a sei pixel l'uno
-     dall'altro, con il «rimuovi» alto diciannove. */
+  /* Il piede della scheda porta la conferma «✓ nel carrello» e il comando che la disfa. */
   .viv-card-foot {
     display: flex;
     align-items: center;
@@ -404,8 +375,7 @@
     color: #a8472b;
   }
 
-  /* Il vantaggio in giorni sta sulla foto: nella scheda stretta la riga del
-     prezzo diventava illeggibile. */
+  /* Il vantaggio in giorni sta sulla foto: nella scheda stretta la riga del prezzo diventava illeggibile. */
   .viv-save-photo {
     position: absolute;
     z-index: 2;
@@ -433,7 +403,6 @@
     font-size: 11.5px;
   }
 
-  /* Prezzo unitario: serve a confrontare, non a decidere — quindi sotto. */
   .viv-unit-price {
     margin: -6px 0 10px;
     padding: 4px 9px;
@@ -452,9 +421,7 @@
     transform: none;
   }
 
-  /* Hero del vivaio: una superficie editoriale chiara per il contenuto e una
-     tavola verde separata per il răsad. I dati di acquisto possono sempre
-     andare a capo: nessuna informazione usa ellissi o ritagli su mobile. */
+  /* Hero del vivaio: una superficie editoriale chiara per il contenuto e una tavola verde separata per il răsad. */
   .viv-hero {
     isolation: isolate;
     display: grid;
@@ -472,9 +439,7 @@
       ),
       linear-gradient(145deg, #fcfdf9 0%, #edf5ef 100%);
     color: var(--orto-ink);
-    /* Il gradino più alto è dei pannelli che stanno sopra la pagina — dialoghi
-       e tendine. Un'intestazione fa parte della pagina: sta al secondo, come
-       la fascia della giornata nell'orto. */
+    /* Il gradino più alto è dei pannelli che stanno sopra la pagina — dialoghi e tendine. */
     box-shadow: var(--elev-2);
   }
 
@@ -506,8 +471,7 @@
     background: color-mix(in srgb, var(--orto-green) 7%, transparent);
   }
 
-  /* display: contents porta copy e visuale nella griglia della sezione senza
-     cambiare il DOM usato dal rendering JavaScript. */
+  /* display: contents porta copy e visuale nella griglia della sezione senza cambiare il DOM usato dal rendering JavaScript. */
   .viv-hero .orto-hero-inner {
     display: contents;
   }
@@ -658,8 +622,7 @@
     animation-delay: -4.1s;
   }
 
-  /* La zolla oscilla appena sopra l'alveolo vuoto: suggerisce il gesto del
-     trapianto senza far muovere la struttura della hero. */
+  /* La zolla oscilla appena sopra l'alveolo vuoto: suggerisce il gesto del trapianto senza far muovere la struttura della hero. */
   .viv-art-plug,
   .viv-art-plant {
     animation: viv-settle 6s ease-in-out infinite;
@@ -698,9 +661,7 @@
     }
   }
 
-  /* L'alone `.viv-art-aura` dietro la piantina non esiste più: il disco chiaro
-     disegnava un cerchio sul verde della scheda. Vedi illustrazionePiantina()
-     in assets/js/vivaio.js. */
+  /* L'alone `.viv-art-aura` dietro la piantina non esiste più: il disco chiaro disegnava un cerchio sul verde della scheda. */
 
   .viv-shipping {
     display: flex;
@@ -714,9 +675,7 @@
     padding: 8px 10px;
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: var(--radius-md);
-    /* Il velo al 48% lasciava passare l'illustrazione chiara e il testo
-       bianco ci finiva sopra a poco più di 2:1. Il fondo diventa pieno: la
-       scritta sulla consegna è un'informazione, non una decorazione. */
+    /* Il velo al 48% lasciava passare l'illustrazione chiara e il testo bianco ci finiva sopra a poco più di 2:1. */
     background: rgba(11, 26, 19, 0.86);
     color: #fff;
     font-size: 10px;
@@ -956,12 +915,6 @@
       font-size: 9.5px;
     }
 
-    /* Su smartphone l'etichetta restava assoluta sopra una griglia a una sola
-       riga: il `margin-top` sulla spedizione era l'unico spazio che la teneva
-       lontana e, appena il testo andava a capo, i due blocchi si sovrapponevano.
-       Qui l'etichetta entra nel flusso della griglia (colonna 2, riga 1) e la
-       spedizione occupa la riga sotto: nessun elemento può più finire addosso
-       a un altro, qualunque sia la lunghezza delle stringhe tradotte. */
     .viv-hero-visual {
       display: grid;
       min-height: 84px;
@@ -1068,11 +1021,6 @@
   }
 }
 
-/* Nel vivaio il disegno della pianta sta sopra la foto senza dischetto: la
-   sezione "Il mio orto" lo tiene (vedi .orto-card-svg in pages/orto.css) perché
-   là le schede hanno foto più chiare, qui il pastiglione scuro pesava sulla
-   scheda. Restano l'ombra e il filo di contorno, che bastano a staccare il
-   disegno dallo sfondo senza costruirgli una medaglia intorno. */
 @layer polish {
   .viv-page .orto-card-svg {
     padding: 0;
@@ -1090,12 +1038,7 @@
 @layer polish {
 }
 
-/* ---------- scala minima del vivaio ----------
-   Undici regole stavano fra 9,5 e 11,5 px: prezzi, unità di vendita, spese di
-   spedizione, la data della fascia alta. Non sono decorazioni, sono i dati su
-   cui si decide un acquisto. Il progetto fissa 12 px come minimo per
-   qualsiasi testo leggibile (vedi design-qa.md) e qui non era rispettato.
-   Va in coda al foglio perché deve vincere sulle regole qui sopra. */
+/* ---------- scala minima del vivaio ---------- */
 @layer base {
   .viv-chip small,
   .viv-qty-value small,

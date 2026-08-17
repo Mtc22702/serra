@@ -1,15 +1,4 @@
-/**
- * Ponte tra gli ordini dell'Area Personale e la sezione "Il mio orto".
- *
- * Mostra ciò che l'utente ha comprato e non ha ancora messo a dimora, e lo
- * porta nella dispensa di orto.html con un tocco. Da lì l'utente decide quante
- * piante avviare e quando: chi compra venti piantine può seminarne cinque oggi
- * e le altre tra due settimane.
- *
- * È un modulo a sé, caricato dopo account.js: non ne modifica il codice, non
- * scrive negli ordini né nel carrello. Legge `SerraAPI.getOrders()` e scrive
- * solo la propria chiave `serra.inventory.v1`.
- */
+/* Ponte tra gli ordini dell'Area Personale e la sezione "Il mio orto". */
 (() => {
   const INVENTORY_KEY = "serra.inventory.v1";
   const card = document.getElementById("accountToPlantCard");
