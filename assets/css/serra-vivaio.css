@@ -3401,21 +3401,33 @@
     font-weight: 700;
   }
 
-  /* ---------- linguette ---------- */
+  /* ---------- sommario: dove sono nella pagina ---------- */
+  /* Resta appeso in alto perché la pagina è lunga: senza, a metà «Piantate»
+     non si saprebbe più che sotto c'è ancora la dispensa. */
   .orto-viewbar {
+    position: sticky;
+    top: calc(var(--nav-h, 62px) + 8px);
+    z-index: 20;
     display: block;
     margin-bottom: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .orto-tab {
+    text-decoration: none;
   }
 
   .orto-tabs {
     display: grid;
     gap: 8px;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
+    padding: 7px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-xl);
+    /* Opaco: sotto ci scorre il contenuto della pagina. */
+    background: color-mix(in srgb, var(--orto-surface) 94%, transparent);
+    box-shadow: var(--orto-shadow-sm);
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
   }
 
   .orto-tab {
@@ -3423,9 +3435,9 @@
     align-items: center;
     gap: 0 11px;
     padding: 11px 13px;
-    border: 1px solid var(--orto-line);
+    border: 1px solid transparent;
     border-radius: var(--control-radius-pill);
-    background: var(--orto-surface-2);
+    background: transparent;
     color: var(--orto-ink);
     cursor: pointer;
     font: inherit;
@@ -3433,7 +3445,8 @@
     transition:
       border-color 0.16s ease,
       background 0.16s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      transform 0.16s ease;
     position: relative;
     min-height: 62px;
     text-align: left;
@@ -3442,14 +3455,19 @@
 
   .orto-tab:hover {
     background: var(--orto-surface);
-    border-color: color-mix(in srgb, var(--orto-green) 45%, transparent);
+    border-color: color-mix(in srgb, var(--orto-green) 32%, transparent);
+    transform: translateY(-1px);
   }
 
   .orto-tab.is-active {
-    background: var(--orto-surface);
+    background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface));
     color: var(--orto-ink);
     box-shadow: var(--orto-shadow-sm);
-    border-color: color-mix(in srgb, var(--orto-green) 55%, transparent);
+    border-color: color-mix(in srgb, var(--orto-green) 40%, transparent);
+  }
+
+  .orto-tab.is-active:hover {
+    transform: none;
   }
 
   .orto-tab-badge {
@@ -3463,22 +3481,9 @@
     display: inline-grid;
     height: 24px;
     place-items: center;
+    transition: background 0.16s ease, color 0.16s ease;
   }
-
-  /* ---------- la giornata ---------- */
-  .orto-hero {
-    position: relative;
-    overflow: hidden;
-    padding: clamp(1.1rem, 2.6vw, 1.6rem) clamp(1.1rem, 2.6vw, 1.7rem);
-    border-radius: var(--radius-xl);
-    background: var(--orto-surface);
-    color: var(--orto-ink);
-    box-shadow: var(--elev-2);
-    border: 1px solid var(--orto-line);
-  }
-
-  /* Due colonne: il testo della giornata a sinistra, l'anello a destra. */
-  .orto-hero-inner {
+  /* Due colonne: il testo della giornata a sinistra {
     position: relative;
     z-index: 1;
     display: grid;
@@ -3487,117 +3492,11 @@
     justify-content: space-between;
     gap: clamp(1rem, 2.5vw, 2rem);
   }
-
-  .orto-hero-date {
-    margin: 0;
-    color: var(--orto-muted);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .orto-hero h2 {
-    margin: 0.4rem 0 10px;
-    font-size: clamp(1.4rem, 2.8vw, 2rem);
-    line-height: 1.1;
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    letter-spacing: -0.014em;
-    color: var(--orto-ink);
-  }
-
-  .orto-hero-sub {
-    max-width: 46ch;
-    margin: 0.3rem 0 0;
-    color: var(--orto-muted);
-    font-size: 0.95rem;
-  }
-
-  .orto-hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(76px, 1fr));
-    gap: 8px 22px;
-    margin-top: 0.9rem;
-    padding-top: 0.85rem;
-    border-top: 1px solid var(--orto-line);
-  }
-
-  /* ---------- riquadri delle statistiche ---------- */
-  .orto-hero-stats > span {
-    padding: 10px 11px;
-    border: 1px solid var(--orto-line);
-    border-radius: var(--radius-md);
-    background: var(--orto-surface-2);
-  }
-
-  .orto-hero-stats b {
-    display: block;
-    font-size: 25px;
-    line-height: 1;
-    color: var(--orto-ink);
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-  }
-
-  .orto-hero-stats small {
-    color: var(--orto-muted);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  /* L'anello resta, ma è un dato accanto agli altri e non un'illustrazione. */
-  .orto-ring-wrap {
+  /* L'anello resta {
     display: grid;
     grid-template-columns: auto;
     align-items: center;
     gap: 0;
-  }
-
-  .orto-ring {
-    position: relative;
-    width: 104px;
-    height: 104px;
-  }
-
-  .orto-ring svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-  }
-
-  /* ---------- testo dentro l'anello ---------- */
-  .orto-ring-txt {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    color: var(--orto-ink);
-    line-height: 1;
-    text-align: center;
-  }
-
-  .orto-ring-txt b {
-    display: block;
-    font-size: 24px;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
-    line-height: 1;
-    color: var(--orto-ink);
-  }
-
-  /* ---------- scala minima ---------- */
-  .orto-ring-txt small {
-    display: block;
-    color: var(--orto-muted);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    text-transform: uppercase;
   }
 
   /* Il riquadro delle notifiche ripeteva a parole l'elenco che sta subito sotto. */
@@ -3635,188 +3534,204 @@
     line-height: 1.35;
   }
 
-  /* ---------- striscia dei giorni ---------- */
-  .orto-daystrip {
-    display: flex;
-    gap: 6px;
-    margin: clamp(1rem, 2.4vw, 1.5rem) 0 0.4rem;
-    padding: 4px 2px;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
+  /* ---------- le tre sezioni della pagina ---------- */
+  /* La pagina è una sola e si scorre: le sezioni si separano con lo spazio
+     e con un filo, non con una scheda da scegliere. */
+  .orto-sec {
+    scroll-margin-top: calc(var(--nav-h, 62px) + 84px);
   }
 
-  .orto-daystrip::-webkit-scrollbar {
+  .orto-sec + .orto-sec {
+    margin-top: clamp(2.4rem, 5vw, 3.6rem);
+    padding-top: clamp(1.6rem, 3.5vw, 2.4rem);
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-sec-head {
+    margin-bottom: clamp(1rem, 2.4vw, 1.5rem);
+    max-width: 62ch;
+  }
+
+  /* Il passo numerato dice a colpo d'occhio dove si è nel flusso. */
+  .orto-sec-kicker {
+    margin: 0 0 6px;
+    color: var(--orto-muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .orto-sec-head h2 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--orto-ink);
+    text-wrap: balance;
+  }
+
+  .orto-sec-sub {
+    margin: 0.5rem 0 0;
+    color: var(--orto-muted);
+    font-size: 14.5px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  /* ---------- pannelli ripiegati: arretrato, fatte, prossimi giorni ---------- */
+  /* Sono contorno, non risposta: restano chiusi finché non si chiede. */
+  .orto-backlog,
+  .orto-upcoming,
+  .orto-done-group {
+    margin-bottom: 14px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: var(--orto-surface-2);
+  }
+
+  .orto-upcoming,
+  .orto-done-group {
+    margin-top: 18px;
+    margin-bottom: 0;
+  }
+
+  .orto-backlog {
+    border-color: color-mix(in srgb, #c2703f 42%, var(--orto-line));
+    background: color-mix(in srgb, #c2703f 7%, var(--orto-surface-2));
+  }
+
+  .orto-backlog-summary,
+  .orto-upcoming-summary,
+  .orto-done-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 10px 15px;
+    border-radius: inherit;
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.16s ease;
+  }
+
+  .orto-backlog-summary::-webkit-details-marker,
+  .orto-upcoming-summary::-webkit-details-marker,
+  .orto-done-summary::-webkit-details-marker {
     display: none;
   }
 
-  .orto-day {
-    position: relative;
+  .orto-backlog-summary:hover,
+  .orto-upcoming-summary:hover,
+  .orto-done-summary:hover {
+    background: color-mix(in srgb, var(--orto-green) 6%, transparent);
+  }
+
+  .orto-backlog-ico,
+  .orto-upcoming-ico {
     display: grid;
-    width: 54px;
     flex: none;
-    padding: 7px 4px 8px;
-    border: 1px solid var(--orto-line);
-    border-radius: var(--radius-lg);
-    background: var(--orto-surface);
-    color: var(--orto-ink-soft);
-    cursor: pointer;
-    font: inherit;
-    justify-items: center;
-    scroll-snap-align: center;
-    transition:
-      border-color 0.16s ease,
-      background 0.16s ease,
-      color 0.16s ease;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--orto-green) 11%, transparent);
+    font-size: 16px;
+    place-items: center;
   }
 
-  .orto-day:hover {
-    border-color: color-mix(in srgb, var(--orto-green) 45%, transparent);
+  .orto-backlog .orto-backlog-ico {
+    background: color-mix(in srgb, #c2703f 16%, transparent);
   }
 
-  .orto-day-dow {
+  .orto-backlog-copy,
+  .orto-upcoming-copy {
+    display: block;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .orto-backlog-copy b,
+  .orto-upcoming-copy b,
+  .orto-done-summary b {
+    display: block;
+    color: var(--orto-ink);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .orto-backlog-copy small,
+  .orto-upcoming-copy small {
+    display: block;
+    margin-top: 2px;
     color: var(--orto-muted);
-    font-size: 12px;
-    font-weight: 650;
-    line-height: 1.1;
-    text-transform: lowercase;
+    font-size: 12.5px;
+    line-height: 1.35;
   }
 
-  .orto-day-num {
-    margin-top: 1px;
-    font-family: "Fraunces", Georgia, serif;
-    font-size: 1.15rem;
-    font-weight: 600;
-    line-height: 1.15;
+  .orto-done-summary {
+    min-height: 48px;
+    color: var(--orto-muted);
   }
 
-  /* Il numero di attività aperte. */
-  .orto-day-dot {
+  .orto-done-summary > span[aria-hidden] {
     display: grid;
-    min-width: 18px;
-    height: 18px;
-    margin-top: 3px;
-    padding: 0 5px;
-    border-radius: var(--radius-pill);
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
     background: color-mix(in srgb, var(--orto-green) 15%, transparent);
     color: var(--orto-green);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     place-items: center;
   }
 
-  .orto-day-dot.is-empty {
-    width: 5px;
-    height: 5px;
-    min-width: 0;
-    margin-top: 9px;
-    margin-bottom: 4px;
-    padding: 0;
-    background: var(--orto-line-strong);
-  }
-
-  /* Oggi resta riconoscibile anche quando si sta guardando un altro giorno. */
-  .orto-day.is-today .orto-day-num {
-    color: var(--orto-green);
-  }
-
-  .orto-day.is-selected {
-    border-color: var(--orto-green);
-    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
-    color: var(--orto-ink);
-  }
-
-  .orto-day.is-selected .orto-day-dow {
-    color: var(--orto-green);
-  }
-
-  .orto-day.is-selected .orto-day-dot {
-    background: var(--orto-green);
-    color: #fffdf6;
-  }
-
-  .orto-day.is-selected .orto-day-dot.is-empty {
-    background: color-mix(in srgb, var(--orto-green) 55%, transparent);
-  }
-
-  /* ---------- intestazione di un giorno diverso da oggi ---------- */
-  .orto-dayhead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 0.6rem;
-    padding: 14px 16px;
-    border: 1px solid var(--orto-line);
-    border-radius: var(--radius-xl);
-    background: var(--orto-surface);
-    box-shadow: var(--elev-1);
-  }
-
-  .orto-dayhead-when {
-    margin: 0;
-    color: var(--orto-green);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .orto-dayhead h2 {
-    margin: 0.25rem 0 0;
-    font-family: "Fraunces", Georgia, serif;
-    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-    font-weight: 600;
-    letter-spacing: -0.014em;
-    line-height: 1.15;
-    color: var(--orto-ink);
-    text-transform: capitalize;
-  }
-
-  .orto-dayhead-sub {
-    margin: 0.25rem 0 0;
-    color: var(--orto-muted);
-    font-size: 0.93rem;
-  }
-
-  /* ---------- intestazioni dell'elenco attività ---------- */
-  .orto-section-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: clamp(1.6rem, 3.5vw, 2.2rem) 0 0.8rem;
-  }
-
-  .orto-section-head h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    font-family: "Fraunces", Georgia, serif;
-    color: var(--orto-ink);
-  }
-
-  .orto-count {
-    padding: 0 7px;
-    border-radius: var(--radius-pill);
-    background: rgba(47, 107, 58, 0.12);
-    color: var(--orto-green);
-    font-size: 12px;
-    font-weight: 700;
-    display: inline-grid;
-    min-width: 22px;
-    height: 22px;
-    place-items: center;
-  }
-
-  .orto-rule {
+  .orto-done-summary b {
     flex: 1;
-    height: 1px;
-    background: var(--orto-line);
+    font-size: 14px;
+  }
+
+  /* Un'etichetta sola che si scambia in base allo stato del pannello. */
+  .orto-backlog-toggle {
+    flex: none;
+    color: var(--orto-green);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .orto-backlog-hide,
+  [open] > * .orto-backlog-show,
+  [open] > .orto-backlog-summary .orto-backlog-show,
+  [open] > .orto-upcoming-summary .orto-backlog-show,
+  [open] > .orto-done-summary .orto-backlog-show {
+    display: none;
+  }
+
+  [open] > .orto-backlog-summary .orto-backlog-hide,
+  [open] > .orto-upcoming-summary .orto-backlog-hide,
+  [open] > .orto-done-summary .orto-backlog-hide {
+    display: inline;
+  }
+
+  .orto-backlog-body,
+  .orto-upcoming-body {
+    padding: 2px 12px 12px;
+  }
+
+  .orto-upcoming-day + .orto-upcoming-day {
+    margin-top: 14px;
+  }
+
+  .orto-upcoming-when {
+    margin: 0 0 7px;
+    color: var(--orto-ink-soft);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   /* ---------- attività ---------- */
@@ -4030,34 +3945,6 @@
     margin: 0 auto;
     color: var(--orto-muted);
     font-size: 14px;
-  }
-
-  /* ---------- schede ---------- */
-  .orto-view-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    margin: 4px 0 20px;
-  }
-
-  /* ---------- schede di coltura e di dispensa ---------- */
-  .orto-view-head h2 {
-    margin: 0 0 4px;
-    font-size: clamp(1.5rem, 3vw, 2.1rem);
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.014em;
-    color: var(--orto-ink);
-  }
-
-  .orto-view-head p {
-    max-width: 62ch;
-    margin: 0.3rem 0 0;
-    color: var(--orto-muted);
-    font-size: 0.97rem;
   }
 
   .orto-grid {
@@ -4318,6 +4205,66 @@
   }
 
   /* ---------- magazzino: la vista «Da piantare» ---------- */
+  .orto-stock-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 0 12px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: var(--control-radius);
+    background: var(--orto-surface);
+    color: var(--orto-muted);
+  }
+
+  .orto-stock-search input {
+    width: 100%;
+    padding: 11px 0;
+    border: 0;
+    background: none;
+    color: var(--orto-ink);
+    font: inherit;
+    outline: none;
+  }
+
+  /* Un gruppo per provenienza: dice una volta sola da dove arriva tutto ciò che contiene, invece di ripeterlo su ogni voce. */
+  .orto-stock-group + .orto-stock-group {
+    margin-top: 22px;
+  }
+
+  .orto-stock-group-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--orto-line);
+  }
+
+  .orto-stock-group-ico {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--orto-surface-2);
+    font-size: 15px;
+    place-items: center;
+  }
+
+  .orto-stock-group-head h3 {
+    margin: 0;
+    color: var(--orto-ink);
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .orto-stock-group-head p {
+    margin: 1px 0 0;
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
   .orto-stock-list {
     display: grid;
     gap: 8px;
@@ -5123,6 +5070,48 @@
     flex: 1;
   }
 
+  /* ---------- dialogo di importazione ordini ---------- */
+  .orto-import-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .orto-import-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: var(--orto-surface);
+    cursor: pointer;
+    transition: border-color 0.16s ease;
+  }
+
+  .orto-import-row:has(input:checked) {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 6%, var(--orto-surface));
+  }
+
+  .orto-import-row input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--orto-green);
+  }
+
+  .orto-import-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    color: var(--orto-ink);
+  }
+
+  .orto-import-body small {
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
   .orto-origin {
     display: flex;
     gap: 10px;
@@ -5408,6 +5397,12 @@
     background: color-mix(in srgb, var(--orto-green) 11%, transparent);
     font-size: 17px;
     place-items: center;
+    transition: background 0.16s ease, transform 0.16s ease;
+  }
+
+  .orto-tab.is-active .orto-tab-ico {
+    background: color-mix(in srgb, var(--orto-green) 20%, transparent);
+    transform: scale(1.04);
   }
 
   .orto-tab-copy {
@@ -5421,6 +5416,11 @@
     font-size: 0.98rem;
     font-weight: 700;
     line-height: 1.2;
+    transition: color 0.16s ease;
+  }
+
+  .orto-tab.is-active .orto-tab-name {
+    color: var(--orto-green-dk, var(--orto-green));
   }
 
   /* La riga di stato è quello che trasforma una voce di menu in un'informazione: «tutto a posto» oppure «2 in ritardo». */
@@ -5442,18 +5442,6 @@
   .orto-tab.is-active .orto-tab-badge {
     background: var(--orto-green);
     color: #fffdf6;
-  }
-
-  .orto-hero::before {
-    display: none;
-  }
-
-  .orto-hero::after {
-    display: none;
-  }
-
-  .orto-hero-stats span {
-    color: var(--orto-muted);
   }
 
   .orto-check::before {
@@ -5498,14 +5486,6 @@
     font-weight: 700;
   }
 
-  .orto-ring-track {
-    stroke: color-mix(in srgb, var(--orto-green) 18%, transparent);
-  }
-
-  .orto-ring-arc {
-    stroke: var(--orto-green);
-  }
-
   .orto-dialog-who:not(:empty)::after {
     content: " — ";
   }
@@ -5527,44 +5507,6 @@
 
 @layer base {
   @media (max-width: 720px) {
-    .orto-hero h2 {
-      margin: 4px 0 6px;
-    }
-
-    .orto-hero-sub {
-      line-height: 1.4;
-    }
-
-    .orto-hero-inner {
-      grid-template-columns: 1fr;
-    }
-
-    .orto-hero-stats > span {
-      min-width: 0;
-      padding: 7px 8px;
-      border-radius: var(--radius-sm);
-    }
-
-    .orto-hero-stats b {
-      font-size: 20px;
-    }
-
-    .orto-hero-stats small {
-      display: block;
-      margin-top: 3px;
-      font-size: 9px;
-      line-height: 1.15;
-    }
-
-    /* L'anello resta a 104px anche su schermo stretto. */
-    .orto-ring {
-      width: 104px;
-      height: 104px;
-    }
-
-    .orto-ring-txt b {
-      font-size: 22px;
-    }
 
     .orto-notif {
       max-width: none;
@@ -5588,10 +5530,6 @@
       margin-top: 1px;
       font-size: 11.5px;
       line-height: 1.3;
-    }
-
-    .orto-view-head h2 {
-      font-size: 24px;
     }
 
     .orto-task-thumb {
@@ -5702,7 +5640,8 @@
     color: var(--orto-green-lt);
   }
 
-  html[data-theme="dark"] .orto-picker-search input {
+  html[data-theme="dark"] .orto-picker-search input,
+  html[data-theme="dark"] .orto-stock-search input {
     background-color: transparent;
     border-color: transparent;
   }
@@ -5727,19 +5666,6 @@
   html[data-theme="dark"] .orto-howto-steps li.is-current .orto-howto-no {
     background: var(--orto-green);
     color: #0b1a13;
-  }
-
-  html[data-theme="dark"] .orto-day-dot {
-    color: var(--orto-green-lt);
-  }
-
-  html[data-theme="dark"] .orto-day.is-selected .orto-day-dot {
-    color: #0b1a13;
-  }
-
-  html[data-theme="dark"] .orto-day.is-today .orto-day-num,
-  html[data-theme="dark"] .orto-dayhead-when {
-    color: var(--orto-green-lt);
   }
 
   html[data-theme="dark"] .orto-track-cursor {
@@ -5773,11 +5699,6 @@
     color: #f0a087;
   }
 
-  html[data-theme="dark"] .orto-count {
-    background: rgba(124, 196, 141, 0.16);
-    color: #8bd49e;
-  }
-
   html[data-theme="dark"] .orto-task.is-late {
     border-color: rgba(226, 140, 99, 0.34);
     background: #1f1a15;
@@ -5799,13 +5720,6 @@
 }
 
 @layer polish {
-  .orto-hero-stats small {
-    font-size: 12px;
-  }
-
-  .orto-ring-txt small {
-    font-size: 12px;
-  }
 
   .orto-notif b {
     font-size: 12px;
@@ -5813,10 +5727,6 @@
 
   .orto-notif p {
     font-size: 14px;
-  }
-
-  .orto-count {
-    font-size: 12px;
   }
 
   .nav-link--vivaio[data-count]::after {
@@ -5960,14 +5870,6 @@
       color: var(--orto-green-dk);
     }
 
-    .orto-hero-inner {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .orto-ring-wrap {
-      justify-self: start;
-    }
-
     .orto-page:not(.viv-page) .orto-toast {
       right: 12px;
       bottom: calc(96px + env(safe-area-inset-bottom));
@@ -6064,15 +5966,6 @@
       padding-top: 12px;
     }
 
-    .orto-day {
-      width: 50px;
-    }
-
-    .orto-daystrip {
-      margin-inline: -14px;
-      padding-inline: 14px;
-    }
-
     /* La striscia dei passi in colonna: tre voci affiancate su 360px darebbero tre parole tagliate. */
     .orto-howto-steps {
       gap: 12px;
@@ -6125,10 +6018,9 @@
 
 @layer polish {
   @media (prefers-reduced-motion: reduce) {
-    .orto-stock,
-    .orto-dialog-sheet,
-    .orto-pick,
-    .orto-day {
+  .orto-stock,
+  .orto-dialog-sheet,
+  .orto-pick {
       animation: none;
       transition: none;
     }

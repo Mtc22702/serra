@@ -146,7 +146,7 @@
         "«Il mio orto» non vende niente: tiene il conto al posto tuo di cosa hai piantato, di cosa serve oggi e di cosa è rimasto indietro. Funziona anche con piante comprate altrove.",
       "grow.s1t": "Le tre schede in alto",
       "grow.s1p":
-        "«Agenda» elenca le attività del giorno e, scorrendo la striscia delle date, anche quelle dei giorni successivi. «Colture» raccoglie le piante che stai seguendo, «Da piantare» ciò che hai comprato e non è ancora in terra. Il numero accanto a ogni nome dice quanto c'è dentro.",
+        "«Agenda» elenca le attività del giorno e, scorrendo la striscia delle date, anche quelle dei giorni successivi. «Piantate» raccoglie le piante che stai seguendo, «Da piantare» ciò che hai comprato e non è ancora in terra. Il numero accanto a ogni nome dice quanto c'è dentro.",
       "grow.s2t": "Registra una coltura",
       "grow.s2p":
         "«＋ Aggiungi coltura» chiede pianta, data, quantità e posizione. Da quei quattro dati l'app costruisce da sola il calendario di cura fino alla raccolta.",
@@ -179,6 +179,20 @@
         "Puoi installare l'app dal browser e riaprirla senza rete: l'ultima versione visitata delle pagine resta disponibile.",
       "settings.note":
         "<b>Dove finiscono i tuoi dati.</b> Carrello, vassoio e «Il mio orto» sono salvati nel browser che stai usando: su un altro dispositivo ripartono vuoti. Gli ordini invece restano nell'Area Personale e li ritrovi ovunque tu acceda.",
+
+      "nav.abbinamenti": "🌿 Abbinamenti",
+      "nav.contatti": "✉️ Contatti",
+      "footer.motto": "Pianta con cura, raccogli con gioia.",
+      "footer.tip_title": "Consiglio del mese",
+      "footer.tip_text": "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
+      "footer.explore": "Esplora",
+      "footer.kit": "📦 Kit del mese",
+      "footer.legal": "Legale",
+      "footer.privacy": "Privacy Policy",
+      "footer.cookie": "Cookie Policy",
+      "footer.terms": "Termini di Servizio",
+      "footer.support": "Supporto",
+      "footer.rights": "© 2026 Orto in Serra · Tutti i diritti riservati",
     },
     ro: {
       "page.title": "Cum folosești Orto in Serra · Ghid",
@@ -322,7 +336,7 @@
         "„Grădina mea” nu vinde nimic: ține socoteala în locul tău a ceea ce ai plantat, a ce trebuie făcut azi și a ce a rămas în urmă. Merge și cu plante cumpărate din altă parte.",
       "grow.s1t": "Cele trei file de sus",
       "grow.s1p":
-        "„Agendă” listează activitățile zilei și, derulând banda datelor, și pe cele din zilele următoare. „Culturi” adună plantele pe care le urmărești, „De plantat” ce ai cumpărat și nu este încă în pământ. Numărul de lângă fiecare nume spune cât e înăuntru.",
+        "„Agendă” listează activitățile zilei și, derulând banda datelor, și pe cele din zilele următoare. „Plantate” adună plantele pe care le urmărești, „De plantat” ce ai cumpărat și nu este încă în pământ. Numărul de lângă fiecare nume spune cât e înăuntru.",
       "grow.s2t": "Înregistrează o cultură",
       "grow.s2p":
         "„＋ Adaugă cultură” cere planta, data, cantitatea și poziția. Din aceste patru date aplicația construiește singură calendarul de îngrijire până la recoltă.",
@@ -354,6 +368,20 @@
         "Poți instala aplicația din browser și o poți redeschide fără rețea: ultima versiune vizitată a paginilor rămâne disponibilă.",
       "settings.note":
         "<b>Unde ajung datele tale.</b> Coșul, tava și „Grădina mea” sunt salvate în browserul pe care îl folosești: pe alt dispozitiv pornesc goale. Comenzile, în schimb, rămân în Zona personală și le regăsești oriunde te autentifici.",
+
+      "nav.abbinamenti": "🌿 Combinații",
+      "nav.contatti": "✉️ Contact",
+      "footer.motto": "Plantează cu grijă, culege cu bucurie.",
+      "footer.tip_title": "Sfatul lunii",
+      "footer.tip_text": "Udă la bază, niciodată pe frunze: previne oidiumul.",
+      "footer.explore": "Explorează",
+      "footer.kit": "📦 Kit-ul lunii",
+      "footer.legal": "Legal",
+      "footer.privacy": "Politică de confidențialitate",
+      "footer.cookie": "Politică Cookie",
+      "footer.terms": "Termeni de serviciu",
+      "footer.support": "Suport",
+      "footer.rights": "© 2026 Orto in Serra · Toate drepturile rezervate",
     },
   };
   const tabs = [...document.querySelectorAll(".guide-tab")];
@@ -524,4 +552,11 @@
   });
   applyLanguage(localStorage.getItem("ois.lang"));
   selectRoute(requested || "novizio");
+
+  // Rende infinita la striscia degli ortaggi nel piè di pagina duplicando gli elementi.
+  const footerRow = document.getElementById("footerPlantRow");
+  if (footerRow) {
+    const html = footerRow.innerHTML;
+    footerRow.innerHTML = html + html + html + html;
+  }
 })();

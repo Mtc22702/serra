@@ -266,30 +266,33 @@
             </button>
           </div>
           <ol class="orto-howto-steps">
-            <li data-orto-step="dispensa">
+            <li>
               <span class="orto-howto-no" aria-hidden="true">1</span>
               <span class="orto-howto-copy">
                 <b data-orto-key="howto.s1t">Registra cosa hai</b>
                 <small data-orto-key="howto.s1p"
-                  >Semi e piantine, comprati qui o altrove.</small
+                  >Semi e piantine finiscono in «Da piantare», in fondo alla
+                  pagina.</small
                 >
               </span>
             </li>
-            <li data-orto-step="oggi">
+            <li>
               <span class="orto-howto-no" aria-hidden="true">2</span>
               <span class="orto-howto-copy">
-                <b data-orto-key="howto.s2t">Segui la giornata</b>
+                <b data-orto-key="howto.s2t">Piantali quando vuoi</b>
                 <small data-orto-key="howto.s2p"
-                  >Ogni mattina trovi solo ciò che serve oggi.</small
+                  >Da lì passano in «Piantate» e ricevono il loro
+                  calendario.</small
                 >
               </span>
             </li>
-            <li data-orto-step="colture">
+            <li>
               <span class="orto-howto-no" aria-hidden="true">3</span>
               <span class="orto-howto-copy">
-                <b data-orto-key="howto.s3t">Arriva alla raccolta</b>
+                <b data-orto-key="howto.s3t">Segui la giornata</b>
                 <small data-orto-key="howto.s3p"
-                  >Ogni coltura ha il suo calendario fino alla fine.</small
+                  >In cima trovi solo ciò che serve oggi, fino alla
+                  raccolta.</small
                 >
               </span>
             </li>
@@ -299,54 +302,41 @@
         </div>
       </details>
 
-      <!-- Selettore delle tre viste: attività del giorno, colture seguite, dispensa -->
-      <div class="orto-viewbar">
+      <!-- Sommario: non cambia vista, porta alla sezione. La pagina è una sola. -->
+      <div class="orto-viewbar" id="ortoViewbar" hidden>
         <!-- Div e non <nav>: in base.css il tag nav è riservato alla navigazione principale fissa -->
-        <div class="orto-tabs" role="tablist" aria-label="Sezioni dell'orto">
-          <button
-            class="orto-tab is-active"
-            type="button"
-            role="tab"
-            id="ortoTabOggi"
-            aria-selected="true"
-            aria-controls="ortoApp"
-            data-orto-view="oggi"
-          >
+        <div
+          class="orto-tabs"
+          role="group"
+          data-orto-key-aria="jump.aria"
+          aria-label="Vai a una sezione"
+        >
+          <a class="orto-tab" href="#ortoSecOggi" data-orto-jump="ortoSecOggi">
             <span class="orto-tab-ico" aria-hidden="true">☀️</span>
             <span class="orto-tab-copy">
               <span class="orto-tab-name" data-orto-key="tab.oggi">Oggi</span>
               <span class="orto-tab-note" id="ortoOggiNote"></span>
             </span>
             <span class="orto-tab-badge" id="ortoTodayBadge" hidden>0</span>
-          </button>
-          <button
+          </a>
+          <a
             class="orto-tab"
-            type="button"
-            role="tab"
-            id="ortoTabColture"
-            aria-selected="false"
-            aria-controls="ortoApp"
-            tabindex="-1"
-            data-orto-view="colture"
+            href="#ortoSecPiante"
+            data-orto-jump="ortoSecPiante"
           >
             <span class="orto-tab-ico" aria-hidden="true">🌿</span>
             <span class="orto-tab-copy">
               <span class="orto-tab-name" data-orto-key="tab.colture"
-                >Colture</span
+                >Piantate</span
               >
               <span class="orto-tab-note" id="ortoColtureNote"></span>
             </span>
             <span class="orto-tab-badge" id="ortoColtureBadge" hidden>0</span>
-          </button>
-          <button
+          </a>
+          <a
             class="orto-tab"
-            type="button"
-            role="tab"
-            id="ortoTabDispensa"
-            aria-selected="false"
-            aria-controls="ortoApp"
-            tabindex="-1"
-            data-orto-view="dispensa"
+            href="#ortoSecDispensa"
+            data-orto-jump="ortoSecDispensa"
           >
             <span class="orto-tab-ico" aria-hidden="true">📦</span>
             <span class="orto-tab-copy">
@@ -356,17 +346,12 @@
               <span class="orto-tab-note" id="ortoDispensaNote"></span>
             </span>
             <span class="orto-tab-badge" id="ortoDispensaBadge" hidden>0</span>
-          </button>
+          </a>
         </div>
       </div>
 
-      <!-- Contenuto generato da orto.js in base alla vista attiva -->
-      <div
-        id="ortoApp"
-        role="tabpanel"
-        tabindex="-1"
-        aria-labelledby="ortoTabOggi"
-      ></div>
+      <!-- Le tre sezioni della pagina, generate da orto.js -->
+      <div id="ortoApp" tabindex="-1"></div>
     </main>
 
     <!-- Messaggio temporaneo di conferma delle azioni -->
@@ -390,7 +375,7 @@
             <h3 id="ortoAddTitle" data-orto-key="dlg.title">
               Aggiungi una coltura
             </h3>
-            <p data-orto-key="dlg.sub">
+            <p id="ortoAddSub" data-orto-key="dlg.sub">
               Da qui parte il calendario di cura fino alla raccolta.
             </p>
           </div>
@@ -512,10 +497,12 @@
               <section class="orto-step">
                 <p class="orto-step-head">
                   <span class="orto-step-no" aria-hidden="true">3</span>
-                  <span data-orto-key="dlg.step_when">Quando e quante</span>
+                  <span id="ortoStepWhenLabel" data-orto-key="dlg.step_when"
+                    >Quando e quante</span
+                  >
                 </p>
                 <div class="orto-row">
-                  <div class="orto-field">
+                  <div class="orto-field" id="ortoDateField">
                     <label for="ortoDate" data-orto-key="dlg.date"
                       >Data di semina / messa a dimora</label
                     >
@@ -526,7 +513,7 @@
                     <input type="number" id="ortoQty" min="1" value="4" />
                   </div>
                 </div>
-                <div class="orto-field">
+                <div class="orto-field" id="ortoPositionField">
                   <label for="ortoPosition" data-orto-key="dlg.position"
                     >Posizione (facoltativa)</label
                   >
@@ -581,7 +568,7 @@
         <div class="orto-dialog-head">
           <div class="orto-dialog-heading">
             <h3 id="ortoPlantTitle" data-orto-key="plant.title">
-              Metti a dimora
+              Pianta ora
             </h3>
             <!-- Trattino di separazione gestito in CSS (.orto-dialog-who) -->
             <p>
@@ -647,7 +634,7 @@
               value="ok"
               data-orto-key="plant.confirm"
             >
-              Metti a dimora
+              Pianta
             </button>
           </div>
         </form>
@@ -821,6 +808,115 @@
       </div>
     </dialog>
 
+    <!-- Scelta di quali ordini importare nella dispensa: evita di riportare dentro acquisti già gestiti -->
+    <dialog
+      class="orto-dialog"
+      id="ortoImportDialog"
+      aria-labelledby="ortoImportTitle"
+    >
+      <div class="orto-dialog-sheet">
+        <span class="orto-dialog-grip" aria-hidden="true"></span>
+        <div class="orto-dialog-head">
+          <div class="orto-dialog-heading">
+            <h3 id="ortoImportTitle" data-orto-key="import.title">
+              Scegli l'ordine da importare
+            </h3>
+            <p data-orto-key="import.sub">
+              Seleziona gli ordini da aggiungere alla dispensa. Quelli già
+              presenti non si duplicano.
+            </p>
+          </div>
+          <button
+            class="orto-dialog-close"
+            type="button"
+            data-orto-action="close-dialog"
+            data-dialog="ortoImportDialog"
+            data-orto-key-aria="dlg.close"
+            aria-label="Chiudi"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+        <form method="dialog" class="orto-dialog-form" id="ortoImportForm">
+          <div class="orto-dialog-body">
+            <div class="orto-import-list" id="ortoImportList"></div>
+          </div>
+          <div class="orto-dialog-foot">
+            <button
+              type="submit"
+              formnovalidate
+              class="orto-btn orto-btn--ghost"
+              value="cancel"
+              data-orto-key="dlg.cancel"
+            >
+              Annulla
+            </button>
+            <button
+              type="submit"
+              class="orto-btn"
+              value="ok"
+              data-orto-key="import.confirm"
+            >
+              Importa
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Conferma di svuotamento della dispensa: le voci restano negli ordini, spariscono solo da qui -->
+    <dialog
+      class="orto-dialog orto-dialog--confirm"
+      id="ortoClearStockDialog"
+      aria-labelledby="ortoClearStockTitle"
+    >
+      <div class="orto-dialog-sheet">
+        <span class="orto-dialog-grip" aria-hidden="true"></span>
+        <div class="orto-dialog-head orto-dialog-head--danger">
+          <div class="orto-dialog-heading">
+            <h3 id="ortoClearStockTitle" data-orto-key="clear.title">
+              Svuotare «Da piantare»?
+            </h3>
+            <p data-orto-key="clear.sub">
+              Le voci spariscono da questo elenco. Restano nei tuoi ordini e
+              puoi reimportarle quando vuoi.
+            </p>
+          </div>
+          <button
+            class="orto-dialog-close"
+            type="button"
+            data-orto-action="close-dialog"
+            data-dialog="ortoClearStockDialog"
+            data-orto-key-aria="dlg.close"
+            aria-label="Chiudi"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+        <form method="dialog" class="orto-dialog-form" id="ortoClearStockForm">
+          <div class="orto-dialog-foot">
+            <button
+              type="submit"
+              formnovalidate
+              class="orto-btn orto-btn--ghost"
+              value="cancel"
+              data-orto-key="dlg.cancel"
+            >
+              Annulla
+            </button>
+            <button
+              type="submit"
+              class="orto-btn orto-btn--danger"
+              value="ok"
+              data-orto-key="clear.confirm"
+            >
+              Svuota
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
     <!-- Conferma di eliminazione: rimuove anche lo storico attività, azione non annullabile -->
     <dialog
       class="orto-dialog orto-dialog--confirm"
@@ -876,6 +972,159 @@
         </form>
       </div>
     </dialog>
+
+    <!-- Piè di pagina condiviso con informazioni e collegamenti del sito -->
+    <footer class="footer-botanico">
+      <div class="footer-plant-strip">
+        <div class="footer-plant-row" id="footerPlantRow">
+          <span class="footer-plant-icon">🍅</span>
+          <span class="footer-plant-icon">🫑</span>
+          <span class="footer-plant-icon">🍆</span>
+          <span class="footer-plant-icon">🥒</span>
+          <span class="footer-plant-icon">🥬</span>
+          <span class="footer-plant-icon">🥦</span>
+          <span class="footer-plant-icon">🧅</span>
+          <span class="footer-plant-icon">🥕</span>
+          <span class="footer-plant-icon">🥔</span>
+          <span class="footer-plant-icon">🫘</span>
+          <span class="footer-plant-icon">🫛</span>
+          <span class="footer-plant-icon">🌽</span>
+          <span class="footer-plant-icon">🍅</span>
+          <span class="footer-plant-icon">🫑</span>
+          <span class="footer-plant-icon">🍆</span>
+          <span class="footer-plant-icon">🥒</span>
+          <span class="footer-plant-icon">🥬</span>
+          <span class="footer-plant-icon">🥦</span>
+          <span class="footer-plant-icon">🧅</span>
+          <span class="footer-plant-icon">🥕</span>
+          <span class="footer-plant-icon">🥔</span>
+          <span class="footer-plant-icon">🫘</span>
+          <span class="footer-plant-icon">🫛</span>
+          <span class="footer-plant-icon">🌽</span>
+        </div>
+      </div>
+      <div class="footer-main">
+        <div class="footer-brand-col">
+          <div class="footer-logo-row">
+            <img
+              class="footer-logo"
+              src="assets/img/svg/logo.svg"
+              alt="Orto in Serra"
+            />
+            <span class="footer-brand-name">Orto in Serra</span>
+          </div>
+          <div class="footer-motto" data-orto-key="footer.motto">
+            "Pianta con cura, raccogli con gioia."
+          </div>
+          <div class="footer-social">
+            <a href="#" title="Instagram" aria-label="Instagram"
+              ><img
+                src="assets/img/svg/icon-instagram.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="Facebook" aria-label="Facebook"
+              ><img
+                src="assets/img/svg/icon-facebook.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+            <a href="#" title="YouTube" aria-label="YouTube"
+              ><img
+                src="assets/img/svg/icon-youtube.svg"
+                alt=""
+                class="footer-social-icon"
+            /></a>
+          </div>
+          <div class="footer-tip-inline">
+            <div class="footer-tip-kicker" data-orto-key="footer.tip_title">
+              Consiglio del mese
+            </div>
+            <div class="footer-tip-text" data-orto-key="footer.tip_text">
+              Annaffia alla base, mai sulle foglie: previeni l'oidio.
+            </div>
+          </div>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-nav-title" data-orto-key="footer.explore">
+            Esplora
+          </div>
+          <ul class="footer-nav-list">
+            <li><a href="index.html" data-orto-key="nav.home">🏠 Home</a></li>
+            <li>
+              <a href="configuratore.html" data-orto-key="nav.configuratore"
+                >📐 Configuratore serra</a
+              >
+            </li>
+            <li>
+              <a href="index.html#abbinamenti" data-orto-key="nav.abbinamenti"
+                >🌿 Abbinamenti</a
+              >
+            </li>
+            <li>
+              <a href="index.html#kit" data-orto-key="footer.kit"
+                >📦 Kit del mese</a
+              >
+            </li>
+            <li>
+              <a href="index.html#contatti" data-orto-key="nav.contatti"
+                >✉️ Contatti</a
+              >
+            </li>
+            <li>
+              <a href="account.html" data-orto-key="nav.account"
+                >👤 Area Personale</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-legal-title" data-orto-key="footer.legal">
+            Legale
+          </div>
+          <ul class="footer-legal-list">
+            <li>
+              <a href="#" data-placeholder-link data-orto-key="footer.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" data-placeholder-link data-orto-key="footer.cookie"
+                >Cookie Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" data-placeholder-link data-orto-key="footer.terms"
+                >Termini di Servizio</a
+              >
+            </li>
+          </ul>
+          <div class="footer-support-block">
+            <div class="footer-nav-title" data-orto-key="footer.support">
+              Supporto
+            </div>
+            <ul class="footer-legal-list">
+              <li>
+                <a href="mailto:info@ortoinserra.it">info@ortoinserra.it</a>
+              </li>
+              <li><a href="tel:+390559870123">+39 055 987 0123</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-company-info">
+          Orto in Serra S.r.l. · P.IVA 07123456789 · Via delle Serre 42, 50023
+          Impruneta (FI)
+        </div>
+        <div class="footer-gdpr-copy" data-orto-key="footer.rights">
+          © 2026 Orto in Serra · Tutti i diritti riservati
+        </div>
+        <span class="footer-app-version" aria-label="Versione applicazione"
+          >v20260816-203216dddd48</span
+        >
+      </div>
+    </footer>
 
     <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; orto.js disegna. -->
     <script src="assets/js/base.js" defer></script>

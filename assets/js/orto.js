@@ -32,44 +32,49 @@
       "page.title": "Il mio orto",
       "page.lead":
         "Registra cosa hai piantato e ti diciamo cosa fare, settimana per settimana, fino alla raccolta. Funziona anche con piante comprate altrove.",
-      "tab.oggi": "Agenda",
+      "tab.oggi": "Oggi",
       "tab.oggi_todo": "da fare adesso",
-      "tab.oggi_late": "{n} in ritardo",
+      // Il badge conta le attività di oggi: questa riga aggiunge l'arretrato, non lo sostituisce.
+      "tab.oggi_late": "+{n} arretrate",
       "tab.oggi_clear": "tutto a posto",
-      // Le due righe di stato dicono la differenza fra le due schede: una elenca ciò che è già in terra, l'altra ciò che non lo è ancora.
+      // Le due righe di stato dicono la differenza fra le due sezioni: una elenca ciò che è già in terra, l'altra ciò che non lo è ancora.
       "tab.colture_note": "già in terra",
       "tab.colture_empty": "ancora niente",
       "tab.dispensa_note": "non ancora in terra",
       "tab.dispensa_empty": "dispensa vuota",
-      "tab.colture": "Colture",
+      "tab.colture": "Piantate",
       "tab.dispensa": "Da piantare",
 
       "welcome.kicker": "Primo avvio",
       "welcome.title": "Comincia da quello che hai",
       "welcome.text":
-        "Dimmi quali semi o piantine possiedi e da quando: penso io a ricordarti cosa fare, giorno per giorno, fino alla raccolta.",
-      "welcome.add": "＋ Aggiungi una coltura",
+        "Dimmi quali semi o piantine possiedi: appena li pianti, penso io a ricordarti cosa fare, giorno per giorno, fino alla raccolta.",
+      "welcome.add": "＋ Aggiungi a mano",
       "welcome.or": "oppure importa da",
       "welcome.orders": "Importa dai miei ordini",
-      "welcome.greenhouse": "Importa dalla mia serra",
       "welcome.nothing": "Non hai ancora semi o piantine?",
       "welcome.shop_seeds": "Catalogo semi",
       "welcome.shop_plugs": "Vivaio piantine",
-      "hero.todo_one": "Hai una cosa da fare",
-      "hero.todo_many": "Hai {n} cose da fare",
-      "hero.todo_none": "Niente di urgente oggi",
-      "hero.sub_late":
-        "{n} attività aspettano da qualche giorno: nessun dramma, si recuperano.",
-      "hero.sub_ok": "Le colture procedono secondo il piano.",
-      "hero.stat_colture": "colture",
-      "hero.stat_done": "fatte oggi",
-      "hero.stat_late": "da recuperare",
-      "hero.ring": "svolte",
-      "hero.ring_aria": "{n} attività svolte su {tot} previste per oggi",
+      // Sezione 1: la giornata. Un solo numero nel titolo, il resto ripiegato.
+      "jump.aria": "Vai a una sezione della pagina",
+      "sec.step1": "Passo 1 · quello che possiedi",
+      "sec.step2": "Passo 2 · quello che è in terra",
+      "oggi.one": "Oggi hai una cosa da fare",
+      "oggi.many": "Oggi hai {n} cose da fare",
+      "oggi.nothing": "Oggi non c'è niente da fare",
+      "oggi.all_done": "Fatto tutto per oggi",
+      "oggi.progress": "{n} di {tot} già spuntate.",
+      "backlog.title_one": "1 attività arretrata",
+      "backlog.title": "{n} attività arretrate",
+      "backlog.sub": "Restano da giorni scorsi. Nessun dramma, si recuperano.",
+      "backlog.show": "Mostra",
+      "backlog.hide": "Nascondi",
+      "done.title_one": "1 fatta oggi",
+      "done.title": "{n} fatte oggi",
+      "week.title": "Prossimi giorni",
+      "week.count_one": "1 attività in programma entro una settimana",
+      "week.count": "{n} attività in programma entro una settimana",
 
-      "section.late": "Da recuperare",
-      "section.today": "Oggi",
-      "section.done": "Fatto oggi",
       "task.snooze": "Domani",
       "task.mark": "Segna come fatta",
       "task.unmark": "Togli la spunta",
@@ -81,22 +86,8 @@
       "task.last_day": "ultima volta 1 giorno fa",
       "today.empty_title": "Nessuna attività per oggi",
       "today.empty_text":
-        "Scorri la striscia dei giorni per vedere cosa arriva, oppure apri “Colture” per il quadro completo.",
-      "today.empty_cta": "Vedi le colture",
-
-      // Agenda: la striscia dei giorni e la giornata scelta.
-      "agenda.strip_aria": "Scegli il giorno da vedere",
-      "agenda.day_aria": "{data}: {n} attività da fare",
+        "Le tue colture non chiedono niente adesso. Apri «Prossimi giorni» per sapere cosa arriva.",
       "agenda.tomorrow": "Domani",
-      "agenda.in_days": "Fra {n} giorni",
-      "agenda.day_free": "Niente in programma per questo giorno.",
-      "agenda.day_one": "Una cosa in programma.",
-      "agenda.day_many": "{n} cose in programma.",
-      "agenda.planned": "In programma",
-      "agenda.back_today": "Torna a oggi",
-      "agenda.free_title": "Giornata libera",
-      "agenda.free_text":
-        "Nessuna delle tue colture chiede qualcosa in questa data. Scorri la striscia per trovare il prossimo impegno.",
 
       "task.germinazione": "Controlla la germinazione",
       "task.attecchimento": "Assesta la piantina",
@@ -143,13 +134,11 @@
       "fase.impianto": "Impianto",
       "fase.perenne": "Perenne",
 
-      "colture.title": "Le mie colture",
+      "colture.title": "Piantate",
       "colture.sub":
-        "Le piante già messe a dimora. Ognuna genera da sola il proprio calendario di cura fino alla raccolta.",
+        "Le piante già piantate. Ognuna genera da sola il proprio calendario di cura fino alla raccolta.",
       "colture.crosslink": "Hai {n} voci comprate e non ancora piantate.",
       "colture.crosslink_cta": "Vai a «Da piantare»",
-      "colture.add": "＋ Aggiungi coltura",
-      "colture.import": "Importa dalla mia serra",
       "colture.ics": "Esporta nel calendario (.ics)",
       "colture.stat_active": "colture in corso",
       "colture.stat_plants": "piante seguite",
@@ -167,40 +156,58 @@
       "colture.plants": "{n} piante",
       "colture.empty_title": "Non stai ancora seguendo nulla",
       "colture.empty_text":
-        "Aggiungi una coltura, importa le aiuole di una serra che hai già progettato, oppure parti da ciò che hai in «Da piantare».",
+        "Qui compaiono le piante che stai seguendo. Vai su «Da piantare», aggiungi ciò che hai e piantalo: comparirà qui da solo.",
 
       "disp.title": "Da piantare",
       "disp.sub":
         "Il magazzino: semi e piantine che possiedi e non sono ancora in terra. Qui non c'è nessun calendario, solo quanto ti resta.",
       "disp.crosslink": "Appena pianti qualcosa, compare fra le colture con il suo calendario.",
-      "disp.crosslink_cta": "Vai a «Colture»",
+      "disp.crosslink_cta": "Vai a «Piantate»",
       "disp.import": "Importa dai miei ordini",
       "disp.add_manual": "＋ Aggiungi a mano",
+      "disp.clear": "Svuota lista",
       "disp.empty_title": "Non hai nulla in attesa",
       "disp.empty_text":
         "Quando confermi un ordine, semi e piantine compaiono qui pronti da piantare. Puoi anche aggiungerli a mano.",
-      "disp.plant_now": "Metti a dimora",
+      "disp.plant_now": "Pianta",
       "disp.archive": "Segna come finita",
-      "disp.left": "{n} di {tot} ancora da mettere a dimora",
-      "disp.all_planted": "Tutte messe a dimora",
+      "disp.left": "{n} di {tot} ancora da piantare",
+      "disp.all_planted": "Tutte piantate",
       "disp.packet": "Bustina · {n} semi",
       "disp.plugs": "{n} piantine · vaso ø7",
       "disp.sowings_none": "Non ancora seminata",
       "disp.sowings_one": "1 semina fatta",
       "disp.sowings": "{n} semine fatte",
-      "disp.from_order": "Ordine {id} · {data}",
-      "disp.from_manual": "Aggiunta a mano",
+      "disp.group_order": "Ordine {id}",
+      "disp.group_manual": "Aggiunte a mano",
+      "disp.group_count_one": "1 articolo",
+      "disp.group_count": "{n} articoli",
+      "disp.search_placeholder": "Cerca per nome…",
+      "disp.search_empty_title": "Nessun risultato",
+      "disp.search_empty_text": "Nessuna pianta corrisponde a «{q}».",
       "disp.login_hint":
         "Accedi alla tua Area Personale per importare gli acquisti.",
 
-      "plant.title": "Metti a dimora",
+      "import.title": "Scegli l'ordine da importare",
+      "import.sub":
+        "Seleziona gli ordini da aggiungere alla dispensa. Quelli già presenti non si duplicano.",
+      "import.order": "Ordine {id}",
+      "import.items_one": "1 articolo",
+      "import.items": "{n} articoli",
+      "import.confirm": "Importa",
+      "clear.title": "Svuotare «Da piantare»?",
+      "clear.sub":
+        "Le voci spariscono da questo elenco. Restano nei tuoi ordini e puoi reimportarle quando vuoi.",
+      "clear.confirm": "Svuota",
+
+      "plant.title": "Pianta ora",
       "plant.sub": "Scegli quante piante avviare e quando.",
       "plant.qty": "Quante ne pianti ora",
       "plant.qty_hint_seed": "Quante piante avvii da questa bustina",
       "plant.qty_hint_plug": "Ne hai {n} disponibili",
       "plant.date": "Data di semina / messa a dimora",
       "plant.position": "Posizione (facoltativa)",
-      "plant.confirm": "Metti a dimora",
+      "plant.confirm": "Pianta",
 
       // Selettore visivo del dialogo «Aggiungi una coltura».
       "dlg.step_plant": "Quale pianta?",
@@ -246,6 +253,9 @@
       "toast.edited": "Coltura aggiornata",
       "dlg.title": "Aggiungi una coltura",
       "dlg.sub": "Da qui parte il calendario di cura fino alla raccolta.",
+      "dlg.title_stock": "Aggiungi alla dispensa",
+      "dlg.sub_stock":
+        "Semi o piantine che hai già, senza metterli subito in terra.",
       "dlg.origin": "Sei partito da…",
       "dlg.seed": "Semi",
       "dlg.seed_hint": "ciclo completo",
@@ -253,20 +263,24 @@
       "dlg.seedling_hint": "già cresciuta",
       "dlg.date": "Data di semina / messa a dimora",
       "dlg.qty": "Quante",
+      "dlg.step_when_stock": "Quanto ne hai",
       "dlg.position": "Posizione (facoltativa)",
       "dlg.position_ph": "es. Aiuola 2",
       "dlg.confirm": "Aggiungi all'orto",
+      "dlg.confirm_stock": "Aggiungi alla dispensa",
+      "dlg.preview_stock": "Aggiungerai {nome} alla dispensa.",
       "dlg.cancel": "Annulla",
 
       "toast.added": "{nome} aggiunta al tuo orto",
+      "toast.added_stock": "{nome} aggiunta alla dispensa",
       "toast.snoozed": "Rimandata a domani",
       "toast.removed": "Coltura rimossa",
       "toast.harvest": "Registrato: diventerà la stima dell'anno prossimo",
-      "toast.imported": "{n} colture importate dalla serra",
-      "toast.no_greenhouse": "Nessuna serra salvata in questo browser",
       "toast.ics": "{n} attività esportate",
       "toast.imported_orders": "{n} voci importate dai tuoi ordini",
       "toast.no_orders": "Nessun nuovo acquisto da importare",
+      "toast.no_orders_selected": "Seleziona almeno un ordine",
+      "toast.stock_cleared": "Dispensa svuotata",
       "toast.archived": "Archiviata",
       "toast.planted": "{n} × {nome} nel tuo orto",
       // Dialoghi delle azioni che non si possono annullare.
@@ -278,6 +292,20 @@
       "remove.sub":
         "Spariscono anche le attività già svolte. Non si può annullare.",
       "remove.confirm": "Elimina",
+
+      "nav.abbinamenti": "🌿 Abbinamenti",
+      "nav.contatti": "✉️ Contatti",
+      "footer.motto": "Pianta con cura, raccogli con gioia.",
+      "footer.tip_title": "Consiglio del mese",
+      "footer.tip_text": "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
+      "footer.explore": "Esplora",
+      "footer.kit": "📦 Kit del mese",
+      "footer.legal": "Legale",
+      "footer.privacy": "Privacy Policy",
+      "footer.cookie": "Cookie Policy",
+      "footer.terms": "Termini di Servizio",
+      "footer.support": "Supporto",
+      "footer.rights": "© 2026 Orto in Serra · Tutti i diritti riservati",
     },
 
     ro: {
@@ -301,43 +329,46 @@
       "page.title": "Grădina mea",
       "page.lead":
         "Notează ce ai plantat și îți spunem ce ai de făcut, săptămână de săptămână, până la recoltare. Funcționează și cu plante cumpărate în altă parte.",
-      "tab.oggi": "Agendă",
+      "tab.oggi": "Astăzi",
       "tab.oggi_todo": "de făcut acum",
-      "tab.oggi_late": "{n} întârziate",
+      "tab.oggi_late": "+{n} întârziate",
       "tab.oggi_clear": "totul în regulă",
       "tab.colture_note": "deja plantate",
       "tab.colture_empty": "încă nimic",
       "tab.dispensa_note": "încă neplantate",
       "tab.dispensa_empty": "cămară goală",
-      "tab.colture": "Culturi",
+      "tab.colture": "Plantate",
       "tab.dispensa": "De plantat",
 
       "welcome.kicker": "Prima pornire",
       "welcome.title": "Începe de la ce ai deja",
       "welcome.text":
-        "Spune-mi ce semințe sau răsaduri ai și de când: îți amintesc eu ce ai de făcut, zi de zi, până la recoltare.",
-      "welcome.add": "＋ Adaugă o cultură",
+        "Spune-mi ce semințe sau răsaduri ai: imediat ce le plantezi, îți amintesc eu ce ai de făcut, zi de zi, până la recoltare.",
+      "welcome.add": "＋ Adaugă manual",
       "welcome.or": "sau importă din",
       "welcome.orders": "Importă din comenzile mele",
-      "welcome.greenhouse": "Importă din sera mea",
       "welcome.nothing": "Încă nu ai semințe sau răsaduri?",
       "welcome.shop_seeds": "Catalog semințe",
       "welcome.shop_plugs": "Pepinieră răsaduri",
-      "hero.todo_one": "Ai un lucru de făcut",
-      "hero.todo_many": "Ai {n} lucruri de făcut",
-      "hero.todo_none": "Nimic urgent astăzi",
-      "hero.sub_late":
-        "{n} activități așteaptă de câteva zile: nicio problemă, se recuperează.",
-      "hero.sub_ok": "Culturile merg conform planului.",
-      "hero.stat_colture": "culturi",
-      "hero.stat_done": "făcute azi",
-      "hero.stat_late": "de recuperat",
-      "hero.ring": "făcute",
-      "hero.ring_aria": "{n} activități făcute din {tot} prevăzute pentru azi",
+      "jump.aria": "Mergi la o secțiune a paginii",
+      "sec.step1": "Pasul 1 · ce ai deja",
+      "sec.step2": "Pasul 2 · ce e în pământ",
+      "oggi.one": "Azi ai un lucru de făcut",
+      "oggi.many": "Azi ai {n} lucruri de făcut",
+      "oggi.nothing": "Azi nu e nimic de făcut",
+      "oggi.all_done": "Gata tot pentru azi",
+      "oggi.progress": "{n} din {tot} deja bifate.",
+      "backlog.title_one": "1 activitate întârziată",
+      "backlog.title": "{n} activități întârziate",
+      "backlog.sub": "Rămase din zilele trecute. Nicio problemă, se recuperează.",
+      "backlog.show": "Arată",
+      "backlog.hide": "Ascunde",
+      "done.title_one": "1 făcută azi",
+      "done.title": "{n} făcute azi",
+      "week.title": "Zilele următoare",
+      "week.count_one": "1 activitate programată în următoarea săptămână",
+      "week.count": "{n} activități programate în următoarea săptămână",
 
-      "section.late": "De recuperat",
-      "section.today": "Astăzi",
-      "section.done": "Făcut azi",
       "task.snooze": "Mâine",
       "task.mark": "Marchează ca făcută",
       "task.unmark": "Scoate bifa",
@@ -349,21 +380,8 @@
       "task.last_day": "ultima dată acum o zi",
       "today.empty_title": "Nicio activitate pentru azi",
       "today.empty_text":
-        "Derulează banda zilelor ca să vezi ce urmează sau deschide „Culturi” pentru imaginea completă.",
-      "today.empty_cta": "Vezi culturile",
-
-      "agenda.strip_aria": "Alege ziua pe care vrei să o vezi",
-      "agenda.day_aria": "{data}: {n} activități de făcut",
+        "Culturile tale nu cer nimic acum. Deschide „Zilele următoare” ca să vezi ce urmează.",
       "agenda.tomorrow": "Mâine",
-      "agenda.in_days": "Peste {n} zile",
-      "agenda.day_free": "Nimic programat pentru această zi.",
-      "agenda.day_one": "Un lucru programat.",
-      "agenda.day_many": "{n} lucruri programate.",
-      "agenda.planned": "Programate",
-      "agenda.back_today": "Înapoi la azi",
-      "agenda.free_title": "Zi liberă",
-      "agenda.free_text":
-        "Niciuna dintre culturile tale nu cere ceva la această dată. Derulează banda pentru a găsi următoarea sarcină.",
 
       "task.germinazione": "Verifică germinația",
       "task.attecchimento": "Așază răsadul",
@@ -412,13 +430,11 @@
       "fase.impianto": "Plantare",
       "fase.perenne": "Perenă",
 
-      "colture.title": "Culturile mele",
+      "colture.title": "Plantate",
       "colture.sub":
         "Plantele deja puse în pământ. Fiecare își generează singură calendarul de îngrijire până la recoltare.",
       "colture.crosslink": "Ai {n} poziții cumpărate și încă neplantate.",
       "colture.crosslink_cta": "Mergi la „De plantat”",
-      "colture.add": "＋ Adaugă cultură",
-      "colture.import": "Importă din sera mea",
       "colture.ics": "Exportă în calendar (.ics)",
       "colture.stat_active": "culturi în curs",
       "colture.stat_plants": "plante urmărite",
@@ -436,15 +452,16 @@
       "colture.plants": "{n} plante",
       "colture.empty_title": "Încă nu urmărești nimic",
       "colture.empty_text":
-        "Adaugă o cultură, importă parcelele unei sere deja proiectate sau pornește de la ce ai în „De plantat”.",
+        "Aici apar plantele pe care le urmărești. Mergi la „De plantat”, adaugă ce ai și plantează-l: va apărea aici automat.",
 
       "disp.title": "De plantat",
       "disp.sub":
         "Depozitul: semințe și răsaduri pe care le ai și care nu sunt încă în pământ. Aici nu există niciun calendar, doar cât ți-a rămas.",
       "disp.crosslink": "Imediat ce plantezi ceva, apare printre culturi cu propriul calendar.",
-      "disp.crosslink_cta": "Mergi la „Culturi”",
+      "disp.crosslink_cta": "Mergi la „Plantate”",
       "disp.import": "Importă din comenzile mele",
       "disp.add_manual": "＋ Adaugă manual",
+      "disp.clear": "Golește lista",
       "disp.empty_title": "Nu ai nimic în așteptare",
       "disp.empty_text":
         "Când confirmi o comandă, semințele și răsadurile apar aici gata de plantat. Le poți adăuga și manual.",
@@ -457,10 +474,27 @@
       "disp.sowings_none": "Încă nesemănată",
       "disp.sowings_one": "o semănare făcută",
       "disp.sowings": "{n} semănări făcute",
-      "disp.from_order": "Comanda {id} · {data}",
-      "disp.from_manual": "Adăugată manual",
+      "disp.group_order": "Comanda {id}",
+      "disp.group_manual": "Adăugate manual",
+      "disp.group_count_one": "1 articol",
+      "disp.group_count": "{n} articole",
+      "disp.search_placeholder": "Caută după nume…",
+      "disp.search_empty_title": "Niciun rezultat",
+      "disp.search_empty_text": "Nicio plantă nu corespunde pentru „{q}”.",
       "disp.login_hint":
         "Autentifică-te în Zona Personală pentru a importa achizițiile.",
+
+      "import.title": "Alege comanda de importat",
+      "import.sub":
+        "Selectează comenzile de adăugat în cămară. Cele deja prezente nu se duplică.",
+      "import.order": "Comanda {id}",
+      "import.items_one": "1 articol",
+      "import.items": "{n} articole",
+      "import.confirm": "Importă",
+      "clear.title": "Golești «De plantat»?",
+      "clear.sub":
+        "Articolele dispar din această listă. Rămân în comenzile tale și le poți reimporta oricând.",
+      "clear.confirm": "Golește",
 
       "plant.title": "Pune în pământ",
       "plant.sub": "Alege câte plante pornești și când.",
@@ -512,6 +546,9 @@
       "toast.edited": "Cultură actualizată",
       "dlg.title": "Adaugă o cultură",
       "dlg.sub": "De aici pornește calendarul de îngrijire până la recoltare.",
+      "dlg.title_stock": "Adaugă în cămară",
+      "dlg.sub_stock":
+        "Semințe sau răsaduri pe care le ai deja, fără să le pui imediat în pământ.",
       "dlg.origin": "Ai pornit de la…",
       "dlg.seed": "Semințe",
       "dlg.seed_hint": "ciclu complet",
@@ -519,20 +556,24 @@
       "dlg.seedling_hint": "deja crescut",
       "dlg.date": "Data semănatului / plantării",
       "dlg.qty": "Câte",
+      "dlg.step_when_stock": "Cât ai",
       "dlg.position": "Poziție (opțional)",
       "dlg.position_ph": "ex. Parcela 2",
       "dlg.confirm": "Adaugă în grădină",
+      "dlg.confirm_stock": "Adaugă în cămară",
+      "dlg.preview_stock": "Vei adăuga {nome} în cămară.",
       "dlg.cancel": "Anulează",
 
       "toast.added": "{nome} adăugată în grădina ta",
+      "toast.added_stock": "{nome} adăugată în cămară",
       "toast.snoozed": "Amânată pe mâine",
       "toast.removed": "Cultură eliminată",
       "toast.harvest": "Înregistrat: va deveni estimarea de anul viitor",
-      "toast.imported": "{n} culturi importate din seră",
-      "toast.no_greenhouse": "Nicio seră salvată în acest browser",
       "toast.ics": "{n} activități exportate",
       "toast.imported_orders": "{n} poziții importate din comenzile tale",
       "toast.no_orders": "Nicio achiziție nouă de importat",
+      "toast.no_orders_selected": "Selectează cel puțin o comandă",
+      "toast.stock_cleared": "Cămară golită",
       "toast.archived": "Arhivată",
       "toast.planted": "{n} × {nome} în grădina ta",
       "harvest.title": "Înregistrează recolta",
@@ -542,6 +583,20 @@
       "remove.title": "Ștergi această cultură?",
       "remove.sub": "Dispar și activitățile deja făcute. Nu se poate anula.",
       "remove.confirm": "Șterge",
+
+      "nav.abbinamenti": "🌿 Combinații",
+      "nav.contatti": "✉️ Contact",
+      "footer.motto": "Plantează cu grijă, culege cu bucurie.",
+      "footer.tip_title": "Sfatul lunii",
+      "footer.tip_text": "Udă la bază, niciodată pe frunze: previne oidiumul.",
+      "footer.explore": "Explorează",
+      "footer.kit": "📦 Kit-ul lunii",
+      "footer.legal": "Legal",
+      "footer.privacy": "Politică de confidențialitate",
+      "footer.cookie": "Politică Cookie",
+      "footer.terms": "Termeni de serviciu",
+      "footer.support": "Suport",
+      "footer.rights": "© 2026 Orto in Serra · Toate drepturile rezervate",
     },
   };
 
@@ -584,13 +639,18 @@
 
   /* ============================================================ Stato ============================================================ */
   let lang = "it";
-  let view = "oggi";
+  /* I pannelli ripiegabili si ridisegnano a ogni azione: senza memoria si
+     richiuderebbero sotto le dita di chi ha appena spuntato un'attività. */
+  let arretratiAperti = false;
+  let settimanaAperta = false;
+  let fatteAperte = false;
   let PLANTS = [];
   let PRODUCTS = {};
   const BYID = {};
   let garden = { colture: [], fatti: {}, rinviati: {} };
   let inventory = { voci: [] };
   let vocePendente = null; // voce della dispensa in corso di messa a dimora
+  let stockQuery = ""; // filtro di ricerca nella vista "Da piantare"
   let colturaInModifica = null; // coltura aperta nel dialogo di modifica
   let colturaDaRimuovere = null; // coltura in attesa di conferma di rimozione
   let colturaDaRaccogliere = null; // coltura di cui si sta registrando la resa
@@ -703,7 +763,10 @@
       ? Math.max(0, (voce.qta || 0) - (voce.qtaPiantata || 0))
       : null;
 
-  // Legge gli ordini dell'utente e ne ricava le voci mancanti. Sola lettura.
+  let ordiniImportabili = []; // ordini in attesa di conferma nel dialogo di importazione
+
+  // Legge gli ordini dell'utente e apre il dialogo di scelta: importare tutto alla cieca
+  // riportava dentro anche acquisti vecchi già gestiti nella dispensa.
   async function importaDaOrdini() {
     const utente = window.SerraAPI?.getCurrentUser?.();
     if (!utente) return toast(t("disp.login_hint"));
@@ -711,32 +774,48 @@
     try {
       ordini = (await window.SerraAPI.getOrders()) || [];
     } catch (_) {}
-    const miei = ordini.filter((o) => o.email === utente.email);
-    let aggiunte = 0;
-    miei.forEach((ordine) => {
-      (ordine.items || []).forEach((item) => {
-        if (!BYID[item.id]) return;
-        const variante = item.variante === "piantina" ? "piantina" : "seme";
-        const id = `${ordine.id}|${item.id}|${variante}`;
-        if (inventory.voci.some((v) => v.id === id)) return;
-        inventory.voci.push({
-          id,
-          plantId: item.id,
-          variante,
-          qta: Number(item.bustine) || 1,
-          qtaPiantata: 0,
-          semine: 0,
-          orderId: ordine.id,
-          dataAcquisto: (ordine.date || "").slice(0, 10),
-          archiviata: false,
-        });
-        aggiunte++;
-      });
-    });
-    if (!aggiunte) return toast(t("toast.no_orders"));
-    saveInventory();
-    render();
-    toast(t("toast.imported_orders", { n: aggiunte }));
+    ordiniImportabili = ordini
+      .filter((o) => o.email === utente.email)
+      .map((ordine) => ({
+        id: ordine.id,
+        data: (ordine.date || "").slice(0, 10),
+        nuovi: (ordine.items || []).filter((item) => {
+          if (!BYID[item.id]) return false;
+          const variante = item.variante === "piantina" ? "piantina" : "seme";
+          const id = `${ordine.id}|${item.id}|${variante}`;
+          // Una voce svuotata resta archiviata in memoria ma non è più "già in dispensa":
+          // deve poter tornare importabile, com'è promesso nel dialogo di svuotamento.
+          return !inventory.voci.some((v) => v.id === id && !v.archiviata);
+        }),
+      }))
+      .filter((o) => o.nuovi.length)
+      .sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+    if (!ordiniImportabili.length) return toast(t("toast.no_orders"));
+    renderImportList();
+    apriDialogo("ortoImportDialog");
+  }
+
+  function renderImportList() {
+    const host = document.getElementById("ortoImportList");
+    if (!host) return;
+    host.innerHTML = ordiniImportabili
+      .map((ordine, i) => {
+        const n = ordine.nuovi.length;
+        const conteggio =
+          n === 1 ? t("import.items_one") : t("import.items", { n });
+        const data = ordine.data
+          ? fmtBreve(E.parseDate(ordine.data))
+          : "—";
+        return `
+          <label class="orto-import-row">
+            <input type="checkbox" name="ortoImportOrder" value="${escape(ordine.id)}" ${i === 0 ? "checked" : ""} />
+            <span class="orto-import-body">
+              <b>${t("import.order", { id: escape(ordine.id) })}</b>
+              <small>${data} · ${conteggio}</small>
+            </span>
+          </label>`;
+      })
+      .join("");
   }
 
   // Il distintivo del carrello resta quello dei semi: nessuna somma inventata.
@@ -783,54 +862,47 @@
     };
   }
 
-  const GIORNI_AVANTI = 20;
-  let giornoScelto = null; // ISO; null significa «oggi»
+  const GIORNI_AVANTI = 7;
 
   const isoOggi = () => E.iso(E.startOfToday());
-  const isoScelto = () => giornoScelto || isoOggi();
 
-  // Finestra della striscia: da oggi in avanti.
-  function giorniAgenda() {
-    const inizio = E.startOfToday();
-    const giorni = [];
-    for (let i = 0; i <= GIORNI_AVANTI; i++) giorni.push(E.iso(E.addDays(inizio, i)));
-    // Un giorno scelto fuori finestra (si può arrivarci solo da un rinvio) resta comunque raggiungibile.
-    if (giornoScelto && !giorni.includes(giornoScelto)) {
-      giorni.push(giornoScelto);
-      giorni.sort();
-    }
-    return giorni;
-  }
-
-  function indicizzaPerGiorno(giorni) {
-    const indice = {};
-    giorni.forEach((g) => (indice[g] = { previste: [], fatte: [] }));
-    tuttiITask().forEach((task) => {
-      const svolta = garden.fatti[task.id];
-      if (svolta) {
-        if (indice[svolta]) indice[svolta].fatte.push(task);
-        return;
-      }
-      const quando = E.iso(dataEffettiva(task));
-      if (indice[quando])
-        indice[quando].previste.push(
-          Object.assign({}, task, { quando: dataEffettiva(task) }),
-        );
-    });
-    return indice;
+  /* I prossimi giorni, raggruppati per data: serve a dare un orizzonte
+     senza trasformare la pagina in un calendario da leggere ogni mattina. */
+  function datiSettimana() {
+    const oggi = E.startOfToday();
+    const limite = E.addDays(oggi, GIORNI_AVANTI);
+    const perGiorno = new Map();
+    tuttiITask()
+      .filter((task) => !garden.fatti[task.id])
+      .map((task) => Object.assign({}, task, { quando: dataEffettiva(task) }))
+      .filter((task) => task.quando > oggi && task.quando <= limite)
+      .forEach((task) => {
+        const iso = E.iso(task.quando);
+        if (!perGiorno.has(iso)) perGiorno.set(iso, []);
+        perGiorno.get(iso).push(task);
+      });
+    // La compressione va fatta dentro il giorno: fra giorni diversi le
+    // ricorrenti sono occorrenze distinte e vanno mostrate entrambe.
+    return [...perGiorno.entries()]
+      .map(([iso, tasks]) => [iso, E.comprimiRicorrenti(tasks)])
+      .sort((a, b) => a[0].localeCompare(b[0]));
   }
 
   /* ============================================================ Viste ============================================================ */
-  function ringSvg(percentuale) {
-    const r = 58;
-    const c = 2 * Math.PI * r;
-    /* Due cerchi sovrapposti: la traccia tenue dice quanto è lunga la giornata, l'arco verde quanto ne è stato fatto. */
-    return `<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
-      <circle class="orto-ring-track" cx="66" cy="66" r="${r}" fill="none" stroke-width="10"/>
-      <circle class="orto-ring-arc" cx="66" cy="66" r="${r}" fill="none" stroke-width="10"
-        stroke-linecap="round" stroke-dasharray="${c}"
-        stroke-dashoffset="${c - (c * percentuale) / 100}"/>
-    </svg>`;
+
+  /* Lo scorrimento si ferma sotto la navbar fissa, che altrimenti coprirebbe
+     il titolo della sezione appena raggiunta. */
+  function vaiAllaSezione(sezione) {
+    if (!sezione) return;
+    const navbar =
+      parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue("--nav-h"),
+        10,
+      ) || 62;
+    const y =
+      sezione.getBoundingClientRect().top + window.scrollY - navbar - 16;
+    const dolce = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, y), behavior: dolce ? "smooth" : "auto" });
   }
 
   // Primo avvio: senza colture né dispensa la vista "Oggi" direbbe che va tutto bene quando in realtà non c'è nulla.
@@ -842,13 +914,11 @@
         <h2>${t("welcome.title")}</h2>
         <p class="orto-welcome-text">${t("welcome.text")}</p>
         <div class="orto-welcome-actions">
-          <button class="orto-btn orto-welcome-primary" type="button" data-orto-action="open-add">${t("welcome.add")}</button>
+          <button class="orto-btn orto-welcome-primary" type="button" data-orto-action="open-add-stock">${t("welcome.add")}</button>
           <p class="orto-welcome-or">${t("welcome.or")}</p>
           <div class="orto-welcome-secondary">
             <button class="orto-btn orto-btn--ghost" type="button"
               data-orto-action="import-orders">${t("welcome.orders")}</button>
-            <button class="orto-btn orto-btn--ghost" type="button"
-              data-orto-action="import-greenhouse">${t("welcome.greenhouse")}</button>
           </div>
         </div>
         <p class="orto-welcome-shop">
@@ -860,204 +930,155 @@
       </section>`;
   }
 
-  /* La striscia dei giorni: una data per pulsante, con il numero di attività ancora da fare. */
-  function stripGiorniHtml(giorni, indice) {
-    const oggi = isoOggi();
-    const scelto = isoScelto();
+  /* L'arretrato resta ripiegato: è la cosa che scoraggia di più a colpo
+     d'occhio, e non è mai ciò che si è venuti a fare stamattina. */
+  function arretratoHtml(arretrati) {
     return `
-      <div class="orto-daystrip" role="tablist"
-        aria-label="${escape(t("agenda.strip_aria"))}">
-        ${giorni
-          .map((iso) => {
-            const data = E.parseDate(iso);
-            const n = indice[iso].previste.length;
-            const attivo = iso === scelto;
-            return `
-            <button type="button" class="orto-day${attivo ? " is-selected" : ""}${
-              iso === oggi ? " is-today" : ""
-            }" role="tab" aria-selected="${attivo}" tabindex="${attivo ? 0 : -1}"
-              data-orto-action="pick-day" data-day="${iso}"
-              aria-label="${escape(
-                t("agenda.day_aria", {
-                  data: data.toLocaleDateString(locale(), {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                  }),
-                  n,
-                }),
-              )}">
-              <span class="orto-day-dow" aria-hidden="true">${escape(
-                data.toLocaleDateString(locale(), { weekday: "short" }),
-              )}</span>
-              <span class="orto-day-num" aria-hidden="true">${data.getDate()}</span>
-              <span class="orto-day-dot${n ? "" : " is-empty"}" aria-hidden="true">${
-                n || ""
-              }</span>
-            </button>`;
-          })
-          .join("")}
-      </div>`;
+      <details class="orto-backlog"${arretratiAperti ? " open" : ""}
+        data-orto-backlog>
+        <summary class="orto-backlog-summary">
+          <span class="orto-backlog-ico" aria-hidden="true">⏳</span>
+          <span class="orto-backlog-copy">
+            <b>${
+              arretrati.length === 1
+                ? t("backlog.title_one")
+                : t("backlog.title", { n: arretrati.length })
+            }</b>
+            <small>${t("backlog.sub")}</small>
+          </span>
+          <span class="orto-backlog-toggle" aria-hidden="true">
+            <span class="orto-backlog-show">${t("backlog.show")}</span>
+            <span class="orto-backlog-hide">${t("backlog.hide")}</span>
+          </span>
+        </summary>
+        <div class="orto-backlog-body">
+          ${arretrati.map((task, i) => taskRow(task, i, true)).join("")}
+        </div>
+      </details>`;
   }
 
-  function renderAgenda() {
-    if (!garden.colture.length && !inventory.voci.some((v) => !v.archiviata))
-      return renderBenvenuto();
+  /* I prossimi giorni: ripiegati, perché la domanda di stamattina è
+     «cosa faccio oggi», non «cosa mi aspetta giovedì». */
+  function settimanaHtml() {
+    const giorni = datiSettimana();
+    if (!giorni.length) return "";
+    const totale = giorni.reduce((n, [, tasks]) => n + tasks.length, 0);
+    return `
+      <details class="orto-upcoming"${settimanaAperta ? " open" : ""}
+        data-orto-upcoming>
+        <summary class="orto-upcoming-summary">
+          <span class="orto-upcoming-ico" aria-hidden="true">📅</span>
+          <span class="orto-upcoming-copy">
+            <b>${t("week.title")}</b>
+            <small>${
+              totale === 1 ? t("week.count_one") : t("week.count", { n: totale })
+            }</small>
+          </span>
+          <span class="orto-backlog-toggle" aria-hidden="true">
+            <span class="orto-backlog-show">${t("backlog.show")}</span>
+            <span class="orto-backlog-hide">${t("backlog.hide")}</span>
+          </span>
+        </summary>
+        <div class="orto-upcoming-body">
+          ${giorni
+            .map(([iso, tasks]) => {
+              const data = E.parseDate(iso);
+              const mancano = E.diffDays(data, E.startOfToday());
+              const quando =
+                mancano === 1
+                  ? t("agenda.tomorrow")
+                  : escape(
+                      data.toLocaleDateString(locale(), {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                      }),
+                    );
+              return `
+              <div class="orto-upcoming-day">
+                <p class="orto-upcoming-when">${quando}</p>
+                ${tasks.map((task, i) => taskRow(task, i)).join("")}
+              </div>`;
+            })
+            .join("")}
+        </div>
+      </details>`;
+  }
 
-    const giorni = giorniAgenda();
-    const indice = indicizzaPerGiorno(giorni);
-    const scelto = isoScelto();
-    const oggiIso = isoOggi();
-    const strip = stripGiorniHtml(giorni, indice);
-
-    if (scelto !== oggiIso) {
-      const data = E.parseDate(scelto);
-      const previste = indice[scelto].previste;
-      const fatte = indice[scelto].fatte;
-      const mancano = E.diffDays(data, E.startOfToday());
-      app.innerHTML = `
-        ${strip}
-        <section class="orto-dayhead">
-          <div>
-            <p class="orto-dayhead-when">${
-              mancano === 1
-                ? t("agenda.tomorrow")
-                : t("agenda.in_days", { n: mancano })
-            }</p>
-            <h2>${escape(
-              data.toLocaleDateString(locale(), {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-              }),
-            )}</h2>
-            <p class="orto-dayhead-sub">${
-              previste.length === 0
-                ? t("agenda.day_free")
-                : previste.length === 1
-                  ? t("agenda.day_one")
-                  : t("agenda.day_many", { n: previste.length })
-            }</p>
-          </div>
-          <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-            data-orto-action="pick-day" data-day="${oggiIso}">${t("agenda.back_today")}</button>
-        </section>
-
-        ${
-          previste.length
-            ? sectionHead(t("agenda.planned"), previste.length) +
-              previste.map((task, i) => taskRow(task, i)).join("")
-            : `<div class="orto-empty"><span class="orto-empty-ico">🌤️</span>
-                <h4>${t("agenda.free_title")}</h4><p>${t("agenda.free_text")}</p></div>`
-        }
-
-        ${
-          fatte.length
-            ? sectionHead(t("section.done"), fatte.length) +
-              fatte
-                .map((task, i) =>
-                  taskRow(
-                    Object.assign({}, task, { quando: task.data }),
-                    i,
-                    false,
-                    true,
-                  ),
-                )
-                .join("")
-            : ""
-        }`;
-      return;
-    }
-
+  /* Prima sezione della pagina: risponde alla sola domanda «cosa faccio
+     adesso». Un numero solo nel titolo; arretrato e prossimi giorni stanno
+     ripiegati intorno, così non competono con la risposta. */
+  function sezioneOggiHtml() {
     const { oggi, arretrati, diOggi, fatti } = datiOggi();
     const totale = diOggi.length + fatti.length;
-    const percentuale = totale
-      ? Math.round((fatti.length / totale) * 100)
-      : 100;
-    app.innerHTML = `
-      <section class="orto-hero">
-        <div class="orto-hero-inner">
-          <div>
-            <p class="orto-hero-date">${oggi.toLocaleDateString(locale(), {
+    const titolo =
+      diOggi.length === 0
+        ? fatti.length
+          ? t("oggi.all_done")
+          : t("oggi.nothing")
+        : diOggi.length === 1
+          ? t("oggi.one")
+          : t("oggi.many", { n: diOggi.length });
+    return `
+      <section class="orto-sec" id="ortoSecOggi" aria-labelledby="ortoSecOggiT">
+        <div class="orto-sec-head">
+          <p class="orto-sec-kicker">${escape(
+            oggi.toLocaleDateString(locale(), {
               weekday: "long",
               day: "numeric",
               month: "long",
-            })}</p>
-            <h2>${
-              diOggi.length === 0
-                ? t("hero.todo_none")
-                : diOggi.length === 1
-                  ? t("hero.todo_one")
-                  : t("hero.todo_many", { n: diOggi.length })
-            }</h2>
-            <p class="orto-hero-sub">${
-              arretrati.length
-                ? t("hero.sub_late", { n: arretrati.length })
-                : t("hero.sub_ok")
-            }</p>
-            <div class="orto-hero-stats">
-              <span><b>${garden.colture.length}</b><small>${t("hero.stat_colture")}</small></span>
-              <span><b>${fatti.length}/${totale}</b><small>${t("hero.stat_done")}</small></span>
-              <span><b>${arretrati.length}</b><small>${t("hero.stat_late")}</small></span>
-            </div>
-          </div>
-          <!-- Il riquadro delle notifiche elencava a parole le stesse
-               attività che stanno subito sotto: tolto. Resta l'anello, che
-               è l'unico dato che l'elenco non dà a colpo d'occhio. -->
-          <!-- L'anello diceva «giornata», che non spiega cosa stia contando.
-               Ora l'etichetta nomina la cosa misurata e la stessa frase è
-               disponibile per chi non vede il grafico. -->
-          <div class="orto-ring-wrap">
-            <div class="orto-ring" role="img"
-              aria-label="${escape(t("hero.ring_aria", { n: fatti.length, tot: totale }))}">
-              ${ringSvg(percentuale)}
-              <span class="orto-ring-txt" aria-hidden="true"><b>${percentuale}%</b><small>${t("hero.ring")}</small></span>
-            </div>
-          </div>
+            }),
+          )}</p>
+          <h2 id="ortoSecOggiT">${titolo}</h2>
+          ${
+            fatti.length
+              ? `<p class="orto-sec-sub">${t("oggi.progress", {
+                  n: fatti.length,
+                  tot: totale,
+                })}</p>`
+              : ""
+          }
         </div>
-      </section>
-
-      ${strip}
-
-      ${
-        arretrati.length
-          ? sectionHead(t("section.late"), arretrati.length) +
-            arretrati.map((task, i) => taskRow(task, i, true)).join("")
-          : ""
-      }
-
-      ${sectionHead(t("section.today"), diOggi.length)}
-      ${
-        diOggi.length
-          ? diOggi.map((task, i) => taskRow(task, i)).join("")
-          : `<div class="orto-empty"><span class="orto-empty-ico">🌿</span>
-              <h4>${t("today.empty_title")}</h4><p>${t("today.empty_text")}</p>
-              <div class="orto-empty-actions">
-                <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-                  data-orto-view="colture">${t("today.empty_cta")}</button>
-              </div></div>`
-      }
-
-      ${
-        fatti.length
-          ? sectionHead(t("section.done"), fatti.length) +
-            fatti
-              .map((task, i) =>
-                taskRow(
-                  Object.assign({}, task, { quando: task.data }),
-                  i,
-                  false,
-                  true,
-                ),
-              )
-              .join("")
-          : ""
-      }`;
+        ${arretrati.length ? arretratoHtml(arretrati) : ""}
+        ${
+          diOggi.length
+            ? `<div class="orto-tasklist">${diOggi
+                .map((task, i) => taskRow(task, i))
+                .join("")}</div>`
+            : `<div class="orto-empty"><span class="orto-empty-ico">🌤️</span>
+                <h4>${t("today.empty_title")}</h4><p>${t("today.empty_text")}</p></div>`
+        }
+        ${
+          fatti.length
+            ? `<details class="orto-done-group"${fatteAperte ? " open" : ""} data-orto-done>
+                <summary class="orto-done-summary">
+                  <span aria-hidden="true">✓</span>
+                  <b>${
+                    fatti.length === 1
+                      ? t("done.title_one")
+                      : t("done.title", { n: fatti.length })
+                  }</b>
+                  <span class="orto-backlog-toggle" aria-hidden="true">
+                    <span class="orto-backlog-show">${t("backlog.show")}</span>
+                    <span class="orto-backlog-hide">${t("backlog.hide")}</span>
+                  </span>
+                </summary>
+                <div class="orto-backlog-body">${fatti
+                  .map((task, i) =>
+                    taskRow(
+                      Object.assign({}, task, { quando: task.data }),
+                      i,
+                      false,
+                      true,
+                    ),
+                  )
+                  .join("")}</div>
+              </details>`
+            : ""
+        }
+        ${settimanaHtml()}
+      </section>`;
   }
-
-  const sectionHead = (titolo, n) =>
-    `<div class="orto-section-head"><h3>${titolo}</h3>
-      <span class="orto-count">${n}</span><span class="orto-rule"></span></div>`;
 
   function taskRow(task, index, ritardo, fatto) {
     const coltura = task.coltura;
@@ -1103,7 +1124,7 @@
       </article>`;
   }
 
-  function renderColture() {
+  function sezionePianteHtml() {
     const oggi = E.startOfToday();
     const riepilogo = garden.colture.reduce(
       (acc, c) => {
@@ -1124,53 +1145,47 @@
 
     const vuoto = garden.colture.length === 0;
 
-    app.innerHTML = `
-      <div class="orto-view-head">
-        <div>
-          <h2>${t("colture.title")}</h2>
-          <p>${t("colture.sub")}</p>
+    return `
+      <section class="orto-sec" id="ortoSecPiante" aria-labelledby="ortoSecPianteT">
+        <div class="orto-sec-head">
+          <p class="orto-sec-kicker"><span aria-hidden="true">🌿</span> ${t("sec.step2")}</p>
+          <h2 id="ortoSecPianteT">${t("colture.title")}</h2>
+          <p class="orto-sec-sub">${t("colture.sub")}</p>
         </div>
         ${
           vuoto
             ? ""
-            : `<button class="orto-btn" type="button" data-orto-action="open-add">${t("colture.add")}</button>`
+            : `<div class="orto-stats">
+          <div class="orto-stat"><span class="orto-stat-ico">🌿</span><span><b>${garden.colture.length}</b><small>${t("colture.stat_active")}</small></span></div>
+          <div class="orto-stat"><span class="orto-stat-ico">🪴</span><span><b>${riepilogo.piante}</b><small>${t("colture.stat_plants")}</small></span></div>
+          <div class="orto-stat"><span class="orto-stat-ico">🧺</span><span><b>${riepilogo.vicine}</b><small>${t("colture.stat_soon")}</small></span></div>
+        </div>
+        <div class="orto-toolbar">
+          <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="export-ics">${t("colture.ics")}</button>
+        </div>`
         }
-      </div>
-      <div class="orto-stats">
-        <div class="orto-stat"><span class="orto-stat-ico">🌿</span><span><b>${garden.colture.length}</b><small>${t("colture.stat_active")}</small></span></div>
-        <div class="orto-stat"><span class="orto-stat-ico">🪴</span><span><b>${riepilogo.piante}</b><small>${t("colture.stat_plants")}</small></span></div>
-        <div class="orto-stat"><span class="orto-stat-ico">🧺</span><span><b>${riepilogo.vicine}</b><small>${t("colture.stat_soon")}</small></span></div>
-      </div>
-      ${
-        vuoto
-          ? ""
-          : `<div class="orto-toolbar">
-        <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="import-greenhouse">${t("colture.import")}</button>
-        <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="export-ics">${t("colture.ics")}</button>
-      </div>`
-      }
-      ${
-        inAttesa
-          ? `<p class="orto-crosslink">
+        ${
+          inAttesa
+            ? `<p class="orto-crosslink">
               <span class="orto-crosslink-ico" aria-hidden="true">📦</span>
               <span>${t("colture.crosslink", { n: inAttesa })}</span>
-              <button class="orto-link" type="button" data-orto-view="dispensa">${
-                t("colture.crosslink_cta") + " →"
-              }</button>
+              <a class="orto-link" href="#ortoSecDispensa" data-orto-jump="ortoSecDispensa">${
+                t("colture.crosslink_cta") + " ↓"
+              }</a>
             </p>`
-          : ""
-      }
-      <div class="orto-grid">${
-        garden.colture.length
-          ? garden.colture.map(colturaCard).join("")
-          : `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">🌱</span>
+            : ""
+        }
+        <div class="orto-grid">${
+          garden.colture.length
+            ? garden.colture.map(colturaCard).join("")
+            : `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">🌱</span>
               <h4>${t("colture.empty_title")}</h4><p>${t("colture.empty_text")}</p>
               <div class="orto-empty-actions">
-                <button class="orto-btn" type="button" data-orto-action="open-add">${t("colture.add")}</button>
-                <button class="orto-btn orto-btn--ghost" type="button"
-                  data-orto-action="import-greenhouse">${t("colture.import")}</button>
+                <a class="orto-btn" href="#ortoSecDispensa"
+                  data-orto-jump="ortoSecDispensa">${t("colture.crosslink_cta")} ↓</a>
               </div></div>`
-      }</div>`;
+        }</div>
+      </section>`;
   }
 
   function colturaCard(coltura, index) {
@@ -1267,46 +1282,136 @@
   }
 
   /* La dispensa non è un secondo elenco di colture: è il magazzino di ciò che si possiede e non è ancora in terra. */
-  function renderDispensa() {
+  function sezioneDispensaHtml() {
     const attive = inventory.voci.filter(
       (v) => !v.archiviata && BYID[v.plantId],
     );
-    app.innerHTML = `
-      <div class="orto-view-head">
-        <div>
-          <h2>${t("disp.title")}</h2>
-          <p>${t("disp.sub")}</p>
+    return `
+      <section class="orto-sec" id="ortoSecDispensa" aria-labelledby="ortoSecDispensaT">
+        <div class="orto-sec-head">
+          <p class="orto-sec-kicker"><span aria-hidden="true">📦</span> ${t("sec.step1")}</p>
+          <h2 id="ortoSecDispensaT">${t("disp.title")}</h2>
+          <p class="orto-sec-sub">${t("disp.sub")}</p>
         </div>
-        <div class="orto-toolbar" style="margin:0">
-          <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
-            data-orto-action="import-orders">${t("disp.import")}</button>
-          <button class="orto-btn orto-btn--sm" type="button"
-            data-orto-action="open-add">${t("disp.add_manual")}</button>
-        </div>
-      </div>
-      ${
-        attive.length
-          ? `<p class="orto-crosslink">
-              <span class="orto-crosslink-ico" aria-hidden="true">🌱</span>
-              <span>${t("disp.crosslink")}</span>
-              <button class="orto-link" type="button" data-orto-view="colture">${
-                t("disp.crosslink_cta") + " →"
-              }</button>
-            </p>`
-          : ""
-      }
-      ${
-        attive.length
-          ? `<div class="orto-stock-list">${attive.map(voceCard).join("")}</div>`
-          : `<div class="orto-empty"><span class="orto-empty-ico">📦</span>
-              <h4>${t("disp.empty_title")}</h4><p>${t("disp.empty_text")}</p>
-              <div class="orto-empty-actions">
-                <button class="orto-btn" type="button"
+        ${
+          attive.length
+            ? `<div class="orto-toolbar">
+                <button class="orto-btn orto-btn--sm" type="button"
+                  data-orto-action="open-add-stock">${t("disp.add_manual")}</button>
+                <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
                   data-orto-action="import-orders">${t("disp.import")}</button>
-                <button class="orto-btn orto-btn--ghost" type="button"
-                  data-orto-action="open-add">${t("disp.add_manual")}</button>
-              </div></div>`
-      }`;
+                <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
+                  data-orto-action="clear-stock">${t("disp.clear")}</button>
+              </div>
+              <p class="orto-crosslink">
+                <span class="orto-crosslink-ico" aria-hidden="true">🌱</span>
+                <span>${t("disp.crosslink")}</span>
+                <a class="orto-link" href="#ortoSecPiante" data-orto-jump="ortoSecPiante">${
+                  t("disp.crosslink_cta") + " ↑"
+                }</a>
+              </p>`
+            : ""
+        }
+        ${
+          attive.length > 6
+            ? `<label class="orto-stock-search">
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="ortoStockSearch" autocomplete="off"
+                value="${escape(stockQuery)}"
+                placeholder="${escape(t("disp.search_placeholder"))}"
+                aria-label="${escape(t("disp.search_placeholder"))}" />
+            </label>`
+            : ""
+        }
+        <div id="ortoStockResults"></div>
+      </section>`;
+  }
+
+  /* Raggruppa la dispensa per provenienza: un ordine può portare decine di voci
+     tutte insieme, e ripetere "Ordine XY" su ognuna nasconde il fatto che sono
+     arrivate in blocco. L'intestazione del gruppo lo dice una volta sola. */
+  function raggruppaVoci(voci) {
+    const perOrdine = new Map();
+    const manuali = [];
+    voci.forEach((voce) => {
+      if (voce.orderId) {
+        if (!perOrdine.has(voce.orderId)) perOrdine.set(voce.orderId, []);
+        perOrdine.get(voce.orderId).push(voce);
+      } else manuali.push(voce);
+    });
+    const perNome = (a, b) =>
+      plantName(BYID[a.plantId]).localeCompare(plantName(BYID[b.plantId]));
+    const gruppi = [...perOrdine.entries()]
+      .map(([orderId, voci]) => ({
+        tipo: "ordine",
+        orderId,
+        data: voci[0].dataAcquisto,
+        voci: voci.sort(perNome),
+      }))
+      .sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+    if (manuali.length)
+      gruppi.push({ tipo: "manuale", voci: manuali.sort(perNome) });
+    return gruppi;
+  }
+
+  function stockGroupHtml(gruppo) {
+    const n = gruppo.voci.length;
+    const conteggio =
+      n === 1 ? t("disp.group_count_one") : t("disp.group_count", { n });
+    const titolo =
+      gruppo.tipo === "ordine"
+        ? t("disp.group_order", { id: escape(gruppo.orderId) })
+        : t("disp.group_manual");
+    const meta =
+      gruppo.tipo === "ordine" && gruppo.data
+        ? `${fmtBreve(E.parseDate(gruppo.data))} · ${conteggio}`
+        : conteggio;
+    return `
+      <section class="orto-stock-group">
+        <header class="orto-stock-group-head">
+          <span class="orto-stock-group-ico" aria-hidden="true">${
+            gruppo.tipo === "ordine" ? "📦" : "✋"
+          }</span>
+          <div>
+            <h3>${titolo}</h3>
+            <p>${meta}</p>
+          </div>
+        </header>
+        <div class="orto-stock-list">${gruppo.voci.map(voceCard).join("")}</div>
+      </section>`;
+  }
+
+  // Rigenera solo l'elenco filtrato: la barra di ricerca resta nel DOM e non perde il fuoco a ogni battitura.
+  function renderStockResults() {
+    const host = document.getElementById("ortoStockResults");
+    if (!host) return;
+    const attive = inventory.voci.filter(
+      (v) => !v.archiviata && BYID[v.plantId],
+    );
+    if (!attive.length) {
+      host.innerHTML = `<div class="orto-empty"><span class="orto-empty-ico">📦</span>
+        <h4>${t("disp.empty_title")}</h4><p>${t("disp.empty_text")}</p>
+        <div class="orto-empty-actions">
+          <button class="orto-btn" type="button"
+            data-orto-action="import-orders">${t("disp.import")}</button>
+          <button class="orto-btn orto-btn--ghost" type="button"
+            data-orto-action="open-add-stock">${t("disp.add_manual")}</button>
+        </div></div>`;
+      return;
+    }
+    const query = stockQuery.trim().toLowerCase();
+    const filtrate = query
+      ? attive.filter((v) =>
+          plantName(BYID[v.plantId]).toLowerCase().includes(query),
+        )
+      : attive;
+    if (!filtrate.length) {
+      host.innerHTML = `<div class="orto-empty"><span class="orto-empty-ico">⌕</span>
+        <h4>${t("disp.search_empty_title")}</h4>
+        <p>${t("disp.search_empty_text", { q: escape(stockQuery.trim()) })}</p></div>`;
+      return;
+    }
+    host.innerHTML = raggruppaVoci(filtrate).map(stockGroupHtml).join("");
   }
 
   function voceCard(voce, index) {
@@ -1327,15 +1432,6 @@
         : voce.semine === 1
           ? t("disp.sowings_one")
           : t("disp.sowings", { n: voce.semine });
-    const provenienza = voce.orderId
-      ? t("disp.from_order", {
-          id: escape(voce.orderId),
-          data: voce.dataAcquisto
-            ? fmtBreve(E.parseDate(voce.dataAcquisto))
-            : "—",
-        })
-      : t("disp.from_manual");
-
     return `
       <article class="orto-stock${esaurita ? " is-empty" : ""}"
         style="animation-delay:${Math.min(index, 8) * 40}ms">
@@ -1352,7 +1448,7 @@
           <!-- Le piantine si contano una a una, le bustine no: la riga forte è
                «quante restano» per le prime e «quante semine» per le seconde. -->
           <p class="orto-stock-count">${stato}</p>
-          <p class="orto-stock-meta">${unita} · ${provenienza}</p>
+          <p class="orto-stock-meta">${unita}</p>
         </div>
         <div class="orto-stock-actions">
           <button class="orto-btn orto-btn--sm" type="button"
@@ -1378,9 +1474,6 @@
       box.open = false;
       box.dataset.responsiveReady = "true";
     }
-    box.querySelectorAll("[data-orto-step]").forEach((passo) => {
-      passo.classList.toggle("is-current", passo.dataset.ortoStep === view);
-    });
     const suggerimento = document.getElementById("ortoHowtoHint");
     if (!suggerimento) return;
     const inAttesa = inventory.voci.filter(
@@ -1394,36 +1487,26 @@
     suggerimento.innerHTML = t(chiave);
   }
 
-  function render() {
-    // Le linguette sono un tablist: una sola resta raggiungibile con Tab, le altre con le frecce.
-    const linguette = [...document.querySelectorAll(".orto-tab")];
-    linguette.forEach((button) => {
-      const attivo = button.dataset.ortoView === view;
-      button.setAttribute("aria-selected", String(attivo));
-      button.classList.toggle("is-active", attivo);
-      button.tabIndex = attivo ? 0 : -1;
-    });
-    const attiva = linguette.find((b) => b.dataset.ortoView === view);
-    if (attiva && app) app.setAttribute("aria-labelledby", attiva.id);
-    // Il pannello ricorda quale vista sta mostrando anche fuori dalle linguette (la striscia dei passi ci porta senza passare da lì).
-    syncHowto();
-    /* Ogni linguetta porta il proprio numero e una riga di stato. */
+  /* Il sommario non cambia vista: dice solo a che punto della pagina si è e
+     quanto c'è in ognuna delle tre sezioni. */
+  function aggiornaSommario() {
     const { diOggi, arretrati } = datiOggi();
     const attive = inventory.voci.filter(
       (v) => !v.archiviata && BYID[v.plantId],
     ).length;
-    const conteggi = [
+    [
       ["ortoTodayBadge", diOggi.length],
       ["ortoColtureBadge", garden.colture.length],
       ["ortoDispensaBadge", attive],
-    ];
-    conteggi.forEach(([id, n]) => {
+    ].forEach(([id, n]) => {
       const badge = document.getElementById(id);
       if (!badge) return;
       badge.hidden = !n;
       badge.textContent = String(n);
     });
-    const note = [
+    /* L'arretrato si somma a quanto c'è oggi invece di sostituirlo: il badge
+       dice «oggi», la riga dice «più questi». Due numeri che non si smentiscono. */
+    [
       [
         "ortoOggiNote",
         arretrati.length
@@ -1440,24 +1523,66 @@
         "ortoDispensaNote",
         attive ? t("tab.dispensa_note") : t("tab.dispensa_empty"),
       ],
-    ];
-    note.forEach(([id, testo]) => {
+    ].forEach(([id, testo]) => {
       const nodo = document.getElementById(id);
       if (nodo) nodo.textContent = testo;
     });
     document
       .getElementById("ortoOggiNote")
       ?.classList.toggle("is-late", arretrati.length > 0);
-    if (view === "colture") renderColture();
-    else if (view === "dispensa") renderDispensa();
-    else renderAgenda();
-    const giornoAttivo = app?.querySelector(".orto-day.is-selected");
-    if (giornoAttivo?.scrollIntoView)
-      giornoAttivo.scrollIntoView({
-        block: "nearest",
-        inline: "center",
-        behavior: "instant",
-      });
+  }
+
+  function render() {
+    syncHowto();
+    const vergine =
+      !garden.colture.length && !inventory.voci.some((v) => !v.archiviata);
+    const viewbar = document.getElementById("ortoViewbar");
+    // A orto vuoto il sommario indicherebbe tre sezioni che non esistono ancora.
+    if (viewbar) viewbar.hidden = vergine;
+    if (vergine) {
+      renderBenvenuto();
+      return;
+    }
+    aggiornaSommario();
+    app.innerHTML =
+      sezioneOggiHtml() + sezionePianteHtml() + sezioneDispensaHtml();
+    renderStockResults();
+    osservaSezioni();
+  }
+
+  /* Scrollspy: la voce del sommario si accende quando la sua sezione è
+     quella che si sta leggendo. Sostituisce lo stato "linguetta scelta",
+     che qui non ha più senso perché le sezioni ci sono tutte insieme. */
+  let osservatore = null;
+  function osservaSezioni() {
+    osservatore?.disconnect();
+    const voci = [...document.querySelectorAll("[data-orto-jump]")];
+    const sezioni = [...app.querySelectorAll(".orto-sec")];
+    if (!voci.length || !sezioni.length || !("IntersectionObserver" in window))
+      return;
+    const visibili = new Set();
+    const accendi = () => {
+      // Fra due sezioni visibili vince quella più in alto: è quella che si sta leggendo.
+      const attiva = sezioni.find((s) => visibili.has(s.id))?.id;
+      voci.forEach((voce) =>
+        voce.classList.toggle(
+          "is-active",
+          Boolean(attiva) && voce.dataset.ortoJump === attiva,
+        ),
+      );
+    };
+    osservatore = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visibili.add(entry.target.id);
+          else visibili.delete(entry.target.id);
+        });
+        accendi();
+      },
+      // Il margine alto scarta la fascia coperta dalla navbar fissa.
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    sezioni.forEach((s) => osservatore.observe(s));
   }
 
   function applyLanguage(value) {
@@ -1495,6 +1620,7 @@
     } catch (_) {}
     renderPicker();
     if (piantaScelta) mostraSceltaPianta();
+    applyAddDialogMode();
     render();
     document.documentElement.classList.remove("serra-i18n-pending");
   }
@@ -1513,6 +1639,36 @@
     toastEl.classList.add("is-on");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toastEl.classList.remove("is-on"), 2600);
+  }
+
+  // Voce aggiunta a mano: stessa logica di riattivazione usata per l'importazione dagli ordini,
+  // ma senza un ordine a cui appoggiarsi.
+  function aggiungiAScorta(plantId, origine, quantita) {
+    const variante = origine === "piantina" ? "piantina" : "seme";
+    const id = `manuale|${plantId}|${variante}`;
+    const qta = Math.max(1, Number(quantita) || 1);
+    const esistente = inventory.voci.find((v) => v.id === id);
+    if (esistente && !esistente.archiviata) {
+      esistente.qta = (Number(esistente.qta) || 0) + qta;
+    } else if (esistente) {
+      esistente.archiviata = false;
+      esistente.qta = qta;
+      esistente.qtaPiantata = 0;
+      esistente.semine = 0;
+    } else {
+      inventory.voci.push({
+        id,
+        plantId,
+        variante,
+        qta,
+        qtaPiantata: 0,
+        semine: 0,
+        orderId: null,
+        dataAcquisto: E.iso(new Date()),
+        archiviata: false,
+      });
+    }
+    saveInventory();
   }
 
   function aggiungiColtura(plantId, origine, dataInizio, quantita, posizione) {
@@ -1535,6 +1691,7 @@
   let pickerQuery = "";
   let pickerFamily = "stagione";
   let piantaScelta = null;
+  let dialogMode = "coltura"; // "coltura" pianta subito, "stock" aggiunge solo alla dispensa
 
   const diStagione = (plant, mese) => (plant.mesi || []).includes(mese);
 
@@ -1648,6 +1805,24 @@
     }
   }
 
+  // Il dialogo "Aggiungi" serve a due scopi: piantare subito, oppure solo mettere da parte
+  // nella dispensa. Cambia titolo, passo 3 e conferma; data e aiuola contano solo se si pianta.
+  function applyAddDialogMode() {
+    const perDispensa = dialogMode === "stock";
+    const titolo = document.getElementById("ortoAddTitle");
+    if (titolo) titolo.textContent = t(perDispensa ? "dlg.title_stock" : "dlg.title");
+    const sottotitolo = document.getElementById("ortoAddSub");
+    if (sottotitolo) sottotitolo.textContent = t(perDispensa ? "dlg.sub_stock" : "dlg.sub");
+    const stepLabel = document.getElementById("ortoStepWhenLabel");
+    if (stepLabel) stepLabel.textContent = t(perDispensa ? "dlg.step_when_stock" : "dlg.step_when");
+    const campoData = document.getElementById("ortoDateField");
+    if (campoData) campoData.hidden = perDispensa;
+    const campoPosizione = document.getElementById("ortoPositionField");
+    if (campoPosizione) campoPosizione.hidden = perDispensa;
+    const conferma = document.getElementById("ortoAddConfirm");
+    if (conferma) conferma.textContent = t(perDispensa ? "dlg.confirm_stock" : "dlg.confirm");
+  }
+
   function mostraSceltaPianta() {
     const picker = document.getElementById("ortoPicker");
     const scelta = document.getElementById("ortoPicked");
@@ -1688,6 +1863,10 @@
     if (!nodo) return;
     const plant = piantaScelta ? BYID[piantaScelta] : null;
     if (!plant) return void (nodo.textContent = "");
+    if (dialogMode === "stock")
+      return void (nodo.textContent = t("dlg.preview_stock", {
+        nome: plantName(plant),
+      }));
     const origine =
       document.querySelector('input[name="ortoOrigine"]:checked')?.value ||
       "seme";
@@ -1704,26 +1883,6 @@
           data: fmtData(E.addDays(inizio, gg)),
         })
       : t("dlg.preview_perenne", { nome: plantName(plant) });
-  }
-
-  // Legge le aiuole della serra attiva senza modificarle.
-  function importaDaSerra() {
-    let beds = [];
-    try {
-      const store = JSON.parse(
-        localStorage.getItem("serra.projects.v1") || "null",
-      );
-      const progetto = store?.projects?.find((p) => p.id === store.activeId);
-      beds = progetto?.config?.beds || [];
-    } catch (_) {}
-    const ids = [
-      ...new Set(beds.map((b) => b.plantId).filter((id) => BYID[id])),
-    ];
-    if (!ids.length) return toast(t("toast.no_greenhouse"));
-    const oggi = E.iso(new Date());
-    ids.forEach((id) => aggiungiColtura(id, "seme", oggi, 4, ""));
-    render();
-    toast(t("toast.imported", { n: ids.length }));
   }
 
   // Promemoria che funziona ovunque, iOS compreso, senza notifiche push.
@@ -1753,50 +1912,15 @@
     toast(t("toast.ics", { n: tasks.length }));
   }
 
-  /* Frecce, Home e Fine sulle linguette: il comportamento che ci si aspetta da un tablist e che qui mancava del tutto. */
-  document.querySelector(".orto-tabs")?.addEventListener("keydown", (event) => {
-    const linguette = [...document.querySelectorAll(".orto-tab")];
-    const corrente = linguette.indexOf(document.activeElement);
-    if (corrente < 0) return;
-    const tasti = ["ArrowLeft", "ArrowRight", "Home", "End"];
-    if (!tasti.includes(event.key)) return;
-    event.preventDefault();
-    const prossimo =
-      event.key === "Home"
-        ? 0
-        : event.key === "End"
-          ? linguette.length - 1
-          : (corrente +
-              (event.key === "ArrowRight" ? 1 : -1) +
-              linguette.length) %
-            linguette.length;
-    view = linguette[prossimo].dataset.ortoView;
-    render();
-    linguette[prossimo].focus();
-  });
-
-  /* Frecce sulla striscia dei giorni: stesso contratto delle linguette. */
-  document.addEventListener("keydown", (event) => {
-    const giorno = event.target.closest?.(".orto-day");
-    if (!giorno) return;
-    const tasti = ["ArrowLeft", "ArrowRight", "Home"];
-    if (!tasti.includes(event.key)) return;
-    event.preventDefault();
-    const giorni = [...document.querySelectorAll(".orto-day")];
-    const corrente = giorni.indexOf(giorno);
-    const prossimo =
-      event.key === "Home"
-        ? 0
-        : Math.min(
-            giorni.length - 1,
-            Math.max(0, corrente + (event.key === "ArrowRight" ? 1 : -1)),
-          );
-    const scelto = giorni[prossimo]?.dataset.day;
-    if (!scelto) return;
-    giornoScelto = scelto === isoOggi() ? null : scelto;
-    render();
-    document.querySelector(".orto-day.is-selected")?.focus();
-  });
+  /* I pannelli ripiegabili ricordano se erano aperti: il ridisegno che segue
+     ogni spunta non deve richiuderli sotto le dita. */
+  app?.addEventListener("toggle", (event) => {
+    const box = event.target;
+    if (!(box instanceof HTMLDetailsElement)) return;
+    if (box.hasAttribute("data-orto-backlog")) arretratiAperti = box.open;
+    else if (box.hasAttribute("data-orto-upcoming")) settimanaAperta = box.open;
+    else if (box.hasAttribute("data-orto-done")) fatteAperte = box.open;
+  }, true);
 
   /* ---------- apertura dei dialoghi ---------- */
   let scrollCongelato = 0;
@@ -1831,12 +1955,14 @@
   });
 
   document.addEventListener("click", (event) => {
-    const viewBtn = event.target.closest("[data-orto-view]");
-    if (viewBtn) {
-      view = viewBtn.dataset.ortoView;
-      render();
-      if (!viewBtn.classList.contains("orto-tab"))
-        app?.focus({ preventScroll: true });
+    // I collegamenti fra sezioni scorrono la pagina: niente cambio di vista, niente salto secco.
+    const salto = event.target.closest("[data-orto-jump]");
+    if (salto) {
+      const meta = document.getElementById(salto.dataset.ortoJump);
+      if (meta) {
+        event.preventDefault();
+        vaiAllaSezione(meta);
+      }
       return;
     }
     const trigger = event.target.closest("[data-orto-action]");
@@ -1851,7 +1977,7 @@
       const id = trigger.dataset.taskId;
       if (garden.fatti[id]) delete garden.fatti[id];
       else {
-        garden.fatti[id] = view === "oggi" ? isoScelto() : E.iso(new Date());
+        garden.fatti[id] = E.iso(new Date());
         trigger.dataset.on = "1";
       }
       saveGarden();
@@ -1893,6 +2019,7 @@
       return;
     }
     if (action === "import-orders") return importaDaOrdini();
+    if (action === "clear-stock") return apriDialogo("ortoClearStockDialog");
     if (action === "archive-voce") {
       const voce = inventory.voci.find((v) => v.id === trigger.dataset.voceId);
       if (voce) {
@@ -1940,11 +2067,6 @@
       syncHowto();
       return;
     }
-    if (action === "pick-day") {
-      giornoScelto =
-        trigger.dataset.day === isoOggi() ? null : trigger.dataset.day;
-      return render();
-    }
     if (action === "pick-family") {
       pickerFamily = trigger.dataset.family || "";
       renderPicker();
@@ -1977,7 +2099,8 @@
       document.getElementById("ortoPlantSearch")?.focus();
       return;
     }
-    if (action === "open-add") {
+    if (action === "open-add" || action === "open-add-stock") {
+      dialogMode = action === "open-add-stock" ? "stock" : "coltura";
       piantaScelta = null;
       pickerQuery = "";
       pickerFamily = PLANTS.some((p) =>
@@ -1995,6 +2118,7 @@
       if (quantita) quantita.value = "4";
       const posizione = document.getElementById("ortoPosition");
       if (posizione) posizione.value = "";
+      applyAddDialogMode();
       apriDialogo("ortoAddDialog");
       if (window.matchMedia("(min-width: 721px)").matches) ricerca?.focus();
       return;
@@ -2020,13 +2144,19 @@
       apriDialogo("ortoEditDialog");
       return;
     }
-    if (action === "import-greenhouse") return importaDaSerra();
     if (action === "export-ics") return esportaIcs();
   });
 
   document.getElementById("ortoPlantSearch")?.addEventListener("input", (e) => {
     pickerQuery = e.target.value;
     renderPicker();
+  });
+  // Delegato su app: la barra di ricerca della dispensa viene ricreata solo al cambio vista, mai a ogni battitura.
+  app?.addEventListener("input", (e) => {
+    if (e.target.id === "ortoStockSearch") {
+      stockQuery = e.target.value;
+      renderStockResults();
+    }
   });
   document.getElementById("ortoAddForm")?.addEventListener("change", (e) => {
     if (e.target.name === "ortoOrigine" || e.target.id === "ortoDate")
@@ -2053,19 +2183,29 @@
       const origine =
         document.querySelector('input[name="ortoOrigine"]:checked')?.value ||
         "seme";
-      aggiungiColtura(
-        plantId,
-        origine,
-        document.getElementById("ortoDate").value || E.iso(new Date()),
-        document.getElementById("ortoQty").value,
-        document.getElementById("ortoPosition").value.trim(),
-      );
       const nome = plantName(BYID[plantId]);
+      const modoScorta = dialogMode === "stock";
+      if (modoScorta) {
+        aggiungiAScorta(plantId, origine, document.getElementById("ortoQty").value);
+      } else {
+        aggiungiColtura(
+          plantId,
+          origine,
+          document.getElementById("ortoDate").value || E.iso(new Date()),
+          document.getElementById("ortoQty").value,
+          document.getElementById("ortoPosition").value.trim(),
+        );
+      }
       piantaScelta = null;
       setTimeout(() => {
-        view = "colture";
         render();
-        toast(t("toast.added", { nome }));
+        // Porta lo sguardo dove la voce è appena comparsa, invece di lasciarla trovare.
+        vaiAllaSezione(
+          document.getElementById(
+            modoScorta ? "ortoSecDispensa" : "ortoSecPiante",
+          ),
+        );
+        toast(t(modoScorta ? "toast.added_stock" : "toast.added", { nome }));
       }, 0);
     });
 
@@ -2108,12 +2248,72 @@
       }, 0);
     });
 
+  // Conferma dell'importazione: solo gli ordini spuntati, e solo le voci che non c'erano già.
+  document
+    .getElementById("ortoImportForm")
+    ?.addEventListener("submit", (event) => {
+      const scelti = ordiniImportabili;
+      ordiniImportabili = [];
+      if (event.submitter && event.submitter.value === "cancel") return;
+      const selezionati = [
+        ...document.querySelectorAll('input[name="ortoImportOrder"]:checked'),
+      ].map((el) => el.value);
+      if (!selezionati.length) return setTimeout(() => toast(t("toast.no_orders_selected")), 0);
+      let aggiunte = 0;
+      scelti
+        .filter((ordine) => selezionati.includes(ordine.id))
+        .forEach((ordine) => {
+          ordine.nuovi.forEach((item) => {
+            const variante = item.variante === "piantina" ? "piantina" : "seme";
+            const id = `${ordine.id}|${item.id}|${variante}`;
+            // Una svuotata precedente lascia la voce archiviata: la si riattiva invece di duplicarla.
+            const esistente = inventory.voci.find((v) => v.id === id);
+            if (esistente) esistente.archiviata = false;
+            else
+              inventory.voci.push({
+                id,
+                plantId: item.id,
+                variante,
+                qta: Number(item.bustine) || 1,
+                qtaPiantata: 0,
+                semine: 0,
+                orderId: ordine.id,
+                dataAcquisto: ordine.data,
+                archiviata: false,
+              });
+            aggiunte++;
+          });
+        });
+      saveInventory();
+      setTimeout(() => {
+        render();
+        toast(t("toast.imported_orders", { n: aggiunte }));
+      }, 0);
+    });
+
+  // Conferma dello svuotamento: archivia tutta la dispensa attiva, come fa "Segna come finita" voce per voce.
+  document
+    .getElementById("ortoClearStockForm")
+    ?.addEventListener("submit", (event) => {
+      if (event.submitter && event.submitter.value === "cancel") return;
+      const attive = inventory.voci.filter(
+        (v) => !v.archiviata && BYID[v.plantId],
+      );
+      attive.forEach((v) => (v.archiviata = true));
+      saveInventory();
+      setTimeout(() => {
+        render();
+        toast(t("toast.stock_cleared"));
+      }, 0);
+    });
+
   [
     ["ortoAddDialog", () => (piantaScelta = null)],
     ["ortoPlantDialog", () => (vocePendente = null)],
     ["ortoEditDialog", () => (colturaInModifica = null)],
     ["ortoHarvestDialog", () => (colturaDaRaccogliere = null)],
     ["ortoRemoveDialog", () => (colturaDaRimuovere = null)],
+    ["ortoImportDialog", () => (ordiniImportabili = [])],
   ].forEach(([id, reset]) => {
     const dialogo = document.getElementById(id);
     if (!dialogo || !reset) return;
@@ -2196,8 +2396,8 @@
       saveInventory();
       const nome = plantName(BYID[voce.plantId]);
       setTimeout(() => {
-        view = "colture";
         render();
+        vaiAllaSezione(document.getElementById("ortoSecPiante"));
         toast(t("toast.planted", { n: quante, nome }));
       }, 0);
     });
@@ -2233,9 +2433,19 @@
     loadGarden();
     loadInventory();
     updateCartBadge();
-    // Un ingresso diretto su #da-piantare (dal pannello utente) apre la dispensa.
-    if (location.hash === "#da-piantare") view = "dispensa";
     applyLanguage(localStorage.getItem("ois.lang"));
+    // Un ingresso diretto su #da-piantare (dal pannello utente) scende alla dispensa.
+    if (location.hash === "#da-piantare")
+      requestAnimationFrame(() =>
+        vaiAllaSezione(document.getElementById("ortoSecDispensa")),
+      );
+
+    // Rende infinita la striscia degli ortaggi nel piè di pagina duplicando gli elementi.
+    const footerRow = document.getElementById("footerPlantRow");
+    if (footerRow) {
+      const html = footerRow.innerHTML;
+      footerRow.innerHTML = html + html + html + html;
+    }
   }
 
   boot();

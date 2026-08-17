@@ -106,6 +106,20 @@
       "toast.cleared": "Carrello svuotato",
       "toast.order_error": "Non è stato possibile registrare l'ordine",
       "seeds.link": "Cerchi i semi? Vai al catalogo",
+
+      "nav.abbinamenti": "🌿 Abbinamenti",
+      "nav.contatti": "✉️ Contatti",
+      "footer.motto": "Pianta con cura, raccogli con gioia.",
+      "footer.tip_title": "Consiglio del mese",
+      "footer.tip_text": "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
+      "footer.explore": "Esplora",
+      "footer.kit": "📦 Kit del mese",
+      "footer.legal": "Legale",
+      "footer.privacy": "Privacy Policy",
+      "footer.cookie": "Cookie Policy",
+      "footer.terms": "Termini di Servizio",
+      "footer.support": "Supporto",
+      "footer.rights": "© 2026 Orto in Serra · Tutti i diritti riservati",
     },
     ro: {
       "page.title": "Pepinieră · Răsaduri gata de plantat",
@@ -200,6 +214,20 @@
       "toast.cleared": "Coș golit",
       "toast.order_error": "Comanda nu a putut fi înregistrată",
       "seeds.link": "Cauți semințe? Mergi la catalog",
+
+      "nav.abbinamenti": "🌿 Combinații",
+      "nav.contatti": "✉️ Contact",
+      "footer.motto": "Plantează cu grijă, culege cu bucurie.",
+      "footer.tip_title": "Sfatul lunii",
+      "footer.tip_text": "Udă la bază, niciodată pe frunze: previne oidiumul.",
+      "footer.explore": "Explorează",
+      "footer.kit": "📦 Kit-ul lunii",
+      "footer.legal": "Legal",
+      "footer.privacy": "Politică de confidențialitate",
+      "footer.cookie": "Politică Cookie",
+      "footer.terms": "Termeni de serviciu",
+      "footer.support": "Suport",
+      "footer.rights": "© 2026 Orto in Serra · Toate drepturile rezervate",
     },
   };
 
@@ -1070,5 +1098,12 @@
     PRODUCTS = listino || E.buildProducts(PLANTS, {});
     loadCart();
     applyLanguage(localStorage.getItem("ois.lang"));
+
+    // Rende infinita la striscia degli ortaggi nel piè di pagina duplicando gli elementi.
+    const footerRow = document.getElementById("footerPlantRow");
+    if (footerRow) {
+      const html = footerRow.innerHTML;
+      footerRow.innerHTML = html + html + html + html;
+    }
   })();
 })();
