@@ -824,11 +824,13 @@
         "journey.semi_benefit":
           "Risparmi e segui la crescita dall'inizio",
         "journey.semi_hint": "97 varietà · da 2,20 €",
+        "journey.semi_cta": "Scegli i semi",
         "journey.piantine_label": "Scelgo le piantine",
         "journey.piantine_badge": "Più veloce",
         "journey.piantine_benefit":
           "Salti la germinazione e raccogli prima",
         "journey.piantine_hint": "Già avviate · consegna in 48 h",
+        "journey.piantine_cta": "Scegli le piantine",
         "journey.or": "oppure",
         "journey.step3_title": "Segui il tuo orto",
         "journey.step3_badge": "gratuito",
@@ -841,6 +843,7 @@
         "journey.preview_check": "Controlla le zucchine",
         "journey.preview_next": "Prossimo: concima venerdì",
         "journey.step3_cta": "Vedi cosa fare oggi",
+        "journey.step3_cta_type": "Strumento gratuito",
         "journey.step3_help": "Scopri come funziona Il mio orto",
         // Ponte contestuale dopo il catalogo semi: propone l'alternativa disponibile in vivaio.
         "bridge.vivaio_kicker": "Un'alternativa ai semi",
@@ -1331,11 +1334,13 @@
         "journey.semi_benefit":
           "Economisești și urmărești creșterea de la început",
         "journey.semi_hint": "97 de soiuri · de la 2,20 €",
+        "journey.semi_cta": "Alege semințele",
         "journey.piantine_label": "Aleg răsadurile",
         "journey.piantine_badge": "Mai rapid",
         "journey.piantine_benefit":
           "Sari peste germinare și recoltezi mai devreme",
         "journey.piantine_hint": "Deja pornite · livrare în 48 h",
+        "journey.piantine_cta": "Alege răsadurile",
         "journey.or": "sau",
         "journey.step3_title": "Urmărește-ți grădina",
         "journey.step3_badge": "gratuit",
@@ -1348,6 +1353,7 @@
         "journey.preview_check": "Verifică dovleceii",
         "journey.preview_next": "Urmează: fertilizează vineri",
         "journey.step3_cta": "Vezi ce ai de făcut astăzi",
+        "journey.step3_cta_type": "Instrument gratuit",
         "journey.step3_help": "Descoperă cum funcționează Grădina mea",
         "bridge.vivaio_kicker": "O alternativă la semințe",
         "bridge.vivaio_title": "Vrei să recoltezi mai devreme?",
