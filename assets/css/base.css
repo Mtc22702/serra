@@ -8941,90 +8941,6 @@ html[data-theme="dark"]
     }
   }
 
-  /* Sugli iPhone il pannello deve mostrare anche il mese senza che il footer
-     lo copra. Compattiamo le parti ripetute; lo scroll interno resta come
-     sicurezza per schermi più piccoli o testo ingrandito. */
-  @media (max-width: 660px) and (max-height: 950px) {
-    .preconfig-sheet {
-      max-height: calc(100dvh - max(6px, env(safe-area-inset-top)));
-    }
-    .preconfig-handle {
-      margin-top: 7px;
-    }
-    .preconfig-panel-head {
-      padding-block: 6px;
-      margin-bottom: 0;
-    }
-    .preconfig-head-icon {
-      width: 30px;
-      height: 30px;
-    }
-    .preconfig-close {
-      width: 40px;
-      height: 40px;
-    }
-    .preconfig-body {
-      padding: 4px 12px 3px;
-      gap: 2px;
-      scrollbar-gutter: auto;
-    }
-    .preconfig-section-label,
-    .preconfig-section-label--primary {
-      margin: 5px 0 2px;
-    }
-    .pc-persona-cards {
-      gap: 4px;
-    }
-    #preconfigPersonaSection .pc-persona-card {
-      min-height: 48px;
-      padding: 5px 10px 5px 12px;
-      gap: 8px;
-    }
-    #preconfigPersonaSection .pc-persona-ico {
-      width: 32px;
-      height: 32px;
-    }
-    .pc-persona-body small {
-      margin-top: 1px;
-      line-height: 1.18;
-    }
-    .preconfig-vfield {
-      padding: 5px 6px;
-    }
-    .preconfig-vfield--dims,
-    .preconfig-vfield--climate {
-      gap: 6px;
-    }
-    .preconfig-fld-row,
-    .preconfig-fld:not(.preconfig-fld-row > *) {
-      margin-bottom: 3px;
-    }
-    .preconfig-step-btn {
-      min-height: 34px;
-    }
-    .preconfig-step-input {
-      padding-block: 3px;
-    }
-    .preconfig-select {
-      min-height: 38px;
-      padding-block: 5px;
-    }
-    .preconfig-month-wrap {
-      min-height: 40px;
-      margin-bottom: 2px;
-    }
-    .preconfig-footer {
-      padding: 6px 12px calc(8px + env(safe-area-inset-bottom, 0px));
-      gap: 4px;
-    }
-    .preconfig-summary {
-      font-size: 0.66rem;
-    }
-    .preconfig-cta {
-      padding-block: 10px;
-    }
-  }
-
   /* Raggruppa gli adattamenti della struttura per le diverse larghezze dello schermo. */
   @media (min-width: 661px) {
     .preconfig-sheet {
@@ -10091,6 +10007,91 @@ html[data-theme="dark"]
   @media (min-width: 661px) {
     .preconfig-month-select {
       padding-block: 6px;
+    }
+  }
+
+  /* Sugli iPhone il pannello deve mostrare anche il mese senza che il footer
+     lo copra. Compattiamo le parti ripetute; lo scroll interno resta come
+     sicurezza per schermi più piccoli o testo ingrandito. Questo blocco è in
+     coda al componente perché deve prevalere sulle misure di base. */
+  @media (max-width: 660px) and (max-height: 950px) {
+    .preconfig-sheet {
+      max-height: calc(100dvh - max(6px, env(safe-area-inset-top)));
+    }
+    .preconfig-handle {
+      margin-top: 7px;
+    }
+    .preconfig-panel-head {
+      padding-block: 6px;
+      margin-bottom: 0;
+    }
+    .preconfig-head-icon {
+      width: 30px;
+      height: 30px;
+    }
+    .preconfig-close {
+      width: 40px;
+      height: 40px;
+    }
+    .preconfig-body {
+      padding: 4px 12px 3px;
+      gap: 2px;
+      scrollbar-gutter: auto;
+    }
+    .preconfig-section-label,
+    .preconfig-section-label--primary {
+      margin: 5px 0 2px;
+    }
+    .pc-persona-cards {
+      gap: 4px;
+    }
+    #preconfigPersonaSection .pc-persona-card {
+      min-height: 48px;
+      padding: 5px 10px 5px 12px;
+      gap: 8px;
+    }
+    #preconfigPersonaSection .pc-persona-ico {
+      width: 32px;
+      height: 32px;
+    }
+    .pc-persona-body small {
+      margin-top: 1px;
+      line-height: 1.18;
+    }
+    .preconfig-vfield {
+      padding: 5px 6px;
+    }
+    .preconfig-vfield--dims,
+    .preconfig-vfield--climate {
+      gap: 6px;
+    }
+    .preconfig-fld-row,
+    .preconfig-fld:not(.preconfig-fld-row > *) {
+      margin-bottom: 3px;
+    }
+    .preconfig-step-btn {
+      min-height: 34px;
+    }
+    .preconfig-step-input {
+      padding-block: 3px;
+    }
+    .preconfig-select {
+      min-height: 38px;
+      padding-block: 5px;
+    }
+    .preconfig-month-wrap {
+      min-height: 40px;
+      margin-bottom: 2px;
+    }
+    .preconfig-footer {
+      padding: 6px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+      gap: 4px;
+    }
+    .preconfig-summary {
+      font-size: 0.66rem;
+    }
+    .preconfig-cta {
+      padding-block: 10px;
     }
   }
 }
