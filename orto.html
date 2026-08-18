@@ -888,6 +888,59 @@
       </div>
     </dialog>
 
+    <!-- Dialogo di conferma dell'eliminazione di tutte le colture attive -->
+    <dialog
+      class="orto-dialog orto-dialog--confirm"
+      id="ortoClearPlantedDialog"
+      aria-labelledby="ortoClearPlantedTitle"
+    >
+      <div class="orto-dialog-sheet">
+        <span class="orto-dialog-grip" aria-hidden="true"></span>
+        <div class="orto-dialog-head orto-dialog-head--danger">
+          <div class="orto-dialog-heading">
+            <h3 id="ortoClearPlantedTitle" data-orto-key="clear_planted.title">
+              Eliminare tutte le piante piantate?
+            </h3>
+            <p data-orto-key="clear_planted.sub">
+              Verranno eliminate tutte le colture attive e le relative attività.
+              Lo storico dei raccolti resterà intatto. Non si può annullare.
+            </p>
+          </div>
+          <button
+            class="orto-dialog-close"
+            type="button"
+            data-orto-action="close-dialog"
+            data-dialog="ortoClearPlantedDialog"
+            data-orto-key-aria="dlg.close"
+            aria-label="Chiudi"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+        <form method="dialog" class="orto-dialog-form" id="ortoClearPlantedForm">
+          <div class="orto-dialog-foot">
+            <button
+              type="submit"
+              formnovalidate
+              class="orto-btn orto-btn--ghost"
+              value="cancel"
+              data-orto-key="dlg.cancel"
+            >
+              Annulla
+            </button>
+            <button
+              type="submit"
+              class="orto-btn orto-btn--danger"
+              value="ok"
+              data-orto-key="clear_planted.confirm"
+            >
+              Elimina tutte
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
     <!-- Dialogo di conferma dell'eliminazione di una coltura -->
     <dialog
       class="orto-dialog orto-dialog--confirm"

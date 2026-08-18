@@ -303,6 +303,11 @@
       "clear.sub":
         "Le voci spariscono da questo elenco. Restano nei tuoi ordini e puoi reimportarle quando vuoi.",
       "clear.confirm": "Svuota",
+      "clear_planted.action": "Elimina tutte le piantate",
+      "clear_planted.title": "Eliminare tutte le piante piantate?",
+      "clear_planted.sub":
+        "Verranno eliminate tutte le colture attive e le relative attività. Lo storico dei raccolti resterà intatto. Non si può annullare.",
+      "clear_planted.confirm": "Elimina tutte",
 
       "plant.title": "Pianta ora",
       "plant.sub": "Scegli quante piante avviare e quando.",
@@ -392,6 +397,7 @@
       "toast.no_orders": "Nessun nuovo acquisto da importare",
       "toast.no_orders_selected": "Seleziona almeno un ordine",
       "toast.stock_cleared": "Dispensa svuotata",
+      "toast.planted_cleared": "Tutte le colture attive sono state eliminate",
       "toast.archived": "Archiviata",
       "toast.undo": "Annulla",
       "toast.restored": "Ripristinata nella lista",
@@ -719,6 +725,11 @@
       "clear.sub":
         "Articolele dispar din această listă. Rămân în comenzile tale și le poți reimporta oricând.",
       "clear.confirm": "Golește",
+      "clear_planted.action": "Șterge toate plantele plantate",
+      "clear_planted.title": "Ștergi toate plantele plantate?",
+      "clear_planted.sub":
+        "Vor fi șterse toate culturile active și activitățile lor. Istoricul recoltelor va rămâne intact. Acțiunea nu poate fi anulată.",
+      "clear_planted.confirm": "Șterge-le pe toate",
 
       "plant.title": "Pune în pământ",
       "plant.sub": "Alege câte plante pornești și când.",
@@ -805,6 +816,7 @@
       "toast.no_orders": "Nicio achiziție nouă de importat",
       "toast.no_orders_selected": "Selectează cel puțin o comandă",
       "toast.stock_cleared": "Cămară golită",
+      "toast.planted_cleared": "Toate culturile active au fost șterse",
       "toast.archived": "Arhivată",
       "toast.undo": "Anulează",
       "toast.restored": "Restaurată în listă",
@@ -2515,6 +2527,7 @@
         </div>
         <div class="orto-toolbar">
           <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="export-ics">${t("colture.ics")}</button>
+          <button class="orto-btn orto-btn--danger orto-btn--sm" type="button" data-orto-action="clear-planted">${t("clear_planted.action")}</button>
         </div>`
         }
         <div class="orto-grid">${
@@ -3634,6 +3647,8 @@
     }
     if (action === "import-orders") return importaDaOrdini();
     if (action === "clear-stock") return apriDialogo("ortoClearStockDialog");
+    if (action === "clear-planted")
+      return apriDialogo("ortoClearPlantedDialog");
     if (action === "restore-voce") {
       const voce = inventory.voci.find((v) => v.id === trigger.dataset.voceId);
       if (voce) {
@@ -4043,6 +4058,32 @@
       setTimeout(() => {
         render();
         toast(t("toast.stock_cleared"));
+      }, 0);
+    });
+
+  // Eliminazione collettiva: rimuove solo le colture ancora attive. I raccolti
+  // conclusi restano nello storico e le quantità tornano disponibili in dispensa.
+  document
+    .getElementById("ortoClearPlantedForm")
+    ?.addEventListener("submit", (event) => {
+      if (event.submitter && event.submitter.value === "cancel") return;
+      const ids = new Set(activeCrops().map((crop) => crop.id));
+      garden.colture = garden.colture.filter((crop) => !ids.has(crop.id));
+      [garden.fatti, garden.rinviati].forEach((mappa) => {
+        Object.keys(mappa).forEach((chiave) => {
+          for (const id of ids) {
+            if (chiave.startsWith(id + "|")) {
+              delete mappa[chiave];
+              break;
+            }
+          }
+        });
+      });
+      saveGarden();
+      reconcileInventoryWithGarden();
+      setTimeout(() => {
+        render();
+        toast(t("toast.planted_cleared"));
       }, 0);
     });
 
