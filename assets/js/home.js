@@ -3409,9 +3409,6 @@ function bindHomeStaticActions() {
       case "open-cart":
         openCart();
         break;
-      case "back-to-top":
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        break;
       case "accept-cookies":
         acceptCookies();
         break;
@@ -4081,10 +4078,6 @@ window.addEventListener(
   // -----------------------------------------------------------------------------
 
   function () {
-    const btn = document.getElementById("backToTop");
-    if (!btn) return;
-    const mobile = window.matchMedia("(max-width: 660px)").matches;
-    btn.classList.toggle("visible", window.scrollY > (mobile ? 1800 : 420));
     syncMobileCatalogDock();
   },
   { passive: true },

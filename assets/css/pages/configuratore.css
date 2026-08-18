@@ -8709,7 +8709,7 @@
     min-height: 58px;
     padding: 10px 12px 10px 14px;
     border-radius: var(--radius-md);
-    border: 1.5px solid var(--accent-edge);
+    border: 1px solid var(--accent-edge);
     background: color-mix(
       in srgb,
       var(--accent) var(--persona-fill),
@@ -8744,14 +8744,14 @@
   }
   .persona-card--intermedio {
     --accent: var(--persona-int);
-    --accent-text: var(--persona-text-int, #674b0d);
+    --accent-text: var(--persona-text-int, #6d500d);
   }
   .persona-card--esperto {
     --accent: var(--persona-exp);
-    --accent-text: var(--persona-text-exp, #71311f);
+    --accent-text: var(--persona-text-exp, #71331f);
   }
   .persona-card:hover {
-    transform: scale(1.025);
+    transform: translateY(-2px);
     z-index: 1;
   }
   .persona-card:not(.is-active):hover {
@@ -15707,20 +15707,66 @@
   /* Usa colori e contrasto per indicare il profilo e lo stato dei passaggi. */
   .workflow-hub .journey-context--novizio {
     --journey-action: #347a3b;
-    --journey-soft: #e5eee3;
+    --journey-soft: #e1efe1;
     --journey-line: #a9cfaa;
+    --journey-action-text: #fff;
   }
 
   .workflow-hub .journey-context--intermedio {
     --journey-action: #986811;
     --journey-soft: #fff0d0;
     --journey-line: #dfc17a;
+    --journey-action-text: #fffdf6;
   }
 
   .workflow-hub .journey-context--esperto {
     --journey-action: #a8472b;
     --journey-soft: #fae1d7;
     --journey-line: #dfad9b;
+    --journey-action-text: #fff;
+  }
+
+  /* La tinta del profilo appartiene all'intera barra, non soltanto ai passi. */
+  .workflow-hub .journey-context {
+    border-bottom: 1px solid var(--journey-line);
+    background: linear-gradient(
+      110deg,
+      var(--journey-soft) 0%,
+      color-mix(in srgb, var(--journey-soft) 62%, #fffdf6) 58%,
+      color-mix(in srgb, var(--journey-action) 7%, #fffdf6) 100%
+    );
+    box-shadow: inset 5px 0 0 var(--journey-action);
+  }
+
+  .workflow-hub .journey-context-level {
+    background: var(--journey-action);
+    color: var(--journey-action-text);
+    box-shadow: 0 4px 11px
+      color-mix(in srgb, var(--journey-action) 24%, transparent);
+  }
+
+  .workflow-hub .journey-context-copy b {
+    color: color-mix(in srgb, var(--journey-action) 76%, #1d3027);
+  }
+
+  .workflow-hub
+    .journey-context-step[data-journey-step="settings"]::before {
+    color: var(--journey-action);
+  }
+
+  .workflow-hub:has(.journey-context--novizio) {
+    border-color: color-mix(in srgb, #347a3b 38%, transparent);
+    border-top-color: #347a3b;
+  }
+
+  .workflow-hub:has(.journey-context--intermedio) {
+    border-color: color-mix(in srgb, #986811 38%, transparent);
+    border-top-color: #986811;
+  }
+
+  .workflow-hub:has(.journey-context--esperto) {
+    border-color: color-mix(in srgb, #a8472b 38%, transparent);
+    border-top-color: #a8472b;
   }
 
   .workflow-hub .journey-context-step:not([data-journey-step="settings"]) {
@@ -15814,6 +15860,21 @@
     --journey-soft: rgba(240, 160, 135, 0.15);
     --journey-line: rgba(240, 160, 135, 0.48);
     --journey-action-text: #2e120b;
+  }
+
+  html[data-theme="dark"] .workflow-hub .journey-context {
+    border-bottom-color: var(--journey-line);
+    background: linear-gradient(
+      110deg,
+      var(--journey-soft) 0%,
+      color-mix(in srgb, var(--journey-soft) 48%, #13221b) 58%,
+      color-mix(in srgb, var(--journey-action) 10%, #13221b) 100%
+    );
+    box-shadow: inset 5px 0 0 var(--journey-action);
+  }
+
+  html[data-theme="dark"] .workflow-hub .journey-context-copy b {
+    color: color-mix(in srgb, var(--journey-action) 72%, #f2f7f0);
   }
 
   html[data-theme="dark"]
@@ -16185,6 +16246,43 @@
   textarea,
   select {
     font-size: 16px !important;
+  }
+
+  /* Il riepilogo del percorso deve rispettare la colonna mobile, senza tagliare copy o passaggi. */
+  .workflow-hub,
+  .workflow-hub > *,
+  .workflow-hub .journey-context,
+  .workflow-hub .journey-context-copy,
+  .workflow-hub .journey-context-progress {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .workflow-hub .journey-context {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .workflow-hub .journey-context-copy :is(b, small) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .workflow-hub .journey-context-progress {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 5px;
+  }
+
+  .workflow-hub .journey-context-step,
+  .workflow-hub .journey-context-step.is-done,
+  .workflow-hub .journey-context-step.is-current {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 4px;
+    white-space: normal;
   }
 }
 

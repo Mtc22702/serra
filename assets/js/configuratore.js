@@ -8849,16 +8849,6 @@ function fillMonths() {
 
 // Registra gli eventi statici dell'interfaccia del configuratore.
 function initEvents() {
-  const backToTopButton = document.getElementById("backToTop");
-  backToTopButton?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-  window.addEventListener(
-    "scroll",
-    () => backToTopButton?.classList.toggle("visible", window.scrollY > 420),
-    { passive: true },
-  );
-
   syncPersonaPickerDisclosure();
 
   document.querySelectorAll(".mode-tab").forEach((tab) => {

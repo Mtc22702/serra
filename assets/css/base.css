@@ -710,6 +710,158 @@
   /* Rifiniture percorso Hero */
 }
 
+/* Preferenze dell'header: tema e lingua formano un solo controllo segmentato,
+   senza superfici e ombre annidate. */
+@layer coerenza {
+  .site-header .nav-prefs {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-surface);
+    background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    box-shadow: var(--elev-2);
+    backdrop-filter: blur(14px) saturate(1.08);
+    -webkit-backdrop-filter: blur(14px) saturate(1.08);
+  }
+
+  .site-header .nav-prefs .theme-toggle {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    flex: 0 0 40px;
+    border: 0;
+    border-radius: var(--control-radius-pill);
+    background: color-mix(in srgb, var(--brand-100) 68%, transparent);
+    color: var(--brand-700);
+    box-shadow: none;
+  }
+
+  .site-header .nav-prefs .theme-toggle:hover {
+    border: 0;
+    background: var(--brand-100);
+    color: var(--green-dk);
+    box-shadow: inset 0 0 0 1px var(--surface-line);
+    transform: none;
+  }
+
+  .site-header .nav-prefs .theme-toggle:focus-visible,
+  .site-header .nav-prefs .nav-lang:focus-within {
+    outline: none;
+    box-shadow: var(--elev-focus);
+  }
+
+  .site-header .nav-prefs .theme-toggle-icon {
+    font-size: 19px;
+  }
+
+  .site-header .nav-prefs .nav-lang {
+    position: relative;
+    width: auto;
+    min-width: 88px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0 0 0 4px;
+    border: 0;
+    border-left: 1px solid var(--surface-line);
+    border-radius: var(--control-radius-pill);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .site-header .nav-prefs .nav-lang:hover {
+    background: color-mix(in srgb, var(--brand-100) 54%, transparent);
+  }
+
+  .site-header .nav-prefs .nav-lang select {
+    width: 84px;
+    min-width: 84px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0 30px 0 10px;
+    border: 0;
+    border-radius: var(--control-radius-pill);
+    background-color: transparent;
+    background-image: var(--select-chevron);
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    background-size: 12px 8px;
+    color: var(--brand-700);
+    font-size: 0.78rem;
+    font-weight: 750;
+    line-height: 1;
+    text-align: left;
+    text-align-last: left;
+    box-shadow: none;
+  }
+
+  html[data-theme="dark"] .site-header .nav-prefs {
+    border-color: var(--surface-line);
+    background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+    box-shadow: var(--elev-2);
+  }
+
+  html[data-theme="dark"] .site-header .nav-prefs .theme-toggle {
+    background: rgba(246, 200, 90, 0.12);
+    color: #f6cf6a;
+  }
+
+  html[data-theme="dark"] .site-header .nav-prefs .theme-toggle:hover {
+    background: rgba(246, 200, 90, 0.2);
+    color: #ffe29a;
+    box-shadow: inset 0 0 0 1px rgba(246, 200, 90, 0.22);
+  }
+
+  html[data-theme="dark"] .site-header .nav-prefs .nav-lang,
+  html[data-theme="dark"] .site-header .nav-prefs .nav-lang select {
+    border-color: var(--surface-line);
+    background-color: transparent;
+    color: var(--brand-200);
+    box-shadow: none;
+  }
+
+  html[data-theme="dark"] .site-header .nav-prefs .nav-lang:hover {
+    background-color: rgba(139, 212, 158, 0.1);
+  }
+
+  /* La conferma ordine usa un header dedicato: mantiene lo stesso linguaggio
+     visivo pur conservando i due pulsanti IT/RO. */
+  .confirmation-preferences {
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-surface);
+    background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    box-shadow: var(--elev-2);
+  }
+
+  .confirmation-preferences .confirmation-lang {
+    gap: 2px;
+    padding: 0 4px 0 0;
+    border: 0;
+    border-right: 1px solid var(--surface-line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .confirmation-preferences .confirmation-theme {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    background: color-mix(in srgb, var(--brand-100) 68%, transparent);
+    box-shadow: none;
+  }
+
+  html[data-theme="dark"] .confirmation-preferences {
+    background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+  }
+}
+
 /* Calendario e catalogo */
 @layer base {
   .month-strip {
@@ -2044,6 +2196,108 @@
     font-size: 0.75rem;
     color: var(--lime);
     white-space: nowrap;
+  }
+}
+
+/* Chiusura della cascata: i bundle di pagina possono riusare questi token,
+   ma non attenuare la palette e la profondità definite per Serra. */
+@layer coerenza {
+  :root {
+    --brand-700: #174d2b;
+    --brand-600: #21633a;
+    --brand-500: #2d7a48;
+    --brand-400: #3f925a;
+    --brand-300: #62aa73;
+    --brand-200: #9acda4;
+    --brand-100: #c9e3cc;
+    --brand-050: #e5f0e5;
+    --bg: #dce9dc;
+    --text: #183222;
+    --muted: #526b59;
+    --border: #b9cdbb;
+    --surface-1: #fbfdf8;
+    --surface-2: #edf5ec;
+    --surface-3: #d7e8d8;
+    --surface-sunken: #cddfce;
+    --surface-line: rgba(23, 77, 43, 0.2);
+    --surface-line-strong: rgba(23, 77, 43, 0.36);
+    --elev-1: 0 1px 2px rgba(10, 48, 25, 0.07), 0 5px 13px rgba(10, 48, 25, 0.08);
+    --elev-2:
+      0 2px 5px rgba(10, 48, 25, 0.09), 0 13px 30px rgba(10, 48, 25, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    --elev-3:
+      0 5px 12px rgba(10, 48, 25, 0.11), 0 23px 48px rgba(10, 48, 25, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    --elev-4:
+      0 9px 22px rgba(10, 48, 25, 0.14), 0 36px 72px rgba(10, 48, 25, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    --elev-hover: 0 8px 18px rgba(10, 48, 25, 0.12), 0 28px 54px rgba(10, 48, 25, 0.22);
+    --elev-focus: 0 0 0 4px rgba(33, 99, 58, 0.2);
+  }
+
+  html[data-theme="dark"] {
+    --brand-700: #73c98b;
+    --brand-600: #64bb7c;
+    --brand-500: #55aa6e;
+    --brand-400: #7bd392;
+    --brand-300: #99dfaa;
+    --brand-200: #b9e8c4;
+    --brand-100: rgba(123, 211, 146, 0.25);
+    --brand-050: rgba(123, 211, 146, 0.13);
+    --bg: #06110b;
+    --white: #10251a;
+    --sand-lt: #10251a;
+    --sand: #1d3a29;
+    --text: #e2f0e5;
+    --muted: #a7bdad;
+    --border: #31543d;
+    --surface-1: #10251a;
+    --surface-2: #173222;
+    --surface-3: #20452e;
+    --surface-sunken: #08180f;
+    --surface-line: rgba(166, 222, 181, 0.2);
+    --surface-line-strong: rgba(166, 222, 181, 0.38);
+    --elev-1:
+      0 1px 3px rgba(0, 0, 0, 0.48), 0 6px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    --elev-2:
+      0 3px 8px rgba(0, 0, 0, 0.5), 0 15px 34px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.065);
+    --elev-3:
+      0 6px 15px rgba(0, 0, 0, 0.54), 0 26px 56px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.075);
+    --elev-4:
+      0 11px 26px rgba(0, 0, 0, 0.6), 0 38px 82px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    --elev-hover: 0 9px 20px rgba(0, 0, 0, 0.56), 0 30px 62px rgba(0, 0, 0, 0.56);
+    --elev-focus: 0 0 0 4px rgba(123, 211, 146, 0.24);
+  }
+
+  body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 7% 2%, rgba(45, 122, 72, 0.2), transparent 31rem),
+      radial-gradient(circle at 94% 18%, rgba(98, 170, 115, 0.14), transparent 29rem),
+      linear-gradient(180deg, rgba(251, 253, 248, 0.18), transparent 34rem);
+  }
+
+  html[data-theme="dark"] body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 7% 2%, rgba(85, 170, 110, 0.17), transparent 34rem),
+      radial-gradient(circle at 94% 18%, rgba(32, 69, 46, 0.3), transparent 30rem),
+      linear-gradient(180deg, rgba(16, 37, 26, 0.34), transparent 36rem);
+  }
+
+  .site-header {
+    border-bottom-color: var(--surface-line-strong);
+    background-color: color-mix(in srgb, var(--surface-1) 92%, transparent);
+    box-shadow: var(--elev-2);
+  }
+
+  html[data-theme="dark"] .site-header {
+    background-color: color-mix(in srgb, var(--surface-sunken) 91%, transparent);
+    box-shadow: var(--elev-2);
   }
 }
 
@@ -8937,27 +9191,29 @@ html[data-theme="dark"]
 
   /* I tre livelli di esperienza. */
   :root {
-    --pc-nov: var(--green-lt);
-    --pc-int: var(--yellow);
-    --pc-exp: var(--accent);
+    --pc-nov: #4f9f5c;
+    --pc-int: #d0a23a;
+    --pc-exp: #c66b4c;
 
     /* Scala del selettore di livello, usata sia dalle schede della home e del configuratore sia dalle linguette della guida. */
-    --persona-fill: 18%;
-    --persona-fill-hover: 26%;
-    --persona-fill-on: 36%;
-    --persona-edge: 60%;
-    --persona-ico: 55%;
-    --persona-ico-on: 72%;
+    --persona-fill: 13%;
+    --persona-fill-hover: 20%;
+    --persona-fill-on: 29%;
+    --persona-edge: 62%;
+    --persona-ico: 34%;
+    --persona-ico-on: 52%;
     /* Le due basi con cui la tinta si mescola: la superficie della scheda e il colore verso cui tira il bordo. */
     --persona-base: var(--serra-paper, #fffdf6);
     --persona-edge-base: #14301d;
     /* Inchiostro predefinito. */
     --persona-text: #245733;
+    --persona-text-int: #6d500d;
+    --persona-text-exp: #71331f;
 
     /* ---------- geometria delle schede di scelta ---------- */
-    --choice-card-radius: var(--radius-md);
-    --choice-card-min-h: 62px;
-    --choice-card-pad: 10px 14px 10px 16px;
+    --choice-card-radius: var(--radius-surface);
+    --choice-card-min-h: 66px;
+    --choice-card-pad: 11px 14px 11px 16px;
     --choice-card-gap: 11px;
     --choice-card-ico: 43px;
     --choice-cards-gap: 10px;
@@ -8985,7 +9241,7 @@ html[data-theme="dark"]
     text-align: left;
     padding: var(--choice-card-pad);
     border-radius: var(--choice-card-radius);
-    border: 1.5px solid var(--accent-edge);
+    border: 1px solid var(--accent-edge);
     background: color-mix(
       in srgb,
       var(--accent) var(--persona-fill),
@@ -9024,14 +9280,14 @@ html[data-theme="dark"]
   }
   .pc-persona-card--intermedio {
     --accent: var(--pc-int);
-    --accent-text: var(--persona-text-int, #674b0d);
+    --accent-text: var(--persona-text-int, #6d500d);
   }
   .pc-persona-card--esperto {
     --accent: var(--pc-exp);
-    --accent-text: var(--persona-text-exp, #71311f);
+    --accent-text: var(--persona-text-exp, #71331f);
   }
   .pc-persona-card:hover {
-    transform: scale(1.025);
+    transform: translateY(-2px);
     z-index: 1;
   }
   .pc-persona-card:not(.is-active):not([aria-pressed="true"]):hover {
@@ -9419,12 +9675,12 @@ html[data-theme="dark"]
   }
   /* Al buio cambiano solo le basi e le forze della scala, non le regole. */
   html[data-theme="dark"] {
-    --persona-fill: 32%;
-    --persona-fill-hover: 40%;
-    --persona-fill-on: 56%;
-    --persona-edge: 80%;
-    --persona-ico: 70%;
-    --persona-ico-on: 88%;
+    --persona-fill: 18%;
+    --persona-fill-hover: 28%;
+    --persona-fill-on: 40%;
+    --persona-edge: 72%;
+    --persona-ico: 36%;
+    --persona-ico-on: 55%;
     --persona-base: #17271f;
     --persona-edge-base: #edf5ef;
     --persona-text: #e5eee3;
@@ -10248,83 +10504,428 @@ html[data-theme="dark"]
   }
 }
 
-/* Sistema visivo trasversale: la stessa profondità deve essere percepibile in
-   home, configuratore, vivaio, orto, guida, account e conferma ordine. */
+/* Direzione cromatica Serra: verdi più presenti e piani più leggibili.
+   Questo strato chiude il sistema visivo condiviso, così card e sezioni
+   conservano la stessa gerarchia in tutte le pagine e in entrambi i temi. */
 @layer coerenza {
   :root {
-    --bg: #eaf1e9;
-    --surface-1: #fffdf8;
-    --surface-2: #f6f8f2;
-    --surface-3: #e5eee4;
-    --surface-sunken: #edf0e9;
-    --surface-line: rgba(31, 58, 38, 0.13);
-    --surface-line-strong: rgba(31, 58, 38, 0.25);
+    --brand-700: #174d2b;
+    --brand-600: #21633a;
+    --brand-500: #2d7a48;
+    --brand-400: #3f925a;
+    --brand-300: #62aa73;
+    --brand-200: #9acda4;
+    --brand-100: #c9e3cc;
+    --brand-050: #e5f0e5;
+
+    --bg: #dce9dc;
+    --text: #183222;
+    --muted: #526b59;
+    --border: #b9cdbb;
+    --surface-1: #fbfdf8;
+    --surface-2: #edf5ec;
+    --surface-3: #d7e8d8;
+    --surface-sunken: #cddfce;
+    --surface-line: rgba(23, 77, 43, 0.2);
+    --surface-line-strong: rgba(23, 77, 43, 0.36);
+
     --elev-1:
-      0 1px 2px rgba(22, 52, 31, 0.04), 0 5px 14px rgba(22, 52, 31, 0.055);
+      0 1px 2px rgba(10, 48, 25, 0.07), 0 5px 13px rgba(10, 48, 25, 0.08);
     --elev-2:
-      0 2px 5px rgba(22, 52, 31, 0.05), 0 12px 28px rgba(22, 52, 31, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.76);
+      0 2px 5px rgba(10, 48, 25, 0.09), 0 13px 30px rgba(10, 48, 25, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
     --elev-3:
-      0 5px 12px rgba(22, 52, 31, 0.065), 0 22px 48px rgba(22, 52, 31, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.82);
+      0 5px 12px rgba(10, 48, 25, 0.11), 0 23px 48px rgba(10, 48, 25, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.92);
     --elev-4:
-      0 9px 22px rgba(22, 52, 31, 0.09), 0 34px 72px rgba(22, 52, 31, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+      0 9px 22px rgba(10, 48, 25, 0.14), 0 36px 72px rgba(10, 48, 25, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94);
     --elev-hover:
-      0 7px 16px rgba(22, 52, 31, 0.08), 0 25px 52px rgba(22, 52, 31, 0.15);
-    --elev-focus: 0 0 0 4px rgba(47, 107, 58, 0.15);
+      0 8px 18px rgba(10, 48, 25, 0.12), 0 28px 54px rgba(10, 48, 25, 0.22);
+    --elev-focus: 0 0 0 4px rgba(33, 99, 58, 0.2);
+
+    --button-secondary-bg: rgba(33, 99, 58, 0.13);
+    --button-secondary-bg-hover: rgba(33, 99, 58, 0.21);
+    --button-secondary-border: rgba(33, 99, 58, 0.26);
+
+    /* Tre soli livelli per i contenitori: interno, card, sezione. */
+    --radius-surface: 16px;
+    --radius-card: 22px;
+    --radius-section: 30px;
   }
 
   html[data-theme="dark"] {
-    --bg: #08120e;
-    --surface-1: #111e18;
-    --surface-2: #17271f;
-    --surface-3: #20342a;
-    --surface-sunken: #0a1510;
-    --surface-line: rgba(173, 211, 186, 0.15);
-    --surface-line-strong: rgba(173, 211, 186, 0.29);
+    --brand-700: #73c98b;
+    --brand-600: #64bb7c;
+    --brand-500: #55aa6e;
+    --brand-400: #7bd392;
+    --brand-300: #99dfaa;
+    --brand-200: #b9e8c4;
+    --brand-100: rgba(123, 211, 146, 0.25);
+    --brand-050: rgba(123, 211, 146, 0.13);
+
+    --bg: #06110b;
+    --white: #10251a;
+    --sand-lt: #10251a;
+    --sand: #1d3a29;
+    --text: #e2f0e5;
+    --muted: #a7bdad;
+    --border: #31543d;
+    --surface-1: #10251a;
+    --surface-2: #173222;
+    --surface-3: #20452e;
+    --surface-sunken: #08180f;
+    --surface-line: rgba(166, 222, 181, 0.2);
+    --surface-line-strong: rgba(166, 222, 181, 0.38);
+
     --elev-1:
-      0 1px 3px rgba(0, 0, 0, 0.34), 0 6px 16px rgba(0, 0, 0, 0.2);
+      0 1px 3px rgba(0, 0, 0, 0.48), 0 6px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
     --elev-2:
-      0 3px 7px rgba(0, 0, 0, 0.34), 0 14px 30px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.045);
-    --elev-3:
-      0 6px 14px rgba(0, 0, 0, 0.4), 0 24px 52px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.055);
-    --elev-4:
-      0 10px 24px rgba(0, 0, 0, 0.46), 0 36px 78px rgba(0, 0, 0, 0.52),
+      0 3px 8px rgba(0, 0, 0, 0.5), 0 15px 34px rgba(0, 0, 0, 0.4),
       inset 0 1px 0 rgba(255, 255, 255, 0.065);
+    --elev-3:
+      0 6px 15px rgba(0, 0, 0, 0.54), 0 26px 56px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.075);
+    --elev-4:
+      0 11px 26px rgba(0, 0, 0, 0.6), 0 38px 82px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
     --elev-hover:
-      0 8px 18px rgba(0, 0, 0, 0.42), 0 28px 58px rgba(0, 0, 0, 0.46);
-    --elev-focus: 0 0 0 4px rgba(139, 212, 158, 0.2);
+      0 9px 20px rgba(0, 0, 0, 0.56), 0 30px 62px rgba(0, 0, 0, 0.56);
+    --elev-focus: 0 0 0 4px rgba(123, 211, 146, 0.24);
   }
 
   body {
     background-color: var(--bg);
     background-image:
-      radial-gradient(circle at 8% 0%, rgba(91, 156, 74, 0.1), transparent 30rem),
-      radial-gradient(circle at 92% 16%, rgba(217, 164, 65, 0.07), transparent 27rem);
+      radial-gradient(circle at 7% 2%, rgba(45, 122, 72, 0.2), transparent 31rem),
+      radial-gradient(circle at 94% 18%, rgba(98, 170, 115, 0.14), transparent 29rem),
+      linear-gradient(180deg, rgba(251, 253, 248, 0.18), transparent 34rem);
+  }
+
+  html[data-theme="dark"] body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 7% 2%, rgba(85, 170, 110, 0.17), transparent 34rem),
+      radial-gradient(circle at 94% 18%, rgba(32, 69, 46, 0.3), transparent 30rem),
+      linear-gradient(180deg, rgba(16, 37, 26, 0.34), transparent 36rem);
+  }
+
+  /* Le sezioni hanno un cambio di piano percepibile, senza trasformarsi in
+     blocchi isolati o interrompere il ritmo delle pagine. */
+  :where(
+      .guide-chapter,
+      .confirmation-next,
+      .profile-form-section,
+      .orto-step
+    ) {
+    border-color: var(--surface-line);
+    border-radius: var(--radius-section) !important;
+  }
+
+  :where(.guide-chapter, .confirmation-next) {
+    background-image: linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-2) 92%, transparent),
+      color-mix(in srgb, var(--surface-3) 72%, transparent)
+    );
+    border-block: 1px solid var(--surface-line);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-1) 86%, transparent),
+      0 12px 34px rgba(10, 48, 25, 0.06);
+  }
+
+  html[data-theme="dark"]
+    :where(.guide-chapter, .confirmation-next) {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.045),
+      0 14px 38px rgba(0, 0, 0, 0.28);
+  }
+
+  /* Una superficie deve dichiarare chiaramente dove comincia e dove finisce. */
+  :where(
+      .panel,
+      .card,
+      .dashboard-card,
+      .catalog-pro-shell,
+      .catalog-tools,
+      .orto-piano-card,
+      .orto-card,
+      .viv-card,
+      .viv-toolbar,
+      .plant-card,
+      .plant-card-top,
+      .plant-card-compact,
+      .abbinamento-card,
+      .companion-card,
+      .kit-card,
+      .action-card,
+      .persona-card,
+      .guided-info-card,
+      .catalog-insight-card,
+      .detail-summary-card,
+      .confirmation-shell,
+      .order-actions-panel,
+      .profile-form-section,
+      .admin-charts-card,
+      .workflow-persona-panel
+    ) {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--surface-line);
+    border-radius: var(--radius-card) !important;
+    background-color: var(--surface-1);
+    box-shadow: var(--elev-2);
+  }
+
+  :where(
+      .catalog-tools,
+      .viv-toolbar,
+      .profile-form-section,
+      .detail-tabs-shell,
+      .account-section-nav
+    ) {
+    background-color: var(--surface-2);
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-surface) !important;
+    box-shadow: var(--elev-1);
+  }
+
+  /* Il catalogo ha già la propria superficie esterna: il guscio interno serve
+     solo ad allineare i contenuti e non deve diventare una card senza padding. */
+  .catalog-pro-section {
+    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .catalog-pro-section > .catalog-pro-shell {
+    padding: 0;
+    border: 0;
+    border-radius: 0 !important;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  @media (max-width: 680px) {
+    .catalog-pro-section {
+      padding-block: 2.25rem;
+    }
+  }
+
+  /* Lo stesso ritmo verticale del catalogo vale per le altre grandi sezioni
+     della home: abbastanza respiro, senza una fascia vuota da 80 px. */
+  :where(.abbinamenti-section, .kit-section, .contatti-section) {
+    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  /* Le sezioni a tutta larghezza sono fasce della pagina, non card giganti.
+     La separazione arriva dal cambio di tono e da una linea sottile; ombre e
+     raggi restano riservati agli oggetti interattivi contenuti al loro interno. */
+  :where(
+      .stagione-section,
+      .abbinamenti-section,
+      .kit-section,
+      .contatti-section
+    ) {
+    border-inline: 0;
+    border-block: 1px solid var(--surface-line);
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+
+  :where(.stagione-section, .kit-section) {
+    background:
+      radial-gradient(
+        circle at 10% 0%,
+        color-mix(in srgb, var(--brand-200) 20%, transparent),
+        transparent 32rem
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--surface-2) 88%, var(--surface-1)),
+        color-mix(in srgb, var(--surface-3) 54%, var(--surface-2))
+      );
+  }
+
+  :where(.abbinamenti-section, .contatti-section) {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-1) 94%, var(--surface-2)),
+      color-mix(in srgb, var(--surface-2) 76%, var(--surface-1))
+    );
+  }
+
+  html[data-theme="dark"]
+    :where(.stagione-section, .abbinamenti-section, .kit-section, .contatti-section) {
+    border-block-color: var(--surface-line);
+    box-shadow: none;
+  }
+
+  /* I capitoli della guida sono superfici vere: bordo e ombra richiedono un
+     margine interno coerente attorno a intestazione e contenuto. */
+  .guide-chapter {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background-color: var(--surface-1);
+  }
+
+  /* Nella conferma ordine il guscio centrale e quello del footer sono solo
+     limiti di larghezza; le card reali vivono già al loro interno. */
+  .confirmation-main > .confirmation-shell,
+  .confirmation-footer > .confirmation-shell {
+    padding: 0;
+    border: 0;
+    border-radius: 0 !important;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  @media (max-width: 680px) {
+    :where(.abbinamenti-section, .kit-section, .contatti-section) {
+      padding-block: 2.25rem;
+    }
+
+    .guide-chapter {
+      padding: 1.25rem;
+    }
+  }
+
+  /* Contenitori principali e sovrapposizioni usano lo stesso raggio ampio.
+     L'intestazione e il piè di pagina restano a filo viewport per necessità. */
+  :where(
+      .guided-intro,
+      .guide-hero,
+      .orto-howto,
+      .pdp-hero-card,
+      .detail-panel,
+      .cart-drawer,
+      .modal-card,
+      .projects-modal,
+      .project-export-menu,
+      .climate-help-popover,
+      .catalog-search-suggestions,
+      .cookie-banner
+    ) {
+    border-radius: var(--radius-section) !important;
+  }
+
+  /* Sottopannelli, righe informative e blocchi annidati non tornano mai
+     squadrati: restano più compatti delle card che li contengono. */
+  :where(
+      .panel-head,
+      .panel-body,
+      .detail-tabs-shell,
+      .detail-tab-panel,
+      .detail-stat,
+      .detail-info-card,
+      .detail-spacing,
+      .cart-item,
+      .cart-summary,
+      .catalog-filter-group,
+      .catalog-search-box,
+      .toplant-feedback,
+      .table-responsive
+    ) {
+    border-radius: var(--radius-surface) !important;
+  }
+
+  :where(.section-kicker, .account-section-kicker, .panel-head-tag) {
+    color: var(--brand-700);
+  }
+
+  html[data-theme="dark"]
+    :where(.section-kicker, .account-section-kicker, .panel-head-tag) {
+    color: var(--brand-300);
+  }
+
+  .site-header {
+    border-bottom-color: var(--surface-line-strong);
+    background-color: color-mix(in srgb, var(--surface-1) 92%, transparent);
+    box-shadow: var(--elev-2);
+  }
+
+  html[data-theme="dark"] .site-header {
+    background-color: color-mix(in srgb, var(--surface-sunken) 91%, transparent);
+    box-shadow: var(--elev-2);
+  }
+}
+
+/* Sistema visivo trasversale: la stessa profondità deve essere percepibile in
+   home, configuratore, vivaio, orto, guida, account e conferma ordine. */
+@layer coerenza {
+  :root {
+    --bg: #dce9dc;
+    --surface-1: #fbfdf8;
+    --surface-2: #edf5ec;
+    --surface-3: #d7e8d8;
+    --surface-sunken: #cddfce;
+    --surface-line: rgba(23, 77, 43, 0.2);
+    --surface-line-strong: rgba(23, 77, 43, 0.36);
+    --elev-1:
+      0 1px 2px rgba(10, 48, 25, 0.07), 0 5px 13px rgba(10, 48, 25, 0.08);
+    --elev-2:
+      0 2px 5px rgba(10, 48, 25, 0.09), 0 13px 30px rgba(10, 48, 25, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    --elev-3:
+      0 5px 12px rgba(10, 48, 25, 0.11), 0 23px 48px rgba(10, 48, 25, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    --elev-4:
+      0 9px 22px rgba(10, 48, 25, 0.14), 0 36px 72px rgba(10, 48, 25, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    --elev-hover:
+      0 8px 18px rgba(10, 48, 25, 0.12), 0 28px 54px rgba(10, 48, 25, 0.22);
+    --elev-focus: 0 0 0 4px rgba(33, 99, 58, 0.2);
+  }
+
+  html[data-theme="dark"] {
+    --bg: #06110b;
+    --surface-1: #10251a;
+    --surface-2: #173222;
+    --surface-3: #20452e;
+    --surface-sunken: #08180f;
+    --surface-line: rgba(166, 222, 181, 0.2);
+    --surface-line-strong: rgba(166, 222, 181, 0.38);
+    --elev-1:
+      0 1px 3px rgba(0, 0, 0, 0.48), 0 6px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    --elev-2:
+      0 3px 8px rgba(0, 0, 0, 0.5), 0 15px 34px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.065);
+    --elev-3:
+      0 6px 15px rgba(0, 0, 0, 0.54), 0 26px 56px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.075);
+    --elev-4:
+      0 11px 26px rgba(0, 0, 0, 0.6), 0 38px 82px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    --elev-hover:
+      0 9px 20px rgba(0, 0, 0, 0.56), 0 30px 62px rgba(0, 0, 0, 0.56);
+    --elev-focus: 0 0 0 4px rgba(123, 211, 146, 0.24);
+  }
+
+  body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 7% 2%, rgba(45, 122, 72, 0.2), transparent 31rem),
+      radial-gradient(circle at 94% 18%, rgba(98, 170, 115, 0.14), transparent 29rem);
     background-attachment: fixed;
   }
 
   html[data-theme="dark"] body {
     background-color: var(--bg);
     background-image:
-      radial-gradient(circle at 8% 0%, rgba(105, 183, 125, 0.095), transparent 32rem),
-      radial-gradient(circle at 92% 16%, rgba(217, 164, 65, 0.045), transparent 28rem);
+      radial-gradient(circle at 7% 2%, rgba(85, 170, 110, 0.17), transparent 34rem),
+      radial-gradient(circle at 94% 18%, rgba(32, 69, 46, 0.3), transparent 30rem);
   }
 
   .site-header {
-    border-bottom: 1px solid var(--surface-line);
-    background-color: color-mix(in srgb, var(--surface-1) 88%, transparent);
-    box-shadow: var(--elev-1);
+    border-bottom: 1px solid var(--surface-line-strong);
+    background-color: color-mix(in srgb, var(--surface-1) 92%, transparent);
+    box-shadow: var(--elev-2);
     backdrop-filter: blur(18px) saturate(1.16);
     -webkit-backdrop-filter: blur(18px) saturate(1.16);
   }
 
   html[data-theme="dark"] .site-header {
     border-bottom-color: var(--surface-line);
-    background-color: color-mix(in srgb, var(--surface-sunken) 88%, transparent);
+    background-color: color-mix(in srgb, var(--surface-sunken) 91%, transparent);
     box-shadow: var(--elev-2);
   }
 
@@ -10488,5 +11089,12 @@ html[data-theme="dark"]
       ) {
       transition: none;
     }
+  }
+}
+
+/* L'header compatto resta su una sola riga anche sugli smartphone più stretti. */
+@media (max-width: 340px) {
+  :root {
+    --nav-h: 60px;
   }
 }

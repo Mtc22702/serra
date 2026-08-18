@@ -6652,7 +6652,7 @@ main {
   gap: var(--choice-card-gap);
   padding: var(--choice-card-pad);
   overflow: hidden;
-  border: 1.5px solid
+  border: 1px solid
     color-mix(
       in srgb,
       var(--guide-accent) var(--persona-edge),
@@ -6679,7 +6679,7 @@ main {
     background 0.16s ease;
 }
 .guide-tab:hover {
-  transform: scale(1.025);
+  transform: translateY(-2px);
   z-index: 1;
 }
 
@@ -6722,11 +6722,11 @@ main {
 }
 .guide-tab--intermedio {
   --guide-accent: var(--pc-int);
-  --guide-accent-text: #674b0d;
+  --guide-accent-text: var(--persona-text-int, #6d500d);
 }
 .guide-tab--esperto {
   --guide-accent: var(--pc-exp);
-  --guide-accent-text: #71311f;
+  --guide-accent-text: var(--persona-text-exp, #71331f);
 }
 .guide-tab-icon {
   width: var(--choice-card-ico);
@@ -6767,9 +6767,9 @@ main {
   gap: 2px;
 }
 .guide-tab-body b {
-  font-family: Fraunces, serif;
-  font-size: 1.04rem;
-  font-weight: 600;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.96rem;
+  font-weight: 750;
   line-height: 1.05;
 }
 .guide-tab-body small {

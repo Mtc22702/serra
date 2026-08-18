@@ -71,6 +71,70 @@
   });
 })();
 
+// Pulsante condiviso per le pagine lunghe: compare dopo il primo tratto di
+// scorrimento e resta fuori dalla sequenza da tastiera quando non è visibile.
+(() => {
+  function initBackToTop() {
+    const buttons = Array.from(
+      document.querySelectorAll("[data-back-to-top]"),
+    );
+    if (!buttons.length) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    const mobile = window.matchMedia("(max-width: 660px)");
+
+    const syncLabel = () => {
+      const ro = (document.documentElement.lang || "it")
+        .toLowerCase()
+        .startsWith("ro");
+      const label = ro
+        ? "Înapoi sus pe pagină"
+        : "Torna all'inizio della pagina";
+      buttons.forEach((button) => button.setAttribute("aria-label", label));
+    };
+
+    const syncVisibility = () => {
+      buttons.forEach((button) => {
+        const desktopThreshold = Number(button.dataset.backToTopThreshold) || 420;
+        const mobileThreshold =
+          Number(button.dataset.backToTopMobileThreshold) || 900;
+        const visible =
+          window.scrollY > (mobile.matches ? mobileThreshold : desktopThreshold);
+        button.classList.toggle("visible", visible);
+        button.tabIndex = visible ? 0 : -1;
+        button.setAttribute("aria-hidden", visible ? "false" : "true");
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: reducedMotion.matches ? "auto" : "smooth",
+        });
+      });
+    });
+
+    window.addEventListener("scroll", syncVisibility, { passive: true });
+    mobile.addEventListener?.("change", syncVisibility);
+    new MutationObserver(syncLabel).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"],
+    });
+    syncLabel();
+    syncVisibility();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initBackToTop, { once: true });
+  } else {
+    initBackToTop();
+  }
+})();
+
 /* Contatore del carrello, valido su ogni pagina. */
 (() => {
   function aggiorna() {

@@ -9395,7 +9395,7 @@
     gap: 12px;
     padding: 14px 16px 12px;
     border: 1.5px solid var(--orto-line);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-card);
     background: var(--orto-surface);
     box-shadow: var(--orto-shadow-sm);
   }
@@ -9406,6 +9406,8 @@
 
   .viv-filter-shell {
     border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   /* Su tablet e desktop i filtri restano sempre esposti: il riepilogo richiudibile serve solo dove lo spazio verticale è più prezioso. */
@@ -9805,6 +9807,8 @@
     min-height: 0;
     padding: clamp(20px, 2.5vw, 30px);
     border: 1px solid color-mix(in srgb, var(--orto-green) 15%, transparent);
+    border-radius: var(--radius-section);
+    overflow: hidden;
     background:
       radial-gradient(
         440px 210px at 4% 0%,
@@ -10082,7 +10086,7 @@
     gap: 9px;
     padding: 9px 10px;
     border: 1px solid color-mix(in srgb, var(--orto-green) 13%, transparent);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-surface);
     background: rgba(255, 255, 255, 0.72);
     grid-template-columns: auto minmax(0, 1fr);
   }
@@ -10180,7 +10184,7 @@
     .viv-filter-shell {
       overflow: hidden;
       border: 1.5px solid var(--orto-line);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-card);
       background: var(--orto-surface);
       box-shadow: var(--orto-shadow-sm);
     }
@@ -10248,7 +10252,7 @@
       grid-template-rows: auto auto auto;
       gap: 10px;
       padding: 15px;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-card);
     }
 
     .viv-hero h1 {
@@ -10395,7 +10399,21 @@
   }
 }
 
-@layer polish {
+@layer coerenza {
+  /* Il details è solo un wrapper su desktop: l'ombra appartiene alla toolbar arrotondata interna. */
+  .viv-page .viv-filter-shell {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  @media (max-width: 720px) {
+    .viv-page .viv-filter-shell {
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      box-shadow: var(--orto-shadow-sm);
+    }
+  }
+
   .viv-page .orto-card-svg {
     padding: 0;
     border: 0;
@@ -10410,6 +10428,37 @@
 
 /* Prezzi, filtri e promesse di servizio restano leggibili su tutti i device. */
 @layer polish {
+}
+
+/* Su smartphone tutte le famiglie restano visibili senza creare overflow orizzontale. */
+@media (max-width: 720px) {
+  .viv-toolbar-row .viv-search,
+  .viv-sort {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .viv-chiprail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: visible;
+    padding-right: 0;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .viv-chip {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 340px) {
+  .viv-chiprail {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ---------- scala minima del vivaio ---------- */

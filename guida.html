@@ -58,8 +58,8 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/base.css?v=20260818-visual-system" />
-    <link rel="stylesheet" href="assets/css/serra-guida.css?v=20260816-uiux" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260818-mobile-audit" />
+    <link rel="stylesheet" href="assets/css/serra-guida.css?v=20260818-level-contrast" />
   </head>
   <body>
     <!-- Intestazione condivisa: su mobile menu a sinistra, marchio al centro
@@ -281,7 +281,12 @@
               aria-controls="guide-novizio"
               data-guide="novizio"
             >
-              <span class="guide-tab-icon" aria-hidden="true">🌱</span>
+              <span class="guide-tab-icon" aria-hidden="true"
+                ><img
+                  src="assets/img/svg/plant_lv1.svg"
+                  alt=""
+                  class="level-plant-ico"
+              /></span>
               <span class="guide-tab-body">
                 <b data-guide-key="tab.novizio">Principiante</b>
                 <small data-guide-key="tab.novizio_hint"
@@ -298,7 +303,12 @@
               aria-controls="guide-intermedio"
               data-guide="intermedio"
             >
-              <span class="guide-tab-icon" aria-hidden="true">🌿</span>
+              <span class="guide-tab-icon" aria-hidden="true"
+                ><img
+                  src="assets/img/svg/plant_lv2.svg"
+                  alt=""
+                  class="level-plant-ico"
+              /></span>
               <span class="guide-tab-body">
                 <b data-guide-key="tab.intermedio">Intermedio</b>
                 <small data-guide-key="tab.intermedio_hint"
@@ -315,7 +325,12 @@
               aria-controls="guide-esperto"
               data-guide="esperto"
             >
-              <span class="guide-tab-icon" aria-hidden="true">🧭</span>
+              <span class="guide-tab-icon" aria-hidden="true"
+                ><img
+                  src="assets/img/svg/plant_lv3.svg"
+                  alt=""
+                  class="level-plant-ico"
+              /></span>
               <span class="guide-tab-body">
                 <b data-guide-key="tab.esperto">Esperto</b>
                 <small data-guide-key="tab.esperto_hint"
@@ -1087,8 +1102,18 @@
       </div>
     </footer>
 
+    <button
+      class="back-to-top"
+      id="backToTop"
+      type="button"
+      data-back-to-top
+      aria-label="Torna all'inizio della pagina"
+    >
+      ↑
+    </button>
+
     <!-- Bootstrap: base.js prepara tema e lingua, guida.js aggiorna il contenuto, boot-sw la cache. -->
-    <script src="assets/js/base.js?v=20260818-visual-system" defer></script>
+    <script src="assets/js/base.js?v=20260818-back-to-top" defer></script>
     <script src="assets/js/guida.js?v=20260816-uiux" defer></script>
     <script src="assets/js/boot-sw.js?v=20260816-203216dddd48" defer></script>
   </body>

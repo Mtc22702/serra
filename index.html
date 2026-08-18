@@ -82,16 +82,16 @@
     </script>
 
     <!-- Fogli di stile principali -->
-    <link rel="stylesheet" href="assets/css/base.css?v=20260818-visual-system" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260818-mobile-audit" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260818-journey-cta"
+      href="assets/css/serra-home.css?v=20260818-level-contrast"
     />
 
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260815-a31f6c7d9e20"
+      href="assets/css/serra-configuratore.css?v=20260818-mobile-audit"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -1631,9 +1631,11 @@
     <button
       class="back-to-top"
       id="backToTop"
+      type="button"
       aria-label="Torna all'inizio della pagina"
       data-i18n-aria="backtotop.aria"
-      data-home-action="back-to-top"
+      data-back-to-top
+      data-back-to-top-mobile-threshold="1800"
     >
       ↑
     </button>
@@ -2156,11 +2158,11 @@
     </div>
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
-    <script src="assets/js/base.js?v=20260818-journey-cta" defer></script>
+    <script src="assets/js/base.js?v=20260818-back-to-top" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
-    <script src="assets/js/home.js?v=20260818-visual-system" defer></script>
+    <script src="assets/js/home.js?v=20260818-back-to-top" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>
