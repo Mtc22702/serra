@@ -3,11 +3,15 @@
   const E = window.SerraCareEngine;
   if (!E) return;
 
+  /* Chiavi di persistenza in localStorage. */
   const GARDEN_KEY = "serra.garden.v1";
-  // Dispensa: ciò che è stato acquistato e non ancora piantato.
   const INVENTORY_KEY = "serra.inventory.v1";
-  // Striscia «come funziona»: si chiude una volta e non torna più.
   const HOWTO_KEY = "serra.orto.howto";
+
+  /* Soglie di comportamento delle viste. */
+  const GIORNI_AVANTI = 7; // ampiezza della finestra «Prossimi giorni»
+  const GIORNI_RACCOLTA_VICINA = 14; // entro quanti giorni una coltura conta come «vicina alla raccolta»
+  const VOCI_PER_RICERCA = 6; // da quante voci in poi compare la barra di ricerca
 
   const COPY = {
     it: {
@@ -34,16 +38,14 @@
         "Registra cosa hai piantato e ti diciamo cosa fare, settimana per settimana, fino alla raccolta. Funziona anche con piante comprate altrove.",
       "tab.oggi": "Oggi",
       "tab.oggi_todo": "da fare adesso",
-      // Il badge conta le attività di oggi: questa riga aggiunge l'arretrato, non lo sostituisce.
+      // Righe di stato della linguetta «Oggi».
       "tab.oggi_late": "+{n} arretrate",
       "tab.oggi_clear": "tutto a posto",
-      // Le due righe di stato dicono la differenza fra le due sezioni: una elenca ciò che è già in terra, l'altra ciò che non lo è ancora.
-      "tab.colture_note": "già in terra",
-      "tab.colture_empty": "ancora niente",
-      "tab.dispensa_note": "non ancora in terra",
-      "tab.dispensa_empty": "dispensa vuota",
-      "tab.colture": "Piantate",
-      "tab.dispensa": "Da piantare",
+      "tab.piante": "Le mie piante",
+      /* Righe di stato della linguetta «Le mie piante». */
+      "tab.piante_stock": "{n} da piantare",
+      "tab.piante_note": "tutte in terra",
+      "tab.piante_empty": "ancora niente",
 
       "welcome.kicker": "Primo avvio",
       "welcome.title": "Comincia da quello che hai",
@@ -55,10 +57,11 @@
       "welcome.nothing": "Non hai ancora semi o piantine?",
       "welcome.shop_seeds": "Catalogo semi",
       "welcome.shop_plugs": "Vivaio piantine",
-      // Sezione 1: la giornata. Un solo numero nel titolo, il resto ripiegato.
-      "jump.aria": "Vai a una sezione della pagina",
-      "sec.step1": "Passo 1 · quello che possiedi",
-      "sec.step2": "Passo 2 · quello che è in terra",
+      "jump.aria": "Sezioni dell'orto",
+      "piante.title": "Le mie piante",
+      "piante.sub":
+        "Tutto quello che possiedi: prima ciò che non è ancora in terra, poi ciò che sta già crescendo.",
+      // Vista «Oggi».
       "oggi.one": "Oggi hai una cosa da fare",
       "oggi.many": "Oggi hai {n} cose da fare",
       "oggi.nothing": "Oggi non c'è niente da fare",
@@ -134,11 +137,11 @@
       "fase.impianto": "Impianto",
       "fase.perenne": "Perenne",
 
-      "colture.title": "Piantate",
+      "colture.title": "In terra",
       "colture.sub":
-        "Le piante già piantate. Ognuna genera da sola il proprio calendario di cura fino alla raccolta.",
+        "Ognuna genera da sola il proprio calendario di cura fino alla raccolta.",
       "colture.crosslink": "Hai {n} voci comprate e non ancora piantate.",
-      "colture.crosslink_cta": "Vai a «Da piantare»",
+      "colture.crosslink_cta": "Vai a «Le mie piante»",
       "colture.ics": "Esporta nel calendario (.ics)",
       "colture.stat_active": "colture in corso",
       "colture.stat_plants": "piante seguite",
@@ -156,13 +159,11 @@
       "colture.plants": "{n} piante",
       "colture.empty_title": "Non stai ancora seguendo nulla",
       "colture.empty_text":
-        "Qui compaiono le piante che stai seguendo. Vai su «Da piantare», aggiungi ciò che hai e piantalo: comparirà qui da solo.",
+        "Premi «Pianta» su una voce del gruppo qui sopra: comparirà qui con il suo calendario.",
 
-      "disp.title": "Da piantare",
+      "disp.title": "Non ancora in terra",
       "disp.sub":
-        "Il magazzino: semi e piantine che possiedi e non sono ancora in terra. Qui non c'è nessun calendario, solo quanto ti resta.",
-      "disp.crosslink": "Appena pianti qualcosa, compare fra le colture con il suo calendario.",
-      "disp.crosslink_cta": "Vai a «Piantate»",
+        "Semi e piantine che possiedi. Qui non c'è nessun calendario, solo quanto ti resta.",
       "disp.import": "Importa dai miei ordini",
       "disp.add_manual": "＋ Aggiungi a mano",
       "disp.clear": "Svuota lista",
@@ -230,21 +231,25 @@
       "dlg.preview_perenne":
         "{nome} è una perenne: nessuna data di fine, il calendario continua di stagione in stagione.",
       // Striscia «come funziona»: tre passi, uno per linguetta.
-      "howto.title": "Come funziona, in tre passi",
+      "howto.title": "Come funziona: tre passi, da «Le mie piante» a «Oggi»",
       "howto.close": "Nascondi la spiegazione",
+      // Testo dei tre passi.
       "howto.s1t": "Registra cosa hai",
-      "howto.s1p": "Semi e piantine, comprati qui o altrove.",
-      "howto.s2t": "Segui la giornata",
-      "howto.s2p": "Le attività del giorno, e con un tocco anche dei successivi.",
-      "howto.s3t": "Arriva alla raccolta",
-      "howto.s3p": "Ogni coltura ha il suo calendario fino alla fine.",
-      // La riga finale cambia con quello che c'è nell'orto: a chi non ha nulla dice come partire, agli altri dove guardare per primo.
+      "howto.s1p":
+        "In «Le mie piante»: semi e piantine che possiedi, comprati qui o altrove.",
+      "howto.s2t": "Piantali",
+      "howto.s2p":
+        "Stessa scheda, gruppo sotto: passano «in terra» e ricevono il loro calendario.",
+      "howto.s3t": "Segui la giornata",
+      "howto.s3p":
+        "In «Oggi» trovi solo ciò che serve adesso. È qui che tornerai ogni mattina.",
+      // Suggerimento finale, scelto in base allo stato dell'orto.
       "howto.start_empty":
-        "<b>Da dove si comincia:</b> aggiungi la prima coltura qui sotto, oppure importa quello che hai già comprato.",
+        "<b>Sei qui:</b> passo 1. Aggiungi i semi e le piantine che possiedi, oppure importali da un ordine.",
       "howto.start_stock":
-        "<b>Da dove si comincia:</b> apri «Da piantare» e metti a dimora ciò che hai già.",
+        "<b>Passo 1 fatto:</b> ora premi «Pianta» su ciò che hai e passerà nel gruppo sotto.",
       "howto.start_today":
-        "<b>Da dove si comincia:</b> «Agenda» è la linguetta da guardare ogni mattina; la striscia dei giorni dice anche cosa arriva dopo.",
+        "<b>Sei a regime:</b> «Oggi» è la scheda da aprire ogni mattina. A «Le mie piante» si torna solo quando arriva roba nuova.",
       "edit.title": "Modifica coltura",
       "edit.confirm": "Salva",
       "edit.note":
@@ -333,12 +338,10 @@
       "tab.oggi_todo": "de făcut acum",
       "tab.oggi_late": "+{n} întârziate",
       "tab.oggi_clear": "totul în regulă",
-      "tab.colture_note": "deja plantate",
-      "tab.colture_empty": "încă nimic",
-      "tab.dispensa_note": "încă neplantate",
-      "tab.dispensa_empty": "cămară goală",
-      "tab.colture": "Plantate",
-      "tab.dispensa": "De plantat",
+      "tab.piante": "Plantele mele",
+      "tab.piante_stock": "{n} de plantat",
+      "tab.piante_note": "toate în pământ",
+      "tab.piante_empty": "încă nimic",
 
       "welcome.kicker": "Prima pornire",
       "welcome.title": "Începe de la ce ai deja",
@@ -350,9 +353,10 @@
       "welcome.nothing": "Încă nu ai semințe sau răsaduri?",
       "welcome.shop_seeds": "Catalog semințe",
       "welcome.shop_plugs": "Pepinieră răsaduri",
-      "jump.aria": "Mergi la o secțiune a paginii",
-      "sec.step1": "Pasul 1 · ce ai deja",
-      "sec.step2": "Pasul 2 · ce e în pământ",
+      "jump.aria": "Secțiunile grădinii",
+      "piante.title": "Plantele mele",
+      "piante.sub":
+        "Tot ce ai: întâi ce nu e încă în pământ, apoi ce crește deja.",
       "oggi.one": "Azi ai un lucru de făcut",
       "oggi.many": "Azi ai {n} lucruri de făcut",
       "oggi.nothing": "Azi nu e nimic de făcut",
@@ -423,18 +427,18 @@
       "fase.germinazione": "Germinație",
       "fase.crescita": "Creștere",
       "fase.raccolta": "Recoltare",
-      // Etichetta di una barra a quattro colonne strette: «La locul definitiv» ci andava a capo tre volte.
+      // Etichetta breve per la barra delle fasi.
       "fase.dimora": "Plantat",
       "fase.attecchimento": "Prindere",
       "fase.sviluppo": "Dezvoltare",
       "fase.impianto": "Plantare",
       "fase.perenne": "Perenă",
 
-      "colture.title": "Plantate",
+      "colture.title": "În pământ",
       "colture.sub":
-        "Plantele deja puse în pământ. Fiecare își generează singură calendarul de îngrijire până la recoltare.",
+        "Fiecare își generează singură calendarul de îngrijire până la recoltare.",
       "colture.crosslink": "Ai {n} poziții cumpărate și încă neplantate.",
-      "colture.crosslink_cta": "Mergi la „De plantat”",
+      "colture.crosslink_cta": "Mergi la „Plantele mele”",
       "colture.ics": "Exportă în calendar (.ics)",
       "colture.stat_active": "culturi în curs",
       "colture.stat_plants": "plante urmărite",
@@ -452,13 +456,11 @@
       "colture.plants": "{n} plante",
       "colture.empty_title": "Încă nu urmărești nimic",
       "colture.empty_text":
-        "Aici apar plantele pe care le urmărești. Mergi la „De plantat”, adaugă ce ai și plantează-l: va apărea aici automat.",
+        "Apasă „Plantează” pe o poziție din grupul de mai sus: va apărea aici cu propriul calendar.",
 
-      "disp.title": "De plantat",
+      "disp.title": "Încă neplantate",
       "disp.sub":
-        "Depozitul: semințe și răsaduri pe care le ai și care nu sunt încă în pământ. Aici nu există niciun calendar, doar cât ți-a rămas.",
-      "disp.crosslink": "Imediat ce plantezi ceva, apare printre culturi cu propriul calendar.",
-      "disp.crosslink_cta": "Mergi la „Plantate”",
+        "Semințe și răsaduri pe care le ai. Aici nu există niciun calendar, doar cât ți-a rămas.",
       "disp.import": "Importă din comenzile mele",
       "disp.add_manual": "＋ Adaugă manual",
       "disp.clear": "Golește lista",
@@ -524,20 +526,24 @@
       "dlg.preview": "{nome} {origine}: recoltare estimată în jurul datei de {data}.",
       "dlg.preview_perenne":
         "{nome} este o plantă perenă: nu are dată de final, calendarul continuă din sezon în sezon.",
-      "howto.title": "Cum funcționează, în trei pași",
+      "howto.title":
+        "Cum funcționează: trei pași, de la „Plantele mele” la „Astăzi”",
       "howto.close": "Ascunde explicația",
       "howto.s1t": "Notează ce ai",
-      "howto.s1p": "Semințe și răsaduri, cumpărate aici sau în altă parte.",
-      "howto.s2t": "Urmărește ziua",
-      "howto.s2p": "Activitățile zilei și, cu o atingere, și ale zilelor următoare.",
-      "howto.s3t": "Ajungi la recoltă",
-      "howto.s3p": "Fiecare cultură are calendarul ei până la final.",
+      "howto.s1p":
+        "În „Plantele mele”: semințe și răsaduri pe care le ai, cumpărate aici sau în altă parte.",
+      "howto.s2t": "Plantează-le",
+      "howto.s2p":
+        "Aceeași filă, grupul de dedesubt: trec „în pământ” și primesc calendarul lor.",
+      "howto.s3t": "Urmărește ziua",
+      "howto.s3p":
+        "În „Astăzi” găsești doar ce trebuie acum. Aici vei reveni în fiecare dimineață.",
       "howto.start_empty":
-        "<b>De unde începi:</b> adaugă prima cultură mai jos sau importă ce ai cumpărat deja.",
+        "<b>Ești aici:</b> pasul 1. Adaugă semințele și răsadurile pe care le ai sau importă-le dintr-o comandă.",
       "howto.start_stock":
-        "<b>De unde începi:</b> deschide „De plantat” și pune în pământ ce ai deja.",
+        "<b>Pasul 1 gata:</b> acum apasă „Plantează” pe ce ai și trece în grupul de dedesubt.",
       "howto.start_today":
-        "<b>De unde începi:</b> „Agendă” este fila de urmărit în fiecare dimineață; banda zilelor arată și ce urmează.",
+        "<b>Ești în ritm:</b> „Astăzi” e fila de deschis în fiecare dimineață. La „Plantele mele” revii doar când apare ceva nou.",
       "edit.title": "Modifică cultura",
       "edit.confirm": "Salvează",
       "edit.note":
@@ -639,8 +645,8 @@
 
   /* ============================================================ Stato ============================================================ */
   let lang = "it";
-  /* I pannelli ripiegabili si ridisegnano a ogni azione: senza memoria si
-     richiuderebbero sotto le dita di chi ha appena spuntato un'attività. */
+  let view = "oggi";
+  /* Stato di apertura dei pannelli ripiegabili, conservato fra i ridisegni. */
   let arretratiAperti = false;
   let settimanaAperta = false;
   let fatteAperte = false;
@@ -757,7 +763,7 @@
       localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
     } catch (_) {}
   }
-  // Le piantine si contano, le bustine no: da una bustina si semina più volte.
+  // Residuo di una voce: solo le piantine hanno una quantità che cala.
   const residuo = (voce) =>
     voce.variante === "piantina"
       ? Math.max(0, (voce.qta || 0) - (voce.qtaPiantata || 0))
@@ -765,8 +771,7 @@
 
   let ordiniImportabili = []; // ordini in attesa di conferma nel dialogo di importazione
 
-  // Legge gli ordini dell'utente e apre il dialogo di scelta: importare tutto alla cieca
-  // riportava dentro anche acquisti vecchi già gestiti nella dispensa.
+  // Legge gli ordini dell'utente e apre il dialogo di scelta.
   async function importaDaOrdini() {
     const utente = window.SerraAPI?.getCurrentUser?.();
     if (!utente) return toast(t("disp.login_hint"));
@@ -783,8 +788,7 @@
           if (!BYID[item.id]) return false;
           const variante = item.variante === "piantina" ? "piantina" : "seme";
           const id = `${ordine.id}|${item.id}|${variante}`;
-          // Una voce svuotata resta archiviata in memoria ma non è più "già in dispensa":
-          // deve poter tornare importabile, com'è promesso nel dialogo di svuotamento.
+          // Una voce archiviata non conta come già presente: resta importabile.
           return !inventory.voci.some((v) => v.id === id && !v.archiviata);
         }),
       }))
@@ -818,7 +822,7 @@
       .join("");
   }
 
-  // Il distintivo del carrello resta quello dei semi: nessuna somma inventata.
+  // Distintivo del carrello: conta le voci del carrello semi.
   function updateCartBadge() {
     const badge = document.getElementById("cartCount");
     if (!badge) return;
@@ -862,12 +866,9 @@
     };
   }
 
-  const GIORNI_AVANTI = 7;
-
   const isoOggi = () => E.iso(E.startOfToday());
 
-  /* I prossimi giorni, raggruppati per data: serve a dare un orizzonte
-     senza trasformare la pagina in un calendario da leggere ogni mattina. */
+  /* Attività dei prossimi giorni, raggruppate per data. */
   function datiSettimana() {
     const oggi = E.startOfToday();
     const limite = E.addDays(oggi, GIORNI_AVANTI);
@@ -881,8 +882,7 @@
         if (!perGiorno.has(iso)) perGiorno.set(iso, []);
         perGiorno.get(iso).push(task);
       });
-    // La compressione va fatta dentro il giorno: fra giorni diversi le
-    // ricorrenti sono occorrenze distinte e vanno mostrate entrambe.
+    // Le ricorrenti si comprimono dentro il singolo giorno, non fra giorni.
     return [...perGiorno.entries()]
       .map(([iso, tasks]) => [iso, E.comprimiRicorrenti(tasks)])
       .sort((a, b) => a[0].localeCompare(b[0]));
@@ -890,22 +890,29 @@
 
   /* ============================================================ Viste ============================================================ */
 
-  /* Lo scorrimento si ferma sotto la navbar fissa, che altrimenti coprirebbe
-     il titolo della sezione appena raggiunta. */
-  function vaiAllaSezione(sezione) {
-    if (!sezione) return;
+  /* Cambio scheda dal contenuto: riporta in cima solo se la vista cambia. */
+  function vaiAllaVista(nuova) {
+    const cambia = view !== nuova;
+    view = nuova;
+    stockQuery = "";
+    render();
+    const barra = document.getElementById("ortoViewbar");
+    if (!cambia || !barra || barra.hidden) return;
     const navbar =
       parseInt(
         getComputedStyle(document.documentElement).getPropertyValue("--nav-h"),
         10,
       ) || 62;
-    const y =
-      sezione.getBoundingClientRect().top + window.scrollY - navbar - 16;
+    const y = barra.getBoundingClientRect().top + window.scrollY - navbar - 12;
+    if (window.scrollY <= y) return;
     const dolce = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: Math.max(0, y), behavior: dolce ? "smooth" : "auto" });
+    window.scrollTo({
+      top: Math.max(0, y),
+      behavior: dolce ? "smooth" : "auto",
+    });
   }
 
-  // Primo avvio: senza colture né dispensa la vista "Oggi" direbbe che va tutto bene quando in realtà non c'è nulla.
+  // Schermata di benvenuto: primo avvio, orto ancora vuoto.
   function renderBenvenuto() {
     app.innerHTML = `
       <section class="orto-welcome">
@@ -930,8 +937,7 @@
       </section>`;
   }
 
-  /* L'arretrato resta ripiegato: è la cosa che scoraggia di più a colpo
-     d'occhio, e non è mai ciò che si è venuti a fare stamattina. */
+  /* Pannello ripiegabile delle attività arretrate. */
   function arretratoHtml(arretrati) {
     return `
       <details class="orto-backlog"${arretratiAperti ? " open" : ""}
@@ -957,8 +963,7 @@
       </details>`;
   }
 
-  /* I prossimi giorni: ripiegati, perché la domanda di stamattina è
-     «cosa faccio oggi», non «cosa mi aspetta giovedì». */
+  /* Pannello ripiegabile dei prossimi giorni, raggruppati per data. */
   function settimanaHtml() {
     const giorni = datiSettimana();
     if (!giorni.length) return "";
@@ -1005,12 +1010,14 @@
       </details>`;
   }
 
-  /* Prima sezione della pagina: risponde alla sola domanda «cosa faccio
-     adesso». Un numero solo nel titolo; arretrato e prossimi giorni stanno
-     ripiegati intorno, così non competono con la risposta. */
+  /* Vista «Oggi»: attività del giorno, con arretrato, svolte e prossimi
+     giorni nei rispettivi pannelli ripiegabili. */
   function sezioneOggiHtml() {
     const { oggi, arretrati, diOggi, fatti } = datiOggi();
     const totale = diOggi.length + fatti.length;
+    const inAttesa = inventory.voci.filter(
+      (v) => !v.archiviata && BYID[v.plantId],
+    ).length;
     const titolo =
       diOggi.length === 0
         ? fatti.length
@@ -1020,7 +1027,7 @@
           ? t("oggi.one")
           : t("oggi.many", { n: diOggi.length });
     return `
-      <section class="orto-sec" id="ortoSecOggi" aria-labelledby="ortoSecOggiT">
+      <section class="orto-sec">
         <div class="orto-sec-head">
           <p class="orto-sec-kicker">${escape(
             oggi.toLocaleDateString(locale(), {
@@ -1029,7 +1036,7 @@
               month: "long",
             }),
           )}</p>
-          <h2 id="ortoSecOggiT">${titolo}</h2>
+          <h2>${titolo}</h2>
           ${
             fatti.length
               ? `<p class="orto-sec-sub">${t("oggi.progress", {
@@ -1039,6 +1046,18 @@
               : ""
           }
         </div>
+        ${
+          /* Rimando a «Le mie piante» quando restano voci non piantate. */
+          inAttesa
+            ? `<p class="orto-crosslink">
+                <span class="orto-crosslink-ico" aria-hidden="true">📦</span>
+                <span>${t("colture.crosslink", { n: inAttesa })}</span>
+                <button class="orto-link" type="button" data-orto-view="piante">${
+                  t("colture.crosslink_cta") + " →"
+                }</button>
+              </p>`
+            : ""
+        }
         ${arretrati.length ? arretratoHtml(arretrati) : ""}
         ${
           diOggi.length
@@ -1124,7 +1143,33 @@
       </article>`;
   }
 
+  /* Vista «Le mie piante»: gruppo 1 non ancora in terra, gruppo 2 in terra. */
   function sezionePianteHtml() {
+    const attive = inventory.voci.filter(
+      (v) => !v.archiviata && BYID[v.plantId],
+    );
+    return `
+      <section class="orto-sec">
+        <div class="orto-sec-head">
+          <h2>${t("piante.title")}</h2>
+          <p class="orto-sec-sub">${t("piante.sub")}</p>
+        </div>
+        ${gruppoDaPiantareHtml(attive)}
+        ${gruppoInTerraHtml()}
+      </section>`;
+  }
+
+  const groupHead = (n, titolo, sub, conteggio) => `
+    <header class="orto-group-head">
+      <span class="orto-group-no" aria-hidden="true">${n}</span>
+      <div class="orto-group-copy">
+        <h3>${titolo}</h3>
+        <p>${sub}</p>
+      </div>
+      ${conteggio ? `<span class="orto-group-count">${conteggio}</span>` : ""}
+    </header>`;
+
+  function gruppoInTerraHtml() {
     const oggi = E.startOfToday();
     const riepilogo = garden.colture.reduce(
       (acc, c) => {
@@ -1132,26 +1177,23 @@
         if (!plant) return acc;
         const gg = E.giorniARaccolta(plant, PRODUCTS[c.plantId], c.origine);
         const fine = E.addDays(E.parseDate(c.dataInizio), gg);
-        if (gg && fine >= oggi && E.diffDays(fine, oggi) <= 14) acc.vicine++;
+        if (gg && fine >= oggi && E.diffDays(fine, oggi) <= GIORNI_RACCOLTA_VICINA) acc.vicine++;
         acc.piante += Number(c.quantita) || 0;
         return acc;
       },
       { vicine: 0, piante: 0 },
     );
 
-    const inAttesa = inventory.voci.filter(
-      (v) => !v.archiviata && BYID[v.plantId],
-    ).length;
-
     const vuoto = garden.colture.length === 0;
 
     return `
-      <section class="orto-sec" id="ortoSecPiante" aria-labelledby="ortoSecPianteT">
-        <div class="orto-sec-head">
-          <p class="orto-sec-kicker"><span aria-hidden="true">🌿</span> ${t("sec.step2")}</p>
-          <h2 id="ortoSecPianteT">${t("colture.title")}</h2>
-          <p class="orto-sec-sub">${t("colture.sub")}</p>
-        </div>
+      <section class="orto-group">
+        ${groupHead(
+          2,
+          t("colture.title"),
+          t("colture.sub"),
+          garden.colture.length,
+        )}
         ${
           vuoto
             ? ""
@@ -1164,26 +1206,11 @@
           <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button" data-orto-action="export-ics">${t("colture.ics")}</button>
         </div>`
         }
-        ${
-          inAttesa
-            ? `<p class="orto-crosslink">
-              <span class="orto-crosslink-ico" aria-hidden="true">📦</span>
-              <span>${t("colture.crosslink", { n: inAttesa })}</span>
-              <a class="orto-link" href="#ortoSecDispensa" data-orto-jump="ortoSecDispensa">${
-                t("colture.crosslink_cta") + " ↓"
-              }</a>
-            </p>`
-            : ""
-        }
         <div class="orto-grid">${
           garden.colture.length
             ? garden.colture.map(colturaCard).join("")
             : `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">🌱</span>
-              <h4>${t("colture.empty_title")}</h4><p>${t("colture.empty_text")}</p>
-              <div class="orto-empty-actions">
-                <a class="orto-btn" href="#ortoSecDispensa"
-                  data-orto-jump="ortoSecDispensa">${t("colture.crosslink_cta")} ↓</a>
-              </div></div>`
+              <h4>${t("colture.empty_title")}</h4><p>${t("colture.empty_text")}</p></div>`
         }</div>
       </section>`;
   }
@@ -1207,7 +1234,7 @@
     const fasi = E.fasi(coltura, plant, product);
     const attuale =
       fasi.filter((f) => f.at * 100 <= percentuale).pop() || fasi[0];
-    // Raccolta in corso o entro una settimana: è il momento in cui l'azione principale della scheda cambia.
+    // Raccolta entro una settimana: l'azione principale della scheda cambia.
     const raccoltaOra = mancano === null || mancano <= 7;
 
     return `
@@ -1281,18 +1308,11 @@
       </article>`;
   }
 
-  /* La dispensa non è un secondo elenco di colture: è il magazzino di ciò che si possiede e non è ancora in terra. */
-  function sezioneDispensaHtml() {
-    const attive = inventory.voci.filter(
-      (v) => !v.archiviata && BYID[v.plantId],
-    );
+  /* Gruppo 1: semi e piantine possedute e non ancora piantate. */
+  function gruppoDaPiantareHtml(attive) {
     return `
-      <section class="orto-sec" id="ortoSecDispensa" aria-labelledby="ortoSecDispensaT">
-        <div class="orto-sec-head">
-          <p class="orto-sec-kicker"><span aria-hidden="true">📦</span> ${t("sec.step1")}</p>
-          <h2 id="ortoSecDispensaT">${t("disp.title")}</h2>
-          <p class="orto-sec-sub">${t("disp.sub")}</p>
-        </div>
+      <section class="orto-group">
+        ${groupHead(1, t("disp.title"), t("disp.sub"), attive.length)}
         ${
           attive.length
             ? `<div class="orto-toolbar">
@@ -1302,18 +1322,11 @@
                   data-orto-action="import-orders">${t("disp.import")}</button>
                 <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
                   data-orto-action="clear-stock">${t("disp.clear")}</button>
-              </div>
-              <p class="orto-crosslink">
-                <span class="orto-crosslink-ico" aria-hidden="true">🌱</span>
-                <span>${t("disp.crosslink")}</span>
-                <a class="orto-link" href="#ortoSecPiante" data-orto-jump="ortoSecPiante">${
-                  t("disp.crosslink_cta") + " ↑"
-                }</a>
-              </p>`
+              </div>`
             : ""
         }
         ${
-          attive.length > 6
+          attive.length > VOCI_PER_RICERCA
             ? `<label class="orto-stock-search">
               <span aria-hidden="true">⌕</span>
               <input type="search" id="ortoStockSearch" autocomplete="off"
@@ -1327,9 +1340,7 @@
       </section>`;
   }
 
-  /* Raggruppa la dispensa per provenienza: un ordine può portare decine di voci
-     tutte insieme, e ripetere "Ordine XY" su ognuna nasconde il fatto che sono
-     arrivate in blocco. L'intestazione del gruppo lo dice una volta sola. */
+  /* Raggruppa le voci per provenienza: un ordine per gruppo, più le manuali. */
   function raggruppaVoci(voci) {
     const perOrdine = new Map();
     const manuali = [];
@@ -1381,7 +1392,7 @@
       </section>`;
   }
 
-  // Rigenera solo l'elenco filtrato: la barra di ricerca resta nel DOM e non perde il fuoco a ogni battitura.
+  // Rigenera il solo elenco filtrato, lasciando la barra di ricerca nel DOM.
   function renderStockResults() {
     const host = document.getElementById("ortoStockResults");
     if (!host) return;
@@ -1474,6 +1485,10 @@
       box.open = false;
       box.dataset.responsiveReady = "true";
     }
+    // Evidenzia il passo corrispondente alla scheda aperta.
+    box.querySelectorAll("[data-orto-step]").forEach((passo) => {
+      passo.classList.toggle("is-current", passo.dataset.ortoStep === view);
+    });
     const suggerimento = document.getElementById("ortoHowtoHint");
     if (!suggerimento) return;
     const inAttesa = inventory.voci.filter(
@@ -1487,8 +1502,7 @@
     suggerimento.innerHTML = t(chiave);
   }
 
-  /* Il sommario non cambia vista: dice solo a che punto della pagina si è e
-     quanto c'è in ognuna delle tre sezioni. */
+  /* Numero e riga di stato sulle due linguette. */
   function aggiornaSommario() {
     const { diOggi, arretrati } = datiOggi();
     const attive = inventory.voci.filter(
@@ -1496,16 +1510,15 @@
     ).length;
     [
       ["ortoTodayBadge", diOggi.length],
-      ["ortoColtureBadge", garden.colture.length],
-      ["ortoDispensaBadge", attive],
+      // Numero della scheda unificata: dispensa più colture.
+      ["ortoPianteBadge", attive + garden.colture.length],
     ].forEach(([id, n]) => {
       const badge = document.getElementById(id);
       if (!badge) return;
       badge.hidden = !n;
       badge.textContent = String(n);
     });
-    /* L'arretrato si somma a quanto c'è oggi invece di sostituirlo: il badge
-       dice «oggi», la riga dice «più questi». Due numeri che non si smentiscono. */
+    /* Righe di stato: il badge conta le attività di oggi, la riga aggiunge l'arretrato. */
     [
       [
         "ortoOggiNote",
@@ -1516,12 +1529,12 @@
             : t("tab.oggi_clear"),
       ],
       [
-        "ortoColtureNote",
-        garden.colture.length ? t("tab.colture_note") : t("tab.colture_empty"),
-      ],
-      [
-        "ortoDispensaNote",
-        attive ? t("tab.dispensa_note") : t("tab.dispensa_empty"),
+        "ortoPianteNote",
+        attive
+          ? t("tab.piante_stock", { n: attive })
+          : garden.colture.length
+            ? t("tab.piante_note")
+            : t("tab.piante_empty"),
       ],
     ].forEach(([id, testo]) => {
       const nodo = document.getElementById(id);
@@ -1534,55 +1547,30 @@
 
   function render() {
     syncHowto();
+    /* Orto vuoto: solo la schermata di benvenuto, senza linguette. */
     const vergine =
       !garden.colture.length && !inventory.voci.some((v) => !v.archiviata);
-    const viewbar = document.getElementById("ortoViewbar");
-    // A orto vuoto il sommario indicherebbe tre sezioni che non esistono ancora.
-    if (viewbar) viewbar.hidden = vergine;
+    const barra = document.getElementById("ortoViewbar");
+    if (barra) barra.hidden = vergine;
     if (vergine) {
       renderBenvenuto();
       return;
     }
+    // Stato tablist: solo la linguetta attiva resta raggiungibile con Tab.
+    const linguette = [...document.querySelectorAll(".orto-tab")];
+    linguette.forEach((bottone) => {
+      const attivo = bottone.dataset.ortoView === view;
+      bottone.setAttribute("aria-selected", String(attivo));
+      bottone.classList.toggle("is-active", attivo);
+      bottone.tabIndex = attivo ? 0 : -1;
+    });
+    const attiva = linguette.find((b) => b.dataset.ortoView === view);
+    if (attiva) app.setAttribute("aria-labelledby", attiva.id);
     aggiornaSommario();
-    app.innerHTML =
-      sezioneOggiHtml() + sezionePianteHtml() + sezioneDispensaHtml();
-    renderStockResults();
-    osservaSezioni();
-  }
-
-  /* Scrollspy: la voce del sommario si accende quando la sua sezione è
-     quella che si sta leggendo. Sostituisce lo stato "linguetta scelta",
-     che qui non ha più senso perché le sezioni ci sono tutte insieme. */
-  let osservatore = null;
-  function osservaSezioni() {
-    osservatore?.disconnect();
-    const voci = [...document.querySelectorAll("[data-orto-jump]")];
-    const sezioni = [...app.querySelectorAll(".orto-sec")];
-    if (!voci.length || !sezioni.length || !("IntersectionObserver" in window))
-      return;
-    const visibili = new Set();
-    const accendi = () => {
-      // Fra due sezioni visibili vince quella più in alto: è quella che si sta leggendo.
-      const attiva = sezioni.find((s) => visibili.has(s.id))?.id;
-      voci.forEach((voce) =>
-        voce.classList.toggle(
-          "is-active",
-          Boolean(attiva) && voce.dataset.ortoJump === attiva,
-        ),
-      );
-    };
-    osservatore = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) visibili.add(entry.target.id);
-          else visibili.delete(entry.target.id);
-        });
-        accendi();
-      },
-      // Il margine alto scarta la fascia coperta dalla navbar fissa.
-      { rootMargin: "-45% 0px -45% 0px" },
-    );
-    sezioni.forEach((s) => osservatore.observe(s));
+    if (view === "piante") {
+      app.innerHTML = sezionePianteHtml();
+      renderStockResults();
+    } else app.innerHTML = sezioneOggiHtml();
   }
 
   function applyLanguage(value) {
@@ -1600,7 +1588,7 @@
     document.querySelectorAll("[data-orto-key-ph]").forEach((el) => {
       el.setAttribute("placeholder", t(el.dataset.ortoKeyPh));
     });
-    // Il pulsante profilo mostra lo stato di accesso, non una voce tradotta.
+    // Il pulsante profilo è aggiornato dalla navbar condivisa.
     window.SerraAPI?.updateNavbarUser?.();
     const select = document.getElementById("ortoLangSelect");
     if (select) select.value = lang;
@@ -1641,8 +1629,7 @@
     toastTimer = setTimeout(() => toastEl.classList.remove("is-on"), 2600);
   }
 
-  // Voce aggiunta a mano: stessa logica di riattivazione usata per l'importazione dagli ordini,
-  // ma senza un ordine a cui appoggiarsi.
+  // Aggiunta manuale alla dispensa: riattiva o somma se la voce esiste già.
   function aggiungiAScorta(plantId, origine, quantita) {
     const variante = origine === "piantina" ? "piantina" : "seme";
     const id = `manuale|${plantId}|${variante}`;
@@ -1744,7 +1731,7 @@
     });
   }
 
-  // Un filtro che non porta a nulla è peggio di nessun filtro: le famiglie elencate sono solo quelle che hanno almeno una pianta.
+  // Elenca solo le famiglie con almeno una pianta disponibile.
   function famigliePicker() {
     const conta = {};
     PLANTS.forEach((p) => (conta[p.tipo] = (conta[p.tipo] || 0) + 1));
@@ -1805,8 +1792,7 @@
     }
   }
 
-  // Il dialogo "Aggiungi" serve a due scopi: piantare subito, oppure solo mettere da parte
-  // nella dispensa. Cambia titolo, passo 3 e conferma; data e aiuola contano solo se si pianta.
+  // Adatta il dialogo «Aggiungi» alla modalità: coltura oppure dispensa.
   function applyAddDialogMode() {
     const perDispensa = dialogMode === "stock";
     const titolo = document.getElementById("ortoAddTitle");
@@ -1885,7 +1871,7 @@
       : t("dlg.preview_perenne", { nome: plantName(plant) });
   }
 
-  // Promemoria che funziona ovunque, iOS compreso, senza notifiche push.
+  // Esportazione .ics delle attività future.
   function esportaIcs() {
     const oggi = E.startOfToday();
     const tasks = tuttiITask()
@@ -1912,8 +1898,30 @@
     toast(t("toast.ics", { n: tasks.length }));
   }
 
-  /* I pannelli ripiegabili ricordano se erano aperti: il ridisegno che segue
-     ogni spunta non deve richiuderli sotto le dita. */
+  /* Navigazione da tastiera fra le linguette: frecce, Home e Fine. */
+  document.querySelector(".orto-tabs")?.addEventListener("keydown", (event) => {
+    const linguette = [...document.querySelectorAll(".orto-tab")];
+    const corrente = linguette.indexOf(document.activeElement);
+    if (corrente < 0) return;
+    const tasti = ["ArrowLeft", "ArrowRight", "Home", "End"];
+    if (!tasti.includes(event.key)) return;
+    event.preventDefault();
+    const prossimo =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? linguette.length - 1
+          : (corrente +
+              (event.key === "ArrowRight" ? 1 : -1) +
+              linguette.length) %
+            linguette.length;
+    view = linguette[prossimo].dataset.ortoView;
+    stockQuery = "";
+    render();
+    linguette[prossimo].focus();
+  });
+
+  /* Memorizza lo stato di apertura dei pannelli ripiegabili. */
   app?.addEventListener("toggle", (event) => {
     const box = event.target;
     if (!(box instanceof HTMLDetailsElement)) return;
@@ -1938,7 +1946,7 @@
   }
 
   function sbloccaPagina() {
-    // Un dialogo può aprirne un altro: si sblocca solo quando non ne resta nessuno aperto.
+    // Lo scorrimento si sblocca solo quando nessun dialogo resta aperto.
     if (document.querySelector("dialog.orto-dialog[open]")) return;
     if (!document.body.classList.contains("orto-dialog-open")) return;
     document.body.classList.remove("orto-dialog-open");
@@ -1950,19 +1958,20 @@
     dialogo.addEventListener("click", (event) => {
       if (event.target === dialogo) dialogo.close("cancel");
     });
-    // La chiusura arriva da cinque strade diverse (✕, Annulla, Esc, sfondo, invio del modulo): lo sblocco sta qui, una volta sola.
+    // Sblocco alla chiusura, da qualunque via avvenga.
     dialogo.addEventListener("close", sbloccaPagina);
   });
 
   document.addEventListener("click", (event) => {
-    // I collegamenti fra sezioni scorrono la pagina: niente cambio di vista, niente salto secco.
-    const salto = event.target.closest("[data-orto-jump]");
-    if (salto) {
-      const meta = document.getElementById(salto.dataset.ortoJump);
-      if (meta) {
-        event.preventDefault();
-        vaiAllaSezione(meta);
-      }
+    const linguetta = event.target.closest("[data-orto-view]");
+    if (linguetta) {
+      event.preventDefault();
+      // I rimandi nel contenuto riportano in cima; le linguette no.
+      if (linguetta.classList.contains("orto-tab")) {
+        view = linguetta.dataset.ortoView;
+        stockQuery = "";
+        render();
+      } else vaiAllaVista(linguetta.dataset.ortoView);
       return;
     }
     const trigger = event.target.closest("[data-orto-action]");
@@ -1993,7 +2002,7 @@
       toast(t("toast.snoozed"));
       return render();
     }
-    // La rimozione porta via anche lo storico: si chiede conferma.
+    // Rimozione di una coltura: richiede conferma.
     if (action === "remove-coltura") {
       const coltura = garden.colture.find(
         (c) => c.id === trigger.dataset.colturaId,
@@ -2029,7 +2038,7 @@
       }
       return render();
     }
-    // Messa a dimora parziale: si sceglie quante piante avviare e quando.
+    // Messa a dimora parziale: quantità e data si scelgono nel dialogo.
     if (action === "plant-from-stock" && !trigger.disabled) {
       vocePendente = inventory.voci.find(
         (v) => v.id === trigger.dataset.voceId,
@@ -2076,7 +2085,7 @@
       piantaScelta = trigger.dataset.plantId;
       ricordaPianta(piantaScelta);
       mostraSceltaPianta();
-      // Il fuoco va sulla scelta successiva, non sulla data: su telefono aprirebbe subito il calendario nascondendo il resto del dialogo.
+      // Il fuoco va sulla scelta dell'origine, non sul campo data.
       document.querySelector('input[name="ortoOrigine"]:checked')?.focus();
       return;
     }
@@ -2151,7 +2160,7 @@
     pickerQuery = e.target.value;
     renderPicker();
   });
-  // Delegato su app: la barra di ricerca della dispensa viene ricreata solo al cambio vista, mai a ogni battitura.
+  // Ricerca della dispensa, delegata sul contenitore della vista.
   app?.addEventListener("input", (e) => {
     if (e.target.id === "ortoStockSearch") {
       stockQuery = e.target.value;
@@ -2169,7 +2178,7 @@
       if (event.submitter && event.submitter.value === "cancel") return;
       const errore = document.getElementById("ortoPlantError");
       if (!piantaScelta || !BYID[piantaScelta]) {
-        // method="dialog": senza preventDefault il dialogo si chiuderebbe comunque.
+        // Con method="dialog" la chiusura avviene senza preventDefault.
         event.preventDefault();
         if (errore) {
           errore.textContent = t("dlg.plant_missing");
@@ -2198,13 +2207,8 @@
       }
       piantaScelta = null;
       setTimeout(() => {
-        render();
-        // Porta lo sguardo dove la voce è appena comparsa, invece di lasciarla trovare.
-        vaiAllaSezione(
-          document.getElementById(
-            modoScorta ? "ortoSecDispensa" : "ortoSecPiante",
-          ),
-        );
+        // Apre la scheda in cui la voce è appena comparsa.
+        vaiAllaVista("piante");
         toast(t(modoScorta ? "toast.added_stock" : "toast.added", { nome }));
       }, 0);
     });
@@ -2248,7 +2252,7 @@
       }, 0);
     });
 
-  // Conferma dell'importazione: solo gli ordini spuntati, e solo le voci che non c'erano già.
+  // Importa solo gli ordini spuntati e le voci non già presenti.
   document
     .getElementById("ortoImportForm")
     ?.addEventListener("submit", (event) => {
@@ -2266,7 +2270,7 @@
           ordine.nuovi.forEach((item) => {
             const variante = item.variante === "piantina" ? "piantina" : "seme";
             const id = `${ordine.id}|${item.id}|${variante}`;
-            // Una svuotata precedente lascia la voce archiviata: la si riattiva invece di duplicarla.
+            // Riattiva una voce archiviata invece di duplicarla.
             const esistente = inventory.voci.find((v) => v.id === id);
             if (esistente) esistente.archiviata = false;
             else
@@ -2291,7 +2295,7 @@
       }, 0);
     });
 
-  // Conferma dello svuotamento: archivia tutta la dispensa attiva, come fa "Segna come finita" voce per voce.
+  // Svuotamento: archivia tutte le voci attive della dispensa.
   document
     .getElementById("ortoClearStockForm")
     ?.addEventListener("submit", (event) => {
@@ -2396,8 +2400,7 @@
       saveInventory();
       const nome = plantName(BYID[voce.plantId]);
       setTimeout(() => {
-        render();
-        vaiAllaSezione(document.getElementById("ortoSecPiante"));
+        vaiAllaVista("piante");
         toast(t("toast.planted", { n: quante, nome }));
       }, 0);
     });
@@ -2433,14 +2436,14 @@
     loadGarden();
     loadInventory();
     updateCartBadge();
+    /* Atterraggio: con scorte ma senza colture si parte da «Le mie piante». */
+    if (!garden.colture.length && inventory.voci.some((v) => !v.archiviata))
+      view = "piante";
+    // Un ingresso diretto su #da-piantare (dal pannello utente) apre la dispensa.
+    if (location.hash === "#da-piantare") view = "piante";
     applyLanguage(localStorage.getItem("ois.lang"));
-    // Un ingresso diretto su #da-piantare (dal pannello utente) scende alla dispensa.
-    if (location.hash === "#da-piantare")
-      requestAnimationFrame(() =>
-        vaiAllaSezione(document.getElementById("ortoSecDispensa")),
-      );
 
-    // Rende infinita la striscia degli ortaggi nel piè di pagina duplicando gli elementi.
+    // Duplica gli ortaggi del piè di pagina per rendere continua la striscia.
     const footerRow = document.getElementById("footerPlantRow");
     if (footerRow) {
       const html = footerRow.innerHTML;

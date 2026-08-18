@@ -18,7 +18,7 @@
     />
     <link rel="manifest" href="manifest.json" />
     <meta name="apple-mobile-web-app-title" content="Orto in Serra" />
-    <!-- Versione applicativa e tema iniziale: stesso contratto delle altre pagine -->
+    <!-- Versione applicativa e tema iniziale -->
     <script>
       window.SERRA_APP_VERSION = "20260816-203216dddd48";
       window.SERRA_IS_LOCAL_DEV =
@@ -31,7 +31,7 @@
         document.documentElement.dataset.theme = dark ? "dark" : "light";
       })();
     </script>
-    <!-- Lingua iniziale: evita il lampeggio del testo italiano in romeno -->
+    <!-- Lingua iniziale, applicata prima del rendering -->
     <style>
       html.serra-i18n-pending body {
         visibility: hidden;
@@ -63,7 +63,7 @@
     <link rel="stylesheet" href="assets/css/serra-orto.css?v=20260816-uiux" />
   </head>
   <body class="orto-page">
-    <!-- Intestazione condivisa con il resto dell'app: stesse voci, stesso ordine -->
+    <!-- Intestazione condivisa con il resto dell'app -->
     <header class="site-header">
       <div class="site-header-inner">
         <a href="index.html" class="nav-brand" aria-label="Orto in Serra, home">
@@ -118,7 +118,7 @@
             data-orto-key="nav.account"
             >👤 Area Personale</a
           >
-          <!-- Tema e lingua: visibili anche nel menu mobile sotto i 660px -->
+          <!-- Controlli di tema e lingua -->
           <div class="mobile-nav-preferences">
             <span
               class="mobile-nav-section-title"
@@ -182,7 +182,7 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          <!-- Accesso rapido al profilo: solo icona su schermi stretti -->
+          <!-- Accesso al profilo -->
           <a
             href="account.html"
             class="nav-account-btn"
@@ -247,10 +247,12 @@
         </p>
       </header>
 
-      <!-- Guida rapida ai tre passi, chiudibile: la preferenza resta salvata nel browser (serra.orto.howto) -->
+      <!-- Guida ai tre passi, chiudibile; preferenza in serra.orto.howto -->
       <details class="orto-howto" id="ortoHowto" hidden open>
         <summary class="orto-howto-summary">
-          <span data-orto-key="howto.title">Come funziona, in tre passi</span>
+          <span data-orto-key="howto.title"
+            >Come funziona: tre passi, da «Le mie piante» a «Oggi»</span
+          >
           <span class="orto-howto-summary-action" aria-hidden="true">⌄</span>
         </summary>
         <div class="orto-howto-content">
@@ -266,92 +268,95 @@
             </button>
           </div>
           <ol class="orto-howto-steps">
-            <li>
+            <li data-orto-step="piante">
               <span class="orto-howto-no" aria-hidden="true">1</span>
               <span class="orto-howto-copy">
                 <b data-orto-key="howto.s1t">Registra cosa hai</b>
                 <small data-orto-key="howto.s1p"
-                  >Semi e piantine finiscono in «Da piantare», in fondo alla
-                  pagina.</small
+                  >In «Le mie piante», semi e piantine che possiedi.</small
                 >
               </span>
             </li>
-            <li>
+            <li data-orto-step="piante">
               <span class="orto-howto-no" aria-hidden="true">2</span>
               <span class="orto-howto-copy">
                 <b data-orto-key="howto.s2t">Piantali quando vuoi</b>
                 <small data-orto-key="howto.s2p"
-                  >Da lì passano in «Piantate» e ricevono il loro
+                  >Nella stessa scheda passano «in terra» e ricevono il loro
                   calendario.</small
                 >
               </span>
             </li>
-            <li>
+            <li data-orto-step="oggi">
               <span class="orto-howto-no" aria-hidden="true">3</span>
               <span class="orto-howto-copy">
                 <b data-orto-key="howto.s3t">Segui la giornata</b>
                 <small data-orto-key="howto.s3p"
-                  >In cima trovi solo ciò che serve oggi, fino alla
+                  >In «Oggi» trovi solo ciò che serve adesso, fino alla
                   raccolta.</small
                 >
               </span>
             </li>
           </ol>
-          <!-- Indicazione della linguetta consigliata per iniziare -->
+          <!-- Suggerimento del passo successivo, popolato da orto.js -->
           <p class="orto-howto-hint" id="ortoHowtoHint"></p>
         </div>
       </details>
 
-      <!-- Sommario: non cambia vista, porta alla sezione. La pagina è una sola. -->
+      <!-- Selettore delle due viste: attività del giorno e piante possedute -->
       <div class="orto-viewbar" id="ortoViewbar" hidden>
-        <!-- Div e non <nav>: in base.css il tag nav è riservato alla navigazione principale fissa -->
+        <!-- Div e non <nav>: in base.css nav è riservato alla navigazione principale -->
         <div
           class="orto-tabs"
-          role="group"
+          role="tablist"
           data-orto-key-aria="jump.aria"
-          aria-label="Vai a una sezione"
+          aria-label="Sezioni dell'orto"
         >
-          <a class="orto-tab" href="#ortoSecOggi" data-orto-jump="ortoSecOggi">
+          <button
+            class="orto-tab orto-tab--primary is-active"
+            type="button"
+            role="tab"
+            id="ortoTabOggi"
+            aria-selected="true"
+            aria-controls="ortoApp"
+            data-orto-view="oggi"
+          >
             <span class="orto-tab-ico" aria-hidden="true">☀️</span>
             <span class="orto-tab-copy">
               <span class="orto-tab-name" data-orto-key="tab.oggi">Oggi</span>
               <span class="orto-tab-note" id="ortoOggiNote"></span>
             </span>
             <span class="orto-tab-badge" id="ortoTodayBadge" hidden>0</span>
-          </a>
-          <a
+          </button>
+          <button
             class="orto-tab"
-            href="#ortoSecPiante"
-            data-orto-jump="ortoSecPiante"
+            type="button"
+            role="tab"
+            id="ortoTabPiante"
+            aria-selected="false"
+            aria-controls="ortoApp"
+            tabindex="-1"
+            data-orto-view="piante"
           >
             <span class="orto-tab-ico" aria-hidden="true">🌿</span>
             <span class="orto-tab-copy">
-              <span class="orto-tab-name" data-orto-key="tab.colture"
-                >Piantate</span
+              <span class="orto-tab-name" data-orto-key="tab.piante"
+                >Le mie piante</span
               >
-              <span class="orto-tab-note" id="ortoColtureNote"></span>
+              <span class="orto-tab-note" id="ortoPianteNote"></span>
             </span>
-            <span class="orto-tab-badge" id="ortoColtureBadge" hidden>0</span>
-          </a>
-          <a
-            class="orto-tab"
-            href="#ortoSecDispensa"
-            data-orto-jump="ortoSecDispensa"
-          >
-            <span class="orto-tab-ico" aria-hidden="true">📦</span>
-            <span class="orto-tab-copy">
-              <span class="orto-tab-name" data-orto-key="tab.dispensa"
-                >Da piantare</span
-              >
-              <span class="orto-tab-note" id="ortoDispensaNote"></span>
-            </span>
-            <span class="orto-tab-badge" id="ortoDispensaBadge" hidden>0</span>
-          </a>
+            <span class="orto-tab-badge" id="ortoPianteBadge" hidden>0</span>
+          </button>
         </div>
       </div>
 
-      <!-- Le tre sezioni della pagina, generate da orto.js -->
-      <div id="ortoApp" tabindex="-1"></div>
+      <!-- Contenuto generato da orto.js in base alla vista attiva -->
+      <div
+        id="ortoApp"
+        role="tabpanel"
+        tabindex="-1"
+        aria-labelledby="ortoTabOggi"
+      ></div>
     </main>
 
     <!-- Messaggio temporaneo di conferma delle azioni -->
@@ -362,7 +367,7 @@
       aria-live="polite"
     ></div>
 
-    <!-- Inserimento di una nuova coltura nel diario: ricerca visiva della pianta, poi data e quantità -->
+    <!-- Dialogo «Aggiungi»: scelta della pianta, poi quantità e data -->
     <dialog
       class="orto-dialog orto-dialog--wide"
       id="ortoAddDialog"
@@ -400,7 +405,7 @@
               </p>
 
               <div class="orto-picker" id="ortoPicker">
-                <!-- Ricerca e famiglie ancorate in alto durante lo scroll della griglia -->
+                <!-- Ricerca e filtro per famiglia, ancorati in alto -->
                 <div class="orto-picker-head">
                   <label class="orto-picker-search">
                     <span aria-hidden="true">⌕</span>
@@ -464,7 +469,7 @@
               ></small>
             </section>
 
-            <!-- Passi 2 e 3, visibili a scelta fatta; validazione gestita da orto.js (nessun campo required) -->
+            <!-- Passi 2 e 3, visibili a scelta fatta; validazione in orto.js -->
             <div class="orto-add-details" id="ortoAddDetails" hidden>
               <section class="orto-step">
                 <p class="orto-step-head">
@@ -532,7 +537,7 @@
           </div>
 
           <div class="orto-dialog-foot">
-            <!-- formnovalidate evita la convalida del browser sull'annullamento; orto.js legge il valore "cancel" da event.submitter -->
+            <!-- formnovalidate salta la convalida; orto.js legge event.submitter.value -->
             <button
               type="submit"
               formnovalidate
@@ -557,7 +562,7 @@
       </div>
     </dialog>
 
-    <!-- Messa a dimora parziale: da venti piantine se ne piantano cinque oggi -->
+    <!-- Dialogo di messa a dimora, anche parziale -->
     <dialog
       class="orto-dialog"
       id="ortoPlantDialog"
@@ -641,7 +646,7 @@
       </div>
     </dialog>
 
-    <!-- Correzione di una coltura già registrata: data, quantità, posizione -->
+    <!-- Dialogo di modifica di una coltura: data, quantità, posizione -->
     <dialog
       class="orto-dialog"
       id="ortoEditDialog"
@@ -808,7 +813,7 @@
       </div>
     </dialog>
 
-    <!-- Scelta di quali ordini importare nella dispensa: evita di riportare dentro acquisti già gestiti -->
+    <!-- Dialogo di scelta degli ordini da importare nella dispensa -->
     <dialog
       class="orto-dialog"
       id="ortoImportDialog"
@@ -864,7 +869,7 @@
       </div>
     </dialog>
 
-    <!-- Conferma di svuotamento della dispensa: le voci restano negli ordini, spariscono solo da qui -->
+    <!-- Dialogo di conferma dello svuotamento della dispensa -->
     <dialog
       class="orto-dialog orto-dialog--confirm"
       id="ortoClearStockDialog"
@@ -917,7 +922,7 @@
       </div>
     </dialog>
 
-    <!-- Conferma di eliminazione: rimuove anche lo storico attività, azione non annullabile -->
+    <!-- Dialogo di conferma dell'eliminazione di una coltura -->
     <dialog
       class="orto-dialog orto-dialog--confirm"
       id="ortoRemoveDialog"
@@ -1126,7 +1131,7 @@
       </div>
     </footer>
 
-    <!-- Bootstrap: base.js prepara tema, lingua e API; il motore è puro; orto.js disegna. -->
+    <!-- Avvio: base.js (tema, lingua, API), motore di calcolo, orto.js (rendering) -->
     <script src="assets/js/base.js" defer></script>
     <script src="assets/js/serra-care-engine.js" defer></script>
     <script src="assets/js/orto.js?v=20260816-uiux" defer></script>
