@@ -1863,7 +1863,7 @@
     background-color: #f2f7f0;
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.88), rgba(242, 247, 240, 0.86)),
-      url("img/svg/misure-pattern.svg");
+      url("../img/svg/misure-pattern.svg");
     background-size:
       auto,
       96px 72px;
@@ -1877,7 +1877,7 @@
     gap: 6px;
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.5), rgba(252, 253, 249, 0.48)),
-      url("img/svg/clima-pattern.svg");
+      url("../img/svg/clima-pattern.svg");
     background-size:
       auto,
       112px 76px;
@@ -1932,7 +1932,7 @@
     background-color: #d8cfbd;
     background-image:
       linear-gradient(rgba(255, 253, 246, 0.48), rgba(245, 240, 226, 0.42)),
-      url("img/svg/camminamento-pattern.svg");
+      url("../img/svg/camminamento-pattern.svg");
     background-size:
       auto,
       54px 54px;
@@ -1990,12 +1990,12 @@
     background-color: #17271f;
     background-image:
       linear-gradient(rgba(20, 48, 29, 0.88), rgba(19, 34, 27, 0.86)),
-      url("img/svg/misure-pattern.svg");
+      url("../img/svg/misure-pattern.svg");
   }
   html[data-theme="dark"] .settings-visual-field--climate {
     background-image:
       linear-gradient(rgba(20, 48, 29, 0.68), rgba(20, 48, 29, 0.76)),
-      url("img/svg/clima-pattern.svg");
+      url("../img/svg/clima-pattern.svg");
   }
   html[data-theme="dark"] .settings-visual-field label.fld {
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
@@ -2005,7 +2005,7 @@
     background-color: #817966;
     background-image:
       linear-gradient(rgba(19, 34, 27, 0.58), rgba(19, 34, 27, 0.66)),
-      url("img/svg/camminamento-pattern.svg");
+      url("../img/svg/camminamento-pattern.svg");
     box-shadow: var(--elev-2);
   }
   html[data-theme="dark"] #pathField > .fld,
@@ -9703,6 +9703,204 @@
     gap: 11px;
     min-width: 0;
     padding: 12px 10px 2px;
+  }
+}
+
+/* Profilo e parametri v2: stessa grammatica visiva del pannello iniziale. */
+@layer coerenza {
+  .persona-ux-v2 {
+    background: linear-gradient(150deg, rgba(255, 253, 246, 0.78), rgba(237, 245, 239, 0.72));
+  }
+
+  .persona-ux-v2 .persona-cards {
+    gap: 7px;
+  }
+
+  .persona-ux-v2 .persona-card {
+    border-radius: 15px;
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--accent) 11%, transparent);
+  }
+
+  .persona-ux-v2 .persona-card.is-active {
+    box-shadow:
+      0 8px 18px color-mix(in srgb, var(--accent) 18%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .settings-ux-v2 {
+    border-radius: 20px;
+    border-top: 0;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(139, 212, 158, 0.18), transparent 28%),
+      linear-gradient(155deg, rgba(255, 253, 246, 0.995), rgba(237, 245, 239, 0.97));
+  }
+
+  .settings-ux-v2::before {
+    content: "";
+    display: block;
+    height: 5px;
+    background: linear-gradient(90deg, var(--verde), #74c69d 58%, #d9a441);
+  }
+
+  .settings-ux-v2 .panel-head {
+    padding: 4px 2px 10px;
+  }
+
+  .settings-ux-v2 .settings-visual-field,
+  .settings-ux-v2 #pathField,
+  .settings-ux-v2 .crops-month-selector {
+    border-radius: 14px;
+    border-color: rgba(47, 107, 58, 0.16);
+    box-shadow:
+      0 8px 20px rgba(31, 58, 38, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  @media (max-width: 660px) {
+    .persona-ux-v2 .persona-cards,
+    .persona-ux-v2 .persona-pick[open] .persona-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      padding: 8px 9px 10px;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-card,
+    .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+      grid-column: auto;
+      order: initial;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 88px;
+      padding: 7px 4px 6px;
+      gap: 4px;
+      text-align: center;
+      border-width: 1px;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+      border-width: 2px;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-card-ico,
+    .persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-ico {
+      width: 32px;
+      height: 32px;
+      transform: none;
+    }
+    .persona-ux-v2 .persona-pick[open] .level-plant-ico,
+    .persona-ux-v2 .persona-pick[open] .persona-card.is-active .level-plant-ico {
+      width: 22px;
+      height: 22px;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-card-body b,
+    .persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-body b {
+      font-size: 0.68rem;
+      line-height: 1.12;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-level-label {
+      display: block;
+      margin: 2px 0 0;
+      font-size: 0.58rem;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-card-body small {
+      display: none;
+    }
+    .persona-ux-v2 .persona-pick[open] .persona-card-go {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 19px;
+      height: 19px;
+    }
+
+    .settings-ux-v2 {
+      border-radius: 18px;
+    }
+    .settings-ux-v2 .pad {
+      padding: 9px 10px 10px;
+    }
+    .settings-ux-v2 .panel-head {
+      margin-bottom: 5px;
+      padding-bottom: 7px;
+    }
+    .settings-ux-v2 .section-label {
+      margin: 7px 0 4px;
+      font-size: 0.64rem;
+      letter-spacing: 0.05em;
+    }
+    .settings-ux-v2 .field {
+      margin-bottom: 7px;
+    }
+    .settings-ux-v2 .settings-visual-field {
+      padding: 6px;
+    }
+    .settings-ux-v2 .settings-visual-field--dimensions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .settings-ux-v2 .dim-slider,
+    .settings-ux-v2 #pathField #inPath {
+      display: none;
+    }
+    .settings-ux-v2 #pathField {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+    }
+    .settings-ux-v2 #pathField > .fld {
+      margin: 0;
+    }
+    .settings-ux-v2 #pathField > .row.field {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .settings-ux-v2 .settings-visual-field--climate {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+    .settings-ux-v2 #climateField select {
+      min-height: 40px;
+      padding-inline: 6px 16px;
+    }
+    .settings-ux-v2 #autoPlanSectionLabel {
+      display: flex !important;
+    }
+    .settings-ux-v2 .crops-month-selector {
+      display: flex !important;
+      margin-bottom: 7px;
+      padding: 6px 8px;
+    }
+    .settings-ux-v2 .crops-month-selector select {
+      min-height: 40px;
+      padding-block: 5px;
+    }
+    .settings-ux-v2 .crops-fill-main-btn {
+      min-height: 44px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .persona-ux-v2 .persona-pick[open] .persona-card,
+    .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+      min-height: 78px;
+    }
+    .settings-ux-v2 .settings-visual-field--climate {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .settings-ux-v2 .settings-visual-field--climate > div:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  html[data-theme="dark"] .settings-ux-v2,
+  html[data-theme="dark"] .persona-ux-v2 {
+    background:
+      radial-gradient(circle at 10% 0%, rgba(82, 183, 136, 0.14), transparent 30%),
+      linear-gradient(155deg, #182a21, #13221b);
   }
 }
 

@@ -11431,3 +11431,283 @@ html[data-theme="dark"]
     --nav-h: 60px;
   }
 }
+
+/* Preconfigurazione v2: una sola gerarchia visiva per profilo e parametri. */
+@layer coerenza {
+  .preconfig-sheet--v2 {
+    width: min(700px, 100%);
+    border: 1px solid color-mix(in srgb, var(--brand-600) 24%, transparent);
+    border-top: 0;
+    border-radius: 26px;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(139, 212, 158, 0.2), transparent 33%),
+      linear-gradient(155deg, rgba(255, 253, 246, 0.995), rgba(237, 245, 239, 0.98));
+  }
+
+  .preconfig-sheet--v2::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 5px;
+    border-radius: 26px 26px 0 0;
+    background: linear-gradient(90deg, var(--brand-600), #74c69d 58%, #d9a441);
+    pointer-events: none;
+  }
+
+  .preconfig-sheet--v2 .preconfig-panel-head {
+    padding: 13px 17px 11px;
+    background: rgba(255, 253, 246, 0.68);
+    backdrop-filter: blur(12px);
+  }
+
+  .preconfig-sheet--v2 .preconfig-head-icon {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(47, 107, 58, 0.14);
+    background: linear-gradient(145deg, rgba(116, 198, 157, 0.24), rgba(255, 255, 255, 0.72));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .preconfig-sheet--v2 .preconfig-title {
+    font-size: 1.05rem;
+  }
+
+  .preconfig-sheet--v2 .preconfig-close {
+    border: 1px solid rgba(47, 107, 58, 0.14);
+    background: rgba(255, 255, 255, 0.76);
+    box-shadow: 0 4px 14px rgba(31, 58, 38, 0.08);
+  }
+
+  .preconfig-sheet--v2 .preconfig-section-label {
+    margin: 6px 0 3px;
+    color: var(--brand-700);
+    font-size: 0.64rem;
+    letter-spacing: 0.065em;
+  }
+
+  .preconfig-sheet--v2 .preconfig-section-label::after {
+    background: linear-gradient(90deg, rgba(47, 107, 58, 0.2), transparent);
+  }
+
+  .preconfig-sheet--v2 .preconfig-vfield,
+  .preconfig-sheet--v2 .preconfig-month-wrap {
+    border: 1px solid rgba(47, 107, 58, 0.16);
+    border-radius: 14px;
+    box-shadow:
+      0 8px 20px rgba(31, 58, 38, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  }
+
+  .preconfig-sheet--v2 .pc-persona-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .preconfig-sheet--v2 .pc-persona-card {
+    min-width: 0;
+    min-height: 68px;
+    padding: 8px 9px;
+    gap: 8px;
+    border-width: 1px;
+    border-radius: 15px;
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--accent) 11%, transparent);
+  }
+
+  .preconfig-sheet--v2 .pc-persona-card.is-active,
+  .preconfig-sheet--v2 .pc-persona-card[aria-pressed="true"] {
+    border-width: 2px;
+    box-shadow:
+      0 8px 18px color-mix(in srgb, var(--accent) 18%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .preconfig-sheet--v2 .pc-persona-ico {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  .preconfig-sheet--v2 .pc-persona-go {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    opacity: 0;
+    transform: none;
+    font-size: 0;
+  }
+
+  .preconfig-sheet--v2 .pc-persona-go::before {
+    content: "✓";
+    font-size: 0.7rem;
+    color: var(--accent-text);
+  }
+
+  .preconfig-sheet--v2
+    .pc-persona-card:is(.is-active, [aria-pressed="true"])
+    .pc-persona-go {
+    background: var(--accent-edge);
+    opacity: 1;
+  }
+
+  .preconfig-sheet--v2
+    .pc-persona-card:is(.is-active, [aria-pressed="true"])
+    .pc-persona-go::before {
+    color: var(--persona-base);
+  }
+
+  /* Il select condiviso possiede già la propria freccia: evita il doppione su iOS. */
+  .preconfig-sheet--v2 .preconfig-month-arrow {
+    display: none;
+  }
+
+  .preconfig-sheet--v2 .preconfig-month-select {
+    padding-right: 8px;
+  }
+
+  .preconfig-sheet--v2 .preconfig-footer {
+    padding: 8px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: color-mix(in srgb, var(--surface-1) 94%, transparent);
+    backdrop-filter: blur(14px);
+  }
+
+  @media (min-width: 661px) {
+    .preconfig-sheet--v2 .preconfig-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      grid-template-areas:
+        "persona persona"
+        "sizes-label climate-label"
+        "dimensions climate"
+        "path month-label"
+        "path month";
+      gap: 3px 12px;
+      padding: 6px 16px 8px;
+    }
+    .preconfig-sheet--v2 #preconfigPersonaSection { grid-area: persona; }
+    .preconfig-sheet--v2 #preconfigSizesLabel { grid-area: sizes-label; }
+    .preconfig-sheet--v2 #preconfigSizesField { grid-area: dimensions; }
+    .preconfig-sheet--v2 .preconfig-vfield--path { grid-area: path; }
+    .preconfig-sheet--v2 [data-i18n="preconfig.climate_label"] { grid-area: climate-label; }
+    .preconfig-sheet--v2 .preconfig-vfield--climate { grid-area: climate; }
+    .preconfig-sheet--v2 [data-i18n="preconfig.month_label"] { grid-area: month-label; }
+    .preconfig-sheet--v2 .preconfig-month-wrap { grid-area: month; }
+  }
+
+  @media (max-width: 660px) {
+    .preconfig-sheet--v2 {
+      border-radius: 24px 24px 0 0;
+      max-height: calc(100dvh - max(6px, env(safe-area-inset-top)));
+    }
+    .preconfig-sheet--v2::before {
+      border-radius: 24px 24px 0 0;
+    }
+    .preconfig-sheet--v2 .preconfig-handle {
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+    }
+    .preconfig-sheet--v2 .preconfig-panel-head {
+      padding: 7px 12px 7px;
+    }
+    .preconfig-sheet--v2 .preconfig-head-icon {
+      width: 32px;
+      height: 32px;
+    }
+    .preconfig-sheet--v2 .preconfig-close {
+      width: 40px;
+      height: 40px;
+    }
+    .preconfig-sheet--v2 .preconfig-body {
+      display: grid;
+      gap: 2px;
+      padding: 4px 10px 5px;
+      scrollbar-gutter: auto;
+    }
+    .preconfig-sheet--v2 .pc-persona-cards {
+      gap: 5px;
+    }
+    .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-card {
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 92px;
+      padding: 7px 4px 6px;
+      gap: 3px;
+      text-align: center;
+    }
+    .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-ico {
+      width: 32px;
+      height: 32px;
+    }
+    .preconfig-sheet--v2 .pc-persona-body b {
+      font-size: 0.7rem;
+      line-height: 1.12;
+    }
+    .preconfig-sheet--v2 .pc-persona-body small {
+      display: -webkit-box;
+      min-height: 2.2em;
+      margin-top: 2px;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      font-size: 0.57rem;
+      line-height: 1.12;
+    }
+    .preconfig-sheet--v2 .pc-persona-go {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 18px;
+      height: 18px;
+    }
+    .preconfig-sheet--v2 .preconfig-vfield {
+      padding: 5px 6px;
+      box-shadow: 0 4px 12px rgba(31, 58, 38, 0.06);
+    }
+    .preconfig-sheet--v2 .preconfig-vfield--dims,
+    .preconfig-sheet--v2 .preconfig-vfield--climate {
+      gap: 6px;
+    }
+    .preconfig-sheet--v2 .preconfig-fld-row,
+    .preconfig-sheet--v2 .preconfig-fld:not(.preconfig-fld-row > *) {
+      margin-bottom: 3px;
+    }
+    .preconfig-sheet--v2 .preconfig-month-wrap {
+      min-height: 40px;
+    }
+    .preconfig-sheet--v2 .preconfig-summary {
+      display: none;
+    }
+    .preconfig-sheet--v2 .preconfig-footer {
+      gap: 3px;
+      padding: 6px 10px calc(7px + env(safe-area-inset-bottom, 0px));
+    }
+    .preconfig-sheet--v2 .preconfig-cta {
+      min-height: 44px;
+      padding-block: 9px;
+    }
+    .preconfig-sheet--v2 .preconfig-cta-hint {
+      margin-top: 2px;
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 380px), (max-height: 760px) {
+    .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-card {
+      min-height: 68px;
+    }
+    .preconfig-sheet--v2 .pc-persona-body small {
+      display: none;
+      min-height: 0;
+    }
+  }
+
+  html[data-theme="dark"] .preconfig-sheet--v2 {
+    background:
+      radial-gradient(circle at 12% 0%, rgba(82, 183, 136, 0.16), transparent 34%),
+      linear-gradient(155deg, #182a21, #13221b);
+  }
+}
