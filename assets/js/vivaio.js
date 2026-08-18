@@ -31,7 +31,7 @@
       "nav.account_label": "Area Personale",
       "nav.carrello": "Carrello",
       "hero.kicker": "VIVAIO",
-      "hero.title": "Piantine pronte da mettere a dimora",
+      "hero.title": "Piantine già cresciute per partire in vantaggio",
       "hero.lead":
         "Non tutte le colture si seminano: alcune arrivano già cresciute e ti fanno guadagnare settimane. Qui trovi solo ciò che è pronto adesso.",
       "hero.count": "varietà pronte in questo momento",
@@ -138,7 +138,7 @@
       "nav.account_label": "Contul Meu",
       "nav.carrello": "Coș",
       "hero.kicker": "PEPINIERĂ",
-      "hero.title": "Răsaduri gata de pus în pământ",
+      "hero.title": "Răsaduri deja crescute, ca să pornești cu un avantaj",
       "hero.lead":
         "Nu toate culturile se seamănă: unele ajung deja crescute și îți câștigă săptămâni. Aici găsești doar ce este gata acum.",
 

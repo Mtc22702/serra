@@ -1595,6 +1595,35 @@ function renderKit() {
     .join("");
 }
 
+// Il ponte dopo il catalogo mostra un assaggio reale del vivaio del mese corrente.
+function renderVivaioBridge() {
+  const list = document.getElementById("bridgeVivaioList");
+  if (!list) return;
+
+  const month = new Date().getMonth() + 1;
+  const available = PLANTS.filter((plant) => {
+    const type = typeOfPlant(plant);
+    if (plant.gg <= 0 || type === "radice" || type === "legume") return false;
+    return (plant.mesi || []).some(
+      (sowingMonth) =>
+        sowingMonth === month || (sowingMonth % 12) + 1 === month,
+    );
+  }).slice(0, 3);
+
+  list.innerHTML = available
+    .map(
+      (plant) => `
+        <div class="bridge-vivaio-plant">
+          <img src="${photoSrc(plant.id)}" alt="" width="72" height="72" loading="lazy" decoding="async" />
+          <span>
+            <b>${plantName(plant.id)}</b>
+            <small>${t("bridge.vivaio_plant_note")}</small>
+          </span>
+        </div>`,
+    )
+    .join("");
+}
+
 // Footer
 function renderFooter() {
   document.getElementById("footerTip").textContent = TIP_MESE[state.mese];
@@ -1629,6 +1658,7 @@ function render() {
   renderHero();
   renderCalendarStrip();
   renderEditorialPlants();
+  renderVivaioBridge();
   renderAbbinamenti();
   renderKit();
   renderFooter();

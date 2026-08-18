@@ -9742,6 +9742,21 @@ function alertConfCheckout() {
   const totalVal = seedsTotal + materialsTotal;
 
   window.SerraAPI.getOrders().then((orders) => {
+    /* Fotografia immutabile del progetto: l'Orto potrà copiarla una volta,
+       senza collegare in seguito i due configuratori. */
+    const greenhousePlan = {
+      version: 1,
+      width: state.larghezza,
+      length: state.lunghezza,
+      path: state.path,
+      beds: state.beds
+        .filter((bed) => seedItems.some((item) => item.id === bed.plantId))
+        .map((bed) => ({
+          plantId: bed.plantId,
+          count: Math.max(1, Number(bed.count) || 1),
+          layout: bed.layout === "fila" ? "fila" : "blocco",
+        })),
+    };
     const newOrder = {
       id: "ORD-" + Math.floor(10000 + Math.random() * 90000),
       email: user.email,
@@ -9749,6 +9764,8 @@ function alertConfCheckout() {
       items: orderItems,
       total: totalVal,
       status: "In elaborazione",
+      source: "configuratore",
+      greenhousePlan,
       billing: {
         accountType: user.accountType || "private",
         name: user.ragioneSociale || user.nome,

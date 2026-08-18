@@ -59,8 +59,8 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/base.css?v=20260816-uiux" />
-    <link rel="stylesheet" href="assets/css/serra-orto.css?v=20260816-uiux" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260818-visual-system" />
+    <link rel="stylesheet" href="assets/css/serra-orto.css?v=20260818-orto-undo" />
   </head>
   <body class="orto-page">
     <!-- Intestazione condivisa con il resto dell'app -->
@@ -237,74 +237,26 @@
     </header>
 
     <main class="orto-wrap">
-      <!-- Intestazione di pagina -->
+      <!-- Testata e percorso: il flusso resta visibile senza confondersi con le viste. -->
       <header class="orto-page-head">
-        <h1 class="orto-page-title" data-orto-key="page.title">Il mio orto</h1>
-        <p class="orto-page-lead" data-orto-key="page.lead">
-          Registra cosa hai piantato e ti diciamo cosa fare, settimana per
-          settimana, fino alla raccolta. Funziona anche con piante comprate
-          altrove.
-        </p>
+        <div class="orto-page-copy">
+          <p class="orto-page-eyebrow" data-orto-key="page.eyebrow">
+            Il tuo assistente di coltivazione
+          </p>
+          <h1 class="orto-page-title" data-orto-key="page.title">Il mio orto</h1>
+          <p class="orto-page-lead" data-orto-key="page.lead">
+            Aggiungi ciò che possiedi, scegli cosa piantare e segui un piano
+            semplice fino alla raccolta.
+          </p>
+        </div>
+        <div class="orto-page-seal" aria-hidden="true">
+          <span>🌱</span>
+          <small data-orto-key="page.seal">Dalla scelta<br />alla raccolta</small>
+        </div>
       </header>
 
-      <!-- Guida ai tre passi, chiudibile; preferenza in serra.orto.howto -->
-      <details class="orto-howto" id="ortoHowto" hidden open>
-        <summary class="orto-howto-summary">
-          <span data-orto-key="howto.title"
-            >Come funziona: tre passi, da «Le mie piante» a «Oggi»</span
-          >
-          <span class="orto-howto-summary-action" aria-hidden="true">⌄</span>
-        </summary>
-        <div class="orto-howto-content">
-          <div class="orto-howto-head">
-            <button
-              class="orto-howto-close"
-              type="button"
-              data-orto-action="dismiss-howto"
-              data-orto-key-aria="howto.close"
-              aria-label="Nascondi la spiegazione"
-            >
-              <span aria-hidden="true">✕</span>
-            </button>
-          </div>
-          <ol class="orto-howto-steps">
-            <li data-orto-step="piante">
-              <span class="orto-howto-no" aria-hidden="true">1</span>
-              <span class="orto-howto-copy">
-                <b data-orto-key="howto.s1t">Registra cosa hai</b>
-                <small data-orto-key="howto.s1p"
-                  >In «Le mie piante», semi e piantine che possiedi.</small
-                >
-              </span>
-            </li>
-            <li data-orto-step="piante">
-              <span class="orto-howto-no" aria-hidden="true">2</span>
-              <span class="orto-howto-copy">
-                <b data-orto-key="howto.s2t">Piantali quando vuoi</b>
-                <small data-orto-key="howto.s2p"
-                  >Nella stessa scheda passano «in terra» e ricevono il loro
-                  calendario.</small
-                >
-              </span>
-            </li>
-            <li data-orto-step="oggi">
-              <span class="orto-howto-no" aria-hidden="true">3</span>
-              <span class="orto-howto-copy">
-                <b data-orto-key="howto.s3t">Segui la giornata</b>
-                <small data-orto-key="howto.s3p"
-                  >In «Oggi» trovi solo ciò che serve adesso, fino alla
-                  raccolta.</small
-                >
-              </span>
-            </li>
-          </ol>
-          <!-- Suggerimento del passo successivo, popolato da orto.js -->
-          <p class="orto-howto-hint" id="ortoHowtoHint"></p>
-        </div>
-      </details>
-
-      <!-- Selettore delle due viste: attività del giorno e piante possedute -->
-      <div class="orto-viewbar" id="ortoViewbar" hidden>
+      <!-- Tre viste che corrispondono alle azioni reali dell'utente. -->
+      <div class="orto-viewbar" id="ortoViewbar">
         <!-- Div e non <nav>: in base.css nav è riservato alla navigazione principale -->
         <div
           class="orto-tabs"
@@ -313,12 +265,48 @@
           aria-label="Sezioni dell'orto"
         >
           <button
-            class="orto-tab orto-tab--primary is-active"
+            class="orto-tab is-active"
+            type="button"
+            role="tab"
+            id="ortoTabPiante"
+            aria-selected="true"
+            aria-controls="ortoApp"
+            data-orto-view="piante"
+          >
+            <span class="orto-tab-ico" aria-hidden="true">🌱</span>
+            <span class="orto-tab-copy">
+              <span class="orto-tab-name" data-orto-key="tab.piante"
+                >Da piantare</span
+              >
+              <span class="orto-tab-note" id="ortoPianteNote"></span>
+            </span>
+            <span class="orto-tab-badge" id="ortoPianteBadge" hidden>0</span>
+          </button>
+          <button
+            class="orto-tab"
+            type="button"
+            role="tab"
+            id="ortoTabPiano"
+            aria-selected="false"
+            aria-controls="ortoApp"
+            tabindex="-1"
+            data-orto-view="piano"
+          >
+            <span class="orto-tab-ico" aria-hidden="true">🪴</span>
+            <span class="orto-tab-copy">
+              <span class="orto-tab-name" data-orto-key="tab.piano">Piantate</span>
+              <span class="orto-tab-note" id="ortoPianoNote"></span>
+            </span>
+            <span class="orto-tab-badge" id="ortoPianoBadge" hidden>0</span>
+          </button>
+          <button
+            class="orto-tab orto-tab--today"
             type="button"
             role="tab"
             id="ortoTabOggi"
-            aria-selected="true"
+            aria-selected="false"
             aria-controls="ortoApp"
+            tabindex="-1"
             data-orto-view="oggi"
           >
             <span class="orto-tab-ico" aria-hidden="true">☀️</span>
@@ -328,25 +316,6 @@
             </span>
             <span class="orto-tab-badge" id="ortoTodayBadge" hidden>0</span>
           </button>
-          <button
-            class="orto-tab"
-            type="button"
-            role="tab"
-            id="ortoTabPiante"
-            aria-selected="false"
-            aria-controls="ortoApp"
-            tabindex="-1"
-            data-orto-view="piante"
-          >
-            <span class="orto-tab-ico" aria-hidden="true">🌿</span>
-            <span class="orto-tab-copy">
-              <span class="orto-tab-name" data-orto-key="tab.piante"
-                >Le mie piante</span
-              >
-              <span class="orto-tab-note" id="ortoPianteNote"></span>
-            </span>
-            <span class="orto-tab-badge" id="ortoPianteBadge" hidden>0</span>
-          </button>
         </div>
       </div>
 
@@ -355,7 +324,7 @@
         id="ortoApp"
         role="tabpanel"
         tabindex="-1"
-        aria-labelledby="ortoTabOggi"
+        aria-labelledby="ortoTabPiante"
       ></div>
     </main>
 
@@ -515,7 +484,7 @@
                   </div>
                   <div class="orto-field orto-field--qty">
                     <label for="ortoQty" data-orto-key="dlg.qty">Quante</label>
-                    <input type="number" id="ortoQty" min="1" value="4" />
+                    <input type="number" id="ortoQty" min="1" value="1" />
                   </div>
                 </div>
                 <div class="orto-field" id="ortoPositionField">
@@ -601,7 +570,7 @@
                 <label for="ortoPlantQty" data-orto-key="plant.qty"
                   >Quante ne pianti ora</label
                 >
-                <input type="number" id="ortoPlantQty" min="1" value="4" />
+                <input type="number" id="ortoPlantQty" min="1" value="1" />
                 <small id="ortoPlantQtyHint" class="orto-field-hint"></small>
               </div>
               <div class="orto-field">
@@ -856,12 +825,9 @@
             >
               Annulla
             </button>
-            <button
-              type="submit"
-              class="orto-btn"
-              value="ok"
-              data-orto-key="import.confirm"
-            >
+            <!-- L'etichetta la riscrive renderImportList: dice quante piante
+                 si sta per importare, non un generico «Importa». -->
+            <button type="submit" class="orto-btn" value="ok" id="ortoImportConfirm">
               Importa
             </button>
           </div>
@@ -978,9 +944,64 @@
       </div>
     </dialog>
 
+    <dialog
+      class="orto-dialog orto-dialog--compact"
+      id="ortoBulkPlantDialog"
+      aria-labelledby="ortoBulkPlantTitle"
+    >
+      <div class="orto-dialog-sheet">
+        <form method="dialog" id="ortoBulkPlantForm">
+          <header class="orto-dialog-head">
+            <div>
+              <h3 id="ortoBulkPlantTitle" data-orto-key="bulk.title">
+                Piantare tutto ciò che entra?
+              </h3>
+              <p data-orto-key="bulk.sub">
+                Controlla il riepilogo prima di avviare le colture.
+              </p>
+            </div>
+            <button
+              class="orto-dialog-x"
+              type="submit"
+              value="cancel"
+              data-orto-key-aria="dlg.close"
+              aria-label="Chiudi"
+            >
+              ✕
+            </button>
+          </header>
+          <div class="orto-dialog-body orto-bulk-summary">
+            <span aria-hidden="true">🌱</span>
+            <div>
+              <strong id="ortoBulkSummary"></strong>
+              <p id="ortoBulkLeft"></p>
+            </div>
+          </div>
+          <footer class="orto-dialog-foot">
+            <button
+              class="orto-btn orto-btn--ghost"
+              type="submit"
+              value="cancel"
+              data-orto-key="bulk.cancel"
+            >
+              Annulla
+            </button>
+            <button
+              class="orto-btn"
+              type="submit"
+              value="confirm"
+              data-orto-key="bulk.confirm"
+            >
+              Pianta ora
+            </button>
+          </footer>
+        </form>
+      </div>
+    </dialog>
+
     <!-- Piè di pagina condiviso con informazioni e collegamenti del sito -->
     <footer class="footer-botanico">
-      <div class="footer-plant-strip">
+      <div class="footer-plant-strip" aria-hidden="true">
         <div class="footer-plant-row" id="footerPlantRow">
           <span class="footer-plant-icon">🍅</span>
           <span class="footer-plant-icon">🫑</span>
@@ -1132,9 +1153,9 @@
     </footer>
 
     <!-- Avvio: base.js (tema, lingua, API), motore di calcolo, orto.js (rendering) -->
-    <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/base.js?v=20260818-visual-system" defer></script>
     <script src="assets/js/serra-care-engine.js" defer></script>
-    <script src="assets/js/orto.js?v=20260816-uiux" defer></script>
+    <script src="assets/js/orto.js?v=20260818-orto-undo" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

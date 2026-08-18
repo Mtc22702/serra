@@ -82,10 +82,10 @@
     </script>
 
     <!-- Fogli di stile principali -->
-    <link rel="stylesheet" href="assets/css/base.css?v=20260816-header-grid" />
+    <link rel="stylesheet" href="assets/css/base.css?v=20260818-visual-system" />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260815-a31f6c7d9e20"
+      href="assets/css/serra-home.css?v=20260818-journey-cta"
     />
 
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
@@ -284,11 +284,12 @@
         <div class="hero-v2-inner page-wrap">
           <div class="hero-v2-copy">
             <h1 class="hero-v2-title" id="heroTitle">
-              <span data-i18n="hero.headline_a">Progetta la serra.</span>
-              <em data-i18n="hero.headline_b">Poi coltivala davvero.</em>
+              <span data-i18n="hero.headline_a">Dai forma al tuo orto.</span>
+              <em data-i18n="hero.headline_b">Seguilo fino al raccolto.</em>
             </h1>
             <p class="hero-v2-lead" data-i18n="hero.promise">
-              Dal progetto al raccolto, con indicazioni adatte al tuo clima.
+              Progetta gli spazi, scegli semi o piantine e ricevi indicazioni
+              semplici fino alla raccolta.
             </p>
           </div>
 
@@ -298,22 +299,28 @@
                 <span
                   class="journey-choice-kicker"
                   data-i18n="journey.choice_kicker"
-                  >Scegli un'opzione</span
+                  >Da dove vuoi iniziare?</span
                 >
+                <h2 class="journey-choice-title" id="journeyTitle" data-i18n="journey.choice_title">
+                  Scegli il percorso giusto per il tuo orto
+                </h2>
+                <p class="journey-choice-sub" data-i18n="journey.choice_sub">
+                  Parti dalla situazione in cui ti trovi: puoi cambiare strada in qualsiasi momento.
+                </p>
               </div>
             </div>
-            <ol class="journey" aria-labelledby="heroTitle">
+            <ul class="journey" aria-labelledby="journeyTitle">
               <li class="journey-step journey-step--plan">
                 <div class="journey-body">
                   <div class="journey-copy">
                     <span class="journey-option-mark">
-                      <span aria-hidden="true">01</span>
+                      <span aria-hidden="true">📐</span>
                       <span data-i18n="journey.step1_when"
                         >Se non sai cosa piantare</span
                       >
                     </span>
                     <div class="journey-head">
-                      <h2 data-i18n="journey.step1_title">Progetta</h2>
+                      <h3 data-i18n="journey.step1_title">Crea il tuo piano</h3>
                       <span
                         class="journey-badge journey-badge--time"
                         data-i18n="journey.step1_badge"
@@ -362,11 +369,13 @@
                       class="journey-cta hero-cfg-open-preconfig"
                       href="configuratore.html?source=index"
                     >
-                      <span data-i18n="journey.step1_cta">Crea il piano</span>
+                      <span data-i18n="journey.step1_cta">Crea il mio piano</span>
                       <span class="journey-arrow" aria-hidden="true">→</span>
                     </a>
                     <a class="journey-quiet" href="guida.html">
-                      <span data-i18n="hero.plan_help">Come funziona</span>
+                      <span data-i18n="journey.step1_help"
+                        >Scopri il configuratore</span
+                      >
                     </a>
                   </div>
                 </div>
@@ -376,15 +385,15 @@
                 <div class="journey-body">
                   <div class="journey-copy">
                     <span class="journey-option-mark">
-                      <span aria-hidden="true">02</span>
+                      <span aria-hidden="true">🌿</span>
                       <span data-i18n="journey.step2_when"
                         >Se devi ancora procurartele</span
                       >
                     </span>
                     <div class="journey-head">
-                      <h2 data-i18n="journey.step2_title">
-                        Procurati le piante
-                      </h2>
+                      <h3 data-i18n="journey.step2_title">
+                        Scegli semi o piantine
+                      </h3>
                       <span
                         class="journey-badge journey-badge--pick"
                         data-i18n="journey.step2_badge"
@@ -397,22 +406,35 @@
                     </p>
                   </div>
                   <div class="journey-actions">
-                    <div class="journey-pair">
+                    <div
+                      class="journey-pair"
+                      role="group"
+                      aria-label="Scegli tra semi e piantine"
+                      data-i18n-aria="journey.step2_choices_aria"
+                    >
                       <a
                         class="journey-pick journey-pick--semi hero-cfg-catalog-link"
                         href="#stagione"
                       >
-                        <img
-                          class="journey-pick-illo"
-                          src="assets/img/svg/bustina-semi.svg"
-                          alt=""
-                          width="64"
-                          height="64"
-                          loading="eager"
-                          decoding="async"
-                        />
+                        <span class="journey-pick-top">
+                          <img
+                            class="journey-pick-illo"
+                            src="assets/img/svg/bustina-semi.svg"
+                            alt=""
+                            width="64"
+                            height="64"
+                            loading="eager"
+                            decoding="async"
+                          />
+                          <span class="journey-pick-badge" data-i18n="journey.semi_badge"
+                            >Più scelta</span
+                          >
+                        </span>
                         <span class="journey-pick-copy">
-                          <b data-i18n="journey.semi_label">I semi</b>
+                          <b data-i18n="journey.semi_label">Parto dai semi</b>
+                          <span class="journey-pick-benefit" data-i18n="journey.semi_benefit"
+                            >Risparmi e segui la crescita dall'inizio</span
+                          >
                           <small data-i18n="journey.semi_hint"
                             >97 varietà · da 2,20 €</small
                           >
@@ -420,27 +442,33 @@
                         <span class="journey-arrow" aria-hidden="true">→</span>
                       </a>
 
-                      <span class="journey-or" data-i18n="journey.or"
-                        >oppure</span
-                      >
-
                       <a
                         class="journey-pick journey-pick--piantine"
                         href="vivaio.html"
                       >
-                        <img
-                          class="journey-pick-illo"
-                          src="assets/img/svg/piantina-vaso.svg"
-                          alt=""
-                          width="64"
-                          height="64"
-                          loading="eager"
-                          decoding="async"
-                        />
+                        <span class="journey-pick-top">
+                          <img
+                            class="journey-pick-illo"
+                            src="assets/img/svg/piantina-vaso.svg"
+                            alt=""
+                            width="64"
+                            height="64"
+                            loading="eager"
+                            decoding="async"
+                          />
+                          <span class="journey-pick-badge" data-i18n="journey.piantine_badge"
+                            >Più veloce</span
+                          >
+                        </span>
                         <span class="journey-pick-copy">
-                          <b data-i18n="journey.piantine_label">Le piantine</b>
+                          <b data-i18n="journey.piantine_label"
+                            >Scelgo le piantine</b
+                          >
+                          <span class="journey-pick-benefit" data-i18n="journey.piantine_benefit"
+                            >Salti la germinazione e raccogli prima</span
+                          >
                           <small data-i18n="journey.piantine_hint"
-                            >già cresciute · in 48 h</small
+                            >Già avviate · consegna in 48 h</small
                           >
                         </span>
                         <span class="journey-arrow" aria-hidden="true">→</span>
@@ -448,7 +476,7 @@
                     </div>
                     <a class="journey-quiet" href="guida.html#seme-o-piantina">
                       <span data-i18n="journey.step2_help"
-                        >Seme o piantina?</span
+                        >Confronta semi e piantine</span
                       >
                     </a>
                   </div>
@@ -459,13 +487,13 @@
                 <div class="journey-body">
                   <div class="journey-copy">
                     <span class="journey-option-mark journey-option-mark--tool">
-                      <span aria-hidden="true">✦</span>
+                      <span aria-hidden="true">☀️</span>
                       <span data-i18n="journey.step3_when"
                         >Se le piante ce le hai già</span
                       >
                     </span>
                     <div class="journey-head">
-                      <h2 data-i18n="journey.step3_title">Coltiva</h2>
+                      <h3 data-i18n="journey.step3_title">Segui il tuo orto</h3>
                       <span
                         class="journey-badge journey-badge--free"
                         data-i18n="journey.step3_badge"
@@ -476,10 +504,7 @@
                       Registra le colture che hai già e ricevi promemoria
                       settimanali per acqua, concime e raccolta.
                     </p>
-                    <div
-                      class="journey-feature journey-care-preview"
-                      aria-hidden="true"
-                    >
+                    <div class="journey-feature journey-care-preview">
                       <div class="journey-tool-bar">
                         <img
                           src="assets/img/icons/orto-in-serra-180-v2.png"
@@ -490,43 +515,40 @@
                           decoding="async"
                         />
                         <strong data-i18n="journey.step3_preview_title"
-                          >La tua settimana</strong
+                          >Oggi nel tuo orto</strong
                         >
                       </div>
-                      <div class="journey-tool-screen">
-                        <img
-                          src="assets/img/previews/il-mio-orto-mobile.png"
-                          alt=""
-                          width="430"
-                          height="932"
-                          loading="eager"
-                          decoding="async"
-                          fetchpriority="high"
-                        />
+                      <div class="journey-care-tasks">
+                        <div class="journey-care-task">
+                          <span aria-hidden="true">💧</span>
+                          <span data-i18n="journey.preview_water">Annaffia i pomodori</span>
+                          <i aria-hidden="true">✓</i>
+                        </div>
+                        <div class="journey-care-task">
+                          <span aria-hidden="true">🔍</span>
+                          <span data-i18n="journey.preview_check">Controlla le zucchine</span>
+                          <i aria-hidden="true"></i>
+                        </div>
+                        <p data-i18n="journey.preview_next">Prossimo: concima venerdì</p>
                       </div>
                     </div>
                   </div>
                   <div class="journey-actions">
-                    <a class="journey-cta journey-cta--soft" href="orto.html">
-                      <img
-                        class="journey-cta-icon"
-                        src="assets/img/icons/orto-in-serra-180-v2.png"
-                        alt=""
-                        width="180"
-                        height="180"
-                        decoding="async"
-                      />
-                      <span data-i18n="paths.orto_cta">Apri Il mio orto</span>
+                    <a class="journey-cta" href="orto.html">
+                      <span data-i18n="journey.step3_cta"
+                        >Vedi cosa fare oggi</span
+                      >
+                      <span class="journey-arrow" aria-hidden="true">→</span>
                     </a>
                     <a class="journey-quiet" href="guida.html#coltivare">
                       <span data-i18n="journey.step3_help"
-                        >Come funziona "Il mio orto"?</span
+                        >Scopri come funziona Il mio orto</span
                       >
                     </a>
                   </div>
                 </div>
               </li>
-            </ol>
+            </ul>
           </div>
         </div>
       </section>
@@ -910,7 +932,7 @@
         </div>
       </section>
 
-      <!-- Sezione ponte verso il vivaio -->
+      <!-- Alternativa contestuale al catalogo semi: disponibilità vivaio del mese corrente -->
       <section
         class="bridge bridge--vivaio"
         aria-labelledby="bridgeVivaioTitle"
@@ -918,25 +940,39 @@
         <div class="page-wrap bridge-inner">
           <div class="bridge-body">
             <span class="section-kicker" data-i18n="bridge.vivaio_kicker"
-              >Non vuoi aspettare la germinazione?</span
+              >Un'alternativa ai semi</span
             >
             <h2
               class="bridge-title"
               id="bridgeVivaioTitle"
               data-i18n="bridge.vivaio_title"
             >
-              Le stesse varietà, già cresciute.
+              Vuoi raccogliere prima?
             </h2>
             <p class="bridge-copy" data-i18n="bridge.vivaio_copy">
-              Piantine pronte da mettere nel terreno: salti la fase più delicata
-              e guadagni fino a un mese sulla prima raccolta.
+              Scegli piantine già avviate, salta la germinazione e guadagna
+              tempo sulla prima raccolta.
             </p>
           </div>
-          <div class="bridge-actions">
+          <div class="bridge-vivaio-products" aria-live="polite">
+            <div class="bridge-vivaio-products-head">
+              <span class="bridge-vivaio-live" aria-hidden="true"></span>
+              <strong id="bridgeVivaioAvailability" data-i18n="bridge.vivaio_available"
+                >Disponibili questo mese</strong
+              >
+            </div>
+            <div class="bridge-vivaio-list" id="bridgeVivaioList"></div>
+          </div>
+          <div class="bridge-actions bridge-actions--vivaio">
             <a class="bridge-cta" href="vivaio.html">
-              <span data-i18n="paths.piantine_cta">Apri il vivaio</span>
+              <span data-i18n="bridge.vivaio_cta"
+                >Scopri le piantine disponibili</span
+              >
               <span aria-hidden="true">→</span>
             </a>
+            <small data-i18n="bridge.vivaio_note"
+              >La disponibilità cambia con la stagione</small
+            >
           </div>
         </div>
       </section>
@@ -2107,11 +2143,11 @@
     </div>
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
-    <script src="assets/js/base.js" defer></script>
+    <script src="assets/js/base.js?v=20260818-journey-cta" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
-    <script src="assets/js/home.js" defer></script>
+    <script src="assets/js/home.js?v=20260818-visual-system" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

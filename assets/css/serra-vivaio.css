@@ -3193,7 +3193,7 @@
 
 /* Pagina «Il mio orto» e componenti condivisi con il vivaio. */
 
-@layer base, dark-theme, polish;
+@layer base, dark-theme, polish, coerenza, orto-audit;
 
 @layer base {
   /* ---------- superficie e token ---------- */
@@ -3416,8 +3416,10 @@
     border-radius: var(--radius-xl);
     background: var(--orto-surface-2);
     box-shadow: none;
-    /* Colonne asimmetriche: «Oggi» più larga della seconda linguetta. */
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    /* «Oggi» si prende metà barra. È la vista in cui si torna ogni giorno,
+       mentre le altre due si visitano quando serve: dare loro lo stesso peso
+       significava far cercare ogni volta quella che si usa sempre. */
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .orto-tab {
@@ -3982,6 +3984,184 @@
     display: grid;
     gap: 18px;
     grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  }
+
+  /* Il passo successivo come invito, quando «Oggi» sarebbe vuoto. */
+  .orto-next-step {
+    margin-bottom: 16px;
+  }
+
+  /* ---------- vista «Piano» ----------
+     Una scheda per coltura: identità, avanzamento, le prossime tappe fino
+     alla raccolta. Le colonne sono più larghe di quelle di «Le mie piante»
+     perché qui ogni riga porta un testo e una scadenza, non solo un nome. */
+  .orto-piano-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+
+  .orto-piano-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-xl);
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-piano-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .orto-piano-thumb {
+    width: var(--control-h-md);
+    height: var(--control-h-md);
+    flex: none;
+    padding: 5px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--control-radius);
+    background: var(--orto-surface-2);
+    object-fit: contain;
+  }
+
+  .orto-piano-id {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .orto-piano-id h3 {
+    margin: 0;
+    overflow: hidden;
+    color: var(--orto-ink);
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .orto-piano-id small {
+    color: var(--orto-muted);
+    font-size: 12px;
+  }
+
+  /* La data di raccolta è il dato per cui si apre questa vista: sta in alto a
+     destra, dove l'occhio torna, e si accende quando è vicina. */
+  .orto-piano-harvest {
+    flex: none;
+    align-self: flex-start;
+    padding: 5px 11px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--control-radius-pill);
+    background: var(--orto-surface-2);
+    color: var(--orto-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .orto-piano-harvest.is-soon {
+    border-color: color-mix(in srgb, var(--orto-amber) 45%, transparent);
+    background: color-mix(in srgb, var(--orto-amber) 14%, var(--orto-surface));
+    color: color-mix(in srgb, var(--orto-amber) 82%, #3d2a04);
+  }
+
+  .orto-piano-track {
+    margin: 0;
+  }
+
+  .orto-piano-steps {
+    display: grid;
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .orto-piano-step {
+    display: grid;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    font-size: 13.5px;
+  }
+
+  .orto-piano-step-ico {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .orto-piano-step-name {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--orto-ink);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .orto-piano-step-when {
+    flex: none;
+    color: var(--orto-muted);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 650;
+  }
+
+  /* Oggi e domani in verde: sono le uniche due su cui si può agire adesso. */
+  .orto-piano-step-when.is-now {
+    color: var(--orto-green);
+  }
+
+  .orto-piano-more,
+  .orto-piano-done {
+    margin: 2px 0 0;
+    padding-left: 30px;
+    color: var(--orto-muted);
+    font-size: 12.5px;
+  }
+
+  .orto-piano-done {
+    padding-left: 0;
+  }
+
+  .orto-piano-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--control-gap);
+    padding-top: 10px;
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-piano-count {
+    color: var(--orto-muted);
+    font-size: 12.5px;
+    font-weight: 650;
+  }
+
+  @media (max-width: 620px) {
+    .orto-piano-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Su telefono la scadenza va sotto al nome: in riga stringeva il titolo
+       a due parole e «raccolta fra 34 giorni» andava a capo comunque. */
+    .orto-piano-head {
+      flex-wrap: wrap;
+    }
+
+    .orto-piano-harvest {
+      order: 3;
+      width: 100%;
+      text-align: left;
+    }
   }
 
   .orto-card {
@@ -5144,6 +5324,117 @@
     font-size: 12.5px;
   }
 
+  /* ---------- ordine apribile con le sue piante ----------
+     L'elenco diceva «21 articoli» e li importava tutti: si sceglieva al buio.
+     Ogni ordine ora si apre e mostra cosa contiene. */
+  .orto-import-order {
+    overflow: hidden;
+    border: 1.5px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: var(--orto-surface);
+  }
+
+  .orto-import-order:has(input[data-orto-import-all]:checked) {
+    border-color: var(--orto-green);
+  }
+
+  .orto-import-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--control-gap);
+    padding: 10px 12px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .orto-import-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* La casella e il pannello sono due comandi nello stesso posto: la casella
+     si prende il proprio spazio perché il dito non la manchi. */
+  .orto-import-check {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 12px;
+    min-height: var(--control-h-sm);
+    min-width: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .orto-import-check input,
+  .orto-import-item input {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    accent-color: var(--orto-green);
+  }
+
+  .orto-import-chevron {
+    flex: none;
+    display: grid;
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
+    place-items: center;
+    border-radius: var(--control-radius);
+    color: var(--orto-muted);
+    font-size: 18px;
+    transition: transform 0.16s ease;
+  }
+
+  .orto-import-order[open] .orto-import-chevron {
+    transform: rotate(180deg);
+  }
+
+  .orto-import-items {
+    display: grid;
+    gap: 2px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px 12px 10px;
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-import-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--control-h-sm);
+    padding: 0 6px;
+    border-radius: var(--control-radius);
+    cursor: pointer;
+    font-size: 13.5px;
+  }
+
+  .orto-import-item:hover {
+    background: color-mix(in srgb, var(--orto-green) 7%, transparent);
+  }
+
+  .orto-import-item-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .orto-import-item-tag {
+    flex: none;
+    padding: 2px 9px;
+    border-radius: var(--control-radius-pill);
+    background: color-mix(in srgb, var(--orto-green) 12%, transparent);
+    color: var(--orto-green);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .orto-import-item:has(input:not(:checked)) .orto-import-item-name {
+    color: var(--orto-muted);
+    text-decoration: line-through;
+  }
+
   .orto-origin {
     display: flex;
     gap: 10px;
@@ -5421,20 +5712,31 @@
     transform: scaleX(1);
   }
 
+  /* Il numero della linguetta. È un disco, non un riquadro: un numero dentro
+     un quadrato somiglia a un contatore — e il distintivo all'altro capo
+     della linguetta un contatore lo è davvero. Due cose diverse, due forme
+     diverse. Spento a riposo, pieno sulla vista aperta. */
   .orto-tab-ico {
     position: relative;
     display: grid;
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-md);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     background: color-mix(in srgb, var(--orto-green) 11%, transparent);
-    font-size: 17px;
+    color: var(--orto-green);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
     place-items: center;
-    transition: background 0.16s ease, transform 0.16s ease;
+    transition:
+      background 0.16s ease,
+      color 0.16s ease,
+      transform 0.16s ease;
   }
 
   .orto-tab.is-active .orto-tab-ico {
-    background: color-mix(in srgb, var(--orto-green) 20%, transparent);
+    background: var(--orto-green);
+    color: #fff;
     transform: scale(1.04);
   }
 
@@ -5456,20 +5758,28 @@
     color: var(--orto-green-dk, var(--orto-green));
   }
 
-  /* Linguetta primaria: icona e titolo più grandi. */
+  /* «Oggi» è la linguetta che si preme ogni giorno: numero più grande, titolo
+     più grande, respiro maggiore. La differenza dev'essere visibile con la
+     coda dell'occhio, non solo confrontandole. */
   .orto-tab--primary {
-    padding-block: 14px;
+    padding-block: 16px;
+    padding-inline: 16px;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
   }
 
   .orto-tab--primary .orto-tab-ico {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
   }
 
   .orto-tab--primary .orto-tab-name {
-    font-size: 1.12rem;
-    letter-spacing: -0.01em;
+    font-size: 1.22rem;
+    letter-spacing: -0.012em;
+  }
+
+  .orto-tab--primary .orto-tab-note {
+    font-size: 12.5px;
   }
 
   /* Riga di stato sotto il nome della linguetta. */
@@ -5551,6 +5861,1054 @@
 
   .orto-phase-labels span:last-child {
     text-align: right;
+  }
+}
+
+/* Revisione finale del flusso Orto: stato attivo inequivocabile, contenuti
+   secondari ripiegabili e densità ridotta per chi torna ogni giorno. */
+@layer orto-audit {
+  body[data-orto-stage="plant"] .orto-page-head,
+  body[data-orto-stage="care"] .orto-page-head {
+    min-height: 210px;
+    padding-block: clamp(26px, 4vw, 42px);
+  }
+
+  body[data-orto-stage="plant"] .orto-page-seal,
+  body[data-orto-stage="care"] .orto-page-seal {
+    width: 94px;
+    min-width: 94px;
+    height: 94px;
+    min-height: 94px;
+  }
+
+  .orto-tab.is-active,
+  html[data-theme="dark"] .orto-tab.is-active {
+    border-color: var(--orto-green);
+    background: linear-gradient(145deg, #397846, var(--orto-green-dk));
+    color: #fff;
+    box-shadow: 0 7px 18px rgba(31, 73, 42, 0.24);
+  }
+
+  .orto-tab.is-active .orto-tab-name,
+  .orto-tab.is-active .orto-tab-note,
+  html[data-theme="dark"] .orto-tab.is-active .orto-tab-name,
+  html[data-theme="dark"] .orto-tab.is-active .orto-tab-note {
+    color: #fff;
+  }
+
+  .orto-tab.is-active .orto-tab-ico {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .orto-tab--today:not(.is-active),
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) {
+    border-color: color-mix(in srgb, var(--orto-green) 24%, transparent);
+    background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
+    box-shadow: none;
+  }
+
+  .orto-tab--today:not(.is-active) .orto-tab-name {
+    color: var(--orto-green-dk);
+  }
+
+  .orto-tab--today:not(.is-active) .orto-tab-note {
+    color: var(--orto-muted);
+  }
+
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) .orto-tab-name {
+    color: var(--orto-green-lt);
+  }
+
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) .orto-tab-note {
+    color: color-mix(in srgb, var(--orto-green-lt) 72%, var(--orto-muted));
+  }
+
+  .orto-tab--today:not(.is-active)::after {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orto-green);
+    content: "";
+  }
+
+  .orto-stock-filters {
+    display: flex;
+    gap: 7px;
+    margin: 14px 0;
+    overflow-x: auto;
+    padding: 2px 1px 5px;
+    scrollbar-width: none;
+  }
+
+  .orto-stock-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .orto-stock-filter {
+    min-height: 38px;
+    flex: 0 0 auto;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: var(--control-radius-pill);
+    padding: 7px 14px;
+    background: var(--orto-surface);
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 750;
+  }
+
+  .orto-stock-filter.is-active {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    color: var(--orto-green-dk);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--orto-green) 8%, transparent);
+  }
+
+  html[data-theme="dark"] .orto-stock-filter.is-active {
+    color: var(--orto-green-lt);
+  }
+
+  .orto-stock-completed,
+  .orto-harvest-history {
+    margin-top: 18px;
+    overflow: hidden;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--orto-green) 3%, var(--orto-surface));
+  }
+
+  .orto-stock-completed > summary,
+  .orto-harvest-history > summary {
+    display: grid;
+    min-height: 66px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--orto-ink);
+    cursor: pointer;
+    list-style: none;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .orto-stock-completed > summary::-webkit-details-marker,
+  .orto-harvest-history > summary::-webkit-details-marker,
+  .orto-greenhouse-settings > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .orto-stock-completed summary > span:first-child,
+  .orto-harvest-history-ico {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    color: var(--orto-green);
+    place-items: center;
+  }
+
+  .orto-stock-completed summary span:nth-child(2),
+  .orto-harvest-history summary span:nth-child(2) {
+    display: grid;
+    gap: 2px;
+  }
+
+  .orto-stock-completed summary small,
+  .orto-harvest-history summary small {
+    color: var(--orto-muted);
+    font-size: 11px;
+  }
+
+  .orto-stock-completed[open] summary > i,
+  .orto-harvest-history[open] .orto-harvest-history-chevron,
+  .orto-greenhouse-settings[open] .orto-greenhouse-settings-action i {
+    transform: rotate(180deg);
+  }
+
+  .orto-stock-completed-body {
+    border-top: 1px solid var(--orto-line);
+    padding: 12px;
+  }
+
+  .orto-stock-completed-body .orto-stock-group + .orto-stock-group {
+    margin-top: 12px;
+  }
+
+  .orto-stock-more {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    font-size: 21px;
+  }
+
+  .orto-greenhouse-settings {
+    margin: 18px clamp(20px, 4vw, 34px);
+    overflow: hidden;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--orto-green) 4%, var(--orto-surface));
+  }
+
+  .orto-greenhouse-settings > summary {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 16px;
+    color: var(--orto-ink);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .orto-greenhouse-settings summary > span:first-child {
+    display: grid;
+    gap: 3px;
+  }
+
+  .orto-greenhouse-settings summary small {
+    color: var(--orto-muted);
+    font-size: 11px;
+  }
+
+  .orto-greenhouse-settings-action {
+    flex: 0 0 auto;
+    color: var(--orto-green);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .orto-greenhouse-settings-action i {
+    display: inline-block;
+    font-style: normal;
+    transition: transform 0.16s ease;
+  }
+
+  .orto-greenhouse-settings .orto-greenhouse-form {
+    margin: 0;
+    border: 0;
+    border-top: 1px solid var(--orto-line);
+    border-radius: 0;
+  }
+
+  .orto-greenhouse-empty .orto-btn {
+    margin-top: 12px;
+  }
+
+  .orto-harvest-history-list {
+    display: grid;
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-harvest-history-item {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+  }
+
+  .orto-harvest-history-item + .orto-harvest-history-item {
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-harvest-history-item > img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    padding: 6px;
+    background: var(--orto-surface-2);
+  }
+
+  .orto-harvest-history-item > span {
+    display: grid;
+    gap: 3px;
+  }
+
+  .orto-harvest-history-item small {
+    color: var(--orto-muted);
+    font-size: 11px;
+  }
+
+  .orto-bulk-summary {
+    display: grid;
+    align-items: center;
+    gap: 14px;
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .orto-bulk-summary > span {
+    display: grid;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--orto-green) 14%, var(--orto-surface));
+    font-size: 24px;
+    place-items: center;
+  }
+
+  .orto-bulk-summary p {
+    margin: 5px 0 0;
+    color: var(--orto-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 720px) {
+    .orto-wrap {
+      padding-bottom: calc(138px + env(safe-area-inset-bottom));
+    }
+
+    body[data-orto-stage="plant"] .orto-page-head,
+    body[data-orto-stage="care"] .orto-page-head {
+      min-height: 178px;
+      padding-block: 24px;
+    }
+
+    .orto-tab--today:not(.is-active) {
+      margin: 0;
+      box-shadow: none;
+    }
+
+    .orto-greenhouse-settings > summary {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .orto-greenhouse-empty {
+      align-items: flex-start;
+    }
+
+    .orto-stock-actions {
+      grid-template-columns: minmax(0, 1fr) 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orto-greenhouse-settings-action i {
+      transition: none;
+    }
+  }
+}
+
+/* Serra visuale: configurazione autonoma nella scheda «Piantate». */
+@layer coerenza {
+  .orto-import-plan {
+    display: grid;
+    gap: 10px;
+    margin: 16px 0 0;
+    border: 1px solid color-mix(in srgb, var(--orto-green) 28%, var(--orto-line));
+    border-radius: var(--radius-lg);
+    padding: 15px;
+    background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
+  }
+
+  .orto-import-plan legend {
+    padding: 0 7px;
+    color: var(--orto-green-dk);
+    font-size: 12px;
+    font-weight: 850;
+  }
+
+  .orto-import-plan > p {
+    margin: 0 0 2px;
+    color: var(--orto-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .orto-import-plan-choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--control-radius);
+    padding: 11px;
+    background: var(--orto-surface);
+    cursor: pointer;
+  }
+
+  .orto-import-plan-choice:has(input:checked) {
+    border-color: color-mix(in srgb, var(--orto-green) 58%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--orto-green) 10%, transparent);
+  }
+
+  .orto-import-plan-choice input {
+    margin-top: 3px;
+    accent-color: var(--orto-green);
+  }
+
+  .orto-import-plan-choice span {
+    display: grid;
+    gap: 3px;
+  }
+
+  .orto-import-plan-choice b {
+    color: var(--orto-ink);
+    font-size: 12px;
+  }
+
+  .orto-import-plan-choice small {
+    color: var(--orto-muted);
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+
+  html[data-theme="dark"] .orto-import-plan {
+    border-color: rgba(139, 212, 158, 0.24);
+    background: rgba(114, 197, 138, 0.08);
+  }
+
+  html[data-theme="dark"] .orto-import-plan legend {
+    color: var(--orto-green-lt);
+  }
+
+  .orto-greenhouse-config-scene {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .orto-greenhouse-config-scene svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    background: #b8c8a8;
+    box-shadow:
+      0 12px 28px rgba(20, 47, 29, 0.2),
+      inset 0 0 0 1px rgba(31, 58, 38, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+
+  .orto-scene-bed {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .orto-scene-bed-soil {
+    transition: filter 0.16s ease, stroke 0.16s ease, stroke-width 0.16s ease;
+  }
+
+  .orto-scene-bed:hover .orto-scene-bed-soil,
+  .orto-scene-bed:focus .orto-scene-bed-soil,
+  .orto-scene-bed.is-selected .orto-scene-bed-soil {
+    filter: brightness(1.13);
+    stroke: #f7df8b;
+    stroke-width: 4px;
+  }
+
+  .orto-scene-plant {
+    filter: drop-shadow(0 1.5px 1.5px rgba(18, 30, 17, 0.42));
+    pointer-events: none;
+  }
+
+  .orto-scene-origin-marker {
+    pointer-events: none;
+  }
+
+  .orto-scene-bed.is-seed .orto-scene-origin-marker {
+    fill: rgba(221, 186, 105, 0.07);
+    stroke: rgba(244, 218, 150, 0.34);
+    stroke-width: 0.7px;
+    stroke-dasharray: 1.2 2.8;
+  }
+
+  .orto-scene-bed.is-seedling .orto-scene-origin-marker {
+    fill: rgba(109, 179, 105, 0.2);
+    stroke: rgba(181, 229, 154, 0.78);
+    stroke-width: 1.1px;
+  }
+
+  .orto-scene-lamp-pool,
+  .orto-scene-lamp-bloom,
+  .orto-scene-lamp-bulb {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: orto-scene-lamp-pulse 3.8s ease-in-out infinite alternate;
+  }
+
+  .orto-scene-lamp-bloom {
+    animation-delay: -1.2s;
+  }
+
+  .orto-scene-lamp-bulb {
+    animation-delay: -0.5s;
+  }
+
+  @keyframes orto-scene-lamp-pulse {
+    from {
+      opacity: 0.58;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orto-scene-lamp-pool,
+    .orto-scene-lamp-bloom,
+    .orto-scene-lamp-bulb {
+      animation: none;
+    }
+  }
+
+  .orto-scene-bed.is-seedling .orto-scene-plant {
+    filter:
+      saturate(1.16)
+      drop-shadow(0 2px 2px rgba(13, 48, 22, 0.5));
+  }
+
+  .orto-scene-bed.is-seedling .orto-scene-bed-soil {
+    stroke: rgba(122, 187, 101, 0.48);
+    stroke-width: 1.5px;
+  }
+
+  .orto-scene-label-bg {
+    fill: rgba(249, 251, 245, 0.76);
+    stroke: rgba(31, 80, 49, 0.3);
+    stroke-width: 0.7px;
+    pointer-events: none;
+  }
+
+  .orto-scene-label {
+    fill: #254331;
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    pointer-events: none;
+  }
+
+  html[data-theme="dark"] .orto-greenhouse-config-scene svg {
+    background: #243b2c;
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.34),
+      inset 0 0 0 1px rgba(177, 211, 187, 0.14);
+  }
+
+  html[data-theme="dark"] .orto-scene-label-bg {
+    fill: rgba(20, 43, 32, 0.82);
+    stroke: rgba(176, 221, 190, 0.34);
+  }
+
+  html[data-theme="dark"] .orto-scene-label {
+    fill: #e8f4eb;
+  }
+
+  .orto-greenhouse {
+    position: relative;
+    overflow: hidden;
+    margin: 4px 0 clamp(24px, 4vw, 38px);
+    border: 1px solid color-mix(in srgb, var(--orto-green) 22%, var(--orto-line));
+    border-radius: calc(var(--radius-lg) + 4px);
+    background:
+      radial-gradient(circle at 86% 0%, color-mix(in srgb, #bde4d1 42%, transparent), transparent 34%),
+      linear-gradient(145deg, color-mix(in srgb, var(--orto-green) 5%, var(--orto-surface)), var(--orto-surface));
+    box-shadow: var(--orto-shadow);
+  }
+
+  .orto-greenhouse::before {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--orto-green), #7daf73 58%, #d9ad62);
+    content: "";
+  }
+
+  .orto-greenhouse-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: clamp(22px, 3vw, 30px) clamp(20px, 4vw, 34px) 17px;
+  }
+
+  .orto-greenhouse-eyebrow {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--orto-green);
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .orto-greenhouse-head h3 {
+    margin: 0;
+    color: var(--orto-ink);
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.05;
+  }
+
+  .orto-greenhouse-head p {
+    max-width: 670px;
+    margin: 9px 0 0;
+    color: var(--orto-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .orto-greenhouse-form {
+    display: grid;
+    align-items: end;
+    gap: 12px;
+    margin: 0 clamp(20px, 4vw, 34px) 22px;
+    padding: 15px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--orto-surface-2) 78%, transparent);
+    grid-template-columns: repeat(3, minmax(130px, 1fr)) minmax(190px, auto);
+  }
+
+  .orto-greenhouse-form > label {
+    display: grid;
+    gap: 7px;
+    color: var(--orto-ink-soft);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .orto-measure-input {
+    display: flex;
+    min-height: var(--control-h);
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: var(--control-radius);
+    background: var(--orto-surface);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .orto-measure-input:focus-within {
+    border-color: var(--orto-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--orto-green) 13%, transparent);
+  }
+
+  .orto-measure-input input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 0 5px 0 12px;
+    background: transparent;
+    color: var(--orto-ink);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .orto-measure-input small {
+    padding: 0 11px 0 5px;
+    color: var(--orto-muted);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .orto-greenhouse-submit {
+    min-width: 190px;
+    white-space: nowrap;
+  }
+
+  .orto-greenhouse-submit:disabled {
+    cursor: not-allowed;
+    filter: grayscale(0.45);
+    opacity: 0.5;
+  }
+
+  .orto-greenhouse-workspace {
+    display: grid;
+    gap: clamp(20px, 3vw, 30px);
+    padding: clamp(20px, 3vw, 30px);
+    border-top: 1px solid var(--orto-line);
+    background: color-mix(in srgb, var(--orto-green) 3%, transparent);
+    grid-template-columns: minmax(0, 1.45fr) minmax(250px, 0.7fr);
+  }
+
+  .orto-greenhouse-plan {
+    min-width: 0;
+  }
+
+  .orto-greenhouse-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+
+  .orto-greenhouse-stats span {
+    padding: 6px 9px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--control-radius-pill);
+    background: var(--orto-surface);
+    color: var(--orto-ink-soft);
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  .orto-greenhouse-north {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 7px;
+    color: var(--orto-muted);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .orto-greenhouse-north span {
+    color: var(--orto-green);
+    font-size: 15px;
+  }
+
+  .orto-greenhouse-shell {
+    position: relative;
+    width: min(100%, 660px);
+    overflow: hidden;
+    margin: 0 auto;
+    border: 7px solid color-mix(in srgb, var(--orto-green-dk) 72%, #73857b);
+    border-radius: 48% 48% 16px 16px / 42px 42px 16px 16px;
+    aspect-ratio: 1 / var(--greenhouse-ratio);
+    background:
+      linear-gradient(90deg, transparent 49.5%, rgba(255, 255, 255, 0.42) 50%, transparent 50.5%),
+      repeating-linear-gradient(90deg, transparent 0 24%, rgba(65, 104, 84, 0.12) 24.2% 24.8%, transparent 25% 50%),
+      linear-gradient(155deg, rgba(216, 239, 229, 0.82), rgba(238, 228, 207, 0.88));
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.52), 0 14px 28px rgba(32, 62, 43, 0.12);
+  }
+
+  .orto-greenhouse-door {
+    position: absolute;
+    z-index: 4;
+    bottom: -7px;
+    left: 50%;
+    width: 17%;
+    height: 8px;
+    border-radius: 7px 7px 0 0;
+    background: var(--orto-surface);
+    transform: translateX(-50%);
+  }
+
+  .orto-greenhouse-bed {
+    position: absolute;
+    top: var(--bed-y);
+    left: var(--bed-x);
+    display: flex;
+    width: var(--bed-w);
+    height: var(--bed-h);
+    min-height: 38px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid rgba(93, 61, 36, 0.34);
+    border-radius: 12px;
+    padding: 7px 5px;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 13px, rgba(74, 45, 26, 0.1) 14px 15px),
+      linear-gradient(135deg, #a7754d, #805234);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.25), 0 3px 8px rgba(55, 38, 24, 0.22);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+  }
+
+  .orto-greenhouse-bed:hover,
+  .orto-greenhouse-bed.is-selected {
+    z-index: 3;
+    border-color: #f5d691;
+    box-shadow: 0 0 0 3px rgba(255, 244, 204, 0.48), 0 8px 15px rgba(42, 29, 18, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .orto-greenhouse-bed-name {
+    z-index: 1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 3px rgba(25, 15, 8, 0.75);
+    white-space: nowrap;
+    font-size: clamp(10px, 1.35vw, 13px);
+    font-weight: 850;
+  }
+
+  .orto-greenhouse-plants {
+    display: flex;
+    max-width: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 3px 0;
+  }
+
+  .orto-greenhouse-plants img {
+    width: clamp(18px, 4vw, 34px);
+    height: clamp(18px, 4vw, 34px);
+    margin: 0 -3px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 2px rgba(31, 24, 14, 0.35));
+  }
+
+  .orto-greenhouse-bed-qty {
+    z-index: 1;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(35, 24, 15, 0.55);
+    font-size: 10px;
+    font-weight: 850;
+  }
+
+  .orto-greenhouse-detail {
+    align-self: start;
+    min-height: 180px;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    background: var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-greenhouse-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .orto-greenhouse-detail-title img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+  }
+
+  .orto-greenhouse-detail-plant {
+    position: relative;
+    display: grid;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border: 1px solid var(--orto-line);
+    border-radius: 50%;
+    background: color-mix(in srgb, #d7b86a 12%, var(--orto-surface));
+    place-items: center;
+  }
+
+  .orto-greenhouse-detail-plant.is-seed {
+    border-style: dashed;
+  }
+
+  .orto-greenhouse-detail-plant.is-seed img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .orto-greenhouse-detail-plant.is-seedling {
+    border-color: color-mix(in srgb, var(--orto-green) 38%, var(--orto-line));
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    box-shadow: 0 5px 12px color-mix(in srgb, var(--orto-green) 12%, transparent);
+  }
+
+  .orto-greenhouse-origin-chip {
+    display: inline-flex;
+    margin-top: 6px;
+    border: 1px solid color-mix(in srgb, #b58a3d 34%, var(--orto-line));
+    border-radius: var(--control-radius-pill);
+    padding: 3px 7px;
+    background: color-mix(in srgb, #d7b86a 10%, var(--orto-surface));
+    color: var(--orto-amber);
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .orto-greenhouse-origin-chip.is-seedling {
+    border-color: color-mix(in srgb, var(--orto-green) 34%, var(--orto-line));
+    background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface));
+    color: var(--orto-green-dk);
+  }
+
+  html[data-theme="dark"] .orto-greenhouse-origin-chip.is-seedling {
+    color: var(--orto-green-lt);
+  }
+
+  .orto-greenhouse-detail-title small {
+    color: var(--orto-green);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .orto-greenhouse-detail-title h4 {
+    margin: 3px 0 0;
+    color: var(--orto-ink);
+    font-size: 20px;
+  }
+
+  .orto-greenhouse-detail dl {
+    display: grid;
+    gap: 0;
+    margin: 15px 0 0;
+  }
+
+  .orto-greenhouse-detail dl > div {
+    padding: 11px 0;
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-greenhouse-detail dt {
+    color: var(--orto-muted);
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  .orto-greenhouse-detail dd {
+    margin: 4px 0 0;
+    color: var(--orto-ink);
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.45;
+  }
+
+  .orto-greenhouse-warning {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    border: 1px solid color-mix(in srgb, #c47724 32%, var(--orto-line));
+    border-radius: var(--radius-md);
+    padding: 11px;
+    background: color-mix(in srgb, #e7a549 10%, var(--orto-surface));
+  }
+
+  .orto-greenhouse-warning > span {
+    display: grid;
+    width: 23px;
+    height: 23px;
+    flex: 0 0 23px;
+    border-radius: 50%;
+    background: #b96b1d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    place-items: center;
+  }
+
+  .orto-greenhouse-warning p {
+    margin: 0;
+    color: var(--orto-muted);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .orto-greenhouse-warning strong {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--orto-ink);
+  }
+
+  .orto-greenhouse-empty {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 clamp(20px, 4vw, 34px) clamp(20px, 4vw, 30px);
+    border: 1px dashed var(--orto-line-strong);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    background: color-mix(in srgb, var(--orto-green) 4%, transparent);
+  }
+
+  .orto-greenhouse-empty > span {
+    display: grid;
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    font-size: 23px;
+    place-items: center;
+  }
+
+  .orto-greenhouse-empty h4,
+  .orto-greenhouse-empty p {
+    margin: 0;
+  }
+
+  .orto-greenhouse-empty h4 {
+    color: var(--orto-ink);
+    font-size: 14px;
+  }
+
+  .orto-greenhouse-empty p {
+    margin-top: 4px;
+    color: var(--orto-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  html[data-theme="dark"] .orto-greenhouse {
+    background:
+      radial-gradient(circle at 86% 0%, rgba(70, 135, 94, 0.18), transparent 34%),
+      linear-gradient(145deg, color-mix(in srgb, var(--orto-green) 8%, var(--orto-surface)), var(--orto-surface));
+  }
+
+  html[data-theme="dark"] .orto-greenhouse-shell {
+    border-color: #466352;
+    background:
+      linear-gradient(90deg, transparent 49.5%, rgba(255, 255, 255, 0.1) 50%, transparent 50.5%),
+      repeating-linear-gradient(90deg, transparent 0 24%, rgba(162, 203, 180, 0.1) 24.2% 24.8%, transparent 25% 50%),
+      linear-gradient(155deg, #193329, #30291f);
+    box-shadow: inset 0 0 0 2px rgba(197, 230, 210, 0.08), 0 16px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  @media (max-width: 900px) {
+    .orto-greenhouse-form {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .orto-greenhouse-submit {
+      grid-column: 1 / -1;
+    }
+
+    .orto-greenhouse-workspace {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .orto-greenhouse {
+      border-radius: var(--radius-lg);
+    }
+
+    .orto-greenhouse-form {
+      grid-template-columns: 1fr;
+    }
+
+    .orto-greenhouse-submit {
+      width: 100%;
+      grid-column: auto;
+    }
+
+    .orto-greenhouse-workspace {
+      padding: 16px;
+    }
+
+    .orto-greenhouse-shell {
+      border-width: 5px;
+    }
+
+    .orto-greenhouse-plants img:nth-child(n + 5) {
+      display: none;
+    }
   }
 }
 
@@ -5849,8 +7207,9 @@
       border-radius: var(--radius-xl);
       background: color-mix(in srgb, var(--orto-surface) 92%, transparent);
       box-shadow: var(--elev-3);
-      /* Due colonne uguali: nella barra in basso conta l'area toccabile. */
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      /* Anche in basso «Oggi» pesa di più, ma meno che sul desktop: qui conta
+         soprattutto che tutte e tre restino comode da premere col pollice. */
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
       backdrop-filter: blur(18px) saturate(1.15);
       -webkit-backdrop-filter: blur(18px) saturate(1.15);
     }
@@ -6095,6 +7454,515 @@
   }
 }
 
+/* Coerenza con il design system condiviso dell'app: superfici, raggi,
+   profondità, controlli e iconografia usano gli stessi token di base.css. */
+@layer coerenza {
+  .orto-page:not(.viv-page) {
+    background: var(--surface-sunken);
+  }
+
+  .orto-page-head {
+    min-height: 220px;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 88% 18%, rgba(116, 198, 157, 0.18), transparent 18rem),
+      linear-gradient(145deg, var(--surface-1), var(--surface-2));
+    color: var(--ink-900);
+    box-shadow: var(--elev-2);
+  }
+
+  .orto-page-head::after {
+    border-color: rgba(47, 107, 58, 0.08);
+    box-shadow:
+      0 0 0 40px rgba(47, 107, 58, 0.025),
+      0 0 0 82px rgba(47, 107, 58, 0.018);
+  }
+
+  .orto-page-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--brand-600);
+  }
+
+  .orto-page-eyebrow::before {
+    width: 34px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+    content: "";
+  }
+
+  .orto-page-title {
+    color: var(--ink-900);
+    font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+    font-weight: 500;
+    letter-spacing: -0.021em;
+  }
+
+  .orto-page-lead {
+    color: var(--ink-500);
+    font-size: clamp(1rem, 1.5vw, 1.12rem);
+    line-height: 1.5;
+  }
+
+  .orto-page-seal {
+    width: 124px;
+    height: 124px;
+    border-color: var(--surface-line);
+    background: var(--surface-2);
+    color: var(--ink-500);
+    box-shadow: var(--elev-1);
+    backdrop-filter: none;
+  }
+
+  .orto-tabs {
+    gap: var(--control-gap);
+    padding: 6px;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-xl);
+    background: var(--surface-1);
+    box-shadow: var(--elev-2);
+  }
+
+  .orto-tab,
+  .orto-tab--primary {
+    min-height: var(--control-h-lg);
+    border-radius: var(--control-radius);
+    box-shadow: none;
+    transition:
+      transform 0.18s ease,
+      background 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .orto-tab:hover {
+    border-color: var(--button-secondary-border);
+    background: var(--button-secondary-bg);
+    box-shadow: var(--elev-1);
+    transform: translateY(-1px);
+  }
+
+  .orto-tab.is-active {
+    border-color: var(--surface-line-strong);
+    background: var(--surface-2);
+    box-shadow: var(--elev-1);
+  }
+
+  .orto-tab-ico,
+  .orto-tab--primary .orto-tab-ico {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-3);
+    color: var(--brand-600);
+    font-size: 16px;
+    box-shadow: none;
+  }
+
+  .orto-tab.is-active .orto-tab-ico {
+    background: var(--brand-600);
+    color: var(--on-fill-brand);
+  }
+
+  .orto-tab--today {
+    border-color: var(--button-secondary-border);
+    background: var(--brand-050);
+    box-shadow: none;
+  }
+
+  .orto-tab--today .orto-tab-ico {
+    width: 36px;
+    height: 36px;
+    background: var(--brand-600);
+    box-shadow: var(--elev-1);
+  }
+
+  .orto-tab--today .orto-tab-name {
+    color: var(--brand-700);
+    font-size: 1.04rem;
+  }
+
+  .orto-tab--today:hover {
+    background: var(--button-secondary-bg-hover);
+  }
+
+  .orto-tab--today.is-active {
+    border-color: var(--button-primary-border);
+    background: var(--button-primary-fill);
+    box-shadow: 0 6px 16px var(--button-primary-shadow);
+  }
+
+  .orto-btn {
+    border-color: var(--button-primary-border);
+    border-radius: var(--control-radius-pill);
+    background: var(--button-primary-fill);
+    color: var(--button-primary-text);
+    box-shadow: 0 6px 16px var(--button-primary-shadow);
+  }
+
+  .orto-btn:hover {
+    background: var(--button-primary-fill-hover);
+    box-shadow: var(--elev-2);
+    transform: translateY(-2px);
+  }
+
+  .orto-btn--ghost {
+    border: 1px solid var(--button-secondary-border);
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+    box-shadow: none;
+  }
+
+  .orto-btn--ghost:hover {
+    border-color: var(--button-secondary-border);
+    background: var(--button-secondary-bg-hover);
+  }
+
+  .orto-welcome,
+  .orto-group,
+  .orto-card,
+  .orto-piano-card {
+    border-color: var(--surface-line);
+    border-radius: var(--radius-xl);
+    background: var(--surface-1);
+    box-shadow: var(--elev-2);
+  }
+
+  .orto-welcome-choice {
+    border-color: var(--surface-line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    box-shadow: none;
+  }
+
+  .orto-welcome-choice--primary {
+    border-color: var(--button-secondary-border);
+    background: var(--surface-2);
+  }
+
+  .orto-welcome-choice:hover {
+    border-color: var(--brand-600);
+    background: var(--brand-050);
+    box-shadow: var(--elev-2);
+    transform: translateY(-2px);
+  }
+
+  .orto-welcome-choice-ico,
+  .orto-stock-group-ico,
+  .orto-backlog-ico,
+  .orto-upcoming-ico,
+  .orto-task-ico,
+  .orto-next-ico {
+    border-radius: var(--radius-sm);
+    background: var(--brand-050);
+  }
+
+  .orto-stock-group,
+  .orto-upcoming,
+  .orto-backlog,
+  .orto-done-group {
+    border-color: var(--surface-line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    box-shadow: var(--elev-1);
+  }
+
+  .orto-stock-group-head {
+    background: var(--surface-2);
+  }
+
+  .orto-stock:hover {
+    background: var(--brand-050);
+  }
+
+  .orto-task {
+    border-color: var(--surface-line);
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    box-shadow: var(--elev-1);
+  }
+
+  .orto-task:hover {
+    box-shadow: var(--elev-2);
+    transform: translateY(-2px);
+  }
+
+  .orto-empty {
+    border-color: var(--surface-line-strong);
+    border-radius: var(--radius-xl);
+    background: var(--surface-2);
+  }
+
+  .orto-dialog-sheet,
+  .orto-dialog--confirm .orto-dialog-sheet {
+    border-radius: var(--radius-xl);
+    background: var(--surface-1);
+    box-shadow: var(--elev-4);
+  }
+
+  .orto-check,
+  .orto-icon-btn,
+  .orto-stock-search,
+  .orto-picker-search {
+    border-radius: var(--control-radius);
+  }
+
+  .orto-chip,
+  .orto-group-count,
+  .orto-snooze,
+  .orto-tool-note,
+  .orto-toast {
+    border-radius: var(--control-radius-pill);
+  }
+
+  html[data-theme="dark"] .orto-page:not(.viv-page) {
+    background: #091410;
+  }
+
+  html[data-theme="dark"] .orto-page-head {
+    border-color: var(--surface-line);
+    background:
+      radial-gradient(circle at 88% 18%, rgba(114, 197, 138, 0.12), transparent 18rem),
+      var(--surface-1);
+  }
+
+  html[data-theme="dark"] .orto-page-title {
+    color: var(--serra-soft-surface);
+  }
+
+  html[data-theme="dark"] .orto-page-lead,
+  html[data-theme="dark"] .orto-page-seal {
+    color: var(--theme-muted);
+  }
+
+  html[data-theme="dark"] .orto-page-seal,
+  html[data-theme="dark"] .orto-tabs,
+  html[data-theme="dark"] .orto-welcome,
+  html[data-theme="dark"] .orto-group,
+  html[data-theme="dark"] .orto-card,
+  html[data-theme="dark"] .orto-piano-card,
+  html[data-theme="dark"] .orto-welcome-choice,
+  html[data-theme="dark"] .orto-stock-group,
+  html[data-theme="dark"] .orto-upcoming,
+  html[data-theme="dark"] .orto-backlog,
+  html[data-theme="dark"] .orto-done-group,
+  html[data-theme="dark"] .orto-task {
+    border-color: var(--surface-line);
+    background: var(--surface-1);
+  }
+
+  html[data-theme="dark"] .orto-tab--today,
+  html[data-theme="dark"] .orto-welcome-choice--primary,
+  html[data-theme="dark"] .orto-stock-group-head,
+  html[data-theme="dark"] .orto-empty {
+    background: var(--surface-2);
+  }
+
+  html[data-theme="dark"] .orto-tab--today.is-active {
+    background: var(--button-primary-fill);
+  }
+}
+
+@layer coerenza {
+  @media (max-width: 720px) {
+    .orto-page-head {
+      border-radius: var(--radius-xl);
+    }
+
+    .orto-tabs {
+      border-radius: var(--radius-xl);
+      box-shadow: var(--elev-3);
+    }
+
+    .orto-tab--today {
+      box-shadow: var(--elev-1);
+    }
+
+    .orto-welcome,
+    .orto-group {
+      border-radius: var(--radius-xl);
+    }
+
+    .orto-dialog-sheet,
+    .orto-dialog--wide .orto-dialog-sheet {
+      border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    }
+  }
+}
+
+/* Correzione geometrica: il contenitore delle tab torna una card regolare e
+   il sigillo della testata mantiene un rapporto perfettamente circolare. */
+@layer coerenza {
+  .orto-viewbar {
+    margin-top: -42px;
+  }
+
+  .orto-tabs {
+    min-height: 78px;
+    align-items: stretch;
+    padding: 7px;
+    overflow: visible;
+    border-radius: var(--radius-lg);
+  }
+
+  .orto-tab,
+  .orto-tab--primary {
+    min-height: 62px;
+    margin: 0;
+  }
+
+  .orto-tab--today,
+  html[data-theme="dark"] .orto-tab--today {
+    min-height: 62px;
+    margin: 0;
+  }
+
+  .orto-page-seal {
+    display: flex;
+    width: 124px;
+    min-width: 124px;
+    height: 124px;
+    min-height: 124px;
+    aspect-ratio: 1 / 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    justify-self: end;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+
+  .orto-page-seal span {
+    display: block;
+    line-height: 1;
+  }
+
+  .orto-page-seal small {
+    display: block;
+    width: 88px;
+    margin-top: 7px;
+    line-height: 1.25;
+    text-align: center;
+  }
+}
+
+@layer coerenza {
+  @media (max-width: 720px) {
+    .orto-viewbar {
+      margin-top: 0;
+    }
+
+    .orto-tabs {
+      min-height: 70px;
+      padding: 6px;
+      border-radius: var(--radius-lg);
+    }
+
+    .orto-tab,
+    .orto-tab--primary,
+    .orto-tab--today,
+    html[data-theme="dark"] .orto-tab--today {
+      min-height: 58px;
+      margin: 0;
+    }
+  }
+}
+
+/* Gerarchia delle tre destinazioni: "Oggi" è la superficie primaria a cui
+   tornare ogni giorno; le altre due restano viste di gestione. */
+@layer coerenza {
+  .orto-tabs {
+    grid-template-columns: minmax(145px, 1fr) minmax(145px, 1fr) minmax(205px, 1.38fr);
+  }
+
+  .orto-tab--today,
+  html[data-theme="dark"] .orto-tab--today {
+    min-height: 62px;
+    margin-block: -5px;
+    border-color: var(--button-primary-border);
+    background: var(--button-primary-fill);
+    color: var(--button-primary-text);
+    box-shadow: 0 8px 20px var(--button-primary-shadow);
+  }
+
+  .orto-tab--today .orto-tab-name,
+  .orto-tab--today .orto-tab-note,
+  html[data-theme="dark"] .orto-tab--today .orto-tab-name,
+  html[data-theme="dark"] .orto-tab--today .orto-tab-note {
+    color: var(--button-primary-text);
+  }
+
+  .orto-tab--today .orto-tab-name {
+    font-size: 1.12rem;
+    font-weight: 800;
+  }
+
+  .orto-tab--today .orto-tab-note {
+    opacity: 0.78;
+  }
+
+  .orto-tab--today .orto-tab-ico,
+  .orto-tab--today.is-active .orto-tab-ico {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.17);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  .orto-tab--today:hover,
+  html[data-theme="dark"] .orto-tab--today:hover {
+    border-color: var(--button-primary-border);
+    background: var(--button-primary-fill-hover);
+    box-shadow: 0 10px 24px var(--button-primary-shadow);
+    transform: translateY(-2px);
+  }
+
+  .orto-tab--today.is-active,
+  html[data-theme="dark"] .orto-tab--today.is-active {
+    border-color: rgba(255, 255, 255, 0.78);
+    background: var(--button-primary-fill-hover);
+    box-shadow:
+      0 0 0 3px var(--surface-1),
+      0 10px 26px var(--button-primary-shadow);
+    transform: translateY(-2px);
+  }
+
+  .orto-tab--today .orto-tab-badge {
+    background: #fff;
+    color: var(--brand-700);
+  }
+}
+
+@layer coerenza {
+  @media (max-width: 720px) {
+    .orto-tabs {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.32fr);
+    }
+
+    .orto-tab--today,
+    html[data-theme="dark"] .orto-tab--today {
+      min-height: calc(var(--control-h-lg) + 12px);
+      margin-block: -6px;
+    }
+
+    .orto-tab--today .orto-tab-ico,
+    .orto-tab--today.is-active .orto-tab-ico {
+      width: 32px;
+      height: 32px;
+    }
+
+    .orto-tab--today .orto-tab-name {
+      font-size: 0.9rem;
+    }
+  }
+}
+
 @layer polish {
   @media (max-width: 360px) {
     .orto-tab-note {
@@ -6135,6 +8003,1371 @@
 
     .orto-snooze {
       transition: none;
+    }
+  }
+}
+
+/* ============================================================
+   Nuova esperienza Orto: il percorso operativo è distinto dalle viste.
+   ============================================================ */
+@layer polish {
+  .orto-page {
+    --orto-green: #2f6b3a;
+    --orto-green-dk: #173d27;
+    --orto-cream: #f6f2e9;
+    background:
+      radial-gradient(circle at 86% 8%, rgba(177, 207, 159, 0.28), transparent 25rem),
+      linear-gradient(180deg, #f8f5ee 0, #f0eee8 100%);
+  }
+
+  .orto-wrap {
+    width: min(100% - clamp(2rem, 6vw, 4rem), 1160px);
+    padding-top: calc(var(--nav-h, 76px) + clamp(1.4rem, 4vw, 3rem));
+  }
+
+  .orto-page-head {
+    position: relative;
+    display: grid;
+    max-width: none;
+    min-height: 246px;
+    margin: 0 0 18px;
+    padding: clamp(2rem, 5vw, 3.7rem);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 32px;
+    background:
+      radial-gradient(circle at 82% 24%, rgba(181, 220, 163, 0.28), transparent 15rem),
+      linear-gradient(135deg, #163b27, #285e35 70%, #3f7745);
+    color: #fff;
+    box-shadow: 0 22px 55px rgba(28, 57, 35, 0.16);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .orto-page-head::after {
+    position: absolute;
+    right: -70px;
+    bottom: -135px;
+    width: 330px;
+    height: 330px;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 40px rgba(255, 255, 255, 0.035),
+      0 0 0 82px rgba(255, 255, 255, 0.025);
+    content: "";
+  }
+
+  .orto-page-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+  }
+
+  .orto-page-eyebrow {
+    margin: 0 0 10px;
+    color: #cde3c7;
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .orto-page-title {
+    margin: 0;
+    color: #fffef8;
+    font-size: clamp(2.3rem, 5vw, 4rem);
+    letter-spacing: -0.035em;
+  }
+
+  .orto-page-lead {
+    max-width: 55ch;
+    margin: 0.8rem 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(1rem, 1.8vw, 1.13rem);
+    line-height: 1.58;
+  }
+
+  .orto-page-seal {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 132px;
+    height: 132px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.78);
+    text-align: center;
+    place-content: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .orto-page-seal span {
+    font-size: 35px;
+  }
+
+  .orto-page-seal small {
+    margin-top: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .orto-journey {
+    position: relative;
+    z-index: 2;
+    margin: -50px 28px 26px;
+    padding: 17px 20px 19px;
+    border: 1px solid rgba(34, 66, 41, 0.12);
+    border-radius: 22px;
+    background: rgba(255, 254, 250, 0.96);
+    box-shadow: 0 16px 36px rgba(28, 57, 35, 0.12);
+  }
+
+  .orto-journey-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .orto-journey-head p {
+    margin: 0;
+    color: var(--orto-ink);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .orto-journey-head > span {
+    color: var(--orto-green);
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  .orto-journey ol {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .orto-journey li {
+    position: relative;
+    display: flex;
+    gap: 11px;
+    min-width: 0;
+    padding-right: 32px;
+    opacity: 0.52;
+  }
+
+  .orto-journey li + li::before {
+    position: absolute;
+    top: 17px;
+    right: calc(100% + 9px);
+    width: 14px;
+    height: 1px;
+    background: var(--orto-line-strong);
+    content: "";
+  }
+
+  .orto-journey li.is-current,
+  .orto-journey li.is-done {
+    opacity: 1;
+  }
+
+  .orto-journey-no {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: 50%;
+    background: #f3f2eb;
+    color: var(--orto-muted);
+    font-size: 13px;
+    font-weight: 800;
+    place-items: center;
+  }
+
+  .orto-journey li.is-current .orto-journey-no {
+    border-color: var(--orto-green);
+    background: var(--orto-green);
+    color: #fff;
+    box-shadow: 0 0 0 5px rgba(47, 107, 58, 0.1);
+  }
+
+  .orto-journey li.is-done .orto-journey-no {
+    border-color: #aac7a4;
+    background: #e7f0e2;
+    color: transparent;
+  }
+
+  .orto-journey li.is-done .orto-journey-no::after {
+    color: var(--orto-green);
+    content: "✓";
+  }
+
+  .orto-journey b,
+  .orto-journey small {
+    display: block;
+  }
+
+  .orto-journey b {
+    margin-top: 1px;
+    color: var(--orto-ink);
+    font-size: 13.5px;
+    line-height: 1.25;
+  }
+
+  .orto-journey small {
+    margin-top: 3px;
+    color: var(--orto-muted);
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+
+  .orto-viewbar {
+    position: relative;
+    z-index: 3;
+    margin: -47px 28px 32px;
+  }
+
+  .orto-tabs {
+    width: max-content;
+    min-width: min(100%, 680px);
+    margin-inline: auto;
+    padding: 5px;
+    border-color: rgba(34, 66, 41, 0.11);
+    border-radius: 17px;
+    background: rgba(255, 254, 250, 0.96);
+    box-shadow: 0 14px 34px rgba(28, 57, 35, 0.14);
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+
+  .orto-tab,
+  .orto-tab--primary {
+    min-height: 58px;
+    padding: 9px 12px;
+    border-radius: var(--control-radius);
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+  }
+
+  .orto-tab--primary .orto-tab-ico,
+  .orto-tab-ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .orto-tab--primary .orto-tab-name,
+  .orto-tab-name {
+    font-size: 0.95rem;
+  }
+
+  .orto-tab.is-active {
+    border-color: rgba(47, 107, 58, 0.13);
+    background: #fff;
+    box-shadow: 0 5px 16px rgba(28, 57, 35, 0.09);
+  }
+
+  .orto-tab.is-active .orto-tab-ico {
+    background: var(--orto-green);
+    color: #fff;
+  }
+
+  .orto-tab::after {
+    display: none;
+  }
+
+  #ortoApp {
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+
+  .orto-sec-head {
+    max-width: 66ch;
+    margin-bottom: 22px;
+  }
+
+  .orto-sec-head h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.45rem);
+  }
+
+  .orto-group {
+    padding: clamp(1.1rem, 3vw, 1.6rem);
+    border: 1px solid rgba(34, 66, 41, 0.11);
+    border-radius: 24px;
+    background: rgba(255, 254, 250, 0.82);
+    box-shadow: 0 12px 35px rgba(28, 57, 35, 0.07);
+  }
+
+  .orto-group + .orto-group {
+    margin-top: 22px;
+    padding-top: clamp(1.1rem, 3vw, 1.6rem);
+    border-top: 1px solid rgba(34, 66, 41, 0.11);
+  }
+
+  .orto-group-no {
+    width: 32px;
+    height: 32px;
+    background: var(--orto-green);
+    color: #fff;
+  }
+
+  .orto-toolbar {
+    justify-content: flex-start;
+    margin: -2px 0 16px 44px;
+  }
+
+  .orto-sec > .orto-group > .orto-toolbar:first-child {
+    margin-left: 0;
+  }
+
+  .orto-stock-group {
+    overflow: hidden;
+    border: 1px solid var(--orto-line);
+    border-radius: 18px;
+    background: var(--orto-surface);
+  }
+
+  .orto-stock-group + .orto-stock-group {
+    margin-top: 14px;
+  }
+
+  .orto-stock-group-head {
+    margin: 0;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--orto-line);
+    background: color-mix(in srgb, var(--orto-green) 5%, var(--orto-surface));
+  }
+
+  .orto-stock-list {
+    gap: 0;
+  }
+
+  .orto-stock {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .orto-stock + .orto-stock {
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-stock:hover {
+    border-color: transparent;
+    background: color-mix(in srgb, var(--orto-green) 4%, var(--orto-surface));
+    box-shadow: none;
+    transform: none;
+  }
+
+  .orto-stock-actions .orto-btn:first-child {
+    min-width: 104px;
+  }
+
+  .orto-welcome {
+    display: grid;
+    max-width: 940px;
+    margin: 4px auto 0;
+    padding: clamp(1.4rem, 4vw, 2.4rem);
+    border: 1px solid rgba(34, 66, 41, 0.12);
+    border-radius: 26px;
+    background: rgba(255, 254, 250, 0.9);
+    box-shadow: 0 18px 45px rgba(28, 57, 35, 0.09);
+    text-align: left;
+    grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+    gap: 22px 42px;
+    align-items: center;
+  }
+
+  .orto-welcome-head {
+    padding: 8px 0;
+  }
+
+  .orto-welcome h2 {
+    margin: 8px 0 10px;
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+  }
+
+  .orto-welcome-text {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .orto-welcome-actions {
+    max-width: none;
+    gap: 10px;
+  }
+
+  .orto-welcome-choice {
+    display: grid;
+    width: 100%;
+    min-height: 92px;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 15px;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: 17px;
+    background: var(--orto-surface);
+    color: var(--orto-ink);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: border-color 0.16s ease, box-shadow 0.18s ease, transform 0.16s ease;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+  }
+
+  .orto-welcome-choice:hover {
+    border-color: var(--orto-green);
+    box-shadow: 0 10px 26px rgba(28, 57, 35, 0.11);
+    transform: translateY(-1px);
+  }
+
+  .orto-welcome-choice--primary {
+    border-color: rgba(47, 107, 58, 0.36);
+    background: linear-gradient(135deg, #edf4e9, #f7faf3);
+  }
+
+  .orto-welcome-choice-ico {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: rgba(47, 107, 58, 0.1);
+    color: var(--orto-green);
+    font-size: 20px;
+    font-weight: 500;
+    place-items: center;
+  }
+
+  .orto-welcome-choice b,
+  .orto-welcome-choice small {
+    display: block;
+  }
+
+  .orto-welcome-choice b {
+    font-size: 15px;
+  }
+
+  .orto-welcome-choice small {
+    margin-top: 3px;
+    color: var(--orto-muted);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .orto-welcome-arrow {
+    color: var(--orto-green);
+    font-size: 20px;
+  }
+
+  .orto-welcome-shop {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: 17px;
+    justify-content: flex-start;
+  }
+
+  .orto-upcoming {
+    overflow: hidden;
+    border-radius: 20px;
+    background: rgba(255, 254, 250, 0.84);
+    box-shadow: 0 10px 28px rgba(28, 57, 35, 0.06);
+  }
+
+  .orto-upcoming-summary {
+    min-height: 70px;
+    padding: 14px 17px;
+  }
+
+  .orto-task {
+    border-radius: 16px;
+  }
+}
+
+@layer polish {
+  @media (max-width: 720px) {
+    .orto-wrap {
+      width: min(100% - 1.15rem, 1160px);
+      padding-top: calc(var(--nav-h, 62px) + 0.7rem);
+    }
+
+    .orto-page-head {
+      min-height: 230px;
+      padding: 28px 23px;
+      border-radius: 24px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .orto-viewbar {
+      height: 0;
+      margin: 0;
+    }
+
+    .orto-page-title {
+      font-size: clamp(2.2rem, 12vw, 3.2rem);
+    }
+
+    .orto-page-seal {
+      display: none;
+    }
+
+    .orto-journey {
+      margin: -34px 10px 18px;
+      padding: 14px;
+      border-radius: 18px;
+    }
+
+    .orto-journey-head {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 12px;
+    }
+
+    .orto-journey ol {
+      gap: 10px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .orto-journey li {
+      padding-right: 0;
+    }
+
+    .orto-journey li + li::before {
+      top: -10px;
+      right: auto;
+      left: 17px;
+      width: 1px;
+      height: 10px;
+    }
+
+    .orto-journey small {
+      display: none;
+    }
+
+    .orto-journey-no {
+      width: 30px;
+      height: 30px;
+    }
+
+    .orto-tabs {
+      width: auto;
+      min-width: 0;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .orto-tab.is-active {
+      background: linear-gradient(155deg, #43804d, var(--orto-green-dk));
+      box-shadow: var(--elev-2);
+    }
+
+    .orto-tab.is-active .orto-tab-name {
+      color: #fff;
+    }
+
+    .orto-tab,
+    .orto-tab--primary {
+      min-height: var(--control-h-lg);
+      padding: 6px 4px 7px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .orto-tab--primary .orto-tab-name,
+    .orto-tab-name {
+      font-size: 0.78rem;
+    }
+
+    .orto-tab--primary .orto-tab-ico,
+    .orto-tab-ico {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+
+    .orto-welcome {
+      display: block;
+      padding: 20px 16px 17px;
+      border-radius: 21px;
+      text-align: left;
+    }
+
+    .orto-welcome-head {
+      padding: 0 2px 16px;
+    }
+
+    .orto-welcome-text {
+      margin: 0;
+    }
+
+    .orto-welcome-choice {
+      min-height: 88px;
+      padding: 12px;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+    }
+
+    .orto-welcome-choice-ico {
+      width: 42px;
+      height: 42px;
+    }
+
+    .orto-welcome-shop {
+      margin-top: 16px;
+    }
+
+    .orto-group {
+      padding: 15px 12px;
+      border-radius: 19px;
+    }
+
+    .orto-toolbar {
+      margin-left: 0;
+    }
+
+    .orto-stock-group {
+      border-radius: 15px;
+    }
+
+    .orto-stock-actions .orto-btn:first-child {
+      min-width: 0;
+    }
+  }
+}
+
+@layer dark-theme {
+  html[data-theme="dark"] .orto-page {
+    background:
+      radial-gradient(circle at 86% 8%, rgba(73, 123, 80, 0.22), transparent 25rem),
+      #0b1710;
+  }
+
+  html[data-theme="dark"] .orto-journey,
+  html[data-theme="dark"] .orto-welcome,
+  html[data-theme="dark"] .orto-group,
+  html[data-theme="dark"] .orto-tabs,
+  html[data-theme="dark"] .orto-upcoming {
+    border-color: var(--surface-line);
+    background: rgba(20, 39, 28, 0.94);
+  }
+
+  html[data-theme="dark"] .orto-welcome-choice,
+  html[data-theme="dark"] .orto-tab.is-active {
+    background: #172a1e;
+  }
+
+  html[data-theme="dark"] .orto-welcome-choice--primary {
+    background: linear-gradient(135deg, #1b3524, #172a1e);
+  }
+
+  html[data-theme="dark"] .orto-stock-group-head {
+    background: rgba(114, 197, 138, 0.08);
+  }
+}
+
+/* "Oggi" è la destinazione quotidiana: resta una tab, ma ha più peso
+   visivo delle viste di gestione. */
+@layer polish {
+  .orto-tabs {
+    grid-template-columns: minmax(150px, 1fr) minmax(150px, 1fr) minmax(178px, 1.18fr);
+  }
+
+  .orto-tab--today {
+    border-color: color-mix(in srgb, var(--orto-green) 28%, transparent);
+    background: color-mix(in srgb, var(--orto-green) 10%, var(--orto-surface));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--orto-green) 5%, transparent);
+  }
+
+  .orto-tab--today .orto-tab-ico {
+    width: 36px;
+    height: 36px;
+    background: var(--orto-green);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(47, 107, 58, 0.2);
+  }
+
+  .orto-tab--today .orto-tab-name {
+    color: var(--orto-green-dk);
+    font-size: 1.08rem;
+    font-weight: 800;
+  }
+
+  .orto-tab--today .orto-tab-note {
+    color: color-mix(in srgb, var(--orto-green) 78%, var(--orto-muted));
+  }
+
+  .orto-tab--today:hover {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 15%, var(--orto-surface));
+  }
+
+  .orto-tab--today.is-active {
+    border-color: var(--orto-green-dk);
+    background: linear-gradient(145deg, #397846, var(--orto-green-dk));
+    box-shadow: 0 8px 20px rgba(31, 73, 42, 0.25);
+  }
+
+  .orto-tab--today.is-active .orto-tab-name,
+  .orto-tab--today.is-active .orto-tab-note {
+    color: #fff;
+  }
+
+  .orto-tab--today.is-active .orto-tab-note {
+    opacity: 0.76;
+  }
+
+  .orto-tab--today.is-active .orto-tab-ico {
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: none;
+  }
+
+  html[data-theme="dark"] .orto-tab--today {
+    border-color: rgba(114, 197, 138, 0.3);
+    background: rgba(114, 197, 138, 0.1);
+  }
+
+  html[data-theme="dark"] .orto-tab--today .orto-tab-name {
+    color: var(--orto-green-lt);
+  }
+
+  html[data-theme="dark"] .orto-tab--today.is-active .orto-tab-name,
+  html[data-theme="dark"] .orto-tab--today.is-active .orto-tab-note {
+    color: #fff;
+  }
+}
+
+@layer polish {
+  @media (max-width: 720px) {
+    .orto-tabs {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.16fr);
+    }
+
+    .orto-tab--today {
+      min-height: calc(var(--control-h-lg) + 6px);
+      margin-block: -3px;
+      box-shadow: 0 5px 14px rgba(31, 73, 42, 0.16);
+    }
+
+    .orto-tab--today .orto-tab-ico {
+      width: 30px;
+      height: 30px;
+    }
+
+    .orto-tab--today .orto-tab-name {
+      font-size: 0.84rem;
+    }
+  }
+}
+
+@layer coerenza {
+  /* Override finale: nessuna tab sporge dal contenitore. */
+  .orto-tabs {
+    min-height: 78px;
+    align-items: stretch;
+    padding: 7px;
+    border-radius: var(--radius-lg);
+  }
+
+  .orto-tab,
+  .orto-tab--primary,
+  .orto-tab--today,
+  html[data-theme="dark"] .orto-tab--today {
+    min-height: 62px;
+    margin: 0;
+  }
+
+  .orto-page-seal {
+    width: 124px;
+    min-width: 124px;
+    height: 124px;
+    min-height: 124px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 720px) {
+    .orto-tabs {
+      min-height: 70px;
+      padding: 6px;
+    }
+
+    .orto-tab,
+    .orto-tab--primary,
+    .orto-tab--today,
+    html[data-theme="dark"] .orto-tab--today {
+      min-height: 58px;
+      margin: 0;
+    }
+  }
+}
+
+/* Una voce resta nella dispensa finché conserva disponibilità, ma dopo la
+   prima messa a dimora deve dichiarare chiaramente il passaggio a «Piantate». */
+@layer coerenza {
+  .orto-stock {
+    position: relative;
+  }
+
+  .orto-stock.is-planted {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--orto-green) 8%, transparent), transparent 42%),
+      var(--orto-surface);
+  }
+
+  .orto-stock.is-planted::before {
+    position: absolute;
+    inset: 8px auto 8px 0;
+    width: 3px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    background: var(--orto-green);
+    content: "";
+  }
+
+  .orto-stock.is-planted .orto-stock-ico {
+    position: relative;
+    border-color: color-mix(in srgb, var(--orto-green) 28%, var(--orto-line));
+    background: color-mix(in srgb, var(--orto-green) 10%, var(--orto-surface));
+  }
+
+  .orto-stock.is-planted .orto-stock-ico::after {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    display: grid;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--orto-surface);
+    border-radius: 50%;
+    background: var(--orto-green);
+    color: #fff;
+    content: "✓";
+    font-size: 11px;
+    font-weight: 900;
+    place-items: center;
+  }
+
+  .orto-stock-planted-link {
+    display: inline-flex;
+    min-height: var(--control-h-sm);
+    align-items: center;
+    gap: 7px;
+    margin-top: 8px;
+    padding: 0 10px;
+    border: 1px solid color-mix(in srgb, var(--orto-green) 24%, var(--orto-line));
+    border-radius: var(--control-radius);
+    background: color-mix(in srgb, var(--orto-green) 9%, var(--orto-surface));
+    color: var(--orto-green-dk);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+    font-weight: 750;
+    line-height: 1.2;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  .orto-stock-planted-link:hover {
+    border-color: color-mix(in srgb, var(--orto-green) 48%, transparent);
+    background: color-mix(in srgb, var(--orto-green) 15%, var(--orto-surface));
+    transform: translateY(-1px);
+  }
+
+  .orto-stock-planted-check {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    border-radius: 50%;
+    background: var(--orto-green);
+    color: #fff;
+    font-size: 10px;
+    place-items: center;
+  }
+
+  .orto-stock.is-planted.is-empty {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--orto-green) 9%, transparent), transparent 48%),
+      var(--orto-surface-2);
+  }
+
+  html[data-theme="dark"] .orto-stock.is-planted {
+    background:
+      linear-gradient(90deg, rgba(114, 197, 138, 0.1), transparent 45%),
+      var(--orto-surface);
+  }
+
+  html[data-theme="dark"] .orto-stock.is-planted.is-empty {
+    background:
+      linear-gradient(90deg, rgba(114, 197, 138, 0.1), transparent 48%),
+      var(--orto-surface-2);
+  }
+
+  html[data-theme="dark"] .orto-stock-planted-link {
+    border-color: rgba(139, 212, 158, 0.24);
+    background: rgba(114, 197, 138, 0.1);
+    color: var(--orto-green-lt);
+  }
+
+  html[data-theme="dark"] .orto-stock.is-planted .orto-stock-ico::after,
+  html[data-theme="dark"] .orto-stock-planted-check {
+    color: #0b1a13;
+  }
+
+  @media (max-width: 660px) {
+    .orto-stock-planted-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+/* La scena dell'Orto riprende materiali, inquadratura e profondità della
+   serra del configuratore, mantenendo i controlli semplificati di questa pagina. */
+@layer coerenza {
+  .orto-greenhouse-stage {
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(242, 247, 240, 0.9)),
+      var(--orto-surface);
+    box-shadow: var(--orto-shadow-sm);
+  }
+
+  .orto-greenhouse-stage-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 2px 2px 12px;
+  }
+
+  .orto-greenhouse-stage-head h4,
+  .orto-greenhouse-stage-head p {
+    margin: 0;
+  }
+
+  .orto-greenhouse-stage-head h4 {
+    color: var(--orto-ink);
+    font-size: 16px;
+    font-weight: 850;
+  }
+
+  .orto-greenhouse-stage-head p {
+    margin-top: 3px;
+    color: var(--orto-muted);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .orto-greenhouse-north {
+    flex: 0 0 auto;
+    margin: 0;
+    border: 1px solid var(--orto-line);
+    border-radius: 999px;
+    padding: 5px 8px;
+    background: var(--orto-surface);
+  }
+
+  .orto-greenhouse-scene-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    border: 1px solid rgba(31, 58, 38, 0.13);
+    border-radius: var(--radius-lg);
+    padding: clamp(13px, 3vw, 24px);
+    background:
+      radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.5), transparent 32%),
+      repeating-linear-gradient(115deg, rgba(57, 88, 56, 0.04) 0 2px, transparent 2px 9px),
+      #aebf9d;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 14px 30px rgba(31, 58, 38, 0.1);
+  }
+
+  .orto-greenhouse-shell {
+    width: min(100%, 660px);
+    border: 6px solid #91a0a0;
+    border-radius: 7px;
+    background:
+      repeating-radial-gradient(circle at 7px 7px, #e7dfcc 0 1.4px, transparent 1.6px 12px),
+      linear-gradient(145deg, #eee8d9, #c8bda5);
+    box-shadow:
+      0 12px 28px rgba(20, 47, 29, 0.24),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.7),
+      0 0 0 1px rgba(31, 58, 38, 0.35);
+  }
+
+  .orto-greenhouse-shell::before,
+  .orto-greenhouse-shell::after {
+    position: absolute;
+    z-index: 5;
+    inset: 0 auto 0 33.333%;
+    width: 1px;
+    background: linear-gradient(transparent, rgba(54, 76, 77, 0.28) 10% 90%, transparent);
+    box-shadow: 1px 0 rgba(255, 255, 255, 0.45);
+    content: "";
+    pointer-events: none;
+  }
+
+  .orto-greenhouse-shell::after {
+    left: 66.666%;
+  }
+
+  .orto-greenhouse-glass {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 2px;
+    background:
+      linear-gradient(108deg, transparent 3% 21%, rgba(255, 255, 255, 0.2) 22% 34%, transparent 35% 72%, rgba(225, 249, 252, 0.1) 73% 83%, transparent 84%),
+      repeating-linear-gradient(0deg, transparent 0 19.8%, rgba(255, 255, 255, 0.2) 20%, transparent 20.2% 40%);
+    box-shadow: inset 0 0 22px rgba(32, 64, 48, 0.12);
+    pointer-events: none;
+  }
+
+  .orto-greenhouse-door {
+    z-index: 7;
+    bottom: -6px;
+    width: min(32%, 92px);
+    height: 12px;
+    border: 3px solid #758585;
+    border-bottom: 0;
+    border-radius: 5px 5px 0 0;
+    background: #d7e5df;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.75);
+  }
+
+  .orto-greenhouse-bed {
+    z-index: 2;
+    border: 5px solid #8a5834;
+    border-radius: 5px;
+    background:
+      repeating-radial-gradient(circle at 8px 7px, rgba(226, 194, 139, 0.18) 0 1px, transparent 1.3px 11px),
+      radial-gradient(circle at 38% 28%, #71553d, #4a3829 78%);
+    box-shadow:
+      inset 0 0 0 1px rgba(44, 23, 11, 0.42),
+      inset 0 2px rgba(255, 220, 166, 0.22),
+      0 4px 7px rgba(36, 20, 8, 0.34);
+  }
+
+  .orto-greenhouse-bed:hover,
+  .orto-greenhouse-bed.is-selected {
+    z-index: 6;
+    border-color: #bd8652;
+    box-shadow:
+      0 0 0 3px rgba(255, 245, 193, 0.8),
+      0 8px 16px rgba(35, 20, 8, 0.38);
+  }
+
+  .orto-greenhouse-bed-name {
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(27, 39, 27, 0.72);
+  }
+
+  .orto-greenhouse-bed-qty {
+    background: rgba(27, 39, 27, 0.78);
+  }
+
+  html[data-theme="dark"] .orto-greenhouse-stage {
+    background: linear-gradient(180deg, rgba(24, 42, 32, 0.96), rgba(16, 31, 23, 0.98));
+  }
+
+  html[data-theme="dark"] .orto-greenhouse-scene-wrap {
+    border-color: rgba(163, 204, 177, 0.14);
+    background:
+      radial-gradient(circle at 20% 12%, rgba(157, 199, 167, 0.1), transparent 32%),
+      repeating-linear-gradient(115deg, rgba(150, 190, 158, 0.04) 0 2px, transparent 2px 9px),
+      #263d2c;
+  }
+
+  html[data-theme="dark"] .orto-greenhouse-shell {
+    border-color: #627778;
+    background:
+      repeating-radial-gradient(circle at 7px 7px, #5d594d 0 1.4px, transparent 1.6px 12px),
+      linear-gradient(145deg, #555247, #383a32);
+  }
+
+  @media (max-width: 620px) {
+    .orto-greenhouse-stage {
+      padding: 10px;
+    }
+
+    .orto-greenhouse-stage-head {
+      align-items: center;
+    }
+
+    .orto-greenhouse-stage-head p {
+      max-width: 210px;
+    }
+
+    .orto-greenhouse-scene-wrap {
+      padding: 10px;
+    }
+
+    .orto-greenhouse-shell {
+      border-width: 4px;
+    }
+
+    .orto-greenhouse-bed {
+      border-width: 3px;
+    }
+  }
+}
+
+/* Correzioni finali della vista Orto: "Oggi" resta riconoscibile anche
+   quando non è selezionata e la dispensa mostra le fotografie dei prodotti. */
+@layer orto-audit {
+  .orto-tab--today:not(.is-active),
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) {
+    border-color: color-mix(in srgb, var(--orto-green) 42%, var(--orto-line));
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    color: var(--orto-green-dk);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--orto-green) 7%, transparent);
+  }
+
+  .orto-tab--today:not(.is-active) .orto-tab-name {
+    color: var(--orto-green-dk);
+    opacity: 1;
+  }
+
+  .orto-tab--today:not(.is-active) .orto-tab-note {
+    color: color-mix(in srgb, var(--orto-green-dk) 72%, var(--orto-muted));
+    opacity: 1;
+  }
+
+  .orto-tab--today:not(.is-active) .orto-tab-ico {
+    background: color-mix(in srgb, var(--orto-green) 15%, var(--orto-surface));
+    color: var(--orto-green-dk);
+    box-shadow: none;
+  }
+
+  .orto-tab--today:not(.is-active):hover {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 18%, var(--orto-surface));
+  }
+
+  .orto-tab--today:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--orto-green) 54%, #fff);
+    outline-offset: 3px;
+  }
+
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) {
+    border-color: rgba(139, 212, 158, 0.36);
+    background: rgba(114, 197, 138, 0.12);
+  }
+
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) .orto-tab-name {
+    color: var(--orto-green-lt);
+  }
+
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) .orto-tab-note {
+    color: color-mix(in srgb, var(--orto-green-lt) 74%, var(--orto-muted));
+  }
+
+  html[data-theme="dark"] .orto-tab--today:not(.is-active) .orto-tab-ico {
+    background: rgba(114, 197, 138, 0.14);
+  }
+
+  .orto-stock-ico {
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--orto-surface-2);
+  }
+
+  .orto-stock-ico > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .orto-greenhouse-detail-plant {
+    overflow: hidden;
+    background: var(--orto-surface-2);
+  }
+
+  .orto-greenhouse-detail-title .orto-greenhouse-detail-plant > img,
+  .orto-greenhouse-detail-title .orto-greenhouse-detail-plant.is-seed > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .orto-page-seal span {
+    font-size: 30px;
+    line-height: 1;
+  }
+
+  .orto-page-seal small {
+    width: 84px;
+    margin: 5px 0 0;
+    font-size: 9.5px;
+    font-weight: 750;
+    letter-spacing: 0.045em;
+    line-height: 1.18;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  body[data-orto-stage="plant"] .orto-page-seal span,
+  body[data-orto-stage="care"] .orto-page-seal span {
+    font-size: 25px;
+  }
+
+  body[data-orto-stage="plant"] .orto-page-seal small,
+  body[data-orto-stage="care"] .orto-page-seal small {
+    width: 78px;
+    margin-top: 3px;
+    font-size: 8.2px;
+    letter-spacing: 0.035em;
+    line-height: 1.16;
+  }
+
+  .orto-toast {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .orto-toast.is-on {
+    pointer-events: auto;
+  }
+
+  .orto-toast-action {
+    min-height: 34px;
+    padding: 6px 13px;
+    border: 0;
+    border-radius: var(--control-radius-pill);
+    background: #fff;
+    color: var(--orto-green-dk);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+  }
+
+  .orto-toast-action:hover {
+    background: color-mix(in srgb, #fff 88%, var(--orto-green-lt));
+  }
+
+  .orto-stock-archived {
+    margin-top: 16px;
+    overflow: hidden;
+    border: 1px solid var(--orto-line);
+    border-radius: var(--radius-lg);
+    background: var(--orto-surface);
+  }
+
+  .orto-stock-archived > summary {
+    display: grid;
+    min-height: 62px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    list-style: none;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+  }
+
+  .orto-stock-archived > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .orto-stock-archived-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--orto-surface-2);
+    color: var(--orto-muted);
+    place-items: center;
+  }
+
+  .orto-stock-archived summary b,
+  .orto-stock-archived summary small {
+    display: block;
+  }
+
+  .orto-stock-archived summary small {
+    margin-top: 2px;
+    color: var(--orto-muted);
+    font-size: 12px;
+  }
+
+  .orto-stock-archived summary > i {
+    transition: transform 0.18s ease;
+  }
+
+  .orto-stock-archived[open] summary > i {
+    transform: rotate(180deg);
+  }
+
+  .orto-stock-archived-list {
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-stock-archived-item {
+    display: grid;
+    min-height: 70px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+  }
+
+  .orto-stock-archived-item + .orto-stock-archived-item {
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-stock-archived-item > img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .orto-stock-archived-item b,
+  .orto-stock-archived-item small {
+    display: block;
+  }
+
+  .orto-stock-archived-item small {
+    margin-top: 2px;
+    color: var(--orto-muted);
+    font-size: 12px;
+  }
+
+  @media (max-width: 620px) {
+    .orto-toast {
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .orto-stock-archived-item {
+      grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    .orto-stock-archived-item > .orto-btn {
+      grid-column: 1 / -1;
     }
   }
 }
