@@ -4268,20 +4268,20 @@
   .cart-item-remove {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     justify-self: start;
+    width: var(--control-h-sm);
     min-height: var(--control-h-sm);
-    padding: 0 10px 0 0;
-    border: none;
+    padding: 0;
+    border: 1px solid var(--button-danger-border);
     border-radius: var(--control-radius);
-    background: none;
-    color: var(--muted);
+    background: var(--button-danger-bg);
+    color: var(--button-danger-text);
     cursor: pointer;
     font: inherit;
-    font-size: 0.82rem;
-    font-weight: 650;
-    text-decoration: underline;
-    text-decoration-color: rgba(31, 58, 38, 0.28);
-    text-underline-offset: 3px;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1;
   }
   .cart-item-remove:hover,
   .cart-item-remove:focus-visible {

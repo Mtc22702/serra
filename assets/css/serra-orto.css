@@ -4374,17 +4374,33 @@
   }
 
   .orto-card-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: max-content var(--control-h-sm) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--control-gap-danger);
     margin-top: 13px;
   }
 
-  /* Azione distruttiva: resa come icona, non come pulsante pieno. */
-  .orto-icon-btn {
+  .orto-card-actions > .orto-btn:last-child {
+    justify-self: stretch;
+  }
+
+  @media (max-width: 520px) {
+    .orto-card-actions {
+      grid-template-columns: minmax(0, 1fr) var(--control-h-sm);
+    }
+
+    .orto-card-actions > .orto-btn:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Pulsante compatto ancora usato da alcuni controlli secondari. */
+  .orto-icon-btn,
+  .orto-remove-btn {
     display: grid;
-    width: 38px;
-    height: 38px;
+    width: var(--control-h-sm);
+    height: var(--control-h-sm);
     flex: none;
     margin-left: auto;
     border: 1px solid var(--orto-line);
@@ -4405,6 +4421,32 @@
     border-color: var(--button-danger-border, rgba(176, 48, 32, 0.32));
     background: var(--button-danger-bg, #fff4e8);
     color: var(--button-danger-text, #a03820);
+  }
+
+  /* La × è il comando coerente per rimuovere una sola voce nell'app: il rosso
+     lo distingue dalla × usata per chiudere finestre e pannelli. */
+  .orto-remove-btn {
+    border-color: var(--button-danger-border, rgba(176, 48, 32, 0.42));
+    background: var(--button-danger-bg, #fff4e8);
+    color: var(--button-danger-text, #a03820);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .orto-remove-btn:hover,
+  .orto-remove-btn:focus-visible {
+    border-color: rgba(176, 48, 32, 0.56);
+    background: var(--button-danger-bg-hover, #ffe8e4);
+    color: #8c2316;
+  }
+
+  .orto-card-remove {
+    margin: 0;
+  }
+
+  .orto-list-remove {
+    justify-self: end;
   }
 
   /* Stato vuoto, con le azioni disponibili per uscirne. */
@@ -4563,7 +4605,7 @@
   .orto-stock-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: var(--control-gap-danger);
   }
 
   /* Distintivi seme/piantina fuori dalle foto, su fondo chiaro. */
@@ -6109,7 +6151,7 @@
   .orto-harvest-history-item {
     display: grid;
     align-items: center;
-    gap: 12px;
+    gap: var(--control-gap-danger);
     padding: 12px 16px;
     grid-template-columns: 42px minmax(0, 1fr) auto;
   }
@@ -7670,6 +7712,21 @@
   .orto-btn--ghost:hover {
     border-color: var(--button-secondary-border);
     background: var(--button-secondary-bg-hover);
+  }
+
+  /* Questa variante condivide la base di .orto-btn, ma non deve mai ereditare
+     il verde dell'azione principale: conferma una rimozione irreversibile. */
+  .orto-btn.orto-btn--danger {
+    border-color: var(--button-danger-border, rgba(176, 48, 32, 0.42));
+    background: var(--button-danger-bg, #fff4e8);
+    color: var(--button-danger-text, #a03820);
+    box-shadow: none;
+  }
+
+  .orto-btn.orto-btn--danger:hover:not(:disabled) {
+    border-color: rgba(176, 48, 32, 0.56);
+    background: var(--button-danger-bg-hover, #ffe8e4);
+    color: #8c2316;
   }
 
   .orto-welcome,

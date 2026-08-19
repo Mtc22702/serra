@@ -361,20 +361,26 @@
   .viv-remove {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    width: var(--control-h-sm);
     min-height: var(--control-h-sm);
-    padding-left: 10px;
-    border: 0;
-    background: none;
-    color: var(--orto-muted);
+    padding: 0;
+    border: 1px solid var(--button-danger-border, rgba(176, 48, 32, 0.32));
+    border-radius: var(--control-radius-pill);
+    background: var(--button-danger-bg, #fff4e8);
+    color: var(--button-danger-text, #a03820);
     cursor: pointer;
     font: inherit;
-    font-size: 11.5px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1;
   }
 
-  .viv-remove:hover {
-    color: #a8472b;
+  .viv-remove:hover,
+  .viv-remove:focus-visible {
+    border-color: rgba(176, 48, 32, 0.52);
+    background: var(--button-danger-bg-hover, #ffe8e4);
+    color: #8c2316;
   }
 
   /* Il vantaggio in giorni sta sulla foto: nella scheda stretta la riga del prezzo diventava illeggibile. */

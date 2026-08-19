@@ -655,7 +655,9 @@
                    <div class="viv-card-foot">
                      <span class="viv-in-cart">✓ ${t("cat.in_cart")}</span>
                      <button type="button" class="viv-remove"
-                       data-viv-action="remove" data-plant="${plant.id}">${t("cat.remove")}</button>
+                       data-viv-action="remove" data-plant="${plant.id}"
+                       title="${escape(t("cat.remove"))}"
+                       aria-label="${escape(t("cat.remove"))}">×</button>
                    </div>`
                 : `<button class="orto-btn orto-btn--block" type="button"
                      data-viv-action="add" data-plant="${plant.id}"

@@ -36,7 +36,7 @@
       "qty.less_tray": "Togli un vassoio",
       "qty.more_tray": "Aggiungi un vassoio",
       "row.remove": "Togli dal carrello",
-      "row.remove_short": "Rimuovi",
+      "row.remove_short": "×",
       "undo.removed": "{nome} tolta dal carrello",
       "undo.cleared": "Carrello svuotato",
       "undo.action": "Annulla",
@@ -80,7 +80,7 @@
       "qty.less_tray": "Scoate o tavă",
       "qty.more_tray": "Adaugă o tavă",
       "row.remove": "Scoate din coș",
-      "row.remove_short": "Scoate",
+      "row.remove_short": "×",
       "undo.removed": "{nome} scos din coș",
       "undo.cleared": "Coș golit",
       "undo.action": "Anulează",
@@ -206,8 +206,7 @@
              «+»: i loro centri distavano 41 px, meno di quanto sia largo un
              polpastrello, quindi un tocco solo li copriva entrambi e quale
              vincesse lo decideva il caso. Adesso fra i due c'è la larghezza
-             della riga, e la parola dice cosa succede — la ✕ da sola poteva
-             anche voler dire «chiudi». -->
+             della riga. Il suggerimento e l'etichetta spiegano l'azione. -->
         <button type="button" class="cart-item-remove" ${bersaglio.replace("{azione}", "remove-from-cart")} aria-label="${escape(t("row.remove"))}" title="${escape(t("row.remove"))}">${t("row.remove_short")}</button>
         <span class="cart-item-qty" role="group" aria-label="${escape(t("qty.label"))}">
           <button type="button" class="cart-qty-btn" ${bersaglio.replace("{azione}", "cart-qty-less")} aria-label="${escape(meno)}" title="${escape(meno)}"${qta <= passoRiga(riga) ? " disabled" : ""}>−</button>

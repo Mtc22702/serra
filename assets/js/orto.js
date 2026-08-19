@@ -191,6 +191,7 @@
       "colture.cycle_done": "Ciclo completato",
       "colture.register": "Registra raccolta",
       "colture.remove": "Rimuovi",
+      "colture.remove_card": "Rimuovi pianta",
       "colture.remove_aria": "Rimuovi la coltura di {nome}",
       "colture.from_seed": "da seme",
       "colture.from_plant": "da piantina",
@@ -617,6 +618,7 @@
       "colture.cycle_done": "Ciclu încheiat",
       "colture.register": "Înregistrează recolta",
       "colture.remove": "Elimină",
+      "colture.remove_card": "Elimină planta",
       "colture.remove_aria": "Elimină cultura de {nome}",
       "colture.from_seed": "din sămânță",
       "colture.from_plant": "din răsad",
@@ -2672,9 +2674,10 @@
               <span><b>${escape(plantName(plant))}</b><small>${t("harvest.history_date", {
                 date: fmtBreve(E.parseDate(raccolta?.data || crop.dataInizio)),
               })} · ${t("colture.plants", { n: crop.quantita })}</small></span>
-              <button class="orto-icon-btn" type="button" data-orto-action="remove-coltura"
-                data-coltura-id="${escape(crop.id)}" title="${escape(t("colture.remove"))}"
-                aria-label="${escape(t("colture.remove_aria", { nome: plantName(plant) }))}"><span aria-hidden="true">🗑</span></button>
+              <button class="orto-remove-btn" type="button"
+                data-orto-action="remove-coltura" data-coltura-id="${escape(crop.id)}"
+                title="${escape(t("colture.remove"))}"
+                aria-label="${escape(t("colture.remove_aria", { nome: plantName(plant) }))}"><span aria-hidden="true">×</span></button>
             </article>`;
           })
           .join("")}
@@ -2750,26 +2753,23 @@
                 : `<b>${t("colture.cycle_done")}</b>`
             }</span>
           </div>
-          <!-- Le tre azioni avevano lo stesso peso, compresa quella che
-               cancella. Ora la principale è quella che serve adesso — a raccolta
-               vicina è «Registra raccolta» — e l'eliminazione è un'icona, che si
-               trova quando la si cerca senza invitare a premerla. -->
+          <!-- Le azioni di cura restano verdi; la rimozione usa la stessa ×
+               rossa tenue delle altre liste dell'app. -->
           <div class="orto-card-actions">
             <button class="orto-btn ${raccoltaOra ? "" : "orto-btn--ghost "}orto-btn--sm" type="button"
               data-orto-action="${raccoltaOra ? "register-harvest" : "edit-coltura"}"
               data-coltura-id="${escape(coltura.id)}">${
                 raccoltaOra ? t("colture.register") : t("colture.edit")
               }</button>
+            <button class="orto-remove-btn orto-card-remove" type="button"
+              data-orto-action="remove-coltura" data-coltura-id="${escape(coltura.id)}"
+              title="${escape(t("colture.remove"))}"
+              aria-label="${escape(t("colture.remove_aria", { nome: plantName(plant) }))}"><span aria-hidden="true">×</span></button>
             <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
               data-orto-action="${raccoltaOra ? "edit-coltura" : "register-harvest"}"
               data-coltura-id="${escape(coltura.id)}">${
                 raccoltaOra ? t("colture.edit") : t("colture.register")
               }</button>
-            <button class="orto-icon-btn" type="button"
-              data-orto-action="remove-coltura" data-coltura-id="${escape(coltura.id)}"
-              title="${escape(t("colture.remove"))}"
-              aria-label="${escape(t("colture.remove_aria", { nome: plantName(plant) }))}">
-              <span aria-hidden="true">🗑</span></button>
           </div>
         </div>
       </article>`;
@@ -2993,10 +2993,10 @@
                   ? t("disp.plant_again")
                   : t("disp.plant_now")
             }</button>
-          <button class="orto-icon-btn orto-stock-more" type="button"
+          <button class="orto-remove-btn orto-stock-archive" type="button"
             data-orto-action="archive-voce" data-voce-id="${escape(voce.id)}"
             title="${escape(t(esaurita ? "disp.archive_planted" : "disp.archive"))}"
-            aria-label="${escape(t(esaurita ? "disp.archive_planted" : "disp.archive"))}"><span aria-hidden="true">⋯</span></button>
+            aria-label="${escape(t(esaurita ? "disp.archive_planted" : "disp.archive"))}"><span aria-hidden="true">×</span></button>
         </div>
       </article>`;
   }

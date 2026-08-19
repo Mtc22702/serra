@@ -2276,7 +2276,7 @@ function renderProjectsModal() {
       )}" aria-label="${projectsText("projects.duplicate")}" data-conf-action="duplicate-project" data-project-id="${project.id}">⧉</button>
       <button type="button" class="projects-act projects-act--danger" title="${projectsText(
         "projects.delete",
-      )}" aria-label="${projectsText("projects.delete")}" data-conf-action="delete-project" data-project-id="${project.id}">🗑</button>
+      )}" aria-label="${projectsText("projects.delete")}" data-conf-action="delete-project" data-project-id="${project.id}">×</button>
     </span>`;
   const summary = (project) => {
     const count = project.config?.beds?.length || 0;
@@ -4809,7 +4809,7 @@ function renderBeds() {
           <span class="bedchip-diff ${diffClass}">${diffLabel}</span>
         </div>
       </div>
-      <button class="del" data-del="${i}" title="${tx("remove")}">✕</button>
+      <button class="del" data-del="${i}" title="${tx("remove")}" aria-label="${tx("remove")}">×</button>
     </div>`;
     })
     .join("");
@@ -9522,7 +9522,7 @@ function updateConfCartUI() {
         <!-- Stessa rimozione delle righe di prodotto: parola invece di ✕ e
              stessa casella della griglia, così le due specie di riga del
              cassetto non si comportano in due modi diversi. -->
-        <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}">${tx("remove")}</button>
+        <button class="cart-item-remove" data-conf-action="unselect-material" data-material-id="${m.id}" title="${tx("remove")}" aria-label="${tx("remove")}">×</button>
       </div>`;
           })
           .join("")}

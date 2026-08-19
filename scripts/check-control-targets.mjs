@@ -36,7 +36,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 /* I comandi che cancellano qualcosa. */
 const DISTRUTTIVI =
-  /\.(cart-item-remove|viv-remove|cart-clear-btn|order-cancel-button|btn-danger|crop-action-btn--danger|crops-clear-btn|catalog-reset-btn|projects-close)\b/;
+  /\.(cart-item-remove|viv-remove|orto-remove-btn|cart-clear-btn|order-cancel-button|btn-danger|crop-action-btn--danger|crops-clear-btn|catalog-reset-btn|projects-close)\b/;
 
 /* I gruppi che ne contengono almeno uno: la loro spaziatura dev'essere quella
    maggiorata. Aggiungere qui i gruppi nuovi. */
@@ -46,6 +46,9 @@ const GRUPPI_A_RISCHIO = [
   ".order-actions-panel",
   ".admin-order-secondary-actions",
   ".viv-card-foot",
+  ".orto-card-actions",
+  ".orto-stock-actions",
+  ".orto-harvest-history-item",
 ];
 
 const ALTEZZE_AMMESSE = new Set([
@@ -97,7 +100,11 @@ for (const file of files.sort()) {
       }
 
       // 2 — spaziatura dei gruppi che contengono un comando distruttivo
-      if (GRUPPI_A_RISCHIO.some((g) => selettore.includes(g))) {
+      if (
+        GRUPPI_A_RISCHIO.some((g) =>
+          selettore.split(",").some((parte) => parte.trim() === g),
+        )
+      ) {
         for (const d of blocco.matchAll(/(?:^|[\s;])gap:\s*([^;]+);/g)) {
           const v = d[1].trim();
           if (v === GAP_AMMESSO) continue;
