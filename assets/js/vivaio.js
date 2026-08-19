@@ -268,6 +268,9 @@
   // Filtri del listino: famiglia botanica e criterio d'ordinamento, come nel catalogo dei semi in home.
   let tipoAttivo = "";
   let ordine = "consigliati";
+  // Su smartphone il pannello parte compatto e conserva la scelta dell'utente
+  // anche quando il listino viene ridisegnato dopo un filtro o un ordinamento.
+  let filtriAperti = !window.matchMedia("(max-width: 720px)").matches;
 
   const app = document.getElementById("vivaioApp");
   const toastEl = document.getElementById("vivaioToast");
@@ -389,6 +392,18 @@
   const filtriAttivi = () =>
     !!tipoAttivo || !!filtro.trim() || ordine !== "consigliati";
 
+  function impostaTipo(tipo) {
+    tipoAttivo = tipoAttivo === tipo ? "" : tipo;
+    render();
+  }
+
+  function azzeraFiltri() {
+    tipoAttivo = "";
+    filtro = "";
+    ordine = "consigliati";
+    render();
+  }
+
   function barraFiltriHtml(lista, visibili) {
     const opzioni = ["consigliati", "nome", "veloce", "risparmio", "prezzo"]
       .map(
@@ -405,7 +420,7 @@
         aria-pressed="${tipoAttivo === tipo}">
         <span>${escape(etichetta)}</span><small>${n}</small></button>`;
     return `
-      <details class="viv-filter-shell" open>
+      <details class="viv-filter-shell"${filtriAperti ? " open" : ""}>
         <summary class="viv-filter-summary">
           <span>${escape(t("filters.toggle"))}</span>
           <b>${escape(
@@ -539,6 +554,26 @@
       </div>`;
 
     disegnaCarrello();
+
+    // I controlli della toolbar vivono dentro un nodo ridisegnato a ogni
+    // aggiornamento. Il binding locale evita interferenze con i gestori del
+    // carrello e garantisce un solo cambio di stato per ciascun clic.
+    app.querySelectorAll('.viv-chip[data-viv-action="set-type"]').forEach((chip) => {
+      chip.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        impostaTipo(chip.dataset.type || "");
+      });
+    });
+    app
+      .querySelectorAll('[data-viv-action="reset-filters"]')
+      .forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          azzeraFiltri();
+        });
+      });
 
     const input = document.getElementById("vivSearch");
     if (input && document.activeElement !== input && filtro) {
@@ -1022,16 +1057,12 @@
       return;
     }
     if (action === "set-type") {
-      const tipo = trigger.dataset.type || "";
-      tipoAttivo = tipoAttivo === tipo ? "" : tipo;
-      render();
+      event.preventDefault();
+      impostaTipo(trigger.dataset.type || "");
       return;
     }
     if (action === "reset-filters") {
-      tipoAttivo = "";
-      filtro = "";
-      ordine = "consigliati";
-      render();
+      azzeraFiltri();
       return;
     }
     if (action === "cross-sell") {
@@ -1064,6 +1095,17 @@
     filtro = event.target.value;
     render();
   });
+
+  // `toggle` non effettua il bubbling: la fase capture mantiene lo stato del
+  // details mobile senza affidarsi al nodo, che cambia a ogni render.
+  document.addEventListener(
+    "toggle",
+    (event) => {
+      if (!event.target.classList?.contains("viv-filter-shell")) return;
+      filtriAperti = event.target.open;
+    },
+    true,
+  );
 
   // L'ordinamento vive nel corpo ridisegnato a ogni render: delega sul documento, come per i clic.
   document.addEventListener("change", (event) => {

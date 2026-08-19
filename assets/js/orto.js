@@ -226,6 +226,10 @@
       "greenhouse.bed": "Aiuola {n}",
       "greenhouse.spacing": "Distanze consigliate",
       "greenhouse.spacing_value": "{d} cm tra le piante · {dr} cm tra le file",
+      "greenhouse.layout": "Disposizione dell’aiuola",
+      "greenhouse.layout_block": "A blocco",
+      "greenhouse.layout_row": "A fila intera",
+      "greenhouse.layout_row_hint": "Usa tutta la lunghezza per le rampicanti alte, come nel configuratore.",
       "greenhouse.placed": "{n} piante collocate",
       "greenhouse.unplaced": "{n} da sistemare",
       "greenhouse.warning":
@@ -648,6 +652,10 @@
       "greenhouse.bed": "Stratul {n}",
       "greenhouse.spacing": "Distanțe recomandate",
       "greenhouse.spacing_value": "{d} cm între plante · {dr} cm între rânduri",
+      "greenhouse.layout": "Dispunerea stratului",
+      "greenhouse.layout_block": "În bloc",
+      "greenhouse.layout_row": "Pe rând complet",
+      "greenhouse.layout_row_hint": "Folosește toată lungimea pentru plantele cățărătoare înalte, ca în configurator.",
       "greenhouse.placed": "{n} plante așezate",
       "greenhouse.unplaced": "{n} de așezat",
       "greenhouse.warning":
@@ -912,6 +920,9 @@
     length: 6,
     path: 50,
     configured: false,
+    /* Stato esclusivo della serra dell'Orto. Non contiene né riferimenti né
+       scritture verso `serra.config.v1`. */
+    beds: {},
   };
   let selectedGreenhouseBed = null;
   let vocePendente = null; // voce della dispensa in corso di messa a dimora
@@ -1042,6 +1053,21 @@
           Math.max(30, Number(raw.path) || 50),
         );
         ortoGreenhouse.configured = Boolean(raw.configured);
+        ortoGreenhouse.beds =
+          raw.beds && typeof raw.beds === "object" && !Array.isArray(raw.beds)
+            ? Object.fromEntries(
+                Object.entries(raw.beds).map(([id, bed]) => [
+                  id,
+                  {
+                    layout: bed?.layout === "fila" ? "fila" : "blocco",
+                    col:
+                      Number.isInteger(bed?.col) && bed.col >= 0
+                        ? bed.col
+                        : undefined,
+                  },
+                ]),
+              )
+            : {};
       }
     } catch (_) {}
   }
@@ -2043,6 +2069,43 @@
     return Math.max(1, Math.min(suggested, bedCount || 1));
   }
 
+  function greenhouseCanUseRow(plant) {
+    return (
+      ortoGreenhouse.width >= 4.2 &&
+      ortoGreenhouse.length >= 4.8 &&
+      plant?.arch === "rampicante" &&
+      plant?.h === "alta"
+    );
+  }
+
+  /* Mantiene per ogni coltura solo metadati di layout propri dell'Orto.
+     Le quantità continuano a provenire dalle colture realmente piantate. */
+  function syncOrtoGreenhouseBeds(crops) {
+    const current = ortoGreenhouse.beds || {};
+    const next = {};
+    let rowSlots = Math.max(
+      0,
+      greenhouseColumns(ortoGreenhouse.width * 100, crops.length) - 1,
+    );
+    crops.forEach((crop) => {
+      const saved = current[crop.id] || {};
+      const wantsRow = saved.layout === "fila";
+      const canUseRow = greenhouseCanUseRow(crop.plant) && rowSlots > 0;
+      const layout = canUseRow && (wantsRow || !current[crop.id])
+        ? "fila"
+        : "blocco";
+      if (layout === "fila") rowSlots--;
+      next[crop.id] = {
+        layout,
+        col: Number.isInteger(saved.col) && saved.col >= 0
+          ? saved.col
+          : undefined,
+      };
+    });
+    ortoGreenhouse.beds = next;
+    return next;
+  }
+
   function greenhouseCrops(extraCrop = null) {
     const groups = new Map();
     const source = extraCrop
@@ -2137,6 +2200,7 @@
     const widthCm = ortoGreenhouse.width * 100;
     const lengthCm = ortoGreenhouse.length * 100;
     const crops = greenhouseCrops(extraCrop);
+    const bedState = syncOrtoGreenhouseBeds(crops);
     const columnCount = greenhouseColumns(widthCm, crops.length);
     const path = ortoGreenhouse.path;
     const bedWidth = Math.max(
@@ -2155,17 +2219,37 @@
 
     crops.forEach((crop, cropIndex) => {
       const plant = crop.plant;
+      const savedBed = bedState[crop.id] || {};
       const spacing = Math.max(10, Number(plant.d) || 30);
       const rowSpacing = Math.max(spacing, Number(plant.dr) || spacing);
       const innerWidth = Math.max(20, bedWidth - 2 * GREENHOUSE_BED_PAD);
       const plantsPerRow = greenhouseMaxSlots(innerWidth, rowSpacing);
-      const rows = Math.max(1, Math.ceil(crop.quantity / plantsPerRow));
-      const naturalHeight = 2 * GREENHOUSE_BED_PAD + rows * spacing;
-      const height = Math.max(
-        naturalHeight,
-        Math.max(46, greenhousePlantRadius(plant) * 3 + 18),
-      );
-      const column = columns.reduce((best, current) => {
+      const isRow =
+        savedBed.layout === "fila" && greenhouseCanUseRow(plant);
+      const rows = isRow
+        ? greenhouseMaxSlots(
+            lengthCm - 2 * GREENHOUSE_MARGIN - 2 * GREENHOUSE_BED_PAD,
+            spacing,
+          )
+        : Math.max(1, Math.ceil(crop.quantity / plantsPerRow));
+      const naturalHeight = isRow
+        ? lengthCm - 2 * GREENHOUSE_MARGIN
+        : 2 * GREENHOUSE_BED_PAD + rows * spacing;
+      const height = isRow
+        ? naturalHeight
+        : Math.max(
+            naturalHeight,
+            Math.max(46, greenhousePlantRadius(plant) * 3 + 18),
+          );
+      let column;
+      if (
+        Number.isInteger(savedBed.col) &&
+        savedBed.col >= 0 &&
+        savedBed.col < columnCount
+      ) {
+        column = columns[savedBed.col];
+      } else {
+        column = columns.reduce((best, current) => {
         const score = (candidate) => {
           const incompatible =
             greenhouseRelated(plant, candidate.lastPlant, "nemiche") ||
@@ -2180,8 +2264,10 @@
           );
         };
         return score(current) < score(best) ? current : best;
-      });
-      const rowOffset = Math.max(0, (height - naturalHeight) / 2);
+        });
+        savedBed.col = column.index;
+      }
+      const rowOffset = isRow ? 0 : Math.max(0, (height - naturalHeight) / 2);
       const xSlots = greenhouseCenteredSlots(
         column.x + GREENHOUSE_BED_PAD,
         innerWidth,
@@ -2206,18 +2292,20 @@
           generated++;
         }
       }
-      const bedUnplaced = positions.filter(
+      const visiblePositions = positions.filter(
         (position) =>
-          position.y < GREENHOUSE_MARGIN ||
-          position.y > lengthCm - GREENHOUSE_MARGIN,
-      ).length;
+          position.y >= GREENHOUSE_MARGIN &&
+          position.y <= lengthCm - GREENHOUSE_MARGIN,
+      );
+      const bedUnplaced = Math.max(0, crop.quantity - visiblePositions.length);
       unplaced += bedUnplaced;
       beds.push({
         id: `${crop.id}-${cropIndex}`,
+        stateId: crop.id,
         plant,
         origin: crop.origin,
         quantity: crop.quantity,
-        placed: crop.quantity - bedUnplaced,
+        placed: visiblePositions.length,
         unplaced: bedUnplaced,
         spacing,
         rowSpacing,
@@ -2227,12 +2315,17 @@
         height,
         cols: plantsPerRow,
         rows,
-        positions,
+        positions: visiblePositions,
         columnIndex: column.index,
+        layout: isRow ? "fila" : "blocco",
       });
       column.y += height + GREENHOUSE_BED_GAP;
       column.lastPlant = plant;
     });
+
+    /* Come nel configuratore, l'assegnazione alle colonne resta stabile fra
+       i rendering; viene però salvata esclusivamente nella chiave dell'Orto. */
+    if (!extraCrop) saveOrtoGreenhouse();
 
     const overflow =
       unplaced > 0 ||
@@ -2342,7 +2435,16 @@
         Math.max(60, fullLabel.length * 5.4 + 18),
         Math.max(45, bed.width - 8),
       );
-      scene += `<rect class="orto-scene-label-bg" x="${x + bed.width / 2 - labelWidth / 2}" y="${y + 4}" width="${labelWidth}" height="19" rx="8"/><text class="orto-scene-label" x="${x + bed.width / 2}" y="${y + 14}" dominant-baseline="middle" text-anchor="middle" textLength="${Math.max(45, labelWidth - 10)}" lengthAdjust="spacingAndGlyphs">${escape(fullLabel)}</text></g>`;
+      const labelSize = Math.max(
+        5.76,
+        Math.min(
+          11.4,
+          Math.min(layout.widthCm, layout.lengthCm) * 0.0192,
+          ((bed.width - 28) / Math.max(fullLabel.length * 0.56, 1)) * 1.2,
+          bed.height * 0.168,
+        ),
+      );
+      scene += `<rect class="orto-scene-label-bg" x="${x + bed.width / 2 - labelWidth / 2}" y="${y + 4}" width="${labelWidth}" height="19" rx="8"/><text class="orto-scene-label" x="${x + bed.width / 2}" y="${y + 14}" dominant-baseline="middle" text-anchor="middle" font-size="${labelSize}">${escape(fullLabel)}</text></g>`;
     });
     scene += `</g>`;
     const lampX = originX + layout.widthCm / 2;
@@ -2448,7 +2550,8 @@
                 ${
                   selected
                     ? `<div class="orto-greenhouse-detail-title"><span class="orto-greenhouse-detail-plant${selected.origin === "piantina" ? " is-seedling" : " is-seed"}"><img src="${photoSrc(selected.plant.id)}" alt="" loading="lazy"></span><div><small>${t("greenhouse.bed", { n: layout.beds.indexOf(selected) + 1 })}</small><h4>${escape(plantName(selected.plant))}</h4><span class="orto-greenhouse-origin-chip ${selected.origin === "piantina" ? "is-seedling" : "is-seed"}">${t(selected.origin === "piantina" ? "greenhouse.source_plant" : "greenhouse.source_seed")}</span></div></div>
-                       <dl><div><dt>${t("greenhouse.spacing")}</dt><dd>${t("greenhouse.spacing_value", { d: selected.spacing, dr: selected.rowSpacing })}</dd></div><div><dt>${t("greenhouse.placed", { n: selected.placed })}</dt><dd>${selected.unplaced ? t("greenhouse.unplaced", { n: selected.unplaced }) : "✓"}</dd></div></dl>`
+                       <dl><div><dt>${t("greenhouse.spacing")}</dt><dd>${t("greenhouse.spacing_value", { d: selected.spacing, dr: selected.rowSpacing })}</dd></div><div><dt>${t("greenhouse.placed", { n: selected.placed })}</dt><dd>${selected.unplaced ? t("greenhouse.unplaced", { n: selected.unplaced }) : "✓"}</dd></div></dl>
+                       <div class="orto-greenhouse-layout-control"><span>${t("greenhouse.layout")}</span><div role="group" aria-label="${t("greenhouse.layout")}"><button type="button" class="${selected.layout === "blocco" ? "is-active" : ""}" data-orto-action="set-greenhouse-layout" data-bed-id="${escape(selected.id)}" data-layout="blocco">${t("greenhouse.layout_block")}</button><button type="button" class="${selected.layout === "fila" ? "is-active" : ""}" data-orto-action="set-greenhouse-layout" data-bed-id="${escape(selected.id)}" data-layout="fila" ${greenhouseCanUseRow(selected.plant) ? "" : "disabled"}>${t("greenhouse.layout_row")}</button></div>${greenhouseCanUseRow(selected.plant) ? `<small>${t("greenhouse.layout_row_hint")}</small>` : ""}</div>`
                     : `<p>${t("greenhouse.hint")}</p>`
                 }
                 ${layout.overflow ? `<div class="orto-greenhouse-warning"><span>!</span><p>${layout.unplaced ? `<strong>${t("greenhouse.unplaced", { n: layout.unplaced })}</strong>` : ""}${t("greenhouse.warning")}</p></div>` : ""}
@@ -3599,6 +3702,23 @@
       selectedGreenhouseBed = trigger.dataset.bedId || null;
       return render();
     }
+    if (action === "set-greenhouse-layout") {
+      const layout = computeGreenhouseLayout();
+      const selected = layout.beds.find(
+        (bed) => bed.id === trigger.dataset.bedId,
+      );
+      if (!selected) return;
+      const requested = trigger.dataset.layout === "fila" ? "fila" : "blocco";
+      ortoGreenhouse.beds[selected.stateId] = {
+        ...(ortoGreenhouse.beds[selected.stateId] || {}),
+        layout:
+          requested === "fila" && greenhouseCanUseRow(selected.plant)
+            ? "fila"
+            : "blocco",
+      };
+      saveOrtoGreenhouse();
+      return render();
+    }
 
     if (action === "toggle-task") {
       const id = trigger.dataset.taskId;
@@ -4212,6 +4332,11 @@
       Math.max(30, Number(data.get("path")) || 50),
     );
     ortoGreenhouse.configured = true;
+    /* Con misure diverse ricalcoliamo le colonne, senza toccare le colture e
+       senza consultare il salvataggio del configuratore. */
+    Object.values(ortoGreenhouse.beds || {}).forEach((bed) => {
+      delete bed.col;
+    });
     selectedGreenhouseBed = null;
     saveOrtoGreenhouse();
     render();

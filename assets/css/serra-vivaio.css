@@ -6780,6 +6780,57 @@
     line-height: 1.45;
   }
 
+  .orto-greenhouse-layout-control {
+    display: grid;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--orto-line);
+  }
+
+  .orto-greenhouse-layout-control > span {
+    color: var(--orto-muted);
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  .orto-greenhouse-layout-control > div {
+    display: grid;
+    gap: 7px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .orto-greenhouse-layout-control button {
+    min-height: 40px;
+    border: 1px solid var(--orto-line-strong);
+    border-radius: var(--control-radius);
+    padding: 7px 9px;
+    background: var(--orto-surface);
+    color: var(--orto-ink-soft);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .orto-greenhouse-layout-control button.is-active {
+    border-color: var(--orto-green);
+    background: color-mix(in srgb, var(--orto-green) 12%, var(--orto-surface));
+    color: var(--orto-green-dk);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--orto-green) 8%, transparent);
+  }
+
+  .orto-greenhouse-layout-control button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  .orto-greenhouse-layout-control small {
+    color: var(--orto-muted);
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+
   .orto-greenhouse-warning {
     display: flex;
     gap: 10px;
@@ -9799,6 +9850,7 @@
 
   /* Hero del vivaio: una superficie editoriale chiara per il contenuto e una tavola verde separata per il răsad. */
   .viv-hero {
+    position: relative;
     isolation: isolate;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(250px, 310px);
@@ -10475,5 +10527,104 @@
   .viv-shipping,
   .viv-hero .viv-stat-copy small {
     font-size: 12px;
+  }
+}
+
+/* Barra filtri: controlli più leggibili, stato attivo netto e ordinamento
+   riconoscibile come select sia su desktop sia su smartphone. */
+.viv-page .viv-toolbar {
+  gap: 11px;
+  padding: 15px;
+  border-width: 1px;
+  border-radius: 18px;
+  box-shadow: 0 7px 22px rgba(24, 53, 36, 0.07);
+}
+
+.viv-page .viv-toolbar-row {
+  display: grid;
+  gap: 9px;
+  grid-template-columns: minmax(220px, 1fr) minmax(210px, 280px);
+}
+
+.viv-page .viv-search,
+.viv-page .viv-sort {
+  min-height: 46px;
+  border: 1px solid var(--orto-line);
+  border-radius: var(--control-radius);
+  background-color: var(--orto-surface-2);
+}
+
+.viv-page .viv-search:focus-within,
+.viv-page .viv-sort:focus-visible {
+  border-color: var(--orto-green);
+  outline: 3px solid color-mix(in srgb, var(--orto-green) 14%, transparent);
+  outline-offset: 1px;
+}
+
+.viv-page .viv-sort {
+  width: 100%;
+  padding-inline: 13px 34px;
+  font-weight: 700;
+}
+
+.viv-page .viv-chiprail {
+  gap: 8px;
+}
+
+.viv-page .viv-chip {
+  min-height: 38px;
+  border-width: 1px;
+  background: var(--orto-surface-2);
+}
+
+.viv-page .viv-chip.is-active {
+  border-color: var(--orto-green);
+  background: var(--orto-green);
+  color: #fff;
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--orto-green) 24%, transparent);
+}
+
+.viv-page .viv-results {
+  min-height: 30px;
+  padding-top: 8px;
+}
+
+.viv-page .viv-reset {
+  min-height: 32px;
+  padding-inline: 7px;
+  border-radius: var(--control-radius);
+  text-decoration: none;
+}
+
+.viv-page .viv-reset:hover {
+  background: color-mix(in srgb, var(--orto-green) 10%, transparent);
+}
+
+@media (max-width: 720px) {
+  .viv-page .viv-filter-summary {
+    min-height: 54px;
+    padding-inline: 13px;
+  }
+
+  .viv-page .viv-filter-shell .viv-toolbar {
+    padding: 12px;
+  }
+
+  .viv-page .viv-toolbar-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .viv-page .viv-chiprail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .viv-page .viv-chip {
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 360px) {
+  .viv-page .viv-chiprail {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
