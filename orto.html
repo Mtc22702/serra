@@ -59,8 +59,14 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/base.css?v=20260819-preconfig-safe-area" />
-    <link rel="stylesheet" href="assets/css/serra-orto.css?v=20260819-orto-greenhouse" />
+    <link
+      rel="stylesheet"
+      href="assets/css/base.css?v=20260819-preconfig-safe-area"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/css/serra-orto.css?v=20260819-orto-greenhouse"
+    />
   </head>
   <body class="orto-page">
     <!-- Intestazione condivisa con il resto dell'app -->
@@ -243,7 +249,9 @@
           <p class="orto-page-eyebrow" data-orto-key="page.eyebrow">
             Il tuo assistente di coltivazione
           </p>
-          <h1 class="orto-page-title" data-orto-key="page.title">Il mio orto</h1>
+          <h1 class="orto-page-title" data-orto-key="page.title">
+            Il mio orto
+          </h1>
           <p class="orto-page-lead" data-orto-key="page.lead">
             Aggiungi ciò che possiedi, scegli cosa piantare e segui un piano
             semplice fino alla raccolta.
@@ -251,7 +259,9 @@
         </div>
         <div class="orto-page-seal" aria-hidden="true">
           <span>🌱</span>
-          <small data-orto-key="page.seal">Dalla scelta<br />alla raccolta</small>
+          <small data-orto-key="page.seal"
+            >Dalla scelta<br />alla raccolta</small
+          >
         </div>
       </header>
 
@@ -294,7 +304,9 @@
           >
             <span class="orto-tab-ico" aria-hidden="true">🪴</span>
             <span class="orto-tab-copy">
-              <span class="orto-tab-name" data-orto-key="tab.piano">Piantate</span>
+              <span class="orto-tab-name" data-orto-key="tab.piano"
+                >Piantate</span
+              >
               <span class="orto-tab-note" id="ortoPianoNote"></span>
             </span>
             <span class="orto-tab-badge" id="ortoPianoBadge" hidden>0</span>
@@ -541,9 +553,7 @@
         <span class="orto-dialog-grip" aria-hidden="true"></span>
         <div class="orto-dialog-head">
           <div class="orto-dialog-heading">
-            <h3 id="ortoPlantTitle" data-orto-key="plant.title">
-              Pianta ora
-            </h3>
+            <h3 id="ortoPlantTitle" data-orto-key="plant.title">Pianta ora</h3>
             <!-- Trattino di separazione gestito in CSS (.orto-dialog-who) -->
             <p>
               <span class="orto-dialog-who" id="ortoPlantWho"></span>
@@ -827,7 +837,12 @@
             </button>
             <!-- L'etichetta la riscrive renderImportList: dice quante piante
                  si sta per importare, non un generico «Importa». -->
-            <button type="submit" class="orto-btn" value="ok" id="ortoImportConfirm">
+            <button
+              type="submit"
+              class="orto-btn"
+              value="ok"
+              id="ortoImportConfirm"
+            >
               Importa
             </button>
           </div>
@@ -917,7 +932,11 @@
             <span aria-hidden="true">✕</span>
           </button>
         </div>
-        <form method="dialog" class="orto-dialog-form" id="ortoClearPlantedForm">
+        <form
+          method="dialog"
+          class="orto-dialog-form"
+          id="ortoClearPlantedForm"
+        >
           <div class="orto-dialog-foot">
             <button
               type="submit"
