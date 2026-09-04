@@ -11868,3 +11868,49 @@ html[data-theme="dark"]
     }
   }
 }
+
+/* Rifinitura dark della preconfigurazione: le superfici introdotte dalla v2
+   devono restare nella stessa scala verde profonda del resto dell'app. */
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-panel-head {
+  background: rgba(19, 34, 27, 0.88);
+}
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-head-icon {
+  border-color: rgba(139, 212, 158, 0.18);
+  background: linear-gradient(
+    145deg,
+    rgba(82, 183, 136, 0.18),
+    rgba(255, 255, 255, 0.04)
+  );
+}
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-close {
+  border-color: rgba(160, 205, 176, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield {
+  border-color: rgba(160, 205, 176, 0.16);
+}
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--climate {
+  background-image:
+    linear-gradient(rgba(20, 48, 29, 0.9), rgba(19, 34, 27, 0.94)),
+    url(../img/svg/clima-pattern.svg);
+}
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-month-wrap {
+  border-color: rgba(160, 205, 176, 0.18);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"]
+  .preconfig-sheet--v2
+  .preconfig-cta.preconfig-cta--disabled {
+  border-color: rgba(139, 212, 158, 0.22);
+  background: rgba(139, 212, 158, 0.08);
+  color: rgba(208, 236, 208, 0.48);
+}

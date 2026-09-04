@@ -4863,7 +4863,11 @@ if (catalogSearchLink) {
     if (!sel) return;
     const lang = document.documentElement.lang === "ro" ? "ro" : "it";
     const months = PC_MONTHS[lang] || PC_MONTHS.it;
-    const currentVal = sel.value;
+    const previousMonth = Number.parseInt(sel.value, 10);
+    const selectedMonth =
+      previousMonth >= 1 && previousMonth <= 12
+        ? previousMonth
+        : new Date().getMonth() + 1;
     sel.innerHTML = "";
     months.forEach(function (m, i) {
       const opt = document.createElement("option");
@@ -4871,7 +4875,7 @@ if (catalogSearchLink) {
       opt.textContent = m;
       sel.appendChild(opt);
     });
-    if (currentVal) sel.value = currentVal;
+    sel.value = String(selectedMonth);
   }
 
   var PC_TR = {
@@ -5069,8 +5073,13 @@ if (catalogSearchLink) {
     const l = saved?.lunghezza ?? 5;
     const zona = saved?.zona ?? "temperato";
     const riscaldata = Boolean(saved?.riscaldata);
-    // Ripristina il mese salvato o usa quello corrente.
-    const mese = saved?.mese ?? new Date().getMonth() + 1;
+    // Ripristina solo un mese salvato valido; dati vecchi, vuoti o corrotti
+    // devono sempre ricadere sul mese corrente.
+    const savedMonth = Number.parseInt(saved?.mese, 10);
+    const mese =
+      savedMonth >= 1 && savedMonth <= 12
+        ? savedMonth
+        : new Date().getMonth() + 1;
 
     const path = saved?.path ?? 60;
     const pcW = document.getElementById("pcW");
