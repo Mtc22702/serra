@@ -4480,15 +4480,20 @@ if (catalogSearchLink) {
       <linearGradient id="hcgSoil" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#795b3e"/><stop offset=".62" stop-color="#5d422d"/><stop offset="1" stop-color="#442d1e"/></linearGradient>
       <linearGradient id="hcgDirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9a7446"/><stop offset="1" stop-color="#684827"/></linearGradient>
       <linearGradient id="hcgPathBase" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#817866"/><stop offset=".16" stop-color="#c9c0a7"/><stop offset=".52" stop-color="#e0d7bd"/><stop offset=".84" stop-color="#b8af97"/><stop offset="1" stop-color="#756c5a"/></linearGradient>
+      <linearGradient id="hcgFrame" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce9e7"/><stop offset=".24" stop-color="#789092"/><stop offset=".6" stop-color="#3d5659"/><stop offset="1" stop-color="#b8cfcc"/></linearGradient>
+      <linearGradient id="hcgBedEdge" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b68b57"/><stop offset=".45" stop-color="#795434"/><stop offset="1" stop-color="#49311f"/></linearGradient>
+      <linearGradient id="hcgGlassLight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="rgba(255,255,255,.22)"/><stop offset=".3" stop-color="rgba(255,255,255,.03)"/><stop offset=".62" stop-color="rgba(170,224,203,.06)"/><stop offset="1" stop-color="rgba(255,255,255,.14)"/></linearGradient>
       <clipPath id="hcgInteriorClip"><rect x="14" y="12" width="192" height="136" rx="5.5"/></clipPath>
+      <filter id="hcgBedShadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2.2" stdDeviation="1.6" flood-color="#180f08" flood-opacity=".48"/></filter>
+      <filter id="hcgFrameShadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2.8" stdDeviation="2.1" flood-color="#07110c" flood-opacity=".6"/></filter>
       <pattern id="hcgGrass" width="15" height="15" patternUnits="userSpaceOnUse"><rect width="15" height="15" fill="#1d4d30"/><path d="M2 14L4 8M9 14l1-5M13 14l-2-3" stroke="#4f843c" stroke-width=".7" opacity=".7"/></pattern>
       <pattern id="hcgGravel" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#aaa28d"/><circle cx="3" cy="3" r="1.2" fill="#ded7c2"/><circle cx="9" cy="7" r="1.3" fill="#817967"/><circle cx="5" cy="10" r=".9" fill="#c3bba4"/></pattern>
       <pattern id="hcgSoilSpecks" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="3" cy="5" r=".9" fill="rgba(230,202,158,.2)"/><circle cx="12" cy="9" r="1.15" fill="rgba(31,20,12,.22)"/><circle cx="8" cy="15" r=".65" fill="rgba(238,214,170,.14)"/></pattern>`;
     defs += `</defs>`;
     let s = `<rect width="220" height="160" fill="url(#hcgGrass)"/>`;
     s += `<rect x="13" y="14" width="194" height="137" rx="10" fill="#102719" opacity=".3"/>`;
-    s += `<rect x="10" y="8" width="200" height="144" rx="10" fill="#657779" stroke="#183b3e" stroke-width="3.4"/>`;
-    s += `<rect x="11.6" y="9.6" width="196.8" height="140.8" rx="8.4" fill="none" stroke="rgba(244,253,252,.9)" stroke-width="1.15"/>`;
+    s += `<rect x="10" y="8" width="200" height="144" rx="10" fill="url(#hcgFrame)" stroke="#183b3e" stroke-width="3.4" filter="url(#hcgFrameShadow)"/>`;
+    s += `<rect x="11.6" y="9.6" width="196.8" height="140.8" rx="8.4" fill="none" stroke="rgba(244,253,252,.94)" stroke-width="1.15"/>`;
     s += `<rect x="13.5" y="11.5" width="193" height="137" rx="6.5" fill="#3a2710" stroke="rgba(35,66,67,.88)" stroke-width="1.2"/>`;
     s += `<g clip-path="url(#hcgInteriorClip)">`;
     s += `<rect x="14" y="12" width="192" height="136" fill="url(#hcgDirt)"/>`;
@@ -4498,11 +4503,16 @@ if (catalogSearchLink) {
     s += `<rect x="97.7" y="12" width="10.6" height="136" fill="url(#hcgGravel)" opacity=".8"/>`;
     s += `<path d="M98.2 13V147 M107.8 13V147" fill="none" stroke="rgba(255,255,242,.42)" stroke-width=".55"/>`;
     BEDS.forEach((b) => {
-      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="url(#hcgSoil)"/>`;
-      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="url(#hcgSoilSpecks)" opacity=".62"/>`;
+      s += `<rect x="${b.x - 1.4}" y="${b.y - 1.4}" width="${b.w + 2.8}" height="${b.h + 2.8}" rx="2.8" fill="url(#hcgBedEdge)" filter="url(#hcgBedShadow)"/>`;
+      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="1.4" fill="url(#hcgSoil)"/>`;
+      s += `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="1.4" fill="url(#hcgSoilSpecks)" opacity=".72"/>`;
+      s += `<path d="M${b.x + 2} ${b.y + 2}H${b.x + b.w - 2}" stroke="rgba(255,231,190,.22)" stroke-width=".7"/>`;
       s += bedDimensions(b);
     });
+    s += `<rect x="14" y="12" width="192" height="136" fill="url(#hcgGlassLight)" pointer-events="none"/>`;
+    s += `<path d="M15 54L205 18M15 108L205 72" stroke="rgba(255,255,255,.085)" stroke-width="12" pointer-events="none"/>`;
     s += `</g>`;
+    s += `<g fill="none" pointer-events="none"><path d="M110 10V150" stroke="rgba(222,241,238,.58)" stroke-width="1.15"/><path d="M13 80H207" stroke="rgba(222,241,238,.32)" stroke-width=".8"/><circle cx="16" cy="14" r="1.5" fill="#eaf4f1"/><circle cx="204" cy="14" r="1.5" fill="#eaf4f1"/><circle cx="16" cy="146" r="1.5" fill="#b9ceca"/><circle cx="204" cy="146" r="1.5" fill="#b9ceca"/></g>`;
     svg.innerHTML = defs + s;
   }
 
@@ -4573,7 +4583,8 @@ if (catalogSearchLink) {
 
   // Costruisce il pannello riepilogo
   function buildPanel() {
-    inner.innerHTML = PLANTS.map(
+    const isRo = document.documentElement.lang === "ro";
+    const cards = PLANTS.map(
       (p) =>
         `<div class="hcg-card">
         <span class="hcg-card-ico">${p.emoji}</span>
@@ -4584,6 +4595,16 @@ if (catalogSearchLink) {
         <span class="hcg-card-qty">${p.qty} pz</span>
       </div>`,
     ).join("");
+    const total = PLANTS.reduce((sum, p) => sum + p.qty, 0);
+    inner.innerHTML = `<div class="hcg-summary-head">
+        <span>${isRo ? "Planul tău" : "Il tuo piano"}</span>
+        <b>${isRo ? "Gata" : "Pronto"}</b>
+      </div>
+      <div class="hcg-summary-list">${cards}</div>
+      <div class="hcg-summary-total">
+        <span>${isRo ? "4 straturi" : "4 aiuole"}</span>
+        <strong>${total} ${isRo ? "plante" : "piante"}</strong>
+      </div>`;
   }
 
   let timers = [];
