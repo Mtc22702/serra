@@ -855,7 +855,7 @@
         "hero.plan_caption": "Esempio di piano · 4 aiuole, 12 m²",
         // Il percorso della home: unico componente che dice cosa può fare l'utente e da dove entra.
         "journey.choice_kicker": "Inizia da qui",
-        "journey.choice_title": "Da dove vuoi iniziare?",
+        "journey.choice_title": "Scegli come iniziare",
         "journey.choice_sub": "Tre percorsi per partire, uno strumento per continuare.",
         "journey.choice_hint":
           "Parti dalla situazione che ti assomiglia di più",
@@ -1074,6 +1074,7 @@
         "catalog.category_label": "Categorie",
         "catalog.category_hint": "Scegli una famiglia di colture",
         "catalog.sort_label": "Ordina per",
+        "catalog.open_sheet": "Dettagli",
         "catalog.sort_season": "Ordina: Consigliati",
         "catalog.sort_name": "Ordina: Nome A-Z",
         "catalog.sort_fast": "Ordina: Raccolta più veloce",
@@ -1368,7 +1369,7 @@
         "hero.eyebrow_now": "· alege de unde pornești",
         "hero.plan_caption": "Exemplu de plan · 4 straturi, 12 m²",
         "journey.choice_kicker": "Începe de aici",
-        "journey.choice_title": "De unde vrei să începi?",
+        "journey.choice_title": "Alege cum începi",
         "journey.choice_sub": "Trei trasee pentru a porni și un instrument pentru a continua.",
         "journey.choice_hint":
           "Pornește de la situația care ți se potrivește cel mai bine",
@@ -1585,6 +1586,7 @@
         "catalog.category_label": "Categorii",
         "catalog.category_hint": "Alege o familie de culturi",
         "catalog.sort_label": "Sortează după",
+        "catalog.open_sheet": "Detalii",
         "catalog.sort_season": "Sortează: Recomandate",
         "catalog.sort_name": "Sortează: Nume A-Z",
         "catalog.sort_fast": "Sortează: Recoltare rapidă",

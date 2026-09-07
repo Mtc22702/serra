@@ -2923,6 +2923,183 @@ html[data-theme="dark"] .journey-care-summary span {
   }
 }
 
+/* Le azioni del catalogo sono già riconoscibili dalle card: qui restano solo gli strumenti di consultazione. */
+@layer coerenza {
+  .catalog-pro-section .catalog-hint--pro {
+    justify-content: flex-end;
+    min-height: 44px;
+    margin: 8px 0 14px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  @media (max-width: 640px) {
+    .catalog-pro-section .catalog-hint--pro {
+      justify-content: stretch;
+      min-height: 0;
+    }
+  }
+}
+
+/* Ritmo editoriale della home: il catalogo resta operativo, le proposte successive diventano destinazioni riconoscibili. */
+@layer coerenza {
+  @media (min-width: 901px) {
+    .catalog-tools--advanced .catalog-filter-group--type {
+      gap: 16px;
+      padding: 18px;
+      border-color: rgba(46, 107, 60, .2);
+      background: linear-gradient(135deg, rgba(250, 254, 248, .98), rgba(235, 246, 229, .82));
+      box-shadow: 0 7px 18px rgba(29, 72, 41, .06), inset 0 1px rgba(255,255,255,.82);
+    }
+    .catalog-tools--advanced .catalog-filter-group--type .catalog-category-rail {
+      padding-right: 18px;
+      border-right: 1px solid rgba(46, 107, 60, .16);
+    }
+    .catalog-tools--advanced .catalog-filter-group--type .catalog-scope-block {
+      min-width: 0;
+      padding-left: 2px;
+    }
+    .catalog-tools--advanced .catalog-filter-group--type .catalog-scope-title {
+      color: #285f39;
+      font-weight: 750;
+    }
+  }
+
+  .bridge--vivaio .bridge-inner {
+    border-color: rgba(140, 103, 28, .34);
+    background:
+      radial-gradient(circle at 82% 12%, rgba(225, 186, 81, .24), transparent 28%),
+      linear-gradient(135deg, #fff5d6 0%, #f4ebc8 46%, #e5f1d6 100%);
+    box-shadow: 0 5px 10px rgba(94, 70, 22, .1), 0 18px 34px rgba(70, 78, 32, .14), inset 0 1px rgba(255,255,255,.9);
+  }
+  .bridge--vivaio .bridge-vivaio-products {
+    border-color: rgba(96, 130, 61, .24);
+    background: rgba(255,255,255,.78);
+    box-shadow: 0 5px 12px rgba(62, 84, 35, .1), inset 0 1px rgba(255,255,255,.86);
+  }
+  .bridge--vivaio .bridge-cta {
+    min-height: 48px;
+    background: #6b7f35;
+    border-color: #56682b;
+    box-shadow: 0 7px 16px rgba(65, 86, 30, .2);
+  }
+  .bridge--vivaio .bridge-cta:hover { background: #56682b; }
+
+  .abbinamenti-inner {
+    padding: clamp(1.1rem, 2.5vw, 1.7rem);
+    border: 1px solid rgba(51, 112, 69, .18);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 92% 0%, rgba(126, 192, 116, .2), transparent 30%),
+      linear-gradient(135deg, #e8f4df, #f7fcf3 72%);
+    box-shadow: 0 10px 24px rgba(31, 75, 43, .09), inset 0 1px rgba(255,255,255,.82);
+  }
+  .abbinamenti-inner .flow-section-head { margin-bottom: 1.45rem; }
+  .abbinamenti-inner .abbinamento-card {
+    border-color: rgba(54, 117, 67, .22);
+    background: rgba(255,255,255,.86);
+    box-shadow: 0 5px 13px rgba(30, 72, 39, .09), inset 0 1px rgba(255,255,255,.82);
+  }
+  .abbinamenti-inner .abbin-add-btn {
+    border-color: rgba(48, 108, 63, .28);
+    background: #eff7ea;
+  }
+
+  .kit-section > .kit-card {
+    border-color: rgba(62, 116, 62, .28);
+    background:
+      radial-gradient(circle at 92% 8%, rgba(212, 232, 115, .4), transparent 32%),
+      linear-gradient(135deg, #e2f1cb, #f9fdf3 58%, #edf6e5 100%);
+    box-shadow: 0 8px 20px rgba(32, 76, 41, .12), 0 18px 34px rgba(32, 76, 41, .1), inset 0 1px rgba(255,255,255,.84);
+  }
+  .kit-section .kit-cta-btn {
+    box-shadow: 0 5px 12px rgba(37, 107, 53, .2);
+  }
+
+  .contatti-section {
+    background: linear-gradient(180deg, #fffdf6 0%, #f6f5e7 48%, #e5efdc 100%);
+  }
+  .contatti-inner {
+    padding: clamp(1rem, 2.4vw, 1.5rem);
+    border: 1px solid rgba(76, 116, 69, .17);
+    border-radius: var(--radius-xl);
+    background: rgba(255,255,255,.45);
+    box-shadow: inset 0 1px rgba(255,255,255,.72);
+  }
+  .contatti-map {
+    border-color: rgba(82, 130, 72, .38);
+    box-shadow: 0 8px 18px rgba(34, 73, 41, .14);
+  }
+  .contatti-map::after {
+    position: absolute;
+    z-index: 400;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(214, 237, 201, .14), rgba(230, 211, 164, .1));
+    content: "";
+    pointer-events: none;
+  }
+  html[data-theme="dark"] .bridge--vivaio .bridge-inner,
+  html[data-theme="dark"] .abbinamenti-inner,
+  html[data-theme="dark"] .kit-section > .kit-card,
+  html[data-theme="dark"] .contatti-inner {
+    background: var(--surface-2);
+    border-color: var(--surface-line);
+  }
+  html[data-theme="dark"] .contatti-section { background: #0b1a13; }
+  @media (max-width: 760px) {
+    .abbinamenti-inner,
+    .contatti-inner { padding: 1rem; border-radius: var(--radius-lg); }
+  }
+}
+
+/* Le CTA devono emergere dal fondo botanico; l'introduzione lascia spazio alle tre scelte. */
+@layer coerenza {
+  .journey-choice-head {
+    margin-bottom: clamp(1rem, 2vw, 1.35rem);
+    padding: 0;
+    border: 0;
+  }
+  .journey-choice-title {
+    max-width: none;
+    margin: 0;
+    color: var(--ink-900);
+    font-size: clamp(1.55rem, 2.7vw, 2.15rem);
+  }
+  html #percorsi .journey-route {
+    border-width: 1.5px;
+    box-shadow: 0 3px 6px rgba(28, 66, 37, .12), 0 20px 38px rgba(28, 66, 37, .2), inset 0 1px rgba(255,255,255,.9);
+  }
+  html .journey-route::before { height: 6px; }
+  html #percorsi .journey-route--plan {
+    background: linear-gradient(150deg, #b9e4a4 0%, #dff3d3 45%, #fbfffa 100%);
+    border-color: rgba(37, 111, 59, .58);
+  }
+  html #percorsi .journey-route--seeds {
+    background: linear-gradient(150deg, #c9e7a9 0%, #e5f4d7 45%, #fcfffa 100%);
+    border-color: rgba(82, 132, 51, .54);
+  }
+  html #percorsi .journey-route--seedlings {
+    background: linear-gradient(150deg, #f0db94 0%, #f8edc7 45%, #fffdf5 100%);
+    border-color: rgba(147, 111, 30, .5);
+  }
+  html #percorsi .journey-route--seeds .journey-route-cta {
+    background: #4c7c39;
+    border-color: #3f6b30;
+    color: #fff;
+  }
+  html #percorsi .journey-route--seedlings .journey-route-cta {
+    background: #8a6b22;
+    border-color: #705719;
+    color: #fffdf3;
+  }
+  html #percorsi .journey-route--seeds .journey-route-cta:hover { background: #3f6b30; }
+  html #percorsi .journey-route--seedlings .journey-route-cta:hover { background: #705719; }
+  @media (max-width: 620px) {
+    .journey-choice-title { font-size: 1.45rem; }
+  }
+}
+
 @layer coerenza {
   @media (max-width: 720px) {
     .journey-wrap {

@@ -1190,6 +1190,50 @@
   }
 }
 
+/* Le card apribili dichiarano la loro seconda azione; il pulsante + resta esclusivamente per il carrello. */
+@layer coerenza {
+  :where(.plant-card-compact, .plant-card-super-compact)[data-home-action="open-detail"] {
+    position: relative;
+    cursor: pointer;
+  }
+  .plant-detail-cue {
+    position: absolute;
+    z-index: 3;
+    top: 9px;
+    left: 9px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 3px 6px;
+    border: 1px solid rgba(47, 107, 58, .22);
+    border-radius: var(--control-radius-pill);
+    background: rgba(255, 255, 255, .9);
+    color: #2c673d;
+    font-size: .62rem;
+    font-weight: 750;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: background .16s ease, color .16s ease, border-color .16s ease;
+  }
+  .plant-detail-cue b { font-size: .78rem; line-height: .7; }
+  :where(.plant-card-compact, .plant-card-super-compact)[data-home-action="open-detail"]:hover .plant-detail-cue,
+  :where(.plant-card-compact, .plant-card-super-compact)[data-home-action="open-detail"]:focus-within .plant-detail-cue {
+    border-color: #2f6b3a;
+    background: #2f6b3a;
+    color: #fff;
+  }
+  @media (max-width: 560px) {
+    .plant-detail-cue { top: 6px; left: 6px; padding: 3px 5px; font-size: .58rem; }
+  }
+  html[data-theme="dark"] .plant-detail-cue {
+    border-color: rgba(151, 212, 155, .25);
+    background: rgba(49, 95, 60, .72);
+    color: #dff1da;
+  }
+}
+
 /* Il clima è una scelta principale del catalogo: sul desktop le tre zone restano leggibili e l'impianto è separato. */
 @layer coerenza {
   @media (min-width: 761px) {

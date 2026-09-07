@@ -2735,12 +2735,16 @@
   }
   .bedhit:hover .bed-soil {
     filter: brightness(1.08) saturate(1.05);
+    stroke: rgba(242, 255, 232, .9);
+    stroke-width: 2px;
   }
   .bedhit:focus {
     outline: none;
   }
   .bedhit:focus .bed-soil {
     filter: brightness(1.14) saturate(1.12);
+    stroke: rgba(242, 255, 232, .95);
+    stroke-width: 3px;
   }
   .plant-glyph--growing {
     transform-box: fill-box;

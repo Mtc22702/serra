@@ -1378,7 +1378,8 @@ function renderEditorialPlants() {
           const emoji = fruitEmoji(p.id);
           const waterIcon = ACQUA_ICON[p.acqua] || "💧";
           const sunIcon = p.sole === "pieno" ? "☀️" : "🌤️";
-          return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}">
+          const sheetLabel = t("catalog.open_sheet");
+          return `<div class="plant-card-super-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}" title="${sheetLabel}: ${plantName(p.id)}">
           <span class="super-compact-thumb" aria-hidden="true">
             <img src="${photoSrc(p.id)}" alt="" loading="lazy" data-catalog-photo-fallback />
             <span class="super-compact-thumb-emoji">${emoji}</span>
@@ -1386,6 +1387,7 @@ function renderEditorialPlants() {
           <span class="super-compact-body">
             <span class="super-compact-top">
               <span class="super-compact-name">${plantName(p.id)}</span>
+              <span class="plant-detail-cue" aria-hidden="true"><span>${sheetLabel}</span><b>↗</b></span>
               <span class="super-compact-price">${money(packPrice(p.id))} ${currentLang === "ro" ? "/ plic" : "/ bustina"}</span>
             </span>
             <span class="super-compact-bottom">
@@ -1414,12 +1416,14 @@ function renderEditorialPlants() {
           const tipo = typeOfPlant(p);
           const ts = TIPO_STYLE[tipo] || TIPO_STYLE.foglia;
           const inC = inCart(p.id);
-          return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}">
+          const sheetLabel = t("catalog.open_sheet");
+          return `<div class="plant-card-compact${inC ? " in-cart" : ""}" id="card-${p.id}" data-home-action="open-detail" data-plant-id="${p.id}" title="${sheetLabel}: ${plantName(p.id)}">
           <div class="compact-thumb"><img src="${photoSrc(p.id)}" alt="${plantName(p.id)}" loading="lazy" /></div>
           <div class="compact-info">
             <div class="compact-name-row">
               <span class="compact-name">${plantName(p.id)}</span>
               <span class="compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
+              <span class="plant-detail-cue" aria-hidden="true"><span>${sheetLabel}</span><b>↗</b></span>
               ${!seasonSet.has(p.id) ? offSeasonBadge : ""}
             </div>
             <p class="compact-note">${plantCompactDescription(p)}</p>
