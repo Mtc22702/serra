@@ -1190,6 +1190,114 @@
   }
 }
 
+/* Il clima è una scelta principale del catalogo: sul desktop le tre zone restano leggibili e l'impianto è separato. */
+@layer coerenza {
+  @media (min-width: 761px) {
+    .catalog-tools--advanced .catalog-filter-group--clima {
+      gap: 12px;
+      padding: 16px 18px 14px;
+      border-color: rgba(46, 107, 60, .24);
+      background: linear-gradient(135deg, rgba(248, 253, 246, .98), rgba(234, 245, 230, .92));
+      box-shadow: 0 8px 20px rgba(29, 72, 41, .08), inset 0 1px rgba(255,255,255,.8);
+    }
+    .catalog-tools--advanced .catalog-clima-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: stretch;
+      gap: 16px;
+    }
+    .catalog-tools--advanced .catalog-zona-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-btn {
+      min-width: 0;
+      padding: 10px 12px;
+      border-radius: var(--control-radius);
+    }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-text {
+      overflow: visible;
+      white-space: nowrap;
+      font-size: .84rem;
+    }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-btn small {
+      margin-top: 3px;
+      white-space: normal;
+      font-size: .68rem;
+    }
+    .catalog-tools--advanced .catalog-clima-divider { display: none; }
+    .catalog-tools--advanced .catalog-heated-toggle {
+      min-width: 216px;
+      justify-content: center;
+      border-radius: var(--control-radius);
+      background: rgba(255,255,255,.76);
+    }
+    .catalog-tools--advanced .catalog-filter-note {
+      margin-top: 2px;
+      padding: 9px 12px;
+      border: 1px solid rgba(46, 107, 60, .12);
+      border-radius: 10px;
+      background: rgba(218, 237, 213, .58);
+    }
+  }
+  @media (max-width: 760px) {
+    .catalog-tools--advanced .catalog-filter-group--clima {
+      gap: 10px;
+      padding: 12px;
+      border-color: rgba(46, 107, 60, .22);
+      background: linear-gradient(145deg, rgba(248, 253, 246, .98), rgba(235, 246, 230, .9));
+    }
+    .catalog-tools--advanced .catalog-clima-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 9px;
+      width: 100%;
+    }
+    .catalog-tools--advanced .catalog-zona-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+      overflow: visible;
+      padding-bottom: 0;
+    }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-btn {
+      min-width: 0;
+      justify-content: center;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 4px;
+      padding: 9px 6px;
+      border-radius: var(--control-radius);
+    }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-icon { font-size: .94rem; }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-text {
+      min-width: 0;
+      overflow: visible;
+      white-space: nowrap;
+      font-size: .72rem;
+    }
+    .catalog-tools--advanced .catalog-clima-bar .hero-zone-btn small { display: none; }
+    .catalog-tools--advanced .catalog-clima-divider { display: none; }
+    .catalog-tools--advanced .catalog-heated-toggle {
+      width: 100%;
+      min-height: 44px;
+      justify-content: center;
+      border-radius: var(--control-radius);
+      background: rgba(255,255,255,.78);
+      font-size: .78rem;
+    }
+    .catalog-tools--advanced .catalog-filter-note {
+      padding: 8px 10px;
+      border: 1px solid rgba(46, 107, 60, .12);
+      border-radius: 10px;
+      background: rgba(218, 237, 213, .58);
+      font-size: .75rem;
+      line-height: 1.35;
+    }
+  }
+}
+
 /* Profondità botanica condivisa: le superfici si distinguono senza effetto plastica. */
 @layer coerenza {
   :where(.panel, .dashboard-card, .card, .orto-piano-card, .orto-card, .viv-card,
