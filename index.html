@@ -31,7 +31,7 @@
 
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260907-9ab4b0228a09";
+      window.SERRA_APP_VERSION = "20260907-776020a56c62";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -1179,7 +1179,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260907-9ab4b0228a09</span
+          >v20260907-776020a56c62</span
         >
       </div>
     </footer>
@@ -1896,19 +1896,21 @@
                 aria-hidden="true"
               />
             </div>
-          </div>
           <!-- Camminamento: misura del passaggio tra le aiuole, non una dimensione della serra -->
-          <div class="preconfig-vfield preconfig-vfield--path">
+          <div class="preconfig-dim--path">
             <div>
-              <span class="preconfig-fld-row"
-                ><label
-                  class="preconfig-fld"
-                  data-i18n="preconfig.path_label_short"
-                  >Camminamento</label
-                ><span class="preconfig-fld-unit" aria-hidden="true"
-                  >cm</span
-                ></span
-              >
+              <div class="preconfig-path-copy">
+                <span class="preconfig-fld-row"
+                  ><label class="preconfig-fld" data-i18n="preconfig.path_label_short"
+                    >Camminamento</label
+                  ><span class="preconfig-fld-unit" aria-hidden="true"
+                    >cm</span
+                  ></span
+                >
+                <small class="preconfig-path-hint" data-i18n="preconfig.path_hint"
+                  >Spazio libero per muoverti e lavorare</small
+                >
+              </div>
               <div class="preconfig-stepper">
                 <button
                   class="preconfig-step-btn"
@@ -1950,6 +1952,7 @@
                 aria-hidden="true"
               />
             </div>
+          </div>
           </div>
           <div
             class="preconfig-section-label"

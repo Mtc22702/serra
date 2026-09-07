@@ -9335,32 +9335,33 @@ html[data-theme="dark"]
   }
 
   .preconfig-vfield--path {
-    padding: 6px 8px;
-    border-color: rgba(47, 107, 58, 0.1);
-    box-shadow: none;
-    background-color: #edf5ef;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.62), rgba(242, 247, 240, 0.58)),
-      url(../img/svg/ciottoli-pattern.svg);
-    background-size:
-      auto,
-      72px 72px;
+    min-height: 78px;
+    padding: 12px 14px;
+    border-color: rgba(47, 107, 58, 0.28);
+    box-shadow: inset 0 1px rgba(255,255,255,.68), 0 4px 12px rgba(31,58,38,.07);
+    background: linear-gradient(135deg, #d9ecd3, #f5fbf1 72%);
   }
-  /* Etichetta a sinistra, regolatore a destra, sulla stessa riga. */
+  /* La misura del passaggio è una scelta operativa: nome, conseguenza e controllo restano raccolti. */
   .preconfig-vfield--path > div {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 142px;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    gap: 18px;
   }
+  .preconfig-path-copy { min-width: 0; }
   .preconfig-vfield--path .preconfig-fld-row {
-    margin-bottom: 0;
+    margin-bottom: 3px;
     min-width: 0;
   }
+  .preconfig-path-hint {
+    display: block;
+    color: #5b6b5e;
+    font-size: 11px;
+    line-height: 1.35;
+  }
   .preconfig-vfield--path .preconfig-stepper {
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 116px;
+    width: 142px;
+    min-height: 46px;
   }
   .preconfig-vfield--path .preconfig-step-btn {
     min-height: var(--control-h-sm);
@@ -9375,9 +9376,11 @@ html[data-theme="dark"]
   }
   /* Il velo chiaro sopra i ciottoli si scurisce: la texture resta leggibile senza diventare una macchia chiara nel pannello notturno. */
   html[data-theme="dark"] .preconfig-vfield--path {
-    background-image:
-      linear-gradient(rgba(20, 48, 29, 0.82), rgba(19, 34, 27, 0.86)),
-      url(../img/svg/ciottoli-pattern.svg);
+    border-color: rgba(151, 212, 155, 0.3);
+    background: linear-gradient(135deg, #244c30, #193725 74%);
+  }
+  html[data-theme="dark"] .preconfig-path-hint {
+    color: #b9cab9;
   }
   .preconfig-vfield--dims > div {
     display: flex;
@@ -11725,22 +11728,21 @@ html[data-theme="dark"]
   @media (min-width: 661px) {
     .preconfig-sheet--v2 .preconfig-body {
       display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-areas:
         "restored restored"
         "persona persona"
-        "sizes-label climate-label"
-        "dimensions climate"
-        "path month-label"
-        "path month";
-      gap: 3px 12px;
-      padding: 6px 16px 8px;
+        "sizes-label sizes-label"
+        "dimensions dimensions"
+        "climate-label month-label"
+        "climate month";
+      gap: 7px 14px;
+      padding: 12px 18px 14px;
     }
     .preconfig-sheet--v2 .preconfig-restored { grid-area: restored; }
     .preconfig-sheet--v2 #preconfigPersonaSection { grid-area: persona; }
     .preconfig-sheet--v2 #preconfigSizesLabel { grid-area: sizes-label; }
     .preconfig-sheet--v2 #preconfigSizesField { grid-area: dimensions; }
-    .preconfig-sheet--v2 .preconfig-vfield--path { grid-area: path; }
     .preconfig-sheet--v2 [data-i18n="preconfig.climate_label"] { grid-area: climate-label; }
     .preconfig-sheet--v2 .preconfig-vfield--climate { grid-area: climate; }
     .preconfig-sheet--v2 [data-i18n="preconfig.month_label"] { grid-area: month-label; }
@@ -11828,6 +11830,13 @@ html[data-theme="dark"]
     }
     .preconfig-sheet--v2 .preconfig-vfield--path {
       min-height: 58px;
+    }
+    .preconfig-sheet--v2 .preconfig-vfield--path > div {
+      grid-template-columns: minmax(0, 1fr) 138px;
+      gap: 8px;
+    }
+    .preconfig-sheet--v2 .preconfig-vfield--path .preconfig-stepper {
+      width: 138px;
     }
     .preconfig-sheet--v2 .preconfig-fld-row,
     .preconfig-sheet--v2 .preconfig-fld:not(.preconfig-fld-row > *) {
@@ -12152,5 +12161,201 @@ html[data-theme="dark"]
   @media (min-width: 1241px) and (max-width: 1400px) {
     .site-header #mainNav > .nav-link { padding-inline: 7px; gap: 6px; }
     .site-header #mainNav > .nav-link--orto::after { display: none; }
+  }
+}
+
+/* Pannello di avvio: profilo, spazio e condizioni sono tre decisioni separate. */
+@layer coerenza {
+  .preconfig-sheet--v2 {
+    width: min(760px, calc(100vw - 32px));
+    border-color: rgba(46, 107, 60, .3);
+    box-shadow: 0 12px 28px rgba(21, 54, 32, .18), 0 30px 70px rgba(21, 54, 32, .24);
+  }
+  .preconfig-sheet--v2 .preconfig-panel-head {
+    border-bottom: 1px solid rgba(46, 107, 60, .12);
+    background: linear-gradient(105deg, #f9fff4, #f2f9ed);
+  }
+  .preconfig-sheet--v2 .preconfig-body {
+    gap: 7px 14px;
+    padding: 12px 18px 14px;
+  }
+  .preconfig-sheet--v2 .preconfig-restored {
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    margin: 0 0 2px;
+    padding: 8px 11px;
+    border: 1px solid rgba(67, 123, 75, .2);
+    border-left: 4px solid #5d9966;
+    border-radius: 10px;
+    background: #ecf6e7;
+    color: #4d6252;
+    font-size: 12px;
+  }
+  .preconfig-sheet--v2 #preconfigPersonaSection {
+    padding-bottom: 3px;
+  }
+  .preconfig-sheet--v2 .pc-persona-cards {
+    gap: 9px;
+  }
+  .preconfig-sheet--v2 .pc-persona-card {
+    min-height: 76px;
+    padding: 10px 11px;
+    box-shadow: 0 3px 7px color-mix(in srgb, var(--accent) 10%, transparent), inset 0 1px rgba(255,255,255,.72);
+  }
+  .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 13px color-mix(in srgb, var(--accent) 24%, transparent), 0 0 0 2px color-mix(in srgb, var(--accent) 13%, transparent), inset 0 1px rgba(255,255,255,.78);
+  }
+  .preconfig-sheet--v2 .preconfig-section-label {
+    margin: 7px 0 4px;
+    color: #245c35;
+    font-size: .67rem;
+  }
+  .preconfig-sheet--v2 .preconfig-vfield,
+  .preconfig-sheet--v2 .preconfig-month-wrap {
+    border-color: rgba(54, 117, 67, .24);
+    box-shadow: 0 5px 12px rgba(27, 72, 39, .08), inset 0 1px rgba(255,255,255,.78);
+  }
+  .preconfig-sheet--v2 .preconfig-vfield--dims {
+    border-radius: 15px 15px 5px 5px;
+    background: linear-gradient(145deg, #d7ecd0, #edf7e9);
+  }
+  .preconfig-sheet--v2 .preconfig-vfield--dims {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  .preconfig-sheet--v2 .preconfig-dim--path {
+    display: flex;
+    min-width: 0;
+  }
+  .preconfig-sheet--v2 .preconfig-dim--path > div {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .preconfig-sheet--v2 .preconfig-dim--path .preconfig-path-hint { display: none; }
+  .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { width: 100%; }
+  .preconfig-sheet--v2 .preconfig-vfield--climate {
+    background: linear-gradient(145deg, #d9ecd1, #edf7e8);
+  }
+  .preconfig-sheet--v2 .preconfig-month-wrap {
+    background: linear-gradient(100deg, #e6f2dd, #f8fcf5);
+  }
+  .preconfig-sheet--v2 .preconfig-stepper,
+  .preconfig-sheet--v2 .preconfig-select {
+    border-color: rgba(54, 117, 67, .2);
+    background-color: rgba(255,255,255,.82);
+    box-shadow: inset 0 1px rgba(255,255,255,.84);
+  }
+  .preconfig-sheet--v2 .preconfig-step-btn:hover {
+    background: rgba(62, 126, 73, .16);
+  }
+  .preconfig-sheet--v2 .preconfig-footer {
+    border-top: 1px solid rgba(46,107,60,.15);
+    background: linear-gradient(100deg, #f8fcf5, #edf7e9);
+    box-shadow: 0 -8px 20px rgba(27,72,39,.05);
+  }
+  .preconfig-sheet--v2 .preconfig-summary {
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: rgba(214,235,205,.58);
+    color: #405b48;
+    font-weight: 600;
+  }
+  .preconfig-sheet--v2 .preconfig-cta {
+    border-radius: var(--control-radius);
+    box-shadow: 0 4px 10px rgba(37,107,53,.2);
+  }
+  .preconfig-sheet--v2 .preconfig-cta:not(.preconfig-cta--disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(37,107,53,.28);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 {
+    border-color: rgba(150,216,157,.3);
+    background: linear-gradient(155deg, #173c27, #102a1b);
+    box-shadow: 0 18px 42px rgba(0,0,0,.34), 0 36px 80px rgba(0,0,0,.32);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-panel-head,
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-footer {
+    background: linear-gradient(100deg, #173c27, #1e482e);
+    border-color: rgba(151,212,155,.18);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-restored {
+    border-color: rgba(151,212,155,.26);
+    border-left-color: #9ccb95;
+    background: #214a2e;
+    color: #d7ead5;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--dims { background: linear-gradient(145deg, #275334, #1d4129); }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--climate { background: linear-gradient(145deg, #265233, #1d4129); }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-month-wrap { background: linear-gradient(100deg, #2a5231, #1b3d27); }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-summary { background: rgba(54,101,61,.46); color: #d5e8d4; }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-section-label { color: #bce5b8; }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-select,
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-stepper {
+    border-color: rgba(151,212,155,.27);
+    background-color: #173b26;
+    color: #edf8e9;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-select {
+    background: #173b26 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23bce5b8' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 9px center;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-step-input {
+    background: #163721;
+    color: #f1f9ee;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-step-btn {
+    background: #255239;
+    color: #bce5b8;
+  }
+  @media (max-width: 660px) {
+    .preconfig-sheet--v2 { width: 100%; }
+    .preconfig-sheet--v2 .preconfig-body { padding: 10px 14px 12px; gap: 7px; }
+    .preconfig-sheet--v2 .preconfig-restored { min-height: 44px; padding: 7px 9px; font-size: 11.5px; line-height: 1.35; }
+    .preconfig-sheet--v2 .pc-persona-cards { gap: 7px; }
+    .preconfig-sheet--v2 .pc-persona-card { min-height: 70px; padding: 8px; }
+    .preconfig-sheet--v2 .preconfig-summary { display: none; }
+  }
+  @media (min-width: 841px) {
+    .preconfig-sheet--v2 .preconfig-vfield--dims { padding: 11px; }
+    .preconfig-sheet--v2 .preconfig-dim--path > div {
+      display: grid;
+      grid-template-rows: auto auto auto;
+      align-content: start;
+      gap: 0;
+    }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-path-copy { display: contents; }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-fld-row {
+      grid-row: 1;
+      margin-bottom: 7px;
+    }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { grid-row: 2; }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-path-hint {
+      display: block;
+      grid-row: 3;
+      margin-top: 5px;
+    }
+  }
+  @media (max-width: 840px) {
+    .preconfig-sheet--v2 .preconfig-vfield--dims {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .preconfig-sheet--v2 .preconfig-dim--path {
+      grid-column: 1 / -1;
+      display: block;
+      padding-top: 8px;
+      border-top: 1px solid rgba(54, 117, 67, .18);
+    }
+    .preconfig-sheet--v2 .preconfig-dim--path > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 132px;
+      align-items: center;
+      gap: 10px;
+    }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { width: 132px; }
   }
 }
