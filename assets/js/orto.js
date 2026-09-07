@@ -18,17 +18,17 @@
       // Titolo della scheda del browser.
       "doc.title": "Il mio orto · Orto in Serra",
       "nav.brand_sub": "Coltiva con un piano",
-      "nav.home": "🏠 Home",
+      "nav.home": "Home",
       "nav.menu_explore": "Esplora",
       "nav.menu_preferences": "Preferenze",
       "nav.theme": "Tema",
       "nav.theme_hint": "Chiaro / scuro",
       "nav.language": "Lingua",
-      "nav.semi": "🌿 Catalogo semi",
-      "nav.vivaio": "🪴 Vivaio piantine",
-      "nav.orto": "🌱 Il mio orto",
-      "nav.configuratore": "📐 Configuratore serra",
-      "nav.account": "👤 Area Personale",
+      "nav.semi": "Catalogo semi",
+      "nav.vivaio": "Vivaio piantine",
+      "nav.orto": "Il mio orto",
+      "nav.configuratore": "Configuratore serra",
+      "nav.account": "Area Personale",
       "nav.account_label": "Area Personale",
       "nav.carrello": "Carrello",
       "nav.main_aria": "Navigazione principale",
@@ -60,7 +60,7 @@
       "welcome.title": "Da dove vuoi aggiungere le piante?",
       "welcome.text":
         "Prima raccogliamo semi e piantine che possiedi. Nel passaggio successivo sceglierai cosa piantare davvero.",
-      "welcome.add": "Aggiungi manualmente",
+      "welcome.add": "Aggiungi piante",
       "welcome.or": "oppure",
       "welcome.orders": "Scegli dagli ordini",
       "welcome.nothing": "Non hai ancora semi o piantine?",
@@ -290,7 +290,7 @@
 
       "import.title": "Scegli cosa importare",
       "import.sub":
-        "Apri un ordine e togli la spunta a ciò che non ti serve adesso. Quello che è già in dispensa non si duplica.",
+        "Apri un ordine e togli la spunta a ciò che non ti serve adesso. Quello che è già in Da piantare non si duplica.",
       "import.order": "Ordine {id}",
       "import.items_one": "1 articolo",
       "import.items": "{n} articoli",
@@ -374,7 +374,7 @@
       "toast.edited": "Coltura aggiornata",
       "dlg.title": "Aggiungi una coltura",
       "dlg.sub": "Da qui parte il calendario di cura fino alla raccolta.",
-      "dlg.title_stock": "Aggiungi alla dispensa",
+      "dlg.title_stock": "Aggiungi a Da piantare",
       "dlg.sub_stock":
         "Semi o piantine che hai già, senza metterli subito in terra.",
       "dlg.origin": "Sei partito da…",
@@ -388,12 +388,12 @@
       "dlg.position": "Posizione (facoltativa)",
       "dlg.position_ph": "es. Aiuola 2",
       "dlg.confirm": "Aggiungi all'orto",
-      "dlg.confirm_stock": "Aggiungi alla dispensa",
-      "dlg.preview_stock": "Aggiungerai {nome} alla dispensa.",
+      "dlg.confirm_stock": "Aggiungi a Da piantare",
+      "dlg.preview_stock": "Troverai {nome} in Da piantare.",
       "dlg.cancel": "Annulla",
 
       "toast.added": "{nome} aggiunta al tuo orto",
-      "toast.added_stock": "{nome} aggiunta alla dispensa",
+      "toast.added_stock": "{nome} aggiunta a Da piantare",
       "toast.snoozed": "Rimandata a domani",
       "toast.removed": "Coltura rimossa",
       "toast.harvest": "Registrato: diventerà la stima dell'anno prossimo",
@@ -448,17 +448,17 @@
     ro: {
       "doc.title": "Grădina mea · Orto in Serra",
       "nav.brand_sub": "Cultivă cu un plan",
-      "nav.home": "🏠 Acasă",
+      "nav.home": "Acasă",
       "nav.menu_explore": "Explorează",
       "nav.menu_preferences": "Preferințe",
       "nav.theme": "Temă",
       "nav.theme_hint": "Deschisă / închisă",
       "nav.language": "Limbă",
-      "nav.semi": "🌿 Catalog de semințe",
-      "nav.vivaio": "🪴 Pepinieră răsaduri",
-      "nav.orto": "🌱 Grădina mea",
-      "nav.configuratore": "📐 Configurator seră",
-      "nav.account": "👤 Contul Meu",
+      "nav.semi": "Catalog de semințe",
+      "nav.vivaio": "Pepinieră răsaduri",
+      "nav.orto": "Grădina mea",
+      "nav.configuratore": "Configurator seră",
+      "nav.account": "Contul Meu",
       "nav.account_label": "Contul Meu",
       "nav.carrello": "Coș",
       "nav.main_aria": "Navigare principală",
@@ -488,7 +488,7 @@
       "welcome.title": "De unde vrei să adaugi plantele?",
       "welcome.text":
         "Mai întâi adunăm semințele și răsadurile pe care le ai. La pasul următor vei alege ce plantezi.",
-      "welcome.add": "Adaugă manual",
+      "welcome.add": "Adaugă plante",
       "welcome.or": "sau",
       "welcome.orders": "Alege din comenzi",
       "welcome.nothing": "Încă nu ai semințe sau răsaduri?",
@@ -798,7 +798,7 @@
       "toast.edited": "Cultură actualizată",
       "dlg.title": "Adaugă o cultură",
       "dlg.sub": "De aici pornește calendarul de îngrijire până la recoltare.",
-      "dlg.title_stock": "Adaugă în cămară",
+      "dlg.title_stock": "Adaugă la De plantat",
       "dlg.sub_stock":
         "Semințe sau răsaduri pe care le ai deja, fără să le pui imediat în pământ.",
       "dlg.origin": "Ai pornit de la…",
@@ -812,12 +812,12 @@
       "dlg.position": "Poziție (opțional)",
       "dlg.position_ph": "ex. Parcela 2",
       "dlg.confirm": "Adaugă în grădină",
-      "dlg.confirm_stock": "Adaugă în cămară",
-      "dlg.preview_stock": "Vei adăuga {nome} în cămară.",
+      "dlg.confirm_stock": "Adaugă la De plantat",
+      "dlg.preview_stock": "Vei găsi {nome} în De plantat.",
       "dlg.cancel": "Anulează",
 
       "toast.added": "{nome} adăugată în grădina ta",
-      "toast.added_stock": "{nome} adăugată în cămară",
+      "toast.added_stock": "{nome} adăugată la De plantat",
       "toast.snoozed": "Amânată pe mâine",
       "toast.removed": "Cultură eliminată",
       "toast.harvest": "Înregistrat: va deveni estimarea de anul viitor",
@@ -1552,15 +1552,15 @@
           <p class="orto-welcome-text">${t("welcome.text")}</p>
         </div>
         <div class="orto-welcome-actions">
-          <button class="orto-welcome-choice orto-welcome-choice--primary" type="button"
+          <button class="orto-welcome-choice orto-welcome-choice--primary" type="button" data-orto-action="open-add-stock">
+            <span class="orto-welcome-choice-ico" aria-hidden="true">＋</span>
+            <span><b>${t("welcome.add")}</b><small>${lang === "ro" ? "Pentru plante cumpărate în altă parte sau pe care le ai deja" : "Per piante acquistate altrove o già in tuo possesso"}</small></span>
+            <span class="orto-welcome-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="orto-welcome-choice" type="button"
             data-orto-action="import-orders">
             <span class="orto-welcome-choice-ico" aria-hidden="true">📦</span>
             <span><b>${t("welcome.orders")}</b><small>${lang === "ro" ? "Selectează una sau mai multe comenzi și plantele dorite" : "Seleziona uno o più ordini e le singole piante"}</small></span>
-            <span class="orto-welcome-arrow" aria-hidden="true">→</span>
-          </button>
-          <button class="orto-welcome-choice" type="button" data-orto-action="open-add-stock">
-            <span class="orto-welcome-choice-ico" aria-hidden="true">＋</span>
-            <span><b>${t("welcome.add")}</b><small>${lang === "ro" ? "Pentru plante cumpărate în altă parte sau pe care le ai deja" : "Per piante acquistate altrove o già in tuo possesso"}</small></span>
             <span class="orto-welcome-arrow" aria-hidden="true">→</span>
           </button>
         </div>

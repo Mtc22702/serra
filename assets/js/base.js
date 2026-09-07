@@ -310,12 +310,7 @@
 
   function splitIconLabel(raw) {
     const trimmed = raw.trim();
-    const spaceIndex = trimmed.indexOf(" ");
-    if (spaceIndex <= 0) return null;
-    return {
-      icon: trimmed.slice(0, spaceIndex),
-      label: trimmed.slice(spaceIndex + 1),
-    };
+    return { icon: "", label: trimmed.replace(/^[^\p{L}\p{N}]+/u, "") };
   }
 
   function ensureOrtoHint(link) {
@@ -835,11 +830,11 @@
     index: {
       it: {
         "page.title": "Orto in Serra · Coltiva con intelligenza",
-        "nav.home": "🏠 Home",
+        "nav.home": "Home",
         "nav.stagione": "🌿 Catalogo completo",
         "nav.catalog_all": "🌿 Catalogo completo",
         "nav.abbinamenti": "🤝 Abbinamenti",
-        "nav.configuratore": "📐 Configuratore serra",
+        "nav.configuratore": "Configuratore serra",
         "cart.plugs_count": "{count} piantine",
         "cart.plugs_unit": "vaso ø7",
         "cart.plugs_hint": "Già cresciuta, pronta da mettere a dimora",
@@ -871,9 +866,9 @@
         "journey.step3_when": "Tool gratuito",
         "journey.step1_title": "Progetta la tua serra",
         "journey.step1_copy":
-          "Rispondi a tre domande e ricevi un piano adatto al tuo spazio.",
+          "Rispondi a quattro domande e ricevi un piano adatto al tuo spazio.",
         "journey.step1_proof": "Un piano completo, pronto in pochi minuti.",
-        "journey.step1_badge": "3 domande · 2 minuti",
+        "journey.step1_badge": "4 domande · 2 minuti",
         "journey.step1_cta": "Crea il mio piano",
         "journey.step1_help": "Scopri il configuratore",
         "journey.step2_title": "Acquista per il tuo orto",
@@ -887,14 +882,14 @@
         "journey.semi_badge": "Più scelta",
         "journey.semi_benefit":
           "Più varietà e controllo, dalla semina alla raccolta.",
-        "journey.semi_hint": "97 varietà · da 2,20 €",
+        "journey.semi_hint": "97 varietà disponibili · da 2,20 € a bustina",
         "journey.semi_cta": "Esplora i semi",
         "journey.piantine_kicker": "Salta la germinazione",
         "journey.piantine_label": "Parti dalle piantine",
         "journey.piantine_badge": "Più veloce",
         "journey.piantine_benefit":
           "Inizia più avanti e raccogli prima.",
-        "journey.piantine_hint": "Già avviate · consegna in 48 h",
+        "journey.piantine_hint": "Piantine già avviate",
         "journey.piantine_cta": "Scopri le piantine",
         "journey.or": "oppure",
         "journey.step3_title": "Hai già iniziato a coltivare?",
@@ -920,10 +915,10 @@
         "bridge.vivaio_cta": "Scopri le piantine disponibili",
         "bridge.vivaio_note": "La disponibilità cambia con la stagione",
         "hero.plan_help": "Scopri come funziona",
-        "nav.semi": "🌿 Catalogo semi",
+        "nav.semi": "Catalogo semi",
         "nav.orto_badge": "gratis",
-        "nav.orto": "🌱 Il mio orto",
-        "nav.vivaio": "🪴 Vivaio piantine",
+        "nav.orto": "Il mio orto",
+        "nav.vivaio": "Vivaio piantine",
         "paths.piantine_cta": "Apri il vivaio",
         "paths.orto_cta": "Apri Il mio orto",
         "paths.orto_tag": "strumento gratuito",
@@ -1112,7 +1107,7 @@
         "zone.freddo": "fredda",
         "zone.temperato": "temperata",
         "zone.caldo": "calda",
-        "greenhouse.cold": "fredda",
+        "greenhouse.cold": "non riscaldata",
         "greenhouse.heated": "riscaldata",
         "type.frutto": "frutto",
         "type.foglia": "foglia",
@@ -1149,7 +1144,7 @@
         "cart.plan_hint": "Apri il configuratore con i semi scelti",
         "cart.species_one": "1 specie",
         "cart.species_many": "{count} specie",
-        "cart.checkout": "Completa acquisto",
+        "cart.checkout": "Invia ordine da confermare",
         "cart.alert":
           "Vorrei ricevere disponibilità e prezzo finale per questi semi:",
         "cart.add": "+ Aggiungi",
@@ -1172,7 +1167,7 @@
         "cart.pack": "1 bustina",
         "cart.estimate": "Totale indicativo",
         "cart.request_note":
-          "Confermando crei un ordine reale (pagamento non online): ti confermiamo disponibilità e prezzo finale. Per completarlo serve accedere alla tua Area Personale.",
+          "Invii un ordine senza pagamento online. Disponibilità e prezzo finale saranno confermati.",
         "cart.mail_subject": "Richiesta semi Orto in Serra",
         "cart.pack_many": "{count} bustine",
         "cart.seeds_per_pack": "{count} semi/busta",
@@ -1310,7 +1305,7 @@
         "preconfig.climate_label": "2. Clima",
         "preconfig.zona_label": "Zona",
         "preconfig.serra_label": "Serra",
-        "preconfig.serra_cold": "Fredda",
+        "preconfig.serra_cold": "Non riscaldata",
         "preconfig.serra_heated": "Riscaldata",
         "preconfig.month_label": "3. Mese di semina",
         "preconfig.cta": "Vai al configuratore",
@@ -1321,8 +1316,8 @@
         "preconfig.account_choice_continue": "Riprendi configurazione",
         "preconfig.account_choice_edit": "Modifica i parametri",
         "nav.aria_main": "Navigazione principale",
-        "nav.account": "👤 Area Personale",
-        "nav.account_label": "Area Personale",
+        "nav.account": "Area personale",
+        "nav.account_label": "Area personale",
         "footer.tip_default":
           "Annaffia alla base, mai sulle foglie: previeni l'oidio.",
         "cart.aria_open": "Apri carrello",
@@ -1342,17 +1337,17 @@
         "preconfig.aria_close": "Chiudi pannello",
         "footer.motto": "Pianta con cura, raccogli con gioia.",
         "cart.checkout_login_required":
-          "Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area Personale.",
+          "Per completare l'acquisto ed inviare la richiesta dei semi, devi prima accedere o registrarti alla tua Area personale.",
         "cart.order_success":
-          "Ordine {id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area Personale.",
+          "Ordine {id} inviato con successo!\nTrovi lo storico della spedizione nella tua Area personale.",
       },
       ro: {
         "page.title": "Grădină în seră · Cultivă inteligent",
-        "nav.home": "🏠 Acasă",
+        "nav.home": "Acasă",
         "nav.stagione": "🌿 Catalog complet",
         "nav.catalog_all": "🌿 Catalog complet",
         "nav.abbinamenti": "🤝 Combinații",
-        "nav.configuratore": "📐 Configurator seră",
+        "nav.configuratore": "Configurator seră",
         "cart.plugs_count": "{count} răsaduri",
         "cart.plugs_unit": "ghiveci ø7",
         "cart.plugs_hint": "Deja crescut, gata de pus în pământ",
@@ -1382,9 +1377,9 @@
         "journey.step3_when": "Instrument gratuit",
         "journey.step1_title": "Planifică-ți sera",
         "journey.step1_copy":
-          "Răspunde la trei întrebări și primești un plan potrivit spațiului tău.",
+          "Răspunde la patru întrebări și primești un plan potrivit spațiului tău.",
         "journey.step1_proof": "Un plan complet, gata în doar câteva minute.",
-        "journey.step1_badge": "3 întrebări · 2 minute",
+        "journey.step1_badge": "4 întrebări · 2 minute",
         "journey.step1_cta": "Creează planul meu",
         "journey.step1_help": "Descoperă configuratorul",
         "journey.step2_title": "Cumpără pentru grădina ta",
@@ -1398,14 +1393,14 @@
         "journey.semi_badge": "Mai multă alegere",
         "journey.semi_benefit":
           "Mai multe soiuri și control, de la semănat la recoltă.",
-        "journey.semi_hint": "97 de soiuri · de la 2,20 €",
+        "journey.semi_hint": "97 de soiuri disponibile · de la 2,20 € / plic",
         "journey.semi_cta": "Explorează semințele",
         "journey.piantine_kicker": "Sari peste germinare",
         "journey.piantine_label": "Pornește cu răsaduri",
         "journey.piantine_badge": "Mai rapid",
         "journey.piantine_benefit":
           "Începe mai avansat și recoltează mai devreme.",
-        "journey.piantine_hint": "Deja pornite · livrare în 48 h",
+        "journey.piantine_hint": "Răsaduri deja crescute",
         "journey.piantine_cta": "Descoperă răsadurile",
         "journey.or": "sau",
         "journey.step3_title": "Ai început deja să cultivi?",
@@ -1430,10 +1425,10 @@
         "bridge.vivaio_cta": "Descoperă răsadurile disponibile",
         "bridge.vivaio_note": "Disponibilitatea se schimbă odată cu sezonul",
         "hero.plan_help": "Vezi cum funcționează",
-        "nav.semi": "🌿 Catalog de semințe",
+        "nav.semi": "Catalog de semințe",
         "nav.orto_badge": "gratuit",
-        "nav.orto": "🌱 Grădina mea",
-        "nav.vivaio": "🪴 Pepinieră răsaduri",
+        "nav.orto": "Grădina mea",
+        "nav.vivaio": "Pepinieră răsaduri",
         "paths.piantine_cta": "Deschide pepiniera",
         "paths.orto_cta": "Deschide Grădina mea",
         "paths.orto_tag": "instrument gratuit",
@@ -1621,7 +1616,7 @@
         "zone.freddo": "rece",
         "zone.temperato": "temperată",
         "zone.caldo": "caldă",
-        "greenhouse.cold": "rece",
+        "greenhouse.cold": "neîncălzită",
         "greenhouse.heated": "încălzită",
         "type.frutto": "fruct",
         "type.foglia": "frunze",
@@ -1658,7 +1653,7 @@
         "cart.plan_hint": "Deschide configuratorul cu semințele alese",
         "cart.species_one": "1 specie",
         "cart.species_many": "{count} specii",
-        "cart.checkout": "Finalizează achiziția",
+        "cart.checkout": "Trimite comanda spre confirmare",
         "cart.alert":
           "Aș dori disponibilitatea și prețul final pentru aceste semințe:",
         "cart.add": "+ Adaugă",
@@ -1681,7 +1676,7 @@
         "cart.pack": "1 plic",
         "cart.estimate": "Total orientativ",
         "cart.request_note":
-          "Confirmând creezi o comandă reală (fără plată online): îți confirmăm disponibilitatea și prețul final. Pentru a o finaliza trebuie să accesezi Contul tău.",
+          "Trimiți o comandă fără plată online. Disponibilitatea și prețul final vor fi confirmate.",
         "cart.mail_subject": "Cerere semințe Orto in Serra",
         "cart.pack_many": "{count} plicuri",
         "cart.seeds_per_pack": "{count} semințe/plic",
@@ -1807,7 +1802,7 @@
         "detail.sow_exposure": "Expunere",
         "detail.sow_water": "Udare",
         "nav.aria_main": "Navigare principală",
-        "nav.account": "👤 Contul Meu",
+        "nav.account": "Contul Meu",
         "nav.account_label": "Contul Meu",
         "footer.tip_default":
           "Udă la bază, niciodată pe frunze: previne oidiumul.",
@@ -2271,7 +2266,7 @@
         temperate: "temperata",
         warm: "calda",
         heatedShort: "riscaldata",
-        unheated: "Fredda",
+        unheated: "Non riscaldata",
         heatedOption: "Riscaldata",
         suitableCrops:
           "<b>{count}</b> piante adatte questo mese — tocca <b>+</b> per aggiungere, <b>×</b> per rimuovere",
@@ -2419,6 +2414,8 @@
         "print.total_yield": "Resa totale",
         "print.shopping": "Da preparare",
         "print.total": "Totale stimato",
+        "review.plan_hint": "Apri un’aiuola per controllare le colture. Poi passa alla lista dei semi.",
+        "review.plan_help": "Come usare il piano",
         "cart.checkout_msg":
           "Il pagamento online non è ancora attivo.\n\nScrivici a info@ortoinserra.it o chiamaci al +39 055 987 0123 con la tua lista:\n{lines}\n\nTotale: {total}",
       },
@@ -3004,6 +3001,8 @@
         "print.total_yield": "Recoltă totală",
         "print.shopping": "De pregătit",
         "print.total": "Total estimat",
+        "review.plan_hint": "Deschide un strat pentru a verifica plantele. Apoi consultă lista de semințe.",
+        "review.plan_help": "Cum folosești planul",
         "cart.checkout_msg":
           "Nu există plată online momentan.\n\nScrie-ne la info@ortoinserra.it sau sună la +39 055 987 0123 cu lista ta:\n{lines}\n\nTotal: {total}",
         "preconfig.title": "Sera ta",
@@ -3018,7 +3017,7 @@
         "preconfig.climate_label": "2. Climă",
         "preconfig.zona_label": "Zonă",
         "preconfig.serra_label": "Seră",
-        "preconfig.serra_cold": "Rece",
+        "preconfig.serra_cold": "Neîncălzită",
         "preconfig.serra_heated": "Încălzită",
         "preconfig.month_label": "3. Luna de semănat",
         "preconfig.cta": "Mergi la configurator",
@@ -3042,17 +3041,17 @@
   // Dizionario dell'area personale.
   shared.account = {
     it: {
-      "page.title": "Orto in Serra · Area Riservata",
-      "nav.home": "🏠 Home",
+      "page.title": "Orto in Serra · Area personale",
+      "nav.home": "Home",
       "nav.catalog": "🌿 Catalogo completo",
-      "nav.semi": "🌿 Catalogo semi",
+      "nav.semi": "Catalogo semi",
       "nav.orto_badge": "gratis",
-      "nav.vivaio": "🪴 Vivaio piantine",
-      "nav.orto": "🌱 Il mio orto",
+      "nav.vivaio": "Vivaio piantine",
+      "nav.orto": "Il mio orto",
       "nav.abbinamenti": "🤝 Abbinamenti",
-      "nav.configuratore": "📐 Configuratore serra",
-      "nav.account": "👤 Area Personale",
-      "nav.account_label": "Area Personale",
+      "nav.configuratore": "Configuratore serra",
+      "nav.account": "Area personale",
+      "nav.account_label": "Area personale",
       "nav.brand_sub": "Coltiva con un piano",
       "nav.carrello": "Carrello",
       "nav.aria_main": "Navigazione principale",
@@ -3072,9 +3071,11 @@
       "auth.title_login": "Accedi",
       "auth.title_register": "Registrati",
       "auth.email": "Indirizzo Email",
+      "auth.context": "Accedi per ritrovare ordini, progetti e piante da coltivare.",
+      "auth.recovery": "Password dimenticata? Contatta l’assistenza",
       "auth.password": "Password",
       "auth.password_min_chars": "Minimo 6 caratteri",
-      "auth.login_btn": "Accedi all'Area Riservata",
+      "auth.login_btn": "Accedi all'Area personale",
       "auth.name": "Nome e cognome",
       "auth.first_name": "Nome",
       "auth.last_name": "Cognome",
@@ -3425,15 +3426,15 @@
     },
     ro: {
       "page.title": "Orto in Serra · Zonă Rezervată",
-      "nav.home": "🏠 Acasă",
+      "nav.home": "Acasă",
       "nav.catalog": "🌿 Catalog complet",
-      "nav.semi": "🌿 Catalog de semințe",
+      "nav.semi": "Catalog de semințe",
       "nav.orto_badge": "gratuit",
-      "nav.vivaio": "🪴 Pepinieră răsaduri",
-      "nav.orto": "🌱 Grădina mea",
+      "nav.vivaio": "Pepinieră răsaduri",
+      "nav.orto": "Grădina mea",
       "nav.abbinamenti": "🤝 Asocieri",
-      "nav.configuratore": "📐 Configurator seră",
-      "nav.account": "👤 Contul Meu",
+      "nav.configuratore": "Configurator seră",
+      "nav.account": "Contul Meu",
       "nav.account_label": "Contul Meu",
       "nav.brand_sub": "Cultivă cu un plan",
       "nav.carrello": "Coș",
@@ -3453,6 +3454,8 @@
       "auth.title_login": "Autentificare",
       "auth.title_register": "Înregistrare",
       "auth.email": "Adresă Email",
+      "auth.context": "Conectează-te pentru comenzi, proiecte și plantele de cultivat.",
+      "auth.recovery": "Ai uitat parola? Contactează asistența",
       "auth.password": "Parolă",
       "auth.password_min_chars": "Minim 6 caractere",
       "auth.login_btn": "Conectează-te la Zona Rezervată",
@@ -4078,7 +4081,7 @@
           ? "Conectare"
           : "Accedi";
       const btn = document.getElementById("navAccountBtn");
-      if (btn) btn.textContent = `👤 ${etichetta}`;
+      if (btn) btn.textContent = `${etichetta}`;
       document.querySelectorAll(".nav-account-btn").forEach((el) => {
         const label = el.querySelector(".nav-account-label");
         if (label) label.textContent = etichetta;

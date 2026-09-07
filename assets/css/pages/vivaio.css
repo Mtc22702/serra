@@ -1209,3 +1209,20 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Presentazione commerciale coerente con il catalogo semi. */
+@layer coerenza {
+  html .viv-hero, html .viv-card { box-shadow: var(--elev-1); }
+  html .viv-card { border-radius: var(--radius-lg); }
+  html .viv-hero { background: linear-gradient(135deg, var(--botanical-leaf), var(--surface-1) 80%); }
+  html .viv-hero::before, html .viv-hero::after { display: none; }
+  @media (max-width: 660px) {
+    html .viv-hero { padding: 16px; gap: 10px; }
+    html .viv-hero h1 { font-size: 26px; }
+    html .viv-hero-stat { min-height: 52px; padding: 8px; background: var(--surface-2); border: 0; }
+    html .viv-hero-visual { min-height: 84px; }
+  }
+}
+@layer coerenza {
+  html[data-theme="dark"] .viv-hero .orto-hero-date { color: #b7d9ab; }
+}

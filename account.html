@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Area Riservata · Orto in Serra</title>
     <script>
-      window.SERRA_APP_VERSION = "20260816-203216dddd48";
+      window.SERRA_APP_VERSION = "20260907-9ab4b0228a09";
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
     />
     <link
       rel="stylesheet"
-      href="assets/css/serra-account.css?v=20260816-203216dddd48"
+      href="assets/css/serra-account.css?v=20260907-9ab4b0228a09"
     />
     <!-- Script iniziale che applica il tema prima della visualizzazione della pagina -->
     <script>
@@ -238,6 +238,7 @@
     <main class="account-container">
       <!-- Sezione di accesso e registrazione per utenti non autenticati -->
       <section id="authSection" class="auth-section card">
+        <p class="auth-context" data-i18n-acc="auth.context">Accedi per ritrovare ordini, progetti e piante da coltivare.</p>
         <div class="auth-tabs">
           <button
             id="tabLogin"
@@ -265,7 +266,7 @@
             <label for="loginEmail" data-i18n-acc="auth.email">Email</label>
             <input
               type="email"
-              id="loginEmail"
+              id="loginEmail" autocomplete="username"
               placeholder="user@ortoinserra.it"
               required
             />
@@ -276,7 +277,7 @@
             >
             <input
               type="password"
-              id="loginPassword"
+              id="loginPassword" autocomplete="current-password"
               placeholder="••••••••"
               required
             />
@@ -289,7 +290,8 @@
           >
             Entra
           </button>
-          <details class="auth-hint auth-hint-demo">
+          <a class="auth-recovery" href="mailto:info@ortoinserra.it?subject=Assistenza%20accesso" data-i18n-acc="auth.recovery">Password dimenticata? Contatta l’assistenza</a>
+          <details class="auth-hint auth-hint-demo" hidden>
             <summary>
               <strong data-i18n-acc="auth.test_users"
                 >Utenti di test pronti:</strong
@@ -1617,7 +1619,7 @@
           © 2026 Orto in Serra · Tutti i diritti riservati
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260816-203216dddd48</span
+          >v20260907-9ab4b0228a09</span
         >
       </div>
     </footer>

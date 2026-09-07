@@ -428,6 +428,9 @@
   }
 
   async function initAccount() {
+    // Le credenziali dimostrative compaiono solo nella demo locale richiesta esplicitamente.
+    const demo = ["localhost", "127.0.0.1", ""].includes(location.hostname) && new URLSearchParams(location.search).get("demo") === "1";
+    document.querySelector(".auth-hint-demo")?.toggleAttribute("hidden", !demo);
     const savedLang = localStorage.getItem("ois.lang");
     currentLang = savedLang === "ro" || savedLang === "it" ? savedLang : "it";
 
@@ -1510,6 +1513,12 @@
     document.getElementById("registerForm").hidden = tab !== "register";
   }
 
+  function resumeCheckout() {
+    const target = new URLSearchParams(location.search).get("return");
+    const allowed = ["index.html?cart=open", "vivaio.html?cart=open", "configuratore.html?cart=open"];
+    if (allowed.includes(target)) location.href = target;
+  }
+
   async function handleLogin(e) {
     e.preventDefault();
     const email = document
@@ -1530,6 +1539,7 @@
       currentUser = user;
       localStorage.setItem("serra.current_user", JSON.stringify(user));
       renderView();
+      resumeCheckout();
     } else {
       errorEl.textContent = tAcc("auth.login_error");
       errorEl.hidden = false;
@@ -1594,6 +1604,7 @@
       currentUser = newUser;
       localStorage.setItem("serra.current_user", JSON.stringify(newUser));
       renderView();
+      resumeCheckout();
     } else {
       errorEl.textContent = tAcc("auth.register_error");
       errorEl.hidden = false;

@@ -17,17 +17,17 @@
     it: {
       "page.title": "Vivaio · Piantine pronte da trapiantare",
       "nav.brand_sub": "Coltiva con un piano",
-      "nav.home": "🏠 Home",
+      "nav.home": "Home",
       "nav.menu_explore": "Esplora",
       "nav.menu_preferences": "Preferenze",
       "nav.theme": "Tema",
       "nav.theme_hint": "Chiaro / scuro",
       "nav.language": "Lingua",
-      "nav.semi": "🌿 Catalogo semi",
-      "nav.vivaio": "🪴 Vivaio piantine",
-      "nav.orto": "🌱 Il mio orto",
-      "nav.configuratore": "📐 Configuratore serra",
-      "nav.account": "👤 Area Personale",
+      "nav.semi": "Catalogo semi",
+      "nav.vivaio": "Vivaio piantine",
+      "nav.orto": "Il mio orto",
+      "nav.configuratore": "Configuratore serra",
+      "nav.account": "Area Personale",
       "nav.account_label": "Area Personale",
       "nav.carrello": "Carrello",
       "hero.kicker": "VIVAIO",
@@ -77,7 +77,7 @@
       "cat.cycle": "{tipo} · ciclo {n} giorni",
       "cat.days_earlier": "−{n} giorni",
       "cat.harvest_earlier":
-        "Raccolta verso il <b>{data}</b>, circa <b>{n} giorni prima</b> rispetto alla semina.",
+        "Raccolta stimata verso il <b>{data}</b>, circa <b>{n} giorni prima</b> rispetto alla semina.",
       "cat.add": "＋ Aggiungi vassoio",
       "cat.plugs_in": "{n} piantine",
       "cat.remove": "Togli",
@@ -95,7 +95,7 @@
       "cart.empty": "Il carrello è vuoto.",
       "cart.empty_hint":
         "Le piantine viaggiano a vassoi interi: il minimo è 2 vassoi.",
-      "cart.checkout": "Completa acquisto",
+      "cart.checkout": "Invia ordine da confermare",
       "cart.clear": "Svuota",
       "cart.open": "Vedi il carrello",
       "cart.note":
@@ -124,17 +124,17 @@
     ro: {
       "page.title": "Pepinieră · Răsaduri gata de plantat",
       "nav.brand_sub": "Cultivă cu un plan",
-      "nav.home": "🏠 Acasă",
+      "nav.home": "Acasă",
       "nav.menu_explore": "Explorează",
       "nav.menu_preferences": "Preferințe",
       "nav.theme": "Temă",
       "nav.theme_hint": "Deschisă / închisă",
       "nav.language": "Limbă",
-      "nav.semi": "🌿 Catalog de semințe",
-      "nav.vivaio": "🪴 Pepinieră răsaduri",
-      "nav.orto": "🌱 Grădina mea",
-      "nav.configuratore": "📐 Configurator seră",
-      "nav.account": "👤 Contul Meu",
+      "nav.semi": "Catalog de semințe",
+      "nav.vivaio": "Pepinieră răsaduri",
+      "nav.orto": "Grădina mea",
+      "nav.configuratore": "Configurator seră",
+      "nav.account": "Contul Meu",
       "nav.account_label": "Contul Meu",
       "nav.carrello": "Coș",
       "hero.kicker": "PEPINIERĂ",
@@ -203,7 +203,7 @@
       "cart.empty": "Coșul este gol.",
       "cart.empty_hint":
         "Răsadurile călătoresc în tăvi întregi: minimul este de 2 tăvi.",
-      "cart.checkout": "Finalizează achiziția",
+      "cart.checkout": "Trimite comanda spre confirmare",
       "cart.clear": "Golește",
       "cart.open": "Vezi coșul",
       "cart.note":
@@ -830,6 +830,7 @@
       });
     }
 
+    window.SerraCartUI?.syncCheckoutLabel?.();
     const compra = document.getElementById("vivaioCheckoutBtn");
     if (compra) {
       const sotto = piantine().length && vassoiInCarrello() < CONSEGNA.vassoiMinimi;
@@ -848,6 +849,7 @@
   }
 
   function apriCarrello() {
+    window.SerraCartUI?.syncCheckoutLabel?.();
     const overlay = document.getElementById("vivaioCartOverlay");
     if (!overlay) return;
     overlay.classList.add("open");
@@ -921,8 +923,7 @@
   async function checkout() {
     const utente = window.SerraAPI?.getCurrentUser?.();
     if (!utente) {
-      toast(t("cart.login"));
-      setTimeout(() => (window.location.href = "account.html"), 900);
+      window.location.href = "account.html?return=vivaio.html%3Fcart%3Dopen";
       return;
     }
     /* Un carrello, un ordine: partono insieme bustine e piantine. */
@@ -1142,6 +1143,7 @@
     PRODUCTS = listino || E.buildProducts(PLANTS, {});
     loadCart();
     applyLanguage(localStorage.getItem("ois.lang"));
+    if (new URLSearchParams(location.search).get("cart") === "open") apriCarrello();
 
     // Rende infinita la striscia degli ortaggi nel piè di pagina duplicando gli elementi.
     const footerRow = document.getElementById("footerPlantRow");

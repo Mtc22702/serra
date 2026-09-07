@@ -338,7 +338,7 @@
       gruppoHtml(semi, ctx, "semi", doppio) +
       gruppoHtml(piantine, ctx, "piantine", doppio) +
       (doppio ? `<p class="cart-note">${t("note.together")}</p>` : "") +
-      crossHtml(semi, piantine, ctx) +
+
       (ctx.extraHtml || "") +
       totaleHtml
     );
@@ -395,7 +395,19 @@
     timer = setTimeout(chiudi, conf.durata || 7000);
   }
 
+  // Il testo anticipa il vero passo successivo, senza inviare ordini al ritorno dal login.
+  function syncCheckoutLabel() {
+    const ro = global.document.documentElement.lang === "ro";
+    const signedIn = !!global.SerraAPI?.getCurrentUser?.();
+    global.document.querySelectorAll(".cart-checkout-btn").forEach((button) => {
+      button.textContent = signedIn
+        ? (ro ? "Trimite comanda spre confirmare" : "Invia ordine da confermare")
+        : (ro ? "Conectează-te pentru a continua" : "Accedi per continuare");
+    });
+  }
+
   global.SerraCartUI = {
+    syncCheckoutLabel,
     CONSEGNA,
     COPY,
     testo,

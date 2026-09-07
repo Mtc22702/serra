@@ -16509,3 +16509,35 @@
     font-size: 12px !important;
   }
 }
+
+/* Il piano precede i dettagli su mobile; le istruzioni restano consultabili su richiesta. */
+@layer coerenza {
+  html .stage { background: var(--surface-1); box-shadow: var(--elev-1); }
+  html .workflow-hub { background: linear-gradient(135deg, var(--botanical-leaf), var(--surface-1)); box-shadow: var(--elev-1); }
+  html .stage-tools-kicker { color: var(--theme-muted); }
+  html .config-page-title h1, html .panel h2, html .stage-title { font-family: "DM Sans", sans-serif; }
+  .novice-guide-details summary::after { content: "⌄"; margin-left: auto; }
+  .novice-guide-details[open] summary::after { transform: rotate(180deg); }
+  .novice-guide-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--theme-text); font: 600 14px/1.4 "DM Sans", sans-serif; }
+  .novice-guide-summary { color: var(--theme-text); font-size: 14px; line-height: 1.5; margin: 10px 0; }
+  @media (max-width: 1100px) {
+    html body .app .stage { order: 1; }
+    html body .app [data-mode-section="expert"] { order: 3; }
+  }
+  @media (max-width: 660px) {
+    html .workflow-hub .journey-context { padding: 10px; gap: 6px; }
+    html .workflow-hub .journey-context-copy small { display: none; }
+    html .config-page-title { padding-block: 10px; }
+    html .stage-head { padding: 10px; }
+    html .stage-title-row { gap: 6px; }
+    html .stage-auto-plan-row { display: flex; flex-direction: row; align-items: center; gap: 8px; margin: 0; padding: 0; }
+    html .stage-auto-plan-header { flex: 0 0 44px; width: 44px; margin: 0; }
+    html .saph-text, html .saph-line { display: none; }
+    html .stage-month-pill { flex: 1; width: auto; margin: 0; min-height: 44px; padding-block: 5px; box-shadow: none; }
+    html .smp-kicker { display: block; font-size: 10px; color: var(--theme-muted); }
+    html .stage-tools-kicker { min-height: 44px; margin: 0; }
+    html .scene-wrap { padding: 0; }
+    html .workflow-hub .journey-context-level { min-height: 32px; }
+    html .journey-context-progress { gap: 4px; }
+  }
+}

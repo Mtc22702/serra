@@ -6183,6 +6183,36 @@
   }
 }
 
+/* Filtri progressivi: categorie subito disponibili, clima nel pannello espandibile. */
+@layer coerenza {
+  html #catalogFilterToggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; width: 100%; padding: 10px 14px; margin-block: 10px; border: 1px solid var(--surface-line); border-radius: var(--control-radius); background: var(--surface-1); color: var(--theme-text); font: 600 14px/1.4 "DM Sans", sans-serif; box-shadow: none; cursor: pointer; }
+  html #catalogFilterToggle .catalog-mobile-filter-copy { display: flex; gap: 12px; align-items: baseline; }
+  html #catalogFilterToggle small { font-size: 12px; font-weight: 400; color: var(--theme-muted); }
+  html .catalog-pro-section { background: linear-gradient(180deg, var(--botanical-section), var(--bg) 380px); }
+  html .compact-name { font-family: "DM Sans", sans-serif; }
+  html .compact-facts-row { color: var(--theme-muted); }
+  html .compact-buy { min-width: 66px; }
+  html #catalogFilterTools { padding: 0; background: transparent; border: 0; box-shadow: none; }
+  html #catalogFilterTools .catalog-filter-group { padding: 12px; background: var(--surface-1); box-shadow: none; border: 1px solid var(--surface-line); }
+  html #catalogFilterTools:not(.is-mobile-open) .catalog-filter-group--clima { display: none; }
+  html #catalogHint { box-shadow: none; background: transparent; padding-inline: 0; }
+  html .catalog-filter-group-head { margin-bottom: 8px; }
+  html .catalog-filter-step { display: none; }
+  html .catalog-pro-section { padding-top: 30px; }
+  html .plant-card-compact { box-shadow: var(--elev-1); }
+  .catalog-pack-unit { display: block; font: 500 11px/1.4 "DM Sans", sans-serif; color: var(--theme-muted); white-space: nowrap; }
+  @media (min-width: 661px) {
+    html #catalogFilterTools:not([hidden]) { display: block; }
+    html #catalogFilterTools .catalog-filter-group--clima { margin-bottom: 10px; }
+  }
+}
+/* La ricerca usa la stessa superficie botanica dei filtri in entrambi i temi. */
+@layer coerenza {
+  html .catalog-search-box { background: var(--surface-1); border-color: var(--surface-line-strong); }
+  html .catalog-search-box #catalogSearch { background: transparent; color: var(--theme-text); }
+  html .catalog-search-box #catalogSearch::placeholder { color: var(--theme-muted); opacity: 1; }
+}
+
 /* Home — hero, percorsi, fasce di collegamento e ritmo della pagina. */
 
 @layer base, dark-theme, polish, components;
@@ -7457,8 +7487,6 @@
     display: block;
     min-height: 178px;
     padding: 0.65rem;
-    border: 0;
-    background: transparent;
   }
 
   .journey-route-visual--plan .hero-v2-visual,
@@ -7776,7 +7804,6 @@
     }
 
     .journey-v3-grid {
-      gap: 0.65rem;
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -7787,49 +7814,25 @@
     .journey-route,
     .journey-route--plan {
       min-height: 0;
-      padding: 0.85rem 0.9rem;
-    }
-
-    .journey-route-head {
-      min-height: 0;
-    }
-
-    .journey-route-icon {
-      width: 38px;
-      height: 38px;
-      flex: 0 0 38px;
-      font-size: 1.1rem;
-    }
-
-    .journey-route-copy {
-      padding-top: 0.65rem;
-    }
-
-    .journey-route-copy h3 {
-      font-size: 1.2rem;
+      padding: 1rem;
     }
 
     .journey-route-copy p {
-      display: -webkit-box;
       min-height: 0;
-      margin-top: 0.35rem;
-      overflow: hidden;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
     }
 
-    /* Su mobile l'immagine torna a essere il fulcro della scelta: il dato resta
-       subito sotto, centrato, e la CTA chiude la card con un ritmo stabile. */
+    .journey-route-visual {
+      min-height: 142px;
+    }
+
     .journey-route-visual:not(.journey-route-visual--plan) {
       min-height: 166px;
       align-content: center;
       align-items: center;
       justify-content: stretch;
-      margin-top: 0.6rem;
       gap: 0.15rem;
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto auto;
-      padding: 0;
     }
 
     .journey-route-illustration {
@@ -7850,16 +7853,8 @@
       justify-self: center;
     }
 
-    .journey-route-visual--plan {
-      min-height: 0;
-      margin-top: 0.6rem;
-      padding: 0.4rem;
-    }
-
-    .journey-route-visual--plan .hero-v2-visual,
-    .journey-route-visual--plan .hcg {
-      width: min(100%, 200px);
-      margin-inline: auto;
+    .journey-route-visual--plan .hcg-glass {
+      height: 124px;
     }
 
     .journey-route-visual--plan .hcg-peek {
@@ -7870,35 +7865,8 @@
       flex-basis: 10px;
     }
 
-    .journey-route-visual--plan .hcg-card {
-      gap: 4px;
-      padding: 3px 6px;
-    }
-
-    .journey-route-visual--plan .hcg-card-ico {
-      flex-basis: 14px;
-      font-size: 10px;
-    }
-
-    .journey-route-visual--plan .hcg-card-name {
-      font-size: 8.5px;
-    }
-
-    .journey-route-visual--plan .hcg-card-meta {
-      display: none;
-    }
-
-    .journey-route-visual--plan .hcg-card-qty {
-      font-size: 8px;
-    }
-
-    .journey-route-visual--plan .hero-v2-caption {
-      display: none;
-    }
-
     .journey-route-cta {
-      min-height: 46px;
-      margin-top: 0.75rem;
+      margin-top: 1rem;
     }
 
     .journey-tool-band {
@@ -8304,7 +8272,7 @@ html[data-theme="dark"] .journey-care-summary span {
 
 @media (max-width: 720px) {
   .hero-v2-title {
-    font-size: clamp(2.1rem, 11vw, 3rem);
+    font-size: clamp(1.9rem, 8.2vw, 2.35rem);
     line-height: 1;
   }
 
@@ -8319,7 +8287,7 @@ html[data-theme="dark"] .journey-care-summary span {
   }
 
   .journey-choice-title {
-    font-size: clamp(1.6rem, 8vw, 2rem);
+    font-size: clamp(1.4rem, 6.2vw, 1.7rem);
   }
 
   .journey-step,
@@ -9724,5 +9692,102 @@ html[data-theme="dark"] .journey-care-summary span {
     .journey-pick-benefit {
       min-height: 0;
     }
+  }
+}
+
+/* Percorsi: informazioni nel testo, illustrazioni bilanciate e azioni separate. */
+@layer coerenza {
+  html .hero-v2 { background: linear-gradient(155deg, var(--botanical-section), var(--bg) 72%); }
+  html .hero-v2::before { opacity: .3; }
+  html #percorsi .journey-route {
+    display: flex; flex-direction: column; gap: 0; grid-column: auto;
+    min-height: 0; padding: 24px; background: linear-gradient(155deg, var(--botanical-card), var(--surface-1) 78%);
+    border-color: var(--surface-line); box-shadow: 0 3px 5px rgba(28, 66, 37, .10), 0 18px 34px rgba(28, 66, 37, .16), inset 0 1px rgba(255,255,255,.82);
+    --route-accent: var(--button-primary); --route-accent-dark: var(--theme-text);
+  }
+  html .journey-route::before { display: block; height: 4px; opacity: .95; }
+  html #percorsi .journey-route--plan { --route-accent: #347b49; background: linear-gradient(150deg, #ccebb9 0%, #edf9e5 37%, #fcfffa 100%); border-color: rgba(47,116,68,.48); }
+  html #percorsi .journey-route--seeds { --route-accent: #5b8c3e; background: linear-gradient(150deg, #d9edc7 0%, #f1fae9 37%, #fcfffa 100%); border-color: rgba(77,130,55,.42); }
+  html #percorsi .journey-route--seedlings { --route-accent: #9a7b2e; background: linear-gradient(150deg, #f2e7b8 0%, #fbf5dc 37%, #fffefa 100%); border-color: rgba(135,105,36,.4); }
+  html .journey-route--seedlings .journey-route-kicker { color: #826324; }
+  html[data-theme="dark"] .journey-route--seedlings .journey-route-kicker { color: #dec58c; }
+  html .journey-route-copy { display: flex; flex-direction: column; gap: 0; }
+  html .journey-route-copy h3 { margin: 0 0 10px; }
+  html .journey-route-copy p { min-height: 0; margin: 0; }
+  html .journey-route-copy .journey-route-fact {
+    display: block; position: static; margin: 12px 0 0; padding: 0;
+    border: 0; border-radius: 0; background: transparent; box-shadow: none;
+    color: var(--theme-text-muted); font-size: .8rem; font-weight: 500; line-height: 1.5;
+  }
+  html .journey-route-visual,
+  html .journey-route-visual:not(.journey-route-visual--plan) {
+    display: grid; place-items: center; align-content: center;
+    height: 160px; min-height: 160px; margin: auto 0 24px; padding: 12px 0 0;
+    grid-template-columns: 1fr; grid-template-rows: 1fr;
+  }
+  html .journey-route-illustration,
+  html .journey-route--seedlings .journey-route-illustration {
+    height: 144px; max-width: 144px; filter: drop-shadow(0 4px 5px rgba(20,40,25,.1));
+  }
+  html .journey-route-visual--plan .hcg-glass { box-shadow: 0 5px 12px rgba(18,43,29,.16); }
+  html .journey-route-cta {
+    margin: 0; min-height: 52px; background: var(--button-primary-fill);
+    color: var(--button-primary-text); box-shadow: none;
+  }
+  html .journey-route:not(.journey-route--plan) .journey-route-cta {
+    background: #e1eed7; color: #254f32; border: 1px solid rgba(59,117,70,.32);
+  }
+  html .journey-route.journey-route--seedlings .journey-route-cta { background: #ececcb; color: #584a1f; border-color: rgba(135,105,36,.3); }
+  html .journey-route:not(.journey-route--plan) .journey-route-cta:hover { background: #d3e6c7; }
+  html .journey-route.journey-route--seedlings .journey-route-cta:hover { background: #e2e3bc; }
+  html .journey-route:hover { transform: translateY(-3px); box-shadow: 0 5px 8px rgba(28,66,37,.12), 0 23px 40px rgba(28,66,37,.19), inset 0 1px rgba(255,255,255,.86); }
+  html[data-theme="dark"] #percorsi .journey-route { box-shadow: 0 2px 4px rgba(0,0,0,.20), 0 16px 30px rgba(0,0,0,.24), inset 0 1px rgba(236,255,230,.07); }
+  html[data-theme="dark"] #percorsi .journey-route--plan { background: linear-gradient(155deg, #2b5a3b, #193725 84%); border-color: rgba(150,216,157,.32); }
+  html[data-theme="dark"] #percorsi .journey-route--seeds { background: linear-gradient(155deg, #294d2d, #193725 84%); border-color: rgba(158,208,122,.3); }
+  html[data-theme="dark"] #percorsi .journey-route--seedlings { background: linear-gradient(155deg, #3c4826, #193725 84%); border-color: rgba(220,196,122,.26); }
+  html[data-theme="dark"] .journey-route--seeds .journey-route-cta { background: #305a35; color: #edf7e9; border-color: rgba(159,214,149,.32); }
+  html[data-theme="dark"] .journey-route.journey-route--seedlings .journey-route-cta { background: #4a512d; color: #fff8d9; border-color: rgba(220,196,122,.3); }
+  html .journey-route-cta .journey-route-arrow,
+  html .journey-route-cta:hover .journey-route-arrow {
+    background: transparent; box-shadow: none; border: 0; color: inherit;
+    width: 24px; height: 24px; border-radius: 0;
+  }
+  html .journey-tool-band { background: var(--botanical-leaf); box-shadow: none; }
+  @media (max-width: 920px) {
+    html #percorsi .journey-v3-grid { grid-template-columns: minmax(0, 1fr); }
+    html #percorsi .journey-route {
+      display: grid; grid-template-columns: minmax(0, 1fr) 150px;
+      gap: 0 24px; padding: 22px;
+    }
+    html .journey-route-copy { grid-column: 1; grid-row: 1; }
+    html .journey-route-visual,
+    html .journey-route-visual:not(.journey-route-visual--plan) {
+      grid-column: 2; grid-row: 1; height: 150px; min-height: 0; margin: 0; padding: 0;
+    }
+    html .journey-route-visual--plan .hero-v2-visual,
+    html .journey-route-visual--plan .hcg { width: 150px; height: 150px; min-height: 0; transform: none; padding: 0; }
+    html .journey-route-visual--plan .hcg-glass { width: 140px; height: 140px; min-width: 0; transform: none; margin: 0; left: 0; right: auto; }
+    html .journey-route-visual--plan .hcg-scene { width: 100%; height: 100%; }
+    html .journey-route-visual--plan .hcg-peek { display: none; }
+    html .journey-route-cta { grid-column: 1 / -1; margin-top: 24px; }
+  }
+  @media (max-width: 660px) {
+    html .hero-v2-inner { gap: 20px; }
+    html .hero-v2-title { font-size: 2rem; }
+    html .journey-choice-title { font-size: 1.5rem; }
+    html .journey-choice-head { margin-bottom: 12px; }
+    html #percorsi .journey-route { grid-template-columns: minmax(0, 1fr) 72px; gap: 0 12px; padding: 18px; }
+    html .journey-route-copy h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    html .journey-route-copy p { font-size: .9rem; }
+    html .journey-route-copy .journey-route-fact { font-size: .78rem; margin-top: 10px; }
+    html .journey-route-kicker { display: none; }
+    html .journey-route-visual,
+    html .journey-route-visual:not(.journey-route-visual--plan) { height: 88px; align-self: center; }
+    html .journey-route-illustration,
+    html .journey-route--seedlings .journey-route-illustration { height: 88px; max-width: 72px; filter: none; }
+    html .journey-route-visual--plan .hcg,
+    html .journey-route-visual--plan .hero-v2-visual { width: 72px; height: 72px; }
+    html .journey-route-visual--plan .hcg-glass { width: 72px; height: 72px; }
+    html .journey-route-cta { margin-top: 24px; min-height: 48px; }
   }
 }

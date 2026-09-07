@@ -1190,6 +1190,30 @@
   }
 }
 
+/* Profondità botanica condivisa: le superfici si distinguono senza effetto plastica. */
+@layer coerenza {
+  :where(.panel, .dashboard-card, .card, .orto-piano-card, .orto-card, .viv-card,
+    .plant-card, .plant-card-top, .plant-card-compact, .abbinamento-card,
+    .companion-card, .kit-card, .action-card, .persona-card, .guided-info-card,
+    .catalog-insight-card, .detail-summary-card, .profile-form-section) {
+    box-shadow: 0 2px 3px rgba(29, 71, 40, .06), 0 10px 22px rgba(29, 71, 40, .09), inset 0 1px rgba(255,255,255,.64);
+  }
+  :where(.panel, .dashboard-card, .card, .orto-piano-card, .orto-card, .viv-card,
+    .plant-card, .plant-card-top, .plant-card-compact, .abbinamento-card,
+    .companion-card, .kit-card, .action-card, .persona-card, .guided-info-card,
+    .catalog-insight-card, .detail-summary-card, .profile-form-section):hover {
+    box-shadow: 0 4px 7px rgba(29, 71, 40, .08), 0 16px 30px rgba(29, 71, 40, .13), inset 0 1px rgba(255,255,255,.68);
+  }
+  html[data-theme="dark"] :where(.panel, .dashboard-card, .card, .orto-piano-card,
+    .orto-card, .viv-card, .plant-card, .plant-card-top, .plant-card-compact,
+    .abbinamento-card, .companion-card, .kit-card, .action-card, .persona-card,
+    .guided-info-card, .catalog-insight-card, .detail-summary-card, .profile-form-section) {
+    box-shadow: 0 2px 4px rgba(0,0,0,.22), 0 12px 26px rgba(0,0,0,.25), inset 0 1px rgba(239,255,232,.06);
+  }
+  .btn, .orto-btn, .cart-checkout-btn { box-shadow: 0 2px 3px rgba(23, 74, 38, .13); }
+  .btn:hover, .orto-btn:hover, .cart-checkout-btn:hover { box-shadow: 0 5px 10px rgba(23, 74, 38, .20); }
+}
+
 /* Calendario e catalogo */
 @layer base {
   .month-strip {
@@ -11302,67 +11326,74 @@ html[data-theme="dark"]
    home, configuratore, vivaio, orto, guida, account e conferma ordine. */
 @layer coerenza {
   :root {
-    --bg: #dce9dc;
-    --surface-1: #fbfdf8;
-    --surface-2: #edf5ec;
-    --surface-3: #d7e8d8;
-    --surface-sunken: #cddfce;
-    --surface-line: rgba(23, 77, 43, 0.2);
+    --text: #203127;
+    --muted: #56665b;
+    --theme-text: var(--text);
+    --theme-muted: var(--muted);
+    --theme-text-muted: var(--muted);
+    --botanical-section: #dcebd3;
+    --botanical-card: #eaf4e1;
+    --botanical-leaf: #d6e9c9;
+    --botanical-warm: #edf0d8;
+    --lift-hover: translateY(-1px);
+    --bg: #eaf2e5;
+    --surface-1: #f6faf2;
+    --surface-2: #dcebd5;
+    --surface-3: #ccdfc4;
+    --surface-sunken: #dcebd5;
+    --surface-line: rgba(39, 100, 49, 0.26);
     --surface-line-strong: rgba(23, 77, 43, 0.36);
-    --elev-1:
-      0 1px 2px rgba(10, 48, 25, 0.07), 0 5px 13px rgba(10, 48, 25, 0.08);
-    --elev-2:
-      0 2px 5px rgba(10, 48, 25, 0.09), 0 13px 30px rgba(10, 48, 25, 0.13),
-      inset 0 1px 0 rgba(255, 255, 255, 0.88);
-    --elev-3:
-      0 5px 12px rgba(10, 48, 25, 0.11), 0 23px 48px rgba(10, 48, 25, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.92);
-    --elev-4:
-      0 9px 22px rgba(10, 48, 25, 0.14), 0 36px 72px rgba(10, 48, 25, 0.24),
-      inset 0 1px 0 rgba(255, 255, 255, 0.94);
-    --elev-hover:
-      0 8px 18px rgba(10, 48, 25, 0.12), 0 28px 54px rgba(10, 48, 25, 0.22);
+    --elev-1: 0 1px 3px rgba(20, 40, 28, .05);
+    --elev-2: 0 3px 10px rgba(20, 40, 28, .07);
+    --elev-3: 0 8px 24px rgba(20, 40, 28, .11);
+    --elev-4: 0 16px 48px rgba(20, 40, 28, .18);
+    --elev-hover: 0 5px 14px rgba(20, 40, 28, .10);
     --elev-focus: 0 0 0 4px rgba(33, 99, 58, 0.2);
   }
 
   html[data-theme="dark"] {
-    --bg: #06110b;
-    --surface-1: #10251a;
-    --surface-2: #173222;
-    --surface-3: #20452e;
-    --surface-sunken: #08180f;
-    --surface-line: rgba(166, 222, 181, 0.2);
+    --botanical-section: #153c27;
+    --botanical-card: #20482e;
+    --botanical-leaf: #2b5234;
+    --botanical-warm: #394b2b;
+    --text: #f5f3e9;
+    --muted: #b7c3b9;
+    --dark-page: #0d1e15;
+    --dark-section: #193725;
+    --dark-surface: #193725;
+    --dark-raised: #254b33;
+    --dark-text: #f5f3e9;
+    --dark-muted: #b7c3b9;
+    --dark-subtle: #b7c3b9;
+    --ink-900: #f5f3e9;
+    --ink-800: #e0e9df;
+    --ink-500: #b7c3b9;
+    --ink-400: #b7c3b9;
+    --ink-600: #cbd7ce;
+    --bg: #0d1e15;
+    --surface-1: #193725;
+    --surface-2: #254b33;
+    --surface-3: #325e40;
+    --surface-sunken: #112a1c;
+    --surface-line: rgba(151, 212, 155, 0.29);
     --surface-line-strong: rgba(166, 222, 181, 0.38);
-    --elev-1:
-      0 1px 3px rgba(0, 0, 0, 0.48), 0 6px 16px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.035);
-    --elev-2:
-      0 3px 8px rgba(0, 0, 0, 0.5), 0 15px 34px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.065);
-    --elev-3:
-      0 6px 15px rgba(0, 0, 0, 0.54), 0 26px 56px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.075);
-    --elev-4:
-      0 11px 26px rgba(0, 0, 0, 0.6), 0 38px 82px rgba(0, 0, 0, 0.62),
-      inset 0 1px 0 rgba(255, 255, 255, 0.09);
-    --elev-hover:
-      0 9px 20px rgba(0, 0, 0, 0.56), 0 30px 62px rgba(0, 0, 0, 0.56);
+    --elev-1: 0 1px 3px rgba(20, 40, 28, .05);
+    --elev-2: 0 3px 10px rgba(20, 40, 28, .07);
+    --elev-3: 0 8px 24px rgba(20, 40, 28, .11);
+    --elev-4: 0 16px 48px rgba(20, 40, 28, .18);
+    --elev-hover: 0 5px 14px rgba(20, 40, 28, .10);
     --elev-focus: 0 0 0 4px rgba(123, 211, 146, 0.24);
   }
 
   body {
     background-color: var(--bg);
-    background-image:
-      radial-gradient(circle at 7% 2%, rgba(45, 122, 72, 0.2), transparent 31rem),
-      radial-gradient(circle at 94% 18%, rgba(98, 170, 115, 0.14), transparent 29rem);
+    background-image: none;
     background-attachment: fixed;
   }
 
   html[data-theme="dark"] body {
     background-color: var(--bg);
-    background-image:
-      radial-gradient(circle at 7% 2%, rgba(85, 170, 110, 0.17), transparent 34rem),
-      radial-gradient(circle at 94% 18%, rgba(32, 69, 46, 0.3), transparent 30rem);
+    background-image: none;
   }
 
   .site-header {
@@ -11696,6 +11727,7 @@ html[data-theme="dark"]
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
       grid-template-areas:
+        "restored restored"
         "persona persona"
         "sizes-label climate-label"
         "dimensions climate"
@@ -11704,6 +11736,7 @@ html[data-theme="dark"]
       gap: 3px 12px;
       padding: 6px 16px 8px;
     }
+    .preconfig-sheet--v2 .preconfig-restored { grid-area: restored; }
     .preconfig-sheet--v2 #preconfigPersonaSection { grid-area: persona; }
     .preconfig-sheet--v2 #preconfigSizesLabel { grid-area: sizes-label; }
     .preconfig-sheet--v2 #preconfigSizesField { grid-area: dimensions; }
@@ -12030,4 +12063,94 @@ html[data-theme="dark"]
   border-color: rgba(139, 212, 158, 0.22);
   background: rgba(139, 212, 158, 0.08);
   color: rgba(208, 236, 208, 0.48);
+}
+
+/* Gerarchia comune: una CTA primaria, superfici calme e focus leggibile nei due temi. */
+@layer coerenza {
+  :root {
+    --button-primary: #356b42;
+    --button-primary-text: #ffffff;
+    --button-primary-fill: #356b42;
+    --button-primary-fill-hover: #285634;
+    --button-secondary-bg: #edf3ea;
+    --button-secondary-text: #284f33;
+    --button-primary-shadow: transparent;
+  }
+  html[data-theme="dark"] {
+    --button-primary: #9ccb95;
+    --button-primary-text: #102016;
+    --button-primary-fill: #9ccb95;
+    --button-primary-fill-hover: #b0d9a9;
+    --button-secondary-bg: #283a2f;
+    --button-secondary-text: #dce8dc;
+    --button-primary-shadow: transparent;
+  }
+  html .cart-checkout-btn, html .orto-btn--primary, html .btn.btn-primary {
+    background: var(--button-primary-fill);
+    color: var(--button-primary-text);
+    box-shadow: none;
+    border-color: transparent;
+  }
+  html .cart-checkout-btn:hover, html .orto-btn--primary:hover, html .btn.btn-primary:hover {
+    background: var(--button-primary-fill-hover);
+    color: var(--button-primary-text);
+  }
+  html .preconfig-sheet--v2, html[data-theme="dark"] .preconfig-sheet--v2 {
+    background: var(--surface-1);
+    box-shadow: var(--elev-4);
+  }
+  html .preconfig-sheet--v2 .preconfig-vfield,
+  html .preconfig-sheet--v2 .preconfig-month-wrap {
+    background: var(--surface-2);
+    background-image: none;
+    box-shadow: none;
+  }
+  html .preconfig-vfield::before, html .preconfig-vfield::after { display: none; }
+  html .preconfig-sheet--v2 .pc-persona-card { box-shadow: none; }
+  html .preconfig-sheet--v2 .pc-persona-card.is-active { box-shadow: none; }
+  html .preconfig-sheet--v2::before { background: var(--button-primary); height: 3px; }
+  html .cart-cross { background: transparent; box-shadow: none; padding-block: 10px; }
+  html .cart-cross small { display: none; }
+  html .cart-cross b { font-weight: 500; font-size: 13px; }
+  html .cart-cross-ico { display: none; }
+  html .cart-drawer { background: var(--surface-1); }
+  html .site-header { box-shadow: var(--elev-1); }
+  :where(button, a, input, select, summary):focus-visible {
+    outline: 3px solid var(--button-primary);
+    outline-offset: 3px;
+  }
+}
+
+
+/* Il ripristino del progetto deve essere esplicito prima di confermare i parametri. */
+@layer coerenza { .preconfig-restored { grid-column: 1 / -1; font-size: 13px; color: var(--theme-muted); margin: 4px 0; } .preconfig-restored[hidden] { display: none; } }
+
+/* Icone di navigazione Lucide: tratto uniforme in entrambi i temi. */
+@layer coerenza {
+  #mainNav > .nav-link .nav-link-icon {
+    content: ""; display: inline-block; flex: 0 0 18px; width: 18px; height: 18px;
+    background: currentColor; mask: var(--nav-icon) center / contain no-repeat;
+    border: 0; border-radius: 0; box-shadow: none; opacity: 1;
+  }
+  #mainNav > .nav-link--menu-home { --nav-icon: url("../img/svg/ui-house.svg"); }
+  #mainNav > .nav-link--configuratore { --nav-icon: url("../img/svg/ui-ruler.svg"); }
+  #mainNav > .nav-link--semi { --nav-icon: url("../img/svg/ui-leaf.svg"); }
+  #mainNav > .nav-link--vivaio { --nav-icon: url("../img/svg/ui-flower-2.svg"); }
+  #mainNav > .nav-link--orto { --nav-icon: url("../img/svg/ui-sprout.svg"); }
+  #mainNav > .nav-link--account { --nav-icon: url("../img/svg/ui-user-round.svg"); }
+}
+@layer coerenza {
+  .site-header .nav-account-ico {
+    font-size: 0; width: 18px; height: 18px; background: currentColor;
+    mask: url("../img/svg/ui-user-round.svg") center / contain no-repeat;
+  }
+  @media (min-width: 1241px) and (max-width: 1400px) {
+    .site-header #mainNav > .nav-link--menu-home { display: none; }
+  }
+}
+@layer coerenza {
+  @media (min-width: 1241px) and (max-width: 1400px) {
+    .site-header #mainNav > .nav-link { padding-inline: 7px; gap: 6px; }
+    .site-header #mainNav > .nav-link--orto::after { display: none; }
+  }
 }

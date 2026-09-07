@@ -9480,6 +9480,36 @@
   }
 }
 
+/* Diario operativo: spazio alle piante, prima delle decorazioni introduttive. */
+@layer orto-audit {
+  html .orto-page-head { padding: 20px; min-height: 0; background: linear-gradient(135deg, var(--botanical-leaf), var(--surface-1)); box-shadow: var(--elev-1); }
+  html .orto-page-seal { display: none; }
+  html .orto-page-head::before, html .orto-page-head::after { display: none; }
+  html .orto-welcome { padding: 20px; background: linear-gradient(145deg, var(--botanical-card), var(--surface-1)); box-shadow: var(--elev-1); }
+  html .orto-page-lead { margin-bottom: 0; }
+  html[data-theme="dark"] .orto-page { --orto-muted: #b7c3b9; --orto-ink-soft: #dce8dc; }
+  html[data-theme="dark"] .orto-chipfilter.is-active, html[data-theme="dark"] .orto-chipfilter[aria-pressed="true"] { background: #34483b; color: #f5f3e9; border-color: #9ccb95; }
+  @media (max-width: 660px) {
+    html .orto-page-head { padding: 16px; margin-bottom: 16px; }
+    html .orto-page-title { font-size: 1.75rem; }
+    html .orto-page-kicker { font-size: 11px; }
+    html .orto-page-lead { font-size: 14px; }
+    html .orto-welcome { padding: 16px; }
+    html .orto-welcome h2 { font-size: 1.4rem; }
+    html .orto-welcome-text { font-size: 14px; }
+  }
+}
+
+@layer orto-audit {
+  html[data-theme="dark"] .orto-welcome-choice-ico,
+  html[data-theme="dark"] .orto-welcome-arrow { color: #b7d9ab; }
+}
+
+@layer orto-audit {
+  html .orto-page { --orto-surface: var(--surface-1); --orto-surface-2: var(--surface-2); }
+  html .orto-welcome-choice--primary { background: var(--botanical-leaf); border-color: var(--surface-line-strong); }
+}
+
 /* Vivaio: stili specifici della sezione che vende le piantine già cresciute. */
 
 @layer base {
@@ -10690,4 +10720,21 @@
   .viv-page .viv-chiprail {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* Presentazione commerciale coerente con il catalogo semi. */
+@layer coerenza {
+  html .viv-hero, html .viv-card { box-shadow: var(--elev-1); }
+  html .viv-card { border-radius: var(--radius-lg); }
+  html .viv-hero { background: linear-gradient(135deg, var(--botanical-leaf), var(--surface-1) 80%); }
+  html .viv-hero::before, html .viv-hero::after { display: none; }
+  @media (max-width: 660px) {
+    html .viv-hero { padding: 16px; gap: 10px; }
+    html .viv-hero h1 { font-size: 26px; }
+    html .viv-hero-stat { min-height: 52px; padding: 8px; background: var(--surface-2); border: 0; }
+    html .viv-hero-visual { min-height: 84px; }
+  }
+}
+@layer coerenza {
+  html[data-theme="dark"] .viv-hero .orto-hero-date { color: #b7d9ab; }
 }

@@ -6181,3 +6181,33 @@
     }
   }
 }
+
+/* Filtri progressivi: categorie subito disponibili, clima nel pannello espandibile. */
+@layer coerenza {
+  html #catalogFilterToggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; width: 100%; padding: 10px 14px; margin-block: 10px; border: 1px solid var(--surface-line); border-radius: var(--control-radius); background: var(--surface-1); color: var(--theme-text); font: 600 14px/1.4 "DM Sans", sans-serif; box-shadow: none; cursor: pointer; }
+  html #catalogFilterToggle .catalog-mobile-filter-copy { display: flex; gap: 12px; align-items: baseline; }
+  html #catalogFilterToggle small { font-size: 12px; font-weight: 400; color: var(--theme-muted); }
+  html .catalog-pro-section { background: linear-gradient(180deg, var(--botanical-section), var(--bg) 380px); }
+  html .compact-name { font-family: "DM Sans", sans-serif; }
+  html .compact-facts-row { color: var(--theme-muted); }
+  html .compact-buy { min-width: 66px; }
+  html #catalogFilterTools { padding: 0; background: transparent; border: 0; box-shadow: none; }
+  html #catalogFilterTools .catalog-filter-group { padding: 12px; background: var(--surface-1); box-shadow: none; border: 1px solid var(--surface-line); }
+  html #catalogFilterTools:not(.is-mobile-open) .catalog-filter-group--clima { display: none; }
+  html #catalogHint { box-shadow: none; background: transparent; padding-inline: 0; }
+  html .catalog-filter-group-head { margin-bottom: 8px; }
+  html .catalog-filter-step { display: none; }
+  html .catalog-pro-section { padding-top: 30px; }
+  html .plant-card-compact { box-shadow: var(--elev-1); }
+  .catalog-pack-unit { display: block; font: 500 11px/1.4 "DM Sans", sans-serif; color: var(--theme-muted); white-space: nowrap; }
+  @media (min-width: 661px) {
+    html #catalogFilterTools:not([hidden]) { display: block; }
+    html #catalogFilterTools .catalog-filter-group--clima { margin-bottom: 10px; }
+  }
+}
+/* La ricerca usa la stessa superficie botanica dei filtri in entrambi i temi. */
+@layer coerenza {
+  html .catalog-search-box { background: var(--surface-1); border-color: var(--surface-line-strong); }
+  html .catalog-search-box #catalogSearch { background: transparent; color: var(--theme-text); }
+  html .catalog-search-box #catalogSearch::placeholder { color: var(--theme-muted); opacity: 1; }
+}

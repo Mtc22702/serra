@@ -1215,7 +1215,11 @@ function updateCatalogFilterToggle() {
     (catalog.type ? 1 : 0) +
     (catalog.easyOnly ? 1 : 0);
   const ro = currentLang === "ro";
-  summary.textContent = ro
+  const desktop = window.matchMedia("(min-width: 661px)").matches;
+  const label = toggle.querySelector("b");
+  if (label) label.textContent = desktop ? (ro ? "Climă și seră" : "Clima e serra") : (ro ? "Filtre" : "Filtri");
+  toggle.setAttribute("aria-controls", desktop ? "catalogClimateGroup" : "catalogFilterTools");
+  summary.textContent = desktop ? `${zoneLabel(state.zona)} · ${greenhouseLabel()}` : ro
     ? `${count} ${count === 1 ? "filtru activ" : "filtre active"}`
     : `${count} ${count === 1 ? "filtro attivo" : "filtri attivi"}`;
 }
@@ -1382,7 +1386,7 @@ function renderEditorialPlants() {
           <span class="super-compact-body">
             <span class="super-compact-top">
               <span class="super-compact-name">${plantName(p.id)}</span>
-              <span class="super-compact-price">${money(packPrice(p.id))}</span>
+              <span class="super-compact-price">${money(packPrice(p.id))} ${currentLang === "ro" ? "/ plic" : "/ bustina"}</span>
             </span>
             <span class="super-compact-bottom">
               <span class="super-compact-badge" data-plant-type="${tipo}" style="${ts}">${typeLabel(tipo)}</span>
@@ -1426,7 +1430,7 @@ function renderEditorialPlants() {
             </div>
           </div>
           <div class="compact-buy">
-            <span class="compact-price">${money(packPrice(p.id))}</span>
+            <span class="compact-price">${money(packPrice(p.id))}<small class="catalog-pack-unit">${currentLang === "ro" ? "per plic" : "a bustina"}</small></span>
             <button class="compact-add-btn${inC ? " added" : ""}" data-home-action="toggle-cart" data-plant-id="${p.id}" title="${inC ? t("cart.remove") : t("cart.add_plain")}" aria-label="${inC ? t("cart.remove") : t("cart.add_plain")} ${plantName(p.id)}">${inC ? "✓" : "+"}</button>
           </div>
         </div>`;
@@ -1816,6 +1820,7 @@ function cartDrawerHtml() {
 }
 // Sincronizza contatore, righe e totale del carrello con i dati correnti.
 function updateCartUI() {
+  window.SerraCartUI?.syncCheckoutLabel?.();
   document.getElementById("cartCount").textContent = cart.length;
   const speciesLine = document.getElementById("cartSpeciesLine");
   if (speciesLine) {
@@ -1933,6 +1938,7 @@ function unlockBodyScroll() {
 
 // Apertura e chiusura
 function openCart() {
+  window.SerraCartUI?.syncCheckoutLabel?.();
   document.getElementById("cartNudge")?.classList.remove("visible");
   lockBodyScroll();
   document.body.classList.add("cart-open");
@@ -1954,8 +1960,7 @@ function alertCheckout() {
   // Controlla se l'utente è autenticato
   const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
   if (!user) {
-    alert(t("cart.checkout_login_required"));
-    window.location.href = "account.html";
+    window.location.href = "account.html?return=index.html%3Fcart%3Dopen";
     return;
   }
 
@@ -5069,6 +5074,13 @@ if (catalogSearchLink) {
     applyPreconfigLang();
 
     const saved = readSavedCfg();
+    const restored = document.getElementById("preconfigRestored");
+    if (restored) {
+      restored.hidden = !saved;
+      restored.textContent = document.documentElement.lang === "ro"
+        ? "Am reluat parametrii ultimului plan. Verifică și luna de semănat."
+        : "Ho ripreso i parametri dell’ultimo piano. Controlla anche il mese di semina.";
+    }
     const w = saved?.larghezza ?? 3;
     const l = saved?.lunghezza ?? 5;
     const zona = saved?.zona ?? "temperato";

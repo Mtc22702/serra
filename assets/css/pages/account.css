@@ -9506,3 +9506,11 @@ html[data-theme="dark"] .notification-content {
     text-align: center;
   }
 }
+
+/* Accesso: contesto esplicito e assistenza reale, senza simulare un reset password. */
+@layer coerenza {
+  html .auth-section.card { box-shadow: var(--elev-1); background: var(--surface-1); }
+  .auth-context { color: var(--theme-muted); font-size: 14px; line-height: 1.5; margin-bottom: 18px; }
+  .auth-recovery { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; color: var(--theme-text); text-decoration: underline; text-underline-offset: 3px; }
+  .auth-hint-demo[hidden] { display: none; }
+}

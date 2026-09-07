@@ -31,7 +31,7 @@
 
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260816-203216dddd48";
+      window.SERRA_APP_VERSION = "20260907-9ab4b0228a09";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -125,39 +125,39 @@
             href="index.html"
             class="nav-link nav-link--menu-home"
             data-i18n="nav.home"
-            >🏠 Home</a
+            >Home</a
           >
           <a
             href="configuratore.html?source=index&resume=1"
             class="nav-link nav-link--configuratore"
             data-i18n="nav.configuratore"
-            >📐 Configuratore serra</a
+            >Configuratore serra</a
           >
           <a
             href="#stagione"
             class="nav-link nav-link--semi"
             data-i18n="nav.semi"
-            >🌿 Catalogo semi</a
+            >Catalogo semi</a
           >
           <a
             href="vivaio.html"
             class="nav-link nav-link--vivaio"
             data-i18n="nav.vivaio"
-            >🪴 Vivaio piantine</a
+            >Vivaio piantine</a
           >
           <!-- Distintivo "gratis" gestito in CSS (::after in home.css), non nel markup -->
           <a
             href="orto.html"
             class="nav-link nav-link--orto"
             data-i18n="nav.orto"
-            >🌱 Il mio orto</a
+            >Il mio orto</a
           >
           <a
             href="account.html"
             class="nav-link nav-link--account"
             id="navAccountBtn"
             data-i18n="nav.account"
-            >👤 Area Personale</a
+            >Area Personale</a
           >
           <div class="mobile-nav-preferences">
             <span
@@ -322,14 +322,6 @@
             </div>
             <ul class="journey journey-v3-grid">
               <li class="journey-route journey-route--plan">
-                <div class="journey-route-head">
-                  <span class="journey-route-icon" aria-hidden="true">📐</span>
-                  <span
-                    class="journey-route-tag"
-                    data-i18n="journey.step1_badge"
-                    >3 domande · 2 minuti</span
-                  >
-                </div>
                 <div class="journey-route-copy">
                   <span
                     class="journey-route-kicker"
@@ -338,9 +330,10 @@
                   >
                   <h3 data-i18n="journey.step1_title">Progetta la tua serra</h3>
                   <p data-i18n="journey.step1_copy">
-                    Rispondi a tre domande e ricevi un piano adatto al tuo
+                    Rispondi a quattro domande e ricevi un piano adatto al tuo
                     spazio.
                   </p>
+                  <p class="journey-route-fact" data-i18n="journey.step1_badge">4 domande · 2 minuti</p>
                 </div>
                 <div
                   class="journey-route-visual journey-route-visual--plan"
@@ -375,12 +368,6 @@
               </li>
 
               <li class="journey-route journey-route--seeds">
-                <div class="journey-route-head">
-                  <span class="journey-route-icon" aria-hidden="true">🌱</span>
-                  <span class="journey-route-tag" data-i18n="journey.semi_badge"
-                    >Più scelta</span
-                  >
-                </div>
                 <div class="journey-route-copy">
                   <span
                     class="journey-route-kicker"
@@ -391,6 +378,7 @@
                   <p data-i18n="journey.semi_benefit">
                     Più varietà e controllo, dalla semina alla raccolta.
                   </p>
+                  <p class="journey-route-fact" data-i18n="journey.semi_hint">97 varietà disponibili · da 2,20 € a bustina</p>
                 </div>
                 <div class="journey-route-visual" aria-hidden="true">
                   <img
@@ -400,9 +388,6 @@
                     width="512"
                     height="768"
                   />
-                  <span class="journey-route-fact" data-i18n="journey.semi_hint"
-                    >97 varietà · da 2,20 €</span
-                  >
                 </div>
                 <a
                   class="journey-route-cta hero-cfg-catalog-link"
@@ -414,14 +399,6 @@
               </li>
 
               <li class="journey-route journey-route--seedlings">
-                <div class="journey-route-head">
-                  <span class="journey-route-icon" aria-hidden="true">🪴</span>
-                  <span
-                    class="journey-route-tag"
-                    data-i18n="journey.piantine_badge"
-                    >Più veloce</span
-                  >
-                </div>
                 <div class="journey-route-copy">
                   <span
                     class="journey-route-kicker"
@@ -434,6 +411,7 @@
                   <p data-i18n="journey.piantine_benefit">
                     Inizia più avanti e raccogli prima.
                   </p>
+                  <p class="journey-route-fact" data-i18n="journey.piantine_hint">Piantine già avviate</p>
                 </div>
                 <div class="journey-route-visual" aria-hidden="true">
                   <img
@@ -443,11 +421,6 @@
                     width="512"
                     height="768"
                   />
-                  <span
-                    class="journey-route-fact"
-                    data-i18n="journey.piantine_hint"
-                    >Già avviate · consegna in 48 h</span
-                  >
                 </div>
                 <a class="journey-route-cta" href="vivaio.html">
                   <span data-i18n="journey.piantine_cta"
@@ -562,7 +535,7 @@
             aria-label="Filtri catalogo semi"
             data-i18n-aria="catalog.aria_filters"
           >
-            <div class="catalog-filter-group catalog-filter-group--clima">
+            <div id="catalogClimateGroup" class="catalog-filter-group catalog-filter-group--clima">
               <div class="catalog-filter-group-head">
                 <span class="catalog-filter-step">1</span>
                 <div>
@@ -1139,7 +1112,7 @@
               <a
                 href="configuratore.html?source=index&resume=1"
                 class="nav-link--configuratore"
-                ><span data-i18n="nav.configuratore">📐 Configuratore</span></a
+                ><span data-i18n="nav.configuratore">Configuratore</span></a
               >
             </li>
             <li>
@@ -1159,7 +1132,7 @@
             </li>
             <li>
               <a href="account.html"
-                ><span data-i18n="nav.account">👤 Area Personale</span></a
+                ><span data-i18n="nav.account">Area Personale</span></a
               >
             </li>
           </ul>
@@ -1206,7 +1179,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260816-203216dddd48</span
+          >v20260907-9ab4b0228a09</span
         >
       </div>
     </footer>
@@ -1719,6 +1692,7 @@
         </div>
 
         <div class="preconfig-body">
+          <p class="preconfig-restored" id="preconfigRestored" hidden></p>
           <div id="preconfigPersonaSection">
             <div
               class="preconfig-section-label preconfig-section-label--primary"

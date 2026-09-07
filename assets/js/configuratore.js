@@ -9459,6 +9459,7 @@ function saveConfCart() {
 
 // Aggiorna la visualizzazione del carrello
 function updateConfCartUI() {
+  window.SerraCartUI?.syncCheckoutLabel?.();
   // Materiali extra selezionati per l'ordine.
   const materials =
     typeof selectedMaterialItems === "function" ? selectedMaterialItems() : [];
@@ -9639,6 +9640,7 @@ function unlockConfCartPageScroll() {
 
 // Apre il pannello carrello
 function openConfCart() {
+  window.SerraCartUI?.syncCheckoutLabel?.();
   const overlay = document.getElementById("cartOverlay");
   if (!overlay || overlay.classList.contains("open")) return;
   loadConfCart();
@@ -9692,8 +9694,7 @@ function alertConfCheckout() {
   // Controlla se l'utente è autenticato
   const user = window.SerraAPI && window.SerraAPI.getCurrentUser();
   if (!user) {
-    alert(tx("cart.checkout_login_required"));
-    window.location.href = "account.html";
+    window.location.href = "account.html?return=configuratore.html%3Fcart%3Dopen";
     return;
   }
 
@@ -10228,3 +10229,11 @@ window.addEventListener("pageshow", (event) => {
     });
   });
 })();
+
+// Riprende la verifica del carrello dopo l'accesso, senza inoltrare l'ordine.
+window.addEventListener("load", () => {
+  if (BOOT_PARAMS.get("cart") === "open") {
+    updateConfCartUI();
+    openConfCart();
+  }
+});
