@@ -201,12 +201,9 @@
             <b>${ctx.soldi(prezzo)}${piantina ? t("row.per_plug") : t("row.per_pack")}</b>
           </span>
         </span>
-        <!-- Rimozione e quantità stanno su una riga propria, ai due capi
-             opposti. Prima la ✕ era 18 × 24 px e stava sette pixel sotto al
-             «+»: i loro centri distavano 41 px, meno di quanto sia largo un
-             polpastrello, quindi un tocco solo li copriva entrambi e quale
-             vincesse lo decideva il caso. Adesso fra i due c'è la larghezza
-             della riga. Il suggerimento e l'etichetta spiegano l'azione. -->
+        <!-- La griglia mette la ✕ nell'angolo superiore destro e la quantità
+             sotto prezzo e dettagli. Il suggerimento e l'etichetta accessibile
+             mantengono esplicita l'azione dei controlli. -->
         <button type="button" class="cart-item-remove" ${bersaglio.replace("{azione}", "remove-from-cart")} aria-label="${escape(t("row.remove"))}" title="${escape(t("row.remove"))}">${t("row.remove_short")}</button>
         <span class="cart-item-qty" role="group" aria-label="${escape(t("qty.label"))}">
           <button type="button" class="cart-qty-btn" ${bersaglio.replace("{azione}", "cart-qty-less")} aria-label="${escape(meno)}" title="${escape(meno)}"${qta <= passoRiga(riga) ? " disabled" : ""}>−</button>
