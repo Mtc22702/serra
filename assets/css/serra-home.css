@@ -10068,10 +10068,10 @@ html[data-theme="dark"] .journey-care-summary span {
   html[data-theme="dark"] .journey-route.journey-route--seedlings .journey-route-cta { background: #9b792f; color: #fff; border-color: rgba(220,196,122,.3); }
   html .journey-route-cta .journey-route-arrow,
   html .journey-route-cta:hover .journey-route-arrow {
-    width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.23);
-    border-radius: var(--control-radius);
-    background: rgba(255,255,255,.16);
-    box-shadow: inset 0 1px rgba(255,255,255,.18);
+    width: auto; height: auto; flex: 0 0 auto;
+    border: 0; border-radius: 0;
+    background: transparent;
+    box-shadow: none;
     color: inherit;
   }
   html .journey-tool-band { background: var(--botanical-leaf); box-shadow: none; }
@@ -10106,10 +10106,6 @@ html[data-theme="dark"] .journey-care-summary span {
       color: #fff;
       box-shadow: 0 7px 14px color-mix(in srgb, var(--route-accent) 22%, transparent);
       font-size: .86rem;
-    }
-    html #percorsi .journey-route .journey-route-arrow {
-      width: 34px;
-      height: 34px;
     }
     html .journey-route-illustration,
     html .journey-route--seedlings .journey-route-illustration { height: 76px; max-width: 76px; }
