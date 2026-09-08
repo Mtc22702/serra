@@ -633,7 +633,14 @@
                 Vive dentro la home, nella sezione dei semi di stagione.
               </p>
             </header>
-            <dl>
+            <div class="guide-compare-signals" aria-label="Punti chiave catalogo semi">
+              <span><i aria-hidden="true">🗓</i><b data-guide-key="compare.seme_signal1">Scegli quando seminare</b></span>
+              <span><i aria-hidden="true">🔎</i><b data-guide-key="compare.seme_signal2">Cerca e filtra</b></span>
+              <span><i aria-hidden="true">🛒</i><b data-guide-key="compare.seme_signal3">Aggiungi al carrello</b></span>
+            </div>
+            <details class="guide-compare-details">
+              <summary data-guide-key="compare.details">Vedi i dettagli</summary>
+              <dl>
               <div>
                 <dt data-guide-key="compare.row_where">Dove si trova</dt>
                 <dd data-guide-key="compare.seme_where">
@@ -644,8 +651,8 @@
               <div>
                 <dt data-guide-key="compare.row_do">Cosa puoi fare</dt>
                 <dd data-guide-key="compare.seme_do">
-                  Filtri per mese e per tipo, campo di ricerca, e «Tutto il
-                  catalogo» per vedere anche ciò che è fuori stagione.
+                  Cerca una pianta, filtra per periodo o tipo e passa dalla
+                  griglia alla lista quando vuoi confrontare più voci.
                 </dd>
               </div>
               <div>
@@ -658,11 +665,13 @@
               <div>
                 <dt data-guide-key="compare.row_detail">Se vuoi i dettagli</dt>
                 <dd data-guide-key="compare.seme_detail">
-                  Aprendo una scheda trovi semina, cure e raccolta di quella
-                  pianta: è lì che stanno le informazioni botaniche.
+                  Aprendo una scheda trovi come usarla, benefici e vitamine,
+                  poi semina, cure e raccolta: tutte le informazioni della
+                  pianta sono lì.
                 </dd>
               </div>
-            </dl>
+              </dl>
+            </details>
             <p class="guide-compare-when" data-guide-key="compare.seme_when">
               <b>Scorciatoia:</b> se hai già progettato una serra, il
               configuratore genera la lista dei semi che ti servono e la
@@ -689,10 +698,18 @@
               </span>
               <h3 data-guide-key="compare.piantina_title">Vivaio piantine</h3>
               <p data-guide-key="compare.piantina_sub">
-                È una pagina a sé, con un vassoio al posto del carrello.
+                È una pagina dedicata a piantine pronte al trapianto, vendute
+                in vassoi da 6.
               </p>
             </header>
-            <dl>
+            <div class="guide-compare-signals" aria-label="Punti chiave vivaio piantine">
+              <span><i aria-hidden="true">🌱</i><b data-guide-key="compare.piantina_signal1">Pronte ora</b></span>
+              <span><i aria-hidden="true">⚡</i><b data-guide-key="compare.piantina_signal2">Raccogli prima</b></span>
+              <span><i aria-hidden="true">📦</i><b data-guide-key="compare.piantina_signal3">Vassoio da 6</b></span>
+            </div>
+            <details class="guide-compare-details">
+              <summary data-guide-key="compare.details">Vedi i dettagli</summary>
+              <dl>
               <div>
                 <dt data-guide-key="compare.row_where">Dove si trova</dt>
                 <dd data-guide-key="compare.piantina_where">
@@ -703,25 +720,27 @@
               <div>
                 <dt data-guide-key="compare.row_do">Cosa puoi fare</dt>
                 <dd data-guide-key="compare.piantina_do">
-                  L'elenco mostra solo ciò che ha senso trapiantare nel mese in
-                  corso; i filtri in alto lo restringono ancora.
+                  Cerca e filtra per famiglia; sulle schede, i due segnali
+                  mostrano raccolta stimata e giorni guadagnati rispetto al
+                  seme.
                 </dd>
               </div>
               <div>
                 <dt data-guide-key="compare.row_add">Come si ordina</dt>
                 <dd data-guide-key="compare.piantina_add">
-                  Le piantine finiscono nel vassoio, che resta visibile mentre
-                  scegli e mostra sempre il totale.
+                  Aggiungi un vassoio; nel carrello puoi aumentare o ridurre la
+                  quantità prima di confermare.
                 </dd>
               </div>
               <div>
                 <dt data-guide-key="compare.row_detail">Se vuoi i dettagli</dt>
                 <dd data-guide-key="compare.piantina_detail">
-                  Ogni scheda dice quanto tempo fa risparmiare rispetto al seme
-                  e quando arriva la consegna.
+                  Le etichette della scheda indicano quando potrai raccogliere
+                  e quanti giorni risparmi rispetto alla semina.
                 </dd>
               </div>
-            </dl>
+              </dl>
+            </details>
             <p
               class="guide-compare-when"
               data-guide-key="compare.piantina_when"
@@ -812,11 +831,10 @@
             <div>
               <h3 data-guide-key="grow.s1t">Le tre schede in alto</h3>
               <p data-guide-key="grow.s1p">
-                «Agenda» elenca le attività del giorno e, scorrendo la striscia
-                delle date, anche quelle dei giorni successivi. «Colture»
-                raccoglie le piante che stai seguendo, «Da piantare» ciò che hai
-                comprato e non è ancora in terra. Il numero accanto a ogni nome
-                dice quanto c'è dentro.
+                «Da piantare» raccoglie ciò che hai comprato e non è ancora in
+                terra, «Piantate» le colture che stai seguendo, «Oggi» le
+                attività da fare. I contatori mostrano quante voci ci sono in
+                ogni scheda.
               </p>
             </div>
             <span class="step-icon">🗂️</span>
@@ -826,9 +844,9 @@
             <div>
               <h3 data-guide-key="grow.s2t">Registra una coltura</h3>
               <p data-guide-key="grow.s2p">
-                «＋ Aggiungi coltura» chiede pianta, data, quantità e posizione.
-                Da quei quattro dati l'app costruisce da sola il calendario di
-                cura fino alla raccolta.
+                Da «Da piantare» scegli piante già con te oppure dagli ordini;
+                poi imposta data, quantità e posizione. L'app costruisce da
+                sola il calendario di cura fino alla raccolta.
               </p>
             </div>
             <span class="step-icon">🌱</span>
@@ -838,9 +856,9 @@
             <div>
               <h3 data-guide-key="grow.s3t">Spunta o rimanda</h3>
               <p data-guide-key="grow.s3p">
-                In «Agenda» il quadratino segna l'attività come fatta e «Domani»
-                la sposta di un giorno. Quello che salti resta in vista sotto
-                «Da recuperare».
+                In «Oggi» il quadratino segna l'attività come fatta e «Domani»
+                la sposta di un giorno. Quello che salti resta visibile tra le
+                attività da recuperare.
               </p>
             </div>
             <span class="step-icon">📅</span>
@@ -891,8 +909,9 @@
               Account, lingua, tema e uso offline
             </h2>
             <p class="guide-chapter-lead" data-guide-key="settings.lead">
-              Quattro comandi identici in tutta l'applicazione: stanno
-              nell'intestazione in alto e, sui telefoni, dentro il menu ☰.
+              Nell'intestazione trovi area personale, tema, lingua, carrello e
+              «Guida»; sui telefoni queste opzioni sono dentro il menu ☰. La
+              guida apre già il capitolo della pagina in cui ti trovi.
             </p>
           </div>
         </header>

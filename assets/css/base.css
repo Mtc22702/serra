@@ -1218,6 +1218,15 @@
     transition: background .16s ease, color .16s ease, border-color .16s ease;
   }
   .plant-detail-cue b { font-size: .78rem; line-height: .7; }
+  /* Nella lista compatta l'indicatore resta nella riga: non copre mai il nome. */
+  .plant-card-super-compact .plant-detail-cue--inline {
+    position: static;
+    z-index: auto;
+    flex: 0 0 auto;
+    align-self: center;
+    padding: 3px 5px;
+    border-radius: 50%;
+  }
   :where(.plant-card-compact, .plant-card-super-compact)[data-home-action="open-detail"]:hover .plant-detail-cue,
   :where(.plant-card-compact, .plant-card-super-compact)[data-home-action="open-detail"]:focus-within .plant-detail-cue {
     border-color: #2f6b3a;
@@ -3656,6 +3665,84 @@
     right: 0.8rem;
     font-size: 1rem;
     opacity: 0.55;
+  }
+
+  .detail-health {
+    padding: 0.88rem 0.95rem;
+    border: 1px solid rgba(45, 106, 79, 0.18);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, rgba(235, 247, 235, 0.94), rgba(255, 255, 255, 0.9));
+    box-shadow: var(--elev-2);
+  }
+  .detail-health-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.42rem;
+    margin-bottom: 0.7rem;
+    color: var(--green-dk);
+  }
+  .detail-health-heading > span {
+    display: grid;
+    width: 1.7rem;
+    height: 1.7rem;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(116, 198, 157, 0.22);
+    color: #24734d;
+    font-size: 0.9rem;
+  }
+  .detail-health-heading h3 {
+    margin: 0;
+    font-family: "Fraunces", serif;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  .detail-health-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.58rem;
+  }
+  .detail-health-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 0.64rem;
+    border: 1px solid rgba(45, 106, 79, 0.12);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.72);
+  }
+  .detail-health-icon {
+    display: grid;
+    flex: 0 0 auto;
+    width: 1.65rem;
+    height: 1.65rem;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(116, 198, 157, 0.18);
+    color: #21663c;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .detail-health-item div { min-width: 0; }
+  .detail-health-item div > span {
+    display: block;
+    margin-bottom: 0.16rem;
+    color: #5f7b66;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .detail-health-item p {
+    margin: 0;
+    color: #38503d;
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+  @media (max-width: 520px) {
+    .detail-health { padding: 0.78rem; }
+    .detail-health-grid { grid-template-columns: 1fr; gap: 0.48rem; }
   }
 
   .detail-spacing {
@@ -11046,6 +11133,100 @@ html[data-theme="dark"]
       margin-left: 3.1rem;
       justify-self: start;
     }
+  }
+
+  /* Accesso contestuale alla guida: sul desktop è un'azione compatta; nel menu
+     mobile mantiene una riga autonoma e facile da trovare. */
+  .site-header .app-guide-link,
+  .site-header .mobile-app-guide-link {
+    color: var(--green-dk);
+    text-decoration: none;
+  }
+
+  .site-header .app-guide-link {
+    min-height: var(--control-h-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0 0.68rem;
+    border: 1px solid rgba(45, 106, 79, 0.14);
+    border-radius: var(--control-radius-pill);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: var(--elev-2);
+    font-size: 0.79rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .site-header .app-guide-link:hover,
+  .site-header .app-guide-link:focus-visible {
+    border-color: rgba(82, 183, 136, 0.48);
+    background: #fff;
+  }
+
+  .site-header .app-guide-link-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(116, 198, 157, 0.22);
+    color: var(--green-dk);
+    font-family: Georgia, serif;
+    font-size: 0.86rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .site-header .mobile-app-guide-link {
+    display: none;
+  }
+
+  @media (max-width: 1220px) and (min-width: 1025px) {
+    .site-header .app-guide-link {
+      width: var(--control-h-md);
+      justify-content: center;
+      padding: 0;
+    }
+
+    .site-header .app-guide-link-label {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .site-header .app-guide-link {
+      display: none;
+    }
+
+    .site-header .mobile-app-guide-link {
+      min-height: 56px;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.45rem 0.2rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--green-dk) 12%, transparent);
+      font-size: 0.93rem;
+      font-weight: 700;
+    }
+
+    .site-header .mobile-app-guide-link .app-guide-link-icon {
+      width: 42px;
+      height: 42px;
+      font-size: 1.05rem;
+    }
+  }
+
+  html[data-theme="dark"] .site-header .app-guide-link {
+    border-color: rgba(181, 232, 197, 0.2);
+    background: rgba(18, 49, 39, 0.82);
+    color: var(--serra-white);
+  }
+
+  html[data-theme="dark"] .site-header .mobile-app-guide-link {
+    border-color: rgba(181, 232, 197, 0.18);
+    color: var(--serra-white);
   }
 
   /* ---------- schede che rispondono al passaggio del mouse ---------- */

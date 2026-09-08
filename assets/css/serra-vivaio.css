@@ -9895,20 +9895,31 @@
     color: #8c2316;
   }
 
-  /* Il vantaggio in giorni sta sulla foto: nella scheda stretta la riga del prezzo diventava illeggibile. */
-  .viv-save-photo {
-    position: absolute;
-    z-index: 2;
-    top: 11px;
-    right: 11px;
-    padding: 4px 9px;
-    border-radius: var(--radius-pill);
-    background: linear-gradient(140deg, #f6c85a, #e2a92c);
-    color: #4a3405;
-    font-size: 11px;
-    font-weight: 800;
-    white-space: nowrap;
+  /* Data e vantaggio diventano due segnali, evitando la frase ripetuta in ogni card. */
+  .viv-timing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.38rem;
+    margin: 0 0 0.82rem;
   }
+  .viv-timing span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    min-height: 1.78rem;
+    padding: 0.28rem 0.52rem;
+    border: 1px solid rgba(45, 106, 79, 0.14);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--orto-green) 7%, var(--orto-surface));
+    color: var(--orto-ink);
+    font-size: 0.72rem;
+  }
+  .viv-timing span + span {
+    border-color: rgba(181, 134, 15, 0.28);
+    background: rgba(246, 200, 90, 0.17);
+    color: #6d5107;
+  }
+  .viv-timing i { font-style: normal; }
 
   .viv-price-row {
     display: flex;
@@ -10612,7 +10623,6 @@
   .viv-qty-value small,
   .viv-card-foot,
   .viv-remove,
-  .viv-save-photo,
   .viv-unit,
   .viv-unit-price,
   .viv-hero .orto-hero-date,

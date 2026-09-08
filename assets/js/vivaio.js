@@ -598,7 +598,6 @@
           <span class="orto-badges">
             <span class="orto-chip orto-chip--piantina">${t("cat.lot", { n: lotto })}</span>
           </span>
-          <span class="viv-save-photo">${t("cat.days_earlier", { n: risparmio })}</span>
           <img class="orto-card-svg" src="${svgSrc(plant.id)}" alt="" loading="lazy" />
           <span class="orto-card-titles">
             <h3>${escape(plantName(plant))}</h3>
@@ -618,10 +617,13 @@
               prezzo: money(piantina.prezzo),
             })}</small>
           </div>
-          <div class="orto-note">${t("cat.harvest_earlier", {
+          <div class="viv-timing" aria-label="${escape(t("cat.harvest_earlier", {
             data: fmtData(raccolta),
             n: risparmio,
-          })}</div>
+          }))}">
+            <span title="${escape(t("cat.harvest_earlier", { data: fmtData(raccolta), n: risparmio }))}"><i aria-hidden="true">📅</i><b>${fmtData(raccolta)}</b></span>
+            <span><i aria-hidden="true">⚡</i><b>${t("cat.days_earlier", { n: risparmio })}</b></span>
+          </div>
           <div class="viv-card-actions">
             ${
               inCarrello

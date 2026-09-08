@@ -38,7 +38,7 @@ const DATA_EXPORT = (function (root) {
         "cavoletti"
       ],
       resa: 3,
-      nota: "Vuole sostegno e pieno sole. Togli le femminelle.",
+      nota: "Ortaggio da frutto succoso e aromatico. Si usa crudo, in insalata, nei sughi e nelle conserve.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -60,7 +60,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico", "pomodoro"],
       nemiche: ["fagiolino", "fagiolo", "broccolo_romanesco"],
       resa: 1,
-      nota: "Ama il caldo. Concima quando inizia a fruttificare.",
+      nota: "Ortaggio da frutto dolce e croccante. Si mangia crudo, arrostito, ripieno o in padella.",
       col: {
         l1: "#3c7d3a",
         l2: "#2c5e2b",
@@ -82,7 +82,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico"],
       nemiche: [],
       resa: 0.5,
-      nota: "Rustico e generoso. Sopporta bene la siccità.",
+      nota: "Piccolo peperone dal gusto più o meno piccante. Si usa fresco, essiccato o per aromatizzare salse e oli.",
       col: {
         l1: "#3c7d3a",
         l2: "#2c5e2b",
@@ -104,7 +104,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fagiolino"],
       nemiche: [],
       resa: 1.5,
-      nota: "Vuole molto caldo e annaffiature regolari.",
+      nota: "Ortaggio da frutto dalla polpa morbida e saporita. Si cucina alla griglia, al forno, fritto o nei sughi.",
       col: {
         l1: "#46743f",
         l2: "#345633",
@@ -126,7 +126,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fagiolino", "ravanello"],
       nemiche: [],
       resa: 2.5,
-      nota: "Cresce in fretta e occupa tanto spazio. Raccogli spesso.",
+      nota: "Ortaggio da frutto tenero e delicato. Si usa in padella, al forno, nelle frittate o crudo quando è giovane.",
       col: {
         l1: "#3f7e3f",
         l2: "#2e5e2e",
@@ -149,7 +149,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fagiolo"],
       nemiche: [],
       resa: 4,
-      nota: "Si allarga molto: lasciale spazio o falla arrampicare.",
+      nota: "Ortaggio da frutto dalla polpa dolce e compatta. Si usa per zuppe, risotti, ripieni, dolci e conserve.",
       col: {
         l1: "#477e3a",
         l2: "#345a2c",
@@ -172,7 +172,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fagiolino", "lattuga", "aneto"],
       nemiche: ["salvia", "pomodoro", "finocchio"],
       resa: 2,
-      nota: "Falla arrampicare su una rete: frutti più puliti e dritti.",
+      nota: "Ortaggio da frutto fresco e croccante. Si consuma crudo, in insalata, sottaceto o in salse fredde.",
       col: {
         l1: "#3f863f",
         l2: "#2c5f2c"
@@ -194,7 +194,7 @@ const DATA_EXPORT = (function (root) {
       amiche: [],
       nemiche: [],
       resa: 2,
-      nota: "Vuole tanto sole e poca acqua a fine maturazione.",
+      nota: "Frutto estivo dalla polpa dolce e profumata. Si mangia fresco, in macedonia o abbinato a ingredienti salati.",
       col: {
         l1: "#4c8240",
         l2: "#385f2f",
@@ -216,7 +216,7 @@ const DATA_EXPORT = (function (root) {
       amiche: [],
       nemiche: [],
       resa: 6,
-      nota: "Enorme footprint: una pianta riempie mezza serra piccola.",
+      nota: "Grande frutto estivo ricco d'acqua e dalla polpa dolce. Si consuma fresco, in macedonia o in bevande.",
       col: {
         l1: "#3f7a3a",
         l2: "#2c5a29",
@@ -239,7 +239,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "ravanello", "fragola", "cetriolo", "cipolla"],
       nemiche: [],
       resa: 0.35,
-      nota: "Facilissima e veloce. Semina poche piante per volta.",
+      nota: "Ortaggio a foglia tenero e dal gusto delicato. Si usa soprattutto crudo in insalate, panini e contorni.",
       col: {
         l1: "#8cc85d",
         l2: "#6fae45"
@@ -260,7 +260,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["finocchio"],
       nemiche: [],
       resa: 0.3,
-      nota: "Il freddo lo rende rosso e dolce.",
+      nota: "Cicoria a foglia o a cespo dal gusto amarognolo. Si mangia cruda, grigliata, al forno o nei risotti.",
       col: {
         l1: "#9c4f6a",
         l2: "#6f3550",
@@ -282,7 +282,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga"],
       nemiche: [],
       resa: 0.1,
-      nota: "Pronta in poche settimane. Si ritaglia e ricresce.",
+      nota: "Foglia dal sapore fresco, pepato e leggermente piccante. Si usa cruda, sulla pizza, nei panini o come pesto.",
       col: {
         l1: "#5fa23a",
         l2: "#477e2b"
@@ -306,7 +306,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fragola", "cavolo"],
       nemiche: ["finocchio"],
       resa: 0.15,
-      nota: "Ama il fresco; in estate va in fiore subito.",
+      nota: "Ortaggio a foglia tenero e ricco di sapore. Si cucina in padella, nelle torte salate, nei ripieni o nelle zuppe.",
       col: {
         l1: "#2f6f2f",
         l2: "#234f24"
@@ -327,7 +327,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cavolo", "cipolla"],
       nemiche: [],
       resa: 0.5,
-      nota: "Generosa: si raccolgono le foglie esterne a mano a mano.",
+      nota: "Ortaggio a foglia con coste carnose e foglie delicate. Si lessa, si ripassa in padella o si usa in torte e minestre.",
       col: {
         l1: "#3a7e3a",
         l2: "#2a5d2a",
@@ -350,7 +350,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["sedano", "aneto", "cipolla", "bietola"],
       nemiche: ["pomodoro", "fragola"],
       resa: 1.2,
-      nota: "Vuole spazio e terreno ricco. Attento ai bruchi.",
+      nota: "Brassica che forma un cespo compatto di foglie. Si usa cruda, stufata, fermentata o in zuppe e involtini.",
       col: {
         l1: "#7fa37e",
         l2: "#5f8060",
@@ -373,7 +373,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["sedano", "aneto", "cipolla"],
       nemiche: ["pomodoro", "fragola"],
       resa: 1.2,
-      nota: "Resiste al gelo; più buona dopo le prime brinate.",
+      nota: "Cavolo dalle foglie increspate e dal gusto dolce. Si cucina in zuppe, stufati, involtini o semplicemente in padella.",
       col: {
         l1: "#5f8a5f",
         l2: "#456545",
@@ -395,7 +395,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["sedano", "cipolla"],
       nemiche: ["pomodoro", "fragola"],
       resa: 0.6,
-      nota: "Dopo la testa centrale dà tanti getti laterali.",
+      nota: "Brassica di cui si mangiano infiorescenze e gambi teneri. Si usa al vapore, in padella, nella pasta o nelle vellutate.",
       col: {
         l1: "#6f9466",
         l2: "#4f704a",
@@ -417,7 +417,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["sedano", "aneto"],
       nemiche: ["pomodoro", "fragola"],
       resa: 0.8,
-      nota: "Piega le foglie sulla testa per tenerla bianca.",
+      nota: "Brassica dalla grande infiorescenza compatta e delicata. Si cucina al forno, al vapore, in pastella o come crema.",
       col: {
         l1: "#7fa178",
         l2: "#5d7d58",
@@ -439,7 +439,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cipolla", "bietola"],
       nemiche: ["pomodoro", "fragola"],
       resa: 0.5,
-      nota: "Rustico toscano: si raccoglie a foglie per mesi.",
+      nota: "Cavolo a foglia scura dal gusto intenso. Si usa in zuppe, minestre, chips al forno o saltato in padella.",
       col: {
         l1: "#2b4f33",
         l2: "#1d3a26",
@@ -461,7 +461,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cipolla", "bietola"],
       nemiche: ["pomodoro", "fragola"],
       resa: 0.3,
-      nota: "Si mangia il fusto ingrossato: raccogli da giovane.",
+      nota: "Brassica dal fusto ingrossato, croccante e leggermente dolce. Si mangia cruda, al forno, in padella o nelle zuppe.",
       col: {
         l1: "#7fa37e",
         l2: "#5f8060",
@@ -483,7 +483,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cipolla", "porro", "lattuga", "ravanello", "pomodoro"],
       nemiche: ["aneto", "finocchio"],
       resa: 0.1,
-      nota: "Semina fitta e dirada. Terreno sciolto, senza sassi.",
+      nota: "Radice dolce e croccante, arancione o colorata. Si usa cruda, cotta, nei soffritti, nelle zuppe e nei dolci.",
       col: {
         l1: "#5fae4a",
         l2: "#458035"
@@ -515,7 +515,7 @@ const DATA_EXPORT = (function (root) {
         "cucamelon"
       ],
       resa: 0.3,
-      nota: 'È "antipatico" a molte piante: tienilo in disparte.',
+      nota: "Ortaggio dal grumolo croccante e aromatico. Si mangia crudo, gratinato, brasato o nelle insalate.",
       col: {
         l1: "#6db04a",
         l2: "#4f8235",
@@ -537,7 +537,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro"],
       nemiche: [],
       resa: 0.05,
-      nota: "Lento a partire; poi taglia di continuo per tutto l'anno.",
+      nota: "Erba aromatica dalle foglie fresche e versatili. Si usa tritata in salse, ripieni, insalate, minestre e secondi piatti.",
       col: {
         l1: "#3f8a3f",
         l2: "#2e6630"
@@ -558,7 +558,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "peperone", "peperoncino"],
       nemiche: [],
       resa: 0.05,
-      nota: "Cima i fiori per avere foglie sempre tenere.",
+      nota: "Erba aromatica dal profumo dolce e intenso. Si usa fresco in pesto, sughi, insalate, pizza e piatti mediterranei.",
       col: {
         l1: "#46a046",
         l2: "#347e34"
@@ -581,7 +581,7 @@ const DATA_EXPORT = (function (root) {
       amiche: [],
       nemiche: [],
       resa: 0.03,
-      nota: "Va a fiore col caldo: semina scalare ogni 2 settimane.",
+      nota: "Erba aromatica dal gusto agrumato e speziato. Foglie e semi insaporiscono curry, salse, verdure e marinature.",
       col: {
         l1: "#5aa24a",
         l2: "#427e35"
@@ -602,7 +602,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cavolo", "cetriolo"],
       nemiche: ["carota"],
       resa: 0.05,
-      nota: "Aiuta i cavoli e attira insetti utili.",
+      nota: "Erba aromatica dal profumo fresco e anisato. Si usa con pesce, patate, cetrioli, sottaceti e salse.",
       col: {
         l1: "#6aa84a",
         l2: "#4d7e36"
@@ -632,7 +632,7 @@ const DATA_EXPORT = (function (root) {
         "fagiolo_borlotto"
       ],
       resa: 0.15,
-      nota: "Poca acqua a fine ciclo. Tiene lontani molti parassiti.",
+      nota: "Bulbo aromatico dal gusto dolce o pungente. È una base per soffritti e si usa crudo, cotto, al forno o in conserva.",
       col: {
         l1: "#6f9e7a",
         l2: "#527e5d"
@@ -663,7 +663,7 @@ const DATA_EXPORT = (function (root) {
         "fagiolo_borlotto"
       ],
       resa: 0.05,
-      nota: "Si pianta a spicchi in autunno, si raccoglie in estate.",
+      nota: "Bulbo aromatico dal sapore intenso e pungente. Si usa crudo o cotto per insaporire salse, verdure, carni e conserve.",
       col: {
         l1: "#7aa884",
         l2: "#5c8866"
@@ -684,7 +684,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota"],
       nemiche: ["fagiolino", "fagiolo", "pisello"],
       resa: 0.2,
-      nota: "Rincalza la terra attorno per avere il fusto bianco lungo.",
+      nota: "Ortaggio della famiglia della cipolla, dal gusto più dolce. Si usa in soffritti, zuppe, torte salate e contorni.",
       col: {
         l1: "#6f9e84",
         l2: "#507a62"
@@ -706,7 +706,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "fragola"],
       nemiche: ["fagiolino", "fagiolo", "pisello"],
       resa: 0.1,
-      nota: "Come la cipolla ma più delicato; ottimo per principianti.",
+      nota: "Piccolo bulbo aromatico dal gusto fine e leggermente dolce. Si usa in salse, vinaigrette, risotti e piatti al forno.",
       col: {
         l1: "#74a37e",
         l2: "#557d60"
@@ -735,7 +735,7 @@ const DATA_EXPORT = (function (root) {
         "finocchio"
       ],
       resa: 0.15,
-      nota: "Non serve sostegno. Migliora il terreno con l'azoto.",
+      nota: "Legume compatto che produce baccelli teneri. Si mangia intero, lessato o saltato, come contorno e nelle insalate.",
       col: {
         l1: "#4f9a3f",
         l2: "#3a7530"
@@ -764,7 +764,7 @@ const DATA_EXPORT = (function (root) {
         "finocchio"
       ],
       resa: 0.25,
-      nota: "Vuole canne o rete: sale anche 2 metri.",
+      nota: "Legume rampicante che produce baccelli o semi. Si usa fresco oppure sgranato in zuppe, insalate e contorni.",
       col: {
         l1: "#4a943a",
         l2: "#36702c"
@@ -785,7 +785,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "lattuga"],
       nemiche: ["cipolla", "aglio", "porro", "scalogno", "finocchio"],
       resa: 0.1,
-      nota: "Ama il fresco: si semina in autunno o fine inverno.",
+      nota: "Legume dai semi dolci racchiusi in baccelli. Si mangia fresco o cotto in risotti, paste, zuppe e contorni.",
       col: {
         l1: "#5fa84a",
         l2: "#458035"
@@ -815,7 +815,7 @@ const DATA_EXPORT = (function (root) {
         "cavoletti"
       ],
       resa: 0.25,
-      nota: "Perenne: produce per più anni e fa stoloni.",
+      nota: "Piccolo falso frutto rosso, dolce e aromatico. Si consuma fresco, nei dolci, in confetture, macedonie e bevande.",
       col: {
         l1: "#3f8a3f",
         l2: "#2e6630",
@@ -838,7 +838,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cavolo", "pomodoro"],
       nemiche: [],
       resa: 0.5,
-      nota: "Vuole tanta acqua e terreno ricco.",
+      nota: "Ortaggio aromatico con coste croccanti e foglie profumate. Si usa crudo, nei soffritti, nelle zuppe e nei centrifugati.",
       col: {
         l1: "#6aa84a",
         l2: "#4d7e36",
@@ -860,7 +860,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "carota", "cetriolo"],
       nemiche: [],
       resa: 0.03,
-      nota: "Il più veloce: pronto in 3-4 settimane. Ideale coi bimbi.",
+      nota: "Piccola radice croccante dal gusto fresco e piccante. Si mangia cruda in insalata, nei panini o come guarnizione.",
       col: {
         l1: "#6fab46",
         l2: "#507f33",
@@ -886,7 +886,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cipolla", "lattuga"],
       nemiche: [],
       resa: 0.2,
-      nota: "Si mangiano radice e foglie. Dirada le piantine.",
+      nota: "Radice dolce e terrosa dalle foglie commestibili. Si usa cruda, lessata, al forno, in creme, insalate e succhi.",
       col: {
         l1: "#6b4f6e",
         l2: "#4d3850",
@@ -908,7 +908,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "lattuga"],
       nemiche: [],
       resa: 0.25,
-      nota: "Rustica e saporita. Raccogli le foglie esterne o il cespo giovane.",
+      nota: "Ortaggio a foglia dal caratteristico gusto amarognolo. Si mangia crudo oppure cotto in padella, zuppe e torte salate.",
       col: {
         l1: "#4f8f3a",
         l2: "#2f6f2f"
@@ -930,7 +930,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "ravanello", "finocchio"],
       nemiche: [],
       resa: 0.35,
-      nota: "Ama il fresco. Lega il cespo se vuoi foglie interne più chiare.",
+      nota: "Insalata a cespo dalle foglie croccanti e leggermente amare. Si usa cruda oppure brasata, gratinata e nelle zuppe.",
       col: {
         l1: "#9bc86b",
         l2: "#6fa84a",
@@ -953,7 +953,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: ["fragola"],
       resa: 0.25,
-      nota: "Cresce veloce in clima fresco. Raccogli da baby leaf o a piccolo cespo.",
+      nota: "Cavolo asiatico dalle coste croccanti e foglie tenere. Si usa saltato, al vapore, nelle zuppe o crudo da giovane.",
       col: {
         l1: "#72b34f",
         l2: "#3f823a",
@@ -976,7 +976,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["sedano", "cipolla", "timo"],
       nemiche: ["pomodoro", "fragola"],
       resa: 0.7,
-      nota: "Vuole tempo e fresco: cima la punta quando i cavoletti iniziano a formarsi.",
+      nota: "Brassica che produce piccoli cavoli lungo il fusto. Si cucina al forno, al vapore, in padella o gratinata.",
       col: {
         l1: "#6f9466",
         l2: "#4f704a",
@@ -999,7 +999,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pisello", "lattuga"],
       nemiche: [],
       resa: 0.15,
-      nota: "Fresca e rapida: dirada presto per far ingrossare la radice.",
+      nota: "Radice croccante dal gusto delicato o leggermente piccante. Si usa cruda, al forno, in zuppe e stufati.",
       col: {
         l1: "#6fab46",
         l2: "#507f33",
@@ -1022,7 +1022,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "ravanello", "cipolla"],
       nemiche: [],
       resa: 0.08,
-      nota: "Perfetta per la serra fredda: forma piccoli ciuffi teneri in autunno e inverno.",
+      nota: "Insalata a piccole rosette, tenera e dal gusto delicato. Si consuma cruda in insalate, panini e contorni.",
       col: {
         l1: "#6fb24f",
         l2: "#4b8a38"
@@ -1044,7 +1044,7 @@ const DATA_EXPORT = (function (root) {
       amiche: [],
       nemiche: [],
       resa: 0.1,
-      nota: "Perenne e rustico: pochissima acqua, vive anni.",
+      nota: "Arbusto aromatico sempreverde dal profumo resinoso. Si usa con arrosti, patate, focacce, legumi e marinature.",
       col: {
         l1: "#3f6e4a",
         l2: "#2c5037"
@@ -1064,7 +1064,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cavolo"],
       nemiche: [],
       resa: 0.05,
-      nota: "Tappezzante e profumato; ama il secco.",
+      nota: "Erba aromatica dal profumo intenso e balsamico. Si usa con carni, verdure, legumi, zuppe e tisane.",
       col: {
         l1: "#5a7e4a",
         l2: "#446035"
@@ -1084,7 +1084,7 @@ const DATA_EXPORT = (function (root) {
       amiche: [],
       nemiche: [],
       resa: 0.05,
-      nota: "Perenne: si secca benissimo per l'inverno.",
+      nota: "Erba aromatica dal gusto caldo e mediterraneo. Si usa fresca o secca su pizza, pomodoro, verdure, carni e formaggi.",
       col: {
         l1: "#5e8a4f",
         l2: "#476838"
@@ -1105,7 +1105,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["cavolo"],
       nemiche: ["cetriolo"],
       resa: 0.05,
-      nota: "Cespuglio perenne dalle foglie vellutate.",
+      nota: "Erba aromatica dalle foglie vellutate e dal profumo deciso. Si usa con burro, pasta, carne, legumi e tisane.",
       col: {
         l1: "#7e9a78",
         l2: "#5e7a5a"
@@ -1126,7 +1126,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 1,
-      nota: "Dolce dopo il freddo; semina diretta e terreno profondo.",
+      nota: "Radice chiara, dolce e aromatica, simile alla carota. Si usa arrosto, in puree, zuppe, stufati e chips.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1151,7 +1151,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 0.7,
-      nota: "Coltura tradizionale rumena: radice bianca aromatica per zuppe e ciorbe.",
+      nota: "Varietà di prezzemolo coltivata per la radice bianca e aromatica. Si usa in brodi, zuppe, ciorbe, puree e contorni.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1173,7 +1173,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 1.2,
-      nota: "Radice globosa e profumata; vuole acqua costante e suolo ricco.",
+      nota: "Varietà di sedano dalla grande radice profumata. Si usa cruda in insalata, in puree, zuppe, gratin e arrosti.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1195,7 +1195,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 0.8,
-      nota: "Radice piccante molto usata in Romania; contenila perché è vigorosa.",
+      nota: "Radice bianca dal gusto molto pungente e piccante. Si grattugia in salse, condimenti, conserve e accompagnamenti per carne.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1217,7 +1217,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 1.8,
-      nota: "In serra anticipa il raccolto; rincalza quando gli steli crescono.",
+      nota: "Tubero amidaceo dalla polpa versatile. Si usa lessato, fritto, al forno, in puree, gnocchi, zuppe e impasti.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1239,7 +1239,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 1.5,
-      nota: "Ama caldo stabile e suolo leggero; ideale in serra lunga.",
+      nota: "Radice tuberosa dolce e nutriente, arancione o colorata. Si usa al forno, in puree, zuppe, gnocchi e dolci.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1261,7 +1261,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 0.25,
-      nota: "Bulbo dolce e colorato; ottima per raccolti scalari.",
+      nota: "Varietà di cipolla dal bulbo violaceo e gusto dolce. Si usa cruda, caramellata, al forno, in conserve e insalate.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1283,7 +1283,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 0.08,
-      nota: "Pronto rapidamente; raccogli giovane prima che ingrossi troppo.",
+      nota: "Cipolla raccolta giovane, con bulbo piccolo e foglie verdi. Si usa cruda, grigliata, in frittate, zuppe e piatti saltati.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1305,7 +1305,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.05,
-      nota: "Aromatica perenne; taglia spesso per foglie tenere.",
+      nota: "Erba aromatica dalle sottili foglie al gusto di cipolla. Si usa fresca su uova, patate, formaggi, salse e insalate.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1326,7 +1326,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.25,
-      nota: "Foglia tradizionale per zuppe rumene; cresce bene con clima fresco.",
+      nota: "Ortaggio a foglia tipico dell'Europa orientale, verde o rossastro. Si usa in zuppe, ciorbe, torte salate e piatti stufati.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1347,7 +1347,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.3,
-      nota: "Acetosa per minestre primaverili; raccogli foglie giovani.",
+      nota: "Pianta a foglia acidula, nota in Romania come ștevie. Si usa soprattutto in zuppe primaverili, ciorbe e ripieni.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1368,7 +1368,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.15,
-      nota: "Il profumo classico delle ciorbe rumene; perenne e vigoroso.",
+      nota: "Erba aromatica perenne dal gusto simile al sedano. Si usa in ciorbe, brodi, stufati, salse e piatti di legumi.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1389,7 +1389,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.08,
-      nota: "Aromatica fine per aceti e conserve; evita ristagni.",
+      nota: "Erba aromatica dal gusto fine, anisato e leggermente piccante. Si usa con pollo, pesce, uova, salse, aceti e conserve.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1413,7 +1413,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.1,
-      nota: "Molto vigorosa: meglio in vaso o area controllata.",
+      nota: "Erba aromatica fresca e balsamica, disponibile in molte varietà. Si usa in tisane, bevande, dolci, salse e piatti salati.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1434,7 +1434,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.05,
-      nota: "Aromatica delicata; ama caldo, luce e terreno drenato.",
+      nota: "Erba aromatica dal profumo dolce, simile all'origano ma più delicato. Si usa con verdure, carne, legumi, salse e ripieni.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1455,7 +1455,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.04,
-      nota: "Fiori per tisane; attira insetti utili e profuma la serra.",
+      nota: "Pianta aromatica dai piccoli fiori profumati. I capolini essiccati si usano soprattutto per infusi, tisane e preparazioni cosmetiche.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1476,7 +1476,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico", "cipolla", "prezzemolo"],
       nemiche: [],
       resa: 1,
-      nota: "Richiede gruppi di piante per impollinarsi bene; ideale ai bordi.",
+      nota: "Cereale che produce pannocchie dai chicchi dolci e teneri. Si mangia lessato, grigliato, in insalate, zuppe e contorni.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -1498,7 +1498,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico", "cipolla", "prezzemolo"],
       nemiche: ["finocchio"],
       resa: 1.5,
-      nota: "Serve almeno due piante per fruttificare bene; ottimo per salse.",
+      nota: "Frutto verde o viola racchiuso in un involucro cartaceo. Si usa soprattutto in salse, chutney, stufati e conserve.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -1520,7 +1520,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico", "cipolla", "prezzemolo"],
       nemiche: ["finocchio"],
       resa: 0.5,
-      nota: "Frutti dolci in lanterna; in serra matura meglio.",
+      nota: "Piccolo frutto arancione avvolto da un calice simile a una lanterna. Si mangia fresco, nei dolci, in confetture o come decorazione.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -1542,7 +1542,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico", "cipolla", "prezzemolo"],
       nemiche: ["finocchio"],
       resa: 0.5,
-      nota: "Piccoli frutti croccanti; produttivo su rete in serra.",
+      nota: "Piccolo frutto rampicante simile a un'anguria in miniatura, dal gusto di cetriolo acidulo. Si usa crudo, in insalata o sottaceto.",
       col: {
         l1: "#3f7a3a",
         l2: "#2f5e2c",
@@ -1564,7 +1564,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.5,
-      nota: "Perenne: richiede pazienza, ma produce per molti anni.",
+      nota: "Ortaggio perenne di cui si mangiano i giovani germogli. Si usa lessato, al vapore, alla griglia, nei risotti e nelle frittate.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1585,7 +1585,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 1.2,
-      nota: "Coltura grande e decorativa; proteggi dal gelo intenso.",
+      nota: "Grande pianta della famiglia dei cardi, coltivata per il capolino. Si usa lessato, alla romana, fritto, ripieno o in conserve.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1606,7 +1606,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 1,
-      nota: "Parente del carciofo; imbianchisci le coste prima del raccolto.",
+      nota: "Ortaggio simile al carciofo, coltivato per le coste carnose. Si cucina gratinato, in umido, fritto o nelle zuppe.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1627,7 +1627,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.1,
-      nota: "Cresce veloce e vuole umidità costante; perfetto per tagli ripetuti.",
+      nota: "Pianta acquatica o amante dell'umidità, dal gusto fresco e pepato. Si usa cruda in insalate, panini, zuppe e salse.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1648,7 +1648,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.18,
-      nota: "Senape giapponese facile; foglie frastagliate per mix insalata.",
+      nota: "Verdura giapponese a foglie frastagliate dal gusto delicatamente piccante. Si usa cruda, saltata, nelle zuppe o nei noodles.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1672,7 +1672,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.25,
-      nota: "Foglie piccanti; semina in fresco per evitare fioritura precoce.",
+      nota: "Brassica a foglia dal sapore deciso e piccante. Si usa cruda nelle insalate, saltata, fermentata o nelle zuppe.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1693,7 +1693,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.2,
-      nota: "Rosetta compatta, molto resistente al freddo.",
+      nota: "Verdura asiatica che forma rosette di foglie scure e coste croccanti. Si usa saltata, al vapore, nelle zuppe o cruda da giovane.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1714,7 +1714,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.9,
-      nota: "Forma un cespo tenero; proteggi da caldo e stress idrico.",
+      nota: "Brassica asiatica dal cespo allungato e dalle foglie tenere. Si usa cruda, saltata, nelle zuppe, negli involtini o fermentata.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1735,7 +1735,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 0.5,
-      nota: "Ravanello lungo: terreno profondo e raccolta prima che lignifichi.",
+      nota: "Grande ravanello bianco di origine asiatica, croccante e delicato. Si usa crudo, marinato, fermentato, in zuppe e piatti saltati.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1757,7 +1757,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 0.5,
-      nota: "Radice nera lunga; richiede suolo leggero e profondo.",
+      nota: "Radice scura dalla polpa chiara e dal gusto delicato. Si usa lessata, gratinata, in puree, zuppe e contorni.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1779,7 +1779,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 2,
-      nota: "Tubero rustico e produttivo; delimita lo spazio perché si espande.",
+      nota: "Tubero nodoso dal gusto dolce, simile al carciofo. Si usa crudo, al forno, in padella, nelle creme e nei risotti.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1801,7 +1801,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cetriolo", "mais_dolce"],
       nemiche: ["cipolla", "aglio"],
       resa: 0.7,
-      nota: "Legume precoce e resistente al fresco; migliora il terreno.",
+      nota: "Legume dai grandi semi teneri racchiusi in baccelli. Si mangia fresco o cotto in zuppe, puree, paste e contorni.",
       col: {
         l1: "#4f8a45",
         l2: "#2f6b3a",
@@ -1823,7 +1823,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cetriolo", "mais_dolce"],
       nemiche: ["cipolla", "aglio"],
       resa: 0.6,
-      nota: "Raccogli i baccelli verdi quando i semi sono pieni ma teneri.",
+      nota: "Soia raccolta giovane, con semi verdi e teneri nel baccello. Si serve lessata, al vapore, in insalate, riso e piatti asiatici.",
       col: {
         l1: "#4f8a45",
         l2: "#2f6b3a",
@@ -1845,7 +1845,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cetriolo", "mais_dolce"],
       nemiche: ["cipolla", "aglio"],
       resa: 0.35,
-      nota: "Ama asciutto e caldo; non eccedere con acqua in serra.",
+      nota: "Legume dai semi rotondi e dal gusto delicato. Si usa in zuppe, insalate, hummus, polpette e farine.",
       col: {
         l1: "#4f8a45",
         l2: "#2f6b3a",
@@ -1867,7 +1867,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cetriolo", "mais_dolce"],
       nemiche: ["cipolla", "aglio"],
       resa: 0.25,
-      nota: "Piccolo legume rustico; adatto a bordure asciutte.",
+      nota: "Piccolo legume dai semi piatti e nutrienti. Si usa in zuppe, minestre, insalate, puree e piatti unici.",
       col: {
         l1: "#4f8a45",
         l2: "#2f6b3a",
@@ -1889,7 +1889,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cetriolo", "mais_dolce"],
       nemiche: ["cipolla", "aglio"],
       resa: 0.8,
-      nota: "Per baccelli freschi o granella; usa tutori robusti.",
+      nota: "Fagiolo dai semi screziati color crema e rosso. Si usa fresco o secco in zuppe, pasta e fagioli, insalate e stufati.",
       col: {
         l1: "#4f8a45",
         l2: "#2f6b3a",
@@ -1911,7 +1911,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 1.5,
-      nota: "Cespo compatto e colorato; ottimo per raccolti autunnali.",
+      nota: "Cavolo cappuccio dalle foglie viola e croccanti. Si usa crudo, stufato, agrodolce, fermentato o nelle insalate.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1935,7 +1935,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "cipolla", "pisello"],
       nemiche: [],
       resa: 1,
-      nota: "Radice grande e rustica; utile per autunno e inverno.",
+      nota: "Grande radice della famiglia dei cavoli, dalla polpa soda e dolce. Si usa in zuppe, stufati, puree, gratin e arrosti.",
       col: {
         l1: "#5f8b46",
         l2: "#3f6533",
@@ -1957,7 +1957,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "ravanello"],
       nemiche: [],
       resa: 0.35,
-      nota: "Raccogli cime e foglie prima della piena fioritura.",
+      nota: "Brassica coltivata per germogli, foglie e piccoli boccioli. Si usa nella pasta, saltata in padella, lessata o nelle torte salate.",
       col: {
         l1: "#4f8a45",
         l2: "#376b34"
@@ -1978,7 +1978,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "cavolo", "carota"],
       nemiche: [],
       resa: 0.08,
-      nota: "Aromatica asiatica profumata; bella anche in vaso in serra.",
+      nota: "Erba aromatica asiatica dal profumo agrumato e speziato. Si usa fresca in curry, zuppe, noodles, insalate e bevande.",
       col: {
         l1: "#5a8a4f",
         l2: "#416b39"
@@ -1999,7 +1999,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "cipolla", "sedano", "lattuga"],
       nemiche: ["pomodoro", "peperone"],
       resa: 0.6,
-      nota: "Varietà ornamentale di broccolo con testa a spirale. Sapore delicato.",
+      nota: "Brassica dalla caratteristica infiorescenza verde a spirale. Si usa al vapore, al forno, nella pasta, nelle vellutate o cruda.",
       col: { l1: "#7a9a6a", l2: "#5c7a4a" },
       tipo: "foglia"
     },
@@ -2017,7 +2017,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["basilico", "carota", "cipolla"],
       nemiche: ["finocchio"],
       resa: 0.8,
-      nota: "Peperone dolce allungato tipico dell'Italia meridionale. Ottimo fritto.",
+      nota: "Peperone dolce, sottile e allungato tipico dell'Italia meridionale. Si usa soprattutto fritto, arrostito, in padella o nei sughi.",
       col: { l1: "#4a8a3a", l2: "#366a28", fr: "#a8c850" },
       tipo: "frutto"
     },
@@ -2035,7 +2035,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["lattuga", "spinaci", "ravanello"],
       nemiche: [],
       resa: 0.15,
-      nota: "Ortaggio primaverile tipico italiano. Si consuma lessato con olio.",
+      nota: "Ortaggio primaverile dai lunghi steli carnosi e dal gusto delicato. Si mangia lessato, condito con olio, nelle frittate o gratinato.",
       col: { l1: "#4a7a3a", l2: "#366028" },
       tipo: "foglia"
     },
@@ -2053,7 +2053,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "zucchina", "fragola"],
       nemiche: [],
       resa: 0.1,
-      nota: "Fiori e foglie commestibili. Attira api e insetti utili. Ottima pianta companion.",
+      nota: "Pianta officinale con fiori blu e foglie commestibili dal gusto fresco. Si usa in ripieni, frittate, zuppe, insalate e decorazioni.",
       col: { l1: "#4a7a54", l2: "#345a3c" },
       tipo: "aromatica"
     },
@@ -2071,7 +2071,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "lattuga", "cipolla"],
       nemiche: [],
       resa: 0.35,
-      nota: "Cicoria tipica romana. Le puntarelle (germogli centrali) si mangiano crude con acciughe.",
+      nota: "Cicoria romana che produce germogli interni croccanti chiamati puntarelle. Si mangia cruda con acciughe oppure saltata in padella.",
       col: { l1: "#6a8a5a", l2: "#4e6842" },
       tipo: "foglia"
     },
@@ -2089,7 +2089,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fragola", "cipolla", "erba_cipollina"],
       nemiche: [],
       resa: 0.2,
-      nota: "Foglie acidule usate in zuppe primaverili (borș cu macriș). Perenne.",
+      nota: "Pianta perenne dalle foglie acidule, simili all'acetosa. Si usa in zuppe primaverili, salse, frittate e insalate.",
       col: { l1: "#5a8a4a", l2: "#426636" },
       tipo: "foglia"
     },
@@ -2107,7 +2107,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "barbabietola", "fragola"],
       nemiche: ["fagiolino", "fagiolo"],
       resa: 0.15,
-      nota: "Aglio selvatico con foglie commestibili. Tipico della cucina primaverile rumena.",
+      nota: "Aglio selvatico dalle foglie tenere e aromatiche. Si usa fresco in pesto, insalate, zuppe, frittate e ripieni.",
       col: { l1: "#4a8040", l2: "#346030" },
       tipo: "aromatica"
     },
@@ -2125,7 +2125,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["pomodoro", "zucchina", "cetriolo"],
       nemiche: [],
       resa: 0.15,
-      nota: "Aromatica perenne al profumo di limone. Ottima per tisane e in cucina.",
+      nota: "Erba aromatica perenne dal profumo di limone. Si usa in tisane, bevande, dolci, insalate, salse e piatti di pesce.",
       col: { l1: "#7a9a5a", l2: "#5c7842" },
       tipo: "aromatica"
     },
@@ -2143,7 +2143,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["carota", "ravanello", "lattuga"],
       nemiche: [],
       resa: 0.1,
-      nota: "Aromatica delicata dal sapore erbaceo-aniceto. Si usa fresca, mai cotta.",
+      nota: "Erba aromatica delicata, tra prezzemolo e anice. Si usa fresca in salse, insalate, uova, pesce e zuppe a fine cottura.",
       col: { l1: "#6a9a5a", l2: "#4e7642" },
       tipo: "aromatica"
     },
@@ -2164,7 +2164,7 @@ const DATA_EXPORT = (function (root) {
       amiche: ["fagiolino", "fagiolo", "cipolla", "carota"],
       nemiche: [],
       resa: 0.1,
-      nota: "L'erba aromatica più usata in Romania: indispensabile per fagioli, sottaceti e sarmale.",
+      nota: "Erba aromatica rumena simile alla santoreggia, dal gusto intenso e pepato. Si usa con fagioli, sarmale, carni e sottaceti.",
       col: { l1: "#6a9050", l2: "#4e6e3c" },
       tipo: "aromatica"
     }
@@ -4870,6 +4870,142 @@ if (typeof window !== "undefined") {
     return GROUP_BY_ID[plant?.id] || plant?.tipo || plant?.arch || "foglia";
   }
 
+  // Indicazioni alimentari generali: descrivono la famiglia di colture senza
+  // trasformare la scheda in un consiglio medico o in una tabella nutrizionale.
+  const HEALTH = {
+    it: {
+      fruitVine: {
+        benefits: "Apporta acqua, fibre e composti vegetali: un modo semplice per dare colore e varietà ai pasti.",
+        vitamins: "Vitamina C; carotenoidi in quantità variabile secondo varietà e colore."
+      },
+      cucurbit: {
+        benefits: "Leggero e ricco d'acqua, contribuisce a rendere freschi e vari i pasti di stagione.",
+        vitamins: "Vitamina C; carotenoidi soprattutto nelle varietà dalla polpa gialla o arancione."
+      },
+      leafyCut: {
+        benefits: "Foglie ricche di acqua e fibre, ottime per aumentare la quota di vegetali nel piatto.",
+        vitamins: "Vitamina K e folati; vitamina C in proporzioni che cambiano con specie e freschezza."
+      },
+      brassica: {
+        benefits: "Fornisce fibre e composti solforati naturalmente presenti nelle brassicacee.",
+        vitamins: "Vitamine C e K; folati in quantità variabile."
+      },
+      directRoot: {
+        benefits: "Radice croccante e fibrosa, utile per variare consistenze e colori nei pasti.",
+        vitamins: "Vitamina C e folati; carotenoidi nelle varietà arancioni o rosse."
+      },
+      allium: {
+        benefits: "Aggiunge sapore con composti solforati naturali, permettendo di usare meno sale in cucina.",
+        vitamins: "Vitamina C e B6 in quantità variabile."
+      },
+      tuber: {
+        benefits: "Fonte di energia e fibre, particolarmente adatta a piatti completi e sazianti.",
+        vitamins: "Vitamina C e B6; beta-carotene nella patata dolce a polpa arancione."
+      },
+      climbingLegume: {
+        benefits: "Porta proteine vegetali e fibre, utili per comporre pasti vegetali più completi.",
+        vitamins: "Folati e vitamine del gruppo B, in proporzioni variabili."
+      },
+      bushLegume: {
+        benefits: "Porta proteine vegetali e fibre, utili per comporre pasti vegetali più completi.",
+        vitamins: "Folati e vitamine del gruppo B, in proporzioni variabili."
+      },
+      woodyHerb: {
+        benefits: "Le foglie aggiungono profumo e composti aromatici; si usano in piccole quantità per insaporire.",
+        vitamins: "Vitamine K e C nelle foglie fresche; l'apporto dipende dalla porzione usata."
+      },
+      annualHerb: {
+        benefits: "Le foglie aggiungono profumo e composti aromatici; si usano in piccole quantità per insaporire.",
+        vitamins: "Vitamine K e C nelle foglie fresche; l'apporto dipende dalla porzione usata."
+      },
+      flowerHerb: {
+        benefits: "Fiori e foglie edibili aggiungono varietà, colore e composti vegetali alle preparazioni.",
+        vitamins: "Vitamina C e carotenoidi in quantità variabile secondo la parte e la porzione consumata."
+      },
+      perennial: {
+        benefits: "Ortaggio ricco di acqua e fibre, utile per rendere più varia la presenza di vegetali nel piatto.",
+        vitamins: "Folati e vitamine C e K in quantità variabile secondo specie e preparazione."
+      },
+      frutto: null,
+      foglia: null,
+      radice: null,
+      legume: null,
+      aromatica: null
+    },
+    ro: {
+      fruitVine: {
+        benefits: "Aduce apă, fibre și compuși vegetali: o modalitate simplă de a da culoare și varietate meselor.",
+        vitamins: "Vitamina C; carotenoizi în cantități variabile, în funcție de soi și culoare."
+      },
+      cucurbit: {
+        benefits: "Ușoară și bogată în apă, ajută la mese proaspete și variate de sezon.",
+        vitamins: "Vitamina C; carotenoizi mai ales la soiurile cu pulpă galbenă sau portocalie."
+      },
+      leafyCut: {
+        benefits: "Frunze bogate în apă și fibre, excelente pentru a crește proporția de vegetale din farfurie.",
+        vitamins: "Vitamina K și folat; vitamina C în proporții care variază cu specia și prospețimea."
+      },
+      brassica: {
+        benefits: "Oferă fibre și compuși sulfurați prezenți în mod natural în brassicacee.",
+        vitamins: "Vitaminele C și K; folat în cantități variabile."
+      },
+      directRoot: {
+        benefits: "Rădăcină crocantă și fibroasă, utilă pentru texturi și culori variate la masă.",
+        vitamins: "Vitamina C și folat; carotenoizi în soiurile portocalii sau roșii."
+      },
+      allium: {
+        benefits: "Dă gust prin compuși sulfurați naturali și poate ajuta la folosirea unei cantități mai mici de sare.",
+        vitamins: "Vitamina C și B6, în cantități variabile."
+      },
+      tuber: {
+        benefits: "Sursă de energie și fibre, potrivită pentru preparate consistente și sățioase.",
+        vitamins: "Vitamina C și B6; beta-caroten în cartoful dulce cu pulpă portocalie."
+      },
+      climbingLegume: {
+        benefits: "Aduce proteine vegetale și fibre, utile pentru mese vegetale mai complete.",
+        vitamins: "Folat și vitamine din grupul B, în proporții variabile."
+      },
+      bushLegume: {
+        benefits: "Aduce proteine vegetale și fibre, utile pentru mese vegetale mai complete.",
+        vitamins: "Folat și vitamine din grupul B, în proporții variabile."
+      },
+      woodyHerb: {
+        benefits: "Frunzele aduc aromă și compuși aromatici; se folosesc în porții mici pentru gust.",
+        vitamins: "Vitaminele K și C în frunzele proaspete; aportul depinde de porția folosită."
+      },
+      annualHerb: {
+        benefits: "Frunzele aduc aromă și compuși aromatici; se folosesc în porții mici pentru gust.",
+        vitamins: "Vitaminele K și C în frunzele proaspete; aportul depinde de porția folosită."
+      },
+      flowerHerb: {
+        benefits: "Florile și frunzele comestibile aduc varietate, culoare și compuși vegetali preparatelor.",
+        vitamins: "Vitamina C și carotenoizi în cantități variabile, după parte și porția consumată."
+      },
+      perennial: {
+        benefits: "Legumă bogată în apă și fibre, utilă pentru o prezență mai variată a vegetalelor în farfurie.",
+        vitamins: "Folat și vitaminele C și K, în cantități variabile după specie și preparare."
+      },
+      frutto: null,
+      foglia: null,
+      radice: null,
+      legume: null,
+      aromatica: null
+    }
+  };
+
+  function healthProfile(plant, lang) {
+    const code = language(lang);
+    const group = cropGroup(plant);
+    const fallbackByType = {
+      frutto: "fruitVine",
+      foglia: "leafyCut",
+      radice: "directRoot",
+      legume: "bushLegume",
+      aromatica: "annualHerb"
+    };
+    return HEALTH[code][group] || HEALTH[code][fallbackByType[plant?.tipo]] || null;
+  }
+
   function detailProfile(plant, guide, lang) {
     if (!plant) return null;
     const code = language(lang);
@@ -4878,7 +5014,9 @@ if (typeof window !== "undefined") {
     const values = copy.defaults[type] || copy.defaults.foglia;
     const overrides = copy.groups[cropGroup(plant)] || {};
     return {
-      description: compactDescription(plant, code),
+      // Nel dettaglio usiamo il testo individuale: resta conciso, ma racconta
+      // davvero quella varietà e il suo uso invece della sola categoria.
+      description: cultivationNote(plant, code) || compactDescription(plant, code),
       soil: overrides.soil || values[0],
       exposure: guide?.esposizione || "",
       irrigation: overrides.water || guide?.annaffiatura || values[1],
@@ -4905,6 +5043,7 @@ if (typeof window !== "undefined") {
     cultivationNote,
     localizedName,
     detailProfile,
+    healthProfile,
     spacingLabel
   };
 })(window);

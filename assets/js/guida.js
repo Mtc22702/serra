@@ -100,34 +100,41 @@
       "compare.row_do": "Cosa puoi fare",
       "compare.row_add": "Come si ordina",
       "compare.row_detail": "Se vuoi i dettagli",
+      "compare.details": "Vedi i dettagli",
+      "compare.seme_signal1": "Scegli quando seminare",
+      "compare.seme_signal2": "Cerca e filtra",
+      "compare.seme_signal3": "Aggiungi al carrello",
       "compare.seme_title": "Catalogo semi",
       "compare.seme_sub":
         "Vive dentro la home, nella sezione dei semi di stagione.",
       "compare.seme_where":
         "Voce «🌿 Catalogo semi» del menu, oppure scorri la home fino alla sezione dei semi.",
       "compare.seme_do":
-        "Filtri per mese e per tipo, campo di ricerca, e «Tutto il catalogo» per vedere anche ciò che è fuori stagione.",
+        "Cerca una pianta, filtra per periodo o tipo e passa dalla griglia alla lista quando vuoi confrontare più voci.",
       "compare.seme_add":
         "Il pulsante di aggiunta su ogni scheda mette la bustina nel carrello; le quantità si regolano lì.",
       "compare.seme_detail":
-        "Aprendo una scheda trovi semina, cure e raccolta di quella pianta: è lì che stanno le informazioni botaniche.",
+        "Aprendo una scheda trovi come usarla, benefici e vitamine, poi semina, cure e raccolta: tutte le informazioni della pianta sono lì.",
       "compare.seme_when":
         "<b>Scorciatoia:</b> se hai già progettato una serra, il configuratore genera la lista dei semi che ti servono e la aggiunge al carrello in un passaggio solo.",
       "compare.seme_cta": "Vai al catalogo semi",
       "compare.piantina_title": "Vivaio piantine",
       "compare.piantina_sub":
-        "È una pagina a sé, con un vassoio al posto del carrello.",
+        "È una pagina dedicata a piantine pronte al trapianto, vendute in vassoi da 6.",
       "compare.piantina_where":
         "Voce «🪴 Vivaio piantine» del menu, raggiungibile da qualsiasi pagina.",
       "compare.piantina_do":
-        "L'elenco mostra solo ciò che ha senso trapiantare nel mese in corso; i filtri in alto lo restringono ancora.",
+        "Cerca e filtra per famiglia; sulle schede, i due segnali mostrano raccolta stimata e giorni guadagnati rispetto al seme.",
       "compare.piantina_add":
-        "Le piantine finiscono nel vassoio, che resta visibile mentre scegli e mostra sempre il totale.",
+        "Aggiungi un vassoio; nel carrello puoi aumentare o ridurre la quantità prima di confermare.",
       "compare.piantina_detail":
-        "Ogni scheda dice quanto tempo fa risparmiare rispetto al seme e quando arriva la consegna.",
+        "Le etichette della scheda indicano quando potrai raccogliere e quanti giorni risparmi rispetto alla semina.",
       "compare.piantina_when":
         "<b>Il vassoio non si perde:</b> resta salvato anche se chiudi la pagina, e il conteggio compare accanto alla voce di menu finché non confermi.",
       "compare.piantina_cta": "Vai al vivaio piantine",
+      "compare.piantina_signal1": "Pronte ora",
+      "compare.piantina_signal2": "Raccogli prima",
+      "compare.piantina_signal3": "Vassoio da 6",
       "compare.s1t": "Apri il carrello",
       "compare.s1p":
         "L'icona in alto a destra è la stessa in tutta l'app e raccoglie semi e piantine insieme.",
@@ -146,13 +153,13 @@
         "«Il mio orto» non vende niente: tiene il conto al posto tuo di cosa hai piantato, di cosa serve oggi e di cosa è rimasto indietro. Funziona anche con piante comprate altrove.",
       "grow.s1t": "Le tre schede in alto",
       "grow.s1p":
-        "«Agenda» elenca le attività del giorno e, scorrendo la striscia delle date, anche quelle dei giorni successivi. «Piantate» raccoglie le piante che stai seguendo, «Da piantare» ciò che hai comprato e non è ancora in terra. Il numero accanto a ogni nome dice quanto c'è dentro.",
+        "«Da piantare» raccoglie ciò che hai comprato e non è ancora in terra, «Piantate» le colture che stai seguendo, «Oggi» le attività da fare. I contatori mostrano quante voci ci sono in ogni scheda.",
       "grow.s2t": "Registra una coltura",
       "grow.s2p":
-        "«＋ Aggiungi coltura» chiede pianta, data, quantità e posizione. Da quei quattro dati l'app costruisce da sola il calendario di cura fino alla raccolta.",
+        "Da «Da piantare» scegli piante già con te oppure dagli ordini; poi imposta data, quantità e posizione. L'app costruisce da sola il calendario di cura fino alla raccolta.",
       "grow.s3t": "Spunta o rimanda",
       "grow.s3p":
-        "In «Agenda» il quadratino segna l'attività come fatta e «Domani» la sposta di un giorno. Quello che salti resta in vista sotto «Da recuperare».",
+        "In «Oggi» il quadratino segna l'attività come fatta e «Domani» la sposta di un giorno. Quello che salti resta visibile tra le attività da recuperare.",
       "grow.s4t": "Correggi quando serve",
       "grow.s4p":
         "«Modifica» cambia data, quantità e posizione di una coltura già inserita: il calendario viene ricalcolato da capo.",
@@ -164,7 +171,7 @@
       "settings.kicker": "IN OGNI PAGINA",
       "settings.title": "Account, lingua, tema e uso offline",
       "settings.lead":
-        "Quattro comandi identici in tutta l'applicazione: stanno nell'intestazione in alto e, sui telefoni, dentro il menu ☰.",
+        "Nell'intestazione trovi area personale, tema, lingua, carrello e «Guida»; sui telefoni queste opzioni sono dentro il menu ☰. La guida apre già il capitolo della pagina in cui ti trovi.",
       "settings.s1t": "Area Personale",
       "settings.s1p":
         "Raccoglie i tuoi ordini e i dati di consegna. Serve anche a «Il mio orto»: senza accesso il pulsante «Importa dai miei ordini» non ha niente da leggere.",
@@ -291,34 +298,41 @@
       "compare.row_do": "Ce poți face",
       "compare.row_add": "Cum comanzi",
       "compare.row_detail": "Dacă vrei detalii",
+      "compare.details": "Vezi detaliile",
+      "compare.seme_signal1": "Alege când semeni",
+      "compare.seme_signal2": "Caută și filtrează",
+      "compare.seme_signal3": "Adaugă în coș",
       "compare.seme_title": "Catalogul de semințe",
       "compare.seme_sub":
         "Stă în pagina principală, în secțiunea semințelor de sezon.",
       "compare.seme_where":
         "Opțiunea „🌿 Catalog semințe” din meniu sau derulează pagina principală până la secțiunea semințelor.",
       "compare.seme_do":
-        "Filtre după lună și după tip, câmp de căutare și „Tot catalogul” pentru a vedea și ce este în afara sezonului.",
+        "Caută o plantă, filtrează după perioadă sau tip și treci din grilă în listă când vrei să compari mai multe opțiuni.",
       "compare.seme_add":
         "Butonul de adăugare de pe fiecare fișă pune plicul în coș; cantitățile se reglează acolo.",
       "compare.seme_detail":
-        "Deschizând o fișă găsești semănatul, îngrijirile și recolta plantei: acolo stau informațiile botanice.",
+        "Deschizând o fișă găsești cum o folosești, beneficii și vitamine, apoi semănatul, îngrijirile și recolta: toate informațiile plantei sunt acolo.",
       "compare.seme_when":
         "<b>Scurtătură:</b> dacă ai proiectat deja o seră, configuratorul generează lista de semințe necesare și o adaugă în coș dintr-un singur pas.",
       "compare.seme_cta": "Mergi la catalogul de semințe",
       "compare.piantina_title": "Pepiniera de răsaduri",
       "compare.piantina_sub":
-        "Este o pagină separată, cu o tavă în loc de coș.",
+        "Este o pagină dedicată răsadurilor gata de transplantare, vândute în tăvi de 6.",
       "compare.piantina_where":
         "Opțiunea „🪴 Răsaduri” din meniu, accesibilă din orice pagină.",
       "compare.piantina_do":
-        "Lista arată doar ce are sens să plantezi în luna curentă; filtrele de sus o restrâng și mai mult.",
+        "Caută și filtrează după familie; pe fișe, cele două semnale arată recolta estimată și zilele câștigate față de sămânță.",
       "compare.piantina_add":
-        "Răsadurile ajung în tavă, care rămâne vizibilă cât timp alegi și arată mereu totalul.",
+        "Adaugă o tavă; în coș poți mări sau micșora cantitatea înainte de confirmare.",
       "compare.piantina_detail":
-        "Fiecare fișă spune cât timp economisești față de sămânță și când sosește livrarea.",
+        "Etichetele fișei arată când poți recolta și câte zile economisești față de semănat.",
       "compare.piantina_when":
         "<b>Tava nu se pierde:</b> rămâne salvată și dacă închizi pagina, iar numărul apare lângă opțiunea din meniu până confirmi.",
       "compare.piantina_cta": "Mergi la răsaduri",
+      "compare.piantina_signal1": "Gata acum",
+      "compare.piantina_signal2": "Recoltezi mai repede",
+      "compare.piantina_signal3": "Tavă de 6",
       "compare.s1t": "Deschide coșul",
       "compare.s1p":
         "Pictograma din dreapta sus este aceeași în toată aplicația și adună la un loc semințele și răsadurile.",
@@ -336,13 +350,13 @@
         "„Grădina mea” nu vinde nimic: ține socoteala în locul tău a ceea ce ai plantat, a ce trebuie făcut azi și a ce a rămas în urmă. Merge și cu plante cumpărate din altă parte.",
       "grow.s1t": "Cele trei file de sus",
       "grow.s1p":
-        "„Agendă” listează activitățile zilei și, derulând banda datelor, și pe cele din zilele următoare. „Plantate” adună plantele pe care le urmărești, „De plantat” ce ai cumpărat și nu este încă în pământ. Numărul de lângă fiecare nume spune cât e înăuntru.",
+        "„De plantat” adună ce ai cumpărat și nu este încă în pământ, „Plantate” culturile pe care le urmărești, iar „Azi” activitățile de făcut. Contoarele arată câte elemente sunt în fiecare filă.",
       "grow.s2t": "Înregistrează o cultură",
       "grow.s2p":
-        "„＋ Adaugă cultură” cere planta, data, cantitatea și poziția. Din aceste patru date aplicația construiește singură calendarul de îngrijire până la recoltă.",
+        "Din „De plantat” alegi plante deja la tine sau din comenzi; apoi stabilești data, cantitatea și poziția. Aplicația construiește singură calendarul de îngrijire până la recoltă.",
       "grow.s3t": "Bifează sau amână",
       "grow.s3p":
-        "În „Agendă”, pătrățelul marchează activitatea ca făcută, iar „Mâine” o mută cu o zi. Ce sari rămâne vizibil sub „De recuperat”.",
+        "În „Azi”, pătrățelul marchează activitatea ca făcută, iar „Mâine” o mută cu o zi. Ce sari rămâne vizibil printre activitățile de recuperat.",
       "grow.s4t": "Corectează când e nevoie",
       "grow.s4p":
         "„Modifică” schimbă data, cantitatea și poziția unei culturi deja introduse: calendarul este recalculat de la zero.",
@@ -353,7 +367,7 @@
       "settings.kicker": "ÎN FIECARE PAGINĂ",
       "settings.title": "Cont, limbă, temă și folosire offline",
       "settings.lead":
-        "Patru comenzi identice în toată aplicația: stau în antetul de sus și, pe telefon, în meniul ☰.",
+        "În antet găsești contul personal, tema, limba, coșul și „Ghid”; pe telefon aceste opțiuni sunt în meniul ☰. Ghidul deschide deja capitolul paginii în care te afli.",
       "settings.s1t": "Zona personală",
       "settings.s1p":
         "Adună comenzile tale și datele de livrare. Este utilă și pentru „Grădina mea”: fără autentificare, butonul „Importă din comenzile mele” nu are ce citi.",

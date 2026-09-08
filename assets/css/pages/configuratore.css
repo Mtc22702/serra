@@ -13710,6 +13710,17 @@
       transform 0.08s ease;
   }
 
+  .journey-context-step-icon {
+    display: inline-grid;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-right: 0.24rem;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--journey-accent) 16%, transparent);
+    font-size: 0.66rem;
+  }
+
   .journey-context-step:hover {
     background: color-mix(in srgb, var(--journey-accent) 12%, #fff);
   }

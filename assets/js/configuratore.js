@@ -1764,8 +1764,13 @@ function updateJourneyContext() {
   level.textContent = content.level;
   title.textContent = content.title;
   desc.textContent = content.desc;
+  const guideLink = document.querySelector(".config-guide-link");
+  if (guideLink) {
+    guideLink.href = `guida.html?livello=${state.livello}#progettare`;
+  }
+  const stepIcons = ["✓", "✦", "🛒"];
   root.querySelectorAll(".journey-context-step").forEach((step, i) => {
-    step.textContent = content.steps[i] || "";
+    step.innerHTML = `<span class="journey-context-step-icon" aria-hidden="true">${stepIcons[i] || ""}</span><span>${content.steps[i] || ""}</span>`;
   });
 }
 

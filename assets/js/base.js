@@ -161,8 +161,8 @@
 (() => {
   // Etichette localizzate usate dai collegamenti che rimandano alla guida.
   const labels = {
-    it: "Non sai da dove iniziare? Guarda la guida",
-    ro: "Nu știi de unde să începi? Vezi ghidul",
+    it: "Vedi il percorso",
+    ro: "Vezi pașii",
   };
   // Applica l'etichetta corrispondente alla lingua italiana o romena attiva.
   function apply() {
@@ -172,6 +172,80 @@
     });
   }
   // Esegue l'aggiornamento iniziale e osserva le successive modifiche della lingua.
+  apply();
+  new MutationObserver(apply).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["lang"],
+  });
+})();
+
+// Inserisce un accesso alla guida che apre direttamente il capitolo utile alla
+// pagina corrente. Sul telefono vive nel menu, così non affolla l'intestazione.
+(() => {
+  const header = document.querySelector(".site-header");
+  if (!header || document.body.classList.contains("guide-page")) return;
+  if (document.querySelector(".config-guide-link")) return;
+
+  const page = window.location.pathname.split("/").pop() || "index.html";
+  const chapters = {
+    "index.html": "seme-o-piantina",
+    "vivaio.html": "seme-o-piantina",
+    "orto.html": "coltivare",
+    "account.html": "impostazioni",
+  };
+  const chapter = chapters[page];
+  if (!chapter) return;
+
+  const isRo = () =>
+    (document.documentElement.lang || "it").toLowerCase().startsWith("ro");
+  const copy = () =>
+    isRo()
+      ? {
+          desktop: "Ghid",
+          mobile: "Ghid pentru această pagină",
+          aria: "Deschide ghidul pentru această pagină",
+        }
+      : {
+          desktop: "Guida",
+          mobile: "Guida per questa pagina",
+          aria: "Apri la guida per questa pagina",
+        };
+
+  function createLink(className, mobile) {
+    const link = document.createElement("a");
+    link.className = className;
+    link.href = `guida.html#${chapter}`;
+    link.innerHTML =
+      '<span class="app-guide-link-icon" aria-hidden="true">?</span><span class="app-guide-link-label"></span>';
+    link.dataset.guideLinkContextual = mobile ? "mobile" : "desktop";
+    return link;
+  }
+
+  const actions = header.querySelector(".nav-actions");
+  const menuPreferences = header.querySelector(".mobile-nav-preferences");
+  const desktopLink = actions && createLink("app-guide-link", false);
+  const mobileLink = menuPreferences && createLink("mobile-app-guide-link", true);
+
+  if (desktopLink) {
+    const prefs = actions.querySelector(".nav-prefs");
+    actions.insertBefore(desktopLink, prefs || null);
+  }
+  if (mobileLink) {
+    const title = menuPreferences.querySelector(".mobile-nav-section-title");
+    title?.insertAdjacentElement("afterend", mobileLink);
+  }
+
+  function apply() {
+    const labels = copy();
+    document.querySelectorAll("[data-guide-link-contextual]").forEach((link) => {
+      const mobile = link.dataset.guideLinkContextual === "mobile";
+      link.querySelector(".app-guide-link-label").textContent = mobile
+        ? labels.mobile
+        : labels.desktop;
+      link.setAttribute("aria-label", labels.aria);
+    });
+  }
+
   apply();
   new MutationObserver(apply).observe(document.documentElement, {
     attributes: true,
@@ -438,391 +512,391 @@
       ro: {
         pomodoro: {
           nome: "Roșie",
-          nota: "Are nevoie de susținere și soare plin. Îndepărtează lăstarii laterali.",
+          nota: "Legumă-fruct suculentă și aromată. Se consumă crudă, în salate, sosuri și conserve.",
         },
         peperone: {
           nome: "Ardei gras",
-          nota: "Iubește căldura. Fertilizează când începe fructificarea.",
+          nota: "Legumă-fruct dulce și crocantă. Se consumă crudă, coaptă, umplută sau sotată.",
         },
         peperoncino: {
           nome: "Ardei iute",
-          nota: "Rustic și productiv. Suportă bine seceta.",
+          nota: "Ardei mic, cu gust mai mult sau mai puțin iute. Se folosește proaspăt, uscat sau în sosuri și uleiuri aromate.",
         },
         melanzana: {
           nome: "Vânătă",
-          nota: "Are nevoie de multă căldură și udări regulate.",
+          nota: "Legumă-fruct cu pulpă moale și gustoasă. Se gătește la grătar, la cuptor, prăjită sau în sosuri.",
         },
         zucchina: {
           nome: "Dovlecel",
-          nota: "Crește repede și ocupă mult spațiu. Recoltează des.",
+          nota: "Legumă-fruct fragedă, cu gust delicat. Se folosește sotată, la cuptor, în omlete sau crudă când este tânără.",
         },
         zucca: {
           nome: "Dovleac",
-          nota: "Se întinde mult: lasă-i spațiu sau condu-l pe suport.",
+          nota: "Legumă-fruct cu pulpă dulce și consistentă. Se folosește în supe, risotto, umpluturi, deserturi și conserve.",
         },
         cetriolo: {
           nome: "Castravete",
-          nota: "Condu-l pe plasă: fructele rămân mai curate și mai drepte.",
+          nota: "Legumă-fruct răcoritoare și crocantă. Se consumă crudă, în salate, murături sau sosuri reci.",
         },
         melone: {
           nome: "Pepene galben",
-          nota: "Vrea mult soare și mai puțină apă spre coacere.",
+          nota: "Fruct de vară cu pulpă dulce și parfumată. Se consumă proaspăt, în salate de fructe sau alături de preparate sărate.",
         },
         anguria: {
           nome: "Pepene verde",
-          nota: "Ocupă mult spațiu: o plantă poate umple jumătate dintr-o seră mică.",
+          nota: "Fruct mare de vară, bogat în apă și cu pulpă dulce. Se consumă proaspăt, în salate de fructe sau băuturi.",
         },
         lattuga: {
           nome: "Salată verde",
-          nota: "Foarte ușoară și rapidă. Seamănă puține plante odată.",
+          nota: "Legumă cu frunze fragede și gust delicat. Se folosește mai ales crudă în salate, sandvișuri și garnituri.",
         },
         radicchio: {
           nome: "Radicchio",
-          nota: "Frigul îl face mai roșu și mai dulce.",
+          nota: "Cicoare cu frunze sau căpățână, cu gust plăcut amărui. Se consumă crudă, la grătar, la cuptor sau în risotto.",
         },
         rucola: {
           nome: "Rucola",
-          nota: "Gata în câteva săptămâni. Se taie și crește din nou.",
+          nota: "Frunză cu gust proaspăt, piperat și ușor picant. Se folosește crudă, pe pizza, în sandvișuri sau pesto.",
         },
         spinaci: {
           nome: "Spanac",
-          nota: "Iubește răcoarea; vara intră repede în floare.",
+          nota: "Legumă cu frunze fragede și gustoase. Se gătește sotată, în plăcinte, umpluturi sau supe.",
         },
         bietola: {
           nome: "Mangold",
-          nota: "Generos: recoltează frunzele exterioare treptat.",
+          nota: "Legumă cu frunze delicate și pețioluri cărnoase. Se fierbe, se sotează sau se folosește în plăcinte și supe.",
         },
         cavolo: {
           nome: "Varză albă",
-          nota: "Are nevoie de spațiu și sol bogat. Atenție la omizi.",
+          nota: "Brassica ce formează o căpățână compactă de frunze. Se folosește crudă, călită, murată sau în supe și sarmale.",
         },
         verza: {
           nome: "Varză creață",
-          nota: "Rezistă la îngheț; e mai gustoasă după primele brume.",
+          nota: "Varză cu frunze crețe și gust dulce. Se gătește în supe, tocane, sarmale sau simplu sotată.",
         },
         broccolo: {
           nome: "Broccoli",
-          nota: "După căpățâna centrală produce mulți lăstari laterali.",
+          nota: "Brassica de la care se consumă inflorescențele și tulpinile fragede. Se gătește la abur, sotată, cu paste sau în supe-cremă.",
         },
         cavolfiore: {
           nome: "Conopidă",
-          nota: "Îndoaie frunzele peste căpățână ca să rămână albă.",
+          nota: "Brassica cu inflorescență mare, compactă și delicată. Se gătește la cuptor, la abur, pane sau sub formă de cremă.",
         },
         cavolonero: {
           nome: "Varză kale neagră",
-          nota: "Rustică: se recoltează frunză cu frunză timp de luni întregi.",
+          nota: "Varză cu frunze închise la culoare și gust intens. Se folosește în supe, chipsuri la cuptor sau sotată.",
         },
         cavolorapa: {
           nome: "Gulie",
-          nota: "Se mănâncă tulpina îngroșată: recoltează când e tânără.",
+          nota: "Brassica cu tulpină îngroșată, crocantă și ușor dulce. Se consumă crudă, la cuptor, sotată sau în supe.",
         },
         carota: {
           nome: "Morcov",
-          nota: "Seamănă des și rărește. Sol afânat, fără pietre.",
+          nota: "Rădăcină dulce și crocantă, portocalie sau colorată. Se folosește crudă, gătită, în supe, tocane și deserturi.",
         },
         finocchio: {
           nome: "Fenicul",
-          nota: "Nu se potrivește cu multe plante: ține-l separat.",
+          nota: "Legumă cu bulb crocant și aromat. Se consumă crudă, gratinată, înăbușită sau în salate.",
         },
         prezzemolo: {
           nome: "Pătrunjel",
-          nota: "Pornește lent; apoi taie des pe tot parcursul anului.",
+          nota: "Plantă aromatică cu frunze proaspete și versatile. Se folosește tocată în sosuri, umpluturi, salate, supe și feluri principale.",
         },
         basilico: {
           nome: "Busuioc",
-          nota: "Ciuppește florile pentru frunze mereu fragede.",
+          nota: "Plantă aromatică cu parfum dulce și intens. Se folosește proaspătă în pesto, sosuri, salate, pizza și preparate mediteraneene.",
         },
         coriandolo: {
           nome: "Coriandru",
-          nota: "Înflorește la căldură: seamănă eșalonat la fiecare 2 săptămâni.",
+          nota: "Plantă aromatică cu gust citric și condimentat. Frunzele și semințele asezonează curry, sosuri, legume și marinade.",
         },
         aneto: {
           nome: "Mărar",
-          nota: "Ajută verzele și atrage insecte utile.",
+          nota: "Plantă aromatică cu parfum proaspăt, ușor anasonat. Se folosește cu pește, cartofi, castraveți, murături și sosuri.",
         },
         cipolla: {
           nome: "Ceapă",
-          nota: "Puțină apă la finalul ciclului. Ține la distanță mulți dăunători.",
+          nota: "Bulb aromatic cu gust dulce sau înțepător. Este bază pentru mâncăruri și se folosește crud, gătit, copt sau murat.",
         },
         aglio: {
           nome: "Usturoi",
-          nota: "Se plantează în căței toamna și se recoltează vara.",
+          nota: "Bulb aromatic cu gust intens și înțepător. Se folosește crud sau gătit pentru sosuri, legume, carne și conserve.",
         },
         porro: {
           nome: "Praz",
-          nota: "Mușuroiește pământul în jur pentru o tulpină albă mai lungă.",
+          nota: "Legumă din familia cepei, cu gust mai dulce. Se folosește în supe, tocane, plăcinte și garnituri.",
         },
         scalogno: {
           nome: "Șalotă",
-          nota: "Ca ceapa, dar mai delicată; foarte bună pentru începători.",
+          nota: "Bulb aromatic mic, cu gust fin și ușor dulce. Se folosește în sosuri, vinegrete, risotto și preparate la cuptor.",
         },
         fagiolino: {
           nome: "Fasole pitică",
-          nota: "Nu are nevoie de suport. Îmbunătățește solul cu azot.",
+          nota: "Leguminoasă compactă ce produce păstăi fragede. Se consumă întreagă, fiartă sau sotată, în garnituri și salate.",
         },
         fagiolo: {
           nome: "Fasole urcătoare",
-          nota: "Are nevoie de araci sau plasă: poate urca până la 2 metri.",
+          nota: "Leguminoasă cățărătoare ce produce păstăi sau boabe. Se folosește proaspătă ori uscată în supe, salate și garnituri.",
         },
         pisello: {
           nome: "Mazăre",
-          nota: "Iubește răcoarea: se seamănă toamna sau la final de iarnă.",
+          nota: "Leguminoasă cu boabe dulci în păstăi. Se consumă proaspătă sau gătită în risotto, paste, supe și garnituri.",
         },
         fragola: {
           nome: "Căpșun",
-          nota: "Peren: produce mai mulți ani și face stoloni.",
+          nota: "Fruct mic, roșu, dulce și aromat. Se consumă proaspăt, în deserturi, dulcețuri, salate de fructe și băuturi.",
         },
         sedano: {
           nome: "Țelină",
-          nota: "Are nevoie de multă apă și sol bogat.",
+          nota: "Legumă aromatică cu tije crocante și frunze parfumate. Se folosește crudă, în supe, tocane și sucuri.",
         },
         ravanello: {
           nome: "Ridiche",
-          nota: "Cea mai rapidă: gata în 3-4 săptămâni. Ideală cu copiii.",
+          nota: "Rădăcină mică și crocantă, cu gust proaspăt și picant. Se consumă crudă în salate, sandvișuri sau ca garnitură.",
         },
         barbabietola: {
           nome: "Sfeclă roșie",
-          nota: "Se mănâncă rădăcina și frunzele. Rărește plantele tinere.",
+          nota: "Rădăcină dulce, cu aromă pământie, ale cărei frunze sunt comestibile. Se folosește crudă, coaptă, în supe și salate.",
         },
         cicoria: {
           nome: "Cicoare",
-          nota: "Rustică și gustoasă. Recoltează frunzele exterioare sau căpățâna tânără.",
+          nota: "Legumă cu frunze și gust plăcut amărui. Se consumă crudă, sotată, în supe, plăcinte și mâncăruri scăzute.",
         },
         indivia: {
           nome: "Andivă / Escarolă",
-          nota: "Iubește răcoarea. Leagă căpățâna dacă vrei frunze interioare mai deschise.",
+          nota: "Legumă cu căpățână și frunze fragede, ușor amărui. Se consumă crudă, înăbușită, gratinată sau în supe.",
         },
         pakchoi: {
           nome: "Pak choi",
-          nota: "Crește repede pe vreme răcoroasă. Recoltează frunze baby sau căpățâni mici.",
+          nota: "Legumă asiatică cu frunze fragede și tije crocante. Se consumă crudă, la abur, sotată sau în supe.",
         },
         cavoletti: {
           nome: "Varză de Bruxelles",
-          nota: "Are nevoie de timp și răcoare: ciupește vârful când mugurii încep să se formeze.",
+          nota: "Brassica ce produce verzișoare compacte pe tulpină. Se gătește la abur, la cuptor, sotată sau gratinată.",
         },
         rapa: {
           nome: "Nap",
-          nota: "Rădăcină rapidă de sezon rece. Rărește devreme ca să se îngroașe.",
+          nota: "Rădăcină crocantă, cu gust dulce sau ușor picant. Se consumă crudă, coaptă, în supe și tocane.",
         },
         valerianella: {
           nome: "Valerianelă",
-          nota: "Perfectă pentru sera rece: formează rozete mici și fragede toamna și iarna.",
+          nota: "Plantă cu rozete mici, fragede și delicate. Se consumă mai ales crudă în salate, sandvișuri și garnituri.",
         },
         rosmarino: {
           nome: "Rozmarin",
-          nota: "Peren și rustic: foarte puțină apă, trăiește ani întregi.",
+          nota: "Plantă aromatică perenă, cu parfum rășinos. Se folosește la fripturi, cartofi, pâine, leguminoase și marinade.",
         },
         timo: {
           nome: "Cimbru",
-          nota: "Târâtor și parfumat; iubește uscăciunea.",
+          nota: "Plantă aromatică cu parfum intens și balsamic. Se folosește cu pește, carne, legume, supe și infuzii.",
         },
         origano: {
           nome: "Oregano",
-          nota: "Peren: se usucă foarte bine pentru iarnă.",
+          nota: "Plantă aromatică perenă, cu gust cald și mediteraneean. Se folosește proaspătă sau uscată pe pizza, carne, legume și sosuri.",
         },
         salvia: {
           nome: "Salvie",
-          nota: "Tufă perenă cu frunze catifelate.",
+          nota: "Plantă aromatică perenă, cu frunze catifelate și gust intens. Se folosește cu carne, ouă, cartofi, sosuri și infuzii.",
         },
         pastinaca: {
           nome: "Păstârnac",
-          nota: "Devine mai dulce după frig; seamănă direct în sol afânat și adânc.",
+          nota: "Rădăcină deschisă la culoare, dulce și aromată, asemănătoare morcovului. Se folosește coaptă, în piureuri, supe și chipsuri.",
         },
         radice_prezemolo: {
           nome: "Pătrunjel rădăcină",
-          nota: "Cultură tradițională: rădăcină albă aromată pentru supe și ciorbe.",
+          nota: "Soi de pătrunjel cultivat pentru rădăcina albă și aromată. Se folosește în supe, ciorbe, piureuri și garnituri.",
         },
         sedano_rapa: {
           nome: "Țelină rădăcină",
-          nota: "Rădăcină rotundă și parfumată; cere apă constantă și sol bogat.",
+          nota: "Soi de țelină cu rădăcină mare și parfumată. Se folosește crudă în salate, în piureuri, supe și preparate la cuptor.",
         },
         rafano: {
           nome: "Hrean",
-          nota: "Rădăcină picantă foarte folosită în România; controlează-l, este viguros.",
+          nota: "Rădăcină albă cu gust foarte iute și pătrunzător. Se rade în sosuri, murături și garnituri pentru carne.",
         },
         patata: {
           nome: "Cartof",
-          nota: "În seră grăbește recolta; mușuroiește când tulpinile cresc.",
+          nota: "Tubercul bogat în amidon și foarte versatil. Se consumă fiert, prăjit, copt, în piureuri, supe și aluaturi.",
         },
         patata_dolce: {
           nome: "Cartof dulce",
-          nota: "Iubește căldura stabilă și solul ușor; potrivit pentru seră caldă.",
+          nota: "Rădăcină tuberizată dulce și hrănitoare, portocalie sau colorată. Se folosește coaptă, în piureuri, supe și deserturi.",
         },
         cipolla_rossa: {
           nome: "Ceapă roșie",
-          nota: "Bulb dulce și colorat; bun pentru recoltări eșalonate.",
+          nota: "Soi de ceapă cu bulb violet și gust dulce. Se consumă crudă, caramelizată, coaptă, murată sau în salate.",
         },
         cipollotto: {
           nome: "Ceapă verde",
-          nota: "Gata rapid; recoltează-l tânăr înainte să se îngroașe.",
+          nota: "Ceapă recoltată tânără, cu bulb mic și frunze verzi. Se consumă crudă, la grătar, în omlete, supe și preparate sotate.",
         },
         erba_cipollina: {
           nome: "Chives / Cepșoară",
-          nota: "Aromatică perenă; taie des pentru frunze fragede.",
+          nota: "Plantă aromatică cu frunze subțiri și gust de ceapă. Se folosește proaspătă cu ouă, cartofi, brânzeturi, sosuri și salate.",
         },
         loboda: {
           nome: "Lobodă",
-          nota: "Frunză tradițională pentru ciorbe; crește bine pe vreme răcoroasă.",
+          nota: "Legumă cu frunze verzi sau roșiatice, tradițională în Europa de Est. Se folosește în supe, ciorbe, plăcinte și tocane.",
         },
         stevia_dolce: {
           nome: "Ștevie",
-          nota: "Plantă acrișoară pentru ciorbe de primăvară; recoltează frunze tinere.",
+          nota: "Plantă cu frunze acrișoare, cunoscută în România ca ștevie. Se folosește mai ales în ciorbe de primăvară și umpluturi.",
         },
         leustean: {
           nome: "Leuștean",
-          nota: "Aroma clasică a ciorbelor românești; peren și viguros.",
+          nota: "Plantă aromatică perenă, cu gust asemănător țelinei. Se folosește în ciorbe, supe, tocane, sosuri și mâncăruri de leguminoase.",
         },
         dragoncello: {
           nome: "Tarhon",
-          nota: "Aromatic fin pentru oțeturi și conserve; evită băltirea.",
+          nota: "Plantă aromatică cu gust fin, anasonat și ușor picant. Se folosește cu pui, pește, ouă, sosuri, oțeturi și conserve.",
         },
         menta: {
           nome: "Mentă",
-          nota: "Foarte viguroasă: mai bine în ghiveci sau zonă controlată.",
+          nota: "Plantă aromatică răcoritoare și balsamică, disponibilă în multe soiuri. Se folosește în ceaiuri, băuturi, deserturi și sosuri.",
         },
         maggiorana: {
           nome: "Măghiran",
-          nota: "Aromatică delicată; iubește căldura, lumina și solul drenat.",
+          nota: "Plantă aromatică dulce, asemănătoare oregano-ului, dar mai delicată. Se folosește cu legume, carne, leguminoase, sosuri și umpluturi.",
         },
         camomilla: {
           nome: "Mușețel",
-          nota: "Flori pentru ceai; atrage insecte utile și parfumează sera.",
+          nota: "Plantă aromatică cu flori mici și parfumate. Florile uscate se folosesc mai ales pentru infuzii, ceaiuri și preparate cosmetice.",
         },
         mais_dolce: {
           nome: "Porumb dulce",
-          nota: "Are nevoie de grupuri de plante pentru polenizare bună; ideal pe margini.",
+          nota: "Cereală ce produce știuleți cu boabe dulci și fragede. Se consumă fiartă, la grătar, în salate, supe și garnituri.",
         },
         tomatillo: {
           nome: "Tomatillo",
-          nota: "Are nevoie de cel puțin două plante pentru fructificare bună; excelent pentru sosuri.",
+          nota: "Fruct verde sau violet învelit într-o foiță subțire. Se folosește mai ales în sosuri, chutney, tocane și conserve.",
         },
         physalis: {
           nome: "Physalis",
-          nota: "Fructe dulci în înveliș ca o lanternă; în seră se coace mai bine.",
+          nota: "Fruct mic și portocaliu, învelit într-un caliciu ca un felinar. Se consumă proaspăt, în deserturi, dulcețuri sau ca decor.",
         },
         cucamelon: {
           nome: "Cucamelon",
-          nota: "Fructe mici și crocante; productiv pe plasă în seră.",
+          nota: "Fruct mic cățărător, asemănător unui pepene în miniatură, cu gust acrișor de castravete. Se consumă crud, în salate sau murat.",
         },
         asparago: {
           nome: "Sparanghel",
-          nota: "Peren: cere răbdare, dar produce mulți ani.",
+          nota: "Legumă perenă de la care se consumă lăstarii tineri. Se gătește fiartă, la abur, la grătar, în risotto și omlete.",
         },
         carciofo: {
           nome: "Anghinare",
-          nota: "Cultură mare și decorativă; protejează de ger puternic.",
+          nota: "Plantă mare din familia ciulinilor, cultivată pentru inflorescență. Se consumă fiartă, umplută, prăjită sau conservată.",
         },
         cardo: {
           nome: "Cardon",
-          nota: "Rudă cu anghinarea; albește pețiolurile înainte de recoltă.",
+          nota: "Legumă înrudită cu anghinarea, cultivată pentru pețiolurile cărnoase. Se gătește gratinată, înăbușită, prăjită sau în supe.",
         },
         crescione: {
           nome: "Năsturel",
-          nota: "Crește rapid și cere umiditate constantă; perfect pentru tăieri repetate.",
+          nota: "Plantă iubitoare de umiditate, cu gust proaspăt și piperat. Se consumă crudă în salate, sandvișuri, supe și sosuri.",
         },
         mizuna: {
           nome: "Mizuna",
-          nota: "Muștar japonez ușor; frunze zimțate pentru mixuri de salată.",
+          nota: "Legumă japoneză cu frunze crestate și gust ușor picant. Se consumă crudă, sotată, în supe sau cu tăiței.",
         },
         senape_foglia: {
           nome: "Muștar frunze",
-          nota: "Frunze picante; seamănă pe răcoare ca să eviți înflorirea rapidă.",
+          nota: "Brassica cu frunze și gust intens, picant. Se consumă crudă în salate, sotată, fermentată sau în supe.",
         },
         tatsoi: {
           nome: "Tatsoi",
-          nota: "Rozetă compactă, foarte rezistentă la frig.",
+          nota: "Legumă asiatică ce formează rozete de frunze închise și tije crocante. Se consumă sotată, la abur, în supe sau crudă.",
         },
         cavolo_cinese: {
           nome: "Varză chinezească",
-          nota: "Formează căpățână fragedă; protejează de căldură și stres hidric.",
+          nota: "Brassica asiatică cu căpățână alungită și frunze fragede. Se consumă crudă, sotată, în supe, rulouri sau fermentată.",
         },
         daikon: {
           nome: "Daikon",
-          nota: "Ridiche lungă: sol adânc și recoltare înainte să devină lemnoasă.",
+          nota: "Ridiche albă mare, de origine asiatică, crocantă și delicată. Se consumă crudă, marinată, fermentată, în supe și preparate sotate.",
         },
         scorzonera: {
           nome: "Scorțonera",
-          nota: "Rădăcină neagră lungă; cere sol ușor și adânc.",
+          nota: "Rădăcină închisă la culoare, cu pulpă albă și gust delicat. Se consumă fiartă, gratinată, în piureuri, supe și garnituri.",
         },
         topinambur: {
           nome: "Topinambur",
-          nota: "Tubercul rustic și productiv; delimitează spațiul deoarece se extinde.",
+          nota: "Tubercul noduros, cu gust dulce asemănător anghinarei. Se consumă crud, copt, sotat, în supe-cremă și risotto.",
         },
         fava: {
           nome: "Bob",
-          nota: "Leguminoasă timpurie, rezistentă la răcoare; îmbunătățește solul.",
+          nota: "Leguminoasă cu boabe mari și fragede în păstăi. Se consumă proaspătă sau gătită în supe, piureuri, paste și garnituri.",
         },
         soia_edamame: {
           nome: "Soia edamame",
-          nota: "Recoltează păstăile verzi când boabele sunt pline, dar fragede.",
+          nota: "Soia recoltată tânără, cu boabe verzi și fragede în păstaie. Se servește fiartă, la abur, în salate, orez și preparate asiatice.",
         },
         cece: {
           nome: "Năut",
-          nota: "Iubește uscăciunea și căldura; nu uda excesiv în seră.",
+          nota: "Leguminoasă cu boabe rotunde și gust delicat. Se folosește în supe, salate, hummus, chiftele și făinuri.",
         },
         lenticchia: {
           nome: "Linte",
-          nota: "Leguminoasă mică și rustică; potrivită pentru margini mai uscate.",
+          nota: "Leguminoasă mică, cu semințe plate și hrănitoare. Se folosește în supe, salate, piureuri și feluri principale.",
         },
         fagiolo_borlotto: {
           nome: "Fasole pestriță",
-          nota: "Pentru păstăi proaspete sau boabe; folosește araci solizi.",
+          nota: "Fasole cu boabe pestrițe crem și roșii. Se folosește proaspătă sau uscată în supe, salate, tocane și paste cu fasole.",
         },
         cavolo_rosso: {
           nome: "Varză roșie",
-          nota: "Căpățână compactă și colorată; excelentă pentru recolte de toamnă.",
+          nota: "Varză cu frunze mov, crocante și compacte. Se consumă crudă, călită, dulce-acrișoară, fermentată sau în salate.",
         },
         cavolo_navone: {
           nome: "Gulie furajeră / Nap",
-          nota: "Rădăcină mare și rustică; utilă pentru toamnă și iarnă.",
+          nota: "Rădăcină mare din familia verzei, cu pulpă fermă și dulce. Se folosește în supe, tocane, piureuri, gratinuri și fripturi.",
         },
         broccolo_rapa: {
           nome: "Rapini",
-          nota: "Recoltează vârfurile și frunzele înainte de înflorire completă.",
+          nota: "Brassica cultivată pentru lăstari, frunze și boboci. Se folosește cu paste, sotată, fiartă sau în plăcinte sărate.",
         },
         shiso: {
           nome: "Shiso",
-          nota: "Aromatică asiatică parfumată; frumoasă și în ghiveci în seră.",
+          nota: "Plantă aromatică asiatică, cu parfum citric și condimentat. Se folosește proaspătă în curry, supe, tăiței, salate și băuturi.",
         },
         broccolo_romanesco: {
           nome: "Broccoli romanesc",
-          nota: "Varietate de broccoli cu capul spiralat caracteristic. Gust delicat și ornamental.",
+          nota: "Brassica cu inflorescență verde în spirală. Se consumă la abur, la cuptor, cu paste, în supe-cremă sau crudă.",
         },
         friggitello: {
           nome: "Ardei friggitello",
-          nota: "Ardei dulce alungit tipic din centrul și sudul Italiei. Excelent la prăjit.",
+          nota: "Ardei dulce, subțire și alungit, tipic sudului Italiei. Se consumă mai ales prăjit, copt, sotat sau în sosuri.",
         },
         agretti: {
           nome: "Agretti",
-          nota: "Legumă primăvăratică italiană cu tulpini subțiri și cărnoase. Se mănâncă fiartă cu ulei de măsline.",
+          nota: "Legumă de primăvară cu tulpini lungi, cărnoase și gust delicat. Se consumă fiartă, cu ulei, în omlete sau gratinată.",
         },
         borragine: {
           nome: "Borago",
-          nota: "Flori și frunze comestibile albastre. Atrage albinele; excelentă lângă roșii și castraveți.",
+          nota: "Plantă medicinală cu flori albastre și frunze comestibile. Se folosește în umpluturi, omlete, supe, salate și decorațiuni.",
         },
         catalogna: {
           nome: "Catalogna",
-          nota: "Cicoare romană: puntarellele centrale se mănâncă crude cu anșoa și usturoi.",
+          nota: "Cicoare romană ce produce lăstari centrali crocanți numiți puntarelle. Se consumă cruzi cu anșoa sau sotați.",
         },
         acetosa: {
           nome: "Macriș",
-          nota: "Frunze acide cu gust de lămâie, excelente în borș. Perenă: revine în fiecare an.",
+          nota: "Plantă perenă cu frunze acrișoare, cu gust de lămâie. Se folosește în borș, supe, sosuri, salate și umpluturi.",
         },
         leurda: {
           nome: "Leurdă",
-          nota: "Usturoi sălbatic cu frunze comestibile. Tipic bucătăriei românești de primăvară.",
+          nota: "Plantă sălbatică înrudită cu usturoiul, cu frunze fragede și aromate. Se consumă crudă, în pesto, salate, supe și plăcinte.",
         },
         melissa: {
           nome: "Melisă / Roiniță",
-          nota: "Aromată perenă cu parfum de lămâie. Excelentă pentru ceaiuri și în bucătărie.",
+          nota: "Plantă aromatică perenă, cu parfum de lămâie. Se folosește în ceaiuri, băuturi, deserturi, salate și sosuri.",
         },
         cerfoglio: {
           nome: "Hasmațuchi",
-          nota: "Aromată delicată cu gust între pătrunjel și anason. Se folosește doar proaspătă.",
+          nota: "Plantă aromatică delicată, cu gust între pătrunjel și anason. Se folosește proaspătă în supe, sosuri, salate și preparate cu ouă.",
         },
         cimbru: {
           nome: "Cimbru",
-          nota: "Cea mai folosită aromă în bucătăria românească: indispensabilă pentru fasole, murături și sarmale.",
+          nota: "Plantă aromatică românească, înrudită cu cimbrul, cu gust intens. Se folosește la fasole, sarmale, carne și murături.",
         },
       },
     },
@@ -1237,6 +1311,9 @@
         "detail.in_greenhouse": "In serra",
         "detail.overview": "Panoramica",
         "detail.practical_note": "Nota pratica",
+        "detail.health_title": "Benefici e vitamine",
+        "detail.health_benefits": "Benefici alimentari",
+        "detail.health_vitamins": "Vitamine presenti",
         "detail.tab_overview": "Panoramica",
         "detail.tab_cultivation": "Coltivazione",
         "detail.tab_calendar": "Calendario",
@@ -1749,6 +1826,9 @@
         "detail.in_greenhouse": "În seră",
         "detail.overview": "Prezentare",
         "detail.practical_note": "Notă practică",
+        "detail.health_title": "Beneficii și vitamine",
+        "detail.health_benefits": "Beneficii alimentare",
+        "detail.health_vitamins": "Vitamine prezente",
         "detail.tab_overview": "Prezentare",
         "detail.tab_cultivation": "Cultivare",
         "detail.tab_calendar": "Calendar",
@@ -1945,8 +2025,8 @@
         guidedSetupCloseAction: "Chiudi",
         workflowHubAria: "Il tuo percorso di acquisto",
         journeyContextAria: "Stato del percorso corrente",
-        workflowHelpAria: "Apri la guida per usare il configuratore",
-        workflowHelpShort: "Guida",
+        workflowHelpAria: "Vedi i passaggi del configuratore",
+        workflowHelpShort: "Passi",
         workflowEditTitle: "Personalizza il percorso",
         workflowEditHint:
           "Aggiorna i dati della serra o il livello di esperienza",
@@ -2534,8 +2614,8 @@
         guidedSetupCloseAction: "Închide",
         workflowHubAria: "Traseul tău de cumpărare",
         journeyContextAria: "Starea traseului curent",
-        workflowHelpAria: "Deschide ghidul de utilizare al configuratorului",
-        workflowHelpShort: "Ghid",
+        workflowHelpAria: "Vezi pașii configuratorului",
+        workflowHelpShort: "Pași",
         workflowEditTitle: "Personalizează traseul",
         workflowEditHint: "Actualizează datele serei sau nivelul de experiență",
         stageContextTitle: "Datele serei",

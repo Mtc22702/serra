@@ -59,10 +59,12 @@
       "welcome.kicker": "Configura il tuo orto",
       "welcome.title": "Da dove vuoi aggiungere le piante?",
       "welcome.text":
-        "Prima raccogliamo semi e piantine che possiedi. Nel passaggio successivo sceglierai cosa piantare davvero.",
+        "Scegli da dove iniziare: le piante entreranno poi nel tuo piano.",
       "welcome.add": "Aggiungi piante",
+      "welcome.owned": "Già con te",
       "welcome.or": "oppure",
       "welcome.orders": "Scegli dagli ordini",
+      "welcome.order_hint": "Dai tuoi acquisti",
       "welcome.nothing": "Non hai ancora semi o piantine?",
       "welcome.shop_seeds": "Catalogo semi",
       "welcome.shop_plugs": "Vivaio piantine",
@@ -487,10 +489,12 @@
       "welcome.kicker": "Configurează grădina",
       "welcome.title": "De unde vrei să adaugi plantele?",
       "welcome.text":
-        "Mai întâi adunăm semințele și răsadurile pe care le ai. La pasul următor vei alege ce plantezi.",
+        "Alege de unde începi: plantele vor intra apoi în planul tău.",
       "welcome.add": "Adaugă plante",
+      "welcome.owned": "Deja la tine",
       "welcome.or": "sau",
       "welcome.orders": "Alege din comenzi",
+      "welcome.order_hint": "Din cumpărăturile tale",
       "welcome.nothing": "Încă nu ai semințe sau răsaduri?",
       "welcome.shop_seeds": "Catalog semințe",
       "welcome.shop_plugs": "Pepinieră răsaduri",
@@ -1553,14 +1557,14 @@
         </div>
         <div class="orto-welcome-actions">
           <button class="orto-welcome-choice orto-welcome-choice--primary" type="button" data-orto-action="open-add-stock">
-            <span class="orto-welcome-choice-ico" aria-hidden="true">＋</span>
-            <span><b>${t("welcome.add")}</b><small>${lang === "ro" ? "Pentru plante cumpărate în altă parte sau pe care le ai deja" : "Per piante acquistate altrove o già in tuo possesso"}</small></span>
+            <span class="orto-welcome-choice-ico" aria-hidden="true">🌱</span>
+            <span><b>${t("welcome.add")}</b><small>${t("welcome.owned")}</small></span>
             <span class="orto-welcome-arrow" aria-hidden="true">→</span>
           </button>
           <button class="orto-welcome-choice" type="button"
             data-orto-action="import-orders">
             <span class="orto-welcome-choice-ico" aria-hidden="true">📦</span>
-            <span><b>${t("welcome.orders")}</b><small>${lang === "ro" ? "Selectează una sau mai multe comenzi și plantele dorite" : "Seleziona uno o più ordini e le singole piante"}</small></span>
+            <span><b>${t("welcome.orders")}</b><small>${t("welcome.order_hint")}</small></span>
             <span class="orto-welcome-arrow" aria-hidden="true">→</span>
           </button>
         </div>

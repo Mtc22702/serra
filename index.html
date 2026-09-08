@@ -302,17 +302,18 @@
             aria-labelledby="journeyTitle"
           >
             <div class="journey-choice-head">
-              <div>
-                <h2
-                  class="journey-choice-title"
-                  id="journeyTitle"
-                  data-i18n="journey.choice_title"
-                >
-                  Scegli come iniziare
-                </h2>
-              </div>
+              <h2
+                class="journey-choice-title"
+                id="journeyTitle"
+                data-i18n="journey.choice_title"
+              >
+                Scegli come iniziare
+              </h2>
             </div>
-            <ul class="journey journey-v3-grid">
+            <ul
+              class="journey journey-v3-grid"
+              aria-labelledby="journeyTitle"
+            >
               <li class="journey-route journey-route--plan">
                 <div class="journey-route-copy">
                   <span
@@ -1299,6 +1300,7 @@
             >
               <div class="detail-badges" id="detailBadges"></div>
               <div class="detail-nota" id="detailNota" hidden></div>
+              <section class="detail-health" id="detailHealth" hidden></section>
               <div class="detail-stats" id="detailStats"></div>
             </div>
 

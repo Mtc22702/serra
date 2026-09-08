@@ -1387,7 +1387,7 @@ function renderEditorialPlants() {
           <span class="super-compact-body">
             <span class="super-compact-top">
               <span class="super-compact-name">${plantName(p.id)}</span>
-              <span class="plant-detail-cue" aria-hidden="true"><span>${sheetLabel}</span><b>↗</b></span>
+              <span class="plant-detail-cue plant-detail-cue--inline" aria-hidden="true"><b>↗</b></span>
               <span class="super-compact-price">${money(packPrice(p.id))} ${currentLang === "ro" ? "/ plic" : "/ bustina"}</span>
             </span>
             <span class="super-compact-bottom">
@@ -3194,6 +3194,37 @@ function openDetail(id, preserveTab = false) {
   const notaEl = document.getElementById("detailNota");
   notaEl.textContent = profile.description;
   notaEl.hidden = !profile.description;
+
+  const health = window.SERRA_PLANT_CONTENT?.healthProfile(p, currentLang);
+  const healthEl = document.getElementById("detailHealth");
+  if (health) {
+    healthEl.innerHTML = `
+      <div class="detail-health-heading">
+        <span aria-hidden="true">✦</span>
+        <h3>${t("detail.health_title")}</h3>
+      </div>
+      <div class="detail-health-grid">
+        <div class="detail-health-item">
+          <span class="detail-health-icon" aria-hidden="true">♡</span>
+          <div>
+            <span>${t("detail.health_benefits")}</span>
+            <p>${escapeHtml(health.benefits)}</p>
+          </div>
+        </div>
+        <div class="detail-health-item">
+          <span class="detail-health-icon" aria-hidden="true">☀</span>
+          <div>
+            <span>${t("detail.health_vitamins")}</span>
+            <p>${escapeHtml(health.vitamins)}</p>
+          </div>
+        </div>
+      </div>
+      `;
+    healthEl.hidden = false;
+  } else {
+    healthEl.hidden = true;
+    healthEl.innerHTML = "";
+  }
 
   const sp = PLANT_SPACING[p.id] || {};
   const svgDiagram = spacingInfographic(p);
