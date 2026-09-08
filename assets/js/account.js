@@ -670,8 +670,13 @@
       const tr = document.createElement("tr");
       const bedsCount = p.config?.beds?.length || 0;
       const isActive = store.activeId === p.id;
+      // Mostra le colture salvate, senza inventare coordinate non presenti nel progetto.
+      const preview = (p.config?.beds || []).slice(0, 4).map((bed) => {
+        const plant = allPlants.find((entry) => entry.id === bed.plantId);
+        return `<span>${escapeHtmlAccount(plant?.emoji || fruitEmoji(bed.plantId) || "🌱")}</span>`;
+      }).join("");
       tr.innerHTML = `
-        <td data-label="${tAcc("dash.project_name")}"><strong>${escapeHtmlAccount(p.name || "")}</strong>${isActive ? ` <span class="status-badge user">${tAcc("dash.project_active")}</span>` : ""}</td>
+        <td data-label="${tAcc("dash.project_name")}">${preview ? `<span class="account-project-preview" aria-hidden="true">${preview}</span>` : ""}<strong>${escapeHtmlAccount(p.name || "")}</strong>${isActive ? ` <span class="status-badge user">${tAcc("dash.project_active")}</span>` : ""}</td>
         <td data-label="${tAcc("dash.project_beds")}">${bedsCount}</td>
         <td data-label="${tAcc("dash.project_updated")}">${formatDate(p.updatedAt || p.createdAt || Date.now())}</td>
         <td data-label="${tAcc("dash.order_actions")}">

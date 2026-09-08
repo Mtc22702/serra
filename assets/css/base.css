@@ -3320,6 +3320,91 @@
     background: #f0b764;
     box-shadow: 0 0 0 3px rgba(240, 183, 100, 0.15);
   }
+  .seed-journey {
+    padding: 1.1rem;
+    margin-block: 0.8rem;
+    border: 1px solid #d5dfcb;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(125deg, #f4f7eb, #fbf4e9);
+    color: #234a35;
+  }
+  .seed-journey-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .seed-journey-heading h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+  .seed-journey-time {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 0.45rem;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+  .seed-journey-time strong {
+    grid-row: 1 / 3;
+    grid-column: 1;
+    font-size: 2rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .seed-journey-time small,
+  .seed-journey-time span { grid-column: 2; font-size: 0.73rem; }
+  .seed-journey-stages {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+  }
+  .seed-journey-stages li {
+    position: relative;
+    min-width: 0;
+    text-align: center;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+  .seed-journey-stages li:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 32px;
+    right: -0.65rem;
+    color: #6d8367;
+  }
+  .seed-journey-visual {
+    display: grid;
+    place-items: center;
+    height: 88px;
+    margin-bottom: 0.4rem;
+  }
+  .seed-journey-visual img,
+  .seed-journey-visual svg { width: 80px; height: 80px; max-width: 100%; object-fit: contain; }
+  .seed-journey-visual .seed-journey-photo {
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 3px 12px #254b3514;
+  }
+  .seed-journey-note { margin: 0; font-size: 0.75rem; line-height: 1.6; color: #58664f; }
+  @media (max-width: 480px) {
+    .seed-journey { padding: 0.85rem; }
+    .seed-journey-heading { align-items: flex-start; flex-direction: column; gap: 0.5rem; }
+    .seed-journey-visual { height: 60px; }
+    .seed-journey-visual img,
+    .seed-journey-visual svg { width: 56px; height: 56px; }
+    .seed-journey-stages li:not(:last-child)::after { top: 20px; }
+    .seed-journey-stages { gap: 0.45rem; }
+    .seed-journey-stages li { font-size: 0.68rem; }
+  }
   .detail-tech-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

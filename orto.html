@@ -253,8 +253,7 @@
             Il mio orto
           </h1>
           <p class="orto-page-lead" data-orto-key="page.lead">
-            Aggiungi ciò che possiedi, scegli cosa piantare e segui un piano
-            semplice fino alla raccolta.
+            Le tue piante e le attività da fare, fino alla raccolta.
           </p>
         </div>
         <div class="orto-page-seal" aria-hidden="true">
@@ -766,8 +765,14 @@
                 min="0"
                 step="0.1"
                 value="1"
+                required
               />
             </div>
+            <label class="orto-harvest-finish">
+              <input type="checkbox" id="ortoHarvestFinish" />
+              <span data-orto-key="harvest.finish">Concludi il ciclo e libera lo spazio</span>
+            </label>
+            <p class="orto-field-hint" data-orto-key="harvest.continue">Lascia deselezionato se la pianta continuerà a produrre: le cure restano attive.</p>
           </div>
           <div class="orto-dialog-foot">
             <button

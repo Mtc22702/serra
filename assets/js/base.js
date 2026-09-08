@@ -2253,12 +2253,12 @@
         expertSeasonal: "Genera piano di stagione",
         arrangeSelected: "Riordina le aiuole",
         arrangeSelectedHint:
-          "Sistema la disposizione, le quantità restano uguali.",
+          "Quantità invariate",
         arrangeSelectedTitle:
           "Riordina la mappa senza cambiare le quantità scelte",
         fillSelected: "Riempi spazi vuoti",
         fillSelectedHint:
-          "Aggiunge altre piante già scelte per non lasciare spazio libero.",
+          "Aggiunge piante già scelte",
         cropActionsTitle: "Azioni sulle colture inserite",
         cropActionsHint:
           "Prima regola le quantità, poi scegli se conservarle o riempire gli spazi vuoti.",
@@ -2841,12 +2841,12 @@
         expertSeasonal: "Generează planul de sezon",
         arrangeSelected: "Reordonează parcelele",
         arrangeSelectedHint:
-          "Aranjează dispunerea, cantitățile rămân aceleași.",
+          "Cantități neschimbate",
         arrangeSelectedTitle:
           "Reordonează harta fără să schimbe cantitățile alese",
         fillSelected: "Umple spațiile libere",
         fillSelectedHint:
-          "Adaugă alte plante deja alese ca să nu rămână spații libere.",
+          "Adaugă plante deja alese",
         cropActionsTitle: "Acțiuni pentru culturile adăugate",
         cropActionsHint:
           "Mai întâi reglează cantitățile, apoi alege dacă le păstrezi sau umpli spațiile libere.",

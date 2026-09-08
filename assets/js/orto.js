@@ -37,7 +37,7 @@
       "page.eyebrow": "Il tuo assistente di coltivazione",
       "page.seal": "Dalla scelta<br>alla raccolta",
       "page.lead":
-        "Aggiungi ciò che possiedi, scegli cosa piantare e segui un piano semplice fino alla raccolta.",
+        "Le tue piante e le attività da fare, fino alla raccolta.",
       "tab.oggi": "Oggi",
       "tab.oggi_todo": "da fare adesso",
       // Righe di stato della linguetta «Oggi».
@@ -56,15 +56,27 @@
       "tab.piante_note": "lista vuota",
       "tab.piante_empty": "aggiungi le piante",
 
-      "welcome.kicker": "Configura il tuo orto",
-      "welcome.title": "Da dove vuoi aggiungere le piante?",
+      "welcome.kicker": "Inizia qui",
+      "welcome.title": "Aggiungi le tue prime piante",
+      "welcome.next": "Aggiungi semi o piantine, conferma lo spazio e scegli quando avviarli.",
+      "flow.space": "Definisci lo spazio",
+      "flow.space_hint": "Conferma le misure prima di scegliere quante piante avviare.",
+      "flow.ready": "Spazio confermato: ora scegli cosa seminare o trapiantare.",
+      "flow.sow": "Semina",
+      "flow.transplant": "Trapianta",
+      "flow.origin_locked": "L'origine è collegata alla scorta. Aggiungi una nuova voce per usare semi o piantine diversi.",
+      "harvest.finish": "Concludi il ciclo e libera lo spazio",
+      "harvest.continue": "Lascia deselezionato se la pianta continuerà a produrre: le cure restano attive.",
+      "welcome.flow_add": "Aggiungi",
+      "welcome.flow_plant": "Pianta",
+      "welcome.flow_care": "Segui le attività",
       "welcome.text":
         "Scegli da dove iniziare: le piante entreranno poi nel tuo piano.",
-      "welcome.add": "Aggiungi piante",
-      "welcome.owned": "Già con te",
+      "welcome.add": "Inserisci a mano",
+      "welcome.owned": "Semi o piantine che possiedi, anche comprati altrove",
       "welcome.or": "oppure",
-      "welcome.orders": "Scegli dagli ordini",
-      "welcome.order_hint": "Dai tuoi acquisti",
+      "welcome.orders": "Importa dagli ordini",
+      "welcome.order_hint": "Scegli tra i tuoi acquisti su Orto in Serra",
       "welcome.nothing": "Non hai ancora semi o piantine?",
       "welcome.shop_seeds": "Catalogo semi",
       "welcome.shop_plugs": "Vivaio piantine",
@@ -321,8 +333,8 @@
       "plant.qty": "Quante ne pianti ora",
       "plant.qty_hint_seed": "Semi realmente disponibili: {n}",
       "plant.qty_hint_plug": "Ne hai {n} disponibili",
-      "plant.qty_hint_fit": "{available} disponibili · nella serra ne entrano ancora {fit}",
-      "plant.qty_hint_plan": "Il progetto ne prevede {plan} · nella serra ne entrano {fit}",
+      "plant.qty_hint_fit": "Disponibili: {available} · Spazio per: {fit}",
+      "plant.qty_hint_plan": "Da progetto: {plan} · Spazio per: {fit}",
       "plant.date": "Data di semina / messa a dimora",
       "plant.position": "Posizione (facoltativa)",
       "plant.confirm": "Pianta",
@@ -398,7 +410,7 @@
       "toast.added_stock": "{nome} aggiunta a Da piantare",
       "toast.snoozed": "Rimandata a domani",
       "toast.removed": "Coltura rimossa",
-      "toast.harvest": "Registrato: diventerà la stima dell'anno prossimo",
+      "toast.harvest": "Raccolta salvata nel diario",
       "toast.ics": "{n} attività esportate",
       "toast.imported_orders": "{n} voci importate dai tuoi ordini",
       "toast.no_orders": "Nessun nuovo acquisto da importare",
@@ -414,7 +426,7 @@
       "toast.no_greenhouse_space": "Non c'è spazio sufficiente: aumenta la serra o riduci le colture già inserite.",
       // Dialoghi delle azioni che non si possono annullare.
       "harvest.title": "Registra la raccolta",
-      "harvest.sub": "Diventerà la stima per l'anno prossimo.",
+      "harvest.sub": "Registra quanto hai raccolto e scegli se il ciclo è concluso.",
       "harvest.kg": "Quanti kg hai raccolto?",
       "harvest.confirm": "Registra",
       "harvest.history_title": "Raccolte",
@@ -469,7 +481,7 @@
       "page.eyebrow": "Asistentul tău de cultivare",
       "page.seal": "De la alegere<br>la recoltare",
       "page.lead":
-        "Adaugă ce ai, alege ce plantezi și urmează un plan simplu până la recoltare.",
+        "Plantele tale și activitățile de făcut, până la recoltare.",
       "tab.oggi": "Astăzi",
       "tab.oggi_todo": "de făcut acum",
       "tab.oggi_late": "+{n} întârziate",
@@ -486,15 +498,27 @@
       "tab.piante_note": "listă goală",
       "tab.piante_empty": "adaugă plante",
 
-      "welcome.kicker": "Configurează grădina",
-      "welcome.title": "De unde vrei să adaugi plantele?",
+      "welcome.kicker": "Începe aici",
+      "welcome.title": "Adaugă primele tale plante",
+      "welcome.next": "Adaugă semințe sau răsaduri, confirmă spațiul și alege când le pornești.",
+      "flow.space": "Definește spațiul",
+      "flow.space_hint": "Confirmă dimensiunile înainte de a alege câte plante pornești.",
+      "flow.ready": "Spațiu confirmat: alege ce semeni sau transplantezi.",
+      "flow.sow": "Seamănă",
+      "flow.transplant": "Transplantează",
+      "flow.origin_locked": "Originea este legată de stoc. Adaugă un element nou pentru alte semințe sau răsaduri.",
+      "harvest.finish": "Încheie ciclul și eliberează spațiul",
+      "harvest.continue": "Lasă nebifat dacă planta va continua să producă: îngrijirea rămâne activă.",
+      "welcome.flow_add": "Adaugă",
+      "welcome.flow_plant": "Plantează",
+      "welcome.flow_care": "Urmărește activitățile",
       "welcome.text":
         "Alege de unde începi: plantele vor intra apoi în planul tău.",
-      "welcome.add": "Adaugă plante",
-      "welcome.owned": "Deja la tine",
+      "welcome.add": "Introdu manual",
+      "welcome.owned": "Semințe sau răsaduri pe care le ai, inclusiv cumpărate din altă parte",
       "welcome.or": "sau",
-      "welcome.orders": "Alege din comenzi",
-      "welcome.order_hint": "Din cumpărăturile tale",
+      "welcome.orders": "Importă din comenzi",
+      "welcome.order_hint": "Alege din cumpărăturile tale de pe Orto in Serra",
       "welcome.nothing": "Încă nu ai semințe sau răsaduri?",
       "welcome.shop_seeds": "Catalog semințe",
       "welcome.shop_plugs": "Pepinieră răsaduri",
@@ -750,8 +774,8 @@
       "plant.qty": "Câte plantezi acum",
       "plant.qty_hint_seed": "Semințe disponibile în realitate: {n}",
       "plant.qty_hint_plug": "Ai {n} disponibile",
-      "plant.qty_hint_fit": "{available} disponibile · mai încap {fit} în seră",
-      "plant.qty_hint_plan": "Proiectul prevede {plan} · în seră încap {fit}",
+      "plant.qty_hint_fit": "Disponibile: {available} · Loc pentru: {fit}",
+      "plant.qty_hint_plan": "În proiect: {plan} · Loc pentru: {fit}",
       "plant.date": "Data semănatului / plantării",
       "plant.position": "Poziție (opțional)",
       "plant.confirm": "Pune în pământ",
@@ -824,7 +848,7 @@
       "toast.added_stock": "{nome} adăugată la De plantat",
       "toast.snoozed": "Amânată pe mâine",
       "toast.removed": "Cultură eliminată",
-      "toast.harvest": "Înregistrat: va deveni estimarea de anul viitor",
+      "toast.harvest": "Recoltă salvată în jurnal",
       "toast.ics": "{n} activități exportate",
       "toast.imported_orders": "{n} poziții importate din comenzile tale",
       "toast.no_orders": "Nicio achiziție nouă de importat",
@@ -839,7 +863,7 @@
       "toast.planted_all_left": "{types} culturi pornite · {n} plante așezate · {left} încă disponibile",
       "toast.no_greenhouse_space": "Nu este suficient spațiu: mărește sera sau redu culturile deja introduse.",
       "harvest.title": "Înregistrează recolta",
-      "harvest.sub": "Va deveni estimarea pentru anul viitor.",
+      "harvest.sub": "Înregistrează cantitatea recoltată și alege dacă ciclul s-a încheiat.",
       "harvest.kg": "Câte kg ai recoltat?",
       "harvest.confirm": "Înregistrează",
       "harvest.history_title": "Recoltate",
@@ -1551,13 +1575,25 @@
     app.innerHTML = `
       <section class="orto-welcome">
         <div class="orto-welcome-head">
+          <div class="orto-welcome-intro">
           <p class="orto-welcome-kicker">${t("welcome.kicker")}</p>
           <h2>${t("welcome.title")}</h2>
-          <p class="orto-welcome-text">${t("welcome.text")}</p>
+          <p class="orto-welcome-text">${t("welcome.next")}</p>
+          </div>
+          <div class="orto-welcome-art" aria-hidden="true">
+            <img class="orto-welcome-art-seeds" src="assets/img/generated/bustina-semi-premium.webp" alt="" width="512" height="768" />
+            <img src="assets/img/generated/piantina-premium.webp" alt="" width="512" height="768" />
+          </div>
         </div>
+        <ol class="orto-start-flow">
+          <li class="is-current"><span aria-hidden="true">🌱</span><b>${t("welcome.flow_add")}</b></li>
+          <li><span aria-hidden="true">📐</span><b>${t("flow.space")}</b></li>
+          <li><span aria-hidden="true">🪴</span><b>${t("welcome.flow_plant")}</b></li>
+          <li><span aria-hidden="true">☀️</span><b>${t("welcome.flow_care")}</b></li>
+        </ol>
         <div class="orto-welcome-actions">
           <button class="orto-welcome-choice orto-welcome-choice--primary" type="button" data-orto-action="open-add-stock">
-            <span class="orto-welcome-choice-ico" aria-hidden="true">🌱</span>
+            <span class="orto-welcome-choice-ico" aria-hidden="true">✎</span>
             <span><b>${t("welcome.add")}</b><small>${t("welcome.owned")}</small></span>
             <span class="orto-welcome-arrow" aria-hidden="true">→</span>
           </button>
@@ -2021,6 +2057,7 @@
           <h2>${t("piante.title")}</h2>
           <p class="orto-sec-sub">${t("piante.sub")}</p>
         </div>
+        ${greenhouseHtml(true)}
         ${gruppoDaPiantareHtml(attive, "", true)}
         ${archiviateHtml()}
       </section>`;
@@ -2351,7 +2388,7 @@
      La ricerca usa una coltura virtuale e non modifica mai il diario reale. */
   function greenhouseFitQuantity(plantId, requested, origin = "seme") {
     const max = Math.max(0, Math.round(Number(requested) || 0));
-    if (!max || !BYID[plantId]) return 0;
+    if (!ortoGreenhouse.configured || !max || !BYID[plantId]) return 0;
     let low = 0;
     let high = max;
     while (low < high) {
@@ -2504,7 +2541,22 @@
     return `<svg viewBox="0 0 ${viewWidth} ${viewHeight}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${escape(sceneLabel)}">${scene}</svg>`;
   }
 
-  function greenhouseHtml() {
+  // Le quantità sono calcolabili soltanto dopo una scelta esplicita dello spazio.
+  function requireGrowingSpace() {
+    if (ortoGreenhouse.configured) return true;
+    vaiAllaVista("piante");
+    if (!document.getElementById("ortoGreenhouseForm"))
+      app.insertAdjacentHTML("afterbegin", greenhouseHtml(true));
+    const form = document.getElementById("ortoGreenhouseForm");
+    const details = form?.closest("details");
+    if (details) details.open = true;
+    form?.querySelector("input")?.focus();
+    form?.scrollIntoView({ block: "center", behavior: "auto" });
+    toast(t("flow.space_hint"));
+    return false;
+  }
+
+  function greenhouseHtml(setupOnly = false) {
     const crops = greenhouseCrops();
     const layout = computeGreenhouseLayout();
     if (!layout.beds.some((bed) => bed.id === selectedGreenhouseBed))
@@ -2517,8 +2569,8 @@
       <div class="orto-greenhouse-head">
         <div>
           <span class="orto-greenhouse-eyebrow">${t("greenhouse.eyebrow")}</span>
-          <h3>${t("greenhouse.title")}</h3>
-          <p>${t("greenhouse.sub")}</p>
+          <h3>${t(setupOnly ? "flow.space" : "greenhouse.title")}</h3>
+          <p>${t(setupOnly ? (ortoGreenhouse.configured ? "flow.ready" : "flow.space_hint") : "greenhouse.sub")}</p>
         </div>
       </div>
       <details class="orto-greenhouse-settings"${ortoGreenhouse.configured ? "" : " open"}>
@@ -2534,7 +2586,7 @@
         </form>
       </details>
       ${
-        crops.length
+        setupOnly ? "" : crops.length
           ? `<div class="orto-greenhouse-workspace">
               <div class="orto-greenhouse-plan">
                 <div class="orto-greenhouse-stats">
@@ -2793,7 +2845,7 @@
           attive.length
             ? `<div class="orto-toolbar">
                 ${daPiantare.length ? `<button class="orto-btn orto-btn--sm orto-btn--plant-all" type="button"
-                  data-orto-action="plant-all"><span aria-hidden="true">🌱</span>${t("disp.plant_all")}</button>` : ""}
+                  data-orto-action="plant-all"><span aria-hidden="true">🌱</span>${t(ortoGreenhouse.configured ? "disp.plant_all" : "flow.space")}</button>` : ""}
                 <button class="orto-btn orto-btn--sm" type="button"
                   data-orto-action="open-add-stock">${t("disp.add_manual")}</button>
                 <button class="orto-btn orto-btn--ghost orto-btn--sm" type="button"
@@ -2993,9 +3045,9 @@
             ${esaurita ? "disabled" : ""}>${
               esaurita
                 ? t("disp.all_planted")
-                : giaPiantata
+                : !ortoGreenhouse.configured ? t("flow.space") : giaPiantata
                   ? t("disp.plant_again")
-                  : t("disp.plant_now")
+                  : t(voce.variante === "seme" ? "flow.sow" : "flow.transplant")
             }</button>
           <button class="orto-remove-btn orto-stock-archive" type="button"
             data-orto-action="archive-voce" data-voce-id="${escape(voce.id)}"
@@ -3106,6 +3158,7 @@
       !activeCrops().length &&
       !harvestedCrops().length &&
       !inventory.voci.some((v) => !v.archiviata);
+    document.body.classList.toggle("orto-first-start", vergine);
     const barra = document.getElementById("ortoViewbar");
     if (barra) barra.hidden = false;
     // Stato tablist: solo la linguetta attiva resta raggiungibile con Tab.
@@ -3325,6 +3378,7 @@
   }
 
   function apriConfermaPiantaTutto() {
+    if (!requireGrowingSpace()) return;
     const plan = preparaPianoPiantaTutto();
     if (!plan.planted) return toast(t("toast.no_greenhouse_space"));
     bulkPlantPlanPending = plan;
@@ -3345,6 +3399,7 @@
   function piantaTuttoDisponibile(plan = bulkPlantPlanPending) {
     bulkPlantPlanPending = null;
     if (!plan?.planted) return;
+    if (!requireGrowingSpace()) return;
     const date = E.iso(new Date());
     plan.candidates.forEach((item) => {
       if (!item.planted) return;
@@ -3366,7 +3421,7 @@
     });
     saveGarden();
     saveInventory();
-    render();
+    vaiAllaVista("piano");
     toast(
       t(plan.left ? "toast.planted_all_left" : "toast.planted_all", {
         types: plan.types,
@@ -3766,6 +3821,7 @@
       if (chi) chi.textContent = plantName(BYID[coltura.plantId]);
       const kg = document.getElementById("ortoHarvestKg");
       if (kg) kg.value = "1";
+      document.getElementById("ortoHarvestFinish").checked = false;
       apriDialogo("ortoHarvestDialog");
       return;
     }
@@ -3804,10 +3860,15 @@
     // Messa a dimora parziale: il valore iniziale viene dall'acquisto, non da
     // una quantità suggerita uguale per tutte le piante.
     if (action === "plant-from-stock" && !trigger.disabled) {
+      if (!requireGrowingSpace()) return;
       vocePendente = inventory.voci.find(
         (v) => v.id === trigger.dataset.voceId,
       );
       if (!vocePendente) return;
+      const actionLabel = t(vocePendente.variante === "seme" ? "flow.sow" : "flow.transplant");
+      document.getElementById("ortoPlantTitle").textContent = actionLabel;
+      const confirmPlant = document.querySelector('#ortoPlantForm button[value="ok"]');
+      if (confirmPlant) confirmPlant.textContent = actionLabel;
       const rimaste = residuo(vocePendente);
       const plannedRemaining = vocePendente.plannedQty
         ? Math.max(
@@ -3840,13 +3901,24 @@
         campo.value = String(suggested);
         campo.max = String(fit);
       }
-      if (nota)
-        nota.textContent = plannedRemaining
+      if (nota) {
+        const summary = plannedRemaining
           ? t("plant.qty_hint_plan", {
               plan: Math.min(plannedRemaining, rimaste),
               fit,
             })
           : t("plant.qty_hint_fit", { available: rimaste, fit });
+        nota.replaceChildren();
+        summary.split(" · ").forEach((text, index) => {
+          const chip = document.createElement("span");
+          chip.className = "orto-quantity-indicator";
+          const icon = document.createElement("span");
+          icon.setAttribute("aria-hidden", "true");
+          icon.textContent = index ? "▦" : "🌱";
+          chip.append(icon, document.createTextNode(text));
+          nota.append(chip);
+        });
+      }
       const data = document.getElementById("ortoPlantDate");
       if (data) data.value = E.iso(new Date());
       apriDialogo("ortoPlantDialog");
@@ -3890,6 +3962,7 @@
       return;
     }
     if (action === "open-add" || action === "open-add-stock") {
+      if (action === "open-add" && !requireGrowingSpace()) return;
       dialogMode = action === "open-add-stock" ? "stock" : "coltura";
       piantaScelta = null;
       pickerQuery = "";
@@ -4004,7 +4077,7 @@
       piantaScelta = null;
       setTimeout(() => {
         // Apre la scheda in cui la voce è appena comparsa.
-        vaiAllaVista("piante");
+        vaiAllaVista(modoScorta ? "piante" : "piano");
         toast(t(modoScorta ? "toast.added_stock" : "toast.added", { nome }));
       }, 0);
     });
@@ -4024,7 +4097,12 @@
         tipo: "raccolta",
         quantitaKg: kg,
       });
-      coltura.stato = "raccolta";
+      // Una raccolta parziale completa solo le attività di raccolta già scadute.
+      tuttiITask().filter((task) => task.colturaId === coltura.id && task.tipo === "raccolta" && dataEffettiva(task) <= E.startOfToday()).forEach((task) => {
+        garden.fatti[task.id] = E.iso(new Date());
+      });
+      if (document.getElementById("ortoHarvestFinish").checked)
+        coltura.stato = "raccolta";
       saveGarden();
       setTimeout(() => {
         render();
@@ -4241,15 +4319,43 @@
       const nuovaOrigine =
         document.querySelector('input[name="ortoEditOrigine"]:checked')
           ?.value || coltura.origine;
+      const nuovaQuantita = Math.max(1, Number(document.getElementById("ortoEditQty").value) || coltura.quantita);
+      const source = inventory.voci.find((v) => v.id === coltura.sourceStockId);
+      if (source && (nuovaOrigine !== coltura.origine || nuovaQuantita > coltura.quantita + residuo(source))) {
+        event.preventDefault();
+        colturaInModifica = id;
+        toast(nuovaOrigine !== coltura.origine ? t("flow.origin_locked") : t("dlg.fit_error", { n: coltura.quantita + residuo(source) }));
+        return;
+      }
+      if (nuovaQuantita > coltura.quantita || nuovaOrigine !== coltura.origine) {
+        const previousState = coltura.stato;
+        const previousLayout = JSON.parse(JSON.stringify(ortoGreenhouse));
+        let fit;
+        try {
+          coltura.stato = "raccolta";
+          fit = greenhouseFitQuantity(coltura.plantId, nuovaQuantita, nuovaOrigine);
+        } finally {
+          coltura.stato = previousState;
+          ortoGreenhouse = previousLayout;
+        }
+        if (fit < nuovaQuantita) {
+          event.preventDefault();
+          colturaInModifica = id;
+          toast(t("dlg.fit_error", { n: fit }));
+          return;
+        }
+      }
+      if (source) {
+        const difference = nuovaQuantita - coltura.quantita;
+        source.qtaPiantata = Math.max(0, (source.qtaPiantata || 0) + difference);
+        if (source.plannedQty) source.plannedPlanted = Math.max(0, (source.plannedPlanted || 0) + difference);
+        saveInventory();
+      }
       const cambiaPianificazione =
         nuovaData !== coltura.dataInizio || nuovaOrigine !== coltura.origine;
       coltura.dataInizio = nuovaData;
       coltura.origine = nuovaOrigine;
-      coltura.quantita = Math.max(
-        1,
-        Number(document.getElementById("ortoEditQty").value) ||
-          coltura.quantita,
-      );
+      coltura.quantita = nuovaQuantita;
       coltura.posizione = document
         .getElementById("ortoEditPosition")
         .value.trim();
@@ -4291,6 +4397,12 @@
         voce.variante,
       );
       const quante = Math.min(richieste, rimaste, fit);
+      if (!ortoGreenhouse.configured || richieste > quante) {
+        event.preventDefault();
+        vocePendente = voce;
+        toast(t("dlg.fit_error", { n: quante }));
+        return;
+      }
       if (quante < 1) {
         setTimeout(() => toast(t("toast.no_greenhouse_space")), 0);
         return;
@@ -4311,8 +4423,7 @@
       saveInventory();
       const nome = plantName(BYID[voce.plantId]);
       setTimeout(() => {
-        view = "piante";
-        render();
+        vaiAllaVista("piano");
         toast(t("toast.planted", { n: quante, nome }));
       }, 0);
     });

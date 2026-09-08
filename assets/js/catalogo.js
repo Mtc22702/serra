@@ -5038,7 +5038,31 @@ if (typeof window !== "undefined") {
     return copy.labels[2];
   }
 
+  // Percorso illustrato condiviso: i tempi del catalogo semi partono dalla semina.
+  function seedJourney(plant, lang) {
+    const ro = language(lang) === "ro";
+    const labels = ro
+      ? ["Semănat", "Germinare", "Creștere", "Recoltare"]
+      : ["Semina", "Germinazione", "Crescita", "Raccolta"];
+    const timing = plant.gg > 0;
+    const photo = root.resolvePlantPhoto(plant, plant.id);
+    const sprout = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M12 76h76" stroke="#b88761" stroke-width="5" stroke-linecap="round"/><path d="M50 76V43" fill="none" stroke="#36794b" stroke-width="4"/><path d="M49 57C25 60 22 40 26 35c19-2 26 9 23 22Z" fill="#82af55"/><path d="M51 46c-1-21 13-29 28-26 1 18-11 30-28 26Z" fill="#39794b"/><path d="m50 79-9 12m9-12 10 11" stroke="#b88761" stroke-width="2"/></svg>`;
+    const visuals = [
+      '<img src="assets/img/generated/bustina-semi-premium.webp" alt="" loading="lazy" />',
+      sprout,
+      `<img src="assets/img/svg/${escapeHtml(plant.id)}.svg" alt="" loading="lazy" />`,
+      `<img class="seed-journey-photo" src="${escapeHtml(photo)}" alt="" loading="lazy" />`
+    ];
+    return `<section class="seed-journey" aria-label="${ro ? "De la sămânță la recoltă" : "Dal seme alla raccolta"}">
+      <div class="seed-journey-heading"><h3>${ro ? "De la sămânță la recoltă" : "Dal seme alla raccolta"}</h3>
+      ${timing ? `<p class="seed-journey-time"><small>${ro ? "Aproximativ" : "Circa"}</small><strong>${escapeHtml(plant.gg)}</strong><span>${ro ? "zile de la semănat" : "giorni dalla semina"}</span></p>` : `<p>${ro ? "Plantă perenă · recoltare variabilă" : "Pianta perenne · raccolta variabile"}</p>`}</div>
+      <ol class="seed-journey-stages">${labels.map((label, i) => `<li><div class="seed-journey-visual">${visuals[i]}</div><span>${label}</span></li>`).join("")}</ol>
+      <p class="seed-journey-note">${ro ? "Etape orientative, nu un calendar: ritmul depinde de climă și îngrijire. Recoltează când planta este pregătită." : "Le fasi non sono un calendario: i tempi dipendono da clima e cure. Raccogli quando la pianta è pronta."}</p>
+    </section>`;
+  }
+
   root.SERRA_PLANT_CONTENT = {
+    seedJourney,
     compactDescription,
     cultivationNote,
     localizedName,

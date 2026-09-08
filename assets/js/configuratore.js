@@ -6187,7 +6187,6 @@ function renderPlantDetailPanel(initialTab = "overview") {
     </div>
     <div class="detail-body pdp-detail-body">
       <div class="detail-tabs-shell">
-      <div class="detail-tabs-heading"><strong>${detailText("detail.tabs_title")}</strong><span>${detailText("detail.tabs_hint")}</span></div>
       <div class="detail-tabs" role="tablist" aria-label="${detailText("detail.tabs_title")}">
         ${CONFIG_DETAIL_TABS.map((tab, index) => {
           return `<button class="detail-tab${index === 0 ? " active" : ""}" type="button" role="tab" aria-selected="${index === 0}" data-detail-tab="${tab}" data-conf-action="set-detail-tab">${configDetailTabIcon(tab)}<span>${detailText(`detail.tab_${tab}`)}</span></button>`;
@@ -6198,6 +6197,7 @@ function renderPlantDetailPanel(initialTab = "overview") {
       <div class="detail-tab-panel active" data-detail-panel="overview">
         <div class="detail-badges"><span class="badge badge--sun">${soleIcon} ${soleLabel}</span><span class="badge badge--water">${acquaIcon} ${waterLabel(p.acqua)}</span></div>
         ${desc ? `<div class="detail-nota">${desc}</div>` : nota ? `<div class="detail-nota">${nota}</div>` : ""}
+        ${window.SERRA_PLANT_CONTENT.seedJourney(p, state.lang)}
         <div class="detail-stats">
           <div class="detail-tile detail-tile--harvest"><div class="detail-tile-icon">⏱</div><div class="detail-tile-label">${tx("harvest")}</div><div class="detail-tile-value">${harvestValue(p)}</div></div>
           <div class="detail-tile detail-tile--yield"><div class="detail-tile-icon">⚖</div><div class="detail-tile-label">${tx("yieldPlant")}</div><div class="detail-tile-value">${yieldLabel(p.resa)}</div></div>

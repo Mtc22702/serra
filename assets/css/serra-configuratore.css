@@ -16557,3 +16557,12 @@
     html .journey-context-progress { gap: 4px; }
   }
 }
+/* Confronti prima/dopo: stessa quantità riordinata oppure nuovi posti occupati. */
+.crop-action-preview { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--theme-text); }
+.crop-mini { display: grid; grid-template-columns: repeat(3, 9px); gap: 3px; padding: 4px; border: 1px solid var(--surface-line-strong); border-radius: 5px; }
+.crop-mini i { width: 9px; height: 9px; border: 1px solid var(--theme-text-muted); border-radius: 2px; }
+.crop-mini--scattered i:nth-child(odd),
+.crop-mini--arranged i:nth-child(-n+3),
+.crop-mini--full i { background: var(--button-primary); }
+#btnArrangeSelected > .crop-action-icon,
+#btnFillSelected > .crop-action-icon { display: none; }

@@ -3266,6 +3266,8 @@ function openDetail(id, preserveTab = false) {
        <div class="detail-tile-sub">${tv("cart.seeds_per_pack", { count: spp })}</div>
      </div>`;
 
+  document.getElementById("detailSeedJourney").innerHTML =
+    window.SERRA_PLANT_CONTENT.seedJourney(p, currentLang);
   document.getElementById("detailCultivationExtra").innerHTML =
     renderTechnicalCards(profile.cultivation);
   document.getElementById("detailCareGuide").innerHTML = renderTechnicalCards(
@@ -4160,6 +4162,11 @@ window.addEventListener(
   initCookieBanner();
   // Mostra il contenuto dopo la sincronizzazione della lingua.
   document.documentElement.classList.remove("serra-i18n-pending");
+  // Collegamento dal vivaio: apri la scheda dopo catalogo e lingua, anche fuori stagione.
+  const requestedPlant = new URLSearchParams(location.search).get("plant");
+  if (requestedPlant && PLANTS.some((plant) => plant.id === requestedPlant)) {
+    openDetail(requestedPlant);
+  }
 })();
 
 /* Apertura diretta del carrello da un'altra pagina: le sezioni senza pannello proprio (Il mio orto) rimandano qui con ?cart=open. */

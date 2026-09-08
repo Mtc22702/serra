@@ -3193,6 +3193,77 @@
 
 /* Pagina «Il mio orto» e componenti condivisi con il vivaio. */
 
+/* Confronto leggibile fra disponibilità e capienza, senza troncare le quantità. */
+#ortoPlantQtyHint { display: flex; flex-wrap: wrap; gap: .5rem; }
+.orto-harvest-finish { display: flex; align-items: center; gap: .7rem; min-height: 44px; line-height: 1.5; }
+.orto-harvest-finish input { flex: 0 0 auto; }
+
+/* Comandi del diario: stessa gerarchia cromatica di catalogo e configuratore. */
+@layer orto-audit {
+  html .orto-page .orto-btn {
+    min-height: 44px;
+    line-height: 1.4;
+    white-space: normal;
+    border-radius: var(--control-radius);
+    box-shadow: none;
+  }
+  html .orto-page .orto-btn:not(.orto-btn--ghost):not(.orto-btn--danger) {
+    background: var(--button-primary-fill);
+    border-color: var(--button-primary-fill);
+    color: var(--button-primary-text);
+  }
+  html .orto-page .orto-btn--ghost {
+    background: var(--button-secondary-bg);
+    border-color: var(--surface-line-strong);
+    color: var(--button-secondary-text);
+  }
+  html .orto-page .orto-btn:hover:not(:disabled) { transform: none; }
+  html .orto-page .orto-btn:not(.orto-btn--ghost):not(.orto-btn--danger):hover:not(:disabled) {
+    background: var(--button-primary-fill-hover);
+    border-color: var(--button-primary-fill-hover);
+  }
+  html .orto-page :is(button, input, select, summary, a):focus-visible {
+    outline: 3px solid var(--button-primary);
+    outline-offset: 3px;
+  }
+  html .orto-page button:disabled {
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: .55;
+  }
+  html .orto-page .orto-stock-archive,
+  html .orto-page .orto-remove-btn { min-width: 44px; min-height: 44px; }
+  html .orto-page .orto-stock-actions { gap: 10px; flex-wrap: wrap; }
+  html .orto-page .orto-sec-head { margin-bottom: 18px; }
+  html .orto-page .orto-greenhouse { margin-bottom: 24px; border-color: var(--surface-line); background: var(--surface-1); box-shadow: none; }
+  html .orto-page .orto-greenhouse:not(.is-configured) { border-color: var(--button-primary); }
+  html .orto-page .orto-greenhouse-settings summary { min-height: 48px; line-height: 1.5; }
+  html .orto-page :is(.orto-piano-card, .orto-card, .orto-task) { border-color: var(--surface-line); background: var(--surface-1); }
+  html .orto-page .orto-task.is-done { background: var(--button-secondary-bg); }
+  html .orto-page .orto-task.is-late:not(.is-done) { border-inline-start: 3px solid #b77a32; }
+  html .orto-page .orto-tab-copy { min-width: 0; }
+  html .orto-page :is(.orto-tab-name, .orto-tab-note) {
+    height: auto; overflow: visible; white-space: normal; line-height: 1.45;
+  }
+  html .orto-page .orto-tab:not(.is-active) { box-shadow: none; }
+  html .orto-page .orto-tab.is-active {
+    background: var(--button-primary-fill); border-color: var(--button-primary-fill);
+    color: var(--button-primary-text); box-shadow: none;
+  }
+  html .orto-page .orto-tab.is-active :is(.orto-tab-name, .orto-tab-note) { color: inherit; }
+  @media (max-width: 660px) {
+    html .orto-page .orto-greenhouse-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    html .orto-page .orto-greenhouse-submit { grid-column: 1 / -1; width: 100%; }
+    html .orto-page .orto-tab { padding-inline: 8px; grid-template-columns: minmax(0, 1fr) auto; }
+    html .orto-page .orto-tab-ico { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html .orto-page :is(.orto-btn, .orto-card, .orto-piano-card, .orto-task, .orto-welcome-choice) { animation: none; transition: none; }
+  }
+}
+.orto-quantity-indicator { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .6rem; border: 1px solid var(--surface-line); border-radius: .6rem; background: var(--surface-1); color: var(--theme-text); font-variant-numeric: tabular-nums; }
+
 @layer base, dark-theme, polish, coerenza, orto-audit;
 
 @layer base {
@@ -9487,6 +9558,32 @@
   html .orto-page-head::before, html .orto-page-head::after { display: none; }
   html .orto-welcome { padding: 20px; background: linear-gradient(145deg, var(--botanical-card), var(--surface-1)); box-shadow: var(--elev-1); }
   html .orto-page-lead { margin-bottom: 0; }
+  /* Navigazione nel flusso: nessuna sovrapposizione con il testo introduttivo. */
+  html .orto-viewbar { margin: 18px 0 24px; }
+  html .orto-tabs { width: 100%; min-width: 0; box-shadow: none; }
+  html .orto-first-start .orto-page-head { background: transparent; border: 0; box-shadow: none; padding: 0; margin-bottom: 0; }
+  html .orto-first-start .orto-page-title { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+  html .orto-first-start .orto-page-eyebrow { display: none; }
+  html .orto-first-start .orto-tab:not(.is-active) { background: transparent; border-color: transparent; box-shadow: none; }
+  html .orto-welcome { max-width: none; grid-template-columns: 1fr; gap: 22px; padding: clamp(20px, 3vw, 36px); background: var(--orto-surface); }
+  html .orto-welcome-head { padding: 0; }
+  html .orto-welcome h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); margin: 6px 0 10px; }
+  html .orto-welcome-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; max-width: none; gap: 14px; }
+  html .orto-welcome-choice { min-height: 114px; padding: 20px; }
+  html .orto-welcome-choice small { font-size: .85rem; line-height: 1.45; }
+  html .orto-welcome-shop { flex-wrap: wrap; line-height: 1.6; }
+  .orto-start-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; margin: 0; padding: 14px; gap: 24px; background: var(--orto-surface-2); border-radius: 14px; }
+  .orto-start-flow li { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--orto-muted); font-size: .85rem; }
+  .orto-start-flow li + li::before { content: "→"; position: absolute; left: -18px; color: var(--orto-muted); }
+  .orto-start-flow li > span { font-size: 1.4rem; }
+  .orto-start-flow .is-current { color: var(--orto-ink); }
+  @media (max-width: 660px) {
+    html .orto-welcome-actions { grid-template-columns: 1fr; }
+    html .orto-welcome-choice { min-height: 96px; padding: 14px; }
+    .orto-start-flow { padding: 12px 8px; gap: 16px; }
+    .orto-start-flow li { flex-direction: column; text-align: center; gap: 5px; font-size: .74rem; }
+    .orto-start-flow li + li::before { left: -13px; top: 8px; }
+  }
   html[data-theme="dark"] .orto-page { --orto-muted: #b7c3b9; --orto-ink-soft: #dce8dc; }
   html[data-theme="dark"] .orto-chipfilter.is-active, html[data-theme="dark"] .orto-chipfilter[aria-pressed="true"] { background: #34483b; color: #f5f3e9; border-color: #9ccb95; }
   @media (max-width: 660px) {
@@ -9508,6 +9605,104 @@
 @layer orto-audit {
   html .orto-page { --orto-surface: var(--surface-1); --orto-surface-2: var(--surface-2); }
   html .orto-welcome-choice--primary { background: var(--botanical-leaf); border-color: var(--surface-line-strong); }
+
+  /* Primo accesso: superfici calde, azioni distinte e testo libero da ritagli. */
+  html body.orto-first-start {
+    background: radial-gradient(ellipse at 90% 15%, var(--botanical-leaf), transparent 48%), var(--bg);
+  }
+  html .orto-first-start .orto-page-head { overflow: visible; }
+  html .orto-first-start .orto-page-title {
+    line-height: 1.3; padding-block: .08em; color: #203b30;
+  }
+  html .orto-first-start .orto-tabs {
+    background: var(--button-secondary-bg); border-color: var(--surface-line); padding: 6px;
+  }
+  html .orto-first-start .orto-tab {
+    height: auto; overflow: visible; border-radius: var(--control-radius);
+  }
+  html .orto-first-start .orto-tab-copy,
+  html .orto-first-start .orto-tab-name,
+  html .orto-first-start .orto-tab-note {
+    min-width: 0; height: auto; overflow: visible; white-space: normal;
+    text-overflow: clip; line-height: 1.45; padding-block: 1px;
+  }
+  html .orto-first-start .orto-tab.is-active {
+    background: var(--button-primary-fill); color: var(--button-primary-text); border-color: var(--button-primary-fill);
+    box-shadow: 0 3px 8px #234f3e20;
+  }
+  html .orto-welcome {
+    border: 1px solid var(--surface-line); background: var(--surface-1);
+    border-radius: 24px; padding: 28px; gap: 22px;
+    box-shadow: 0 16px 42px #3245340c;
+  }
+  html .orto-welcome-head {
+    display: grid; grid-template-columns: minmax(0, 1fr) 156px;
+    align-items: center; gap: 22px; padding: 4px 8px;
+  }
+  .orto-welcome-intro { min-width: 0; }
+  html .orto-welcome-kicker { color: #976042; letter-spacing: .12em; }
+  html .orto-welcome h2 {
+    font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.3;
+    padding-block: .06em; margin: 6px 0 10px; color: #203b30; overflow: visible;
+  }
+  html .orto-welcome-text { max-width: 55ch; margin: 0; color: #53645a; line-height: 1.6; }
+  .orto-welcome-art {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; height: 164px;
+    border-radius: 48% 52% 40% 60%;
+    background: radial-gradient(ellipse, #e6ca8990, #e6ca8920 70%, transparent 71%);
+  }
+  .orto-welcome-art img { width: 100%; height: 148px; object-fit: contain; filter: drop-shadow(0 9px 7px #463e2926); }
+  .orto-welcome-art .orto-welcome-art-seeds { transform: rotate(-9deg); }
+  html .orto-welcome-actions { order: 1; gap: 16px; }
+  html .orto-welcome-choice {
+    min-height: 128px; padding: 22px; border-radius: 17px;
+    border-color: #dbc6b6; background: #f4e9dc; color: #563b2d;
+    grid-template-columns: 48px minmax(0, 1fr) 20px;
+  }
+  html .orto-welcome-choice > span { min-width: 0; }
+  html .orto-welcome-choice b { font-size: 1.04rem; line-height: 1.45; padding-block: 2px; }
+  html .orto-welcome-choice small { line-height: 1.55; color: #755a48; overflow: visible; }
+  html .orto-welcome-choice-ico { background: #fffaf080; color: #855137; width: 48px; height: 48px; }
+  html .orto-welcome-choice .orto-welcome-arrow { color: inherit; }
+  html .orto-welcome-choice--primary {
+    background: linear-gradient(125deg, #285c45, #193e31);
+    border-color: #285c45; color: #fffdf5; box-shadow: 0 6px 16px #234f3e1a;
+  }
+  html .orto-welcome-choice--primary small { color: #e0ecdc; }
+  html .orto-welcome-choice--primary .orto-welcome-choice-ico { background: #ffffff18; color: #fffdf5; }
+  html .orto-welcome-choice:focus-visible { outline: 3px solid #aa713a; outline-offset: 4px; }
+  html .orto-start-flow {
+    order: 2; background: transparent; border: 1px solid #e5e4d8;
+    padding: 17px 14px; border-radius: 13px;
+  }
+  html .orto-start-flow li { color: #647268; line-height: 1.5; }
+  html .orto-start-flow li.is-current { color: #285c45; }
+  html .orto-welcome-shop { order: 3; color: #647268; border: 0; padding-top: 0; }
+  html .orto-welcome-shop a { color: #345c42; text-underline-offset: 3px; }
+  html[data-theme="dark"] body.orto-first-start { background: #111e18; }
+  html[data-theme="dark"] .orto-first-start .orto-page-title { color: #f6f0e2; }
+  html[data-theme="dark"] .orto-first-start .orto-tabs { background: #1d3025; border-color: #39503e; }
+  html[data-theme="dark"] .orto-welcome { background: #1b2a22; border-color: #405044; }
+  html[data-theme="dark"] .orto-welcome h2 { color: #f6f0e2; }
+  html[data-theme="dark"] .orto-welcome-text,
+  html[data-theme="dark"] .orto-welcome-shop,
+  html[data-theme="dark"] .orto-start-flow li { color: #cad4c6; }
+  html[data-theme="dark"] .orto-welcome-kicker { color: #e0b78a; }
+  html[data-theme="dark"] .orto-start-flow { border-color: #405044; }
+  html[data-theme="dark"] .orto-welcome-shop a { color: #baddb0; }
+  html[data-theme="dark"] .orto-welcome-choice:not(.orto-welcome-choice--primary) { background: #44372c; border-color: #76604a; color: #faecd8; }
+  html[data-theme="dark"] .orto-welcome-choice:not(.orto-welcome-choice--primary) small { color: #e1cbb2; }
+  @media (max-width: 660px) {
+    html .orto-welcome { padding: 18px; gap: 18px; }
+    html .orto-welcome-head { grid-template-columns: minmax(0, 1fr) 96px; padding: 0; gap: 10px; }
+    html .orto-welcome h2 { font-size: 1.55rem; }
+    .orto-welcome-art { height: 110px; }
+    .orto-welcome-art img { width: 100%; height: 100px; }
+    html .orto-welcome-choice { min-height: 112px; padding: 16px; gap: 12px; grid-template-columns: 40px minmax(0, 1fr) 18px; }
+    html .orto-welcome-choice-ico { width: 40px; height: 44px; }
+    html .orto-welcome-choice b { font-size: .96rem; }
+    html .orto-start-flow { gap: 18px; padding: 12px 6px; }
+  }
 }
 
 /* Vivaio: stili specifici della sezione che vende le piantine già cresciute. */
@@ -10747,4 +10942,91 @@
 }
 @layer coerenza {
   html[data-theme="dark"] .viv-hero .orto-hero-date { color: #b7d9ab; }
+}
+/* Il formato del vassoio si riconosce contando le sei piantine. */
+.viv-tray-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 4px; border: 1px solid var(--surface-line); border-radius: 6px; flex-shrink: 0; }
+.viv-tray-preview i { font-style: normal; font-size: 12px; line-height: 1.25; }
+
+/* Card di acquisto: dati confrontabili e comandi coerenti con il catalogo semi. */
+.viv-page .viv-grid .orto-card { display: flex; flex-direction: column; border-color: var(--surface-line); background: var(--surface-1); box-shadow: var(--elev-1); }
+.viv-page .viv-grid .orto-card { position: relative; }
+.viv-page .viv-plant-details { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; box-shadow: none; cursor: pointer; }
+.viv-page .viv-plant-details::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.viv-page .viv-card-actions { position: relative; z-index: 4; }
+.viv-page .orto-card:has(.viv-plant-details:focus-visible) { outline: 3px solid var(--button-primary); outline-offset: 3px; }
+.viv-page .viv-plant-details:hover { text-decoration: underline; text-underline-offset: 3px; }
+.viv-page .viv-grid .orto-card-body { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.viv-page .viv-card-actions { margin-top: auto; padding-top: 12px; }
+.viv-page .viv-timing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.viv-page .viv-timing > span { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; padding: 8px; background: var(--button-secondary-bg); border: 0; border-radius: 8px; }
+.viv-page .viv-timing small { font-size: .72rem; line-height: 1.4; color: var(--theme-text-muted); }
+.viv-page .viv-timing b { font-size: .85rem; line-height: 1.45; color: var(--theme-text); white-space: normal; }
+.viv-page .viv-price-row { flex-wrap: wrap; gap: 6px 12px; }
+.viv-page .viv-grid .orto-card-titles h3 { line-height: 1.3; padding-block: 2px; }
+.viv-page :is(.viv-qty-btn, .viv-remove, .viv-reset, .viv-chip) { min-height: 44px; }
+.viv-page :is(.viv-qty-btn, .viv-remove) { min-width: 44px; }
+.viv-page .viv-grid .orto-btn { min-height: 46px; white-space: normal; line-height: 1.4; background: var(--button-primary-fill); color: var(--button-primary-text); border-color: var(--button-primary-fill); box-shadow: none; }
+.viv-page .viv-grid .orto-btn:hover:not(:disabled) { background: var(--button-primary-fill-hover); transform: none; }
+.viv-page .viv-chip.is-active { background: var(--button-primary-fill); color: var(--button-primary-text); border-color: var(--button-primary-fill); box-shadow: none; }
+.viv-page :is(button, a, input, select, summary):focus-visible { outline: 3px solid var(--button-primary); outline-offset: 3px; }
+.viv-page button:disabled { cursor: not-allowed; box-shadow: none; transform: none; }
+.viv-minimum-hint { margin: 10px 0 0; font-size: .85rem; line-height: 1.5; color: var(--theme-text); }
+
+/* Schede dedicate alle piantine: dialogo nativo con focus ed Escape. */
+body.viv-detail-open { overflow: hidden; }
+.viv-plant-dialog { width: min(720px, calc(100vw - 28px)); max-height: min(90dvh, 860px); margin: auto; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--surface-line); border-radius: var(--radius-xl); background: var(--surface-1); color: var(--theme-text); box-shadow: 0 24px 70px #0004; }
+.viv-plant-dialog::backdrop { background: #10271db3; }
+.viv-detail-top-close { position: absolute; top: 12px; right: 12px; margin: 0; z-index: 2; }
+.viv-detail-top-close button { width: 44px; height: 44px; border: 1px solid #ffffff50; border-radius: var(--control-radius-round); background: #173e30; color: #fff; font-size: 26px; cursor: pointer; }
+.viv-detail-top-close button:focus-visible { outline: 3px solid #e4cc93; outline-offset: 2px; }
+.viv-detail-hero { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 24px; align-items: center; padding: 28px 64px 28px 28px; background: linear-gradient(125deg, #163e2e, #356348); color: #fffdf4; }
+.viv-detail-hero img { width: 140px; height: 140px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: 0 8px 24px #0003; }
+.viv-detail-hero h2 { margin: 8px 0 12px; font-family: "Fraunces", Georgia, serif; font-size: 2.1rem; line-height: 1.3; color: inherit; }
+.viv-detail-hero small, .viv-detail-hero span { font-size: .85rem; }
+.viv-detail-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 24px; }
+.viv-detail-overview, .viv-detail-harvest { grid-column: 1 / -1; }
+.viv-detail-instruction { padding: 16px; border: 1px solid var(--surface-line); border-radius: var(--radius-lg); }
+.viv-detail-harvest { display: flex; align-items: flex-start; gap: 14px; padding: 18px; border-radius: var(--radius-lg); background: var(--botanical-warm); }
+.viv-detail-harvest-icon { font-size: 28px; }
+.viv-detail-content h3 { margin: 0 0 8px; font-size: 1.05rem; color: inherit; }
+.viv-detail-content p { margin: 6px 0; font-size: .94rem; line-height: 1.6; }
+.viv-detail-content small { color: var(--theme-text-muted); line-height: 1.5; }
+.viv-detail-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.viv-growing-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.viv-spacing-graphic { margin: 0; padding: 12px; border: 1px solid var(--surface-line); border-radius: var(--radius-lg); }
+.viv-spacing-graphic figcaption { font-size: .78rem; line-height: 1.4; color: var(--theme-text-muted); }
+.viv-spacing-graphic svg { display: block; width: 100%; height: auto; margin-block: 6px; }
+.viv-spacing-key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .75rem; }
+.viv-detail-facts svg { width: 100%; max-width: 80px; height: 46px; margin-block: auto; }
+.viv-detail-harvest > div { width: 100%; min-width: 0; }
+.viv-detail-content .viv-harvest-duration { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
+.viv-harvest-duration strong { font: 700 2.6rem/1.2 "Fraunces", Georgia, serif; color: var(--theme-text); }
+.viv-harvest-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 14px 0; margin: 0; }
+.viv-harvest-path li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.viv-harvest-path li + li::before { content: "→"; position: absolute; left: -19px; top: 24px; color: var(--theme-text-muted); }
+.viv-harvest-path img { width: 68px; height: 68px; object-fit: contain; }
+.viv-harvest-path li:last-child img { object-fit: cover; border-radius: var(--radius-lg); }
+.viv-harvest-path b { font-size: .8rem; line-height: 1.4; }
+@media (max-width: 600px) {
+  .viv-growing-layout { grid-template-columns: 1fr; }
+  .viv-detail-facts svg { margin-block: 3px; }
+  .viv-harvest-path { gap: 16px; }
+  .viv-harvest-path li + li::before { left: -13px; }
+  .viv-harvest-path img { width: 54px; height: 60px; }
+}
+.viv-detail-facts span { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: var(--radius-sm); background: var(--button-secondary-bg); font-size: .8rem; }
+.viv-detail-facts b { font-size: 1rem; }
+.viv-detail-footer { position: sticky; bottom: 0; padding: 14px 24px; margin: 0; background: var(--surface-1); border-top: 1px solid var(--surface-line); }
+.viv-detail-close { width: 100%; min-height: 46px; padding: 10px 16px; border: 0; border-radius: var(--control-radius); background: var(--button-primary-fill); color: var(--button-primary-text); font: inherit; font-weight: 700; cursor: pointer; }
+.viv-detail-close:focus-visible { outline: 3px solid var(--button-primary); outline-offset: 3px; }
+@media (max-width: 480px) {
+  .viv-detail-hero { grid-template-columns: 76px minmax(0, 1fr); padding: 60px 18px 20px; gap: 14px; }
+  .viv-detail-hero img { width: 76px; height: 88px; }
+  .viv-detail-hero h2 { font-size: 1.4rem; }
+  .viv-detail-content { padding: 18px; grid-template-columns: 1fr; gap: 14px; }
+  .viv-detail-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .viv-detail-facts span { padding: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .viv-page :is(.orto-card, .orto-btn, .viv-chip) { animation: none; transition: none; }
 }

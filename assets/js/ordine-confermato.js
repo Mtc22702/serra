@@ -13,7 +13,7 @@
       theme_light: "Attiva modalità chiara",
       eyebrow: "Ordine ricevuto",
       title: "Grazie, il tuo orto può iniziare.",
-      lead: "Abbiamo ricevuto il tuo ordine e lo stiamo preparando con cura. Quando riceverai semi o piantine, potrai gestire il tuo orto dalla tua area personale, dove troverai aggiornamenti, ricevuta e manuali di coltivazione.",
+      lead: "Ordine ricevuto. Trovi aggiornamenti e documenti nella tua area personale.",
       order_number: "Numero ordine",
       account_cta: "Vai alla tua area personale",
       catalog_cta: "Torna alla home",
@@ -29,7 +29,7 @@
       total: "Totale",
       next_title: "Cosa succede adesso?",
       next_text:
-        "Puoi seguire l’ordine dalla tua area personale. Quando sarà disponibile, troverai anche il manuale personalizzato con indicazioni per semina, trapianto e cura delle piante acquistate.",
+        "Quando arrivano semi o piantine, importali in «Il mio orto» per iniziare il calendario di cura. Il manuale sarà consultabile dall'ordine quando disponibile.",
       footer: "Orto in Serra · Dalla pianificazione al raccolto",
       generic_id: "Confermato",
       no_items: "Il riepilogo completo è disponibile nella tua area personale."
@@ -41,7 +41,7 @@
       theme_light: "Activează modul luminos",
       eyebrow: "Comandă primită",
       title: "Îți mulțumim, grădina ta poate începe.",
-      lead: "Am primit comanda și o pregătim cu grijă. Când vei primi semințele sau răsadurile, îți vei putea gestiona grădina din contul tău, unde vei găsi actualizări, chitanța și ghidurile de cultivare.",
+      lead: "Comandă primită. Găsești actualizări și documente în contul personal.",
       order_number: "Numărul comenzii",
       account_cta: "Mergi în contul personal",
       catalog_cta: "Înapoi la pagina principală",
@@ -57,7 +57,7 @@
       total: "Total",
       next_title: "Ce urmează?",
       next_text:
-        "Poți urmări comanda din contul personal. Când va fi disponibil, vei găsi și ghidul personalizat pentru semănarea, transplantarea și îngrijirea plantelor cumpărate.",
+        "Când sosesc semințele sau răsadurile, importă-le în „Grădina mea” pentru a începe calendarul de îngrijire. Manualul va putea fi consultat din comandă când este disponibil.",
       footer: "Orto in Serra · De la planificare la recoltă",
       generic_id: "Confirmată",
       no_items: "Rezumatul complet este disponibil în contul tău personal."

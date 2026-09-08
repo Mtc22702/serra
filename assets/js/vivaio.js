@@ -33,7 +33,7 @@
       "hero.kicker": "VIVAIO",
       "hero.title": "Piantine già cresciute per partire in vantaggio",
       "hero.lead":
-        "Non tutte le colture si seminano: alcune arrivano già cresciute e ti fanno guadagnare settimane. Qui trovi solo ciò che è pronto adesso.",
+        "Scegli le piantine di stagione e anticipa la raccolta.",
       "hero.count": "varietà pronte in questo momento",
       "hero.count_month": "varietà pronte a {mese}",
       "hero.month": "disponibili {mese}",
@@ -76,6 +76,9 @@
       "cat.lot": "vassoio da {n}",
       "cat.cycle": "{tipo} · ciclo {n} giorni",
       "cat.days_earlier": "−{n} giorni",
+      "cat.harvest_label": "Raccolta stimata",
+      "cat.details": "Scheda informativa: {nome}",
+      "cat.saving_label": "Rispetto al seme",
       "cat.harvest_earlier":
         "Raccolta stimata verso il <b>{data}</b>, circa <b>{n} giorni prima</b> rispetto alla semina.",
       "cat.add": "＋ Aggiungi vassoio",
@@ -140,7 +143,7 @@
       "hero.kicker": "PEPINIERĂ",
       "hero.title": "Răsaduri deja crescute, ca să pornești cu un avantaj",
       "hero.lead":
-        "Nu toate culturile se seamănă: unele ajung deja crescute și îți câștigă săptămâni. Aici găsești doar ce este gata acum.",
+        "Alege răsadurile de sezon și recoltează mai devreme.",
 
       "hero.count": "soiuri gata chiar acum",
       "hero.count_month": "soiuri gata în {mese}",
@@ -184,6 +187,9 @@
       "cat.lot": "tavă de {n}",
       "cat.cycle": "{tipo} · ciclu {n} zile",
       "cat.days_earlier": "−{n} zile",
+      "cat.harvest_label": "Recoltă estimată",
+      "cat.details": "Fișa plantei: {nome}",
+      "cat.saving_label": "Față de sămânță",
       "cat.harvest_earlier":
         "Recoltare în jur de <b>{data}</b>, cu circa <b>{n} zile mai devreme</b> față de semănat.",
       "cat.add": "＋ Adaugă tavă",
@@ -521,7 +527,7 @@
             </span>
           </div>
           <div class="viv-hero-stat">
-            <span class="viv-stat-icon" aria-hidden="true">🪴</span>
+            <span class="viv-tray-preview" aria-hidden="true"><i>🌱</i><i>🌱</i><i>🌱</i><i>🌱</i><i>🌱</i><i>🌱</i></span>
             <span class="viv-stat-copy">
               <b>${t("hero.lot_value", { n: 6 })}</b>
               <small>${t("hero.lot_label", {
@@ -593,6 +599,7 @@
     const prezzoVassoio = Math.round(piantina.prezzo * lotto * 100) / 100;
     return `
       <article class="orto-card" style="animation-delay:${Math.min(index, 10) * 35}ms">
+        <button type="button" class="viv-plant-details" data-viv-action="plant-details" data-plant="${plant.id}" aria-label="${escape(t("cat.details", { nome: plantName(plant) }))}"></button>
         <div class="orto-card-photo">
           <img class="orto-card-bg" src="${photoSrc(plant.id)}" alt="" loading="lazy" />
           <span class="orto-badges">
@@ -600,10 +607,10 @@
           </span>
           <img class="orto-card-svg" src="${svgSrc(plant.id)}" alt="" loading="lazy" />
           <span class="orto-card-titles">
-            <h3>${escape(plantName(plant))}</h3>
+            <h3>${escape(plantName(plant))}<span aria-hidden="true"> ↗</span></h3>
             <small>${t("cat.cycle", {
               tipo: TIPI[lang][plant.tipo] || plant.tipo,
-              n: plant.gg,
+              n: ggPiantina,
             })}</small>
           </span>
         </div>
@@ -620,9 +627,9 @@
           <div class="viv-timing" aria-label="${escape(t("cat.harvest_earlier", {
             data: fmtData(raccolta),
             n: risparmio,
-          }))}">
-            <span title="${escape(t("cat.harvest_earlier", { data: fmtData(raccolta), n: risparmio }))}"><i aria-hidden="true">📅</i><b>${fmtData(raccolta)}</b></span>
-            <span><i aria-hidden="true">⚡</i><b>${t("cat.days_earlier", { n: risparmio })}</b></span>
+          }).replace(/<[^>]*>/g, ""))}">
+            <span><small>${t("cat.harvest_label")}</small><b><i aria-hidden="true">📅</i> ${fmtData(raccolta)}</b></span>
+            <span><small>${t("cat.saving_label")}</small><b><i aria-hidden="true">⚡</i> ${t("cat.days_earlier", { n: risparmio })}</b></span>
           </div>
           <div class="viv-card-actions">
             ${
@@ -665,8 +672,75 @@
                      data-viv-action="add" data-plant="${plant.id}"
                      aria-label="${escape(t("cat.add"))} ${escape(plantName(plant))}">${t("cat.add")}</button>`
             }
+          </div>
         </div>
       </article>`;
+  }
+
+  // Scheda del vivaio: parte da una piantina avviata, senza istruzioni di semina.
+  function openSeedlingDetails(id) {
+    const plant = BYID[id];
+    const product = PRODUCTS[id];
+    if (!plant || !product?.piantina) return;
+    const text = lang === "ro" ? {
+      close: "Înapoi la răsaduri", ready: "Răsad gata de transplantare",
+      transplant: "La transplantare", transplantCopy: "Pregătește locul înainte de a scoate răsadul din recipient. Păstrează rădăcinile împreună cu pământul și udă după plantare.",
+      space: "Spațiu și lumină", between: "între plante", rows: "între rânduri",
+      care: "Îngrijire după transplantare", water: "Necesar de apă", careCopy: "Verifică umiditatea solului și adaptarea răsadului, mai ales în primele zile. Ajustează udarea în funcție de căldură și sol.",
+      harvest: "Când poți începe să recoltezi?", days: "zile de la transplantare", estimate: "Durată orientativă: depinde de climă, dezvoltarea răsadului și îngrijire.",
+      start: "Transplantezi", growth: "Crește", firstHarvest: "Prima recoltă estimată", timing: "Numără zilele din momentul în care pui răsadul în pământ, nu de la cumpărare.", approx: "Aproximativ", spacingDiagram: "Dispunere orientativă: distanța dintre plante și dintre rânduri",
+      perennial: "Plantă perenă: recoltarea urmează dezvoltarea plantei.",
+      light: "Lumină", unknown: "Nespecificat",
+      sun: {pieno: "Soare plin", mezz: "Semiumbră", mezzombra: "Semiumbră", ombra: "Umbră"},
+      waterValues: {bassa: "Redus", media: "Moderat", alta: "Ridicat"}
+    } : {
+      close: "Torna alle piantine", ready: "Piantina pronta al trapianto",
+      transplant: "Al trapianto", transplantCopy: "Prepara lo spazio prima di estrarre la piantina dal contenitore. Mantieni integro il pane di terra e annaffia dopo la messa a dimora.",
+      space: "Spazio e luce", between: "tra le piante", rows: "tra le file",
+      care: "Cure dopo il trapianto", water: "Fabbisogno d’acqua", careCopy: "Controlla l’umidità del terreno e l’adattamento della piantina, soprattutto nei primi giorni. Regola le annaffiature in base a caldo e terreno.",
+      harvest: "Quando puoi iniziare a raccogliere?", days: "giorni dal trapianto", estimate: "Tempo indicativo: dipende da clima, sviluppo della piantina e cure.",
+      start: "Trapianti", growth: "Cresce", firstHarvest: "Prima raccolta stimata", timing: "Conta i giorni da quando metti la piantina nel terreno, non dal giorno dell’acquisto.", approx: "Circa", spacingDiagram: "Disposizione indicativa: distanza tra piante e tra file",
+      perennial: "Pianta perenne: la raccolta segue lo sviluppo della pianta.",
+      light: "Esposizione", unknown: "Non specificato",
+      sun: {pieno: "Pieno sole", mezz: "Mezz’ombra", mezzombra: "Mezz’ombra", ombra: "Ombra"},
+      waterValues: {bassa: "Basso", media: "Medio", alta: "Alto"}
+    };
+    let dialog = document.getElementById("vivPlantDialog");
+    if (!dialog) {
+      dialog = document.createElement("dialog");
+      dialog.id = "vivPlantDialog";
+      dialog.className = "viv-plant-dialog";
+      dialog.setAttribute("aria-labelledby", "vivPlantTitle");
+      document.body.append(dialog);
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) {
+          const rect = dialog.getBoundingClientRect();
+          if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+        }
+      });
+      dialog.addEventListener("close", () => {
+        document.body.classList.remove("viv-detail-open");
+      });
+    }
+    const days = E.giorniARaccolta(plant, product, "piantina");
+    // Schema indicativo, non in scala: quote derivate dai dati della pianta.
+    const sprout = (x, y) => `<g transform="translate(${x} ${y})"><ellipse cy="8" rx="17" ry="8" fill="#ac865a" opacity=".25"/><path d="M0 9V-8" stroke="#356b42" stroke-width="3"/><path d="M0 0C-18 0-19-15-16-16C-4-17 2-8 0 0" fill="#6ba55a"/><path d="M0-4C0-16 11-22 18-20C20-10 10-3 0-4" fill="#356b42"/></g>`;
+    const spacingGraphic = `<figure class="viv-spacing-graphic"><figcaption>${text.spacingDiagram}</figcaption><svg viewBox="0 0 360 166" role="img" aria-label="${escape(text.spacingDiagram)}"><rect x="12" y="12" width="254" height="142" rx="18" fill="#e5d5b6"/>${[57,137,217].map(x => [57,123].map(y => sprout(x,y)).join("")).join("")}<g fill="none" stroke="#56664b" stroke-width="1.5"><path d="M63 81H131m-68-4v8m68-8v8M285 57V123m-4-66h8m-8 66h8"/></g><g fill="#263d30" font-size="13" font-family="DM Sans, sans-serif" font-weight="700"><text x="97" y="99" text-anchor="middle">${Number(plant.d) || "—"} cm</text><text x="298" y="94">${Number(plant.dr || plant.d) || "—"} cm</text></g></svg><div class="viv-spacing-key"><span>↔ ${text.between}</span><span>↕ ${text.rows}</span></div></figure>`;
+    const waterLevel = {bassa: 1, media: 2, alta: 3}[plant.acqua] || 0;
+    const waterGraphic = `<svg viewBox="0 0 96 40" aria-hidden="true">${[0,1,2].map(n => `<path transform="translate(${n*32} 0)" d="M16 3C12 12 5 18 5 25a11 11 0 0022 0c0-7-7-13-11-22Z" fill="${n < waterLevel ? '#3983a2' : 'none'}" stroke="#3983a2" stroke-width="2"/>`).join("")}</svg>`;
+    const lightGraphic = `<svg viewBox="0 0 64 40" aria-hidden="true"><g stroke="#b4872e" stroke-width="2"><path d="M32 1v5m0 28v5M13 20h5m28 0h5M18 6l4 4m20 20l4 4M18 34l4-4M42 10l4-4"/><circle cx="32" cy="20" r="11" fill="#edc76b"/></g>${plant.sole !== 'pieno' ? '<path d="M32 9a11 11 0 010 22Z" fill="#60765a"/>' : ''}</svg>`;
+    dialog.innerHTML = `
+      <form method="dialog" class="viv-detail-top-close"><button autofocus aria-label="${escape(text.close)}">×</button></form>
+      <div class="viv-detail-hero"><img src="${photoSrc(id)}" alt="" /><div><small>${text.ready}</small><h2 id="vivPlantTitle">${escape(plantName(plant))}</h2><span>${t("cat.lot", {n: product.piantina.lotto || 6})}</span></div></div>
+      <div class="viv-detail-content">
+        <section class="viv-detail-overview"><h3>${text.space}</h3><div class="viv-growing-layout">${spacingGraphic}<div class="viv-detail-facts"><span><small>${text.light}</small>${lightGraphic}<b>${escape(text.sun[plant.sole] || text.unknown)}</b></span><span><small>${text.water}</small>${waterGraphic}<b>${escape(text.waterValues[plant.acqua] || text.unknown)}</b></span></div></div></section>
+        <section class="viv-detail-instruction"><h3><span aria-hidden="true">🪴</span> ${text.transplant}</h3><p>${text.transplantCopy}</p></section>
+        <section class="viv-detail-instruction"><h3><span aria-hidden="true">💧</span> ${text.care}</h3><p>${text.careCopy}</p></section>
+        <section class="viv-detail-harvest"><div><h3>${text.harvest}</h3>${days ? `<p class="viv-harvest-duration"><small>${text.approx}</small><strong>${days}</strong><span>${text.days}</span></p><ol class="viv-harvest-path"><li><img src="assets/img/generated/piantina-premium.webp" alt="" /><b>${text.start}</b></li><li><img src="${svgSrc(id)}" alt="" /><b>${text.growth}</b></li><li><img src="${photoSrc(id)}" alt="" /><b>${text.firstHarvest}</b></li></ol><p>${text.timing}</p>` : `<p>${text.perennial}</p>`}<small>${text.estimate}</small></div></section>
+      </div>
+      <form method="dialog" class="viv-detail-footer"><button class="viv-detail-close">${text.close}</button></form>`;
+    document.body.classList.add("viv-detail-open");
+    dialog.showModal();
   }
 
   /* Illustrazione della hero: una piantina con il pane di terra, cioè il "răsad" — pronta da estrarre dall'alveolo e mettere a dimora. */
@@ -837,6 +911,18 @@
     if (compra) {
       const sotto = piantine().length && vassoiInCarrello() < CONSEGNA.vassoiMinimi;
       compra.disabled = !!sotto;
+      let hint = document.getElementById("vivaioMinimumHint");
+      if (!hint) {
+        hint = document.createElement("p");
+        hint.id = "vivaioMinimumHint";
+        hint.className = "viv-minimum-hint";
+        hint.setAttribute("role", "status");
+        compra.insertAdjacentElement("afterend", hint);
+        compra.setAttribute("aria-describedby", hint.id);
+      }
+      hint.hidden = !sotto;
+      const missing = Math.max(0, CONSEGNA.vassoiMinimi - vassoiInCarrello());
+      hint.textContent = sotto ? t(missing === 1 ? "cart.min_missing_one" : "cart.min_missing", { n: missing }) : "";
     }
 
     const riga = document.getElementById("vivaioCartLine");
@@ -996,6 +1082,7 @@
     const trigger = event.target.closest("[data-viv-action]");
     if (!trigger) return;
     const action = trigger.dataset.vivAction;
+    if (action === "plant-details") return openSeedlingDetails(trigger.dataset.plant);
     // `data-plant` sulle schede del listino, `data-plant-id` sulle righe del cassetto condiviso: entrambe indicano la stessa pianta.
     const id = trigger.dataset.plant || trigger.dataset.plantId;
     if (action === "set-language") {

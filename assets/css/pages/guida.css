@@ -6887,7 +6887,11 @@ main {
   font-size: 1.3rem;
 }
 
-/* Nei percorsi la sequenza è una mappa: su desktop titolo e icona bastano, il dettaglio resta disponibile nella lettura mobile. */
+/* Dettagli accessibili al tocco e da tastiera, anche nella mappa desktop. */
+.guide-step-details { width: 100%; margin-top: .35rem; }
+.guide-step-details summary { cursor: pointer; padding: .65rem .2rem; font-size: .85rem; color: var(--guide-muted); }
+.guide-step-details[open] summary { margin-bottom: .35rem; }
+/* Nei percorsi la sequenza compatta mantiene i dettagli espandibili. */
 @media (min-width: 700px) {
   .guide-route .guide-steps {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -6903,7 +6907,7 @@ main {
   }
   .guide-route .guide-steps li > div { display: contents; }
   .guide-route .guide-steps h3 { margin: 0; font-size: 0.82rem; }
-  .guide-route .guide-steps p { display: none; }
+  .guide-route .guide-steps .guide-step-details p { display: block; text-align: left; }
   .guide-route .step-icon { order: -1; padding: 0; font-size: 1.45rem; }
 }
 /* Azione di apertura del configuratore. */

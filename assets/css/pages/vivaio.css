@@ -1236,3 +1236,90 @@
 @layer coerenza {
   html[data-theme="dark"] .viv-hero .orto-hero-date { color: #b7d9ab; }
 }
+/* Il formato del vassoio si riconosce contando le sei piantine. */
+.viv-tray-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 4px; border: 1px solid var(--surface-line); border-radius: 6px; flex-shrink: 0; }
+.viv-tray-preview i { font-style: normal; font-size: 12px; line-height: 1.25; }
+
+/* Card di acquisto: dati confrontabili e comandi coerenti con il catalogo semi. */
+.viv-page .viv-grid .orto-card { display: flex; flex-direction: column; border-color: var(--surface-line); background: var(--surface-1); box-shadow: var(--elev-1); }
+.viv-page .viv-grid .orto-card { position: relative; }
+.viv-page .viv-plant-details { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; box-shadow: none; cursor: pointer; }
+.viv-page .viv-plant-details::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.viv-page .viv-card-actions { position: relative; z-index: 4; }
+.viv-page .orto-card:has(.viv-plant-details:focus-visible) { outline: 3px solid var(--button-primary); outline-offset: 3px; }
+.viv-page .viv-plant-details:hover { text-decoration: underline; text-underline-offset: 3px; }
+.viv-page .viv-grid .orto-card-body { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.viv-page .viv-card-actions { margin-top: auto; padding-top: 12px; }
+.viv-page .viv-timing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.viv-page .viv-timing > span { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; padding: 8px; background: var(--button-secondary-bg); border: 0; border-radius: 8px; }
+.viv-page .viv-timing small { font-size: .72rem; line-height: 1.4; color: var(--theme-text-muted); }
+.viv-page .viv-timing b { font-size: .85rem; line-height: 1.45; color: var(--theme-text); white-space: normal; }
+.viv-page .viv-price-row { flex-wrap: wrap; gap: 6px 12px; }
+.viv-page .viv-grid .orto-card-titles h3 { line-height: 1.3; padding-block: 2px; }
+.viv-page :is(.viv-qty-btn, .viv-remove, .viv-reset, .viv-chip) { min-height: 44px; }
+.viv-page :is(.viv-qty-btn, .viv-remove) { min-width: 44px; }
+.viv-page .viv-grid .orto-btn { min-height: 46px; white-space: normal; line-height: 1.4; background: var(--button-primary-fill); color: var(--button-primary-text); border-color: var(--button-primary-fill); box-shadow: none; }
+.viv-page .viv-grid .orto-btn:hover:not(:disabled) { background: var(--button-primary-fill-hover); transform: none; }
+.viv-page .viv-chip.is-active { background: var(--button-primary-fill); color: var(--button-primary-text); border-color: var(--button-primary-fill); box-shadow: none; }
+.viv-page :is(button, a, input, select, summary):focus-visible { outline: 3px solid var(--button-primary); outline-offset: 3px; }
+.viv-page button:disabled { cursor: not-allowed; box-shadow: none; transform: none; }
+.viv-minimum-hint { margin: 10px 0 0; font-size: .85rem; line-height: 1.5; color: var(--theme-text); }
+
+/* Schede dedicate alle piantine: dialogo nativo con focus ed Escape. */
+body.viv-detail-open { overflow: hidden; }
+.viv-plant-dialog { width: min(720px, calc(100vw - 28px)); max-height: min(90dvh, 860px); margin: auto; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--surface-line); border-radius: var(--radius-xl); background: var(--surface-1); color: var(--theme-text); box-shadow: 0 24px 70px #0004; }
+.viv-plant-dialog::backdrop { background: #10271db3; }
+.viv-detail-top-close { position: absolute; top: 12px; right: 12px; margin: 0; z-index: 2; }
+.viv-detail-top-close button { width: 44px; height: 44px; border: 1px solid #ffffff50; border-radius: var(--control-radius-round); background: #173e30; color: #fff; font-size: 26px; cursor: pointer; }
+.viv-detail-top-close button:focus-visible { outline: 3px solid #e4cc93; outline-offset: 2px; }
+.viv-detail-hero { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 24px; align-items: center; padding: 28px 64px 28px 28px; background: linear-gradient(125deg, #163e2e, #356348); color: #fffdf4; }
+.viv-detail-hero img { width: 140px; height: 140px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: 0 8px 24px #0003; }
+.viv-detail-hero h2 { margin: 8px 0 12px; font-family: "Fraunces", Georgia, serif; font-size: 2.1rem; line-height: 1.3; color: inherit; }
+.viv-detail-hero small, .viv-detail-hero span { font-size: .85rem; }
+.viv-detail-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 24px; }
+.viv-detail-overview, .viv-detail-harvest { grid-column: 1 / -1; }
+.viv-detail-instruction { padding: 16px; border: 1px solid var(--surface-line); border-radius: var(--radius-lg); }
+.viv-detail-harvest { display: flex; align-items: flex-start; gap: 14px; padding: 18px; border-radius: var(--radius-lg); background: var(--botanical-warm); }
+.viv-detail-harvest-icon { font-size: 28px; }
+.viv-detail-content h3 { margin: 0 0 8px; font-size: 1.05rem; color: inherit; }
+.viv-detail-content p { margin: 6px 0; font-size: .94rem; line-height: 1.6; }
+.viv-detail-content small { color: var(--theme-text-muted); line-height: 1.5; }
+.viv-detail-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.viv-growing-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.viv-spacing-graphic { margin: 0; padding: 12px; border: 1px solid var(--surface-line); border-radius: var(--radius-lg); }
+.viv-spacing-graphic figcaption { font-size: .78rem; line-height: 1.4; color: var(--theme-text-muted); }
+.viv-spacing-graphic svg { display: block; width: 100%; height: auto; margin-block: 6px; }
+.viv-spacing-key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .75rem; }
+.viv-detail-facts svg { width: 100%; max-width: 80px; height: 46px; margin-block: auto; }
+.viv-detail-harvest > div { width: 100%; min-width: 0; }
+.viv-detail-content .viv-harvest-duration { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
+.viv-harvest-duration strong { font: 700 2.6rem/1.2 "Fraunces", Georgia, serif; color: var(--theme-text); }
+.viv-harvest-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 14px 0; margin: 0; }
+.viv-harvest-path li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.viv-harvest-path li + li::before { content: "→"; position: absolute; left: -19px; top: 24px; color: var(--theme-text-muted); }
+.viv-harvest-path img { width: 68px; height: 68px; object-fit: contain; }
+.viv-harvest-path li:last-child img { object-fit: cover; border-radius: var(--radius-lg); }
+.viv-harvest-path b { font-size: .8rem; line-height: 1.4; }
+@media (max-width: 600px) {
+  .viv-growing-layout { grid-template-columns: 1fr; }
+  .viv-detail-facts svg { margin-block: 3px; }
+  .viv-harvest-path { gap: 16px; }
+  .viv-harvest-path li + li::before { left: -13px; }
+  .viv-harvest-path img { width: 54px; height: 60px; }
+}
+.viv-detail-facts span { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: var(--radius-sm); background: var(--button-secondary-bg); font-size: .8rem; }
+.viv-detail-facts b { font-size: 1rem; }
+.viv-detail-footer { position: sticky; bottom: 0; padding: 14px 24px; margin: 0; background: var(--surface-1); border-top: 1px solid var(--surface-line); }
+.viv-detail-close { width: 100%; min-height: 46px; padding: 10px 16px; border: 0; border-radius: var(--control-radius); background: var(--button-primary-fill); color: var(--button-primary-text); font: inherit; font-weight: 700; cursor: pointer; }
+.viv-detail-close:focus-visible { outline: 3px solid var(--button-primary); outline-offset: 3px; }
+@media (max-width: 480px) {
+  .viv-detail-hero { grid-template-columns: 76px minmax(0, 1fr); padding: 60px 18px 20px; gap: 14px; }
+  .viv-detail-hero img { width: 76px; height: 88px; }
+  .viv-detail-hero h2 { font-size: 1.4rem; }
+  .viv-detail-content { padding: 18px; grid-template-columns: 1fr; gap: 14px; }
+  .viv-detail-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .viv-detail-facts span { padding: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .viv-page :is(.orto-card, .orto-btn, .viv-chip) { animation: none; transition: none; }
+}

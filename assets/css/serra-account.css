@@ -1,6 +1,10 @@
 /* File generato con npm run build:css: modificare il CSS completo in pages/. */
 /* Area riservata: sorgente degli stili di account, distribuito come serra-account.css. */
 
+/* Anteprima delle colture contenute nel progetto salvato. */
+.account-project-preview { display: inline-grid; grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 4px; margin-inline-end: .65rem; vertical-align: middle; border: 1px solid var(--surface-line); border-radius: 7px; background: var(--surface-1); }
+.account-project-preview span { font-size: 15px; line-height: 1.2; }
+
 /* Fondazioni condivise: colori ricorrenti dell'interfaccia. */
 /* Modulo "Semi e piantine da piantare": ponte tra ordini e Il mio orto. */
 @layer base {

@@ -156,7 +156,7 @@
         "«Da piantare» raccoglie ciò che hai comprato e non è ancora in terra, «Piantate» le colture che stai seguendo, «Oggi» le attività da fare. I contatori mostrano quante voci ci sono in ogni scheda.",
       "grow.s2t": "Registra una coltura",
       "grow.s2p":
-        "Da «Da piantare» scegli piante già con te oppure dagli ordini; poi imposta data, quantità e posizione. L'app costruisce da sola il calendario di cura fino alla raccolta.",
+        "In «Da piantare» aggiungi semi o piantine e conferma le misure dello spazio. Poi scegli «Semina» o «Trapianta», quantità e data: la coltura passa in «Piantate» e le attività compaiono in «Oggi».",
       "grow.s3t": "Spunta o rimanda",
       "grow.s3p":
         "In «Oggi» il quadratino segna l'attività come fatta e «Domani» la sposta di un giorno. Quello che salti resta visibile tra le attività da recuperare.",
@@ -165,7 +165,7 @@
         "«Modifica» cambia data, quantità e posizione di una coltura già inserita: il calendario viene ricalcolato da capo.",
       "grow.s5t": "Chiudi il ciclo",
       "grow.s5p":
-        "«Registra raccolta» salva i chili raccolti e diventa la stima dell'anno prossimo. «Esporta nel calendario» porta le scadenze sul telefono, anche senza notifiche.",
+        "«Registra raccolta» salva i chili nel diario. Se la pianta produce ancora, lascia il ciclo aperto; seleziona «Concludi il ciclo» solo quando hai finito, per liberare lo spazio. Puoi anche esportare le attività nel calendario.",
       "grow.cta": "Apri «Il mio orto»",
       // Capitolo 4: i comandi comuni a tutte le pagine.
       "settings.kicker": "IN OGNI PAGINA",
@@ -353,7 +353,7 @@
         "„De plantat” adună ce ai cumpărat și nu este încă în pământ, „Plantate” culturile pe care le urmărești, iar „Azi” activitățile de făcut. Contoarele arată câte elemente sunt în fiecare filă.",
       "grow.s2t": "Înregistrează o cultură",
       "grow.s2p":
-        "Din „De plantat” alegi plante deja la tine sau din comenzi; apoi stabilești data, cantitatea și poziția. Aplicația construiește singură calendarul de îngrijire până la recoltă.",
+        "În „De plantat” adaugi semințe sau răsaduri și confirmi dimensiunile spațiului. Apoi alegi „Seamănă” sau „Transplantează”, cantitatea și data: cultura trece în „Plantate”, iar activitățile apar în „Astăzi”.",
       "grow.s3t": "Bifează sau amână",
       "grow.s3p":
         "În „Azi”, pătrățelul marchează activitatea ca făcută, iar „Mâine” o mută cu o zi. Ce sari rămâne vizibil printre activitățile de recuperat.",
@@ -362,7 +362,7 @@
         "„Modifică” schimbă data, cantitatea și poziția unei culturi deja introduse: calendarul este recalculat de la zero.",
       "grow.s5t": "Închide ciclul",
       "grow.s5p":
-        "„Înregistrează recolta” salvează kilogramele strânse și devine estimarea de anul viitor. „Exportă în calendar” duce termenele pe telefon, chiar și fără notificări.",
+        "„Înregistrează recolta” salvează kilogramele în jurnal. Dacă planta mai produce, lasă ciclul deschis; selectează „Încheie ciclul” doar când ai terminat, pentru a elibera spațiul. Poți exporta activitățile în calendar.",
       "grow.cta": "Deschide „Grădina mea”",
       "settings.kicker": "ÎN FIECARE PAGINĂ",
       "settings.title": "Cont, limbă, temă și folosire offline",
@@ -398,6 +398,16 @@
       "footer.rights": "© 2026 Orto in Serra · Toate drepturile rezervate",
     },
   };
+  // I dettagli rimangono consultabili anche quando il percorso è una mappa compatta.
+  document.querySelectorAll(".guide-route .guide-steps li > div > p").forEach((paragraph) => {
+    const details = document.createElement("details");
+    details.className = "guide-step-details";
+    const summary = document.createElement("summary");
+    summary.dataset.guideKey = "compare.details";
+    summary.textContent = copy.it["compare.details"];
+    paragraph.before(details);
+    details.append(summary, paragraph);
+  });
   const tabs = [...document.querySelectorAll(".guide-tab")];
   const routes = [...document.querySelectorAll(".guide-route")];
   const requested = new URLSearchParams(location.search).get("livello");
