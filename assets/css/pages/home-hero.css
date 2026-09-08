@@ -3758,7 +3758,18 @@ html[data-theme="dark"] .journey-care-summary span {
     pointer-events: none;
     z-index: -1;
   }
-  html #percorsi .journey-route--plan { --route-accent: #347b49; background: linear-gradient(150deg, #ccebb9 0%, #edf9e5 37%, #fcfffa 100%); border-color: rgba(47,116,68,.48); }
+  /* Il piano è la scelta consigliata: emerge senza trasformare le altre due in opzioni minori. */
+  html #percorsi .journey-route--plan {
+    --route-accent: #347b49;
+    background: linear-gradient(150deg, #c4ebb0 0%, #eaf9e1 37%, #fcfffa 100%);
+    border-color: rgba(47,116,68,.68);
+    border-width: 2px;
+    box-shadow:
+      0 5px 10px rgba(25, 56, 34, .1),
+      0 22px 42px rgba(36, 107, 58, .2),
+      inset 0 6px 0 var(--route-accent),
+      inset 0 1px rgba(255, 255, 255, .92);
+  }
   html #percorsi .journey-route--seeds { --route-accent: #5b8c3e; background: linear-gradient(150deg, #d9edc7 0%, #f1fae9 37%, #fcfffa 100%); border-color: rgba(77,130,55,.42); }
   html #percorsi .journey-route--seedlings { --route-accent: #9a7b2e; background: linear-gradient(150deg, #f2e7b8 0%, #fbf5dc 37%, #fffefa 100%); border-color: rgba(135,105,36,.4); }
   html .journey-route--seedlings .journey-route-kicker { color: #826324; }
@@ -3808,15 +3819,17 @@ html[data-theme="dark"] .journey-care-summary span {
   }
   html .journey-route-visual--plan .hero-v2-visual { position: relative; z-index: 1; }
   html .journey-route-visual--plan .hcg-glass { box-shadow: 0 10px 22px rgba(18,43,29,.24); }
-  html .journey-route-cta {
+  html #percorsi .journey-route .journey-route-cta {
     position: relative; z-index: 2;
-    margin: 0; min-height: 54px; border: 1px solid color-mix(in srgb, var(--route-accent) 72%, #173221);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--route-accent) 88%, #fff), var(--route-accent));
-    color: #fff;
-    box-shadow:
-      0 9px 18px color-mix(in srgb, var(--route-accent) 27%, transparent),
-      inset 0 1px rgba(255,255,255,.25),
-      inset 0 -2px rgba(20,46,28,.14);
+    min-height: 52px; margin: 0;
+    border: 1px solid var(--button-primary-border);
+    border-radius: var(--control-radius-pill);
+    padding: 10px 16px;
+    background: var(--button-primary-fill);
+    color: var(--button-primary-text);
+    box-shadow: none;
+    font-weight: var(--button-font-weight);
+    transition: background .15s ease, border-color .15s ease, transform .08s ease;
   }
   /* Il collegamento conserva la sua semantica e rende premibile tutta la scelta. */
   html #percorsi .journey-route-cta::after {
@@ -3830,13 +3843,24 @@ html[data-theme="dark"] .journey-care-summary span {
     outline: 3px solid var(--route-accent);
     outline-offset: 2px;
   }
-  html .journey-route:not(.journey-route--plan) .journey-route-cta,
-  html .journey-route.journey-route--seedlings .journey-route-cta {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--route-accent) 88%, #fff), var(--route-accent));
-    color: #fff;
+  html #percorsi .journey-route .journey-route-cta:hover {
+    background: var(--button-primary-fill-hover);
+    border-color: color-mix(in srgb, var(--button-primary) 72%, transparent);
   }
-  html .journey-route:not(.journey-route--plan) .journey-route-cta:hover,
-  html .journey-route.journey-route--seedlings .journey-route-cta:hover { background: var(--route-accent-dark); }
+  /* Le alternative restano nello stesso sistema, con una tinta più ariosa. */
+  html #percorsi .journey-route--seeds .journey-route-cta {
+    background: color-mix(in srgb, var(--button-primary) 90%, #fff);
+  }
+  html #percorsi .journey-route--seedlings .journey-route-cta {
+    background: color-mix(in srgb, var(--button-primary) 84%, #fff);
+  }
+  html #percorsi .journey-route--seeds .journey-route-cta:hover {
+    background: color-mix(in srgb, var(--button-primary-hover) 90%, #fff);
+  }
+  html #percorsi .journey-route--seedlings .journey-route-cta:hover {
+    background: color-mix(in srgb, var(--button-primary-hover) 84%, #fff);
+  }
+  html #percorsi .journey-route .journey-route-cta:active { transform: translateY(1px); }
   html .journey-route:hover {
     transform: translateY(-6px);
     box-shadow:
@@ -3846,11 +3870,17 @@ html[data-theme="dark"] .journey-care-summary span {
       inset 0 1px rgba(255,255,255,.9);
   }
   html[data-theme="dark"] #percorsi .journey-route { box-shadow: 0 2px 4px rgba(0,0,0,.20), 0 16px 30px rgba(0,0,0,.24), inset 0 1px rgba(236,255,230,.07); }
-  html[data-theme="dark"] #percorsi .journey-route--plan { background: linear-gradient(155deg, #2b5a3b, #193725 84%); border-color: rgba(150,216,157,.32); }
+  html[data-theme="dark"] #percorsi .journey-route--plan {
+    background: linear-gradient(155deg, #326b45, #193725 84%);
+    border-color: rgba(150,216,157,.55);
+    box-shadow:
+      0 4px 9px rgba(0,0,0,.28),
+      0 20px 38px rgba(0,0,0,.31),
+      inset 0 6px #54a869,
+      inset 0 1px rgba(236,255,230,.1);
+  }
   html[data-theme="dark"] #percorsi .journey-route--seeds { background: linear-gradient(155deg, #294d2d, #193725 84%); border-color: rgba(158,208,122,.3); }
   html[data-theme="dark"] #percorsi .journey-route--seedlings { background: linear-gradient(155deg, #3c4826, #193725 84%); border-color: rgba(220,196,122,.26); }
-  html[data-theme="dark"] .journey-route--seeds .journey-route-cta { background: #528b5e; color: #fff; border-color: rgba(159,214,149,.32); }
-  html[data-theme="dark"] .journey-route.journey-route--seedlings .journey-route-cta { background: #9b792f; color: #fff; border-color: rgba(220,196,122,.3); }
   html .journey-route-cta .journey-route-arrow,
   html .journey-route-cta:hover .journey-route-arrow {
     width: auto; height: auto; flex: 0 0 auto;
@@ -3871,6 +3901,13 @@ html[data-theme="dark"] .journey-care-summary span {
       display: grid; grid-template-columns: 76px minmax(0, 1fr);
       gap: 0 18px; min-height: 150px; padding: 18px;
     }
+    html #percorsi .journey-route--plan {
+      border-width: 2px;
+      box-shadow:
+        0 5px 12px color-mix(in srgb, var(--route-accent) 16%, transparent),
+        inset 0 5px 0 var(--route-accent),
+        inset 0 1px rgba(255,255,255,.9);
+    }
     html .journey-route-copy { grid-column: 2; grid-row: 1; }
     html #percorsi .journey-route-kicker,
     html #percorsi .journey-route-copy .journey-route-fact { display: none; }
@@ -3884,12 +3921,13 @@ html[data-theme="dark"] .journey-care-summary span {
     html .journey-route-visual--plan .hcg-scene { width: 100%; height: 100%; }
     html .journey-route-visual--plan .hcg-peek { display: none; }
     html #percorsi .journey-route .journey-route-cta {
-      grid-column: 2; grid-row: 2; margin: 10px 0 0; min-height: 44px;
-      padding: 4px 5px 4px 13px;
-      border: 1px solid color-mix(in srgb, var(--route-accent) 70%, #173221);
-      background: linear-gradient(180deg, color-mix(in srgb, var(--route-accent) 88%, #fff), var(--route-accent));
-      color: #fff;
-      box-shadow: 0 7px 14px color-mix(in srgb, var(--route-accent) 22%, transparent);
+      grid-column: 2; grid-row: 2; margin: 10px 0 0; min-height: 48px;
+      padding: 8px 14px;
+      border: 1px solid var(--button-primary-border);
+      border-radius: var(--control-radius-pill);
+      background: var(--button-primary-fill);
+      color: var(--button-primary-text);
+      box-shadow: none;
       font-size: .86rem;
     }
     html .journey-route-illustration,
