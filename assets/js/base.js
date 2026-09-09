@@ -930,6 +930,7 @@
         // Il percorso della home: unico componente che dice cosa può fare l'utente e da dove entra.
         "journey.choice_kicker": "Inizia da qui",
         "journey.choice_title": "Scegli come iniziare",
+        "journey.choice_or": "oppure",
         "journey.choice_sub": "Tre percorsi per partire, uno strumento per continuare.",
         "journey.choice_hint":
           "Parti dalla situazione che ti assomiglia di più",
@@ -1447,6 +1448,7 @@
         "hero.plan_caption": "Exemplu de plan · 4 straturi, 12 m²",
         "journey.choice_kicker": "Începe de aici",
         "journey.choice_title": "Alege cum începi",
+        "journey.choice_or": "sau",
         "journey.choice_sub": "Trei trasee pentru a porni și un instrument pentru a continua.",
         "journey.choice_hint":
           "Pornește de la situația care ți se potrivește cel mai bine",

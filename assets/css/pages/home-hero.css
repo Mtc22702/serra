@@ -3711,12 +3711,48 @@ html[data-theme="dark"] .journey-care-summary span {
   html #percorsi .journey-v3-grid {
     position: relative;
     align-items: stretch;
-    gap: 12px;
+    gap: 0;
     padding: 12px;
     border: 1px solid var(--surface-line-strong);
     border-radius: calc(var(--radius-xl) + 12px);
     background: color-mix(in srgb, var(--surface-1) 65%, transparent);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+      minmax(0, 1fr) 48px minmax(0, 1fr) 48px minmax(0, 1fr);
+  }
+  /* I separatori rendono esplicita l'alternativa senza diventare nuove voci della scelta. */
+  html #percorsi .journey-choice-separator {
+    display: grid;
+    min-width: 0;
+    padding: 20px 0;
+    grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+    place-items: stretch center;
+    gap: 10px;
+    color: color-mix(in srgb, var(--theme-text-muted) 78%, var(--route-accent));
+    font-size: .66rem;
+    font-weight: 750;
+    letter-spacing: .04em;
+  }
+  html #percorsi .journey-choice-separator::before,
+  html #percorsi .journey-choice-separator::after {
+    width: 1px;
+    min-height: 28px;
+    background: linear-gradient(
+      transparent,
+      color-mix(in srgb, var(--brand-600) 30%, var(--surface-line-strong)) 24%,
+      color-mix(in srgb, var(--brand-600) 30%, var(--surface-line-strong)) 76%,
+      transparent
+    );
+    content: "";
+  }
+  html #percorsi .journey-choice-separator span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    border: 1px solid color-mix(in srgb, var(--brand-600) 18%, var(--surface-line));
+    border-radius: var(--radius-pill);
+    padding: 3px 7px;
+    background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    box-shadow: 0 3px 10px rgba(25, 56, 34, .06);
   }
   html #percorsi .journey-v3-grid::before {
     display: none;
@@ -3823,11 +3859,11 @@ html[data-theme="dark"] .journey-care-summary span {
     position: relative; z-index: 2;
     min-height: 52px; margin: 0;
     border: 1px solid var(--button-primary-border);
-    border-radius: var(--control-radius-pill);
+    border-radius: var(--control-radius);
     padding: 10px 16px;
     background: var(--button-primary-fill);
     color: var(--button-primary-text);
-    box-shadow: none;
+    box-shadow: 0 8px 18px color-mix(in srgb, var(--route-accent) 18%, transparent);
     font-weight: var(--button-font-weight);
     transition: background .15s ease, border-color .15s ease, transform .08s ease;
   }
@@ -3847,18 +3883,45 @@ html[data-theme="dark"] .journey-care-summary span {
     background: var(--button-primary-fill-hover);
     border-color: color-mix(in srgb, var(--button-primary) 72%, transparent);
   }
-  /* Le alternative restano nello stesso sistema, con una tinta più ariosa. */
+  /* Le tre CTA condividono misura e struttura, ma comunicano tre azioni diverse. */
+  html #percorsi .journey-route--plan .journey-route-arrow {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    place-items: center;
+    background: rgba(255, 255, 255, .16);
+  }
   html #percorsi .journey-route--seeds .journey-route-cta {
-    background: color-mix(in srgb, var(--button-primary) 90%, #fff);
+    border: 1.5px solid color-mix(in srgb, var(--route-accent) 72%, #23482d);
+    border-radius: var(--control-radius-pill);
+    background: color-mix(in srgb, var(--surface-1) 78%, transparent);
+    box-shadow: inset 0 1px rgba(255, 255, 255, .9);
+    color: color-mix(in srgb, var(--route-accent) 74%, #183821);
   }
   html #percorsi .journey-route--seedlings .journey-route-cta {
-    background: color-mix(in srgb, var(--button-primary) 84%, #fff);
+    border: 1px solid color-mix(in srgb, var(--route-accent) 58%, #6c531a);
+    border-radius: var(--control-radius);
+    background: color-mix(in srgb, var(--route-accent) 22%, #fffaf0);
+    box-shadow: 0 7px 16px rgba(117, 88, 24, .12);
+    color: #5f4815;
+  }
+  html #percorsi .journey-route--seedlings .journey-route-arrow {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    place-items: center;
+    background: #80631f;
+    color: #fffdf5;
   }
   html #percorsi .journey-route--seeds .journey-route-cta:hover {
-    background: color-mix(in srgb, var(--button-primary-hover) 90%, #fff);
+    border-color: var(--route-accent);
+    background: color-mix(in srgb, var(--route-accent) 12%, var(--surface-1));
   }
   html #percorsi .journey-route--seedlings .journey-route-cta:hover {
-    background: color-mix(in srgb, var(--button-primary-hover) 84%, #fff);
+    border-color: var(--route-accent);
+    background: color-mix(in srgb, var(--route-accent) 30%, #fffaf0);
   }
   html #percorsi .journey-route .journey-route-cta:active { transform: translateY(1px); }
   html .journey-route:hover {
@@ -3881,6 +3944,19 @@ html[data-theme="dark"] .journey-care-summary span {
   }
   html[data-theme="dark"] #percorsi .journey-route--seeds { background: linear-gradient(155deg, #294d2d, #193725 84%); border-color: rgba(158,208,122,.3); }
   html[data-theme="dark"] #percorsi .journey-route--seedlings { background: linear-gradient(155deg, #3c4826, #193725 84%); border-color: rgba(220,196,122,.26); }
+  html[data-theme="dark"] #percorsi .journey-choice-separator span {
+    background: color-mix(in srgb, var(--surface-2) 90%, transparent);
+  }
+  html[data-theme="dark"] #percorsi .journey-route--seeds .journey-route-cta {
+    border-color: #88ba73;
+    background: rgba(15, 35, 24, .38);
+    color: #c8e9b9;
+  }
+  html[data-theme="dark"] #percorsi .journey-route--seedlings .journey-route-cta {
+    border-color: rgba(222, 197, 126, .6);
+    background: rgba(180, 140, 47, .16);
+    color: #f0d894;
+  }
   html .journey-route-cta .journey-route-arrow,
   html .journey-route-cta:hover .journey-route-arrow {
     width: auto; height: auto; flex: 0 0 auto;
@@ -3892,9 +3968,36 @@ html[data-theme="dark"] .journey-care-summary span {
   html .journey-tool-band { background: var(--botanical-leaf); box-shadow: none; }
   @media (max-width: 920px) {
     html #percorsi .journey-v3-grid {
-      gap: 10px;
+      gap: 0;
       padding: 10px;
       grid-template-columns: minmax(0, 1fr);
+    }
+    html #percorsi .journey-choice-separator {
+      display: grid;
+      height: 38px;
+      padding: 0 18px;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      grid-template-rows: 1fr;
+      place-items: center stretch;
+      gap: 10px;
+    }
+    html #percorsi .journey-choice-separator::before,
+    html #percorsi .journey-choice-separator::after {
+      width: 100%;
+      min-height: 1px;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--brand-600) 32%, var(--surface-line-strong))
+      );
+    }
+    html #percorsi .journey-choice-separator::after {
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--brand-600) 32%, var(--surface-line-strong)),
+        transparent
+      );
     }
     html #percorsi .journey-v3-grid::before { display: none; }
     html #percorsi .journey-route {
@@ -3923,11 +4026,6 @@ html[data-theme="dark"] .journey-care-summary span {
     html #percorsi .journey-route .journey-route-cta {
       grid-column: 2; grid-row: 2; margin: 10px 0 0; min-height: 48px;
       padding: 8px 14px;
-      border: 1px solid var(--button-primary-border);
-      border-radius: var(--control-radius-pill);
-      background: var(--button-primary-fill);
-      color: var(--button-primary-text);
-      box-shadow: none;
       font-size: .86rem;
     }
     html .journey-route-illustration,
