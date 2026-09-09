@@ -1000,6 +1000,116 @@
     background: #263c31;
     color: #a8d8ca;
   }
+
+  /* La scheda pianta è composta anche da blocchi inseriti a runtime. Queste
+     superfici non possono ereditare i fondi chiari della vista diurna. */
+  html[data-theme="dark"] .detail-section-heading > span,
+  html[data-theme="dark"] .detail-health-heading,
+  html[data-theme="dark"] .seed-journey,
+  html[data-theme="dark"] .seed-journey-heading h3,
+  html[data-theme="dark"] .seed-journey-time,
+  html[data-theme="dark"] .detail-tech-card h4,
+  html[data-theme="dark"] .detail-spacing-val,
+  html[data-theme="dark"] .detail-tile-value,
+  html[data-theme="dark"] .detail-sow-header,
+  html[data-theme="dark"] .detail-sow-row b {
+    color: #edf8ef;
+  }
+
+  html[data-theme="dark"] .detail-section-heading small,
+  html[data-theme="dark"] .detail-tech-card p,
+  html[data-theme="dark"] .seed-journey-note,
+  html[data-theme="dark"] .detail-health-item div > span,
+  html[data-theme="dark"] .detail-health-item p,
+  html[data-theme="dark"] .detail-tile-label,
+  html[data-theme="dark"] .detail-sow-row {
+    color: #bfd2c3;
+  }
+
+  html[data-theme="dark"] .detail-health {
+    border-color: rgba(139, 212, 158, 0.28);
+    background: linear-gradient(135deg, #1d3929, #173020);
+    box-shadow: var(--elev-2);
+  }
+
+  html[data-theme="dark"] .detail-health-heading > span,
+  html[data-theme="dark"] .detail-health-icon {
+    background: rgba(139, 212, 158, 0.16);
+    color: #9de2ae;
+  }
+
+  html[data-theme="dark"] .detail-health-item {
+    border-color: rgba(139, 212, 158, 0.2);
+    background: #203e2c;
+  }
+
+  html[data-theme="dark"] .seed-journey {
+    border-color: rgba(211, 229, 183, 0.25);
+    background: linear-gradient(135deg, #263d2a, #1c3324);
+  }
+
+  html[data-theme="dark"] .seed-journey-stages li:not(:last-child)::after {
+    color: #9bc5a0;
+  }
+
+  html[data-theme="dark"] .seed-journey-visual .seed-journey-photo {
+    border-color: #31543d;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.34);
+  }
+
+  html[data-theme="dark"] .detail-tech-card,
+  html[data-theme="dark"] .detail-spacing,
+  html[data-theme="dark"] .detail-tile,
+  html[data-theme="dark"] .detail-sow,
+  html[data-theme="dark"] .detail-companions {
+    border-color: rgba(139, 212, 158, 0.22);
+    background: #203e2c;
+  }
+
+  html[data-theme="dark"] .detail-sow-header,
+  html[data-theme="dark"] .detail-sow-row {
+    border-color: rgba(139, 212, 158, 0.18);
+    background: #183323;
+  }
+
+  html[data-theme="dark"] .detail-diseases,
+  html[data-theme="dark"] .detail-pests {
+    border-color: rgba(224, 183, 143, 0.25);
+    background: linear-gradient(145deg, #342b25, #242d24);
+  }
+
+  html[data-theme="dark"] .detail-pests {
+    border-color: rgba(190, 181, 237, 0.26);
+    background: linear-gradient(145deg, #2b2a3a, #202d25);
+  }
+
+  html[data-theme="dark"] .detail-diseases-head h3,
+  html[data-theme="dark"] .detail-disease-card summary,
+  html[data-theme="dark"] .detail-disease-info b {
+    color: #f2dfcd;
+  }
+
+  html[data-theme="dark"] .detail-pests .detail-diseases-head h3,
+  html[data-theme="dark"] .detail-pests .detail-disease-card summary,
+  html[data-theme="dark"] .detail-pests .detail-disease-info b {
+    color: #ddd7ff;
+  }
+
+  html[data-theme="dark"] .detail-diseases-head p,
+  html[data-theme="dark"] .detail-disease-info p,
+  html[data-theme="dark"] .detail-treatment-note {
+    color: #cbbfb5;
+  }
+
+  html[data-theme="dark"] .detail-disease-card {
+    border-color: rgba(224, 183, 143, 0.2);
+    background: #2b332a;
+  }
+
+  html[data-theme="dark"] .detail-disease-info,
+  html[data-theme="dark"] .detail-disease-info--action {
+    background: #233c2b;
+  }
 }
 @layer base {
   html[data-theme="dark"] .app {

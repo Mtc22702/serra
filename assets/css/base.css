@@ -123,6 +123,11 @@
     --button-danger-text: #a03820;
     --button-danger-border: rgba(176, 48, 32, 0.32);
 
+    /* Le pill informative sono più quiete dei controlli: niente elevazione e contrasto ridotto. */
+    --pill-passive-bg: rgba(31, 58, 38, 0.055);
+    --pill-passive-text: #526259;
+    --pill-passive-border: rgba(31, 58, 38, 0.12);
+
     /* Principale sopra una superficie verde scura (la scheda della hero, i riquadri pieni). */
     --button-on-dark-bg: var(--serra-paper, #fffdf6);
     --button-on-dark-bg-hover: #ffffff;
@@ -2919,12 +2924,12 @@
     }
   }
   .detail-photo-wrap {
-    width: 80%;
+    width: calc(100% - 2.2rem);
     height: clamp(168px, 27.2dvh, 240px);
-    margin-inline: auto;
+    margin: 0.85rem auto 0;
     overflow: hidden;
     background: var(--sand);
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-radius: var(--radius-xl);
     position: relative;
   }
   .detail-photo-wrap img {
@@ -6889,7 +6894,8 @@
 
     .detail-photo-wrap {
       height: clamp(152px, 24dvh, 192px);
-      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      margin-top: 0.65rem;
+      border-radius: var(--radius-xl);
     }
 
     .detail-photo-name {
@@ -7934,18 +7940,19 @@
   }
   .catalog-scope--advanced .catalog-reset-btn {
     padding: 0 0.8rem;
-    background: rgba(231, 111, 81, 0.06);
-    border: 1.5px solid rgba(231, 111, 81, 0.18);
-    color: #a03820;
+    background: var(--button-secondary-bg);
+    border: 1px solid var(--button-secondary-border);
+    border-radius: var(--control-radius);
+    color: var(--button-secondary-text);
     font-weight: 600;
     font-size: 0.8rem;
     transition: all 0.2s ease;
     text-decoration: none;
   }
   .catalog-scope--advanced .catalog-reset-btn:hover {
-    background: rgba(231, 111, 81, 0.12);
-    border-color: rgba(231, 111, 81, 0.3);
-    color: #a03820;
+    background: var(--button-secondary-bg-hover);
+    border-color: rgba(47, 107, 58, 0.28);
+    color: var(--button-secondary-text);
     transform: translateY(-1.5px);
   }
   .catalog-insights {
@@ -9745,20 +9752,54 @@ html[data-theme="dark"]
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  /* Segno di quota accanto all'etichetta: freccia fra due sponde, orizzontale per la larghezza e verticale per la lunghezza. */
+  /* Mini-planimetrie: un badge rende immediata la misura, senza competere con l'etichetta. */
   .preconfig-axis {
     flex: 0 0 auto;
-    width: 15px;
-    height: 15px;
+    box-sizing: content-box;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    border: 1px solid rgba(47, 107, 58, 0.2);
+    border-radius: 6px;
+    background: rgba(116, 198, 157, 0.14);
     fill: none;
     stroke: var(--serra-green);
-    stroke-width: 1.6;
+    stroke-width: 1.35;
     stroke-linecap: round;
     stroke-linejoin: round;
-    opacity: 0.72;
+    opacity: 1;
+  }
+  .preconfig-axis--length {
+    width: 16px;
+    height: 20px;
+  }
+  .preconfig-axis-frame {
+    fill: rgba(116, 198, 157, 0.22);
+  }
+  .preconfig-axis-bed {
+    fill: rgba(82, 183, 136, 0.28);
+  }
+  .preconfig-axis-walkway {
+    fill: rgba(201, 133, 47, 0.3);
+    stroke: #a66c1a;
+  }
+  .preconfig-axis-measure {
+    stroke-width: 1.55;
   }
   html[data-theme="dark"] .preconfig-axis {
     stroke: #a0c8a0;
+    border-color: rgba(160, 200, 160, 0.28);
+    background: rgba(160, 200, 160, 0.12);
+  }
+  html[data-theme="dark"] .preconfig-axis-frame {
+    fill: rgba(160, 200, 160, 0.14);
+  }
+  html[data-theme="dark"] .preconfig-axis-bed {
+    fill: rgba(160, 200, 160, 0.2);
+  }
+  html[data-theme="dark"] .preconfig-axis-walkway {
+    fill: rgba(224, 173, 89, 0.34);
+    stroke: #e1b35c;
   }
 
   .preconfig-fld-row {
@@ -9766,6 +9807,11 @@ html[data-theme="dark"]
     align-items: baseline;
     gap: 0.25rem;
     margin-bottom: 6px;
+  }
+  /* Nei tre campi dimensionali l'icona è un badge, non un glifo: il testo
+     resta centrato al suo fianco anziché agganciarsi alla baseline. */
+  .preconfig-vfield--dims .preconfig-fld-row {
+    align-items: center;
   }
   /* Le etichette senza unità accanto — Zona, Serra — restano a sé: hanno bisogno del loro stacco dal selettore sottostante. */
   .preconfig-fld:not(.preconfig-fld-row > *) {
@@ -10854,7 +10900,7 @@ html[data-theme="dark"]
 }
 
 @layer components {
-  /* --- forma comune: stessa sagoma per tutti i ruoli. */
+  /* Le azioni testuali hanno angoli standard; le capsule restano riservate a filtri e stati. */
   :is(
     .detail-add-btn,
     .conf-cart-export-btn,
@@ -10876,19 +10922,37 @@ html[data-theme="dark"]
     .novice-restart-btn,
     .catalog-load-more-btn,
     .cart-edit-btn,
+    .cart-conf-link,
+    .cart-nudge button,
     .orto-btn--ghost,
     .btn-danger,
     .cart-clear-btn,
     .crops-clear-btn,
-    .crop-action-btn--danger,
+    .crop-action-btn,
     .del,
-    .crops-fill-main-btn
+    .crops-fill-main-btn,
+    .bridge-cta,
+    .guide-cta,
+    .viv-hero-cta,
+    .abbin-add-btn,
+    .kit-plan-link,
+    .journey-tool-cta,
+    .panel-toggle,
+    .preset-seasonal-btn,
+    .project-export-icon,
+    .btn-outline,
+    .btn-save,
+    .cookie-reject-btn,
+    .order-cancel-button,
+    .viv-reset,
+    .preconfig-cta,
+    .preconfig-account-edit
   ) {
-    border-radius: var(--control-radius-pill);
+    border-radius: var(--control-radius) !important;
     font-weight: var(--button-font-weight);
   }
 
-  /* Bersaglio comodo al dito: solo per le azioni vere, non per i comandi minuti come "Svuota" nell'intestazione del cassetto. */
+  /* Tutte le azioni testuali conservano un bersaglio comodo anche su touch. */
   :is(
     .detail-add-btn,
     .conf-cart-export-btn,
@@ -10904,12 +10968,31 @@ html[data-theme="dark"]
     .btn-soft,
     .catalog-load-more-btn,
     .cart-edit-btn,
-    .crops-fill-main-btn
+    .cart-conf-link,
+    .cart-nudge button,
+    .crops-fill-main-btn,
+    .bridge-cta,
+    .guide-cta,
+    .viv-hero-cta,
+    .abbin-add-btn,
+    .kit-plan-link,
+    .journey-tool-cta,
+    .crop-action-btn,
+    .panel-toggle,
+    .preset-seasonal-btn,
+    .project-export-icon,
+    .btn-outline,
+    .btn-save,
+    .cookie-reject-btn,
+    .order-cancel-button,
+    .viv-reset,
+    .preconfig-cta,
+    .preconfig-account-edit
   ) {
     min-height: var(--button-min-height);
   }
 
-  /* --- principale: l'azione che fa avanzare. Uno solo per schermata. --- */
+  /* Principale: conferma, salva, aggiunge o fa avanzare nel flusso. */
   :is(
     .detail-add-btn,
     .conf-cart-export-btn,
@@ -10924,12 +11007,18 @@ html[data-theme="dark"]
     .admin-packing-btn,
     .projects-new-btn,
     .orto-btn,
+    .bridge-cta,
+    .guide-cta,
+    .viv-hero-cta,
+    .abbin-add-btn,
+    .btn-save,
+    .crop-action-btn--primary,
     body.serra-empty .crops-fill-main-btn
-  ):not(.orto-btn--ghost, .btn-danger) {
-    background: var(--button-primary-fill);
-    color: var(--button-primary-text);
+  ):not(.orto-btn--ghost, .orto-btn--danger, .btn-danger) {
     border: 1px solid var(--button-primary-border);
+    background: var(--button-primary-fill);
     box-shadow: 0 8px 22px var(--button-primary-shadow);
+    color: var(--button-primary-text);
   }
 
   :is(
@@ -10946,14 +11035,20 @@ html[data-theme="dark"]
       .admin-packing-btn,
       .projects-new-btn,
       .orto-btn,
+      .bridge-cta,
+      .guide-cta,
+      .viv-hero-cta,
+      .abbin-add-btn,
+      .btn-save,
+      .crop-action-btn--primary,
       body.serra-empty .crops-fill-main-btn
-    ):not(.orto-btn--ghost, .btn-danger):hover:not(:disabled) {
+    ):not(.orto-btn--ghost, .orto-btn--danger, .btn-danger):hover:not(:disabled) {
+    border-color: rgba(47, 107, 58, 0.52);
     background: var(--button-primary-fill-hover);
     color: var(--button-primary-text);
-    border-color: rgba(47, 107, 58, 0.52);
   }
 
-  /* --- secondario: le alternative, leggibili ma senza rubare la scena. --- */
+  /* Secondario: naviga, apre strumenti o annulla senza modificare dati. */
   :is(
     .btn-soft,
     .view-print-btn,
@@ -10963,12 +11058,37 @@ html[data-theme="dark"]
     .catalog-load-more-btn,
     .cart-edit-btn,
     .orto-btn--ghost,
+    .btn-outline:not(.btn-danger):not(.btn-save),
+    .kit-plan-link,
+    .journey-tool-cta,
+    .cookie-reject-btn,
+    .crop-action-btn--secondary,
+    .panel-toggle,
+    .preset-seasonal-btn,
+    .viv-reset,
+    .catalog-reset-btn,
     body:not(.serra-empty) .crops-fill-main-btn
   ) {
-    background: var(--button-secondary-bg);
-    color: var(--button-secondary-text);
     border: 1px solid var(--button-secondary-border);
+    background: var(--button-secondary-bg);
     box-shadow: none;
+    color: var(--button-secondary-text);
+  }
+
+  /* Il reset dei filtri è reversibile: mai rosso, anche dove restano override storici. */
+  .catalog-reset-btn {
+    border-color: var(--button-secondary-border) !important;
+    border-radius: var(--control-radius);
+    background: var(--button-secondary-bg) !important;
+    box-shadow: none !important;
+    color: var(--button-secondary-text) !important;
+    text-decoration: none !important;
+  }
+
+  .catalog-reset-btn:hover:not(:disabled) {
+    border-color: rgba(47, 107, 58, 0.28) !important;
+    background: var(--button-secondary-bg-hover) !important;
+    color: var(--button-secondary-text) !important;
   }
 
   :is(
@@ -10980,25 +11100,41 @@ html[data-theme="dark"]
       .catalog-load-more-btn,
       .cart-edit-btn,
       .orto-btn--ghost,
+      .btn-outline:not(.btn-danger):not(.btn-save),
+      .kit-plan-link,
+      .journey-tool-cta,
+      .cookie-reject-btn,
+      .crop-action-btn--secondary,
+      .panel-toggle,
+      .preset-seasonal-btn,
+      .viv-reset,
+      .catalog-reset-btn,
       body:not(.serra-empty) .crops-fill-main-btn
     ):hover:not(:disabled) {
+    border-color: rgba(47, 107, 58, 0.28);
     background: var(--button-secondary-bg-hover);
     color: var(--button-secondary-text);
-    border-color: rgba(47, 107, 58, 0.28);
   }
 
-  /* --- distruttivo: toglie o svuota. Rosso tenue, non allarmante. --- */
+  /* Distruttivo: elimina, rimuove o svuota contenuti persistenti. */
   :is(
     .btn-danger,
     .cart-clear-btn,
     .crops-clear-btn,
     .crop-action-btn--danger,
-    .del
+    .del,
+    .orto-btn--danger,
+    .cart-item-remove,
+    .viv-remove,
+    .orto-remove-btn,
+    .order-cancel-button,
+    .order-edit-remove
   ) {
-    background: var(--button-danger-bg);
-    color: var(--button-danger-text);
-    border: 1px solid var(--button-danger-border);
-    box-shadow: none;
+    border: 1px solid var(--button-danger-border) !important;
+    border-radius: var(--control-radius) !important;
+    background: var(--button-danger-bg) !important;
+    box-shadow: none !important;
+    color: var(--button-danger-text) !important;
   }
 
   :is(
@@ -11006,33 +11142,112 @@ html[data-theme="dark"]
       .cart-clear-btn,
       .crops-clear-btn,
       .crop-action-btn--danger,
-      .del
+      .del,
+      .orto-btn--danger,
+      .cart-item-remove,
+      .viv-remove,
+      .orto-remove-btn,
+      .order-cancel-button,
+      .order-edit-remove
     ):hover:not(:disabled) {
+    border-color: rgba(176, 48, 32, 0.48);
     background: var(--button-danger-bg-hover);
     color: #8c2316;
-    border-color: rgba(176, 48, 32, 0.48);
   }
 
-  /* --- principale su fondo scuro: crema, non giallo. --- */
+  /* Chiudere una superficie non elimina dati: i comandi X restano neutri e quadrati. */
+  :is(
+    .cart-close,
+    .detail-close,
+    .preconfig-close,
+    .modal-close-button,
+    .projects-close,
+    .orto-dialog-close,
+    .orto-dialog-x,
+    .veg-search-clear,
+    .catalog-search-clear
+  ) {
+    width: var(--control-h-sm);
+    min-width: var(--control-h-sm);
+    min-height: var(--control-h-sm);
+    border: 1px solid var(--button-secondary-border);
+    border-radius: var(--control-radius) !important;
+    background: var(--button-secondary-bg);
+    box-shadow: none;
+    color: var(--button-secondary-text);
+  }
+
+  :is(
+      .cart-close,
+      .detail-close,
+      .preconfig-close,
+      .modal-close-button,
+      .projects-close,
+      .orto-dialog-close,
+      .orto-dialog-x,
+      .veg-search-clear,
+      .catalog-search-clear
+    ):hover:not(:disabled) {
+    border-color: rgba(47, 107, 58, 0.28);
+    background: var(--button-secondary-bg-hover);
+    color: var(--button-secondary-text);
+  }
+
+  /* Principale su fondo scuro: crema, non giallo. */
   :is(.cart-nudge button) {
-    background: var(--button-on-dark-bg);
-    color: var(--button-on-dark-text);
     border: 1px solid var(--button-on-dark-border);
+    background: var(--button-on-dark-bg);
     box-shadow: var(--elev-2);
+    color: var(--button-on-dark-text);
   }
 
   :is(.cart-nudge button):hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.8);
     background: var(--button-on-dark-bg-hover);
     color: var(--button-on-dark-text);
-    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Selettori compatti e avanzamento guidato: piccoli visivamente, non al tatto. */
+  .layout-toggle-btn {
+    min-width: var(--control-h-sm);
+    min-height: var(--control-h-sm);
+  }
+
+  :is(
+    .journey-context-level--chooser,
+    .journey-context-step,
+    .stage-tools-kicker
+  ) {
+    min-height: var(--control-h-sm) !important;
+  }
+
+  /* Badge, tag e pill non interattive: capsule compatte e piatte, senza affordance da pulsante. */
+  :where(span, small, div, p, li):is(
+      [class$="-badge"],
+      [class*="-badge "],
+      [class$="-tag"],
+      [class*="-tag "],
+      [class$="-pill"],
+      [class*="-pill "],
+      [class$="-kicker"],
+      [class*="-kicker "]
+    ):not([role="button"]):not(
+      :is(button, a[href], [role="button"], label[for]) *
+    ) {
+    min-height: 0;
+    border-radius: var(--radius-pill);
+    box-shadow: none !important;
+    cursor: default !important;
+    transition: none !important;
+    user-select: none;
   }
 
   /* Disabilitato: stesso segnale ovunque, qualunque sia il ruolo. */
   :is(.orto-btn, .cart-checkout-btn, .btn-primary, .btn-success):disabled {
-    background: var(--border);
-    color: var(--muted);
     border-color: transparent;
+    background: var(--border);
     box-shadow: none;
+    color: var(--muted);
     cursor: not-allowed;
   }
 }
@@ -11055,6 +11270,9 @@ html[data-theme="dark"]
     --button-danger-bg-hover: #643638;
     --button-danger-text: #f3c3c3;
     --button-danger-border: rgba(168, 90, 93, 0.6);
+    --pill-passive-bg: rgba(208, 236, 208, 0.08);
+    --pill-passive-text: #a9b9ae;
+    --pill-passive-border: rgba(208, 236, 208, 0.16);
 
     /* Nomi storici, ancora citati da alcune regole scure dentro i fogli di pagina. */
     --button-secondary: var(--button-secondary-bg);
@@ -11071,7 +11289,13 @@ html[data-theme="dark"]
       .cart-clear-btn,
       .crops-clear-btn,
       .crop-action-btn--danger,
-      .del
+      .del,
+      .orto-btn--danger,
+      .cart-item-remove,
+      .viv-remove,
+      .orto-remove-btn,
+      .order-cancel-button,
+      .order-edit-remove
     ):hover:not(:disabled) {
     color: #fae1d7;
   }
@@ -11091,8 +11315,14 @@ html[data-theme="dark"]
       .admin-packing-btn,
       .projects-new-btn,
       .orto-btn,
+      .bridge-cta,
+      .guide-cta,
+      .viv-hero-cta,
+      .abbin-add-btn,
+      .btn-save,
+      .crop-action-btn--primary,
       body.serra-empty .crops-fill-main-btn
-    ):not(.orto-btn--ghost, .btn-danger) {
+    ):not(.orto-btn--ghost, .orto-btn--danger, .btn-danger) {
     text-shadow: none;
   }
 }
@@ -12740,9 +12970,16 @@ html[data-theme="dark"]
   }
   @media (min-width: 841px) {
     .preconfig-sheet--v2 .preconfig-vfield--dims { padding: 11px; }
+    /* Ogni misura occupa una delle tre colonne: anche il camminamento deve
+       estendere lo stepper all'intera colonna, senza una coda decorativa vuota. */
+    .preconfig-sheet--v2 .preconfig-dim--path,
+    .preconfig-sheet--v2 .preconfig-dim--path > div {
+      min-width: 0;
+      width: 100%;
+    }
     .preconfig-sheet--v2 .preconfig-dim--path > div {
       display: grid;
-      grid-template-rows: auto auto auto;
+      grid-template-rows: auto auto;
       align-content: start;
       gap: 0;
     }
@@ -12751,11 +12988,14 @@ html[data-theme="dark"]
       grid-row: 1;
       margin-bottom: 7px;
     }
-    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { grid-row: 2; }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper {
+      grid-row: 2;
+      width: 100%;
+      min-width: 0;
+      align-self: stretch;
+    }
     .preconfig-sheet--v2 .preconfig-dim--path .preconfig-path-hint {
-      display: block;
-      grid-row: 3;
-      margin-top: 5px;
+      display: none;
     }
   }
   @media (max-width: 840px) {
@@ -12770,10 +13010,11 @@ html[data-theme="dark"]
     }
     .preconfig-sheet--v2 .preconfig-dim--path > div {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 132px;
-      align-items: center;
-      gap: 10px;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: start;
+      gap: 7px;
     }
-    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { width: 132px; }
+    .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { width: 100%; }
   }
 }

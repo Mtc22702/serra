@@ -36,7 +36,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 /* I comandi che cancellano qualcosa. */
 const DISTRUTTIVI =
-  /\.(cart-item-remove|viv-remove|orto-remove-btn|cart-clear-btn|order-cancel-button|btn-danger|crop-action-btn--danger|crops-clear-btn|catalog-reset-btn|projects-close)\b/;
+  /\.(cart-item-remove|viv-remove|orto-remove-btn|orto-btn--danger|cart-clear-btn|order-cancel-button|order-edit-remove|btn-danger|crop-action-btn--danger|crops-clear-btn)\b/;
 
 /* I gruppi che ne contengono almeno uno: la loro spaziatura dev'essere quella
    maggiorata. Aggiungere qui i gruppi nuovi. */
@@ -45,6 +45,8 @@ const GRUPPI_A_RISCHIO = [
   ".order-cancel-zone",
   ".order-actions-panel",
   ".admin-order-secondary-actions",
+  ".admin-danger-actions",
+  ".order-edit-item",
   ".viv-card-foot",
   ".orto-card-actions",
   ".orto-stock-actions",

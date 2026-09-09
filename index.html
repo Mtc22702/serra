@@ -31,7 +31,7 @@
 
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260907-443a74946cfa";
+      window.SERRA_APP_VERSION = "20260909-22c516094c76";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -84,17 +84,17 @@
     <!-- Fogli di stile principali -->
     <link
       rel="stylesheet"
-      href="assets/css/base.css?v=20260819-preconfig-mobile-safe"
+      href="assets/css/base.css?v=20260909-22c516094c76"
     />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260909-choice-cta"
+      href="assets/css/serra-home.css?v=20260909-22c516094c76"
     />
 
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260818-mobile-audit"
+      href="assets/css/serra-configuratore.css?v=20260909-22c516094c76"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -1173,7 +1173,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260907-443a74946cfa</span
+          >v20260909-22c516094c76</span
         >
       </div>
     </footer>
@@ -1776,14 +1776,13 @@
             <div>
               <span class="preconfig-fld-row"
                 ><svg
-                  class="preconfig-axis"
-                  viewBox="0 0 22 12"
+                  class="preconfig-axis preconfig-axis--width"
+                  viewBox="0 0 24 18"
                   aria-hidden="true"
                   focusable="false"
                 >
-                  <path d="M2 2v8M20 2v8" />
-                  <path d="M4 6h14" />
-                  <path d="M6.5 3.6 4 6l2.5 2.4M15.5 3.6 18 6l-2.5 2.4" /></svg
+                  <rect class="preconfig-axis-frame" x="4" y="2" width="16" height="10" rx="2" />
+                  <path class="preconfig-axis-measure" d="M5 15h14M5 15l2-2M5 15l2 2M19 15l-2-2M19 15l-2 2" /></svg
                 ><label class="preconfig-fld" data-i18n="preconfig.width"
                   >Larghezza</label
                 ><span class="preconfig-fld-unit" aria-hidden="true"
@@ -1832,14 +1831,13 @@
             <div>
               <span class="preconfig-fld-row"
                 ><svg
-                  class="preconfig-axis"
-                  viewBox="0 0 12 22"
+                  class="preconfig-axis preconfig-axis--length"
+                  viewBox="0 0 18 24"
                   aria-hidden="true"
                   focusable="false"
                 >
-                  <path d="M2 2h8M2 20h8" />
-                  <path d="M6 4v14" />
-                  <path d="M3.6 6.5 6 4l2.4 2.5M3.6 15.5 6 18l2.4-2.5" /></svg
+                  <rect class="preconfig-axis-frame" x="6" y="4" width="10" height="16" rx="2" />
+                  <path class="preconfig-axis-measure" d="M3 5v14M3 5l-2 2M3 5l2 2M3 19l-2-2M3 19l2-2" /></svg
                 ><label class="preconfig-fld" data-i18n="preconfig.length"
                   >Lunghezza</label
                 ><span class="preconfig-fld-unit" aria-hidden="true"
@@ -1890,6 +1888,17 @@
             <div>
               <div class="preconfig-path-copy">
                 <span class="preconfig-fld-row"
+                  ><svg
+                    class="preconfig-axis preconfig-axis--path"
+                    viewBox="0 0 24 18"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <rect class="preconfig-axis-bed" x="2" y="2" width="7" height="14" rx="2" />
+                    <rect class="preconfig-axis-walkway" x="10" y="2" width="4" height="14" rx="1.3" />
+                    <rect class="preconfig-axis-bed" x="15" y="2" width="7" height="14" rx="2" />
+                    <path class="preconfig-axis-measure" d="M12 5v8M12 5l-1.5 1.6M12 5l1.5 1.6M12 13l-1.5-1.6M12 13l1.5-1.6" />
+                  </svg
                   ><label class="preconfig-fld" data-i18n="preconfig.path_label_short"
                     >Camminamento</label
                   ><span class="preconfig-fld-unit" aria-hidden="true"
@@ -2043,11 +2052,11 @@
     </div>
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
-    <script src="assets/js/base.js?v=20260909-choice-cta" defer></script>
+    <script src="assets/js/base.js?v=20260909-22c516094c76" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
-    <script src="assets/js/home.js?v=20260818-back-to-top" defer></script>
+    <script src="assets/js/home.js?v=20260909-22c516094c76" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

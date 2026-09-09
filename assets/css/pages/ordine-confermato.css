@@ -3013,7 +3013,7 @@
   }
 
   .confirmation-lang button {
-    min-width: 38px;
+    min-width: var(--control-h-sm);
     min-height: var(--control-h-sm);
     border-radius: var(--control-radius-pill);
     font:
@@ -3144,7 +3144,7 @@
     gap: 9px;
     padding: 0 20px;
     border: 1px solid var(--confirmation-line);
-    border-radius: var(--control-radius-pill);
+    border-radius: var(--control-radius);
     color: var(--confirmation-ink);
     background: var(--serra-white);
     text-decoration: none;

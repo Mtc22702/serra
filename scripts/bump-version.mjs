@@ -104,7 +104,12 @@ async function main() {
   for (const file of files) {
     const filePath = path.join(root, file);
     const text = await readFile(filePath, "utf8");
-    const updated = existing ? text.split(existing).join(newVersion) : text;
+    const withAppVersion = existing
+      ? text.split(existing).join(newVersion)
+      : text;
+    const updated = file.endsWith(".html")
+      ? withAppVersion.replace(/\?v=[^"'\s)]+/g, `?v=${newVersion}`)
+      : withAppVersion;
     await writeFile(filePath, updated);
   }
 

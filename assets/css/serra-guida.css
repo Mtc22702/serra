@@ -6923,7 +6923,7 @@ main {
   margin: 1.5rem auto 0;
   padding: 0 2rem;
   box-sizing: border-box;
-  border-radius: var(--control-radius-pill);
+  border-radius: var(--control-radius);
   color: var(--serra-white);
   border: 0;
   background: var(--guide-green);
