@@ -3329,7 +3329,16 @@ html .orto-page.orto-first-start .orto-welcome-actions { margin-top: 20px; }
 @media (max-width: 720px) {
   html .orto-page .orto-welcome-actions { margin-top: 18px; }
   html .orto-page .orto-tabs {
+    right: 0;
     bottom: calc(48px + env(safe-area-inset-bottom));
+    left: 0;
+    width: 100%;
+    max-width: none;
+    min-height: 70px;
+    margin: 0;
+    padding: 6px 8px;
+    border-radius: 18px;
+    box-sizing: border-box;
   }
   html .orto-page .orto-wrap {
     padding-bottom: calc(152px + env(safe-area-inset-bottom));

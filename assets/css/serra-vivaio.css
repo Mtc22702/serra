@@ -11191,7 +11191,7 @@ html .viv-page .viv-shipping .orto-notif-ico {
 html .viv-page .viv-shipping > span:last-child { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
 html .viv-page .viv-shipping b { color: #2b4937; font-size: .72rem; line-height: 1.25; }
 html .viv-page .viv-shipping small { color: #66776b; font-size: .66rem; line-height: 1.35; }
-@media (max-width: 600px) {
+@media (max-width: 720px) {
   html .viv-page .viv-hero .orto-hero-inner { grid-template-columns: 1fr; }
   html .viv-page .viv-hero-visual {
     display: grid;
