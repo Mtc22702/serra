@@ -977,10 +977,10 @@
           "Riduci l'attesa, semplifica l'avvio e raccogli prima.",
         "journey.piantine_hint": "Piantine già avviate",
         "journey.piantine_cta": "Scopri le piantine",
-        "journey.step3_title": "Hai già iniziato a coltivare?",
+        "journey.step3_title": "Hai già un orto avviato?",
         "journey.step3_badge": "gratuito",
         "journey.step3_copy":
-          "Gestisci il tuo orto e ricevi promemoria per acqua, nutrimento e raccolta.",
+          "Tieni sotto controllo attività e promemoria per acqua, nutrimento e raccolta.",
         "journey.step3_proof":
           "Acqua, nutrimento e raccolta sempre sotto controllo.",
         "journey.step3_preview_title": "Oggi nel tuo orto",
@@ -1505,10 +1505,10 @@
           "Redu așteptarea, simplifică începutul și recoltează mai devreme.",
         "journey.piantine_hint": "Răsaduri deja crescute",
         "journey.piantine_cta": "Descoperă răsadurile",
-        "journey.step3_title": "Ai început deja să cultivi?",
+        "journey.step3_title": "Ai deja o grădină cultivată?",
         "journey.step3_badge": "gratuit",
         "journey.step3_copy":
-          "Gestionează grădina și primește mementouri pentru udare, nutriție și recoltare.",
+          "Ține sub control activitățile și mementourile pentru udare, fertilizare și recoltare.",
         "journey.step3_proof":
           "Udarea, fertilizarea și recoltarea, mereu sub control.",
         "journey.step3_preview_title": "Astăzi în grădina ta",

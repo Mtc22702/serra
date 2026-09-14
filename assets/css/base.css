@@ -13127,8 +13127,28 @@ html[data-theme="dark"]
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-persona-help {
     color: #afc9b2;
   }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-head-tag {
+    color: #c5dec5;
+    border-color: rgba(188, 229, 184, .32);
+    background: rgba(188, 229, 184, .09);
+  }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-axis {
+    color: #c6e9c1;
+    stroke: #c6e9c1;
+    border-color: rgba(188, 229, 184, .36);
     background: rgba(12,34,21,.48);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-axis--path { color: #c6e9c1; }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-axis--path .preconfig-axis-bed {
+    fill: #468356;
+    stroke: #acd6aa;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-axis--path .preconfig-axis-walkway {
+    fill: #a77d41;
+    stroke: #eed08f;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .level-plant-ico {
+    filter: brightness(1.5) saturate(.85);
   }
   html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card {
     background: color-mix(in srgb, var(--accent) 14%, #163721);

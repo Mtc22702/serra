@@ -31,7 +31,7 @@
 
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260914-d6bf742c608d";
+      window.SERRA_APP_VERSION = "20260914-bfbe56e0a82b";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -84,17 +84,17 @@
     <!-- Fogli di stile principali -->
     <link
       rel="stylesheet"
-      href="assets/css/base.css?v=20260914-d6bf742c608d"
+      href="assets/css/base.css?v=20260914-bfbe56e0a82b"
     />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260914-d6bf742c608d"
+      href="assets/css/serra-home.css?v=20260914-bfbe56e0a82b"
     />
 
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260914-d6bf742c608d"
+      href="assets/css/serra-configuratore.css?v=20260914-bfbe56e0a82b"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -468,15 +468,20 @@
             </div>
 
             <aside class="journey-tool-band" aria-labelledby="journeyToolTitle">
-              <span class="journey-tool-icon" aria-hidden="true">☀️</span>
+              <span class="journey-tool-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                  <path d="M7 3v4M17 3v4M3 10h18M9 15l2 2 4-4"></path>
+                </svg>
+              </span>
               <div class="journey-tool-copy">
                 <span data-i18n="journey.step3_when">Tool gratuito</span>
                 <h3 id="journeyToolTitle" data-i18n="journey.step3_title">
-                  Hai già iniziato a coltivare?
+                  Hai già un orto avviato?
                 </h3>
                 <p data-i18n="journey.step3_copy">
-                  Gestisci il tuo orto e ricevi promemoria per acqua, nutrimento
-                  e raccolta.
+                  Tieni sotto controllo attività e promemoria per acqua,
+                  nutrimento e raccolta.
                 </p>
               </div>
               <a class="journey-tool-cta" href="orto.html">
@@ -1208,7 +1213,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260914-d6bf742c608d</span
+          >v20260914-bfbe56e0a82b</span
         >
       </div>
     </footer>
@@ -2129,11 +2134,11 @@
     </div>
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
-    <script src="assets/js/base.js?v=20260914-d6bf742c608d" defer></script>
+    <script src="assets/js/base.js?v=20260914-bfbe56e0a82b" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
-    <script src="assets/js/home.js?v=20260914-d6bf742c608d" defer></script>
+    <script src="assets/js/home.js?v=20260914-bfbe56e0a82b" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>
