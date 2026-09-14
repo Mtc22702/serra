@@ -1585,12 +1585,6 @@
             <img src="assets/img/generated/piantina-premium.webp" alt="" width="512" height="768" />
           </div>
         </div>
-        <ol class="orto-start-flow">
-          <li class="is-current"><span aria-hidden="true">🌱</span><b>${t("welcome.flow_add")}</b></li>
-          <li><span aria-hidden="true">📐</span><b>${t("flow.space")}</b></li>
-          <li><span aria-hidden="true">🪴</span><b>${t("welcome.flow_plant")}</b></li>
-          <li><span aria-hidden="true">☀️</span><b>${t("welcome.flow_care")}</b></li>
-        </ol>
         <div class="orto-welcome-actions">
           <button class="orto-welcome-choice orto-welcome-choice--primary" type="button" data-orto-action="open-add-stock">
             <span class="orto-welcome-choice-ico" aria-hidden="true">✎</span>

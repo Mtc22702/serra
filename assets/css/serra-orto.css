@@ -3262,6 +3262,117 @@
     html .orto-page :is(.orto-btn, .orto-card, .orto-piano-card, .orto-task, .orto-welcome-choice) { animation: none; transition: none; }
   }
 }
+
+/* Icone delle sezioni e percorso: override finale rispetto al CSS storico. */
+html .orto-page .orto-tab-ico { display: grid; width: 34px; height: 34px; flex: 0 0 34px; border-radius: 10px; background: var(--orto-surface-2); color: #315f43; font: 800 23px/1 "DM Sans", sans-serif; place-items: center; }
+html .orto-page .orto-tab-ico--stock,
+html .orto-page .orto-tab-ico--plan { font-size: 0; }
+html .orto-page .orto-tab-ico--stock::before,
+html .orto-page .orto-tab-ico--plan::before { content: none; }
+html .orto-page .orto-tab-ico--today { color: #9b672c; }
+html .orto-page .orto-tab-ico svg { width: 22px; height: 22px; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+html .orto-page .orto-tab-ico { overflow: hidden; }
+html .orto-page .orto-tab-ico img {
+  display: block;
+  width: 31px;
+  height: 31px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 2px rgba(29, 58, 37, .15));
+}
+html .orto-page .orto-tab-ico--stock img { width: 29px; height: 35px; transform: rotate(-4deg) translateY(1px); }
+html .orto-page .orto-tab-ico--plan img { width: 34px; height: 35px; transform: translateY(2px); }
+html .orto-page .orto-tab-ico--today img { width: 31px; height: 31px; border-radius: 50%; }
+html .orto-page .orto-tab.is-active .orto-tab-ico { background: rgba(255,255,255,.18); color: currentColor; }
+html .orto-page .orto-start-flow { position: relative; gap: 12px; padding: 0; border: 0; background: transparent; }
+html .orto-page .orto-start-flow li { min-height: 86px; justify-content: flex-start; gap: 11px; padding: 12px; border: 1px solid #dfe5d9; border-radius: 14px; background: #fbfcf8; text-align: left; }
+html .orto-page .orto-start-flow li + li::before { content: ""; left: -8px; top: 50%; z-index: 1; width: 14px; height: 2px; background: #bed0b8; }
+html .orto-page .orto-flow-icon { display: grid; width: 38px; height: 38px; flex: 0 0 38px; border-radius: 11px; background: #e6f0df; color: #356b48; font: 800 22px/1 "DM Sans", sans-serif; place-items: center; }
+html .orto-page .orto-start-flow li > span:last-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+html .orto-page .orto-start-flow li small { color: #8c9a8d; font: 700 .65rem/1 "DM Sans", sans-serif; letter-spacing: .1em; }
+html .orto-page .orto-start-flow li b { font-size: .84rem; }
+html .orto-page .orto-start-flow li.is-current { border-color: #78a56e; background: #f1f8ec; }
+html .orto-page .orto-start-flow li.is-current .orto-flow-icon { background: #285c45; color: #fff; }
+@media (max-width: 660px) {
+  html .orto-page .orto-tab-ico { display: grid; }
+  html .orto-page .orto-start-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  html .orto-page .orto-start-flow li { min-height: 72px; padding: 9px; gap: 8px; }
+  html .orto-page .orto-start-flow li + li::before { display: none; }
+  html .orto-page .orto-flow-icon { width: 31px; height: 31px; flex-basis: 31px; border-radius: 9px; font-size: 18px; }
+  html .orto-page .orto-start-flow li b { font-size: .74rem; line-height: 1.25; }
+}
+
+/* Le illustrazioni delle tab restano leggibili anche sulla barra mobile e in dark mode. */
+@media (max-width: 720px) {
+  html .orto-page .orto-tab-ico { width: 36px; height: 36px; }
+  html .orto-page .orto-tab-ico img { transform-origin: center; }
+  html .orto-page .orto-tab-name { line-height: 1.2; }
+}
+html[data-theme="dark"] .orto-page .orto-tab-ico {
+  border: 1px solid rgba(190, 218, 185, .12);
+  background: #294332;
+}
+html[data-theme="dark"] .orto-page .orto-tab.is-active .orto-tab-ico {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.16);
+}
+html[data-theme="dark"] .orto-page .orto-welcome-choice--primary small {
+  display: block;
+  color: #dcebdd;
+  opacity: 1;
+}
+html[data-theme="dark"] .orto-page .orto-welcome-choice--primary .orto-welcome-arrow,
+html[data-theme="dark"] .orto-page .orto-welcome-choice--primary .orto-welcome-choice-ico { color: #f4f7ef; }
+
+/* Dopo la rimozione del percorso guidato, la separazione fra introduzione e
+   azioni deve essere autonoma e non dipendere da un elemento intermedio. */
+html .orto-page.orto-first-start .orto-welcome-actions { margin-top: 20px; }
+@media (max-width: 720px) {
+  html .orto-page .orto-welcome-actions { margin-top: 18px; }
+  html .orto-page .orto-tabs {
+    bottom: calc(48px + env(safe-area-inset-bottom));
+  }
+  html .orto-page .orto-wrap {
+    padding-bottom: calc(152px + env(safe-area-inset-bottom));
+  }
+  html .orto-page:not(.viv-page) .orto-toast {
+    bottom: calc(132px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Primo ingresso nell'orto: tappe leggibili e icone che spiegano la destinazione. */
+@layer orto-onboarding-refine {
+  html .orto-tab-ico {
+    display: grid; width: 34px; height: 34px; flex: 0 0 34px;
+    border-radius: 10px; background: var(--orto-surface-2); color: #315f43;
+    font: 800 23px/1 "DM Sans", sans-serif; place-items: center;
+  }
+  html .orto-tab-ico--stock::before { content: ""; width: 12px; height: 15px; border: 2px solid currentColor; border-radius: 8px 8px 6px 6px; box-shadow: inset 0 -4px 0 #94bd67; }
+  html .orto-tab-ico--stock { font-size: 0; }
+  html .orto-tab-ico--plan::before { content: ""; width: 16px; height: 11px; border: 2px solid currentColor; border-radius: 50% 50% 45% 45%; transform: rotate(-35deg); box-shadow: -5px 8px 0 -4px currentColor; }
+  html .orto-tab-ico--plan { font-size: 0; }
+  html .orto-tab-ico--today { color: #9b672c; }
+  html .orto-tab.is-active .orto-tab-ico { background: rgba(255,255,255,.18); color: currentColor; }
+  html .orto-start-flow { position: relative; gap: 12px; padding: 0; border: 0; background: transparent; }
+  html .orto-start-flow li { min-height: 86px; justify-content: flex-start; gap: 11px; padding: 12px; border: 1px solid #dfe5d9; border-radius: 14px; background: #fbfcf8; text-align: left; }
+  html .orto-start-flow li + li::before { content: ""; left: -8px; top: 50%; z-index: 1; width: 14px; height: 2px; background: #bed0b8; }
+  html .orto-flow-icon { display: grid; width: 38px; height: 38px; flex: 0 0 38px; border-radius: 11px; background: #e6f0df; color: #356b48; font: 800 22px/1 "DM Sans", sans-serif; place-items: center; }
+  html .orto-start-flow li > span:last-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  html .orto-start-flow li small { color: #8c9a8d; font: 700 .65rem/1 "DM Sans", sans-serif; letter-spacing: .1em; }
+  html .orto-start-flow li b { font-size: .84rem; }
+  html .orto-start-flow li.is-current { border-color: #78a56e; background: #f1f8ec; }
+  html .orto-start-flow li.is-current .orto-flow-icon { background: #285c45; color: #fff; }
+  @media (max-width: 660px) {
+    html .orto-start-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    html .orto-start-flow li { min-height: 72px; padding: 9px; gap: 8px; }
+    html .orto-start-flow li + li::before { display: none; }
+    html .orto-flow-icon { width: 31px; height: 31px; flex-basis: 31px; border-radius: 9px; font-size: 18px; }
+    html .orto-start-flow li b { font-size: .74rem; line-height: 1.25; }
+  }
+  html[data-theme="dark"] .orto-tab-ico { background: #2b4433; color: #c1e2b8; }
+  html[data-theme="dark"] .orto-start-flow li { background: #213427; border-color: #405744; color: #dae6d8; }
+  html[data-theme="dark"] .orto-start-flow li.is-current { background: #294734; border-color: #7fac78; }
+  html[data-theme="dark"] .orto-flow-icon { background: #345440; color: #d6edd0; }
+}
 .orto-quantity-indicator { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .6rem; border: 1px solid var(--surface-line); border-radius: .6rem; background: var(--surface-1); color: var(--theme-text); font-variant-numeric: tabular-nums; }
 
 @layer base, dark-theme, polish, coerenza, orto-audit;

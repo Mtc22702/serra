@@ -11030,3 +11030,223 @@ body.viv-detail-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .viv-page :is(.orto-card, .orto-btn, .viv-chip) { animation: none; transition: none; }
 }
+
+/* Vivaio: una testata editoriale, non un secondo catalogo prima del catalogo. */
+@layer vivaio-refine {
+  html .viv-hero {
+    overflow: hidden;
+    background: linear-gradient(132deg, #f3f7ed 0%, #e6f0df 62%, #d9e9d1 100%);
+    border: 1px solid #d5e2cd;
+    box-shadow: 0 10px 28px rgba(37, 71, 48, .09);
+  }
+  html .viv-hero .orto-hero-inner { min-height: 0; padding-bottom: 8px; }
+  html .viv-hero h1 { max-width: 18ch; color: #1d392d; }
+  html .viv-hero .orto-hero-sub { max-width: 44ch; color: #526958; }
+  html .viv-hero-visual { align-self: end; }
+  html .viv-hero .viv-hero-art { opacity: .88; filter: saturate(.76) contrast(.96); }
+  html .viv-visual-label { background: #2c6648; box-shadow: none; }
+  html .viv-shipping { background: #173e30; box-shadow: 0 7px 18px rgba(18, 53, 40, .16); }
+  html .viv-hero .orto-hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 520px; padding-top: 10px; }
+  html .viv-hero-stat { background: rgba(255,255,255,.48); border-color: #d2e0cc; }
+
+  html .viv-results { align-items: center; gap: 10px; }
+  html .viv-view-switch { display: inline-flex; margin-left: auto; padding: 3px; gap: 2px; border: 1px solid var(--surface-line); border-radius: 10px; background: var(--surface-2); }
+  html .viv-view-switch button { display: grid; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 7px; background: transparent; color: var(--theme-text-muted); font: 800 21px/1 sans-serif; place-items: center; cursor: pointer; }
+  html .viv-view-switch button.is-active { background: var(--button-primary-fill); color: var(--button-primary-text); box-shadow: 0 2px 5px rgba(24, 67, 45, .18); }
+  html .viv-view-switch button:focus-visible { outline: 3px solid var(--button-primary); outline-offset: 2px; }
+
+  html .viv-grid--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  html .viv-grid--list { grid-template-columns: 1fr; gap: 10px; }
+  html .viv-grid--list .orto-card { display: grid; grid-template-columns: minmax(150px, 24%) minmax(0, 1fr); align-items: stretch; }
+  html .viv-grid--list .orto-card-photo { min-height: 174px; height: 100%; }
+  html .viv-grid--list .orto-card-body { padding: 14px 16px; }
+  html .viv-grid--list .viv-card-actions { display: grid; grid-template-columns: minmax(180px, 250px); justify-content: end; }
+  html .viv-grid--list .viv-timing { max-width: 460px; }
+  @media (max-width: 600px) {
+    html .viv-hero .orto-hero-inner { grid-template-columns: minmax(0, 1fr) 112px; gap: 8px; }
+    html .viv-hero .viv-hero-art { width: 128px; margin-right: -20px; }
+    html .viv-hero .orto-hero-stats { max-width: none; }
+    html .viv-grid--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    html .viv-grid--grid .orto-card-body { padding: 11px; }
+    html .viv-grid--grid .orto-card-photo { min-height: 148px; }
+    html .viv-grid--grid .viv-timing { grid-template-columns: 1fr; gap: 5px; }
+    html .viv-grid--grid .viv-timing > span:nth-child(2) { display: none; }
+    html .viv-grid--grid .viv-unit { font-size: .7rem; }
+    html .viv-grid--grid .orto-card-titles h3 { font-size: 1rem; }
+    html .viv-grid--grid .orto-card-titles small { font-size: .68rem; }
+    html .viv-grid--grid .orto-btn { padding-inline: 8px; font-size: .78rem; }
+    html .viv-grid--list .orto-card { grid-template-columns: 112px minmax(0, 1fr); }
+    html .viv-grid--list .orto-card-photo { min-height: 100%; }
+    html .viv-grid--list .orto-card-body { padding: 12px; }
+    html .viv-grid--list .viv-timing { display: none; }
+    html .viv-grid--list .viv-card-actions { grid-template-columns: 1fr; }
+  }
+  html[data-theme="dark"] .viv-hero { background: linear-gradient(132deg, #193126, #213d2c); border-color: #355840; }
+  html[data-theme="dark"] .viv-hero h1 { color: #f3f4ea; }
+  html[data-theme="dark"] .viv-hero .orto-hero-sub { color: #cad8c8; }
+  html[data-theme="dark"] .viv-hero-stat { background: rgba(8, 25, 17, .28); border-color: #3c5a44; }
+}
+
+/* Gli override restano fuori dai layer: questo foglio contiene anche CSS storico
+   non stratificato, che altrimenti vincerebbe sempre nella cascade. */
+html .viv-page .viv-hero { background: linear-gradient(132deg, #f3f7ed 0%, #e6f0df 62%, #d9e9d1 100%); border-color: #d5e2cd; box-shadow: 0 10px 28px rgba(37, 71, 48, .09); }
+html .viv-page .viv-hero .orto-hero-inner { min-height: 0; padding-bottom: 8px; }
+html .viv-page .viv-hero h1 { max-width: 18ch; color: #1d392d; }
+html .viv-page .viv-hero .orto-hero-sub { max-width: 44ch; color: #526958; }
+html .viv-page .viv-hero .viv-hero-art { opacity: .88; filter: saturate(.76) contrast(.96); }
+html .viv-page .viv-hero .orto-hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 520px; padding-top: 10px; }
+html .viv-page .viv-hero-stat { background: rgba(255,255,255,.48); border-color: #d2e0cc; }
+html .viv-page .viv-view-switch { display: inline-flex; margin-left: auto; padding: 3px; gap: 2px; border: 1px solid var(--surface-line); border-radius: 10px; background: var(--surface-2); }
+html .viv-page .viv-viewbar { display: flex; min-height: 42px; align-items: center; justify-content: flex-end; gap: 12px; margin: 0; }
+html .viv-page .viv-viewbar-label { color: var(--theme-text-muted); font-size: .78rem; font-weight: 700; }
+html .viv-page .viv-viewbar .viv-view-switch { margin-left: 0; }
+html .viv-page .viv-view-switch button { display: grid; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 7px; background: transparent; color: var(--theme-text-muted); font: 800 21px/1 sans-serif; place-items: center; cursor: pointer; }
+html .viv-page .viv-view-switch button.is-active { background: var(--button-primary-fill); color: var(--button-primary-text); }
+html .viv-page .viv-grid--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+html .viv-page .viv-grid--list { grid-template-columns: 1fr; gap: 10px; }
+html .viv-page .viv-grid--list .orto-card { display: grid; grid-template-columns: minmax(150px, 24%) minmax(0, 1fr); align-items: stretch; }
+html .viv-page .viv-grid--list .orto-card-photo { min-height: 174px; height: 100%; }
+html .viv-page .viv-grid--list .orto-card-body { padding: 14px 16px; }
+html .viv-page .viv-grid--list .viv-card-actions { display: grid; grid-template-columns: minmax(180px, 250px); justify-content: end; }
+@media (max-width: 600px) {
+  html .viv-page .viv-hero .orto-hero-inner { grid-template-columns: minmax(0, 1fr) 112px; gap: 8px; }
+  html .viv-page .viv-hero .viv-hero-art { width: 128px; margin-right: -20px; }
+  html .viv-page .viv-grid--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  html .viv-page .viv-grid--grid .orto-card-body { padding: 11px; }
+  html .viv-page .viv-grid--grid .orto-card-photo { min-height: 148px; }
+  html .viv-page .viv-grid--grid .viv-timing { grid-template-columns: 1fr; gap: 5px; }
+  html .viv-page .viv-grid--grid .viv-timing > span:nth-child(2) { display: none; }
+  html .viv-page .viv-grid--list .orto-card { grid-template-columns: 112px minmax(0, 1fr); }
+  html .viv-page .viv-grid--list .viv-timing { display: none; }
+  html .viv-page .viv-grid--list .viv-card-actions { grid-template-columns: 1fr; }
+}
+html[data-theme="dark"] .viv-page .viv-hero { background: linear-gradient(132deg, #193126, #213d2c); border-color: #355840; }
+
+/* Scheda informativa della hero: trattamento editoriale, senza affordance da pulsante. */
+html .viv-page .viv-hero-visual {
+  min-height: 252px;
+  align-self: stretch;
+  justify-content: flex-start;
+  padding: 18px 18px 82px;
+  border: 1px solid #d6e0d1;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 72% 44%, rgba(155, 190, 116, .18), transparent 38%),
+    linear-gradient(155deg, rgba(255,255,255,.82), rgba(239,245,232,.88));
+  box-shadow: 0 8px 24px rgba(37, 71, 48, .08);
+}
+html .viv-page .viv-visual-label {
+  position: static;
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #294f39;
+  font-size: .76rem;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+html .viv-page .viv-visual-label > span {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #dcebd4;
+  color: #356746;
+  font-size: 13px;
+  place-items: center;
+}
+html .viv-page .viv-hero-visual .viv-hero-art {
+  width: min(215px, 84%);
+  max-height: 178px;
+  margin: -2px auto 0;
+  filter: saturate(.74) drop-shadow(0 10px 12px rgba(38, 64, 42, .14));
+}
+html .viv-page .viv-shipping {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  left: 16px;
+  gap: 10px;
+  padding: 11px 0 0;
+  border: 0;
+  border-top: 1px solid #d7e1d2;
+  border-radius: 0;
+  background: transparent;
+  color: #526458;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+html .viv-page .viv-shipping .orto-notif-ico {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border-radius: 10px;
+  background: #e6eee1;
+}
+html .viv-page .viv-shipping > span:last-child { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
+html .viv-page .viv-shipping b { color: #2b4937; font-size: .72rem; line-height: 1.25; }
+html .viv-page .viv-shipping small { color: #66776b; font-size: .66rem; line-height: 1.35; }
+@media (max-width: 600px) {
+  html .viv-page .viv-hero .orto-hero-inner { grid-template-columns: 1fr; }
+  html .viv-page .viv-hero-visual {
+    display: grid;
+    min-height: 126px;
+    padding: 12px;
+    column-gap: 10px;
+    grid-template-columns: 76px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  html .viv-page .viv-hero-visual .viv-hero-art {
+    width: 76px;
+    max-height: 94px;
+    margin: 2px 0 0;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  html .viv-page .viv-visual-label { grid-column: 2; grid-row: 1; font-size: .62rem; }
+  html .viv-page .viv-visual-label > span { width: 20px; height: 20px; font-size: 11px; }
+  html .viv-page .viv-shipping {
+    position: static;
+    align-self: end;
+    margin: 6px 0 0;
+    padding-top: 7px;
+    grid-column: 2;
+    grid-row: 2;
+  }
+  html .viv-page .viv-shipping .orto-notif-ico { display: none; }
+  html .viv-page .viv-shipping b { font-size: .65rem; }
+  html .viv-page .viv-shipping small { font-size: .6rem; }
+}
+html[data-theme="dark"] .viv-page .viv-hero-visual {
+  border-color: #3a5542;
+  background: radial-gradient(circle at 72% 44%, rgba(126, 171, 99, .13), transparent 38%), #1d3326;
+  box-shadow: none;
+}
+html[data-theme="dark"] .viv-page .viv-visual-label { color: #d9ead5; }
+html[data-theme="dark"] .viv-page .viv-visual-label > span { background: #31533b; color: #d9ead5; }
+html[data-theme="dark"] .viv-page .viv-shipping { border-color: #405945; color: #c4d0c4; }
+html[data-theme="dark"] .viv-page .viv-shipping b { color: #edf2e7; }
+html[data-theme="dark"] .viv-page .viv-shipping small { color: #bac8ba; }
+
+/* Contrasto e ritmo finale verificati sulle viste strette. */
+@media (max-width: 720px) {
+  html .viv-page .viv-hero .orto-hero-stats { max-width: none; gap: 8px; }
+  html .viv-page .viv-hero .viv-hero-stat:nth-child(2) { display: grid; }
+}
+html[data-theme="dark"] .viv-page .viv-hero h1 { color: #f3f4ea; }
+html[data-theme="dark"] .viv-page .viv-hero .orto-hero-sub { color: #cad8c8; }
+html[data-theme="dark"] .viv-page .viv-hero .orto-hero-date { color: #c5e0bd; }
+html[data-theme="dark"] .viv-page .viv-hero-stat {
+  border-color: #405c48;
+  background: #253c2d;
+  color: #f2f5ed;
+}
+html[data-theme="dark"] .viv-page .viv-hero .viv-stat-copy small { color: #c0cec0; }
+html[data-theme="dark"] .viv-page .viv-viewbar-label { color: #cad5ca; }

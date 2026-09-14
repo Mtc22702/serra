@@ -56,6 +56,9 @@
       "filters.count": "{n} varietà",
       "filters.of_total": "su {n} disponibili questo mese",
       "filters.none": "Nessun risultato con questi filtri.",
+      "view.aria": "Visualizzazione lista",
+      "view.grid": "Griglia a due colonne",
+      "view.list": "Lista compatta",
       "cart.qty_less": "Togli un vassoio",
       "cart.qty_more": "Aggiungi un vassoio",
       "cart.delivery": "Consegna prevista <b>{data}</b>",
@@ -66,6 +69,7 @@
         "Piantina con il pane di terra, pronta da estrarre dall'alveolo e mettere a dimora",
       "hero.shipping":
         "Merce viva: spedizione a inizio settimana, sospesa in caso di gelate.",
+      "hero.shipping_label": "Spedizione protetta",
       "hero.cta": "Vedi le piantine disponibili",
       "hero.visual_label": "Pronte al trapianto",
       "cat.per_plant": "a piantina · vaso ø7",
@@ -167,6 +171,9 @@
       "filters.count": "{n} soiuri",
       "filters.of_total": "din {n} disponibile luna aceasta",
       "filters.none": "Niciun rezultat cu aceste filtre.",
+      "view.aria": "Afișare listă",
+      "view.grid": "Grilă cu două coloane",
+      "view.list": "Listă compactă",
       "cart.qty_less": "Scoate o tavă",
       "cart.qty_more": "Adaugă o tavă",
       "cart.delivery": "Livrare estimată <b>{data}</b>",
@@ -177,6 +184,7 @@
         "Răsad cu bulgărele de pământ, gata de scos din alveolă și pus în pământ",
       "hero.shipping":
         "Marfă vie: livrare la început de săptămână, suspendată în caz de îngheț.",
+      "hero.shipping_label": "Livrare protejată",
       "hero.cta": "Vezi răsadurile disponibile",
       "hero.visual_label": "Gata de transplantat",
       "cat.per_plant": "per răsad · ghiveci ø7",
@@ -274,6 +282,8 @@
   // Filtri del listino: famiglia botanica e criterio d'ordinamento, come nel catalogo dei semi in home.
   let tipoAttivo = "";
   let ordine = "consigliati";
+  // Il vivaio può essere letto come vetrina (due colonne) o come lista rapida.
+  let vistaListino = localStorage.getItem("serra.vivaio.view") === "list" ? "list" : "grid";
   // Su smartphone il pannello parte compatto e conserva la scelta dell'utente
   // anche quando il listino viene ridisegnato dopo un filtro o un ordinamento.
   let filtriAperti = !window.matchMedia("(max-width: 720px)").matches;
@@ -410,6 +420,12 @@
     render();
   }
 
+  function impostaVistaListino(vista) {
+    vistaListino = vista === "list" ? "list" : "grid";
+    localStorage.setItem("serra.vivaio.view", vistaListino);
+    render();
+  }
+
   function barraFiltriHtml(lista, visibili) {
     const opzioni = ["consigliati", "nome", "veloce", "risparmio", "prezzo"]
       .map(
@@ -479,6 +495,16 @@
       </details>`;
   }
 
+  function barraVistaHtml() {
+    return `<div class="viv-viewbar">
+      <span class="viv-viewbar-label">${escape(t("view.aria"))}</span>
+      <div class="viv-view-switch" role="group" aria-label="${escape(t("view.aria"))}">
+        <button type="button" class="${vistaListino === "grid" ? "is-active" : ""}" data-viv-action="set-view" data-view="grid" aria-pressed="${vistaListino === "grid"}" aria-label="${escape(t("view.grid"))}" title="${escape(t("view.grid"))}"><span aria-hidden="true">▦</span></button>
+        <button type="button" class="${vistaListino === "list" ? "is-active" : ""}" data-viv-action="set-view" data-view="list" aria-pressed="${vistaListino === "list"}" aria-label="${escape(t("view.list"))}" title="${escape(t("view.list"))}"><span aria-hidden="true">☷</span></button>
+      </div>
+    </div>`;
+  }
+
   function render() {
     const mese = new Date().getMonth() + 1;
     const lista = disponibili();
@@ -490,17 +516,16 @@
             <p class="orto-hero-date">${t("hero.kicker")}</p>
             <h1 id="vivHeroTitle">${t("hero.title")}</h1>
             <p class="orto-hero-sub">${t("hero.lead")}</p>
-            <a class="viv-hero-cta" href="#vivaioCatalog">
-              <span>${t("hero.cta")}</span>
-              <span aria-hidden="true">↓</span>
-            </a>
           </div>
           <div class="viv-hero-visual">
-            <span class="viv-visual-label">${t("hero.visual_label")}</span>
+            <div class="viv-visual-label">
+              <span aria-hidden="true">✓</span>
+              <strong>${t("hero.visual_label")}</strong>
+            </div>
             ${illustrazionePiantina()}
             <p class="viv-shipping">
               <span class="orto-notif-ico" aria-hidden="true">🚚</span>
-              <span>${t("hero.shipping")}</span>
+              <span><b>${t("hero.shipping_label")}</b><small>${t("hero.shipping")}</small></span>
             </p>
           </div>
         </div>
@@ -526,22 +551,14 @@
               <small>${t("hero.delivery")}</small>
             </span>
           </div>
-          <div class="viv-hero-stat">
-            <span class="viv-tray-preview" aria-hidden="true"><i>🌱</i><i>🌱</i><i>🌱</i><i>🌱</i><i>🌱</i><i>🌱</i></span>
-            <span class="viv-stat-copy">
-              <b>${t("hero.lot_value", { n: 6 })}</b>
-              <small>${t("hero.lot_label", {
-                n: CONSEGNA.vassoiMinimi,
-              })}</small>
-            </span>
-          </div>
         </div>
       </section>
 
       <div class="viv-listing" id="vivaioCatalog">
         ${lista.length ? barraFiltriHtml(lista, visibili) : ""}
+        ${lista.length ? barraVistaHtml() : ""}
         ${barraStatoHtml()}
-        <div class="orto-grid viv-grid">${
+        <div class="orto-grid viv-grid viv-grid--${vistaListino}">${
           !lista.length
             ? `<div class="orto-empty orto-empty--wide"><span class="orto-empty-ico">🌱</span>
                 <h4>${t("empty.title")}</h4><p>${t("empty.text")}</p>
@@ -580,6 +597,10 @@
           azzeraFiltri();
         });
       });
+
+    app.querySelectorAll('[data-viv-action="set-view"]').forEach((button) => {
+      button.addEventListener("click", () => impostaVistaListino(button.dataset.view));
+    });
 
     const input = document.getElementById("vivSearch");
     if (input && document.activeElement !== input && filtro) {
