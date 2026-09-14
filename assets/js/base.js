@@ -963,7 +963,7 @@
         "journey.piantine_label": "Parti dalle piantine",
         "journey.piantine_badge": "Più veloce",
         "journey.piantine_benefit":
-          "Inizia più avanti e raccogli prima.",
+          "Riduci l'attesa, semplifica l'avvio e raccogli prima.",
         "journey.piantine_hint": "Piantine già avviate",
         "journey.piantine_cta": "Scopri le piantine",
         "journey.or": "oppure",
@@ -1481,7 +1481,7 @@
         "journey.piantine_label": "Pornește cu răsaduri",
         "journey.piantine_badge": "Mai rapid",
         "journey.piantine_benefit":
-          "Începe mai avansat și recoltează mai devreme.",
+          "Redu așteptarea, simplifică începutul și recoltează mai devreme.",
         "journey.piantine_hint": "Răsaduri deja crescute",
         "journey.piantine_cta": "Descoperă răsadurile",
         "journey.or": "sau",

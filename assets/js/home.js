@@ -4732,6 +4732,7 @@ if (catalogSearchLink) {
   // -----------------------------------------------------------------------------
 
   const CONFIG_KEY = "serra.config.v1";
+  let preconfigReturnFocus = null;
 
   // Legge la configurazione salvata
   function readSavedCfg() {
@@ -4820,7 +4821,43 @@ if (catalogSearchLink) {
     const snapped = Math.round(Math.min(120, Math.max(30, raw)) / 5) * 5;
     slider.value = snapped;
     num.value = snapped;
+    updatePcStepperButtons("pcPathNum");
     updatePreconfigSummary();
+  }
+
+  /* Normalizza i valori digitati a mano e disattiva i pulsanti quando il limite è raggiunto. */
+  function normalizePcDimension(input) {
+    if (!input) return;
+    const min = Number.parseFloat(input.min);
+    const max = Number.parseFloat(input.max);
+    const step = Number.parseFloat(input.step) || 1;
+    const fallback = input.id === "pcW" ? 3 : 5;
+    const raw = Number.parseFloat(input.value);
+    const bounded = Math.min(
+      max,
+      Math.max(min, Number.isFinite(raw) ? raw : fallback),
+    );
+    const snapped = min + Math.round((bounded - min) / step) * step;
+    input.value = String(
+      Number(Math.min(max, Math.max(min, snapped)).toFixed(2)),
+    );
+    syncPcSlider(input.id, input.id === "pcW" ? "pcWSlider" : "pcLSlider");
+    updatePcStepperButtons(input.id);
+    updatePreconfigSummary();
+  }
+
+  function updatePcStepperButtons(targetId) {
+    const input = document.getElementById(targetId);
+    if (!input) return;
+    const value = Number.parseFloat(input.value);
+    const min = Number.parseFloat(input.min);
+    const max = Number.parseFloat(input.max);
+    document
+      .querySelectorAll(`.preconfig-step-btn[data-target="${targetId}"]`)
+      .forEach((button) => {
+        const step = Number.parseFloat(button.dataset.step);
+        button.disabled = step < 0 ? value <= min : value >= max;
+      });
   }
 
   // Aggiorna il riepilogo pre-configurazione
@@ -4932,6 +4969,10 @@ if (catalogSearchLink) {
       "preconfig.intro_note":
         "Un avvio rapido: bastano pochi dati per aprire il configuratore già pronto. Nulla è definitivo, potrai cambiare tutto in qualsiasi momento nella pagina successiva.",
       "preconfig.persona_label": "1. Che tipo di coltivatore sei?",
+      "preconfig.persona_help":
+        "Scegli il percorso più adatto a te. Potrai cambiarlo anche in seguito.",
+      "preconfig.persona_select": "Seleziona",
+      "preconfig.persona_selected": "Selezionato",
       "preconfig.summary_missing": "livello da scegliere",
       "preconfig.persona_badge": "Obbligatorio",
       "preconfig.sizes_label": "2. Misure interne",
@@ -4948,15 +4989,17 @@ if (catalogSearchLink) {
       "preconfig.serra_cold": "Fredda",
       "preconfig.serra_heated": "Riscaldata",
       "preconfig.month_label": "4. Mese di semina",
+      "preconfig.month_field_label": "Mese",
       "preconfig.cta": "Vai al configuratore",
+      "preconfig.cta_selected": "Continua come {level}",
       "preconfig.account_choice_title":
         "Vuoi riprendere la tua configurazione?",
       "preconfig.account_choice_text":
         "La configurazione attuale è già al sicuro. Puoi continuare senza modifiche oppure aggiornare i parametri della serra.",
       "preconfig.account_choice_continue": "Riprendi configurazione",
       "preconfig.account_choice_edit": "Modifica i parametri",
-      "preconfig.cta_hint": "Scegli il tuo livello per continuare",
-      "preconfig.cta_hint_sizes": "Controlla le misure della serra: ora {n}",
+      "preconfig.cta_hint": "Per continuare, scegli prima il tuo livello",
+      "preconfig.cta_hint_sizes": "Misure precompilate: verifica che {n} sia corretto",
       "preconfig.sizes_badge_check": "Da controllare",
       "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
       "hero.cfg_novizio": "Principiante",
@@ -4975,6 +5018,10 @@ if (catalogSearchLink) {
       "preconfig.intro_note":
         "Un început rapid: e nevoie doar de câteva date pentru a deschide configuratorul deja pregătit. Nimic nu este definitiv, poți schimba totul oricând pe pagina următoare.",
       "preconfig.persona_label": "1. Ce fel de cultivator ești?",
+      "preconfig.persona_help":
+        "Alege traseul potrivit pentru tine. Îl vei putea schimba și mai târziu.",
+      "preconfig.persona_select": "Selectează",
+      "preconfig.persona_selected": "Selectat",
       "preconfig.summary_missing": "nivel de ales",
       "preconfig.persona_badge": "Obligatoriu",
       "preconfig.sizes_label": "2. Dimensiuni interne",
@@ -4991,14 +5038,16 @@ if (catalogSearchLink) {
       "preconfig.serra_cold": "Rece",
       "preconfig.serra_heated": "Încălzită",
       "preconfig.month_label": "4. Luna de semănat",
+      "preconfig.month_field_label": "Lună",
       "preconfig.cta": "Mergi la configurator",
+      "preconfig.cta_selected": "Continuă ca {level}",
       "preconfig.account_choice_title": "Vrei să reiei configurarea?",
       "preconfig.account_choice_text":
         "Configurarea actuală este deja în siguranță. Poți continua fără modificări sau poți actualiza parametrii serei.",
       "preconfig.account_choice_continue": "Reia configurarea",
       "preconfig.account_choice_edit": "Modifică parametrii",
-      "preconfig.cta_hint": "Alege-ți nivelul pentru a continua",
-      "preconfig.cta_hint_sizes": "Verifică dimensiunile serei: acum {n}",
+      "preconfig.cta_hint": "Pentru a continua, alege mai întâi nivelul",
+      "preconfig.cta_hint_sizes": "Dimensiuni completate: verifică dacă {n} este corect",
       "preconfig.sizes_badge_check": "De verificat",
       "hero.cfg_levels_title": "Ce fel de cultivator ești?",
       "hero.cfg_novizio": "Începător",
@@ -5021,6 +5070,37 @@ if (catalogSearchLink) {
     );
   }
 
+  /* Mantiene coerenti testo, indicatore e CTA quando cambia scelta o lingua. */
+  function updatePersonaPresentation() {
+    const cards = Array.from(
+      document.querySelectorAll("#preconfigPersonaSection .pc-persona-card"),
+    );
+    const active = cards.find((card) => card.classList.contains("is-active"));
+    cards.forEach((card) => {
+      const isActive = card === active;
+      card.setAttribute("aria-pressed", String(isActive));
+      const action = card.querySelector(".pc-persona-action");
+      if (action) {
+        action.textContent = pcT(
+          isActive ? "preconfig.persona_selected" : "preconfig.persona_select",
+        );
+      }
+    });
+
+    const ctaLabel = document.getElementById("preconfigCtaLabel");
+    if (!ctaLabel) return;
+    if (!active) {
+      ctaLabel.textContent = pcT("preconfig.cta");
+      return;
+    }
+    const level =
+      active.querySelector(".pc-persona-body b")?.textContent.trim() || "";
+    ctaLabel.textContent = pcT("preconfig.cta_selected").replace(
+      "{level}",
+      level,
+    );
+  }
+
   // Applica la lingua alla pre-configurazione
   function applyPreconfigLang() {
     const overlay = document.getElementById("preconfigOverlay");
@@ -5035,6 +5115,7 @@ if (catalogSearchLink) {
       }
     });
     populatePcMonths();
+    updatePersonaPresentation();
   }
 
   /* Vero solo quando le misure a schermo sono ancora il ripiego del pannello e l'utente non le ha toccate in questa sessione. */
@@ -5049,23 +5130,6 @@ if (catalogSearchLink) {
     updatePreconfigCta();
   }
 
-  /* Porta lo sguardo sul passo 2 e lo fa notare una volta. */
-  function richiamaMisure() {
-    const campo = document.getElementById("preconfigSizesField");
-    if (!campo) return;
-    try {
-      campo.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    } catch (_) {}
-    campo.classList.remove("preconfig-persona-shake");
-    void campo.offsetWidth;
-    campo.classList.add("preconfig-persona-shake");
-    campo.addEventListener(
-      "animationend",
-      () => campo.classList.remove("preconfig-persona-shake"),
-      { once: true },
-    );
-  }
-
   // Aggiorna la CTA pre-configurazione
   function updatePreconfigCta() {
     const active = document.querySelector(
@@ -5076,7 +5140,7 @@ if (catalogSearchLink) {
 
     const daControllare = misureDaControllare();
     const badge = document.getElementById("preconfigSizesBadge");
-    if (badge) badge.hidden = !daControllare;
+    if (badge) badge.hidden = !daControllare || !active;
 
     const hint = document.getElementById("preconfigCtaHint");
     if (hint) {
@@ -5107,6 +5171,7 @@ if (catalogSearchLink) {
       cta.classList.add("preconfig-cta--disabled");
       cta.setAttribute("aria-disabled", "true");
     }
+    updatePersonaPresentation();
   }
 
   // Apre la scheda pre-configurazione
@@ -5146,6 +5211,7 @@ if (catalogSearchLink) {
     const pcPathNum = document.getElementById("pcPathNum");
     if (pcPath) pcPath.value = path;
     if (pcPathNum) pcPathNum.value = path;
+    ["pcW", "pcL", "pcPathNum"].forEach(updatePcStepperButtons);
     const pcZona = document.getElementById("pcZona");
     if (pcZona) pcZona.value = zona;
     syncPcRiscSelect(riscaldata);
@@ -5173,7 +5239,7 @@ if (catalogSearchLink) {
     const validLevels = ["novizio", "intermedio", "esperto"];
     const selectedLivello = validLevels.includes(livello) ? livello : null;
     const personaSection = document.getElementById("preconfigPersonaSection");
-    const hasLivello = Boolean(livello);
+    const hasLivello = Boolean(selectedLivello);
 
     if (personaSection) personaSection.hidden = hasLivello;
 
@@ -5185,36 +5251,31 @@ if (catalogSearchLink) {
         btn.setAttribute("aria-pressed", String(isActive));
       });
 
+    updatePreconfigCta();
     const cta = document.getElementById("preconfigCta");
     if (cta && hasLivello) {
       cta.href = target.href;
       cta.classList.remove("preconfig-cta--disabled");
       cta.removeAttribute("aria-disabled");
-    } else {
-      updatePreconfigCta();
     }
+    updatePersonaPresentation();
 
     overlay.removeAttribute("hidden");
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         overlay.classList.add("is-open");
 
-        setTimeout(function () {
-          const dimsCard = overlay.querySelector(".preconfig-vfield--primary");
-          if (!dimsCard) return;
-          dimsCard.classList.remove("dims-attention");
-          void dimsCard.offsetWidth;
-          dimsCard.classList.add("dims-attention");
-          dimsCard.addEventListener(
-            "animationend",
-            function () {
-              dimsCard.classList.remove("dims-attention");
-            },
-            { once: true },
-          );
-        }, 280);
+        window.setTimeout(() => {
+          const focusTarget = isSafeResumeEntry
+            ? document.getElementById("preconfigAccountContinue")
+            : overlay.querySelector(
+                ".pc-persona-card.is-active, .pc-persona-card, #pcW",
+              );
+          focusTarget?.focus({ preventScroll: true });
+        }, 120);
       });
     });
+    preconfigReturnFocus = document.activeElement;
     document.documentElement.classList.add("preconfig-open");
     document.body.classList.add("preconfig-open");
   }
@@ -5231,6 +5292,7 @@ if (catalogSearchLink) {
       overlay.setAttribute("hidden", "");
       document.documentElement.classList.remove("preconfig-open");
       document.body.classList.remove("preconfig-open");
+      preconfigReturnFocus?.focus?.({ preventScroll: true });
     };
     overlay.addEventListener("transitionend", onEnd, { once: true });
     window.setTimeout(onEnd, 450);
@@ -5305,7 +5367,27 @@ if (catalogSearchLink) {
           updatePreconfigCta();
           // Il riepilogo apre col livello: va rifatto anche qui.
           updatePreconfigSummary();
-          if (misureDaControllare()) richiamaMisure();
+        });
+        btn.addEventListener("keydown", function (event) {
+          if (
+            !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
+              event.key,
+            )
+          )
+            return;
+          event.preventDefault();
+          const cards = Array.from(
+            document.querySelectorAll("#preconfigPersonaSection .pc-persona-card"),
+          );
+          const direction = ["ArrowRight", "ArrowDown"].includes(event.key)
+            ? 1
+            : -1;
+          const next =
+            cards[
+              (cards.indexOf(this) + direction + cards.length) % cards.length
+            ];
+          next.focus();
+          next.click();
         });
       });
 
@@ -5327,7 +5409,14 @@ if (catalogSearchLink) {
         // Toccare larghezza o lunghezza vale come "le ho guardate".
         if (input.id === "pcW" || input.id === "pcL") segnaMisureToccate();
         if (input.id === "pcPathNum") syncPcPath("num");
-        else updatePreconfigSummary();
+        else {
+          syncPcSlider(
+            input.id,
+            input.id === "pcW" ? "pcWSlider" : "pcLSlider",
+          );
+          updatePcStepperButtons(input.id);
+          updatePreconfigSummary();
+        }
       });
     });
 
@@ -5360,11 +5449,15 @@ if (catalogSearchLink) {
       .getElementById("pcPathNum")
       ?.addEventListener("change", () => syncPcPath("num"));
 
-    ["pcW", "pcL", "pcMese"].forEach((id) => {
-      document
-        .getElementById(id)
-        ?.addEventListener("change", updatePreconfigSummary);
+    ["pcW", "pcL"].forEach((id) => {
+      document.getElementById(id)?.addEventListener("change", (event) => {
+        normalizePcDimension(event.currentTarget);
+        segnaMisureToccate();
+      });
     });
+    document
+      .getElementById("pcMese")
+      ?.addEventListener("change", updatePreconfigSummary);
 
     document
       .getElementById("preconfigCta")
@@ -5396,11 +5489,30 @@ if (catalogSearchLink) {
       });
 
     document.addEventListener("keydown", (e) => {
-      if (
-        e.key === "Escape" &&
-        !document.getElementById("preconfigOverlay")?.hasAttribute("hidden")
-      ) {
+      const overlay = document.getElementById("preconfigOverlay");
+      const isOpen = overlay && !overlay.hasAttribute("hidden");
+      if (e.key === "Escape" && isOpen) {
         closePreconfigSheet();
+        return;
+      }
+      if (e.key !== "Tab" || !isOpen) return;
+      const focusable = Array.from(
+        overlay.querySelectorAll(
+          "button:not([disabled]), a[href], input:not([disabled]), select:not([disabled])",
+        ),
+      ).filter(
+        (element) =>
+          !element.closest("[hidden]") && element.offsetParent !== null,
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     });
 

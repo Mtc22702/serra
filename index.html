@@ -31,7 +31,7 @@
 
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260909-22c516094c76";
+      window.SERRA_APP_VERSION = "20260914-0a66ac7defde";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -84,17 +84,17 @@
     <!-- Fogli di stile principali -->
     <link
       rel="stylesheet"
-      href="assets/css/base.css?v=20260909-22c516094c76"
+      href="assets/css/base.css?v=20260914-0a66ac7defde"
     />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260909-22c516094c76"
+      href="assets/css/serra-home.css?v=20260914-0a66ac7defde"
     />
 
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260909-22c516094c76"
+      href="assets/css/serra-configuratore.css?v=20260914-0a66ac7defde"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -410,7 +410,7 @@
                     Parti dalle piantine
                   </h3>
                   <p data-i18n="journey.piantine_benefit">
-                    Inizia più avanti e raccogli prima.
+                    Riduci l'attesa, semplifica l'avvio e raccogli prima.
                   </p>
                   <p class="journey-route-fact" data-i18n="journey.piantine_hint">Piantine già avviate</p>
                 </div>
@@ -1173,7 +1173,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260909-22c516094c76</span
+          >v20260914-0a66ac7defde</span
         >
       </div>
     </footer>
@@ -1695,9 +1695,21 @@
                 >Obbligatorio</span
               >
             </div>
-            <div class="pc-persona-cards">
+            <p
+              class="preconfig-persona-help"
+              id="preconfigPersonaHelp"
+              data-i18n="preconfig.persona_help"
+            >
+              Scegli il percorso più adatto a te. Potrai cambiarlo anche in seguito.
+            </p>
+            <div
+              class="pc-persona-cards"
+              role="group"
+              aria-labelledby="preconfigPersonaHelp"
+            >
               <button
                 class="pc-persona-card pc-persona-card--novizio"
+                type="button"
                 data-livello="novizio"
                 data-url="configuratore.html?livello=novizio&guided=1&source=index"
                 aria-pressed="false"
@@ -1713,11 +1725,15 @@
                   <small data-i18n="hero.cfg_nov_hint"
                     >Orto pronto, guidato passo passo</small
                   >
+                  <span class="pc-persona-action" data-i18n="preconfig.persona_select"
+                    >Seleziona</span
+                  >
                 </span>
-                <span class="pc-persona-go" aria-hidden="true">→</span>
+                <span class="pc-persona-go" aria-hidden="true"></span>
               </button>
               <button
                 class="pc-persona-card pc-persona-card--intermedio"
+                type="button"
                 data-livello="intermedio"
                 data-url="configuratore.html?livello=intermedio&guided=1&source=index"
                 aria-pressed="false"
@@ -1733,11 +1749,15 @@
                   <small data-i18n="hero.cfg_int_hint"
                     >Guidato, ma personalizzabile</small
                   >
+                  <span class="pc-persona-action" data-i18n="preconfig.persona_select"
+                    >Seleziona</span
+                  >
                 </span>
-                <span class="pc-persona-go" aria-hidden="true">→</span>
+                <span class="pc-persona-go" aria-hidden="true"></span>
               </button>
               <button
                 class="pc-persona-card pc-persona-card--esperto"
+                type="button"
                 data-livello="esperto"
                 data-url="configuratore.html?livello=esperto&mode=expert&empty=1&source=index"
                 aria-pressed="false"
@@ -1753,8 +1773,11 @@
                   <small data-i18n="hero.cfg_exp_hint"
                     >Scegli un layout pronto oppure componi liberamente</small
                   >
+                  <span class="pc-persona-action" data-i18n="preconfig.persona_select"
+                    >Seleziona</span
+                  >
                 </span>
-                <span class="pc-persona-go" aria-hidden="true">→</span>
+                <span class="pc-persona-go" aria-hidden="true"></span>
               </button>
             </div>
           </div>
@@ -1777,13 +1800,13 @@
               <span class="preconfig-fld-row"
                 ><svg
                   class="preconfig-axis preconfig-axis--width"
-                  viewBox="0 0 24 18"
+                  viewBox="0 0 24 24"
                   aria-hidden="true"
                   focusable="false"
                 >
-                  <rect class="preconfig-axis-frame" x="4" y="2" width="16" height="10" rx="2" />
-                  <path class="preconfig-axis-measure" d="M5 15h14M5 15l2-2M5 15l2 2M19 15l-2-2M19 15l-2 2" /></svg
-                ><label class="preconfig-fld" data-i18n="preconfig.width"
+                  <path class="preconfig-axis-guide" d="M3 5v14M21 5v14" />
+                  <path class="preconfig-axis-measure" d="M3 12h18M3 12l4-4M3 12l4 4M21 12l-4-4M21 12l-4 4" /></svg
+                ><label class="preconfig-fld" for="pcW" data-i18n="preconfig.width"
                   >Larghezza</label
                 ><span class="preconfig-fld-unit" aria-hidden="true"
                   >m</span
@@ -1792,9 +1815,10 @@
               <div class="preconfig-stepper">
                 <button
                   class="preconfig-step-btn"
+                  type="button"
                   data-target="pcW"
                   data-step="-0.5"
-                  aria-label="−"
+                  aria-label="Diminuisci la larghezza"
                 >
                   −
                 </button>
@@ -1802,6 +1826,7 @@
                   class="preconfig-step-input"
                   type="number"
                   id="pcW"
+                  aria-label="Larghezza interna in metri"
                   min="1"
                   max="12"
                   step="0.5"
@@ -1810,9 +1835,10 @@
                 />
                 <button
                   class="preconfig-step-btn"
+                  type="button"
                   data-target="pcW"
                   data-step="0.5"
-                  aria-label="+"
+                  aria-label="Aumenta la larghezza"
                 >
                   +
                 </button>
@@ -1832,13 +1858,13 @@
               <span class="preconfig-fld-row"
                 ><svg
                   class="preconfig-axis preconfig-axis--length"
-                  viewBox="0 0 18 24"
+                  viewBox="0 0 24 24"
                   aria-hidden="true"
                   focusable="false"
                 >
-                  <rect class="preconfig-axis-frame" x="6" y="4" width="10" height="16" rx="2" />
-                  <path class="preconfig-axis-measure" d="M3 5v14M3 5l-2 2M3 5l2 2M3 19l-2-2M3 19l2-2" /></svg
-                ><label class="preconfig-fld" data-i18n="preconfig.length"
+                  <path class="preconfig-axis-guide" d="M5 3h14M5 21h14" />
+                  <path class="preconfig-axis-measure" d="M12 3v18M12 3L8 7M12 3l4 4M12 21l-4-4M12 21l4-4" /></svg
+                ><label class="preconfig-fld" for="pcL" data-i18n="preconfig.length"
                   >Lunghezza</label
                 ><span class="preconfig-fld-unit" aria-hidden="true"
                   >m</span
@@ -1847,9 +1873,10 @@
               <div class="preconfig-stepper">
                 <button
                   class="preconfig-step-btn"
+                  type="button"
                   data-target="pcL"
                   data-step="-0.5"
-                  aria-label="−"
+                  aria-label="Diminuisci la lunghezza"
                 >
                   −
                 </button>
@@ -1857,6 +1884,7 @@
                   class="preconfig-step-input"
                   type="number"
                   id="pcL"
+                  aria-label="Lunghezza interna in metri"
                   min="1"
                   max="30"
                   step="0.5"
@@ -1865,9 +1893,10 @@
                 />
                 <button
                   class="preconfig-step-btn"
+                  type="button"
                   data-target="pcL"
                   data-step="0.5"
-                  aria-label="+"
+                  aria-label="Aumenta la lunghezza"
                 >
                   +
                 </button>
@@ -1890,16 +1919,16 @@
                 <span class="preconfig-fld-row"
                   ><svg
                     class="preconfig-axis preconfig-axis--path"
-                    viewBox="0 0 24 18"
+                    viewBox="0 0 24 24"
                     aria-hidden="true"
                     focusable="false"
                   >
-                    <rect class="preconfig-axis-bed" x="2" y="2" width="7" height="14" rx="2" />
-                    <rect class="preconfig-axis-walkway" x="10" y="2" width="4" height="14" rx="1.3" />
-                    <rect class="preconfig-axis-bed" x="15" y="2" width="7" height="14" rx="2" />
-                    <path class="preconfig-axis-measure" d="M12 5v8M12 5l-1.5 1.6M12 5l1.5 1.6M12 13l-1.5-1.6M12 13l1.5-1.6" />
+                    <rect class="preconfig-axis-bed" x="2" y="3" width="6" height="18" rx="2" />
+                    <rect class="preconfig-axis-walkway" x="9" y="3" width="6" height="18" rx="1.5" />
+                    <rect class="preconfig-axis-bed" x="16" y="3" width="6" height="18" rx="2" />
+                    <path class="preconfig-axis-measure" d="M9.5 12h5M9.5 12l2-2M9.5 12l2 2M14.5 12l-2-2M14.5 12l-2 2" />
                   </svg
-                  ><label class="preconfig-fld" data-i18n="preconfig.path_label_short"
+                  ><label class="preconfig-fld" for="pcPathNum" data-i18n="preconfig.path_label_short"
                     >Camminamento</label
                   ><span class="preconfig-fld-unit" aria-hidden="true"
                     >cm</span
@@ -1912,9 +1941,10 @@
               <div class="preconfig-stepper">
                 <button
                   class="preconfig-step-btn"
+                  type="button"
                   data-target="pcPathNum"
                   data-step="-5"
-                  aria-label="−"
+                  aria-label="Riduci il camminamento"
                 >
                   −
                 </button>
@@ -1922,6 +1952,7 @@
                   class="preconfig-step-input"
                   type="number"
                   id="pcPathNum"
+                  aria-label="Larghezza del camminamento in centimetri"
                   min="30"
                   max="120"
                   step="5"
@@ -1931,9 +1962,10 @@
                 />
                 <button
                   class="preconfig-step-btn"
+                  type="button"
                   data-target="pcPathNum"
                   data-step="5"
-                  aria-label="+"
+                  aria-label="Aumenta il camminamento"
                 >
                   +
                 </button>
@@ -2007,22 +2039,30 @@
             4. Mese di semina
           </div>
           <div class="preconfig-month-wrap">
-            <span class="preconfig-month-icon" aria-hidden="true">📅</span>
-            <select id="pcMese" class="preconfig-month-select"></select>
-            <span class="preconfig-month-arrow" aria-hidden="true">
-              <svg
-                viewBox="0 0 12 8"
-                width="11"
-                height="11"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M1 1l5 5 5-5" />
-              </svg>
-            </span>
+            <label
+              class="preconfig-fld preconfig-month-label"
+              for="pcMese"
+              data-i18n="preconfig.month_field_label"
+              >Mese</label
+            >
+            <div class="preconfig-month-control">
+              <span class="preconfig-month-icon" aria-hidden="true">📅</span>
+              <select id="pcMese" class="preconfig-month-select"></select>
+              <span class="preconfig-month-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 12 8"
+                  width="11"
+                  height="11"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M1 1l5 5 5-5" />
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -2034,7 +2074,9 @@
             href="#"
             aria-describedby="preconfigCtaHint"
           >
-            <span data-i18n="preconfig.cta">Vai al configuratore</span>
+            <span id="preconfigCtaLabel" data-i18n="preconfig.cta"
+              >Vai al configuratore</span
+            >
             <span class="preconfig-cta-arrow" aria-hidden="true">→</span>
           </a>
           <!-- Testo visibile finché manca la scelta necessaria ad attivare il pulsante -->
@@ -2052,11 +2094,11 @@
     </div>
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
-    <script src="assets/js/base.js?v=20260909-22c516094c76" defer></script>
+    <script src="assets/js/base.js?v=20260914-0a66ac7defde" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
-    <script src="assets/js/home.js?v=20260909-22c516094c76" defer></script>
+    <script src="assets/js/home.js?v=20260914-0a66ac7defde" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

@@ -12815,17 +12815,19 @@ html[data-theme="dark"]
 /* Pannello di avvio: profilo, spazio e condizioni sono tre decisioni separate. */
 @layer coerenza {
   .preconfig-sheet--v2 {
-    width: min(760px, calc(100vw - 32px));
+    width: min(900px, calc(100vw - 32px));
     border-color: rgba(46, 107, 60, .3);
-    box-shadow: 0 12px 28px rgba(21, 54, 32, .18), 0 30px 70px rgba(21, 54, 32, .24);
+    border-radius: 24px;
+    box-shadow: 0 16px 36px rgba(21, 54, 32, .2), 0 34px 80px rgba(21, 54, 32, .25);
   }
   .preconfig-sheet--v2 .preconfig-panel-head {
+    min-height: 74px;
     border-bottom: 1px solid rgba(46, 107, 60, .12);
     background: linear-gradient(105deg, #f9fff4, #f2f9ed);
   }
   .preconfig-sheet--v2 .preconfig-body {
-    gap: 7px 14px;
-    padding: 12px 18px 14px;
+    gap: 9px 18px;
+    padding: 16px 22px 20px;
   }
   .preconfig-sheet--v2 .preconfig-restored {
     display: flex;
@@ -12841,19 +12843,108 @@ html[data-theme="dark"]
     font-size: 12px;
   }
   .preconfig-sheet--v2 #preconfigPersonaSection {
-    padding-bottom: 3px;
+    padding: 13px 14px 15px;
+    border: 1px solid rgba(47, 107, 58, .16);
+    border-radius: 16px;
+    background: rgba(240, 247, 236, .72);
+    box-shadow: inset 0 1px rgba(255,255,255,.78);
+  }
+  .preconfig-sheet--v2 #preconfigPersonaSection .preconfig-section-label {
+    margin-top: 0;
+  }
+  .preconfig-sheet--v2 .preconfig-persona-help {
+    margin: 1px 0 11px;
+    color: #5a6f60;
+    font-size: .76rem;
+    line-height: 1.4;
   }
   .preconfig-sheet--v2 .pc-persona-cards {
-    gap: 9px;
+    gap: 12px;
   }
   .preconfig-sheet--v2 .pc-persona-card {
-    min-height: 76px;
-    padding: 10px 11px;
-    box-shadow: 0 3px 7px color-mix(in srgb, var(--accent) 10%, transparent), inset 0 1px rgba(255,255,255,.72);
+    min-height: 116px;
+    align-items: flex-start;
+    padding: 13px 12px 12px;
+    border: 2px solid color-mix(in srgb, var(--accent) 44%, #d7dfd4);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 6%, #fff);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 10%, transparent), inset 0 1px #fff;
+  }
+  .preconfig-sheet--v2 .pc-persona-card::before {
+    top: 12px;
+    bottom: 12px;
+    width: 4px;
+  }
+  .preconfig-sheet--v2 .pc-persona-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 78%, #17371f);
+    background: color-mix(in srgb, var(--accent) 11%, #fff);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 18%, transparent), inset 0 1px #fff;
   }
   .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) {
     transform: translateY(-1px);
-    box-shadow: 0 5px 13px color-mix(in srgb, var(--accent) 24%, transparent), 0 0 0 2px color-mix(in srgb, var(--accent) 13%, transparent), inset 0 1px rgba(255,255,255,.78);
+    border-color: color-mix(in srgb, var(--accent) 88%, #183620);
+    background: color-mix(in srgb, var(--accent) 18%, #fff);
+    box-shadow: 0 7px 16px color-mix(in srgb, var(--accent) 22%, transparent), 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent), inset 0 1px #fff;
+  }
+  .preconfig-sheet--v2 .pc-persona-ico {
+    width: 44px;
+    height: 44px;
+    border-width: 1.5px;
+  }
+  .preconfig-sheet--v2 .pc-persona-body b {
+    padding-right: 22px;
+    color: #183c24;
+    font-size: .9rem;
+  }
+  .preconfig-sheet--v2 .pc-persona-body small {
+    min-height: 2.6em;
+    margin-top: 4px;
+    color: #53665a;
+    font-size: .71rem;
+    line-height: 1.3;
+  }
+  .preconfig-sheet--v2 .pc-persona-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 25px;
+    margin-top: 8px;
+    padding: 4px 9px;
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    border-radius: 999px;
+    background: rgba(255,255,255,.76);
+    color: var(--accent-text);
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .015em;
+  }
+  .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) .pc-persona-action {
+    border-color: var(--accent-edge);
+    background: var(--accent-edge);
+    color: #fff;
+  }
+  .preconfig-sheet--v2 .pc-persona-go {
+    position: absolute;
+    top: 12px;
+    right: 11px;
+    width: 23px;
+    height: 23px;
+    border: 2px solid color-mix(in srgb, var(--accent) 55%, #fff);
+    background: rgba(255,255,255,.8);
+    opacity: 1;
+  }
+  .preconfig-sheet--v2 .pc-persona-go::before {
+    content: "";
+  }
+  .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) .pc-persona-go {
+    border-color: var(--accent-edge);
+    background: var(--accent-edge);
+  }
+  .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) .pc-persona-go::before {
+    content: "✓";
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 900;
   }
   .preconfig-sheet--v2 .preconfig-section-label {
     margin: 7px 0 4px;
@@ -12862,8 +12953,8 @@ html[data-theme="dark"]
   }
   .preconfig-sheet--v2 .preconfig-vfield,
   .preconfig-sheet--v2 .preconfig-month-wrap {
-    border-color: rgba(54, 117, 67, .24);
-    box-shadow: 0 5px 12px rgba(27, 72, 39, .08), inset 0 1px rgba(255,255,255,.78);
+    border-color: rgba(54, 117, 67, .3);
+    box-shadow: 0 4px 10px rgba(27, 72, 39, .07), inset 0 1px rgba(255,255,255,.82);
   }
   .preconfig-sheet--v2 .preconfig-vfield--dims {
     border-radius: 15px 15px 5px 5px;
@@ -12872,6 +12963,44 @@ html[data-theme="dark"]
   .preconfig-sheet--v2 .preconfig-vfield--dims {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
+  }
+  /* Le tre icone descrivono la direzione della misura, non la forma della serra. */
+  .preconfig-sheet--v2 .preconfig-axis {
+    width: 23px;
+    height: 23px;
+    padding: 4px;
+    border-width: 1.5px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.5);
+    color: var(--serra-green);
+    stroke-width: 1.7;
+  }
+  .preconfig-sheet--v2 .preconfig-axis--length {
+    width: 23px;
+    height: 23px;
+  }
+  .preconfig-sheet--v2 .preconfig-axis-guide {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+    opacity: .42;
+  }
+  .preconfig-sheet--v2 .preconfig-axis-measure {
+    stroke: currentColor;
+    stroke-width: 1.9;
+  }
+  .preconfig-sheet--v2 .preconfig-axis--path {
+    color: #2f6b3a;
+  }
+  .preconfig-sheet--v2 .preconfig-axis--path .preconfig-axis-walkway {
+    fill: #efd79d;
+    stroke: #9a681f;
+    stroke-width: 1.15;
+  }
+  .preconfig-sheet--v2 .preconfig-axis--path .preconfig-axis-bed {
+    fill: #a9d5ac;
+    stroke: #3d7b49;
+    stroke-width: 1.15;
   }
   .preconfig-sheet--v2 .preconfig-dim--path {
     display: flex;
@@ -12892,20 +13021,73 @@ html[data-theme="dark"]
   }
   .preconfig-sheet--v2 .preconfig-month-wrap {
     background: linear-gradient(100deg, #e6f2dd, #f8fcf5);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    min-height: 0;
+    padding: 11px;
+  }
+  .preconfig-sheet--v2 .preconfig-month-label {
+    display: block;
+    margin: 0 0 6px;
+  }
+  .preconfig-sheet--v2 .preconfig-month-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 43px;
+    overflow: hidden;
+    border: 1px solid rgba(54,117,67,.26);
+    border-radius: var(--control-radius);
+    background: rgba(255,255,255,.92);
+    box-shadow: 0 1px 2px rgba(27,72,39,.05), inset 0 1px rgba(255,255,255,.9);
+    transition: border-color .16s ease, box-shadow .16s ease;
+  }
+  .preconfig-sheet--v2 .preconfig-month-control:focus-within {
+    border-color: var(--serra-green);
+    box-shadow: 0 0 0 3px rgba(82,183,136,.14);
+  }
+  .preconfig-sheet--v2 .preconfig-month-icon {
+    margin-left: 10px;
+  }
+  .preconfig-sheet--v2 .preconfig-month-select {
+    min-height: 41px;
+    padding: 0 34px 0 0;
+    background: transparent
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232f6b3a' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")
+      no-repeat right 12px center;
   }
   .preconfig-sheet--v2 .preconfig-stepper,
   .preconfig-sheet--v2 .preconfig-select {
-    border-color: rgba(54, 117, 67, .2);
-    background-color: rgba(255,255,255,.82);
-    box-shadow: inset 0 1px rgba(255,255,255,.84);
+    min-height: 43px;
+    border-color: rgba(54, 117, 67, .26);
+    background-color: rgba(255,255,255,.92);
+    box-shadow: 0 1px 2px rgba(27,72,39,.05), inset 0 1px rgba(255,255,255,.9);
+  }
+  .preconfig-sheet--v2 .preconfig-step-btn {
+    width: 42px;
+    background: rgba(53,107,66,.1);
+    font-size: 1.05rem;
+    transition: background .16s ease, color .16s ease;
   }
   .preconfig-sheet--v2 .preconfig-step-btn:hover {
-    background: rgba(62, 126, 73, .16);
+    background: rgba(53,107,66,.2);
+  }
+  .preconfig-sheet--v2 .preconfig-step-btn:disabled {
+    color: rgba(47, 107, 58, .3);
+    background: rgba(47, 107, 58, .035);
+    cursor: not-allowed;
+  }
+  .preconfig-sheet--v2 .preconfig-select:hover,
+  .preconfig-sheet--v2 .preconfig-month-control:hover {
+    border-color: rgba(47,107,58,.5);
   }
   .preconfig-sheet--v2 .preconfig-footer {
     border-top: 1px solid rgba(46,107,60,.15);
     background: linear-gradient(100deg, #f8fcf5, #edf7e9);
-    box-shadow: 0 -8px 20px rgba(27,72,39,.05);
+    box-shadow: 0 -10px 24px rgba(27,72,39,.07);
   }
   .preconfig-sheet--v2 .preconfig-summary {
     padding: 8px 10px;
@@ -12916,7 +13098,7 @@ html[data-theme="dark"]
   }
   .preconfig-sheet--v2 .preconfig-cta {
     border-radius: var(--control-radius);
-    box-shadow: 0 4px 10px rgba(37,107,53,.2);
+    box-shadow: 0 5px 12px rgba(37,107,53,.24);
   }
   .preconfig-sheet--v2 .preconfig-cta:not(.preconfig-cta--disabled):hover {
     transform: translateY(-1px);
@@ -12938,9 +13120,52 @@ html[data-theme="dark"]
     background: #214a2e;
     color: #d7ead5;
   }
+  html[data-theme="dark"] .preconfig-sheet--v2 #preconfigPersonaSection {
+    border-color: rgba(151,212,155,.2);
+    background: rgba(20,54,32,.62);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-persona-help {
+    color: #afc9b2;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-axis {
+    background: rgba(12,34,21,.48);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card {
+    background: color-mix(in srgb, var(--accent) 14%, #163721);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card:hover {
+    background: color-mix(in srgb, var(--accent) 23%, #163721);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) {
+    background: color-mix(in srgb, var(--accent) 34%, #163721);
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-body b,
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-body small {
+    color: #e5f1e3;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-action,
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-go {
+    background: rgba(14,38,23,.78);
+    color: #e5f1e3;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) .pc-persona-action,
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) .pc-persona-go {
+    background: var(--accent-edge);
+    color: #fff;
+  }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--dims { background: linear-gradient(145deg, #275334, #1d4129); }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--climate { background: linear-gradient(145deg, #265233, #1d4129); }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-month-wrap { background: linear-gradient(100deg, #2a5231, #1b3d27); }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-month-control {
+    border-color: rgba(151,212,155,.27);
+    background: #173b26;
+  }
+  html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-month-select {
+    color: #edf8e9;
+    background: transparent
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23bce5b8' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")
+      no-repeat right 12px center;
+  }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-summary { background: rgba(54,101,61,.46); color: #d5e8d4; }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-section-label { color: #bce5b8; }
   html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-select,
@@ -12965,7 +13190,13 @@ html[data-theme="dark"]
     .preconfig-sheet--v2 .preconfig-body { padding: 10px 14px 12px; gap: 7px; }
     .preconfig-sheet--v2 .preconfig-restored { min-height: 44px; padding: 7px 9px; font-size: 11.5px; line-height: 1.35; }
     .preconfig-sheet--v2 .pc-persona-cards { gap: 7px; }
-    .preconfig-sheet--v2 .pc-persona-card { min-height: 70px; padding: 8px; }
+    .preconfig-sheet--v2 #preconfigPersonaSection { padding: 11px; }
+    .preconfig-sheet--v2 .preconfig-persona-help { margin-bottom: 9px; font-size: .7rem; }
+    .preconfig-sheet--v2 .pc-persona-card { min-height: 112px; padding: 10px 7px; }
+    .preconfig-sheet--v2 .pc-persona-body b { padding-right: 0; }
+    .preconfig-sheet--v2 .pc-persona-body small { min-height: 2.3em; }
+    .preconfig-sheet--v2 .pc-persona-action { margin-top: 6px; padding: 3px 7px; }
+    .preconfig-sheet--v2 .pc-persona-go { top: 7px; right: 7px; width: 20px; height: 20px; }
     .preconfig-sheet--v2 .preconfig-summary { display: none; }
   }
   @media (min-width: 841px) {

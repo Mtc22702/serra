@@ -3841,6 +3841,8 @@ html[data-theme="dark"] .journey-care-summary span {
   html .journey-route-copy { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 0; }
   html .journey-route-copy h3 { margin: 0 0 10px; }
   html .journey-route-copy p { min-height: 0; margin: 0; }
+  /* Riserva due righe alle promesse: i badge informativi partono dalla stessa quota. */
+  html #percorsi .journey-route-copy > p:not(.journey-route-fact) { min-height: 3em; }
   html #percorsi .journey-route-kicker {
     align-self: flex-start;
     margin-bottom: 12px;
@@ -3910,6 +3912,10 @@ html[data-theme="dark"] .journey-care-summary span {
   html #percorsi .journey-route .journey-route-cta:hover {
     background: var(--button-primary-fill-hover);
     border-color: color-mix(in srgb, var(--button-primary) 72%, transparent);
+  }
+  html #percorsi .journey-route:hover .journey-route-arrow,
+  html #percorsi .journey-route:focus-within .journey-route-arrow {
+    transform: translateX(3px);
   }
   /* Le frecce sono testo puro: la variante appartiene alla CTA, non all'icona. */
   html #percorsi .journey-route--seeds .journey-route-cta {
@@ -4023,6 +4029,7 @@ html[data-theme="dark"] .journey-care-summary span {
         inset 0 1px rgba(255,255,255,.9);
     }
     html .journey-route-copy { grid-column: 2; grid-row: 1; }
+    html #percorsi .journey-route-copy > p:not(.journey-route-fact) { min-height: 0; }
     html #percorsi .journey-route-kicker,
     html #percorsi .journey-route-copy .journey-route-fact { display: none; }
     html .journey-route-visual,
