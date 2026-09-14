@@ -930,7 +930,18 @@
         // Il percorso della home: unico componente che dice cosa può fare l'utente e da dove entra.
         "journey.choice_kicker": "Inizia da qui",
         "journey.choice_title": "Scegli come iniziare",
-        "journey.choice_or": "oppure",
+        "journey.selection_group_aria": "Scegli uno dei tre percorsi disponibili",
+        "journey.select": "Seleziona",
+        "journey.selected": "Selezionato",
+        "journey.selection_help":
+          "Seleziona una card per scegliere il tuo punto di partenza.",
+        "journey.selection_ready_plan":
+          "Hai scelto un piano su misura per la tua serra.",
+        "journey.selection_ready_seeds":
+          "Hai scelto di partire dai semi.",
+        "journey.selection_ready_seedlings":
+          "Hai scelto le piantine già avviate.",
+        "journey.selection_cta_idle": "Scegli un percorso",
         "journey.choice_sub": "Tre percorsi per partire, uno strumento per continuare.",
         "journey.choice_hint":
           "Parti dalla situazione che ti assomiglia di più",
@@ -966,7 +977,6 @@
           "Riduci l'attesa, semplifica l'avvio e raccogli prima.",
         "journey.piantine_hint": "Piantine già avviate",
         "journey.piantine_cta": "Scopri le piantine",
-        "journey.or": "oppure",
         "journey.step3_title": "Hai già iniziato a coltivare?",
         "journey.step3_badge": "gratuito",
         "journey.step3_copy":
@@ -1448,7 +1458,18 @@
         "hero.plan_caption": "Exemplu de plan · 4 straturi, 12 m²",
         "journey.choice_kicker": "Începe de aici",
         "journey.choice_title": "Alege cum începi",
-        "journey.choice_or": "sau",
+        "journey.selection_group_aria": "Alege unul dintre cele trei trasee disponibile",
+        "journey.select": "Selectează",
+        "journey.selected": "Selectat",
+        "journey.selection_help":
+          "Selectează un card pentru a alege punctul de pornire.",
+        "journey.selection_ready_plan":
+          "Ai ales un plan personalizat pentru sera ta.",
+        "journey.selection_ready_seeds":
+          "Ai ales să începi de la semințe.",
+        "journey.selection_ready_seedlings":
+          "Ai ales răsadurile deja crescute.",
+        "journey.selection_cta_idle": "Alege un traseu",
         "journey.choice_sub": "Trei trasee pentru a porni și un instrument pentru a continua.",
         "journey.choice_hint":
           "Pornește de la situația care ți se potrivește cel mai bine",
@@ -1484,7 +1505,6 @@
           "Redu așteptarea, simplifică începutul și recoltează mai devreme.",
         "journey.piantine_hint": "Răsaduri deja crescute",
         "journey.piantine_cta": "Descoperă răsadurile",
-        "journey.or": "sau",
         "journey.step3_title": "Ai început deja să cultivi?",
         "journey.step3_badge": "gratuit",
         "journey.step3_copy":

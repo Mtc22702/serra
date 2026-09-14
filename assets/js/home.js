@@ -5298,11 +5298,127 @@ if (catalogSearchLink) {
     window.setTimeout(onEnd, 450);
   }
 
+  // Trasforma le tre card iniziali in un radiogruppo e configura l'unica CTA in base alla scelta.
+  function initJourneySelection() {
+    const cards = Array.from(
+      document.querySelectorAll("#percorsi .journey-route[data-journey-route]"),
+    );
+    const cta = document.getElementById("journeySelectionCta");
+    const ctaLabel = cta?.querySelector("[data-i18n]");
+    const help = document.getElementById("journeySelectionHelp");
+    if (!cards.length || !cta || !ctaLabel || !help) return;
+
+    let selectedCard = null;
+    const ctaVariants = [
+      "journey-selection-cta--plan",
+      "journey-selection-cta--seeds",
+      "journey-selection-cta--seedlings",
+    ];
+
+    const updateTranslatedText = (element, key) => {
+      element.dataset.i18n = key;
+      element.textContent = t(key);
+    };
+
+    const selectCard = (card, focusCard = false) => {
+      selectedCard = card;
+      cards.forEach((item) => {
+        const isSelected = item === card;
+        item.setAttribute("aria-checked", String(isSelected));
+        item.tabIndex = isSelected ? 0 : -1;
+        const stateLabel = item.querySelector(
+          ".journey-route-selection-state [data-i18n]",
+        );
+        if (stateLabel) {
+          updateTranslatedText(
+            stateLabel,
+            isSelected ? "journey.selected" : "journey.select",
+          );
+        }
+      });
+
+      cta.classList.remove("is-disabled", ...ctaVariants);
+      cta.classList.add(
+        `journey-selection-cta--${card.dataset.journeyRoute}`,
+      );
+      cta.removeAttribute("aria-disabled");
+      cta.removeAttribute("tabindex");
+      cta.href = card.dataset.journeyHref;
+      updateTranslatedText(ctaLabel, card.dataset.journeyCtaKey);
+      updateTranslatedText(
+        help,
+        `journey.selection_ready_${card.dataset.journeyRoute}`,
+      );
+      if (focusCard) card.focus({ preventScroll: true });
+      if (window.innerWidth <= 660) {
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        window.setTimeout(() => {
+          cta.scrollIntoView({
+            behavior: reduceMotion ? "auto" : "smooth",
+            block: "nearest",
+          });
+        }, 180);
+      }
+    };
+
+    cards.forEach((card, index) => {
+      card.addEventListener("click", () => selectCard(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          selectCard(card);
+          return;
+        }
+        const previous = event.key === "ArrowLeft" || event.key === "ArrowUp";
+        const next = event.key === "ArrowRight" || event.key === "ArrowDown";
+        if (!previous && !next && event.key !== "Home" && event.key !== "End") return;
+        event.preventDefault();
+        let targetIndex = index;
+        if (previous) targetIndex = (index - 1 + cards.length) % cards.length;
+        if (next) targetIndex = (index + 1) % cards.length;
+        if (event.key === "Home") targetIndex = 0;
+        if (event.key === "End") targetIndex = cards.length - 1;
+        selectCard(cards[targetIndex], true);
+      });
+    });
+
+    cta.addEventListener("click", (event) => {
+      if (!selectedCard) {
+        event.preventDefault();
+        cards[0].focus({ preventScroll: true });
+        return;
+      }
+      const route = selectedCard.dataset.journeyRoute;
+      if (route === "plan") {
+        event.preventDefault();
+        openPreconfigSheet(cta.href);
+        return;
+      }
+      if (route === "seeds") {
+        event.preventDefault();
+        const target =
+          document.querySelector("#stagione .stagione-kicker") ||
+          document.getElementById("stagione");
+        if (!target) return;
+        history.replaceState(null, "", "#stagione");
+        scrollElementBelowNav(target);
+        window.setTimeout(() => {
+          if (window.innerWidth > 660) {
+            document.getElementById("catalogSearch")?.focus({ preventScroll: true });
+          }
+        }, 600);
+      }
+    });
+  }
+
   // -----------------------------------------------------------------------------
   // Home — Avvio pagina, parametri URL e caricamento differito della mappa. Assemblato da npm run build:js; il frammento non viene caricato autonomamente.
   // -----------------------------------------------------------------------------
 
   function initHomeApp() {
+    initJourneySelection();
     document
       .getElementById("catalogFilterToggle")
       ?.addEventListener("click", toggleCatalogFilters);
