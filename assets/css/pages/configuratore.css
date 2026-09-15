@@ -16565,3 +16565,106 @@
 .crop-mini--full i { background: var(--button-primary); }
 #btnArrangeSelected > .crop-action-icon,
 #btnFillSelected > .crop-action-icon { display: none; }
+
+/* Su smartphone il percorso diventa una sola barra compatta: profilo e
+   avanzamento affiancati. Il titolo esteso resta disponibile via ARIA. */
+@media (max-width: 660px) {
+  .config-page .workflow-hub {
+    border-top-width: 3px;
+  }
+
+  .config-page .workflow-hub .journey-context {
+    display: grid;
+    grid-template-columns: minmax(108px, 0.72fr) minmax(0, 1.28fr);
+    align-items: stretch;
+    gap: 5px;
+    padding: 7px 8px;
+    box-shadow: inset 3px 0 0 var(--journey-action);
+  }
+
+  .config-page .workflow-hub .journey-context-level--chooser {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    max-width: 100%;
+    min-height: 42px;
+    justify-self: start;
+    padding-inline: 8px;
+    line-height: 1.1;
+    text-align: left;
+  }
+
+  .config-page .workflow-hub .journey-context-level--chooser > span:first-child {
+    min-width: 0;
+    white-space: normal;
+    font-size: 9px;
+  }
+
+  .config-page .workflow-hub .journey-context-copy {
+    display: none;
+  }
+
+  .config-page .workflow-hub .journey-context-progress {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    grid-template-columns: 1.2fr repeat(2, minmax(0, 1fr));
+    gap: 3px;
+  }
+
+  .config-page .workflow-hub .journey-context-step,
+  .config-page .workflow-hub .journey-context-step.is-current,
+  .config-page .workflow-hub .journey-context-step.is-done,
+  .config-page .workflow-hub .journey-context-step[data-journey-step="settings"] {
+    min-height: 42px;
+    padding: 3px 2px;
+    font-size: 10px !important;
+    line-height: 1.05;
+    overflow: hidden;
+  }
+
+  .config-page .workflow-hub .journey-context-step::before {
+    display: none;
+  }
+
+  .config-page .workflow-hub .journey-context-step {
+    font-size: 0 !important;
+  }
+
+  .config-page .workflow-hub .journey-context-step > span {
+    display: none;
+  }
+
+  .config-page .workflow-hub .journey-context-step::after {
+    font-size: 10px;
+    line-height: 1.05;
+    white-space: normal;
+  }
+
+  .config-page .workflow-hub .journey-context-step[data-journey-step="settings"]::after {
+    content: "1\A Scelta";
+    white-space: pre-line;
+  }
+
+  .config-page .workflow-hub .journey-context-step[data-journey-step="crops"]::after {
+    content: "2\A Colture";
+    white-space: pre-line;
+  }
+
+  .config-page .workflow-hub .journey-context-step[data-journey-step="yield"]::after {
+    content: "3\A Acquisto";
+    white-space: pre-line;
+  }
+
+  html[lang="ro"] .config-page .workflow-hub .journey-context-step[data-journey-step="settings"]::after {
+    content: "1\A Alegere";
+  }
+
+  html[lang="ro"] .config-page .workflow-hub .journey-context-step[data-journey-step="crops"]::after {
+    content: "2\A Culturi";
+  }
+
+  html[lang="ro"] .config-page .workflow-hub .journey-context-step[data-journey-step="yield"]::after {
+    content: "3\A Cumpără";
+  }
+}

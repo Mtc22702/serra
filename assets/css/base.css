@@ -715,6 +715,90 @@
   /* Rifiniture percorso Hero */
 }
 
+/* Pannello iniziale su iPhone: il select nativo resta dentro la scheda e le
+   tre scelte di livello comunicano con più chiarezza profondità e selezione. */
+@media (max-width: 660px) {
+  .preconfig-sheet--v2 .preconfig-body,
+  .preconfig-sheet--v2 .preconfig-month-wrap,
+  .preconfig-sheet--v2 .preconfig-month-control {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .preconfig-sheet--v2 .preconfig-body {
+    overflow-x: clip;
+  }
+
+  .preconfig-sheet--v2 .preconfig-month-select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+  }
+
+  html .preconfig-sheet--v2 .pc-persona-card {
+    border-width: 1px;
+    background: linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--accent) 13%, #fff),
+      color-mix(in srgb, var(--accent) 4%, #fff)
+    );
+    box-shadow:
+      0 2px 0 color-mix(in srgb, var(--accent) 42%, #cbd8c8),
+      0 6px 12px color-mix(in srgb, var(--accent) 16%, transparent),
+      inset 0 1px rgba(255, 255, 255, .94);
+    transform: translateY(-1px);
+  }
+
+  html .preconfig-sheet--v2 .pc-persona-card:active {
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--accent) 48%, #cbd8c8),
+      0 4px 9px color-mix(in srgb, var(--accent) 14%, transparent);
+    transform: translateY(1px);
+  }
+
+  html .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) {
+    border-width: 2px;
+    background: linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--accent) 25%, #fff),
+      color-mix(in srgb, var(--accent) 12%, #fff)
+    );
+    box-shadow:
+      0 2px 0 color-mix(in srgb, var(--accent) 72%, #31553a),
+      0 7px 14px color-mix(in srgb, var(--accent) 24%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--accent) 17%, transparent),
+      inset 0 1px rgba(255, 255, 255, .95);
+  }
+
+  html .preconfig-sheet--v2 .pc-persona-go {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+    box-shadow:
+      0 2px 5px color-mix(in srgb, var(--accent) 24%, transparent),
+      inset 0 1px #fff;
+  }
+}
+
+/* Nel carrello del configuratore la foto è un riferimento visivo primario,
+   quindi occupa più spazio senza comprimere nome, prezzo e quantità. */
+@media (max-width: 660px) {
+  .config-page .cart-item {
+    grid-template-columns: 64px minmax(0, 1fr) var(--control-h-sm);
+    column-gap: .9rem;
+  }
+
+  .config-page .cart-item img,
+  .config-page .cart-item-glyph {
+    width: 64px;
+    height: 64px;
+  }
+}
+
 /* Preferenze mobile e tablet: nell'header resta solo l'accesso al menu; tema e
    lingua vivono in un pannello dedicato dentro l'hamburger. Queste regole sono
    intenzionalmente fuori dai layer per prevalere sui bundle storici di pagina. */
@@ -13267,5 +13351,174 @@ html[data-theme="dark"]
       gap: 7px;
     }
     .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper { width: 100%; }
+  }
+}
+
+/* Ultima regola del componente: Safari deve conteggiare il select del mese
+   dentro la superficie verde, senza spostarlo oltre il bordo. */
+@media (max-width: 660px) {
+  html .preconfig-sheet--v2 .preconfig-month-wrap {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 58px;
+    padding: 7px 9px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-month-control {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 44px;
+    flex: 0 0 44px;
+    box-sizing: border-box;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-month-select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Le tre misure usano la stessa riga visiva: etichetta a sinistra e controllo
+     a destra. La struttura regolare evita disallineamenti e ritagli su iPhone. */
+  html .preconfig-sheet--v2 #preconfigSizesField {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    min-height: 174px;
+    padding: 7px;
+  }
+
+  html .preconfig-sheet--v2 #preconfigSizesField > div {
+    display: grid;
+    grid-template-columns: minmax(112px, .82fr) minmax(140px, 1.18fr);
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 5px 6px;
+    border: 1px solid rgba(54, 117, 67, .16);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .44);
+    box-shadow: inset 0 1px rgba(255, 255, 255, .8);
+  }
+
+  html .preconfig-sheet--v2 #preconfigSizesField > div > .preconfig-fld-row {
+    grid-column: 1;
+    margin: 0;
+  }
+
+  html .preconfig-sheet--v2 #preconfigSizesField > div > .preconfig-stepper {
+    grid-column: 2;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Su smartphone il titolo di sezione identifica già il mese e il messaggio
+     di ripristino non aggiunge un'azione: li omettiamo per lasciare spazio ai controlli. */
+  html .preconfig-sheet--v2 .preconfig-restored,
+  html .preconfig-sheet--v2 .preconfig-month-label {
+    display: none;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-dim--path {
+    min-height: 48px;
+    padding: 5px 6px;
+    border: 1px solid rgba(54, 117, 67, .16);
+  }
+
+  html .preconfig-sheet--v2 .preconfig-dim--path > div {
+    display: contents;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-dim--path .preconfig-path-copy {
+    display: contents;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-dim--path .preconfig-fld-row {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-dim--path :is(.preconfig-fld, .preconfig-fld-unit) {
+    font-size: 9px;
+    letter-spacing: .1px;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-dim--path .preconfig-stepper {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Lo spazio recuperato viene distribuito tra icona, descrizione e azione:
+     le tre card mantengono così testi e pulsanti sulla stessa linea visiva. */
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-card {
+    min-height: 122px;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-ico {
+    flex: 0 0 auto;
+  }
+
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-body {
+    display: grid;
+    grid-template-rows: auto minmax(2.35em, auto) auto;
+    align-items: center;
+    justify-items: center;
+    gap: 3px;
+    width: 100%;
+  }
+
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-body small,
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-action {
+    margin-top: 0;
+  }
+
+  html[data-theme="dark"] .preconfig-sheet--v2 #preconfigSizesField > div {
+    border-color: rgba(151, 212, 155, .22);
+    background: rgba(12, 38, 23, .52);
+    box-shadow: inset 0 1px rgba(255, 255, 255, .05);
+  }
+
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card {
+    border-color: color-mix(in srgb, var(--accent) 52%, #0d2316);
+    background: linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--accent) 25%, #193522),
+      color-mix(in srgb, var(--accent) 11%, #102719)
+    );
+    box-shadow:
+      0 2px 0 color-mix(in srgb, var(--accent) 42%, #09170f),
+      0 7px 14px rgba(0, 0, 0, .24),
+      inset 0 1px rgba(255, 255, 255, .08);
+  }
+
+  html[data-theme="dark"] .preconfig-sheet--v2 .pc-persona-card:is(.is-active, [aria-pressed="true"]) {
+    background: linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--accent) 40%, #193522),
+      color-mix(in srgb, var(--accent) 22%, #102719)
+    );
+    box-shadow:
+      0 2px 0 color-mix(in srgb, var(--accent) 72%, #09170f),
+      0 8px 15px rgba(0, 0, 0, .3),
+      0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent),
+      inset 0 1px rgba(255, 255, 255, .09);
+  }
+}
+
+@media (max-width: 380px), (max-height: 760px) {
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-card {
+    min-height: 92px;
+  }
+
+  html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-body {
+    grid-template-rows: auto auto;
   }
 }

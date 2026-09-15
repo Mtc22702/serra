@@ -31,7 +31,7 @@
 
     <!-- Script di configurazione e versioning -->
     <script>
-      window.SERRA_APP_VERSION = "20260914-56d48c3be812";
+      window.SERRA_APP_VERSION = "20260915-9cc36c08c732";
       window.SERRA_IS_LOCAL_DEV =
         location.hostname === "localhost" ||
         location.hostname === "127.0.0.1" ||
@@ -84,17 +84,17 @@
     <!-- Fogli di stile principali -->
     <link
       rel="stylesheet"
-      href="assets/css/base.css?v=20260914-56d48c3be812"
+      href="assets/css/base.css?v=20260915-9cc36c08c732"
     />
     <link
       rel="stylesheet"
-      href="assets/css/serra-home.css?v=20260914-56d48c3be812"
+      href="assets/css/serra-home.css?v=20260915-9cc36c08c732"
     />
 
     <!-- Prepara il singolo bundle del configuratore mentre l'utente consulta la home. -->
     <link
       rel="prefetch"
-      href="assets/css/serra-configuratore.css?v=20260914-56d48c3be812"
+      href="assets/css/serra-configuratore.css?v=20260915-9cc36c08c732"
       as="style"
     />
     <link rel="prefetch" href="assets/js/configuratore.js" as="script" />
@@ -1213,7 +1213,7 @@
           <span data-i18n="footer.rights">Tutti i diritti riservati</span>
         </div>
         <span class="footer-app-version" aria-label="Versione applicazione"
-          >v20260914-56d48c3be812</span
+          >v20260915-9cc36c08c732</span
         >
       </div>
     </footer>
@@ -1763,7 +1763,7 @@
                 <span class="pc-persona-body">
                   <b data-i18n="hero.cfg_novizio">Principiante</b>
                   <small data-i18n="hero.cfg_nov_hint"
-                    >Orto pronto, guidato passo passo</small
+                    >Guida passo passo</small
                   >
                   <span class="pc-persona-action" data-i18n="preconfig.persona_select"
                     >Seleziona</span
@@ -1787,7 +1787,7 @@
                 <span class="pc-persona-body">
                   <b data-i18n="hero.cfg_intermedio">Intermedio</b>
                   <small data-i18n="hero.cfg_int_hint"
-                    >Guidato, ma personalizzabile</small
+                    >Piano pronto da adattare</small
                   >
                   <span class="pc-persona-action" data-i18n="preconfig.persona_select"
                     >Seleziona</span
@@ -1811,7 +1811,7 @@
                 <span class="pc-persona-body">
                   <b data-i18n="hero.cfg_esperto">Esperto</b>
                   <small data-i18n="hero.cfg_exp_hint"
-                    >Scegli un layout pronto oppure componi liberamente</small
+                    >Composizione libera</small
                   >
                   <span class="pc-persona-action" data-i18n="preconfig.persona_select"
                     >Seleziona</span
@@ -1822,7 +1822,7 @@
             </div>
           </div>
           <div class="preconfig-section-label" id="preconfigSizesLabel">
-            <span data-i18n="preconfig.sizes_label">2. Misure interne</span>
+            <span data-i18n="preconfig.sizes_label">2. Misure interne serra</span>
             <!-- Distintivo misure di default: nascosto quando l'utente modifica i valori o carica una serra salvata (updatePreconfigCta() in home.js) -->
             <span
               class="preconfig-priority-badge preconfig-priority-badge--check"
@@ -2134,11 +2134,11 @@
     </div>
 
     <!-- Bootstrap: l'ordine base → catalogo → home → cache espone le dipendenze richieste. -->
-    <script src="assets/js/base.js?v=20260914-56d48c3be812" defer></script>
+    <script src="assets/js/base.js?v=20260915-9cc36c08c732" defer></script>
     <script src="assets/js/serra-cart.js" defer></script>
     <script src="assets/js/serra-cart-ui.js" defer></script>
     <script src="assets/js/catalogo.js" defer></script>
-    <script src="assets/js/home.js?v=20260914-56d48c3be812" defer></script>
+    <script src="assets/js/home.js?v=20260915-9cc36c08c732" defer></script>
     <script src="assets/js/boot-sw.js" defer></script>
   </body>
 </html>

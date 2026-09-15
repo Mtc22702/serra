@@ -627,6 +627,10 @@
             <span class="orto-chip orto-chip--piantina">${t("cat.lot", { n: lotto })}</span>
           </span>
           <img class="orto-card-svg" src="${svgSrc(plant.id)}" alt="" loading="lazy" />
+        </div>
+        <div class="orto-card-body">
+          <!-- Nome e ciclo vivono sulla superficie della card: sulle foto
+               strette il contrasto variava troppo da una pianta all'altra. -->
           <span class="orto-card-titles">
             <h3>${escape(plantName(plant))}<span aria-hidden="true"> ↗</span></h3>
             <small>${t("cat.cycle", {
@@ -634,8 +638,6 @@
               n: ggPiantina,
             })}</small>
           </span>
-        </div>
-        <div class="orto-card-body">
           <!-- Prezzo pagato e confronto unitario stanno sulla stessa riga:
                si legge più in fretta e non si ripete il formato del lotto. -->
           <div class="orto-price-row viv-price-row">

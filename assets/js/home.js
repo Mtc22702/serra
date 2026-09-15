@@ -4975,7 +4975,7 @@ if (catalogSearchLink) {
       "preconfig.persona_selected": "Selezionato",
       "preconfig.summary_missing": "livello da scegliere",
       "preconfig.persona_badge": "Obbligatorio",
-      "preconfig.sizes_label": "2. Misure interne",
+      "preconfig.sizes_label": "2. Misure interne serra",
       "preconfig.sizes_note":
         "Le dimensioni determinano quante aiuole e piante puoi coltivare.",
       "preconfig.width": "Larghezza",
@@ -5003,11 +5003,11 @@ if (catalogSearchLink) {
       "preconfig.sizes_badge_check": "Da controllare",
       "hero.cfg_levels_title": "Che tipo di coltivatore sei?",
       "hero.cfg_novizio": "Principiante",
-      "hero.cfg_nov_hint": "Ti guido dalla prima scelta fino all'acquisto",
+      "hero.cfg_nov_hint": "Guida passo passo",
       "hero.cfg_intermedio": "Intermedio",
-      "hero.cfg_int_hint": "Parti da un piano pronto e personalizzalo",
+      "hero.cfg_int_hint": "Piano pronto da adattare",
       "hero.cfg_esperto": "Esperto",
-      "hero.cfg_exp_hint": "Scegli un layout pronto oppure componi liberamente",
+      "hero.cfg_exp_hint": "Composizione libera",
       "hero.zone_cold_label": "Fredda",
       "hero.zone_temp_label": "Temperata",
       "hero.zone_warm_label": "Calda",
@@ -5024,7 +5024,7 @@ if (catalogSearchLink) {
       "preconfig.persona_selected": "Selectat",
       "preconfig.summary_missing": "nivel de ales",
       "preconfig.persona_badge": "Obligatoriu",
-      "preconfig.sizes_label": "2. Dimensiuni interne",
+      "preconfig.sizes_label": "2. Dimensiuni interioare ale serei",
       "preconfig.sizes_note":
         "Dimensiunile determină câte parcele și plante poți cultiva.",
       "preconfig.width": "Lățime",
@@ -5051,11 +5051,11 @@ if (catalogSearchLink) {
       "preconfig.sizes_badge_check": "De verificat",
       "hero.cfg_levels_title": "Ce fel de cultivator ești?",
       "hero.cfg_novizio": "Începător",
-      "hero.cfg_nov_hint": "Te ghidez de la prima alegere până la cumpărare",
+      "hero.cfg_nov_hint": "Ghid pas cu pas",
       "hero.cfg_intermedio": "Intermediar",
-      "hero.cfg_int_hint": "Pornești de la un plan gata și îl personalizezi",
+      "hero.cfg_int_hint": "Plan gata de adaptat",
       "hero.cfg_esperto": "Expert",
-      "hero.cfg_exp_hint": "Alege un plan gata sau compune liber",
+      "hero.cfg_exp_hint": "Compoziție liberă",
       "hero.zone_cold_label": "Rece",
       "hero.zone_temp_label": "Temperată",
       "hero.zone_warm_label": "Caldă",
@@ -5354,12 +5354,25 @@ if (catalogSearchLink) {
         const reduceMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;
+        // Safari iOS può considerare la CTA già nella layout viewport anche
+        // quando la barra del browser la copre nella viewport realmente visibile.
+        const revealCta = (behavior) => {
+          const viewport = window.visualViewport;
+          const visibleBottom = viewport
+            ? viewport.offsetTop + viewport.height
+            : window.innerHeight;
+          const rect = cta.getBoundingClientRect();
+          const safeGap = 18;
+          const hiddenAmount = rect.bottom + safeGap - visibleBottom;
+          if (hiddenAmount > 0) {
+            window.scrollBy({ top: hiddenAmount, behavior });
+          }
+        };
         window.setTimeout(() => {
-          cta.scrollIntoView({
-            behavior: reduceMotion ? "auto" : "smooth",
-            block: "nearest",
-          });
-        }, 180);
+          revealCta(reduceMotion ? "auto" : "smooth");
+          // Una seconda misura compensa l'espansione/chiusura della barra URL.
+          window.setTimeout(() => revealCta("auto"), 420);
+        }, 80);
       }
     };
 
