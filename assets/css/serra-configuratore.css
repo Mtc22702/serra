@@ -17244,3 +17244,60 @@ html[data-theme="dark"] .settings-axis {
   background: rgba(12, 34, 21, .48);
   color: #c6e9c1;
 }
+
+/* Le superfici introdotte per il passo “Scelta” non devono riaccendersi nel tema scuro. */
+@media (max-width: 660px) {
+  html[data-theme="dark"] .config-page .workflow-hub .journey-context {
+    background: rgba(9, 27, 17, .68);
+    box-shadow: inset 0 0 0 1px rgba(151, 212, 155, .2);
+  }
+
+  html[data-theme="dark"] .config-page .workflow-hub .journey-context-step,
+  html[data-theme="dark"] .config-page .workflow-hub .journey-context-step.is-done {
+    border-color: rgba(151, 212, 155, .25);
+    background: #173b26;
+  }
+
+  html[data-theme="dark"] .config-page .workflow-hub .journey-context-step::after {
+    color: #c7e3c5;
+  }
+
+  html[data-theme="dark"] .config-page .workflow-hub .journey-context-step.is-current {
+    border-color: var(--journey-action);
+    background: var(--journey-action);
+  }
+
+  html[data-theme="dark"] .config-page .workflow-hub .journey-context-step.is-current::after {
+    color: #fff;
+  }
+
+  html[data-theme="dark"] .settings-ux-v2 #dimensionsField,
+  html[data-theme="dark"] .settings-ux-v2 #pathField,
+  html[data-theme="dark"] .settings-ux-v2 #climateField,
+  html[data-theme="dark"] .settings-ux-v2 .crops-month-selector {
+    border-color: rgba(151, 212, 155, .28);
+    background: linear-gradient(145deg, #275334, #1d4129);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .22), inset 0 1px rgba(255, 255, 255, .05);
+  }
+
+  html[data-theme="dark"] .settings-ux-v2 #dimensionsField > div {
+    border-color: rgba(151, 212, 155, .22);
+    background: rgba(12, 38, 23, .52);
+  }
+
+  html[data-theme="dark"] .settings-ux-v2 :is(#dimensionsField, #pathField, #climateField) .fld,
+  html[data-theme="dark"] .settings-ux-v2 .settings-fld-unit {
+    color: #c7e3c5;
+    text-shadow: none;
+  }
+
+  html[data-theme="dark"] .settings-ux-v2 .settings-axis-bed {
+    fill: #468356;
+    stroke: #acd6aa;
+  }
+
+  html[data-theme="dark"] .settings-ux-v2 .settings-axis-walkway {
+    fill: #a77d41;
+    stroke: #eed08f;
+  }
+}

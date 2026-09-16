@@ -13748,3 +13748,14 @@ html[data-theme="dark"]
     font-size: .66rem;
   }
 }
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--climate {
+  border-color: rgba(151, 212, 155, .3);
+  background: linear-gradient(145deg, #265233, #1d4129);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .2), inset 0 1px rgba(255, 255, 255, .05);
+}
+
+html[data-theme="dark"] .preconfig-sheet--v2 .preconfig-vfield--climate .preconfig-fld {
+  color: #c7e3c5;
+  text-shadow: none;
+}
