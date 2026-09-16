@@ -2060,10 +2060,10 @@
     border-color: #c66b67;
   }
   html[data-theme="dark"] body .catalog-pro-section .compact-add-btn {
-    background: #263c31;
-    color: #a8e6bd;
-    border: 2px solid #64c58a;
-    box-shadow: var(--elev-2);
+    background: var(--green);
+    color: var(--serra-white);
+    border: 2px solid var(--green);
+    box-shadow: var(--elev-1);
   }
   html[data-theme="dark"] body .catalog-pro-section .compact-add-btn:hover {
     background: #2e8c51;
@@ -6321,6 +6321,45 @@
   html .catalog-search-box { background: var(--surface-1); border-color: var(--surface-line-strong); }
   html .catalog-search-box #catalogSearch { background: transparent; color: var(--theme-text); }
   html .catalog-search-box #catalogSearch::placeholder { color: var(--theme-muted); opacity: 1; }
+}
+
+/* Il carrello resta visibile nella navbar mobile, senza la pillola pesante. */
+@media (max-width: 660px) {
+  html .site-header .cart-btn {
+    position: relative;
+    width: 40px;
+    min-width: 40px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--green-dk);
+    box-shadow: none;
+  }
+
+  html .site-header .cart-btn:hover,
+  html .site-header .cart-btn:focus-visible {
+    background: rgba(45, 106, 79, 0.1);
+    box-shadow: none;
+    transform: none;
+  }
+
+  html .site-header .cart-icon {
+    font-size: 18px;
+  }
+
+  html .site-header .cart-count {
+    position: absolute;
+    top: 1px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 2px solid var(--surface-1);
+    font-size: 0.6rem;
+  }
 }
 
 /* Home — hero, percorsi, fasce di collegamento e ritmo della pagina. */

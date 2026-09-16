@@ -4759,6 +4759,7 @@ if (catalogSearchLink) {
     );
     const zona = document.getElementById("pcZona")?.value ?? "temperato";
     const riscaldata = document.getElementById("pcRisc")?.value === "si";
+    const sudInBasso = document.getElementById("pcSole")?.value === "basso";
     const mese =
       parseInt(document.getElementById("pcMese")?.value) ||
       new Date().getMonth() + 1;
@@ -4776,13 +4777,14 @@ if (catalogSearchLink) {
           path,
           zona,
           riscaldata,
+          sudInBasso,
           mese,
           livello:
             activePersona?.dataset.livello || existing.livello || "novizio",
         }),
       );
     } catch {}
-    return { w, l, path, zona, riscaldata, mese };
+    return { w, l, path, zona, riscaldata, sudInBasso, mese };
   }
 
   // Inserisce la pre-configurazione anche nell'URL di ingresso.
@@ -4794,6 +4796,7 @@ if (catalogSearchLink) {
     url.searchParams.set("path", String(config.path));
     url.searchParams.set("zona", config.zona);
     url.searchParams.set("risc", config.riscaldata ? "1" : "0");
+    url.searchParams.set("sole", config.sudInBasso ? "basso" : "alto");
     url.searchParams.set("mese", String(config.mese));
     return url.href;
   }
@@ -4969,8 +4972,6 @@ if (catalogSearchLink) {
       "preconfig.intro_note":
         "Un avvio rapido: bastano pochi dati per aprire il configuratore già pronto. Nulla è definitivo, potrai cambiare tutto in qualsiasi momento nella pagina successiva.",
       "preconfig.persona_label": "1. Che tipo di coltivatore sei?",
-      "preconfig.persona_help":
-        "Scegli il percorso più adatto a te. Potrai cambiarlo anche in seguito.",
       "preconfig.persona_select": "Seleziona",
       "preconfig.persona_selected": "Selezionato",
       "preconfig.summary_missing": "livello da scegliere",
@@ -4986,6 +4987,9 @@ if (catalogSearchLink) {
       "preconfig.climate_label": "3. Clima",
       "preconfig.zona_label": "Zona",
       "preconfig.serra_label": "Serra",
+      "preconfig.sun_label": "Sole",
+      sunTop: "In alto",
+      sunBottom: "In basso",
       "preconfig.serra_cold": "Fredda",
       "preconfig.serra_heated": "Riscaldata",
       "preconfig.month_label": "4. Mese di semina",
@@ -5018,8 +5022,6 @@ if (catalogSearchLink) {
       "preconfig.intro_note":
         "Un început rapid: e nevoie doar de câteva date pentru a deschide configuratorul deja pregătit. Nimic nu este definitiv, poți schimba totul oricând pe pagina următoare.",
       "preconfig.persona_label": "1. Ce fel de cultivator ești?",
-      "preconfig.persona_help":
-        "Alege traseul potrivit pentru tine. Îl vei putea schimba și mai târziu.",
       "preconfig.persona_select": "Selectează",
       "preconfig.persona_selected": "Selectat",
       "preconfig.summary_missing": "nivel de ales",
@@ -5035,6 +5037,9 @@ if (catalogSearchLink) {
       "preconfig.climate_label": "3. Climă",
       "preconfig.zona_label": "Zonă",
       "preconfig.serra_label": "Seră",
+      "preconfig.sun_label": "Soare",
+      sunTop: "Sus",
+      sunBottom: "Jos",
       "preconfig.serra_cold": "Rece",
       "preconfig.serra_heated": "Încălzită",
       "preconfig.month_label": "4. Luna de semănat",
@@ -5192,6 +5197,7 @@ if (catalogSearchLink) {
     const l = saved?.lunghezza ?? 5;
     const zona = saved?.zona ?? "temperato";
     const riscaldata = Boolean(saved?.riscaldata);
+    const sudInBasso = Boolean(saved?.sudInBasso);
     // Ripristina solo un mese salvato valido; dati vecchi, vuoti o corrotti
     // devono sempre ricadere sul mese corrente.
     const savedMonth = Number.parseInt(saved?.mese, 10);
@@ -5215,6 +5221,8 @@ if (catalogSearchLink) {
     const pcZona = document.getElementById("pcZona");
     if (pcZona) pcZona.value = zona;
     syncPcRiscSelect(riscaldata);
+    const pcSole = document.getElementById("pcSole");
+    if (pcSole) pcSole.value = sudInBasso ? "basso" : "alto";
     const pcMese = document.getElementById("pcMese");
     if (pcMese) pcMese.value = mese;
     updatePreconfigSummary();
@@ -5350,30 +5358,33 @@ if (catalogSearchLink) {
         `journey.selection_ready_${card.dataset.journeyRoute}`,
       );
       if (focusCard) card.focus({ preventScroll: true });
-      if (window.innerWidth <= 660) {
-        const reduceMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        ).matches;
-        // Safari iOS può considerare la CTA già nella layout viewport anche
-        // quando la barra del browser la copre nella viewport realmente visibile.
-        const revealCta = (behavior) => {
-          const viewport = window.visualViewport;
-          const visibleBottom = viewport
-            ? viewport.offsetTop + viewport.height
-            : window.innerHeight;
-          const rect = cta.getBoundingClientRect();
-          const safeGap = 18;
-          const hiddenAmount = rect.bottom + safeGap - visibleBottom;
-          if (hiddenAmount > 0) {
-            window.scrollBy({ top: hiddenAmount, behavior });
-          }
-        };
-        window.setTimeout(() => {
-          revealCta(reduceMotion ? "auto" : "smooth");
-          // Una seconda misura compensa l'espansione/chiusura della barra URL.
-          window.setTimeout(() => revealCta("auto"), 420);
-        }, 80);
-      }
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      // Su ogni viewport la CTA deve entrare nella parte visibile della pagina
+      // dopo la scelta. Su iOS consideriamo anche la visual viewport, così la
+      // barra del browser non la copre.
+      const revealCta = (behavior) => {
+        const viewport = window.visualViewport;
+        const visibleTop = viewport?.offsetTop || 0;
+        const visibleBottom = viewport
+          ? viewport.offsetTop + viewport.height
+          : window.innerHeight;
+        const rect = cta.getBoundingClientRect();
+        const safeGap = 20;
+        const belowViewport = rect.bottom + safeGap - visibleBottom;
+        const aboveViewport = rect.top - safeGap - visibleTop;
+        if (belowViewport > 0) {
+          window.scrollBy({ top: belowViewport, behavior });
+        } else if (aboveViewport < 0) {
+          window.scrollBy({ top: aboveViewport, behavior });
+        }
+      };
+      window.setTimeout(() => {
+        revealCta(reduceMotion ? "auto" : "smooth");
+        // Una seconda misura compensa layout reflow e barra URL mobile.
+        window.setTimeout(() => revealCta("auto"), 420);
+      }, 80);
     };
 
     cards.forEach((card, index) => {
@@ -5472,6 +5483,9 @@ if (catalogSearchLink) {
 
     document
       .getElementById("pcZona")
+      ?.addEventListener("change", updatePreconfigSummary);
+    document
+      .getElementById("pcSole")
       ?.addEventListener("change", updatePreconfigSummary);
     document.getElementById("pcRisc")?.addEventListener("change", (event) => {
       event.currentTarget.classList.toggle(

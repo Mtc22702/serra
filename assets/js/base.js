@@ -921,10 +921,10 @@
         "cross.to_seeds_text":
           "Nel catalogo trovi 97 varietà con mesi di semina, distanze e abbinamenti.",
         "hero.promise":
-          "Progetta gli spazi, scegli semi o piantine e ricevi indicazioni semplici fino alla raccolta.",
+          "Parti dalla serra, dai semi o dalle piantine e segui il tuo orto fino al raccolto.",
         // Titolo della hero spezzato in due: la seconda parte è evidenziata.
-        "hero.headline_a": "Il tuo orto,",
-        "hero.headline_b": "dall’idea al raccolto.",
+        "hero.headline_a": "Coltiva il tuo orto,",
+        "hero.headline_b": "a modo tuo.",
         "hero.eyebrow_now": "· scegli da dove partire",
         "hero.plan_caption": "Esempio di piano · 4 aiuole, 12 m²",
         // Il percorso della home: unico componente che dice cosa può fare l'utente e da dove entra.
@@ -1252,8 +1252,6 @@
         "cart.removed_meta": "{count} semi nel carrello",
         "cart.pack": "1 bustina",
         "cart.estimate": "Totale indicativo",
-        "cart.request_note":
-          "Invii un ordine senza pagamento online. Disponibilità e prezzo finale saranno confermati.",
         "cart.mail_subject": "Richiesta semi Orto in Serra",
         "cart.pack_many": "{count} bustine",
         "cart.seeds_per_pack": "{count} semi/busta",
@@ -1450,9 +1448,9 @@
         "cross.to_seeds_text":
           "În catalog găsești 97 de soiuri cu luni de semănat, distanțe și asocieri.",
         "hero.promise":
-          "Planifică spațiul, alege semințe sau răsaduri și primește recomandări simple până la recoltă.",
-        "hero.headline_a": "Grădina ta,",
-        "hero.headline_b": "de la idee la recoltă.",
+          "Pornește cu sera, semințele sau răsadurile și urmărește grădina până la recoltă.",
+        "hero.headline_a": "Cultivă grădina ta,",
+        "hero.headline_b": "în felul tău.",
         "hero.eyebrow_now": "· alege de unde pornești",
         "hero.plan_caption": "Exemplu de plan · 4 straturi, 12 m²",
         "journey.choice_kicker": "Începe de aici",
@@ -1777,8 +1775,6 @@
         "cart.removed_meta": "{count} semințe în coș",
         "cart.pack": "1 plic",
         "cart.estimate": "Total orientativ",
-        "cart.request_note":
-          "Trimiți o comandă fără plată online. Disponibilitatea și prețul final vor fi confirmate.",
         "cart.mail_subject": "Cerere semințe Orto in Serra",
         "cart.pack_many": "{count} plicuri",
         "cart.seeds_per_pack": "{count} semințe/plic",
@@ -2298,16 +2294,17 @@
         personaPickLabel: "Percorso scelto",
         personaPickHint: "Apri per cambiare livello di guida e controllo.",
         personaPickAction: "Cambia",
-        personaNovTitle: "Sono alle prime armi",
-        personaNovLevel: "(Principiante)",
+        personaSelect: "Seleziona",
+        personaNovTitle: "Principiante",
+        personaNovLevel: "Guida passo passo",
         personaNovDesc:
           "Ti guido passo passo: clima, serra e un orto pronto fino al carrello",
-        personaIntTitle: "Ho un po' di esperienza",
-        personaIntLevel: "(Intermedio)",
+        personaIntTitle: "Intermedio",
+        personaIntLevel: "Piano pronto da adattare",
         personaIntDesc:
           "Parti guidato, poi personalizza le colture e aggiungi semi fuori stagione",
-        personaExpTitle: "So già cosa voglio",
-        personaExpLevel: "(Esperto)",
+        personaExpTitle: "Esperto",
+        personaExpLevel: "Composizione libera",
         personaExpDesc:
           "Sfoglia tutto il catalogo, di stagione o no, e componi la serra a mano",
         fillSelectedTitle:
@@ -2886,16 +2883,17 @@
         personaPickLabel: "Traseu ales",
         personaPickHint: "Deschide ca să schimbi nivelul de ghidaj și control.",
         personaPickAction: "Schimbă",
-        personaNovTitle: "Sunt la început",
-        personaNovLevel: "(Începător)",
+        personaSelect: "Selectează",
+        personaNovTitle: "Începător",
+        personaNovLevel: "Ghid pas cu pas",
         personaNovDesc:
           "Te ghidez pas cu pas: climă, seră și o grădină gata până la coș",
-        personaIntTitle: "Am ceva experiență",
-        personaIntLevel: "(Intermediar)",
+        personaIntTitle: "Intermediar",
+        personaIntLevel: "Plan gata de adaptat",
         personaIntDesc:
           "Pornești ghidat, apoi personalizezi culturile și adaugi semințe în afara sezonului",
-        personaExpTitle: "Știu deja ce vreau",
-        personaExpLevel: "(Expert)",
+        personaExpTitle: "Expert",
+        personaExpLevel: "Compoziție liberă",
         personaExpDesc:
           "Răsfoiește tot catalogul, de sezon sau nu, și compune sera manual",
         fillSelectedTitle:

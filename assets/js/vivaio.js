@@ -710,9 +710,7 @@
       transplant: "La transplantare", transplantCopy: "Pregătește locul înainte de a scoate răsadul din recipient. Păstrează rădăcinile împreună cu pământul și udă după plantare.",
       space: "Spațiu și lumină", between: "între plante", rows: "între rânduri",
       care: "Îngrijire după transplantare", water: "Necesar de apă", careCopy: "Verifică umiditatea solului și adaptarea răsadului, mai ales în primele zile. Ajustează udarea în funcție de căldură și sol.",
-      harvest: "Când poți începe să recoltezi?", days: "zile de la transplantare", estimate: "Durată orientativă: depinde de climă, dezvoltarea răsadului și îngrijire.",
-      start: "Transplantezi", growth: "Crește", firstHarvest: "Prima recoltă estimată", timing: "Numără zilele din momentul în care pui răsadul în pământ, nu de la cumpărare.", approx: "Aproximativ", spacingDiagram: "Dispunere orientativă: distanța dintre plante și dintre rânduri",
-      perennial: "Plantă perenă: recoltarea urmează dezvoltarea plantei.",
+      harvest: "Când începi să recoltezi", days: "zile", approx: "Aproximativ", spacingDiagram: "Dispunere orientativă: distanța dintre plante și dintre rânduri",
       light: "Lumină", unknown: "Nespecificat",
       sun: {pieno: "Soare plin", mezz: "Semiumbră", mezzombra: "Semiumbră", ombra: "Umbră"},
       waterValues: {bassa: "Redus", media: "Moderat", alta: "Ridicat"}
@@ -721,9 +719,7 @@
       transplant: "Al trapianto", transplantCopy: "Prepara lo spazio prima di estrarre la piantina dal contenitore. Mantieni integro il pane di terra e annaffia dopo la messa a dimora.",
       space: "Spazio e luce", between: "tra le piante", rows: "tra le file",
       care: "Cure dopo il trapianto", water: "Fabbisogno d’acqua", careCopy: "Controlla l’umidità del terreno e l’adattamento della piantina, soprattutto nei primi giorni. Regola le annaffiature in base a caldo e terreno.",
-      harvest: "Quando puoi iniziare a raccogliere?", days: "giorni dal trapianto", estimate: "Tempo indicativo: dipende da clima, sviluppo della piantina e cure.",
-      start: "Trapianti", growth: "Cresce", firstHarvest: "Prima raccolta stimata", timing: "Conta i giorni da quando metti la piantina nel terreno, non dal giorno dell’acquisto.", approx: "Circa", spacingDiagram: "Disposizione indicativa: distanza tra piante e tra file",
-      perennial: "Pianta perenne: la raccolta segue lo sviluppo della pianta.",
+      harvest: "Quando inizi a raccogliere", days: "giorni", approx: "Circa", spacingDiagram: "Disposizione indicativa: distanza tra piante e tra file",
       light: "Esposizione", unknown: "Non specificato",
       sun: {pieno: "Pieno sole", mezz: "Mezz’ombra", mezzombra: "Mezz’ombra", ombra: "Ombra"},
       waterValues: {bassa: "Basso", media: "Medio", alta: "Alto"}
@@ -759,7 +755,7 @@
         <section class="viv-detail-overview"><h3>${text.space}</h3><div class="viv-growing-layout">${spacingGraphic}<div class="viv-detail-facts"><span><small>${text.light}</small>${lightGraphic}<b>${escape(text.sun[plant.sole] || text.unknown)}</b></span><span><small>${text.water}</small>${waterGraphic}<b>${escape(text.waterValues[plant.acqua] || text.unknown)}</b></span></div></div></section>
         <section class="viv-detail-instruction"><h3><span aria-hidden="true">🪴</span> ${text.transplant}</h3><p>${text.transplantCopy}</p></section>
         <section class="viv-detail-instruction"><h3><span aria-hidden="true">💧</span> ${text.care}</h3><p>${text.careCopy}</p></section>
-        <section class="viv-detail-harvest"><div><h3>${text.harvest}</h3>${days ? `<p class="viv-harvest-duration"><small>${text.approx}</small><strong>${days}</strong><span>${text.days}</span></p><ol class="viv-harvest-path"><li><img src="assets/img/generated/piantina-premium.webp" alt="" /><b>${text.start}</b></li><li><img src="${svgSrc(id)}" alt="" /><b>${text.growth}</b></li><li><img src="${photoSrc(id)}" alt="" /><b>${text.firstHarvest}</b></li></ol><p>${text.timing}</p>` : `<p>${text.perennial}</p>`}<small>${text.estimate}</small></div></section>
+        ${days ? `<section class="viv-detail-harvest"><div><h3>${text.harvest}</h3><p class="viv-harvest-duration"><small>${text.approx}</small><strong>${days}</strong><span>${text.days}</span></p></div></section>` : ""}
       </div>
       <form method="dialog" class="viv-detail-footer"><button class="viv-detail-close">${text.close}</button></form>`;
     document.body.classList.add("viv-detail-open");

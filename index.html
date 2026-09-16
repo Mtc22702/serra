@@ -287,12 +287,12 @@
         <div class="hero-v2-inner page-wrap">
           <div class="hero-v2-copy">
             <h1 class="hero-v2-title" id="heroTitle">
-              <span data-i18n="hero.headline_a">Il tuo orto,</span>
-              <em data-i18n="hero.headline_b">dall’idea al raccolto.</em>
+              <span data-i18n="hero.headline_a">Coltiva il tuo orto,</span>
+              <em data-i18n="hero.headline_b">a modo tuo.</em>
             </h1>
             <p class="hero-v2-lead" data-i18n="hero.promise">
-              Progetta gli spazi, scegli semi o piantine e ricevi indicazioni
-              semplici fino alla raccolta.
+              Parti dalla serra, dai semi o dalle piantine e segui il tuo orto
+              fino al raccolto.
             </p>
           </div>
 
@@ -1516,11 +1516,6 @@
         </div>
         <div class="cart-items" id="cartItems" hidden></div>
         <div class="cart-footer" id="cartFooter" hidden>
-          <div class="cart-footer-note" data-i18n="cart.request_note">
-            Confermando crei un ordine reale (pagamento non online): ti
-            confermiamo disponibilità e prezzo finale. Per completarlo serve
-            accedere alla tua Area Personale.
-          </div>
           <a
             href="configuratore.html?import=cart&source=index"
             class="cart-conf-link"
@@ -1724,6 +1719,7 @@
           <p class="preconfig-restored" id="preconfigRestored" hidden></p>
           <div id="preconfigPersonaSection">
             <div
+              id="preconfigPersonaLabel"
               class="preconfig-section-label preconfig-section-label--primary"
             >
               <span data-i18n="preconfig.persona_label"
@@ -1735,17 +1731,10 @@
                 >Obbligatorio</span
               >
             </div>
-            <p
-              class="preconfig-persona-help"
-              id="preconfigPersonaHelp"
-              data-i18n="preconfig.persona_help"
-            >
-              Scegli il percorso più adatto a te. Potrai cambiarlo anche in seguito.
-            </p>
             <div
               class="pc-persona-cards"
               role="group"
-              aria-labelledby="preconfigPersonaHelp"
+              aria-labelledby="preconfigPersonaLabel"
             >
               <button
                 class="pc-persona-card pc-persona-card--novizio"
@@ -2068,6 +2057,18 @@
                 <option value="si" data-i18n="preconfig.serra_heated">
                   Riscaldata
                 </option>
+              </select>
+            </div>
+            <div>
+              <label
+                class="preconfig-fld"
+                for="pcSole"
+                data-i18n="preconfig.sun_label"
+                >Sole</label
+              >
+              <select id="pcSole" class="preconfig-select">
+                <option value="alto" data-i18n="sunTop">In alto</option>
+                <option value="basso" data-i18n="sunBottom">In basso</option>
               </select>
             </div>
           </div>

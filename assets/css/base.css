@@ -784,9 +784,171 @@
   }
 }
 
+/* Anche su tablet e desktop il carrello segue il linguaggio delle azioni
+   compatte della navbar: icona chiara, quantità come notifica. */
+@media (min-width: 661px) {
+  html body .site-header .cart-btn {
+    position: relative;
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    min-height: 48px;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(45, 106, 79, 0.18);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--green-dk);
+    box-shadow: var(--elev-1);
+  }
+
+  html body .site-header .cart-btn:hover,
+  html body .site-header .cart-btn:focus-visible {
+    border-color: rgba(45, 106, 79, 0.34);
+    background: var(--white);
+    color: var(--green);
+    box-shadow: var(--elev-2);
+    transform: translateY(-1px);
+  }
+
+  html body .site-header .cart-label {
+    display: none;
+  }
+
+  html body .site-header .cart-icon {
+    font-size: 20px;
+  }
+
+  html body .site-header .cart-count {
+    position: absolute;
+    top: 3px;
+    right: 2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0;
+    border: 2px solid var(--surface-1);
+    font-size: 0.65rem;
+  }
+}
+
+/* Dopo la rimozione della nota introduttiva, il titolo del livello conserva
+   un distacco visivo dalle tre opzioni. */
+.preconfig-sheet--v2 #preconfigPersonaLabel {
+  margin-bottom: 10px;
+}
+
+/* Tema e lingua restano distinti anche sugli schermi larghi: eliminare il
+   guscio unico rende l'header più arioso e allineato al nuovo carrello. */
+@media (min-width: 661px) {
+  html body .site-header .nav-prefs {
+    display: inline-flex;
+    min-height: 48px;
+    gap: 0.45rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  html body .site-header .nav-prefs .theme-toggle {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    min-height: 48px;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    box-shadow: var(--elev-1);
+  }
+
+  html body .site-header .nav-prefs .theme-toggle:hover {
+    background: var(--surface-1);
+    box-shadow: var(--elev-2);
+    transform: translateY(-1px);
+  }
+
+  html body .site-header .nav-prefs .nav-lang {
+    min-width: 72px;
+    width: 72px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    box-shadow: var(--elev-1);
+  }
+
+  html body .site-header .nav-prefs .nav-lang:hover,
+  html body .site-header .nav-prefs .nav-lang:focus-within {
+    background: var(--surface-1);
+    box-shadow: var(--elev-2);
+  }
+
+  html body .site-header .nav-prefs .nav-lang select {
+    width: 70px;
+    min-width: 70px;
+    height: 46px;
+    min-height: 46px;
+    padding: 0 24px 0 8px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background-position: right 8px center;
+    text-align: center;
+    text-align-last: center;
+  }
+
+  html[data-theme="dark"] body .site-header .nav-prefs {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  html[data-theme="dark"] body .site-header .nav-prefs .theme-toggle,
+  html[data-theme="dark"] body .site-header .nav-prefs .nav-lang {
+    border-color: var(--surface-line);
+    background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    box-shadow: var(--elev-1);
+  }
+
+  html[data-theme="dark"] body .site-header .nav-prefs .nav-lang select {
+    background-color: transparent;
+    color: var(--brand-200);
+  }
+}
+
 /* Nel carrello del configuratore la foto è un riferimento visivo primario,
    quindi occupa più spazio senza comprimere nome, prezzo e quantità. */
 @media (max-width: 660px) {
+  /* Nel carrello mobile l'immagine resta ben riconoscibile e i comandi
+     formano una colonna pulita: rimozione in alto, quantità in basso. */
+  .cart-item {
+    grid-template-columns: 56px minmax(0, 1fr) var(--control-h-sm);
+    grid-template-areas:
+      "foto testo togli"
+      "foto quantita quantita";
+    column-gap: 0.75rem;
+    row-gap: 0.45rem;
+    padding: 0.8rem;
+  }
+
+  .cart-item img,
+  .cart-item-glyph {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cart-item-copy {
+    align-self: start;
+    padding-top: 0.1rem;
+  }
+
+  .cart-item-qty {
+    min-height: var(--control-h-sm);
+  }
+
   .config-page .cart-item {
     grid-template-columns: 64px minmax(0, 1fr) var(--control-h-sm);
     column-gap: .9rem;
@@ -2063,9 +2225,9 @@
     width: var(--control-h-sm);
     height: var(--control-h-sm);
     border-radius: 50%;
-    border: 2px solid var(--lime);
-    background: transparent;
-    color: var(--green);
+    border: 2px solid var(--green);
+    background: var(--green);
+    color: var(--serra-white);
     font-size: 1.05rem;
     font-weight: 700;
     cursor: pointer;
@@ -8585,7 +8747,9 @@
     .catalog-hint-controls .cat-sort-select {
       flex: 1;
       min-width: 0;
-      padding-inline: 1.5rem;
+      /* L'icona di ordinamento occupa il lato sinistro: il testo parte
+         dopo un distacco leggibile, anche sugli schermi più stretti. */
+      padding: 0 1.5rem 0 2rem;
     }
   }
 
@@ -8599,7 +8763,7 @@
     }
     /* Sugli schermi più stretti si stringe la select, non il selettore di vista: quello è un bersaglio da premere e scendeva a 24 px. */
     .catalog-hint-controls .cat-sort-select {
-      padding-inline: 1.15rem;
+      padding: 0 1.15rem 0 2rem;
     }
   }
 
@@ -8765,8 +8929,8 @@
     width: 32px;
     height: 32px;
     border: none;
-    background: rgba(45, 106, 79, 0.09);
-    color: var(--green-dk);
+    background: var(--green);
+    color: var(--serra-white);
     font-size: 1.05rem;
     font-weight: 800;
     border-radius: var(--control-radius-pill);
@@ -8780,7 +8944,7 @@
   }
 
   .super-compact-add-btn:hover {
-    background: var(--green);
+    background: var(--green-dk);
     color: var(--serra-white);
   }
 
@@ -13520,5 +13684,67 @@ html[data-theme="dark"]
 
   html .preconfig-sheet--v2 #preconfigPersonaSection .pc-persona-body {
     grid-template-rows: auto auto;
+  }
+}
+
+/* Navbar mobile coerente: il carrello è un'icona, non una pillola separata. */
+@media (max-width: 660px) {
+  html body .site-header .cart-btn {
+    position: relative;
+    width: 40px;
+    min-width: 40px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--green-dk);
+    box-shadow: none;
+  }
+
+  html body .site-header .cart-btn:hover,
+  html body .site-header .cart-btn:focus-visible {
+    background: rgba(45, 106, 79, 0.1);
+    box-shadow: none;
+    transform: none;
+  }
+
+  html body .site-header .cart-icon {
+    font-size: 18px;
+  }
+
+  html body .site-header .cart-count {
+    position: absolute;
+    top: 1px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 2px solid var(--surface-1);
+    font-size: 0.6rem;
+  }
+}
+
+/* Il lato più soleggiato entra nella stessa riga del clima: su iPhone resta
+   disponibile senza aumentare l'altezza della modale né spingere la CTA fuori vista. */
+@media (max-width: 660px) {
+  html .preconfig-sheet--v2 .preconfig-vfield--climate {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    min-height: 64px;
+    padding: 5px 7px 9px;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-vfield--climate .preconfig-fld {
+    margin-bottom: 3px;
+    font-size: .58rem;
+    letter-spacing: .02em;
+  }
+
+  html .preconfig-sheet--v2 .preconfig-vfield--climate .preconfig-select {
+    min-height: 34px;
+    padding: 4px 17px 4px 6px;
+    font-size: .66rem;
   }
 }

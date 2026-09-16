@@ -6511,3 +6511,48 @@
     html .orto-start-flow { gap: 18px; padding: 12px 6px; }
   }
 }
+
+/* Su mobile le tre viste dell'orto restano sempre a portata di pollice. */
+@media (max-width: 720px) {
+  html body.orto-page {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+
+  html .orto-viewbar {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: auto;
+    margin: 0;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--orto-surface) 94%, transparent);
+    box-shadow: 0 -8px 22px rgba(27, 53, 35, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  html .orto-tabs {
+    position: static;
+    width: min(100%, 520px);
+    min-width: 0;
+    margin: 0 auto;
+    padding: 6px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  html .orto-tab,
+  html .orto-tab--primary,
+  html .orto-tab--today {
+    min-height: 70px;
+    padding: 7px 4px 8px;
+    grid-template-rows: 32px minmax(0, 1fr);
+  }
+
+  html .orto-tab-ico,
+  html .orto-tab--primary .orto-tab-ico {
+    width: 32px;
+    height: 32px;
+  }
+}

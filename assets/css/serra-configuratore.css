@@ -12860,7 +12860,7 @@
     margin-top: 4px;
     color: #5f6f60;
     font-size: 12px;
-    font-weight: 650;
+    font-weight: 500;
     line-height: 1.3;
   }
 
@@ -16668,4 +16668,579 @@
   html[lang="ro"] .config-page .workflow-hub .journey-context-step[data-journey-step="yield"]::after {
     content: "3\A Cumpără";
   }
+}
+
+/* Il riepilogo del percorso mobile separa chiaramente il profilo dagli step:
+   ogni fase ha ora una superficie leggibile e quella corrente emerge subito. */
+@media (max-width: 660px) {
+  .config-page .workflow-hub .journey-context {
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: 8px;
+    padding: 9px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 0 1px rgba(47, 107, 58, 0.13);
+  }
+
+  .config-page .workflow-hub .journey-context-level--chooser {
+    min-height: 48px;
+    padding: 7px 10px;
+    border-radius: 13px;
+    background: linear-gradient(145deg, var(--journey-action), var(--verde-scuro));
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--journey-action) 26%, transparent);
+  }
+
+  .config-page .workflow-hub .journey-context-level--chooser > span:first-child {
+    font-size: 10px;
+    font-weight: 750;
+    line-height: 1.2;
+  }
+
+  .config-page .workflow-hub .journey-context-progress {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .config-page .workflow-hub .journey-context-step,
+  .config-page .workflow-hub .journey-context-step.is-done,
+  .config-page .workflow-hub .journey-context-step.is-current {
+    min-height: 48px;
+    padding: 4px 3px;
+    border: 1px solid color-mix(in srgb, var(--journey-action) 25%, var(--surface-line));
+    border-radius: 12px;
+    background: var(--surface-1);
+    box-shadow: none;
+  }
+
+  .config-page .workflow-hub .journey-context-step::after {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    color: var(--theme-muted);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .config-page .workflow-hub .journey-context-step.is-done::after {
+    color: var(--verde-scuro);
+  }
+
+  .config-page .workflow-hub .journey-context-step.is-current {
+    border-color: var(--journey-action);
+    background: var(--journey-action);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--journey-action) 32%, transparent);
+  }
+
+  .config-page .workflow-hub .journey-context-step.is-current::after {
+    color: #fff;
+  }
+}
+
+@media (max-width: 360px) {
+  .config-page .workflow-hub .journey-context {
+    grid-template-columns: 98px minmax(0, 1fr);
+  }
+}
+
+/* Le tre scelte del profilo restano compatte, ma con una colonna di testo
+   reale: i titoli lunghi non vengono più compressi o tagliati. */
+@media (max-width: 660px) {
+  .persona-ux-v2 .persona-pick[open] .persona-card,
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    min-height: 110px;
+    align-items: start;
+    gap: 3px 6px;
+    padding: 8px 9px 9px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-ico {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    margin: 0;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-go {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    background: var(--surface-1);
+    color: transparent;
+    font-size: 0;
+    opacity: 1;
+    transform: none;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-go::before {
+    display: none;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-go {
+    background: var(--accent);
+    color: var(--serra-white);
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-go::before {
+    display: block;
+    content: "✓";
+    color: var(--serra-white);
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-body {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    flex: 0 1 auto;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: start;
+    padding: 0 1px;
+    text-align: center;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-action {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-row: 4;
+    min-height: 20px;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--accent) 48%, var(--surface-line));
+    border-radius: var(--radius-pill);
+    color: color-mix(in srgb, var(--accent), var(--verde-scuro) 24%);
+    font-size: 0.56rem;
+    font-weight: 750;
+    line-height: 1;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-action {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, var(--surface-1));
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-body b,
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-body b {
+    display: block;
+    height: auto;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.2;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-level-label {
+    display: block;
+    min-height: 2.35em;
+    margin-top: 2px;
+    color: var(--theme-muted);
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-body b > span:first-child {
+    display: block;
+    color: color-mix(in srgb, var(--accent), var(--verde-scuro) 24%);
+  }
+}
+
+/* Il cambio percorso usa esattamente la stessa scheda della scelta iniziale:
+   tinta tenue, icona in badge, selettore circolare e CTA a pillola. */
+.persona-ux-v2 .persona-pick[open] .persona-card {
+  min-height: 116px;
+  align-items: flex-start;
+  padding: 13px 12px 12px;
+  border: 2px solid color-mix(in srgb, var(--accent) 44%, #d7dfd4);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--accent) 6%, #fff);
+  box-shadow:
+    0 4px 10px color-mix(in srgb, var(--accent) 10%, transparent),
+    inset 0 1px #fff;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 78%, #17371f);
+  background: color-mix(in srgb, var(--accent) 11%, #fff);
+  box-shadow:
+    0 8px 18px color-mix(in srgb, var(--accent) 18%, transparent),
+    inset 0 1px #fff;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+  border-color: color-mix(in srgb, var(--accent) 88%, #183620);
+  background: color-mix(in srgb, var(--accent) 18%, #fff);
+  box-shadow:
+    0 7px 16px color-mix(in srgb, var(--accent) 22%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent),
+    inset 0 1px #fff;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card::before {
+  top: 12px;
+  bottom: 12px;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card-ico,
+.persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-ico {
+  width: 44px;
+  height: 44px;
+  border-width: 1.5px;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card-body b,
+.persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-body b {
+  color: #183c24;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card-body small {
+  min-height: 2.6em;
+  margin-top: 4px;
+  color: #53665a;
+  font-size: .71rem;
+  line-height: 1.3;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card-action {
+  min-height: 25px;
+  margin-top: 8px;
+  padding: 4px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .76);
+  color: var(--accent-text);
+  font-size: .67rem;
+  font-weight: 800;
+  letter-spacing: .015em;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-action {
+  border-color: var(--accent-edge);
+  background: var(--accent-edge);
+  color: #fff;
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card-go {
+  top: 12px;
+  right: 11px;
+  width: 23px;
+  height: 23px;
+  border: 2px solid color-mix(in srgb, var(--accent) 55%, #fff);
+  background: rgba(255, 255, 255, .8);
+}
+
+.persona-ux-v2 .persona-pick[open] .persona-card.is-active .persona-card-go {
+  border-color: var(--accent-edge);
+  background: var(--accent-edge);
+}
+
+html[data-theme="dark"] .persona-ux-v2 .persona-pick[open] .persona-card {
+  background: color-mix(in srgb, var(--accent) 14%, #163721);
+}
+
+html[data-theme="dark"] .persona-ux-v2 .persona-pick[open] .persona-card:hover {
+  background: color-mix(in srgb, var(--accent) 23%, #163721);
+}
+
+html[data-theme="dark"] .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+  background: color-mix(in srgb, var(--accent) 34%, #163721);
+}
+
+html[data-theme="dark"] .persona-ux-v2 .persona-pick[open] .persona-card-body b,
+html[data-theme="dark"] .persona-ux-v2 .persona-pick[open] .persona-card-body small {
+  color: #e5f1e3;
+}
+
+@media (max-width: 660px) {
+  .persona-ux-v2 .persona-pick[open] .persona-card,
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+    min-height: 112px;
+    padding: 10px 7px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-body small {
+    min-height: 2.3em;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-action {
+    min-height: 20px;
+    margin-top: 6px;
+    padding: 3px 7px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card-go {
+    top: 7px;
+    right: 7px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Rifinitura mobile: un solo raggio per il selettore e testi sempre leggibili. */
+@media (max-width: 660px) {
+  .config-page .workflow-hub .journey-context {
+    grid-template-columns: 102px minmax(0, 1fr);
+    gap: 6px;
+    padding: 7px;
+    border-radius: 12px;
+  }
+
+  .config-page .workflow-hub .journey-context-level--chooser {
+    min-height: 40px;
+    padding: 5px 7px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--journey-action) 20%, transparent);
+  }
+
+  .config-page .workflow-hub .journey-context-level--chooser > span:first-child {
+    font-size: 9px;
+    line-height: 1.1;
+  }
+
+  .config-page .workflow-hub .journey-context-step,
+  .config-page .workflow-hub .journey-context-step.is-done,
+  .config-page .workflow-hub .journey-context-step.is-current {
+    min-height: 40px;
+    border-radius: 10px;
+  }
+
+  .workflow-persona-panel {
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-cards {
+    gap: 6px;
+    padding: 9px 10px 10px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card,
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+    min-height: 118px;
+    border-radius: 12px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card::before,
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active::before {
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-card.is-active {
+    box-shadow:
+      0 6px 14px color-mix(in srgb, var(--accent) 18%, transparent),
+      0 0 0 2px color-mix(in srgb, var(--accent) 14%, transparent),
+      inset 0 1px #fff;
+  }
+
+  .persona-ux-v2 .persona-pick[open] .persona-level-label {
+    min-height: 0;
+    white-space: normal !important;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: normal;
+    word-break: normal;
+    line-height: 1.18;
+  }
+}
+
+/* Le tre opzioni sono già card autonome: il pannello esterno non aggiunge
+   gerarchia, quindi resta solo lo spazio che le separa dal percorso. */
+.workflow-persona-panel {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+@media (max-width: 660px) {
+  .workflow-persona-panel .persona-cards,
+  .workflow-persona-panel .persona-pick[open] .persona-cards {
+    padding: 8px 0 2px;
+  }
+}
+
+/* Il passo “Scelta” riprende i gruppi operativi della modale iniziale:
+   controlli raccolti in superfici verdi e righe nette, senza la griglia a mosaico. */
+@media (max-width: 660px) {
+  .settings-ux-v2 #dimensionsField {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    margin-bottom: 0;
+    padding: 7px;
+    border-color: rgba(54, 117, 67, .3);
+    border-radius: 14px 14px 4px 4px;
+    background: linear-gradient(145deg, #d7ecd0, #edf7e9);
+    box-shadow: 0 4px 10px rgba(27, 72, 39, .07), inset 0 1px rgba(255, 255, 255, .82);
+  }
+
+  .settings-ux-v2 #dimensionsField > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border: 1px solid rgba(54, 117, 67, .18);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .76);
+  }
+
+  .settings-ux-v2 #dimensionsField .fld,
+  .settings-ux-v2 #pathField > .fld {
+    margin: 0;
+    color: #46554a;
+    font-size: .61rem;
+    line-height: 1.15;
+  }
+
+  .settings-ux-v2 #dimensionsField .stepper,
+  .settings-ux-v2 #pathField .stepper-sm {
+    min-height: 34px;
+  }
+
+  .settings-ux-v2 #dimensionsField .step-btn,
+  .settings-ux-v2 #pathField .step-btn {
+    min-height: 34px;
+  }
+
+  .settings-ux-v2 #pathField {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    margin-top: -1px;
+    padding: 7px;
+    border-color: rgba(54, 117, 67, .3);
+    border-radius: 4px 4px 14px 14px;
+    background: linear-gradient(145deg, #d7ecd0, #edf7e9);
+    box-shadow: 0 4px 10px rgba(27, 72, 39, .07), inset 0 1px rgba(255, 255, 255, .82);
+  }
+
+  .settings-ux-v2 #pathField > .row.field {
+    display: flex;
+    gap: 4px;
+  }
+
+  .settings-ux-v2 #pathField .path-unit-label {
+    display: inline-flex;
+    align-items: center;
+    margin-left: -3px;
+  }
+
+  .settings-ux-v2 #climateField {
+    padding: 7px;
+    border-color: rgba(54, 117, 67, .3);
+    border-radius: 14px;
+    background: linear-gradient(145deg, #d9ecd1, #edf7e8);
+    box-shadow: 0 4px 10px rgba(27, 72, 39, .07), inset 0 1px rgba(255, 255, 255, .82);
+  }
+
+  .settings-ux-v2 #climateField .fld {
+    margin-bottom: 4px;
+    font-size: .61rem;
+  }
+
+  .settings-ux-v2 .crops-month-selector {
+    padding: 7px 9px;
+    border-color: rgba(54, 117, 67, .3);
+    border-radius: 14px;
+    background: linear-gradient(145deg, #d9ecd1, #edf7e8);
+    box-shadow: 0 4px 10px rgba(27, 72, 39, .07), inset 0 1px rgba(255, 255, 255, .82);
+  }
+}
+
+/* Icone di misura condivise con la modale: spiegano subito quale valore si sta regolando. */
+.settings-axis {
+  box-sizing: content-box;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border: 1px solid rgba(47, 107, 58, .2);
+  border-radius: 7px;
+  background: rgba(116, 198, 157, .14);
+  color: var(--serra-green);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.settings-axis-guide {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  opacity: .42;
+}
+
+.settings-axis-measure {
+  stroke: currentColor;
+  stroke-width: 1.9;
+}
+
+.settings-axis-bed {
+  fill: #a9d5ac;
+  stroke: #3d7b49;
+  stroke-width: 1.15;
+}
+
+.settings-axis-walkway {
+  fill: #efd79d;
+  stroke: #9a681f;
+  stroke-width: 1.15;
+}
+
+.settings-fld-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.settings-fld-row .fld {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-fld-unit {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: .65rem;
+  font-weight: 750;
+}
+
+@media (max-width: 660px) {
+  .settings-ux-v2 #pathField > .path-section-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+  }
+
+  .settings-ux-v2 #pathField > .path-section-label .settings-axis {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+html[data-theme="dark"] .settings-axis {
+  border-color: rgba(188, 229, 184, .36);
+  background: rgba(12, 34, 21, .48);
+  color: #c6e9c1;
 }

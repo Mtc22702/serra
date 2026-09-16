@@ -461,9 +461,9 @@
                 /></span>
                 <span class="persona-card-body">
                   <b>
-                    <span id="personaNovTitle">Sono alle prime armi</span>
+                    <span id="personaNovTitle">Principiante</span>
                     <span class="persona-level-label" id="personaNovLevel"
-                      >(Principiante)</span
+                      >Guida passo passo</span
                     >
                   </b>
                   <small id="personaNovDesc"
@@ -472,6 +472,12 @@
                   >
                 </span>
                 <span class="persona-card-go" aria-hidden="true">→</span>
+                <span
+                  class="persona-card-action"
+                  id="personaNovAction"
+                  aria-hidden="true"
+                  >Seleziona</span
+                >
               </button>
               <button
                 class="persona-card persona-card--intermedio is-active"
@@ -491,9 +497,9 @@
                 /></span>
                 <span class="persona-card-body">
                   <b>
-                    <span id="personaIntTitle">Ho un po' di esperienza</span>
+                    <span id="personaIntTitle">Intermedio</span>
                     <span class="persona-level-label" id="personaIntLevel"
-                      >(Intermedio)</span
+                      >Piano pronto da adattare</span
                     >
                   </b>
                   <small id="personaIntDesc"
@@ -502,6 +508,12 @@
                   >
                 </span>
                 <span class="persona-card-go" aria-hidden="true">→</span>
+                <span
+                  class="persona-card-action"
+                  id="personaIntAction"
+                  aria-hidden="true"
+                  >Seleziona</span
+                >
               </button>
               <button
                 class="persona-card persona-card--esperto"
@@ -521,9 +533,9 @@
                 /></span>
                 <span class="persona-card-body">
                   <b>
-                    <span id="personaExpTitle">So già cosa voglio</span>
+                    <span id="personaExpTitle">Esperto</span>
                     <span class="persona-level-label" id="personaExpLevel"
-                      >(Esperto)</span
+                      >Composizione libera</span
                     >
                   </b>
                   <small id="personaExpDesc"
@@ -532,6 +544,12 @@
                   >
                 </span>
                 <span class="persona-card-go" aria-hidden="true">→</span>
+                <span
+                  class="persona-card-action"
+                  id="personaExpAction"
+                  aria-hidden="true"
+                  >Seleziona</span
+                >
               </button>
             </div>
           </details>
@@ -608,7 +626,14 @@
                   id="dimensionsField"
                 >
                   <div>
-                    <label class="fld">Larghezza</label>
+                    <span class="settings-fld-row">
+                      <svg class="settings-axis" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path class="settings-axis-guide" d="M3 5v14M21 5v14" />
+                        <path class="settings-axis-measure" d="M3 12h18M3 12l4-4M3 12l4 4M21 12l-4-4M21 12l-4 4" />
+                      </svg>
+                      <label class="fld">Larghezza</label>
+                      <span class="settings-fld-unit" aria-hidden="true">m</span>
+                    </span>
                     <div class="stepper">
                       <button
                         class="step-btn"
@@ -651,7 +676,14 @@
                     />
                   </div>
                   <div>
-                    <label class="fld">Lunghezza</label>
+                    <span class="settings-fld-row">
+                      <svg class="settings-axis settings-axis--length" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path class="settings-axis-guide" d="M5 3h14M5 21h14" />
+                        <path class="settings-axis-measure" d="M12 3v18M12 3L8 7M12 3l4 4M12 21l-4-4M12 21l4-4" />
+                      </svg>
+                      <label class="fld">Lunghezza</label>
+                      <span class="settings-fld-unit" aria-hidden="true">m</span>
+                    </span>
                     <div class="stepper">
                       <button
                         class="step-btn"
@@ -698,7 +730,12 @@
                   <label
                     class="fld section-label path-section-label"
                     id="lblPath"
-                    >Camminamento tra aiuole</label
+                    ><svg class="settings-axis settings-axis--path" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <rect class="settings-axis-bed" x="2" y="3" width="6" height="18" rx="2" />
+                      <rect class="settings-axis-walkway" x="9" y="3" width="6" height="18" rx="1.5" />
+                      <rect class="settings-axis-bed" x="16" y="3" width="6" height="18" rx="2" />
+                      <path class="settings-axis-measure" d="M9.5 12h5M9.5 12l2-2M9.5 12l2 2M14.5 12l-2-2M14.5 12l-2 2" />
+                    </svg><span>Camminamento</span><span class="settings-fld-unit" aria-hidden="true">cm</span></label
                   >
                   <div class="row field">
                     <input
@@ -1701,15 +1738,6 @@
         </div>
         <div class="cart-items" id="cartItems" hidden></div>
         <div class="cart-footer" id="cartFooter" hidden>
-          <div
-            class="cart-footer-note"
-            id="confCartNote"
-            data-i18n-conf="cart.request_note"
-          >
-            Confermando crei un ordine reale (pagamento non online): ti
-            confermiamo disponibilità e prezzo finale. Per completarlo serve
-            accedere alla tua Area Personale.
-          </div>
           <button
             class="cart-conf-link"
             type="button"

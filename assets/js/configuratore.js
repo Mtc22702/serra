@@ -1516,6 +1516,7 @@ function applyBootPreconfigToState() {
   const month = boundedNumber("mese", 1, 12);
   const zone = BOOT_PARAMS.get("zona");
   const heated = BOOT_PARAMS.get("risc");
+  const sun = BOOT_PARAMS.get("sole");
 
   let applied = false;
   if (width !== null) {
@@ -1540,6 +1541,10 @@ function applyBootPreconfigToState() {
   }
   if (heated === "1" || heated === "0") {
     state.riscaldata = heated === "1";
+    applied = true;
+  }
+  if (sun === "alto" || sun === "basso") {
+    state.sudInBasso = sun === "basso";
     applied = true;
   }
 
@@ -2679,12 +2684,15 @@ function applyLanguage() {
   setText("#personaNovTitle", "personaNovTitle");
   setText("#personaNovLevel", "personaNovLevel");
   setText("#personaNovDesc", "personaNovDesc");
+  setText("#personaNovAction", "personaSelect");
   setText("#personaIntTitle", "personaIntTitle");
   setText("#personaIntLevel", "personaIntLevel");
   setText("#personaIntDesc", "personaIntDesc");
+  setText("#personaIntAction", "personaSelect");
   setText("#personaExpTitle", "personaExpTitle");
   setText("#personaExpLevel", "personaExpLevel");
   setText("#personaExpDesc", "personaExpDesc");
+  setText("#personaExpAction", "personaSelect");
   if (typeof syncPersonaPickerSummary === "function")
     syncPersonaPickerSummary();
   if (typeof syncQuickGuide === "function") syncQuickGuide();
