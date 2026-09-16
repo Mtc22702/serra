@@ -1,5 +1,5 @@
 /* Offline: precache minimo e strategie di rete/cache per l'intera applicazione. */
-const CACHE_VERSION = "20260915-9cc36c08c732";
+const CACHE_VERSION = "20260916-5af7d1c9e4b2";
 const RELEASE_EPOCH = 3;
 const CACHE = `serra-${CACHE_VERSION}`;
 
